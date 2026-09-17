@@ -279,7 +279,7 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 ssh desktop "nvidia-smi --query-gpu=name,memory.used,memory.total --format=csv"</pre><button type="button" data-copy="c4">Copiar</button></div>
         </div>
       </details>
-      <details>
+      <details open>
         <summary>5. Reconciliar o desktop com o repositório <span class="where">DESKTOP · CLAUDE CODE</span></summary>
         <div class="dbody">
           <p class="note">Pode ser feito antes dos passos 1, 3 e 4: só precisa do <code>gh</code> e do clone, e o próprio prompt cuida disso. Abra o Claude Code na pasta de trabalho atual do desktop e cole o bloco abaixo. Ele para três vezes para você aprovar: depois do inventário, depois da tabela de divergências e antes de mudar a base de trabalho.</p>
