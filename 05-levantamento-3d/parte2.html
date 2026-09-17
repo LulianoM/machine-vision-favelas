@@ -1,0 +1,76 @@
+<h2 class="brk">3. De onde vem a geometria da favela</h2>
+<p>Como a seção anterior estabeleceu que esta é a decisão de maior peso, ela vem antes da escolha de software. Todas as opções abaixo foram verificadas.</p>
+
+<h3>3.1 A descoberta mais acionável do levantamento: LiDAR e ortofoto 2024 do IPP</h3>
+<div class="win">O Instituto Pereira Passos mantém publicamente servida uma <b>ortofoto verdadeira de toda a cidade do Rio, adquirida no primeiro semestre de 2024, com pixel de 15 cm</b>, produzida por um voo <b>que incluiu levantamento LiDAR</b>. Serviço ArcGIS em <code>pgeo3.rio.rj.gov.br/arcgis/rest/services/Imagens/Mosaico_2024/ImageServer</code>, RGB, EPSG:31983 (UTM 23S, SAD69), extensão X de 621.720 a 695.788 e Y de 7.444.172 a 7.485.303, que cobre o Jacarezinho. Copyright Instituto Pereira Passos, PCRJ.</div>
+<p>Isso muda o projeto em três frentes. Primeiro, é dado municipal aberto e recente, não dado sensível da PCERJ, o que remove o problema ético e de sigilo que hoje trava a circulação do material de 2022. Segundo, 15 cm de GSD é resolução de sobra para gerar textura e validar geometria. Terceiro, e mais importante, se a nuvem LiDAR do mesmo voo estiver disponível, ela é a melhor fonte possível de morfologia vertical de favela, que é literalmente o objeto do artigo.</p>
+<p>O catálogo público da Mapoteca do IPP lista apenas produtos de 1975 a 2019. O acervo restante é obtido por solicitação em <code>cartografia.ipp@prefeitura.rio</code>, sujeito a licença de uso, com desconto para estudantes. O servidor expõe mosaicos de 1999 até 2025, mas <b>nenhum serviço de LiDAR, MDS, MDT ou nuvem de pontos está publicado</b>. Ou seja: a ortofoto está disponível agora, a nuvem LiDAR precisa ser pedida.</p>
+<p class="note"><b>Ação de maior alavancagem do projeto inteiro:</b> escrever para <code>cartografia.ipp@prefeitura.rio</code> solicitando a nuvem de pontos LiDAR e o MDS do levantamento de 2024 para o recorte do Jacarezinho, identificando-se como pesquisador de mestrado da FGV EBAPE. Isso deve ser feito antes de qualquer decisão de software, porque a resposta determina o desenho. Não verifiquei disponibilidade real, custo nem termos.</p>
+
+<h3>3.2 O que você já tem</h3>
+<p>Os dois arquivos de Jacarezinho de 2022 no Drive (Sudoeste, 145 MB; Nordeste, 248 MB), do voo da PCERJ, continuam sendo um ativo valioso: são a geometria correta de uma favela vertical real, com posição real de cada edificação. Reconstruir isso à mão levaria meses e seria bem menos defensável academicamente.</p>
+<p>Duas ressalvas. São dados sensíveis de origem policial, o que restringe publicação e compartilhamento (a nota do projeto já registra que não devem entrar em pacotes). E têm quatro anos, num tecido urbano que muda rápido. Se o LiDAR 2024 do IPP vier, ele é preferível em todos os aspectos: mais novo, mais preciso em vertical, e publicável.</p>
+
+<h3>3.3 O que está juridicamente bloqueado</h3>
+<div class="alert"><b>Google Photorealistic 3D Tiles está fora, apesar de cobrir o Rio.</b> As Map Tiles API Policies proíbem literalmente <i>"image analysis, machine interpretation, object detection or identification, geodata extraction or resale, or offline uses"</i>, e também cache, pré-fetch, armazenamento e criação de obra derivada. A cláusula complementar permite sobrepor objetos 3D próprios aos tiles <i>"as long as the 3D objects aren't extracted, traced, or otherwise derived by hand or machine"</i> deles. Treinar um detector sobre esses tiles é exatamente o uso vedado. Não há exceção acadêmica em nenhum dos termos, nem do Google nem da Cesium.</div>
+<p>Vale como referência visual em tela e para contexto de skyline em figura, com atribuição obrigatória (logo Cesium ion e logo Google Maps). Não vale como fonte de geometria nem como cena de captura de dataset.</p>
+
+<h3>3.4 Demais fontes, avaliadas</h3>
+<table>
+<tr><th>Fonte</th><th>Serve para</th><th>Limite</th></tr>
+<tr><td><b>LiDAR IPP 2024</b> (sob solicitação)</td><td>Morfologia vertical real, a melhor opção</td><td>Disponibilidade não confirmada</td></tr>
+<tr><td><b>Ortofoto IPP 2024</b>, 15 cm, pública</td><td>Textura, validação, footprints, referência de cor real</td><td>É 2,5D, não dá volumetria sozinha</td></tr>
+<tr><td>Fotogrametria PCERJ 2022 (sua)</td><td>Geometria real do Jacarezinho</td><td>Sensível, não publicável, desatualizada</td></tr>
+<tr><td>DATA.RIO, camada "Edificações"</td><td>Footprints 2D, escala 1:2.000</td><td>Restituída sobre imagem de <b>2013</b>. Muito desatualizada para área informal</td></tr>
+<tr><td>IBGE, "Favelas e Comunidades Urbanas" (Censo 2022)</td><td>Perímetro oficial, contexto estatístico</td><td>Polígono de área, sem edificação individual</td></tr>
+<tr><td>OpenStreetMap (via Blosm)</td><td>Traçado de vielas onde mapeado</td><td>Cobertura de favela notoriamente incompleta. Ruas do Vidigal aparecem vazias no OSM e no Google Maps</td></tr>
+<tr><td>Google Photorealistic 3D Tiles</td><td>Nada, neste projeto</td><td>Proibido contratualmente para detecção de objetos</td></tr>
+</table>
+
+<h3>3.5 Kits de assets: úteis, mas não para a massa construída</h3>
+<p>Existem e são bons, mas a Ablação B da seção 2.2 diz que usá-los <i>no lugar</i> da geometria real custa mais de 22 pontos de mAP. Use-os para props e detalhe de alta frequência sobre a base real, nunca como a base.</p>
+<table>
+<tr><th>Pack</th><th>Preço</th><th>Conteúdo</th><th>Observação</th></tr>
+<tr><td><b>KitBash3D "Favelas"</b></td><td>US$ 195</td><td>256 modelos, 7,5M polys, 43 materiais PBR. Blender, UE, Houdini, OpenUSD, MaterialX</td><td>O melhor do mercado em qualidade. Mas a descrição vende as moradias para <i>"burgeoning post-apocalyptic urban centers"</i>, sem menção a Rio ou Brasil. Estética de favela global, não morfologia carioca. Tag "Allows usage with AI" na Fab: <b>No</b></td></tr>
+<tr><td><b>South American Slums - Favela</b> (Leartes)</td><td>US$ 49,99 na Fab, US$ 79,99 na Unity Asset Store</td><td>~531 meshes, 324 materiais, 797 texturas (4K/2K/1K), 4,7 GB</td><td>O mais denso. Versão Unity atualizada em 08/04/2026 com suporte a HDRP</td></tr>
+<tr><td><b>Megapack Favela Rio de Janeiro Brazil</b> (Studio 17)</td><td>~US$ 125</td><td>UE 5.4</td><td><b>Baseado especificamente na Rocinha.</b> O único com referência carioca declarada. Tag AI: <b>Yes</b></td></tr>
+<tr><td>Stylized Favela Residential Kit (RealityForge)</td><td>~US$ 5 a 19</td><td>80+ meshes, vertex paint, gerador de cabos em blueprint</td><td>Estilizado, não fotorrealista. Tag AI: No</td></tr>
+<tr><td>Brazilian Favela Modular Pack (Space Studios)</td><td>US$ 20</td><td>186 MB, low-poly mobile</td><td>Insuficiente para fotorrealismo</td></tr>
+</table>
+<div class="alert"><b>Atenção de licença que quase ninguém checa.</b> A EULA da Fab restringe conteúdo marcado <b>NoAI</b>: não pode ser usado em datasets para treinar, nem no desenvolvimento de, "Generative AI Programs". O KitBash3D Favelas é NoAI. Porém, a própria definição contratual exclui programas que <i>"generate tags to classify visual input content"</i>, o que, em leitura literal, deixa um detector discriminativo fora da restrição. O ponto genuinamente cinzento é <b>publicar o dataset sintético completo</b> como artefato aberto em Zenodo ou HuggingFace, o que pode ser lido como redistribuição do conteúdo. Mitigação prática: preferir assets sem tag NoAI, usar Megascans para superfície, e manter rastreabilidade asset por imagem. Isto é leitura de contrato de adesão, não parecer jurídico.</div>
+
+<h3>3.6 Precedente acadêmico que você deve citar</h3>
+<ul>
+<li><b>Berwaldt, N. L. P.; Bettker, R. V.; Pozzer, C. T. "Procedural Generation of Favela Layouts on Arbitrary Terrains".</b> SBGames 2020, 19º Simpósio Brasileiro de Jogos, Recife, pp. 136-144, IEEE, DOI 10.1109/SBGames51465.2020.00027. Trabalho brasileiro, usa <b>A* para gerar as vielas</b> e <b>quadtrees para organizar lotes</b> sobre terreno arbitrário, implementado em Unity. É a referência metodológica mais próxima do objetivo de geração procedural de favela.</li>
+<li><b>MIT Senseable City Lab, "Favelas 4D"</b> (arXiv 2105.03235), análise de morfologia da Rocinha por laser scanning terrestre. E <b>"Unveiling the internal structures of informal settlements through AI-driven automated segmentation of LiDAR data"</b>, npj Urban Sustainability, dezembro de 2025, sobre o Vidigal, com segmentação semântica 3D em sete classes: ground, vegetation, building, wire, rock, pole e movable objects. Esse esquema de classes é diretamente reaproveitável.</li>
+<li><b>"Mapping Rio de Janeiro's favelas: general-purpose vs. satellite-specific neural networks"</b> (arXiv 2510.03725, 2025).</li>
+</ul>
+
+<div class="alert"><b>Prior art que você precisa conhecer com urgência.</b> Kim, Y.; Park, J.; Yoon, D.; Jung, N.; Jeon, M. <b>"G-MAD: A Game-Based Data Generation Framework for Multi-View RGB-T Aerial Object Detection"</b>, aceito no <b>ACM Multimedia 2026</b> (arXiv 2607.19942). Usa <b>ARMA 3</b> para gerar dados aéreos <b>RGB-T</b> multi-vista sincronizados, com <b>anotação automática de bounding box a partir de metadados geométricos do engine</b>, e libera código e o benchmark AMOD. É exatamente a metodologia do seu projeto de 2022, agora publicada numa conferência de primeira linha. E o ACM MM 2026 acontece <b>no Rio de Janeiro, de 10 a 14 de novembro de 2026</b>, no Windsor Barra, primeira vez na América Latina. Recomendação: citar obrigatoriamente, avaliar reusar o código em vez de reconstruir o pipeline, e considerar ir ao evento.</div>
+
+<h2 class="brk">4. A restrição de hardware, que é hoje o seu maior gargalo</h2>
+<p>Verificado na máquina em 12/09/2026: <b>MacBook Air M1, 8 GB de memória unificada, GPU de 7 núcleos, 64 GB livres em disco</b>. Blender, Unity e Unreal não estão instalados. Não há GPU NVIDIA nem CUDA disponível.</p>
+<p>Isso não é um detalhe de configuração, é o que elimina a maior parte das opções.</p>
+<table>
+<tr><th>Requisito</th><th>Sua máquina</th><th>Veredito</th></tr>
+<tr><td>Unreal Engine 5.8, mínimo oficial em macOS: 16 GB RAM, recomendado 32 GB</td><td>8 GB</td><td><b>Abaixo do mínimo</b></td></tr>
+<tr><td>Nanite e Virtual Shadow Maps em macOS: "Apple Silicon M2+ (Beta support)"</td><td>M1</td><td><b>Não suportado</b></td></tr>
+<tr><td>Path Tracer da Unreal em macOS</td><td>Metal</td><td><b>Não existe.</b> Engenheiro da Epic no fórum da Apple: <i>"Until Apple officially supports raytracing/path tracing, there's nothing we can do on our side for now."</i></td></tr>
+<tr><td>Ray tracing e path tracing do Unity HDRP: DirectX 12 apenas</td><td>Metal</td><td><b>Não existe no Mac</b></td></tr>
+<tr><td>Blender Cycles, cena urbana densa</td><td>8 GB unificados</td><td>Estoura. Há bug conhecido de consumo de memória no M1 com BVH2 (MetalRT só é padrão em M3+), e combinar CPU+GPU no Apple Silicon multiplica o uso. Fontes recomendam 24 GB ou mais</td></tr>
+<tr><td>Isaac Sim / Omniverse Replicator: RTX com RT Cores, Linux ou Windows</td><td>Apple Silicon</td><td><b>Impossível.</b> Nem A100 nem H100 servem, por falta de RT Cores</td></tr>
+<tr><td>CARLA, Project AirSim, Cosys-AirSim</td><td>macOS</td><td><b>Não rodam</b></td></tr>
+<tr><td>BlenderProc</td><td>macOS ARM</td><td>Roda nativo (baixa Blender 4.2.1 arm64), mas <b>sem GPU no macOS</b>, cai em CPU</td></tr>
+<tr><td>Treino de 3D Gaussian Splatting (gsplat, SuGaR, 2DGS)</td><td>sem CUDA</td><td>Fora, com a exceção do <b>Brush</b>, que roda via WebGPU em Metal</td></tr>
+</table>
+
+<div class="note"><b>Conclusão de hardware.</b> O Mac serve para modelagem leve, organização de assets, scripts, análise e escrita. Não serve para renderizar o dataset nem para rodar engine com iluminação avançada. A saída não é comprar máquina, sobretudo porque 2026 é um péssimo momento: há crise de GDDR7 por demanda de datacenter de IA, e a RTX 5090 está entre R$ 20.000 e R$ 27.650 no Brasil, contra MSRP original de US$ 1.999. A saída é <b>alugar GPU por hora</b>.</div>
+<table>
+<tr><th>Opção de nuvem</th><th>Preço aproximado</th><th>Observação</th></tr>
+<tr><td>Vast.ai, RTX 4090</td><td>US$ 0,11 a 0,29/h</td><td>Mais barato, menos previsível</td></tr>
+<tr><td>RunPod Community, RTX 4090</td><td>US$ 0,34/h</td><td>Bom equilíbrio</td></tr>
+<tr><td>RunPod, RTX A6000 48 GB</td><td>US$ 0,33/h</td><td>Mais VRAM pelo mesmo preço</td></tr>
+<tr><td>AWS g6.xlarge (L4 24 GB)</td><td>US$ 0,80/h</td><td>A mais barata da AWS com RT cores</td></tr>
+<tr><td>Render farm por frame (GarageFarm, RebusFarm)</td><td>US$ 0,004 a 0,072 por unidade</td><td>Modelo ruim para dezenas de milhares de imagens. Serve para lote final calibrado, não para tatear configuração</td></tr>
+</table>
+<p>A conta prática é tranquilizadora: 50 mil imagens em Cycles a 15 s por frame dão cerca de 208 horas de GPU, o que a US$ 0,40/h sai por volta de <b>US$ 83</b>. <b>Renderizar não é o gargalo de custo.</b> O gargalo é tempo humano de modelagem, limpeza de malha e delighting.</p>

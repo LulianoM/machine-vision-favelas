@@ -1,0 +1,326 @@
+<title>Painel Favelas Verticais</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+  :root{
+    --ground:#EDF0F2; --surface:#FFFFFF; --sunk:#E2E7EB; --line:#CBD3DA;
+    --ink:#17212A; --ink-2:#4C5A67; --accent:#1C69AD;
+    --ok:#2B7A52; --pend:#B45E2A; --unk:#66727F; --crit:#B0302A;
+    --on-state:#FFFFFF;
+    --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+    --body:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#10171D; --surface:#182129; --sunk:#0C1216; --line:#2C3944;
+      --ink:#E3E9EE; --ink-2:#9AA8B5; --accent:#62ABEA;
+      --ok:#4FB583; --pend:#E0894F; --unk:#8C99A6; --crit:#E8675F;
+      --on-state:#0C1216;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#10171D; --surface:#182129; --sunk:#0C1216; --line:#2C3944;
+    --ink:#E3E9EE; --ink-2:#9AA8B5; --accent:#62ABEA;
+    --ok:#4FB583; --pend:#E0894F; --unk:#8C99A6; --crit:#E8675F;
+    --on-state:#0C1216;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:28px 56px}
+  .wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:36px}
+  h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;text-wrap:balance;line-height:1.15}
+  h1{font-size:2.1rem;font-weight:700;letter-spacing:.005em}
+  h2{font-size:1.45rem}
+  h3{font-size:1.05rem;letter-spacing:.02em}
+  p{margin:0}
+  code,.mono{font-family:var(--mono);font-size:.84em}
+  a{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:end;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px}
+  .sub{color:var(--ink-2);max-width:62ch}
+  .stamp{font-family:var(--mono);font-size:.8rem;color:var(--ink-2);text-align:right}
+  .stamp b{color:var(--ink);font-weight:500}
+
+  /* blocos de estado desenhados como caixas de detecção */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .bbox{--c:var(--unk);--t:2px;--l:16px;padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;
+    background:
+      linear-gradient(var(--c),var(--c)) top right/var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c),var(--c)) top right/var(--t) var(--l) no-repeat,
+      linear-gradient(var(--c),var(--c)) bottom left/var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c),var(--c)) bottom left/var(--t) var(--l) no-repeat,
+      linear-gradient(var(--c),var(--c)) bottom right/var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c),var(--c)) bottom right/var(--t) var(--l) no-repeat,
+      var(--surface)}
+  .bbox.ok{--c:var(--ok)} .bbox.pend{--c:var(--pend)} .bbox.unk{--c:var(--unk)}
+  .tag{align-self:flex-start;margin-left:-16px;background:var(--c);color:var(--on-state);font-family:var(--mono);font-size:.74rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px}
+  .bbox ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:.95rem;display:flex;flex-direction:column;gap:4px}
+  .bbox ul b{color:var(--ink);font-weight:600}
+
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px}
+  section{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .note{color:var(--ink-2);font-size:.95rem;max-width:68ch}
+
+  ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:10px}
+  ol.steps li{counter-increment:s;display:grid;grid-template-columns:1.6rem 1fr;gap:10px;align-items:start}
+  ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:.85rem;color:var(--ink-2);padding-top:2px}
+  .who{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;border:1px solid var(--line);color:var(--ink-2);padding:1px 6px;margin-right:6px;vertical-align:1px}
+  .who.you{border-color:var(--accent);color:var(--accent)}
+
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:.93rem}
+  th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--line)}
+  td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  th.n{text-align:right}
+  td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .bar{height:8px;background:var(--sunk);min-width:90px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+
+  .pill{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;padding:1px 8px;color:var(--on-state);white-space:nowrap}
+  .pill.ok{background:var(--ok)} .pill.pend{background:var(--pend)} .pill.unk{background:var(--unk)}
+
+  .slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .slot{border:1px dashed var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+  .slot .v{font-family:var(--mono);font-size:1.3rem;color:var(--unk)}
+  .slot .k{font-size:.9rem;color:var(--ink-2)}
+
+  /* esquema das máquinas */
+  .net{display:grid;grid-template-columns:1fr auto 1fr;gap:10px 14px;align-items:center;text-align:center}
+  .node{background:var(--surface);border:1px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:2px}
+  .node.hub{grid-column:1 / -1}
+  .node.main{border-color:var(--accent);border-width:2px}
+  .node small{color:var(--ink-2);font-size:.85rem}
+  .link{font-family:var(--mono);font-size:.74rem;color:var(--ink-2);line-height:1.3}
+  .link.v{grid-column:span 1}
+  .gap{grid-column:2}
+  @media (max-width:560px){
+    .net{grid-template-columns:1fr}
+    .node.hub,.gap{grid-column:1}
+    .gap,.link.dup{display:none}
+  }
+
+  details{background:var(--surface);border:1px solid var(--line)}
+  details + details{margin-top:-1px}
+  summary{cursor:pointer;padding:12px 14px;font-family:var(--display);font-weight:600;font-size:1.05rem;display:flex;gap:10px;align-items:baseline}
+  summary .where{font-family:var(--mono);font-size:.7rem;font-weight:400;color:var(--ink-2);letter-spacing:.05em}
+  .dbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+  .cmd{position:relative;background:var(--sunk);border:1px solid var(--line)}
+  .cmd pre{margin:0;padding:12px 14px;padding-right:84px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.55;color:var(--ink)}
+  .cmd button{position:absolute;top:6px;right:6px;font-family:var(--mono);font-size:.72rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:4px 9px;cursor:pointer}
+  .cmd button:hover{border-color:var(--accent);color:var(--accent)}
+
+  .log{border-left:2px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:4px}
+  .log .when{font-family:var(--mono);font-size:.78rem;color:var(--ink-2)}
+  footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-2);font-size:.88rem}
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Painel Favelas Verticais</h1>
+      <p class="sub">Artigo "Machine Vision from the Global South" e o experimento de dados sintéticos (ARMA 3 para YOLO). Estado compartilhado entre o MacBook e o desktop.</p>
+    </div>
+    <!-- ESTADO: carimbo -->
+    <p class="stamp">atualizado em <b>2026-09-17</b><br>por <b>[MAC]</b></p>
+  </header>
+
+  <!-- ESTADO: blocos -->
+  <div class="tiles">
+    <div class="bbox pend">
+      <span class="tag">artigo · em revisão</span>
+      <h3>v2 do orientador, 6.304 palavras</h3>
+      <ul>
+        <li>Dividido em <b>8 seções</b> editáveis</li>
+        <li><b>24 pendências</b> verificadas, 0 resolvidas</li>
+        <li>O download de 17/09 é idêntico à v2: <b>não há v3</b></li>
+      </ul>
+    </div>
+    <div class="bbox unk">
+      <span class="tag">experimento · sem sinal</span>
+      <h3>Treino em curso no desktop</h3>
+      <ul>
+        <li>Estado real <b>desconhecido</b> deste lado</li>
+        <li>Nenhum número disponível para o artigo</li>
+        <li>Primeira entrega esperada: <b>RESULTADOS.md</b></li>
+      </ul>
+    </div>
+    <div class="bbox pend">
+      <span class="tag">infra · em montagem</span>
+      <h3>Repositório único preparado</h3>
+      <ul>
+        <li>Estrutura pronta no Mac</li>
+        <li>GitHub privado: <b>aguarda aprovação</b></li>
+        <li>Tailscale, SSH e migração do desktop: <b>pendentes</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cols">
+    <section>
+      <h2>Próximos passos</h2>
+      <!-- ESTADO: passos -->
+      <ol class="steps">
+        <li><div><span class="who you">AUTOR</span>Aprovar a criação do repositório privado e o push inicial.</div></li>
+        <li><div><span class="who you">AUTOR</span>No desktop: Tailscale, OpenSSH e clone do repositório (comandos abaixo).</div></li>
+        <li><div><span class="who">DESKTOP</span>Migrar scripts evoluídos, RESULTADOS.md e métricas para o repositório. Atualizar o estado real do treino.</div></li>
+        <li><div><span class="who">MAC / DESKTOP</span>Resolver as pendências do rascunho, começando pelas 13 referências ausentes. Cada DOI conferido no Crossref.</div></li>
+        <li><div><span class="who you">AUTOR</span>Devolver a lista de pendências ao orientador e combinar o formato das edições.</div></li>
+        <li><div><span class="who you">AUTOR</span>Pedir ao IPP (cartografia.ipp@prefeitura.rio) a nuvem LiDAR e o MDS de 2024 do Jacarezinho.</div></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>O que trafega por onde</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Conteúdo</th><th>Canal</th></tr></thead>
+          <tbody>
+            <tr><td>Artigo, scripts, métricas, estado, decisões</td><td><b>git</b> (GitHub privado)</td></tr>
+            <tr><td>Datasets, capturas, pesos, PDFs de papers</td><td>Ficam no desktop. Cópia pontual por <code>scp</code> via Tailscale</td></tr>
+            <tr><td>.docx de e para o orientador</td><td>E-mail ou Drive, arquivado em <code>01-artigo/</code></td></tr>
+            <tr><td>Ortomosaicos da PCERJ</td><td><b>Não trafegam</b></td></tr>
+            <tr><td>Memória automática do Claude</td><td>Não trafega. O que importa vai para <code>docs/CONTEXTO.md</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Como as máquinas conversam</h2>
+    <div class="net">
+      <div class="node hub"><b>GitHub, repositório privado</b><small>fonte única: texto, código, estado, histórico</small></div>
+      <div class="link">git pull / push</div><div class="gap"></div><div class="link dup">git pull / push</div>
+      <div class="node"><b>MacBook</b><small>cliente leve, escrita offline</small></div>
+      <div class="link">Tailscale<br>ssh · scp · tela remota</div>
+      <div class="node main"><b>Desktop Windows</b><small>central: ARMA 3, datasets, treino, pesos</small></div>
+    </div>
+    <p class="note">Obsidian é leitor, não transporte. Google Drive serve para o .docx do orientador e para os binários que já estão lá. Cloudflare Tunnel só entra se um dia for preciso mostrar algo do desktop a terceiros. A justificativa completa está em <code>docs/ARQUITETURA.md</code>.</p>
+  </section>
+
+  <section>
+    <h2>Artigo por seção</h2>
+    <!-- ESTADO: secoes -->
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Arquivo em 01-artigo/manuscrito</th><th class="n">Palavras</th><th></th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">01-introduction.md</td><td class="n">1.287</td><td><div class="bar"><i style="width:100%"></i></div></td><td>Sem título de seção. Cita 9 das 13 referências ausentes</td></tr>
+          <tr><td class="mono">02-literature-review.md</td><td class="n">1.005</td><td><div class="bar"><i style="width:78%"></i></div></td><td>Cita 6 das 13 ausentes. Repete trecho da introdução</td></tr>
+          <tr><td class="mono">03-methodology.md</td><td class="n">416</td><td><div class="bar"><i style="width:32%"></i></div></td><td>Remete a uma "Section 6" que não existe</td></tr>
+          <tr><td class="mono">04-situating-the-study.md</td><td class="n">1.145</td><td><div class="bar"><i style="width:89%"></i></div></td><td>Wikipedia citada três vezes</td></tr>
+          <tr><td class="mono">05-case-jacarezinho.md</td><td class="n">387</td><td><div class="bar"><i style="width:30%"></i></div></td><td>"Ad Infinitum" citado como autor, a conferir</td></tr>
+          <tr><td class="mono">06-results-proposed-model.md</td><td class="n">289</td><td><div class="bar"><i style="width:22%"></i></div></td><td>Conceitual. Recebe os números do experimento</td></tr>
+          <tr><td class="mono">07-conclusion.md</td><td class="n">1.115</td><td><div class="bar"><i style="width:87%"></i></div></td><td>Falta o fecho. Resíduo de XML em Delimitations</td></tr>
+          <tr><td class="mono">08-references.md</td><td class="n">660</td><td><div class="bar"><i style="width:51%"></i></div></td><td>Título "eferences". Dois formatos misturados</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Pendências (01-artigo/PENDENCIAS.md)</th><th class="n">Abertas</th><th class="n">Resolvidas</th></tr></thead>
+        <tbody>
+          <tr><td>A. Estrutura</td><td class="n">5</td><td class="n">0</td></tr>
+          <tr><td>B. Referências</td><td class="n">10</td><td class="n">0</td></tr>
+          <tr><td>C. Texto</td><td class="n">5</td><td class="n">0</td></tr>
+          <tr><td>D. Conteúdo novo a incorporar</td><td class="n">4</td><td class="n">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Números que o artigo espera do experimento</h2>
+    <!-- ESTADO: numeros -->
+    <div class="slots">
+      <div class="slot"><span class="v">sem número</span><span class="k">mAP no VisDrone, zero-shot (só sintético)</span></div>
+      <div class="slot"><span class="v">sem número</span><span class="k">mAP com 5 a 10% de dado real</span></div>
+      <div class="slot"><span class="v">sem número</span><span class="k">mAP com sintético mais real</span></div>
+    </div>
+    <p class="note">Regra do projeto: número só aparece aqui e no artigo se estiver em <code>06-resultados/</code> com o comando que o gerou.</p>
+  </section>
+
+  <section>
+    <h2>Setup do desktop</h2>
+    <p class="note">Abra este painel no navegador do desktop e copie os blocos na ordem. O roteiro completo, com as explicações, está em <code>docs/SETUP-DESKTOP.md</code>.</p>
+    <div>
+      <details open>
+        <summary>1. Instalar o que falta <span class="where">DESKTOP · POWERSHELL</span></summary>
+        <div class="dbody">
+          <div class="cmd"><pre id="c1">winget install Git.Git
+winget install GitHub.cli
+winget install tailscale.tailscale</pre><button type="button" data-copy="c1">Copiar</button></div>
+          <p class="note">Depois abra o Tailscale e entre com a conta Google pessoal. No Mac: <code>brew install --cask tailscale</code> e a mesma conta. No painel do Tailscale, renomeie a máquina para <code>desktop</code> e marque "Disable key expiry".</p>
+        </div>
+      </details>
+      <details>
+        <summary>2. Clonar o repositório <span class="where">DESKTOP · POWERSHELL</span></summary>
+        <div class="dbody">
+          <div class="cmd"><pre id="c2">gh auth login
+mkdir C:\projetos
+gh repo clone LulianoM/machine-vision-favelas C:\projetos\machine-vision-favelas</pre><button type="button" data-copy="c2">Copiar</button></div>
+          <p class="note">Só funciona depois que o repositório privado for criado (passo 1 da lista acima).</p>
+        </div>
+      </details>
+      <details>
+        <summary>3. Ligar o SSH, só pela rede Tailscale <span class="where">DESKTOP · POWERSHELL ADMIN</span></summary>
+        <div class="dbody">
+          <div class="cmd"><pre id="c3">cd C:\projetos\machine-vision-favelas\docs
+Set-ExecutionPolicy -Scope Process Bypass -Force
+.\setup-desktop.ps1</pre><button type="button" data-copy="c3">Copiar</button></div>
+          <p class="note">O script foi escrito no Mac e ainda não foi testado neste Windows. Leia a saída. No fim ele mostra o usuário Windows e o IP Tailscale, que entram no <code>~/.ssh/config</code> do Mac.</p>
+        </div>
+      </details>
+      <details>
+        <summary>4. Conferir, a partir do Mac <span class="where">MAC · TERMINAL</span></summary>
+        <div class="dbody">
+          <div class="cmd"><pre id="c4">ping -c 2 desktop
+ssh desktop "nvidia-smi --query-gpu=name,memory.used,memory.total --format=csv"</pre><button type="button" data-copy="c4">Copiar</button></div>
+        </div>
+      </details>
+      <details>
+        <summary>5. Migrar o trabalho existente <span class="where">DESKTOP · CLAUDE CODE</span></summary>
+        <div class="dbody">
+          <p class="note">Abra o Claude Code na pasta antiga de trabalho e cole o conteúdo de <code>docs/PROMPT-MIGRACAO-DESKTOP.md</code>. Ele faz o inventário, copia scripts e métricas para o repositório, deixa datasets e pesos onde estão e atualiza este painel com o estado real do treino.</p>
+        </div>
+      </details>
+      <details>
+        <summary>6. Tela do desktop no Mac <span class="where">AS DUAS</span></summary>
+        <div class="dbody">
+          <p class="note">O ARMA 3 precisa de interface gráfica, e SSH não mostra janela. Opção simples: Parsec (host no desktop, cliente no Mac, mesma conta). Opção aberta: Sunshine no desktop e Moonlight no Mac, conectando em <code>desktop</code> pelo Tailscale.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Diário</h2>
+    <!-- ESTADO: diario (entrada mais recente primeiro, no máximo 5) -->
+    <div class="log">
+      <span class="when">2026-09-17 · [MAC]</span>
+      <p>Pasta AIM2027 separada em <code>dossie-conferencia/</code> e <code>machine-vision-favelas/</code>. Três pastas soltas fundidas na estrutura numerada do pacote de 11/09. Rascunhos do orientador arquivados, v2 dividida em 8 seções, 24 pendências verificadas. Criados CLAUDE.md, STATUS.md, DIARIO.md, contexto acumulado e guias de setup do desktop.</p>
+    </div>
+  </section>
+
+  <footer>
+    Fonte desta página: <code>painel/painel.html</code> no repositório. Qualquer um dos dois Claudes atualiza editando os blocos marcados com <code>ESTADO</code> e republicando no mesmo endereço. A verdade está em <code>STATUS.md</code> e <code>DIARIO.md</code>; o painel é o espelho.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", async function () {
+      var pre = document.getElementById(btn.dataset.copy);
+      var ok = false;
+      try { await navigator.clipboard.writeText(pre.innerText); ok = true; } catch (e) {}
+      if (!ok) {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        try { ok = document.execCommand("copy"); } catch (e) {}
+      }
+      btn.textContent = ok ? "Copiado" : "Selecionado: Ctrl+C";
+      setTimeout(function () { btn.textContent = "Copiar"; }, 1800);
+    });
+  });
+</script>

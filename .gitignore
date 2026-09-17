@@ -1,0 +1,41 @@
+# Sistema e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.obsidian/
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Dados sensíveis (PCERJ). Nunca versionar.
+*rtomosaico*/
+*Jacarezinho_*.zip
+*Manguinhos*.zip
+*.tif
+*.tiff
+*.las
+*.laz
+
+# Datasets, capturas e treino: ficam só no desktop
+datasets/
+dataset/
+screenshots/
+runs/
+wandb/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.rpt
+
+# Binários grandes
+*.zip
+*.rar
+*.7z
+04-bibliografia/papers-fabio-2022/*.pdf
+04-bibliografia/papers/*.pdf

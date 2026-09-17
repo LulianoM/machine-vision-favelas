@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Levantamento tecnico: recriar um quarteirao de favela em 3D com alta fidelidade</title>
+<style>
+@page{size:A4;margin:20mm 18mm}
+body{font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.45;color:#1a1a1a;margin:0}
+h1{font-size:19pt;margin:0 0 4px;line-height:1.2}
+.sub{color:#555;margin:0 0 16px;font-size:9.5pt}
+h2{font-size:13pt;margin:24px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #1a1a1a;page-break-after:avoid}
+h3{font-size:11pt;margin:16px 0 6px;page-break-after:avoid}
+p{margin:0 0 8px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin-bottom:3px}
+table{border-collapse:collapse;width:100%;font-size:8.8pt;margin:8px 0 14px;page-break-inside:avoid}
+th,td{border:1px solid #bbb;padding:4px 6px;text-align:left;vertical-align:top}
+th{background:#efefef;font-weight:bold}
+.note{background:#f6f6f6;border-left:3px solid #999;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.alert{background:#fdf3f3;border-left:3px solid #b33;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.win{background:#f2f8f2;border-left:3px solid #2c7a3f;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+code{font-family:"SF Mono",Menlo,monospace;font-size:8.8pt;background:#f0f0f0;padding:1px 3px}
+a{color:#1a4fa3;text-decoration:none;word-break:break-all}
+.src{font-size:8.5pt;color:#444;line-height:1.4}
+.src li{margin-bottom:2px}
+.brk{page-break-before:always}
+</style></head><body>
+
+<h1>Recriar um quarteirão de favela carioca em 3D com alta fidelidade</h1>
+<p class="sub">Levantamento técnico de caminhos, softwares e evidência empírica. Rio de Janeiro, 12 de setembro de 2026. Preparado para o projeto <i>Machine Vision from the Global South: Developing an AI Model for Vertical Favelas</i>.</p>
+
+<div class="win"><b>Resposta curta.</b> O caminho de maior fidelidade não é modelar uma favela bonita em Blender nem comprar um kit de assets. É reconstruir a geometria real do lugar por fotogrametria ou LiDAR e, sobre ela, variar agressivamente sol, clima e ângulo de câmera. Existe evidência publicada e medida de que essa escolha vale mais de 22 pontos de mAP contra a alternativa de assets genéricos, e que a variação de iluminação vale outros 10 a 20 pontos. Comprar um kit de favela e caprichar na textura é, literalmente, o braço perdedor do experimento mais próximo do seu.</div>
+
+<h2>1. O que este levantamento responde</h2>
+<p>A pergunta original tinha três partes: qual o melhor caminho no Blender para criar cidades com alto realismo, se faz sentido usar outro software como Unity, e se há integração com Claude para validar o processo. A pesquisa mudou a ordem de importância dessas perguntas.</p>
+<p>O objetivo declarado é recriar uma quadra de favela com alta fidelidade de textura, realismo e sombras/sol, com qualidade de videogame. Como o projeto em que isso se insere treina um modelo de visão computacional sobre dados sintéticos, existe um critério objetivo de sucesso que não é estético: o modelo treinado nas imagens renderizadas precisa funcionar em imagem real. Esse critério é mensurável, já foi medido por outros, e é ele que organiza o documento.</p>
+<p>Se o objetivo fosse apenas uma imagem bonita para publicação ou apresentação, várias conclusões aqui seriam diferentes e mais permissivas. Onde isso acontece, está sinalizado.</p>
+
+<h2>2. A evidência que decide o desenho</h2>
+<h3>2.1 O experimento mais próximo do seu já foi feito e publicado</h3>
+<p>Liao, Liu, Xu, Wang, Liu, Yang e Li publicaram em 2026 na <i>Remote Sensing</i> (18(2):361, DOI 10.3390/rs18020361) exatamente o pipeline que este levantamento recomenda, para detecção de veículos em imagem de drone. A estrutura tem três estágios: fotogrametria oblíqua de UAV reconstrói o modelo 3D real do local, estratégias de renderização diversificadas simulam variação de iluminação e clima, e um algoritmo automatizado gera ground truth a partir de máscaras semânticas de instância.</p>
+<p>Stack: Colosseum (sucessor do AirSim) sobre Unreal Engine 5.1, com o plugin UltraDynamicSky para elevação solar, cor da luz, intensidade de sombra e condições de tempo. Câmera de 10 mm de focal, sensor de 6,4 por 5,12 mm, resolução 1920 por 1536. Treino em MMDetection numa única RTX 4090.</p>
+<p>O dataset resultante, UAV-SynthScene, tem <b>4.659 imagens</b>. Dez rotas de voo, altitude sorteada entre 50 e 300 m, heading entre -10 e 10 graus, pitch entre -45 e -90 graus, roll fixo em zero. Três condições de tempo (sol, nublado, névoa) e três de luz (nascer do sol, meio-dia, pôr do sol).</p>
+
+<table>
+<tr><th>Resultado (mAP50, sempre avaliado em conjunto de teste REAL)</th><th>Valor</th></tr>
+<tr><td>DINO treinado só em sintético</td><td><b>87,9%</b></td></tr>
+<tr><td>DINO treinado em dado real</td><td>87,9% (idêntico)</td></tr>
+<tr><td>DEIM, sintético deles</td><td><b>88,7%</b></td></tr>
+<tr><td>DEIM, treinado em SkyScenes</td><td>86,5%</td></tr>
+<tr><td>DEIM, treinado em UEMM-Air</td><td>72,0%</td></tr>
+<tr><td>Objetos truncados, DINO, sintético deles</td><td><b>73,0%</b></td></tr>
+<tr><td>Objetos truncados, DINO, dado real</td><td>56,3%</td></tr>
+<tr><td>Zero-shot em RGBT-Tiny, DINO, sintético deles</td><td><b>96,5%</b></td></tr>
+<tr><td>Zero-shot em RGBT-Tiny, DINO, SkyScenes</td><td>76,5%</td></tr>
+</table>
+
+<h3>2.2 As duas ablações que respondem diretamente à sua pergunta</h3>
+<p>O valor deste paper para você não está no resultado principal, está nas duas ablações. Elas isolam exatamente as duas variáveis sobre as quais você perguntou.</p>
+
+<div class="note"><b>Ablação A, remover a variação de iluminação e de ângulo.</b> Renderizando tudo em condição fixa (meio-dia claro, altitude 150 m, pitch -80 graus, roll zero), a média de mAP50 cai cerca de <b>10 pontos</b> no conjunto completo e cerca de <b>20 pontos</b> no subconjunto de objetos truncados. O DINO em objetos truncados despenca de 73,0% para 44,2%.</div>
+
+<div class="note"><b>Ablação B, trocar a base fotogramétrica por assets 3D genéricos</b>, mantendo toda a variação de iluminação. A média cai <b>22,5 pontos de mAP50</b> (a seção de discussão do paper cita 23,3 pontos, pequena inconsistência interna). O RT-DETR perde 27,5 pontos.</div>
+
+<p>Traduzindo para as suas decisões: a variação de sol e sombra que você intuiu como importante é de fato essencial e vale cerca de 10 a 20 pontos. Mas a origem da geometria vale mais do que o dobro disso. Nenhum esforço de textura, shader ou iluminação compensa modelar a favela errada.</p>
+<p>Os autores formulam assim: <i>"for top-down remote sensing views, structural and textural fidelity is a more critical factor than for ground-level vision, where generic urban layouts can often suffice."</i> E advogam explicitamente por integrar técnicas de mapeamento 3D de grau topográfico, fotogrametria e LiDAR, dentro do pipeline de dado sintético.</p>
+
+<h3>2.3 O contraponto que parece contradizer e não contradiz</h3>
+<p>Há uma linha de literatura que aponta na direção oposta: Tremblay et al. (CVPRW 2018) mostraram que randomização de domínio não fotorrealista bate sintético fotorrealista em duas de três arquiteturas no KITTI, e Barisic et al. (Sim2Air, RA-L 2022) obtiveram ganhos de 17 a 20 pontos percentuais justamente usando texturas irrealistas. Krump e Stütz (Sensors 2023) decompõem o problema em <i>content gap</i> (o que está na cena) e <i>appearance gap</i> (como é renderizado) e concluem que similaridade de conteúdo domina fotorrealismo.</p>
+<p>Isso não contradiz o resultado anterior, converge com ele. Fotogrametria resolve o <i>content gap</i>, que é o fator dominante. Randomização agressiva de luz, cor e material ataca o <i>appearance gap</i>, que é o fator secundário mas não desprezível. Fazer os dois é precisamente a definição de <b>randomização estruturada de domínio</b> (Prakash et al., ICRA 2019), em que as distribuições amostradas derivam da estrutura real do problema em vez de serem uniformes.</p>
+<div class="win"><b>Princípio operacional que sai daqui:</b> acerte a geometria com dado real, e depois randomize a aparência com base nas distribuições observadas nas ortofotos reais (cor de reboco, material de telhado, altura de laje, densidade de antena). Isso é um argumento metodológico defensável para a seção de método do artigo, não apenas uma escolha técnica.</div>
+
+<h3>2.4 Expectativa calibrada, para não prometer o que não se entrega</h3>
+<p>A literatura de detecção aérea é honesta sobre os limites, e convém registrar antes de qualquer promessa em proposta ou artigo.</p>
+<ul>
+<li>Kiefer, Ott e Zell (ICPR 2022) reportam sintético puro no VisDrone com <b>1,2 mAP</b> (EfficientDet) e 2,4 mAP (Faster R-CNN), contra 24,6 e 48,6 do dado real. Colapso quase total em cena urbana densa com objetos minúsculos.</li>
+<li>Rizzoli et al. (SynDrone, ICCVW 2023) mostram que treinar a 20 m de altitude e testar a 80 m derruba o mIoU de 65,1 para 28,1. <b>Altitude é um eixo de domain shift tão severo quanto clima.</b> Varrer altitude não é opcional.</li>
+<li>Khose et al. (SkyScenes, ECCV 2024) medem ganho de praticamente zero ao adicionar sintético quando já existe 100% do dado real e um backbone forte (DINOv2). O sintético resolve escassez, não abundância.</li>
+<li>Consolidando Burdorf et al. (2022), Dergachov e Aizatskyi (WDA 2026), SkyScenes e Lee et al. (2024): com pré-treino sintético de qualidade, <b>5% a 20% do volume de dado real recupera 85% a 95% do desempenho de treino totalmente real</b>. Planeje anotar algumas centenas de imagens reais. Não prometa substituição total.</li>
+</ul>
+<p>Um detalhe técnico fácil de perder e caro: o Unity anota apenas a porção visível do objeto sob oclusão (modal), enquanto o VisDrone anota o objeto inteiro (amodal). Essa incompatibilidade de convenção gera falsos positivos e falsos negativos simultâneos, é invisível numa inspeção visual do dataset, e custa pontos de mAP sem causa aparente. Defina e documente a convenção antes de gerar o primeiro lote.</p>
+
+
+<h2 class="brk">3. De onde vem a geometria da favela</h2>
+<p>Como a seção anterior estabeleceu que esta é a decisão de maior peso, ela vem antes da escolha de software. Todas as opções abaixo foram verificadas.</p>
+
+<h3>3.1 A descoberta mais acionável do levantamento: LiDAR e ortofoto 2024 do IPP</h3>
+<div class="win">O Instituto Pereira Passos mantém publicamente servida uma <b>ortofoto verdadeira de toda a cidade do Rio, adquirida no primeiro semestre de 2024, com pixel de 15 cm</b>, produzida por um voo <b>que incluiu levantamento LiDAR</b>. Serviço ArcGIS em <code>pgeo3.rio.rj.gov.br/arcgis/rest/services/Imagens/Mosaico_2024/ImageServer</code>, RGB, EPSG:31983 (UTM 23S, SAD69), extensão X de 621.720 a 695.788 e Y de 7.444.172 a 7.485.303, que cobre o Jacarezinho. Copyright Instituto Pereira Passos, PCRJ.</div>
+<p>Isso muda o projeto em três frentes. Primeiro, é dado municipal aberto e recente, não dado sensível da PCERJ, o que remove o problema ético e de sigilo que hoje trava a circulação do material de 2022. Segundo, 15 cm de GSD é resolução de sobra para gerar textura e validar geometria. Terceiro, e mais importante, se a nuvem LiDAR do mesmo voo estiver disponível, ela é a melhor fonte possível de morfologia vertical de favela, que é literalmente o objeto do artigo.</p>
+<p>O catálogo público da Mapoteca do IPP lista apenas produtos de 1975 a 2019. O acervo restante é obtido por solicitação em <code>cartografia.ipp@prefeitura.rio</code>, sujeito a licença de uso, com desconto para estudantes. O servidor expõe mosaicos de 1999 até 2025, mas <b>nenhum serviço de LiDAR, MDS, MDT ou nuvem de pontos está publicado</b>. Ou seja: a ortofoto está disponível agora, a nuvem LiDAR precisa ser pedida.</p>
+<p class="note"><b>Ação de maior alavancagem do projeto inteiro:</b> escrever para <code>cartografia.ipp@prefeitura.rio</code> solicitando a nuvem de pontos LiDAR e o MDS do levantamento de 2024 para o recorte do Jacarezinho, identificando-se como pesquisador de mestrado da FGV EBAPE. Isso deve ser feito antes de qualquer decisão de software, porque a resposta determina o desenho. Não verifiquei disponibilidade real, custo nem termos.</p>
+
+<h3>3.2 O que você já tem</h3>
+<p>Os dois arquivos de Jacarezinho de 2022 no Drive (Sudoeste, 145 MB; Nordeste, 248 MB), do voo da PCERJ, continuam sendo um ativo valioso: são a geometria correta de uma favela vertical real, com posição real de cada edificação. Reconstruir isso à mão levaria meses e seria bem menos defensável academicamente.</p>
+<p>Duas ressalvas. São dados sensíveis de origem policial, o que restringe publicação e compartilhamento (a nota do projeto já registra que não devem entrar em pacotes). E têm quatro anos, num tecido urbano que muda rápido. Se o LiDAR 2024 do IPP vier, ele é preferível em todos os aspectos: mais novo, mais preciso em vertical, e publicável.</p>
+
+<h3>3.3 O que está juridicamente bloqueado</h3>
+<div class="alert"><b>Google Photorealistic 3D Tiles está fora, apesar de cobrir o Rio.</b> As Map Tiles API Policies proíbem literalmente <i>"image analysis, machine interpretation, object detection or identification, geodata extraction or resale, or offline uses"</i>, e também cache, pré-fetch, armazenamento e criação de obra derivada. A cláusula complementar permite sobrepor objetos 3D próprios aos tiles <i>"as long as the 3D objects aren't extracted, traced, or otherwise derived by hand or machine"</i> deles. Treinar um detector sobre esses tiles é exatamente o uso vedado. Não há exceção acadêmica em nenhum dos termos, nem do Google nem da Cesium.</div>
+<p>Vale como referência visual em tela e para contexto de skyline em figura, com atribuição obrigatória (logo Cesium ion e logo Google Maps). Não vale como fonte de geometria nem como cena de captura de dataset.</p>
+
+<h3>3.4 Demais fontes, avaliadas</h3>
+<table>
+<tr><th>Fonte</th><th>Serve para</th><th>Limite</th></tr>
+<tr><td><b>LiDAR IPP 2024</b> (sob solicitação)</td><td>Morfologia vertical real, a melhor opção</td><td>Disponibilidade não confirmada</td></tr>
+<tr><td><b>Ortofoto IPP 2024</b>, 15 cm, pública</td><td>Textura, validação, footprints, referência de cor real</td><td>É 2,5D, não dá volumetria sozinha</td></tr>
+<tr><td>Fotogrametria PCERJ 2022 (sua)</td><td>Geometria real do Jacarezinho</td><td>Sensível, não publicável, desatualizada</td></tr>
+<tr><td>DATA.RIO, camada "Edificações"</td><td>Footprints 2D, escala 1:2.000</td><td>Restituída sobre imagem de <b>2013</b>. Muito desatualizada para área informal</td></tr>
+<tr><td>IBGE, "Favelas e Comunidades Urbanas" (Censo 2022)</td><td>Perímetro oficial, contexto estatístico</td><td>Polígono de área, sem edificação individual</td></tr>
+<tr><td>OpenStreetMap (via Blosm)</td><td>Traçado de vielas onde mapeado</td><td>Cobertura de favela notoriamente incompleta. Ruas do Vidigal aparecem vazias no OSM e no Google Maps</td></tr>
+<tr><td>Google Photorealistic 3D Tiles</td><td>Nada, neste projeto</td><td>Proibido contratualmente para detecção de objetos</td></tr>
+</table>
+
+<h3>3.5 Kits de assets: úteis, mas não para a massa construída</h3>
+<p>Existem e são bons, mas a Ablação B da seção 2.2 diz que usá-los <i>no lugar</i> da geometria real custa mais de 22 pontos de mAP. Use-os para props e detalhe de alta frequência sobre a base real, nunca como a base.</p>
+<table>
+<tr><th>Pack</th><th>Preço</th><th>Conteúdo</th><th>Observação</th></tr>
+<tr><td><b>KitBash3D "Favelas"</b></td><td>US$ 195 no site, US$ 199,99 na Fab</td><td>256 modelos, 7,5M polys, 43 materiais PBR. Blender, UE, Houdini, OpenUSD, MaterialX</td><td>O melhor do mercado em qualidade, com duas ressalvas sérias. A ficha da Fab avisa: <i>"These are high poly assets intended for use in cinematics within Unreal Engine 5."</i> <b>Não é game-ready</b>, o que pesa num pipeline de render em lote. E a descrição vende as moradias para <i>"burgeoning post-apocalyptic urban centers"</i>, sem menção a Rio ou Brasil: estética de favela global, não morfologia carioca. As layout scenes vêm em todos os formatos exceto Unreal e Unity. Tag "Allows usage with AI" na Fab: <b>No</b></td></tr>
+<tr><td><b>South American Slums - Favela</b> (Leartes)</td><td>US$ 49,99 na Fab, US$ 79,99 na Unity Asset Store</td><td>~531 meshes, 324 materiais, 797 texturas (4K/2K/1K), 4,7 GB</td><td>O mais denso. Versão Unity atualizada em 08/04/2026 com suporte a HDRP. <b>Atenção:</b> vem com Nanite habilitado e <b>nenhum LOD</b>. Como o Blender não tem equivalente a Nanite, esse pack é substancialmente mais pesado num pipeline Blender do que no Unreal para o qual foi feito</td></tr>
+<tr><td><b>Megapack Favela Rio de Janeiro Brazil</b> (Studio 17)</td><td>~US$ 125</td><td>UE 5.4</td><td><b>Baseado especificamente na Rocinha.</b> O único com referência carioca declarada. Tag AI: <b>Yes</b></td></tr>
+<tr><td>Stylized Favela Residential Kit (RealityForge)</td><td>~US$ 5 a 19</td><td>80+ meshes, vertex paint, gerador de cabos em blueprint</td><td>Estilizado, não fotorrealista. Tag AI: No</td></tr>
+<tr><td>Brazilian Favela Modular Pack (Space Studios)</td><td>US$ 20</td><td>186 MB, low-poly mobile</td><td>Insuficiente para fotorrealismo</td></tr>
+<tr><td>Favela Inspired Old Post Apocalyptic Buildings (hknoblauch)</td><td>US$ 25 na Superhive/Blender Market, US$ 31,50 na CGTrader</td><td>Assets de edificação</td><td>Opção barata para props. Estética pós-apocalíptica, não carioca</td></tr>
+</table>
+<div class="alert"><b>Atenção de licença que quase ninguém checa.</b> A EULA da Fab restringe conteúdo marcado <b>NoAI</b>: não pode ser usado em datasets para treinar, nem no desenvolvimento de, "Generative AI Programs". O KitBash3D Favelas é NoAI. Porém, a própria definição contratual exclui programas que <i>"generate tags to classify visual input content"</i>, o que, em leitura literal, deixa um detector discriminativo fora da restrição. O ponto genuinamente cinzento é <b>publicar o dataset sintético completo</b> como artefato aberto em Zenodo ou HuggingFace, o que pode ser lido como redistribuição do conteúdo. Mitigação prática: preferir assets sem tag NoAI, usar Megascans para superfície, e manter rastreabilidade asset por imagem. Isto é leitura de contrato de adesão, não parecer jurídico.</div>
+
+<h3>3.6 Precedente acadêmico que você deve citar</h3>
+<ul>
+<li><b>Berwaldt, N. L. P.; Bettker, R. V.; Pozzer, C. T. "Procedural Generation of Favela Layouts on Arbitrary Terrains".</b> SBGames 2020, 19º Simpósio Brasileiro de Jogos, Recife, pp. 136-144, IEEE, DOI 10.1109/SBGames51465.2020.00027. Trabalho brasileiro, usa <b>A* para gerar as vielas</b> e <b>quadtrees para organizar lotes</b> sobre terreno arbitrário, implementado em Unity. É a referência metodológica mais próxima do objetivo de geração procedural de favela.</li>
+<li><b>MIT Senseable City Lab, "Favelas 4D"</b> (arXiv 2105.03235), análise de morfologia da Rocinha por laser scanning terrestre. E <b>"Unveiling the internal structures of informal settlements through AI-driven automated segmentation of LiDAR data"</b>, npj Urban Sustainability, dezembro de 2025, sobre o Vidigal, com segmentação semântica 3D em sete classes: ground, vegetation, building, wire, rock, pole e movable objects. Esse esquema de classes é diretamente reaproveitável.</li>
+<li><b>"Mapping Rio de Janeiro's favelas: general-purpose vs. satellite-specific neural networks"</b> (arXiv 2510.03725, 2025).</li>
+</ul>
+
+<div class="alert"><b>Prior art que você precisa conhecer com urgência.</b> Kim, Y.; Park, J.; Yoon, D.; Jung, N.; Jeon, M. <b>"G-MAD: A Game-Based Data Generation Framework for Multi-View RGB-T Aerial Object Detection"</b>, aceito no <b>ACM Multimedia 2026</b> (arXiv 2607.19942). Usa <b>ARMA 3</b> para gerar dados aéreos <b>RGB-T</b> multi-vista sincronizados, com <b>anotação automática de bounding box a partir de metadados geométricos do engine</b>, e libera código e o benchmark AMOD. É exatamente a metodologia do seu projeto de 2022, agora publicada numa conferência de primeira linha. E o ACM MM 2026 acontece <b>no Rio de Janeiro, de 10 a 14 de novembro de 2026</b>, no Windsor Barra, primeira vez na América Latina. Recomendação: citar obrigatoriamente, avaliar reusar o código em vez de reconstruir o pipeline, e considerar ir ao evento.</div>
+
+<h2 class="brk">4. A restrição de hardware, que é hoje o seu maior gargalo</h2>
+<p>Verificado na máquina em 12/09/2026: <b>MacBook Air M1, 8 GB de memória unificada, GPU de 7 núcleos, 64 GB livres em disco</b>. Blender, Unity e Unreal não estão instalados. Não há GPU NVIDIA nem CUDA disponível.</p>
+<p>Isso não é um detalhe de configuração, é o que elimina a maior parte das opções.</p>
+<table>
+<tr><th>Requisito</th><th>Sua máquina</th><th>Veredito</th></tr>
+<tr><td>Unreal Engine 5.8, mínimo oficial em macOS: 16 GB RAM, recomendado 32 GB</td><td>8 GB</td><td><b>Abaixo do mínimo</b></td></tr>
+<tr><td>Nanite e Virtual Shadow Maps em macOS: "Apple Silicon M2+ (Beta support)"</td><td>M1</td><td><b>Não suportado</b></td></tr>
+<tr><td>Path Tracer da Unreal em macOS</td><td>Metal</td><td><b>Não existe.</b> Engenheiro da Epic no fórum da Apple: <i>"Until Apple officially supports raytracing/path tracing, there's nothing we can do on our side for now."</i></td></tr>
+<tr><td>Ray tracing e path tracing do Unity HDRP: DirectX 12 apenas</td><td>Metal</td><td><b>Não existe no Mac</b></td></tr>
+<tr><td>Blender Cycles, cena urbana densa</td><td>8 GB unificados</td><td>Estoura. Há bug conhecido de consumo de memória no M1 com BVH2 (MetalRT só é padrão em M3+), e combinar CPU+GPU no Apple Silicon multiplica o uso. Fontes recomendam 24 GB ou mais</td></tr>
+<tr><td>Isaac Sim / Omniverse Replicator: RTX com RT Cores, Linux ou Windows</td><td>Apple Silicon</td><td><b>Impossível.</b> Nem A100 nem H100 servem, por falta de RT Cores</td></tr>
+<tr><td>CARLA, Project AirSim, Cosys-AirSim</td><td>macOS</td><td><b>Não rodam</b></td></tr>
+<tr><td>BlenderProc</td><td>macOS ARM</td><td>Roda nativo (baixa Blender 4.2.1 arm64), mas <b>sem GPU no macOS</b>, cai em CPU</td></tr>
+<tr><td>Treino de 3D Gaussian Splatting (gsplat, SuGaR, 2DGS)</td><td>sem CUDA</td><td>Fora, com a exceção do <b>Brush</b>, que roda via WebGPU em Metal</td></tr>
+</table>
+
+<div class="note"><b>Conclusão de hardware.</b> O Mac serve para modelagem leve, organização de assets, scripts, análise e escrita. Não serve para renderizar o dataset nem para rodar engine com iluminação avançada. A saída não é comprar máquina, sobretudo porque 2026 é um péssimo momento: há crise de GDDR7 por demanda de datacenter de IA, e a RTX 5090 está entre R$ 20.000 e R$ 27.650 no Brasil, contra MSRP original de US$ 1.999. A saída é <b>alugar GPU por hora</b>.</div>
+<table>
+<tr><th>Opção de nuvem</th><th>Preço aproximado</th><th>Observação</th></tr>
+<tr><td>Vast.ai, RTX 4090</td><td>US$ 0,11 a 0,29/h</td><td>Mais barato, menos previsível</td></tr>
+<tr><td>RunPod Community, RTX 4090</td><td>US$ 0,34/h</td><td>Bom equilíbrio</td></tr>
+<tr><td>RunPod, RTX A6000 48 GB</td><td>US$ 0,33/h</td><td>Mais VRAM pelo mesmo preço</td></tr>
+<tr><td>AWS g6.xlarge (L4 24 GB)</td><td>US$ 0,80/h</td><td>A mais barata da AWS com RT cores</td></tr>
+<tr><td>Render farm por frame (GarageFarm, RebusFarm)</td><td>US$ 0,004 a 0,072 por unidade</td><td>Modelo ruim para dezenas de milhares de imagens. Serve para lote final calibrado, não para tatear configuração</td></tr>
+</table>
+<p>A conta prática é tranquilizadora: 50 mil imagens em Cycles a 15 s por frame dão cerca de 208 horas de GPU, o que a US$ 0,40/h sai por volta de <b>US$ 83</b>. <b>Renderizar não é o gargalo de custo.</b> O gargalo é tempo humano de modelagem, limpeza de malha e delighting.</p>
+<h2 class="brk">5. Comparação dos softwares</h2>
+<h3>5.1 Quadro geral</h3>
+<table>
+<tr><th>Critério</th><th>Blender 5.2 LTS</th><th>Unreal Engine 5.8</th><th>Unity 6.5 / 6.6</th></tr>
+<tr><td>Custo</td><td>Grátis, GPL</td><td>Grátis para pesquisa e não comercial. Royalty de 5% só acima de US$ 1M em jogos</td><td>Personal grátis até US$ 200 mil de receita</td></tr>
+<tr><td>Qualidade máxima de imagem</td><td><b>A melhor</b>, Cycles é path tracer sem compromisso</td><td>Muito alta. Lumen, Nanite, VSM, MegaLights, Substrate, e Path Tracer para imagem final</td><td>Alta com HDRP, mas o HDRP entrou em <b>modo de manutenção em 23/02/2026</b>, sem novas features para sempre</td></tr>
+<tr><td>Velocidade de render em lote</td><td>Lenta (segundos a minutos por frame)</td><td><b>Muito rápida</b> (frações de segundo a segundos)</td><td>Muito rápida</td></tr>
+<tr><td>Geometria densa e irregular</td><td>Sem equivalente a Nanite. Instancing e linked libraries ajudam, mas há teto</td><td><b>Nanite</b> resolve. Comprime a ~14,4 bytes por triângulo; mesh de 1,5M tri ocupa 19,6 MB contra 149 MB tradicional</td><td><b>Sem geometria virtualizada.</b> Budget de polígono e LOD manual continuam obrigatórios</td></tr>
+<tr><td>Anotação automática para CV</td><td>Via <b>BlenderProc</b>, maduro: COCO e BOP prontos</td><td>Via EasySynth, UnrealCV, Cosys-AirSim. Bbox derivado de máscara semântica</td><td>Unity Perception, <b>oficialmente descontinuado</b></td></tr>
+<tr><td>Roda no seu Mac M1 8 GB</td><td>Parcialmente, com dor</td><td><b>Não</b> (abaixo do mínimo, e Nanite exige M2+)</td><td>Sim para rasterização, <b>não</b> para ray/path tracing</td></tr>
+<tr><td>Integração com Claude</td><td>blender-mcp (28,3k estrelas) e <b>MCP oficial da Blender Foundation</b> (v1.0.3, 11/09/2026)</td><td><b>Plugin MCP oficial da Epic na 5.8</b>, com skills de PCG</td><td><b>Plugin oficial da Unity para Claude Code (10/09/2026)</b>, 29 skills, Unity CLI</td></tr>
+<tr><td>Assets de favela disponíveis</td><td>KitBash3D Favelas</td><td><b>Os melhores</b>: Leartes (531 meshes), KitBash3D, Megapack Rocinha</td><td>Leartes com HDRP, Brazilian Favela Modular Pack</td></tr>
+</table>
+
+<h3>5.2 Blender: onde ganha e onde trava</h3>
+<p>Versão atual: <b>5.2 LTS</b>, lançada em 14/07/2026 (a 5.0 saiu em 18/11/2025). O Cycles ganhou texture cache na linha 5.x, o que ajuda justamente em cena pesada de textura como malha fotogramétrica.</p>
+<p>Ganha em: qualidade final de imagem sem concessão, custo zero, controle total por Python, e o ecossistema de dado sintético mais maduro em código aberto (BlenderProc). Para gerar figuras de artigo com luz fisicamente correta, é a melhor ferramenta da lista.</p>
+<p>Trava em: ausência de geometria virtualizada, o que impõe teto real em cena urbana densa; velocidade de render em lote; e, na sua máquina, memória. Há bug documentado de consumo de memória no M1 com BVH2, sendo que MetalRT só virou padrão a partir do M3.</p>
+<div class="note"><b>Gotcha crítico do BlenderProc.</b> O instalador está preso a <b>Blender 4.2.1 LTS</b> por código explícito (<code>major_version = "4.2"</code>, <code>minor_version = "1"</code> em <code>InstallUtility.py</code>). Não suporta 4.3, 4.5 nem 5.x. Ou seja, escolher BlenderProc significa abrir mão dos ganhos do Cycles 5.x. Versão 2.8.0, último release em outubro de 2024, commits até janeiro de 2026: vivo mas lento. E em macOS ele cai em CPU, sem GPU.</div>
+
+<h3>5.3 Unreal Engine: a escolha tecnicamente mais forte, e a que você não consegue rodar</h3>
+<p>Versão atual: <b>5.8, lançada em 17/06/2026</b>, e é declaradamente o último lançamento maior da linha UE5. A Epic já migrou o esforço para a UE6, com Early Access previsto para o fim de 2027. Para um projeto começando agora, mirar 5.7 (mais estável) ou 5.8 (mais recursos) é razoável, sabendo que migrar para UE6 em 2028 não será trivial.</p>
+<p>É o que o paper de referência da seção 2 usou (na versão 5.1), é onde estão os melhores assets de favela, tem a renderização em lote mais rápida, e tem Nanite, que é a única resposta real ao problema de milhares de volumes irregulares interpenetrados. O Lumen em modo <i>Software Ray Tracing</i> é particularmente adequado aqui porque o custo independe do número de instâncias e da sobreposição entre elas, ao contrário do modo por hardware, cuja documentação cita explicitamente <i>"kit-bashed overlapping layers"</i> como caso problemático. Uma favela é, por definição, camadas sobrepostas.</p>
+<p>Pontos de atenção levantados na pesquisa: tessellation e displacement do Nanite continuam experimentais na 5.8 e há regressão reportada e confirmada por múltiplos usuários (funciona na 5.7.4, quebra na 5.8 e 5.8.1), o que importa para tijolo aparente com relevo real. Lightmaps assados com Nanite são tecnicamente frágeis e não recomendados. E Virtual Shadow Maps têm custo dominado por invalidação de cache, que dispara com qualquer coisa animada: roupa no varal, lona ao vento, folhagem.</p>
+
+<h3>5.4 Unity: perdeu terreno, e para o seu caso específico perdeu mais ainda</h3>
+<p>Versão atual: 6.6 (31/08/2026), com 6.3 como LTS. O Unity 7 foi anunciado para GA no primeiro trimestre de 2027.</p>
+<p>Três fatos, verificados, que desaconselham o Unity neste projeto:</p>
+<ol>
+<li><b>O HDRP entrou em modo de manutenção em 23/02/2026.</b> Comunicado oficial: manter o HDRP "focusing only on expanding platform reach with Nintendo Switch 2 support and stability". Nenhuma feature nova planejada. E a tabela oficial de comparação do Unity 6.3 mostra que o URP, que é o futuro, <b>não tem</b> ray tracing, path tracing, physically based sky, volumetric clouds, SSGI, SSR, subsurface scattering, physical light units, nem physical camera completa. Para fotorrealismo hoje o HDRP é a única opção, e é tecnologia congelada.</li>
+<li><b>O Unity Perception está oficialmente descontinuado.</b> O README diz literalmente: <i>"This project has been discontinued and is no longer supported by Unity."</i> Último commit de código em 28/11/2022, última release <code>1.0.0-preview.1</code>, nunca saiu de preview, zero pull requests mergeados desde 2022. A linha de produto "Unity Computer Vision" sumiu do site (as URLs redirecionam para <code>unity.com/products</code>), e o Unity Simulation não existe mais. Existe um fork comunitário vivo que resolve o Unity 6 (<code>tobeornottobia/com.unity.perception</code>, branches <code>upgrade-unity6.1</code> e <code>upgrade-unity6.5</code>, commit em 01/09/2026), com diff pequeno (14 arquivos, +57/-39), mas é um autor, zero estrelas, sem CI. A toolchain Python associada (<code>pysolotools</code>) teve último upload no PyPI em 2022 e pina numpy 1.23, que não instala em Python moderno.</li>
+<li><b>Ray tracing e path tracing do HDRP são DirectX 12 apenas</b>, ou seja, Windows. No Mac você fica sem justamente o recurso que daria qualidade de referência ao dataset.</li>
+</ol>
+<p>Contexto de mercado, para calibrar: a pesquisa State of the Game Industry da GDC 2026, com mais de 2.300 profissionais, registrou <b>pela primeira vez a Unreal passando a Unity como engine primária, 42% contra 30%</b>. No fórum oficial da Unity, a reação de profissionais ao anúncio de pipelines foi dura, incluindo <i>"HDRP is the only thing that gets on-par with AAA graphics... If HDRP gets dropped, I am leaving Unity"</i> e <i>"URP is a decade behind HDRP and is unlikely to catch up anytime soon"</i>.</p>
+<div class="note">Há um caso interessante e diretamente aplicável, apesar de tudo: Dergachov e Aizatskyi (WDA 2026, CEUR-WS Vol-4155) usaram Unity + Perception + HDRP com câmera em trajetórias Bezier simulando voo de drone, detecção de carro, baseline VisDrone e YOLOv8n. Resultado que vale memorizar: <b>400 imagens reais (7,6% do VisDrone) mais 6.289 sintéticas atingem 93% do mAP do treino totalmente real</b>. E melhorar a qualidade do sintético entre iterações reduziu em 8 vezes o dado real necessário. Também acharam saturação em 700 a 1.000 imagens por localização: mais volume sem mais diversidade não adiciona nada.</div>
+
+<h3>5.5 Alternativas fora do trio</h3>
+<table>
+<tr><th>Stack</th><th>Estado em 2026</th><th>Veredito para você</th></tr>
+<tr><td><b>ARMA 3</b> (o que você já usa)</td><td>Vivo, e agora com precedente publicado no ACM MM 2026 (G-MAD)</td><td><b>Não descarte.</b> Já funciona, você tem o código, e a justificativa dos autores do G-MAD é exatamente a sua: assets prontos eliminam custo substancial de criação. O que falta é a favela, que o ARMA não tem</td></tr>
+<tr><td>Isaac Sim 6.x + Replicator (NVIDIA)</td><td>Muito ativo, open source Apache 2.0, gratuito desde maio de 2026. Isaac Sim 6.0 traz <b>NuRec</b>, com Gaussian Splatting integrado e <b>interação de luz entre splat e mesh</b></td><td>Maior teto de qualidade de anotação (bbox 3D nativo, oclusão, KittiWriter). Mas exige RTX com RT Cores, Linux ou Windows, e pipeline USD. Só vale se o LiDAR vier e você quiser casar splat real com geometria autoral</td></tr>
+<tr><td>CARLA 0.9.16 / branch ue5-dev</td><td>Ativo (14,4k estrelas). Linha UE 5.5 parou na 0.10.0 de dez/2024; trabalho real em nightlies sem release tagueada</td><td>O repositório <code>LTTM/Syndrone</code> publica <b>o gerador</b>, não só o dataset: CARLA modificado, 28 classes, alturas 20/50/80 m e pitch 30/60/90 já parametrizados. É o seu caso de uso com código pronto, mas exige Linux e não tem favela</td></tr>
+<tr><td>Project AirSim (IAMAI, ex-Microsoft)</td><td><b>Vivo sob licença MIT</b>, v1.0.1 em 07/09/2026, iniciativa apoiada pela DARPA. Suporta UE 5.2 ou 5.7</td><td>O <code>microsoft/AirSim</code> original está morto desde 2022 e o <b>Colosseum foi arquivado</b>. Se o plano era usar o fork "oficial", ele acabou. Cosys-AirSim (release para UE 5.8) é o fork vivo mais direto</td></tr>
+<tr><td>Infinigen (Princeton)</td><td>Muito ativo, 7,2k estrelas, v2.0.0a2 em 27/08/2026</td><td><b>Não tem gerador urbano.</b> Só natureza e interiores. E o custo publicado no CVPR 2023 é de <b>3,5 horas por par de imagens 1080p</b> a 10.000 amostras por pixel. Não copie a configuração de render deles</td></tr>
+<tr><td>Kubric (Google)</td><td>Manutenção mínima, sem releases formais</td><td>Escopo errado (objetos caindo numa caixa). Ignore</td></tr>
+</table>
+
+<div class="win"><b>Achado que sustenta a tese do artigo.</b> Os três principais datasets aéreos sintéticos (SkyScenes, SynDrone, UEMM-Air) são construídos sobre mapas CARLA ou Unreal de cidade genérica de padrão norte-atlântico. O Infinigen gera natureza e interiores, não cidade. Ou seja, <b>a própria infraestrutura de dados sintéticos codifica uma morfologia urbana específica</b>, e nenhuma delas é a do Sul Global. Além disso, nenhuma das buscas encontrou trabalho publicado gerando imagem aérea sintética de favela ou assentamento informal com game engine. A literatura de mapeamento de favela é quase toda satélite com dado real. Isso é lacuna verificável e é um argumento direto para "Machine Vision from the Global South", não apenas retórica.</div>
+<h2 class="brk">6. Sol, sombra e luz: a parte que você intuiu certo</h2>
+<p>A Ablação A da seção 2.2 mostrou que remover variação de iluminação e de ângulo custa 10 pontos de mAP no geral e 20 em objetos truncados. Vale, portanto, tratar isso com rigor e não no olho.</p>
+
+<h3>6.1 Parâmetros corretos para o Rio de Janeiro</h3>
+<table>
+<tr><th>Parâmetro</th><th>Valor</th><th>Cuidado</th></tr>
+<tr><td>Latitude</td><td><b>-22,9068</b></td><td>Negativo para o hemisfério Sul</td></tr>
+<tr><td>Longitude</td><td><b>-43,1729</b></td><td>Negativo para oeste de Greenwich</td></tr>
+<tr><td>Fuso horário</td><td><b>-3</b> (UTC-3)</td><td></td></tr>
+<tr><td>Horário de verão</td><td><b>Desligado</b> para qualquer data a partir de 2019</td><td>O Brasil fez a última mudança de relógio em 16/02/2019 e aboliu o horário de verão por decreto em abril de 2019. Para datas anteriores, a janela era de outubro a fevereiro e precisa ser configurada à mão, porque os defaults dos plugins seguem convenção do hemisfério norte</td></tr>
+<tr><td>Orientação do modelo (North Offset)</td><td>Calibrar</td><td><b>É a armadilha maior, e não é o fuso.</b> Se a geometria estiver posicionada arbitrariamente na cena, as sombras caem nas paredes erradas mesmo com azimute correto. Num morro, onde a orientação da encosta determina quais casas pegam sol da manhã e quais ficam na sombra o dia inteiro, isso é a diferença entre estudo válido e erro sistemático</td></tr>
+</table>
+
+<h3>6.2 Ferramentas e precisão declarada</h3>
+<ul>
+<li><b>Blender, addon Sun Position</b> com textura de céu Nishita: coordenadas, data e hora. Gratuito e embutido.</li>
+<li><b>Unreal, Sun Position Calculator</b> (plugin em Misc): retorna <code>elevation</code>, <code>corrected_elevation</code> (corrigida para refração atmosférica), <code>azimuth</code>, <code>sunrise_time</code>, <code>sunset_time</code> e <code>solar_noon</code>. A Epic <b>não publica número de precisão</b> nem declara o algoritmo. Exposto ao Python como <code>unreal.SunPositionFunctionLibrary</code>, o que permite varrer horas e datas por script.</li>
+<li><b>Ultra Dynamic Sky</b> (Fab, a partir de US$ 49,99, UE 5.5 a 5.8): é o único do ecossistema com <b>erro publicado</b>, de cerca de <b>0,03 grau</b> para sol e lua, com fórmulas baseadas no <i>Astronomical Algorithms</i> de Jean Meeus. Foi o plugin usado no paper de referência da seção 2.</li>
+<li><b>Referência de comparação:</b> o NREL Solar Position Algorithm (Reda e Andreas) declara incerteza de 0,0003 grau.</li>
+</ul>
+
+<h3>6.3 Como validar, em três camadas</h3>
+<ol>
+<li><b>Efeméride independente.</b> Comparar azimute, elevação corrigida, nascer, pôr e meio-dia solar com NOAA Solar Calculator, suncalc.org ou <code>pvlib</code>/<code>pysolar</code> em Python, para a mesma coordenada, data e hora. Diferença acima de 0,1 grau denuncia erro de fuso, DST ou data.</li>
+<li><b>Sombra medida em campo.</b> Fotografar um objeto vertical conhecido com timestamp, medir comprimento e direção da sombra real e reproduzir na cena. <b>É o único teste que pega erro de orientação do modelo</b>, que a camada 1 não pega.</li>
+<li><b>Fotometria.</b> Existe precedente acadêmico ("Validating Game Engines as a Quantitative Daylighting Simulation Tool") que mediu iluminância em pontos selecionados na Unreal contra ferramenta validada e luxímetro físico, com erro médio próximo ao da simulação de referência.</li>
+</ol>
+
+<h3>6.4 Exposição fisicamente baseada, para casar com foto real</h3>
+<p>Fórmula: <b>EV100 = log2(abertura² / tempo de obturador × 100 / ISO)</b>. Dia ensolarado a f/16, ISO 100 e 1/125 s dá EV100 = 15.</p>
+<p>Procedimento: desligar auto-exposure (senão ela injeta variável espúria entre frames do dataset), colocar a luz direcional em <b>100.000 lux</b> para sol de meio-dia (o CesiumSunSky usa ~111.000), e derivar o EV alvo do EXIF da foto de referência. Na Unreal é preciso ligar "Extend default luminance range" nas configurações de renderização, senão os valores físicos não se comportam como esperado.</p>
+<p>Dois detalhes que denunciam uma imagem sintética na hora quando errados:</p>
+<ul>
+<li><b>Ângulo angular do sol.</b> O sol real tem cerca de 0,545 grau de diâmetro angular, e é isso que controla a dureza da penumbra. Penumbra errada é o sinal mais diagnóstico ao comparar com foto real. No Rio, a luz de meio-dia é dura e quase vertical, e a de fim de tarde é rasante, que é justamente a condição mais bonita e a mais difícil de renderizar sem artefato (aliasing projetivo em ângulo raso é problema conhecido de Virtual Shadow Maps).</li>
+<li><b>Nuvem não é previsão.</b> Volumetric clouds são fisicamente plausíveis, mas nenhum engine ingere METAR ou imagem de satélite. Para reproduzir uma data e hora específicas, a cobertura precisa ser autorada a partir da foto de referência.</li>
+</ul>
+
+<h2>7. Texturas, materiais e o trabalho invisível que vai dominar o cronograma</h2>
+<h3>7.1 O problema do delighting</h3>
+<div class="alert">A textura da sua fotogrametria de 2022 tem <b>iluminação e sombras assadas no albedo</b>. Cada sombra projetada, cada oclusão de ambiente, cada realce especular daquele dia e daquela hora está pintado na imagem. Mudar a posição do sol não apaga a sombra que já está na laje. Para variar o sol de forma fisicamente coerente, é preciso recuperar o albedo puro. <b>Este é o maior trabalho invisível do projeto e precisa ser planejado explicitamente.</b></div>
+<p>Os próprios autores do paper de referência declaram isso como limitação: <i>"while photogrammetry ensures geometric consistency, the interaction between simulated lighting and reconstructed textures inevitably approximates real-world optics. This discrepancy may lead to missed detections under extreme lighting or complex material reflectance conditions."</i></p>
+<p>Ferramentas disponíveis:</p>
+<ul>
+<li><b>Agisoft De-Lighter</b>: gratuito, standalone, remove sombras projetadas e oclusão de ambiente das texturas fotogramétricas. O caminho mais direto.</li>
+<li><b>Unity DeLightingTool</b> (github.com/Unity-Technologies/DeLightingTool): mais controle, mas exige diffuse lit, normais em object space, bent normals e AO.</li>
+<li>Abordagens recentes de decomposição intrínseca com difusão (por exemplo DiffusionLight), ainda experimentais.</li>
+</ul>
+<p>Mitigação parcial e barata: se o LiDAR do IPP vier, a geometria vem sem textura assada, e você texturiza com materiais PBR autorais amostrados das distribuições reais observadas na ortofoto de 15 cm. Isso resolve o delighting por construção, ao custo de perder o detalhe fotográfico da fachada.</p>
+
+<h3>7.2 Fontes de textura</h3>
+<ul>
+<li><b>Megascans</b>: grátis para todos apenas até 31/12/2024. Quem reclamou o acervo naquela janela mantém uso perpétuo. Desde 2025 a Epic voltou a cobrar por asset (a partir de US$ 0,99). <b>Porém</b>, o acesso ilimitado continua válido para quem tem licença da Unreal Engine, com a contrapartida de que esses assets são "UE-Only Content" e não podem ser renderizados fora da engine.</li>
+<li><b>Poly Haven</b> e <b>ambientCG</b>: CC0, sem restrição, ideais para concreto, reboco, telha de fibrocimento, ferrugem e metal corrugado.</li>
+<li><b>Substance 3D Sampler</b>: tem Text-to-Texture, Text-to-Pattern e Image-to-Texture em beta, gerando tileable com Base Color, Metallic, Roughness e Normal. A jogada realista para favela é fotografar fachadas reais e passar por ali. <b>ArmorLab</b> é a alternativa gratuita e offline.</li>
+<li>Não encontrei nenhum pack de <b>tipografia e sinalização comercial brasileira</b> (letreiro de bar, placa de comércio, grafismo carioca), que é um dos elementos mais identitários. Isso provavelmente precisa ser feito à mão a partir de fotos.</li>
+</ul>
+
+<h3>7.3 A lição de quem já construiu favela fotorrealista</h3>
+<p>Jean Pierre Vargas construiu um diorama de favela em UE5 com Lumen e Nanite, em seis meses de trabalho parcial, com Maya, Substance 3D Painter, Quixel Mixer, Marvelous Designer e Marmoset. O achado metodológico mais importante do relato dele: <b>ele rejeitou explicitamente a abordagem modular</b>. Nas palavras dele, "the more I worked on the project and analyzed the reference images, the more I realized that this approach wouldn't be very suitable", porque as unidades superiores avançam sobre as inferiores de forma irregular. Modelou cada apartamento como mesh separado.</p>
+<p>A estrutura de quatro andares dele progride de concreto acabado embaixo para tijolo aparente em cima, mais um puxadinho de madeira, refletindo expansão geracional. O shader usa canais de UV secundários com máscaras RGB no térreo para variar cor de pintura e concreto exposto, e vertex paint nos andares superiores misturando tijolo, concreto rugoso e mofo por height lerp, com uma máscara geral de sujeira. Iluminação: uma única luz direcional com skylight e sky atmosphere, Lumen dispensando qualquer bake.</p>
+<p>Outros dois projetos de referência: Gian Franco Caserta fez favela em UE 5.3 com Kitbash e Quixel usando <b>PCG para distribuição aleatória de assets</b>, e "SCARCITY", de Yuri Vieira de Aguiar, é um ambiente real-time em UE4 inspirado em Pavão-Pavãozinho e Cantagalo.</p>
+
+<h2 class="brk">8. Claude no processo: o que funciona e o que é demo</h2>
+<h3>8.1 O dado mais honesto disponível</h3>
+<p>O benchmark <b>3DCodeBench</b> (arXiv 2606.01057, junho de 2026) mede modelos escrevendo código 3D. Dois resultados importam:</p>
+<table>
+<tr><th>Modelo</th><th>Executabilidade</th><th>Elo humano de qualidade</th></tr>
+<tr><td>GPT-5.5</td><td>0,906</td><td>1.163</td></tr>
+<tr><td>Gemini 3.1 Pro</td><td>0,725</td><td>1.147</td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td><b>0,910 (o maior)</b></td><td>1.006 (o menor dos frontier)</td></tr>
+</table>
+<p>Leitura: Claude é o mais confiável em produzir código que roda sem quebrar, e o mais fraco em qualidade geométrica percebida. Isso define exatamente o papel certo dele: <b>engenheiro de pipeline e autor de código procedural, não artista</b>.</p>
+<p>E o achado decisivo do mesmo benchmark: dar feedback de erro em múltiplos turnos leva a executabilidade de 0,702 para 0,974, <b>mas a qualidade condicional da forma quase não melhora</b>. O loop de erro conserta crash. Não conserta geometria desconectada, desalinhada ou feia.</p>
+
+<h3>8.2 Onde os MCPs estão em setembro de 2026</h3>
+<table>
+<tr><th>Ferramenta</th><th>Estado</th><th>Nota</th></tr>
+<tr><td><b>MCP oficial da Blender Foundation</b></td><td>v1.0.0 em 27/04/2026, v1.0.3 em 11/09/2026</td><td>Foco declarado em interface de linguagem natural para a API Python, mais copiloto de API do que modelador. Já tem captura de viewport</td></tr>
+<tr><td><b>ahujasid/blender-mcp</b></td><td>28.324 estrelas, push em 07/09/2026</td><td>O mais popular. Poly Haven, Sketchfab, Poly Pizza, Hyper3D Rodin, Hunyuan3D. <b>Ver alerta de segurança abaixo</b></td></tr>
+<tr><td><b>MCP oficial da Epic (UE 5.8)</b></td><td>Experimental, servidor no editor em <code>127.0.0.1:8000/mcp</code></td><td>Toolsets de cena, mesh, material, PCG e captura de viewport. Sem autenticação, loopback apenas. A Epic pretende torná-lo "an integral part of UE6"</td></tr>
+<tr><td><b>Plugin oficial da Unity para Claude Code</b></td><td>Publicado em <b>10/09/2026</b>, 29 skills</td><td>Via Unity CLI (<code>brew install --cask unity-cli</code>). Grátis, roda offline, não consome Unity Points. Mas as skills de rendering são URP, não HDRP</td></tr>
+<tr><td>CoplayDev/unity-mcp</td><td>14.148 estrelas, v10.2.0 em 01/09/2026</td><td>47 tools. O ecossistema Unity é hoje o mais maduro dos três</td></tr>
+<tr><td>chongdashu/unreal-mcp</td><td>2.077 estrelas, <b>parado desde 22/04/2025</b>, sem licença</td><td><b>Não use.</b> É o mais citado em blogs e o mais desatualizado</td></tr>
+</table>
+
+<div class="alert"><b>Alerta de segurança sobre o blender-mcp.</b> Em 09 e 10/08/2026 a conta GitHub do mantenedor foi comprometida e os repositórios foram transferidos para outra organização (depois recuperados). Há CVEs abertos contra o projeto: CVE-2026-10661 (injection), CVE-2026-10662 (SSRF), CVE-2026-10688 (code injection), além de leitura arbitrária de arquivo. O mantenedor adicionou um "safe mode" em 02/09/2026 e há Dockerfile desde 05/09/2026. Como a ferramenta executa Python arbitrário na máquina e baixa assets de URLs, rode em container ou em safe mode.</div>
+
+<h3>8.3 O que a comunidade relata, sem filtro</h3>
+<p>O relato mais próximo do seu caso de uso, sobre alimentar desenhos 2D para gerar arquitetura 3D via MCP: <i>"No understanding on how windows attach to walls, misaligned bearing walls between floors, gaps all around the places, chimney not continuous, windows don't line up and are in wrong places, house parts swapped. And still struggling when I explain those things... But I just had to keep prompting to fix this, that, redo this and that and then it breaks other things until I fed up."</i></p>
+<p>No BlenderArtists, numa thread dedicada ao tema em setembro de 2025, praticamente nenhum artista profissional tinha testado, e um deles resumiu: <i>"I didn't see any practical examples that looks good or useful."</i> As 28 mil estrelas vêm do público de desenvolvimento e IA, não do público de 3D.</p>
+<p>Um teste de custo documentado: reproduzir o tutorial do donut do Blender Guru via MCP consumiu 60% dos tokens de sessão de um plano de US$ 200 por mês, levou duas horas, e o render final tinha objetos atravessando outros e ângulo de câmera errado. Um donut.</p>
+<p>Limites estruturais bem identificados: o modelo só conhece o que as tools expõem; cada ação é uma ida e volta (um passe de limpeza em 40 objetos com 10 operações vira 400 chamadas); operações pesadas estouram timeout porque o protocolo não tem vocabulário para trabalho assíncrono; e nomes de sockets de Geometry Nodes mudam entre versões.</p>
+
+<h3>8.4 O padrão que de fato funciona</h3>
+<p>Não é MCP conversacional, é <b>script headless com loop de validação</b>. O caminho: <code>blender --background --python script.py</code>. É a API completa, sem GUI, sem socket, sem ida e volta por operação, determinístico, versionável em git, e paralelizável.</p>
+<p>Sobre a validação visual, a resposta é sim, e há workflows documentados. O padrão consolidado:</p>
+<ol>
+<li><b>Índice da API antes de agir.</b> Fornecer um arquivo de referência da API da sua versão exata, em vez de confiar na memória do modelo. No 3DCodeBench, a maior causa de falha de execução foi incompatibilidade de API com o Blender 5.0, porque o modelo escreve código da versão que estava no treino.</li>
+<li><b>Todo script escreve um render de preview</b>, e o agente lê a imagem. Três ângulos fixos por iteração: topo (layout e sobreposição), altura dos olhos (estética) e o ângulo de captura real.</li>
+<li><b>Anotações no render</b>: grade de coordenadas e rótulos de objeto. O agente raciocina muito melhor sobre "o objeto X está em (3, 0, 12)" via JSON do que sobre pixels.</li>
+<li><b>Sidecar JSON compacto</b> junto do PNG. Nunca jogar blob base64 grande no contexto.</li>
+<li><b>Comparação contra referência</b> (moodboard ou foto real), em vez de crítica aberta.</li>
+<li><b>Validação numérica junto da visual</b>: contagem de polígonos, bounding boxes, testes de interpenetração, normais, escala em metros, densidade de texel. O agente é ruim de olho e bom com números.</li>
+</ol>
+<p>Confirmação acadêmica de que essa direção é a certa: <b>LL3M</b> (arXiv 2508.08228), sistema multiagente com planner, retrieval, coding, critic e verification, escrevendo <code>bpy</code> com RAG da API do Blender, supera a baseline BlenderMCP. E <b>"Thinking in Blender"</b> (arXiv 2606.02580, junho de 2026) reconstrói cena 3D a partir de uma única imagem como programa Blender editável, refinando em estágios (geometria, materiais, composição, iluminação), e conclui que <i>"staged reconstruction substantially improves reconstruction fidelity, highlighting the importance of task decomposition."</i> Isso é literalmente "foto de prédio de favela para cena Blender editável", mas é paper recente, sem produto.</p>
+
+<h3>8.5 Geração de assets por IA: onde entra e onde não entra</h3>
+<p>O bake-off mais útil encontrado construiu o mesmo prédio por seis métodos e concluiu, textualmente: <i>"CC0 kits win for the repeated city mass; Blender headless for bespoke shapes; image-to-3D only for one-off props (messy topology, as predicted)."</i> E o insight estratégico: <i>"Architect the city from real footprint extrusion, NOT AI-generated buildings."</i></p>
+<p>Traduzindo: text/image-to-3D (Meshy 6, Tripo, Hyper3D Rodin, Hunyuan3D, TRELLIS) <b>não serve para os prédios</b>. Serve razoavelmente para props avulsos (caixa d'água, ar-condicionado, antena parabólica, botijão, cadeira de plástico), e mesmo assim com retopologia, reescala (chegam com fator ~10x errado) e correção de eixo (Y-up contra Z-up).</p>
+<p>Sobre world models generativos: <b>World Labs Marble</b> é o único que exporta artefato editável (splat .ply, collider mesh e GLB texturizado de ~600k triângulos), com planos de US$ 20 a 95 por mês, mas a própria documentação declara "reconstruction artifacts, with uneven geometry, holes, and blobby or 'floater' surfaces". Serve como blockout e referência de layout, não como quarteirão final. <b>Genie 3, Odyssey e Decart não exportam geometria</b>: são render neural ou vídeo, inúteis para este pipeline.</p>
+<h2 class="brk">9. Gaussian Splatting: por que não resolve o seu problema</h2>
+<p>Vale tratar explicitamente, porque é a tecnologia da moda e parece a resposta óbvia para "pegar o real e colocar no computador".</p>
+<p>Existe pesquisa madura para cena urbana grande a partir de imagem aérea: Scaffold-GS (arXiv 2312.00109), VastGaussian (2402.17427), Octree-GS (2403.17898), CityGaussian (2404.01133), Hierarchical 3DGS (2406.12080), CityGaussianV2 (2411.00771) e HUG (2504.16606), este último especificamente para urbano aéreo em blocos.</p>
+<div class="alert"><b>O bloqueio é iluminação.</b> Um splat codifica a aparência exatamente como foi fotografada, com luz assada nos harmônicos esféricos de cada gaussiana. Não existe material PBR nem shader interagindo com luz. Mover o sol não apaga a sombra pintada na laje. Como a variação de sol vale 10 a 20 pontos de mAP (Ablação A), <b>3DGS não serve como motor de variação de iluminação</b>, que é exatamente o que você precisa.</div>
+<p>Há pesquisa de relighting (GS-IR arXiv 2311.16473, Relightable 3D Gaussians 2311.16043, GaRe 2507.20512, e ROSGS 2509.11275, o mais relevante para cena externa). Mas a própria literatura declara que os métodos atuais "carecem de flexibilidade para mudar o horário de captura ou ajustar condições climáticas, e tais mudanças frequentemente levam a imprecisões em iluminação e predição de sombra". E há um limite que ninguém escreveu porque ninguém testou: <b>nenhum desses métodos foi validado em favela vertical densa</b>, que é o pior caso possível para rendering inverso, com auto-oclusão extrema, milhares de superfícies pequenas em ângulos arbitrários e sombra projetada dominante.</p>
+<p>Onde 3DGS serve neste projeto: validação visual da reconstrução, geração de vistas próximas às originais, e figura de qualidade no artigo. No seu Mac, a única ferramenta séria que roda é o <b>Brush</b> (WebGPU sobre Metal, sem CUDA).</p>
+<p>Uma ideia aproveitável de Niżeniec e Iwanowski (arXiv 2512.13411): eles usam 3DGS para o ambiente e aplicam <b>two-pass rendering combinando o splat com shadow maps derivados de proxy meshes</b>, recuperando sombras plausíveis sobre um splat sem material, com máscaras de segmentação automáticas em formato YOLO. É um meio-termo elegante se você quiser o realismo do splat sem abrir mão de sombra controlável.</p>
+
+<h2>10. Recomendação</h2>
+<h3>10.1 O caminho recomendado</h3>
+<div class="win"><b>Fotogrametria ou LiDAR real do Jacarezinho como base geométrica, detalhe paramétrico por cima, renderização com randomização estruturada de sol, clima e ângulo, e anotação automática por máscara de instância.</b> Essa é a arquitetura validada por Liao et al. (2026) com ganho medido de 22,5 pontos sobre assets genéricos e 10 a 20 pontos sobre iluminação estática.</div>
+<p>Sobre o software, a resposta honesta é que <b>ela depende de uma informação que você ainda não tem</b>: se o IPP libera o LiDAR de 2024. Mas a escolha de engine é menos crítica do que parece, porque o fator dominante é a geometria, não o renderizador. Dito isso:</p>
+<table>
+<tr><th>Cenário</th><th>Stack recomendado</th><th>Razão</th></tr>
+<tr><td><b>Prioridade em publicar rápido e reaproveitar o que existe</b></td><td>ARMA 3 + código do G-MAD</td><td>Você já domina, já tem scripts, e agora há precedente publicado no ACM MM 2026 com código aberto. Falta a favela, que é o que você acrescentaria de original</td></tr>
+<tr><td><b>Prioridade em fidelidade e o LiDAR vier</b></td><td>Blender 4.2.1 + BlenderProc, renderizando em GPU alugada</td><td>Custo zero de licença, anotação COCO pronta, melhor qualidade de luz, e roda no seu fluxo sem depender de máquina Windows para autorar</td></tr>
+<tr><td><b>Prioridade em volume de imagens e realismo de engine</b></td><td>Unreal 5.7 + EasySynth ou Cosys-AirSim, em máquina alugada</td><td>Duas ordens de grandeza mais rápido em lote, melhores assets de favela, e é o que o paper de referência usou</td></tr>
+<tr><td>Unity</td><td><b>Não recomendado neste projeto</b></td><td>HDRP congelado, Perception descontinuado, ray tracing indisponível no Mac. O plugin oficial para Claude Code é excelente, mas não compensa o resto</td></tr>
+</table>
+
+<h3>10.2 Roteiro sugerido, em ordem</h3>
+<ol>
+<li><b>Hoje.</b> Escrever para <code>cartografia.ipp@prefeitura.rio</code> pedindo a nuvem LiDAR e o MDS do voo de 2024 para o recorte do Jacarezinho, como pesquisador de mestrado da FGV EBAPE. É a ação de maior alavancagem e tem latência de dias ou semanas, então precisa começar antes de tudo.</li>
+<li><b>Esta semana.</b> Ler o G-MAD (arXiv 2607.19942) e baixar o código e o benchmark AMOD. Decidir se reusa ou reconstrói. Ler o Liao et al. (DOI 10.3390/rs18020361) inteiro, é o template do método.</li>
+<li><b>Enquanto espera o IPP.</b> Baixar recortes da ortofoto 2024 de 15 cm do ImageServer público para o Jacarezinho. Isso já dá textura, footprints e, principalmente, as <b>distribuições reais</b> de cor de telhado, material e densidade construtiva, que são o insumo da randomização estruturada.</li>
+<li><b>Prova de conceito mínima.</b> Uma quadra, não a favela inteira. Renderizar 500 imagens variando só sol (três horários) e altitude (três alturas). Treinar YOLO. Medir. Isso valida o pipeline inteiro por menos de US$ 5 de GPU alugada e responde se a abordagem funciona antes de investir meses.</li>
+<li><b>Só então</b> decidir escalar, e para qual engine.</li>
+</ol>
+
+<h3>10.3 O que não fazer</h3>
+<ul>
+<li>Não comprar kit de favela para servir de base geométrica. É o braço perdedor medido do experimento (22,5 pontos de mAP). Compre para props e detalhe, se comprar.</li>
+<li>Não usar Google Photorealistic 3D Tiles. Está contratualmente vedado para detecção de objetos.</li>
+<li>Não apostar em Gaussian Splatting como motor de variação de iluminação.</li>
+<li>Não tentar rodar Unreal 5.8 nesse MacBook Air. Está abaixo do mínimo oficial e o Nanite exige M2 ou superior.</li>
+<li>Não comprar GPU em 2026 se puder evitar. Alugue.</li>
+<li>Não copiar a configuração de render do Infinigen (10.000 amostras por pixel, 3,5 horas por par de imagens). É escolha de paper, não de produção.</li>
+<li>Não usar <code>chongdashu/unreal-mcp</code> (parado desde abril de 2025, sem licença) nem contar com Genie 3, Odyssey ou Decart.</li>
+<li>Não prometer, em proposta ou artigo, que dado sintético substitui dado real. A literatura é consistente: ele multiplica o valor de pouco dado real.</li>
+</ul>
+
+<h3>10.4 Onde o Claude entra de verdade</h3>
+<p>Escrevendo e depurando o gerador paramétrico em <code>bpy</code> ou o grafo PCG, orquestrando o pipeline (baixar recorte, converter formato, importar, instanciar, variar, renderizar, converter anotação), escrevendo o conversor de máscara de instância para YOLO, e rodando o loop de validação render, ler imagem, comparar com referência, corrigir. Expectativa realista: economiza entre 40% e 60% do tempo de pipeline e praticamente <b>nada</b> do tempo de direção de arte e julgamento visual.</p>
+
+<h2 class="brk">11. Limitações deste levantamento</h2>
+<ul>
+<li>Não confirmei disponibilidade real, custo nem termos de licença da nuvem LiDAR de 2024 do IPP. O servidor público expõe apenas os mosaicos de imagem, não a nuvem de pontos.</li>
+<li>Não verifiquei a cobertura e a qualidade do OpenStreetMap especificamente para o Jacarezinho.</li>
+<li>Os preços de assets na Fab, ArtStation e CGTrader vêm em parte de resultados de busca, porque essas lojas bloqueiam acesso automatizado. Confirme antes de comprar.</li>
+<li>A leitura das cláusulas de IA da EULA da Fab e da Unreal Engine é interpretação literal de contrato de adesão, <b>não é parecer jurídico</b>. Para publicar dataset aberto, consulte o setor competente da instituição.</li>
+<li>Estimativas de tempo de render por frame para Cycles, Isaac Sim e Unreal são ordens de grandeza, não medições. O número do Infinigen (3,5 h por par) é publicado.</li>
+<li>O Reddit estava inacessível durante a pesquisa. As citações de comunidade vêm de fóruns oficiais (Epic Developer Community, discussions.unity.com, BlenderArtists), Hacker News e blogs técnicos.</li>
+<li>Há uma inconsistência interna no paper de Liao et al.: a seção de resultados cita ganho médio de 22,5 pontos da reconstrução de alta fidelidade, e a discussão cita 23,3. Usei o valor da seção de resultados.</li>
+<li>Não encontrei nenhum trabalho publicado gerando imagem aérea sintética de favela com game engine. Isso é afirmação sobre ausência de evidência, baseada em buscas convergentes, e não prova definitiva de inexistência.</li>
+</ul>
+
+<h2>12. Referências principais</h2>
+<h3>Evidência que sustenta a recomendação</h3>
+<ul class="src">
+<li>Liao, F.; Liu, Y.; Xu, W.; Wang, X.; Liu, G.; Yang, K.; Li, J. (2026). Bridging the Sim2Real Gap in UAV Remote Sensing: A High-Fidelity Synthetic Data Framework for Vehicle Detection. <i>Remote Sensing</i>, 18(2), 361. https://doi.org/10.3390/rs18020361</li>
+<li>Kim, Y.; Park, J.; Yoon, D.; Jung, N.; Jeon, M. (2026). G-MAD: A Game-Based Data Generation Framework for Multi-View RGB-T Aerial Object Detection. ACM Multimedia 2026. https://arxiv.org/abs/2607.19942</li>
+<li>Berwaldt, N. L. P.; Bettker, R. V.; Pozzer, C. T. (2020). Procedural Generation of Favela Layouts on Arbitrary Terrains. SBGames 2020, pp. 136-144. https://doi.org/10.1109/SBGames51465.2020.00027</li>
+<li>Prakash, A. et al. (2019). Structured Domain Randomization. ICRA. https://arxiv.org/abs/1810.10093</li>
+<li>Tobin, J. et al. (2017). Domain Randomization for Transferring Deep Neural Networks. IROS. https://arxiv.org/abs/1703.06907</li>
+<li>Tremblay, J. et al. (2018). Training Deep Networks with Synthetic Data. CVPRW. https://arxiv.org/abs/1804.06516</li>
+<li>Zakharov, S. et al. (2022). Photo-realistic Neural Domain Randomization. ECCV. https://arxiv.org/abs/2210.12682</li>
+<li>Krump, M.; Stütz, P. (2023). Sensors, 23(7), 3769. https://doi.org/10.3390/s23073769</li>
+<li>Burdorf, S.; Plum, K.; Hasenklever, D. (2022). Reducing the Amount of Real World Data for Object Detector Training with Synthetic Data. https://arxiv.org/abs/2202.00632</li>
+<li>Rizzoli, G. et al. (2023). SynDrone. ICCVW. https://arxiv.org/abs/2308.10491 | Código: https://github.com/LTTM/Syndrone</li>
+<li>Khose, S. et al. (2024). SkyScenes. ECCV. https://arxiv.org/abs/2312.06719</li>
+<li>Liu, F. et al. (2024). UEMM-Air. https://arxiv.org/abs/2406.06230</li>
+<li>Kiefer, B.; Ott, D.; Zell, A. (2022). Leveraging Synthetic Data in Object Detection on UAVs. ICPR. https://arxiv.org/abs/2112.12252</li>
+<li>Dergachov, K.; Aizatskyi, O. (2026). Synthetic data for deep learning in object detection tasks. WDA'26, CEUR-WS Vol-4155. https://ceur-ws.org/Vol-4155/paper03.pdf</li>
+<li>Barisic, A. et al. (2022). Sim2Air. IEEE RA-L. https://arxiv.org/abs/2110.05145</li>
+</ul>
+<h3>Favela, morfologia e dados do Rio</h3>
+<ul class="src">
+<li>MIT Senseable City Lab (2021). Favelas 4D. https://arxiv.org/abs/2105.03235</li>
+<li>Liu et al. (2025). Unveiling the internal structures of informal settlements through AI-driven automated segmentation of LiDAR data. <i>npj Urban Sustainability</i>. https://www.nature.com/articles/s42949-025-00295-9</li>
+<li>Mapping Rio de Janeiro's favelas (2025). https://arxiv.org/pdf/2510.03725</li>
+<li>IPP, ortofoto verdadeira 2024, 15 cm: https://pgeo3.rio.rj.gov.br/arcgis/rest/services/Imagens/Mosaico_2024/ImageServer</li>
+<li>Mapoteca IPP e solicitação de acervo: https://ipp.prefeitura.rio/home/mapoteca/ | cartografia.ipp@prefeitura.rio</li>
+<li>DATA.RIO, camada Edificações: https://www.data.rio/datasets/124f1607b57d4292af5c0dfc2ff8572c_0/about</li>
+</ul>
+<h3>Ferramentas, documentação e licenças</h3>
+<ul class="src">
+<li>BlenderProc: https://github.com/DLR-RM/BlenderProc | Infinigen: https://github.com/princeton-vl/infinigen</li>
+<li>MCP oficial da Blender Foundation: https://www.blender.org/lab/mcp-server/ | blender-mcp: https://github.com/ahujasid/blender-mcp</li>
+<li>Unreal MCP oficial: https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor</li>
+<li>UE 5.8 release notes: https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-8-release-notes</li>
+<li>Sun Position Calculator (UE): https://dev.epicgames.com/documentation/unreal-engine/geographically-accurate-sun-positioning-tool-in-unreal-engine</li>
+<li>Plugin oficial da Unity para Claude Code: https://unity.com/blog/unity-plugin-for-claude-code</li>
+<li>Estratégia de render pipelines da Unity para 2026: https://unity.com/topics/render-pipelines-strategy-for-2026</li>
+<li>Unity Perception (descontinuado): https://github.com/Unity-Technologies/com.unity.perception | Fork Unity 6: https://github.com/tobeornottobia/com.unity.perception</li>
+<li>EasySynth: https://github.com/ydrive/EasySynth | UnrealCV: https://github.com/unrealcv/unrealcv | Cosys-AirSim: https://github.com/Cosys-Lab/Cosys-AirSim</li>
+<li>Project AirSim (IAMAI, MIT): https://github.com/iamaisim/ProjectAirSim</li>
+<li>Google Map Tiles API Policies: https://developers.google.com/maps/documentation/tile/policies</li>
+<li>Fab EULA: https://www.fab.com/eula</li>
+<li>Agisoft De-Lighter e Unity DeLightingTool: https://github.com/Unity-Technologies/DeLightingTool</li>
+<li>3DCodeBench: https://arxiv.org/abs/2606.01057 | LL3M: https://arxiv.org/abs/2508.08228 | Thinking in Blender: https://arxiv.org/pdf/2606.02580</li>
+<li>Brush (3DGS em Metal, sem CUDA): https://github.com/ArthurBrussee/brush</li>
+<li>Diorama de favela em UE5, breakdown: https://80.lv/articles/making-a-realistic-favela-diorama-with-maya-substance-3d-ue5</li>
+</ul>
+
+<p style="margin-top:24px;font-size:8.5pt;color:#666">Levantamento produzido em 12 de setembro de 2026. Versões de software, preços e disponibilidade verificados nessa data e sujeitos a mudança.</p>
+</body></html>

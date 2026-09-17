@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Levantamento tecnico: recriar um quarteirao de favela em 3D com alta fidelidade</title>
+<style>
+@page{size:A4;margin:20mm 18mm}
+body{font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.45;color:#1a1a1a;margin:0}
+h1{font-size:19pt;margin:0 0 4px;line-height:1.2}
+.sub{color:#555;margin:0 0 16px;font-size:9.5pt}
+h2{font-size:13pt;margin:24px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #1a1a1a;page-break-after:avoid}
+h3{font-size:11pt;margin:16px 0 6px;page-break-after:avoid}
+p{margin:0 0 8px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin-bottom:3px}
+table{border-collapse:collapse;width:100%;font-size:8.8pt;margin:8px 0 14px;page-break-inside:avoid}
+th,td{border:1px solid #bbb;padding:4px 6px;text-align:left;vertical-align:top}
+th{background:#efefef;font-weight:bold}
+.note{background:#f6f6f6;border-left:3px solid #999;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.alert{background:#fdf3f3;border-left:3px solid #b33;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.win{background:#f2f8f2;border-left:3px solid #2c7a3f;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+code{font-family:"SF Mono",Menlo,monospace;font-size:8.8pt;background:#f0f0f0;padding:1px 3px}
+a{color:#1a4fa3;text-decoration:none;word-break:break-all}
+.src{font-size:8.5pt;color:#444;line-height:1.4}
+.src li{margin-bottom:2px}
+.brk{page-break-before:always}
+</style></head><body>
+
+<h1>Recriar um quarteirão de favela carioca em 3D com alta fidelidade</h1>
+<p class="sub">Levantamento técnico de caminhos, softwares e evidência empírica. Rio de Janeiro, 12 de setembro de 2026. Preparado para o projeto <i>Machine Vision from the Global South: Developing an AI Model for Vertical Favelas</i>.</p>
+
+<div class="win"><b>Resposta curta.</b> O caminho de maior fidelidade não é modelar uma favela bonita em Blender nem comprar um kit de assets. É reconstruir a geometria real do lugar por fotogrametria ou LiDAR e, sobre ela, variar agressivamente sol, clima e ângulo de câmera. Existe evidência publicada e medida de que essa escolha vale mais de 22 pontos de mAP contra a alternativa de assets genéricos, e que a variação de iluminação vale outros 10 a 20 pontos. Comprar um kit de favela e caprichar na textura é, literalmente, o braço perdedor do experimento mais próximo do seu.</div>
+
+<h2>1. O que este levantamento responde</h2>
+<p>A pergunta original tinha três partes: qual o melhor caminho no Blender para criar cidades com alto realismo, se faz sentido usar outro software como Unity, e se há integração com Claude para validar o processo. A pesquisa mudou a ordem de importância dessas perguntas.</p>
+<p>O objetivo declarado é recriar uma quadra de favela com alta fidelidade de textura, realismo e sombras/sol, com qualidade de videogame. Como o projeto em que isso se insere treina um modelo de visão computacional sobre dados sintéticos, existe um critério objetivo de sucesso que não é estético: o modelo treinado nas imagens renderizadas precisa funcionar em imagem real. Esse critério é mensurável, já foi medido por outros, e é ele que organiza o documento.</p>
+<p>Se o objetivo fosse apenas uma imagem bonita para publicação ou apresentação, várias conclusões aqui seriam diferentes e mais permissivas. Onde isso acontece, está sinalizado.</p>
+
+<h2>2. A evidência que decide o desenho</h2>
+<h3>2.1 O experimento mais próximo do seu já foi feito e publicado</h3>
+<p>Liao, Liu, Xu, Wang, Liu, Yang e Li publicaram em 2026 na <i>Remote Sensing</i> (18(2):361, DOI 10.3390/rs18020361) exatamente o pipeline que este levantamento recomenda, para detecção de veículos em imagem de drone. A estrutura tem três estágios: fotogrametria oblíqua de UAV reconstrói o modelo 3D real do local, estratégias de renderização diversificadas simulam variação de iluminação e clima, e um algoritmo automatizado gera ground truth a partir de máscaras semânticas de instância.</p>
+<p>Stack: Colosseum (sucessor do AirSim) sobre Unreal Engine 5.1, com o plugin UltraDynamicSky para elevação solar, cor da luz, intensidade de sombra e condições de tempo. Câmera de 10 mm de focal, sensor de 6,4 por 5,12 mm, resolução 1920 por 1536. Treino em MMDetection numa única RTX 4090.</p>
+<p>O dataset resultante, UAV-SynthScene, tem <b>4.659 imagens</b>. Dez rotas de voo, altitude sorteada entre 50 e 300 m, heading entre -10 e 10 graus, pitch entre -45 e -90 graus, roll fixo em zero. Três condições de tempo (sol, nublado, névoa) e três de luz (nascer do sol, meio-dia, pôr do sol).</p>
+
+<table>
+<tr><th>Resultado (mAP50, sempre avaliado em conjunto de teste REAL)</th><th>Valor</th></tr>
+<tr><td>DINO treinado só em sintético</td><td><b>87,9%</b></td></tr>
+<tr><td>DINO treinado em dado real</td><td>87,9% (idêntico)</td></tr>
+<tr><td>DEIM, sintético deles</td><td><b>88,7%</b></td></tr>
+<tr><td>DEIM, treinado em SkyScenes</td><td>86,5%</td></tr>
+<tr><td>DEIM, treinado em UEMM-Air</td><td>72,0%</td></tr>
+<tr><td>Objetos truncados, DINO, sintético deles</td><td><b>73,0%</b></td></tr>
+<tr><td>Objetos truncados, DINO, dado real</td><td>56,3%</td></tr>
+<tr><td>Zero-shot em RGBT-Tiny, DINO, sintético deles</td><td><b>96,5%</b></td></tr>
+<tr><td>Zero-shot em RGBT-Tiny, DINO, SkyScenes</td><td>76,5%</td></tr>
+</table>
+
+<h3>2.2 As duas ablações que respondem diretamente à sua pergunta</h3>
+<p>O valor deste paper para você não está no resultado principal, está nas duas ablações. Elas isolam exatamente as duas variáveis sobre as quais você perguntou.</p>
+
+<div class="note"><b>Ablação A, remover a variação de iluminação e de ângulo.</b> Renderizando tudo em condição fixa (meio-dia claro, altitude 150 m, pitch -80 graus, roll zero), a média de mAP50 cai cerca de <b>10 pontos</b> no conjunto completo e cerca de <b>20 pontos</b> no subconjunto de objetos truncados. O DINO em objetos truncados despenca de 73,0% para 44,2%.</div>
+
+<div class="note"><b>Ablação B, trocar a base fotogramétrica por assets 3D genéricos</b>, mantendo toda a variação de iluminação. A média cai <b>22,5 pontos de mAP50</b> (a seção de discussão do paper cita 23,3 pontos, pequena inconsistência interna). O RT-DETR perde 27,5 pontos.</div>
+
+<p>Traduzindo para as suas decisões: a variação de sol e sombra que você intuiu como importante é de fato essencial e vale cerca de 10 a 20 pontos. Mas a origem da geometria vale mais do que o dobro disso. Nenhum esforço de textura, shader ou iluminação compensa modelar a favela errada.</p>
+<p>Os autores formulam assim: <i>"for top-down remote sensing views, structural and textural fidelity is a more critical factor than for ground-level vision, where generic urban layouts can often suffice."</i> E advogam explicitamente por integrar técnicas de mapeamento 3D de grau topográfico, fotogrametria e LiDAR, dentro do pipeline de dado sintético.</p>
+
+<h3>2.3 O contraponto que parece contradizer e não contradiz</h3>
+<p>Há uma linha de literatura que aponta na direção oposta: Tremblay et al. (CVPRW 2018) mostraram que randomização de domínio não fotorrealista bate sintético fotorrealista em duas de três arquiteturas no KITTI, e Barisic et al. (Sim2Air, RA-L 2022) obtiveram ganhos de 17 a 20 pontos percentuais justamente usando texturas irrealistas. Krump e Stütz (Sensors 2023) decompõem o problema em <i>content gap</i> (o que está na cena) e <i>appearance gap</i> (como é renderizado) e concluem que similaridade de conteúdo domina fotorrealismo.</p>
+<p>Isso não contradiz o resultado anterior, converge com ele. Fotogrametria resolve o <i>content gap</i>, que é o fator dominante. Randomização agressiva de luz, cor e material ataca o <i>appearance gap</i>, que é o fator secundário mas não desprezível. Fazer os dois é precisamente a definição de <b>randomização estruturada de domínio</b> (Prakash et al., ICRA 2019), em que as distribuições amostradas derivam da estrutura real do problema em vez de serem uniformes.</p>
+<div class="win"><b>Princípio operacional que sai daqui:</b> acerte a geometria com dado real, e depois randomize a aparência com base nas distribuições observadas nas ortofotos reais (cor de reboco, material de telhado, altura de laje, densidade de antena). Isso é um argumento metodológico defensável para a seção de método do artigo, não apenas uma escolha técnica.</div>
+
+<h3>2.4 Expectativa calibrada, para não prometer o que não se entrega</h3>
+<p>A literatura de detecção aérea é honesta sobre os limites, e convém registrar antes de qualquer promessa em proposta ou artigo.</p>
+<ul>
+<li>Kiefer, Ott e Zell (ICPR 2022) reportam sintético puro no VisDrone com <b>1,2 mAP</b> (EfficientDet) e 2,4 mAP (Faster R-CNN), contra 24,6 e 48,6 do dado real. Colapso quase total em cena urbana densa com objetos minúsculos.</li>
+<li>Rizzoli et al. (SynDrone, ICCVW 2023) mostram que treinar a 20 m de altitude e testar a 80 m derruba o mIoU de 65,1 para 28,1. <b>Altitude é um eixo de domain shift tão severo quanto clima.</b> Varrer altitude não é opcional.</li>
+<li>Khose et al. (SkyScenes, ECCV 2024) medem ganho de praticamente zero ao adicionar sintético quando já existe 100% do dado real e um backbone forte (DINOv2). O sintético resolve escassez, não abundância.</li>
+<li>Consolidando Burdorf et al. (2022), Dergachov e Aizatskyi (WDA 2026), SkyScenes e Lee et al. (2024): com pré-treino sintético de qualidade, <b>5% a 20% do volume de dado real recupera 85% a 95% do desempenho de treino totalmente real</b>. Planeje anotar algumas centenas de imagens reais. Não prometa substituição total.</li>
+</ul>
+<p>Um detalhe técnico fácil de perder e caro: o Unity anota apenas a porção visível do objeto sob oclusão (modal), enquanto o VisDrone anota o objeto inteiro (amodal). Essa incompatibilidade de convenção gera falsos positivos e falsos negativos simultâneos, é invisível numa inspeção visual do dataset, e custa pontos de mAP sem causa aparente. Defina e documente a convenção antes de gerar o primeiro lote.</p>
+
+</body></html>

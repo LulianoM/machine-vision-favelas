@@ -1,0 +1,21 @@
+@page{size:A4;margin:20mm 18mm}
+body{font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.45;color:#1a1a1a;margin:0}
+h1{font-size:19pt;margin:0 0 4px;line-height:1.2}
+.sub{color:#555;margin:0 0 16px;font-size:9.5pt}
+h2{font-size:13pt;margin:24px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #1a1a1a;page-break-after:avoid}
+h3{font-size:11pt;margin:16px 0 6px;page-break-after:avoid}
+p{margin:0 0 8px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin-bottom:3px}
+table{border-collapse:collapse;width:100%;font-size:8.8pt;margin:8px 0 14px;page-break-inside:avoid}
+th,td{border:1px solid #bbb;padding:4px 6px;text-align:left;vertical-align:top}
+th{background:#efefef;font-weight:bold}
+.note{background:#f6f6f6;border-left:3px solid #999;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.alert{background:#fdf3f3;border-left:3px solid #b33;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+.win{background:#f2f8f2;border-left:3px solid #2c7a3f;padding:8px 10px;font-size:9.3pt;margin:12px 0;page-break-inside:avoid}
+code{font-family:"SF Mono",Menlo,monospace;font-size:8.8pt;background:#f0f0f0;padding:1px 3px}
+a{color:#1a4fa3;text-decoration:none;word-break:break-all}
+.src{font-size:8.5pt;color:#444;line-height:1.4}
+.src li{margin-bottom:2px}
+.tag{display:inline-block;font-size:8pt;padding:1px 5px;border-radius:3px;background:#e6e6e6;margin-right:4px}
+.brk{page-break-before:always}

@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Computer Vision, Drones e Segurança Pública</title>
+<style>
+@page{size:A4;margin:22mm 20mm}
+body{font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.45;color:#1a1a1a;margin:0}
+h1{font-size:20pt;margin:0 0 4px}
+.sub{color:#555;margin:0 0 18px;font-size:10pt}
+h2{font-size:13pt;margin:22px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #1a1a1a}
+.art{margin:0 0 13px;page-break-inside:avoid}
+.t{font-weight:bold}
+.m{color:#444;font-size:9.5pt}
+.doi{color:#1a4fa3;font-size:9.5pt;word-break:break-all}
+.r{margin-top:3px}
+table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:8px 0 14px}
+th,td{border:1px solid #bbb;padding:4px 6px;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+.note{background:#f6f6f6;border-left:3px solid #999;padding:8px 10px;font-size:9.5pt;margin:12px 0}
+</style></head><body>
+<h1>Computer Vision, Drones e Segurança Pública</h1>
+<p class="sub">Bibliografia comentada com 15 artigos verificados via Crossref. Levantamento em 09/09/2026.</p>
+
+<div class="note">Critério de seleção: artigos revisados por pares (periódico ou conferência de referência) que combinem visão computacional embarcada ou aplicada a imagens de VANT (drone) com um problema de segurança pública: vigilância, detecção de crime e violência, policiamento de eventos, perícia, busca e salvamento, resposta a emergências, trânsito e governança. Um preprint arXiv foi incluído por ser a revisão mais citada do tema.</div>
+
+<table>
+<tr><th>Eixo</th><th>Artigos</th><th>Uso sugerido</th></tr>
+<tr><td>Revisões e surveys</td><td>1 a 5</td><td>Fundamentação teórica e estado da arte</td></tr>
+<tr><td>Detecção de crime, violência e policiamento</td><td>6 a 10</td><td>Casos aplicados e métodos (CNN, YOLO, transformers)</td></tr>
+<tr><td>Busca, salvamento e emergências</td><td>11 a 13</td><td>Detecção de pessoas, térmico, classificação de desastres</td></tr>
+<tr><td>Governança, ética e integração operacional</td><td>14 e 15</td><td>Discussão crítica, privacidade e aceitação pública</td></tr>
+</table>
+
+<h2>A. Revisões e surveys</h2>
+
+<div class="art"><div class="t">1. The State of Aerial Surveillance: A Survey</div>
+<div class="m">Nguyen, K.; Fookes, C.; Sridharan, S.; Tian, Y.; Liu, F.; Liu, X.; Ross, A. (2022). arXiv preprint 2201.03080.</div>
+<div class="doi">https://arxiv.org/abs/2201.03080</div>
+<div class="r">Revisão centrada no humano da vigilância aérea sob a ótica de visão computacional: detecção, identificação, rastreamento e reidentificação de pessoas a partir de drones. Mapeia datasets públicos, compara os desafios aéreos com os de câmeras fixas e aponta lacunas de pesquisa. É a referência mais citada para situar o campo.</div></div>
+
+<div class="art"><div class="t">2. Applications, databases and open computer vision research from drone videos and images: a survey</div>
+<div class="m">Akbari, Y.; Almaadeed, N.; Al-maadeed, S.; Elharrouss, O. (2021). Artificial Intelligence Review, 54(5).</div>
+<div class="doi">https://doi.org/10.1007/s10462-020-09943-1</div>
+<div class="r">Levantamento de aplicações de visão computacional em vídeos de drone, com seção dedicada a vigilância, detecção de pessoas, reconhecimento facial e detecção de desastres. Útil pelo inventário de bases de dados e pela lista de problemas em aberto.</div></div>
+
+<div class="art"><div class="t">3. A review on object detection in unmanned aerial vehicle surveillance</div>
+<div class="m">Ramachandran, A.; Sangaiah, A. K. (2021). International Journal of Cognitive Computing in Engineering, 2.</div>
+<div class="doi">https://doi.org/10.1016/j.ijcce.2021.11.005</div>
+<div class="r">Revisão focada em detecção e rastreamento de objetos em vigilância por VANT, cobrindo arquiteturas de deep learning, métricas e restrições de processamento embarcado. Bom ponto de partida técnico para quem vai implementar o pipeline de detecção.</div></div>
+
+<div class="art"><div class="t">4. Human detection in UAV imagery using deep learning: a review</div>
+<div class="m">Simões, D. P.; Oliveira, H. C.; Marsico, S.; Souza, J. R.; Barbosa, L. A. (2025). Neural Computing and Applications, 37(22).</div>
+<div class="doi">https://doi.org/10.1007/s00521-025-11446-5</div>
+<div class="r">Revisão recente, de grupo brasileiro, sobre detecção de pessoas em imagens de drone com deep learning. Discute o problema dos alvos pequenos, variação de altitude e ângulo, e os limites de rodar modelos grandes em hardware embarcado. Relevante pela proximidade com o contexto nacional.</div></div>
+
+<div class="art"><div class="t">5. Future UAV/Drone Systems for Intelligent Active Surveillance and Monitoring</div>
+<div class="m">Ahmad, T.; Morel, A.; Cheng, N.; Palaniappan, K.; Calyam, P.; Sun, K.; Pan, J. (2025). ACM Computing Surveys, 58(2).</div>
+<div class="doi">https://doi.org/10.1145/3760389</div>
+<div class="r">Survey da ACM sobre sistemas de vigilância ativa com drones: percepção, autonomia, comunicação e edge computing integrados. Serve para discutir a arquitetura completa (drone, rede, nuvem) e não apenas o modelo de visão.</div></div>
+
+<h2>B. Detecção de crime, violência e policiamento</h2>
+
+<div class="art"><div class="t">6. UAV surveillance for violence detection and individual identification</div>
+<div class="m">Srivastava, A.; Badal, T.; Saxena, P.; Vidyarthi, A.; Singh, R. (2022). Automated Software Engineering, 29(1).</div>
+<div class="doi">https://doi.org/10.1007/s10515-022-00323-3</div>
+<div class="r">Propõe um sistema de vigilância por drone que detecta comportamento violento em vídeo aéreo e, em seguida, identifica os indivíduos envolvidos. Combina detecção de pose e classificação de ações com deep learning. Exemplo direto de CV aplicado a prevenção de crime.</div></div>
+
+<div class="art"><div class="t">7. Advancing automated street crime detection: a drone-based system integrating CNN models and enhanced feature selection techniques</div>
+<div class="m">Vuyyuru, L. R.; Purimetla, N. R.; Reddy, K. Y.; Vellela, S. S.; Basha, S. K.; Vatambeti, R. (2024). International Journal of Machine Learning and Cybernetics, 16(2).</div>
+<div class="doi">https://doi.org/10.1007/s13042-024-02315-z</div>
+<div class="r">Sistema baseado em drone para detecção automática de crimes de rua com CNNs e seleção de características otimizada. Reporta ganhos de acurácia frente a baselines e discute latência para operação em tempo real.</div></div>
+
+<div class="art"><div class="t">8. Enhancing Drones for Law Enforcement and Capacity Monitoring at Open Large Events</div>
+<div class="m">Royo, P.; Asenjo, À.; Trujillo, J.; Çetin, E.; Barrado, C. (2022). Drones, 6(11), 359.</div>
+<div class="doi">https://doi.org/10.3390/drones6110359</div>
+<div class="r">Estudo de caso com a polícia local de Castelldefels (Espanha): software de deep learning para contar pessoas e monitorar lotação em eventos abertos usando drones. Um dos poucos trabalhos com validação em operação policial real.</div></div>
+
+<div class="art"><div class="t">9. UAV-assisted real-time evidence detection in outdoor crime scene investigations</div>
+<div class="m">Georgiou, A.; Masters, P.; Johnson, S.; Feetham, L. (2022). Journal of Forensic Sciences, 67(3).</div>
+<div class="doi">https://doi.org/10.1111/1556-4029.15009</div>
+<div class="r">Aplica detecção de objetos em tempo real a partir de drone para localizar evidências em cenas de crime ao ar livre. Reporta taxas de detecção próximas de 100% em áreas amplas e discute o uso pericial e a documentação da cena.</div></div>
+
+<div class="art"><div class="t">10. Drone-assisted adaptive object detection and privacy-preserving surveillance in smart cities using whale-optimized deep reinforcement learning techniques</div>
+<div class="m">Abu-Khadrah, A.; Al-Qerem, A.; Hassan, M. R.; Ali, A. M.; Jarrah, M. (2025). Scientific Reports, 15.</div>
+<div class="doi">https://doi.org/10.1038/s41598-025-94796-3</div>
+<div class="r">Detecção adaptativa de objetos e pessoas em grandes aglomerações urbanas com drones, combinando otimização e aprendizado por reforço profundo, com mecanismos de preservação de privacidade. Interessante por tratar acurácia e privacidade no mesmo desenho.</div></div>
+
+<h2>C. Busca, salvamento e resposta a emergências</h2>
+
+<div class="art"><div class="t">11. Aerial Person Detection for Search and Rescue: Survey and Benchmarks</div>
+<div class="m">Zhang, X.; Feng, Y.; Wang, N.; Lu, G.; Mei, S. (2025). Journal of Remote Sensing, 5.</div>
+<div class="doi">https://doi.org/10.34133/remotesensing.0474</div>
+<div class="r">Survey com benchmarks de detecção de pessoas em imagens aéreas para busca e salvamento, incluindo o dataset RGB-Térmico RGBTDronePerson. Compara detectores em cenas, iluminações e climas variados.</div></div>
+
+<div class="art"><div class="t">12. Enhancing Search and Rescue Missions with UAV Thermal Video Tracking</div>
+<div class="m">Fraternali, P.; Morandini, L.; Motta, R. (2025). Remote Sensing, 17(17), 3032.</div>
+<div class="doi">https://doi.org/10.3390/rs17173032</div>
+<div class="r">Rastreamento de pessoas em vídeo térmico de drone para missões de busca e salvamento, com foco em robustez a oclusão e baixo contraste. Complementa o item 11 com um método aplicado.</div></div>
+
+<div class="art"><div class="t">13. Deep-Learning-Based Aerial Image Classification for Emergency Response Applications Using Unmanned Aerial Vehicles</div>
+<div class="m">Kyrkou, C.; Theocharides, T. (2019). IEEE/CVF CVPR Workshops (CVPRW).</div>
+<div class="doi">https://doi.org/10.1109/CVPRW.2019.00077</div>
+<div class="r">Introduz o dataset AIDER e uma CNN leve para classificar, a bordo do drone, cenas de emergência: incêndio, enchente, colapso de edifício e acidente de trânsito. Referência clássica para classificação embarcada em resposta a emergências.</div></div>
+
+<h2>D. Governança, ética e integração operacional</h2>
+
+<div class="art"><div class="t">14. Moving beyond privacy and airspace safety: Guidelines for just drones in policing</div>
+<div class="m">Dolata, M.; Schwabe, G. (2023). Government Information Quarterly, 40(4).</div>
+<div class="doi">https://doi.org/10.1016/j.giq.2023.101874</div>
+<div class="r">Mostra que a aceitação pública de drones policiais depende da percepção de justiça no uso, e não só de privacidade e segurança aérea. Propõe diretrizes para programas de policiamento com drones. Essencial para a seção de discussão e limitações.</div></div>
+
+<div class="art"><div class="t">15. Integrating body-worn cameras, drones, and AI: A framework for enhancing police readiness and response</div>
+<div class="m">Davies, A.; Krame, G. (2023). Policing: A Journal of Policy and Practice, 17.</div>
+<div class="doi">https://doi.org/10.1093/police/paad083</div>
+<div class="r">Framework para integrar câmeras corporais, drones e IA na prontidão e resposta policial. Trata a visão computacional como parte de um sistema sociotécnico, incluindo treinamento, protocolo e accountability.</div></div>
+
+<h2>Sugestões complementares (não contabilizadas nos 15)</h2>
+<div class="art"><div class="m">Obaid, L. et al. (2025). State-of-the-art review of UAVs and AI for traffic and safety analyses. Transportation Research Interdisciplinary Perspectives, 33. https://doi.org/10.1016/j.trip.2025.101591</div></div>
+<div class="art"><div class="m">Farhan, M. et al. (2025). Transforming Highway Safety With Autonomous Drones and AI: A Framework for Incident Detection and Emergency Response. IEEE Open Journal of Vehicular Technology, 6. https://doi.org/10.1109/ojvt.2025.3549387</div></div>
+<div class="art"><div class="m">Jamil, S. et al. (2020). Malicious UAV Detection Using Integrated Audio and Visual Features for Public Safety Applications. Sensors, 20(14). https://doi.org/10.3390/s20143923 (o inverso do tema: CV para detectar drones hostis)</div></div>
+
+<h2 style="page-break-before:always">Ranking dos periódicos por fator de impacto (JCR 2025)</h2>
+<p class="m">Journal Impact Factor (JIF) do Journal Citation Reports 2025 (Clarivate, divulgado em junho de 2026), coletado nas páginas oficiais das editoras em 09/09/2026. CiteScore (Scopus) informado quando a editora exibe.</p>
+<table>
+<tr><th>#</th><th>Periódico</th><th>Editora</th><th>JIF 2025</th><th>JIF 5 anos</th><th>Artigos da lista</th></tr>
+<tr><td>1</td><td>ACM Computing Surveys</td><td>ACM</td><td><b>30.4</b></td><td>n/d</td><td>5</td></tr>
+<tr><td>2</td><td>Artificial Intelligence Review</td><td>Springer</td><td><b>18.8</b></td><td>19.1</td><td>2</td></tr>
+<tr><td>3</td><td>Journal of Remote Sensing</td><td>Science Partner Journals (AAAS)</td><td><b>11.0</b></td><td>n/d</td><td>11</td></tr>
+<tr><td>4</td><td>Government Information Quarterly</td><td>Elsevier</td><td><b>10.8</b></td><td>n/d</td><td>14</td></tr>
+<tr><td>5</td><td>Drones</td><td>MDPI</td><td><b>5.2</b></td><td>5.3</td><td>8</td></tr>
+<tr><td>6</td><td>Scientific Reports</td><td>Springer Nature</td><td><b>4.9</b></td><td>4.8</td><td>10</td></tr>
+<tr><td>7</td><td>Remote Sensing</td><td>MDPI</td><td><b>4.3</b></td><td>5.0</td><td>12</td></tr>
+<tr><td>8</td><td>Automated Software Engineering</td><td>Springer</td><td><b>3.9</b></td><td>3.4</td><td>6</td></tr>
+<tr><td>9</td><td>Int. J. of Machine Learning and Cybernetics</td><td>Springer</td><td><b>2.9</b></td><td>3.4</td><td>7</td></tr>
+<tr><td>10</td><td>Journal of Forensic Sciences</td><td>Wiley</td><td><b>1.9</b></td><td>n/d</td><td>9</td></tr>
+<tr><td>11</td><td>Policing: A Journal of Policy and Practice</td><td>Oxford UP</td><td><b>1.8</b></td><td>n/d</td><td>15</td></tr>
+<tr><td>-</td><td>Neural Computing and Applications</td><td>Springer</td><td>não divulgado*</td><td>n/d</td><td>4</td></tr>
+<tr><td>-</td><td>Int. J. of Cognitive Computing in Engineering</td><td>KeAi / Elsevier</td><td>sem JIF (CiteScore 18.0)</td><td>n/d</td><td>3</td></tr>
+<tr><td>-</td><td>CVPR Workshops (conferência)</td><td>IEEE/CVF</td><td>não se aplica</td><td>n/d</td><td>13</td></tr>
+<tr><td>-</td><td>arXiv (preprint)</td><td>-</td><td>não se aplica</td><td>n/d</td><td>1</td></tr>
+</table>
+<p class="m">* A página da Springer não exibe JIF 2025 para a Neural Computing and Applications, enquanto os outros três títulos da editora exibem. Isso é compatível com supressão do indicador pela Clarivate no JCR 2025, mas não encontrei comunicado oficial. Último JIF conhecido: 4.5 (JCR 2024). Recomendo tratar o artigo 4 com cautela se o critério for o JIF.</p>
+<p class="m">Complementares: Transportation Research Interdisciplinary Perspectives (Elsevier) JIF 4.8; Sensors (MDPI) JIF 4.0; IEEE Open Journal of Vehicular Technology, JIF entre 6.4 e 6.6 segundo agregadores (página da IEEE bloqueou a verificação).</p>
+</body></html>

@@ -1,0 +1,110 @@
+<h2 class="brk">6. Sol, sombra e luz: a parte que você intuiu certo</h2>
+<p>A Ablação A da seção 2.2 mostrou que remover variação de iluminação e de ângulo custa 10 pontos de mAP no geral e 20 em objetos truncados. Vale, portanto, tratar isso com rigor e não no olho.</p>
+
+<h3>6.1 Parâmetros corretos para o Rio de Janeiro</h3>
+<table>
+<tr><th>Parâmetro</th><th>Valor</th><th>Cuidado</th></tr>
+<tr><td>Latitude</td><td><b>-22,9068</b></td><td>Negativo para o hemisfério Sul</td></tr>
+<tr><td>Longitude</td><td><b>-43,1729</b></td><td>Negativo para oeste de Greenwich</td></tr>
+<tr><td>Fuso horário</td><td><b>-3</b> (UTC-3)</td><td></td></tr>
+<tr><td>Horário de verão</td><td><b>Desligado</b> para qualquer data a partir de 2019</td><td>O Brasil fez a última mudança de relógio em 16/02/2019 e aboliu o horário de verão por decreto em abril de 2019. Para datas anteriores, a janela era de outubro a fevereiro e precisa ser configurada à mão, porque os defaults dos plugins seguem convenção do hemisfério norte</td></tr>
+<tr><td>Orientação do modelo (North Offset)</td><td>Calibrar</td><td><b>É a armadilha maior, e não é o fuso.</b> Se a geometria estiver posicionada arbitrariamente na cena, as sombras caem nas paredes erradas mesmo com azimute correto. Num morro, onde a orientação da encosta determina quais casas pegam sol da manhã e quais ficam na sombra o dia inteiro, isso é a diferença entre estudo válido e erro sistemático</td></tr>
+</table>
+
+<h3>6.2 Ferramentas e precisão declarada</h3>
+<ul>
+<li><b>Blender, addon Sun Position</b> com textura de céu Nishita: coordenadas, data e hora. Gratuito e embutido.</li>
+<li><b>Unreal, Sun Position Calculator</b> (plugin em Misc): retorna <code>elevation</code>, <code>corrected_elevation</code> (corrigida para refração atmosférica), <code>azimuth</code>, <code>sunrise_time</code>, <code>sunset_time</code> e <code>solar_noon</code>. A Epic <b>não publica número de precisão</b> nem declara o algoritmo. Exposto ao Python como <code>unreal.SunPositionFunctionLibrary</code>, o que permite varrer horas e datas por script.</li>
+<li><b>Ultra Dynamic Sky</b> (Fab, a partir de US$ 49,99, UE 5.5 a 5.8): é o único do ecossistema com <b>erro publicado</b>, de cerca de <b>0,03 grau</b> para sol e lua, com fórmulas baseadas no <i>Astronomical Algorithms</i> de Jean Meeus. Foi o plugin usado no paper de referência da seção 2.</li>
+<li><b>Referência de comparação:</b> o NREL Solar Position Algorithm (Reda e Andreas) declara incerteza de 0,0003 grau.</li>
+</ul>
+
+<h3>6.3 Como validar, em três camadas</h3>
+<ol>
+<li><b>Efeméride independente.</b> Comparar azimute, elevação corrigida, nascer, pôr e meio-dia solar com NOAA Solar Calculator, suncalc.org ou <code>pvlib</code>/<code>pysolar</code> em Python, para a mesma coordenada, data e hora. Diferença acima de 0,1 grau denuncia erro de fuso, DST ou data.</li>
+<li><b>Sombra medida em campo.</b> Fotografar um objeto vertical conhecido com timestamp, medir comprimento e direção da sombra real e reproduzir na cena. <b>É o único teste que pega erro de orientação do modelo</b>, que a camada 1 não pega.</li>
+<li><b>Fotometria.</b> Existe precedente acadêmico ("Validating Game Engines as a Quantitative Daylighting Simulation Tool") que mediu iluminância em pontos selecionados na Unreal contra ferramenta validada e luxímetro físico, com erro médio próximo ao da simulação de referência.</li>
+</ol>
+
+<h3>6.4 Exposição fisicamente baseada, para casar com foto real</h3>
+<p>Fórmula: <b>EV100 = log2(abertura² / tempo de obturador × 100 / ISO)</b>. Dia ensolarado a f/16, ISO 100 e 1/125 s dá EV100 = 15.</p>
+<p>Procedimento: desligar auto-exposure (senão ela injeta variável espúria entre frames do dataset), colocar a luz direcional em <b>100.000 lux</b> para sol de meio-dia (o CesiumSunSky usa ~111.000), e derivar o EV alvo do EXIF da foto de referência. Na Unreal é preciso ligar "Extend default luminance range" nas configurações de renderização, senão os valores físicos não se comportam como esperado.</p>
+<p>Dois detalhes que denunciam uma imagem sintética na hora quando errados:</p>
+<ul>
+<li><b>Ângulo angular do sol.</b> O sol real tem cerca de 0,545 grau de diâmetro angular, e é isso que controla a dureza da penumbra. Penumbra errada é o sinal mais diagnóstico ao comparar com foto real. No Rio, a luz de meio-dia é dura e quase vertical, e a de fim de tarde é rasante, que é justamente a condição mais bonita e a mais difícil de renderizar sem artefato (aliasing projetivo em ângulo raso é problema conhecido de Virtual Shadow Maps).</li>
+<li><b>Nuvem não é previsão.</b> Volumetric clouds são fisicamente plausíveis, mas nenhum engine ingere METAR ou imagem de satélite. Para reproduzir uma data e hora específicas, a cobertura precisa ser autorada a partir da foto de referência.</li>
+</ul>
+
+<h2>7. Texturas, materiais e o trabalho invisível que vai dominar o cronograma</h2>
+<h3>7.1 O problema do delighting</h3>
+<div class="alert">A textura da sua fotogrametria de 2022 tem <b>iluminação e sombras assadas no albedo</b>. Cada sombra projetada, cada oclusão de ambiente, cada realce especular daquele dia e daquela hora está pintado na imagem. Mudar a posição do sol não apaga a sombra que já está na laje. Para variar o sol de forma fisicamente coerente, é preciso recuperar o albedo puro. <b>Este é o maior trabalho invisível do projeto e precisa ser planejado explicitamente.</b></div>
+<p>Os próprios autores do paper de referência declaram isso como limitação: <i>"while photogrammetry ensures geometric consistency, the interaction between simulated lighting and reconstructed textures inevitably approximates real-world optics. This discrepancy may lead to missed detections under extreme lighting or complex material reflectance conditions."</i></p>
+<p>Ferramentas disponíveis:</p>
+<ul>
+<li><b>Agisoft De-Lighter</b>: gratuito, standalone, remove sombras projetadas e oclusão de ambiente das texturas fotogramétricas. O caminho mais direto.</li>
+<li><b>Unity DeLightingTool</b> (github.com/Unity-Technologies/DeLightingTool): mais controle, mas exige diffuse lit, normais em object space, bent normals e AO.</li>
+<li>Abordagens recentes de decomposição intrínseca com difusão (por exemplo DiffusionLight), ainda experimentais.</li>
+</ul>
+<p>Mitigação parcial e barata: se o LiDAR do IPP vier, a geometria vem sem textura assada, e você texturiza com materiais PBR autorais amostrados das distribuições reais observadas na ortofoto de 15 cm. Isso resolve o delighting por construção, ao custo de perder o detalhe fotográfico da fachada.</p>
+
+<h3>7.2 Fontes de textura</h3>
+<ul>
+<li><b>Megascans</b>: grátis para todos apenas até 31/12/2024. Quem reclamou o acervo naquela janela mantém uso perpétuo. Desde 2025 a Epic voltou a cobrar por asset (a partir de US$ 0,99). <b>Porém</b>, o acesso ilimitado continua válido para quem tem licença da Unreal Engine, com a contrapartida de que esses assets são "UE-Only Content" e não podem ser renderizados fora da engine.</li>
+<li><b>Poly Haven</b> e <b>ambientCG</b>: CC0, sem restrição, ideais para concreto, reboco, telha de fibrocimento, ferrugem e metal corrugado.</li>
+<li><b>Substance 3D Sampler</b>: tem Text-to-Texture, Text-to-Pattern e Image-to-Texture em beta, gerando tileable com Base Color, Metallic, Roughness e Normal. A jogada realista para favela é fotografar fachadas reais e passar por ali. <b>ArmorLab</b> é a alternativa gratuita e offline.</li>
+<li>Não encontrei nenhum pack de <b>tipografia e sinalização comercial brasileira</b> (letreiro de bar, placa de comércio, grafismo carioca), que é um dos elementos mais identitários. Isso provavelmente precisa ser feito à mão a partir de fotos.</li>
+</ul>
+
+<h3>7.3 A lição de quem já construiu favela fotorrealista</h3>
+<p>Jean Pierre Vargas construiu um diorama de favela em UE5 com Lumen e Nanite, em seis meses de trabalho parcial, com Maya, Substance 3D Painter, Quixel Mixer, Marvelous Designer e Marmoset. O achado metodológico mais importante do relato dele: <b>ele rejeitou explicitamente a abordagem modular</b>. Nas palavras dele, "the more I worked on the project and analyzed the reference images, the more I realized that this approach wouldn't be very suitable", porque as unidades superiores avançam sobre as inferiores de forma irregular. Modelou cada apartamento como mesh separado.</p>
+<p>A estrutura de quatro andares dele progride de concreto acabado embaixo para tijolo aparente em cima, mais um puxadinho de madeira, refletindo expansão geracional. O shader usa canais de UV secundários com máscaras RGB no térreo para variar cor de pintura e concreto exposto, e vertex paint nos andares superiores misturando tijolo, concreto rugoso e mofo por height lerp, com uma máscara geral de sujeira. Iluminação: uma única luz direcional com skylight e sky atmosphere, Lumen dispensando qualquer bake.</p>
+<p>Outros dois projetos de referência: Gian Franco Caserta fez favela em UE 5.3 com Kitbash e Quixel usando <b>PCG para distribuição aleatória de assets</b>, e "SCARCITY", de Yuri Vieira de Aguiar, é um ambiente real-time em UE4 inspirado em Pavão-Pavãozinho e Cantagalo.</p>
+
+<h2 class="brk">8. Claude no processo: o que funciona e o que é demo</h2>
+<h3>8.1 O dado mais honesto disponível</h3>
+<p>O benchmark <b>3DCodeBench</b> (arXiv 2606.01057, junho de 2026) mede modelos escrevendo código 3D. Dois resultados importam:</p>
+<table>
+<tr><th>Modelo</th><th>Executabilidade</th><th>Elo humano de qualidade</th></tr>
+<tr><td>GPT-5.5</td><td>0,906</td><td>1.163</td></tr>
+<tr><td>Gemini 3.1 Pro</td><td>0,725</td><td>1.147</td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td><b>0,910 (o maior)</b></td><td>1.006 (o menor dos frontier)</td></tr>
+</table>
+<p>Leitura: Claude é o mais confiável em produzir código que roda sem quebrar, e o mais fraco em qualidade geométrica percebida. Isso define exatamente o papel certo dele: <b>engenheiro de pipeline e autor de código procedural, não artista</b>.</p>
+<p>E o achado decisivo do mesmo benchmark: dar feedback de erro em múltiplos turnos leva a executabilidade de 0,702 para 0,974, <b>mas a qualidade condicional da forma quase não melhora</b>. O loop de erro conserta crash. Não conserta geometria desconectada, desalinhada ou feia.</p>
+
+<h3>8.2 Onde os MCPs estão em setembro de 2026</h3>
+<table>
+<tr><th>Ferramenta</th><th>Estado</th><th>Nota</th></tr>
+<tr><td><b>MCP oficial da Blender Foundation</b></td><td>v1.0.0 em 27/04/2026, v1.0.3 em 11/09/2026</td><td>Foco declarado em interface de linguagem natural para a API Python, mais copiloto de API do que modelador. Já tem captura de viewport</td></tr>
+<tr><td><b>ahujasid/blender-mcp</b></td><td>28.324 estrelas, push em 07/09/2026</td><td>O mais popular. Poly Haven, Sketchfab, Poly Pizza, Hyper3D Rodin, Hunyuan3D. <b>Ver alerta de segurança abaixo</b></td></tr>
+<tr><td><b>MCP oficial da Epic (UE 5.8)</b></td><td>Experimental, servidor no editor em <code>127.0.0.1:8000/mcp</code></td><td>Toolsets de cena, mesh, material, PCG e captura de viewport. Sem autenticação, loopback apenas. A Epic pretende torná-lo "an integral part of UE6"</td></tr>
+<tr><td><b>Plugin oficial da Unity para Claude Code</b></td><td>Publicado em <b>10/09/2026</b>, 29 skills</td><td>Via Unity CLI (<code>brew install --cask unity-cli</code>). Grátis, roda offline, não consome Unity Points. Mas as skills de rendering são URP, não HDRP</td></tr>
+<tr><td>CoplayDev/unity-mcp</td><td>14.148 estrelas, v10.2.0 em 01/09/2026</td><td>47 tools. O ecossistema Unity é hoje o mais maduro dos três</td></tr>
+<tr><td>chongdashu/unreal-mcp</td><td>2.077 estrelas, <b>parado desde 22/04/2025</b>, sem licença</td><td><b>Não use.</b> É o mais citado em blogs e o mais desatualizado</td></tr>
+</table>
+
+<div class="alert"><b>Alerta de segurança sobre o blender-mcp.</b> Em 09 e 10/08/2026 a conta GitHub do mantenedor foi comprometida e os repositórios foram transferidos para outra organização (depois recuperados). Há CVEs abertos contra o projeto: CVE-2026-10661 (injection), CVE-2026-10662 (SSRF), CVE-2026-10688 (code injection), além de leitura arbitrária de arquivo. O mantenedor adicionou um "safe mode" em 02/09/2026 e há Dockerfile desde 05/09/2026. Como a ferramenta executa Python arbitrário na máquina e baixa assets de URLs, rode em container ou em safe mode.</div>
+
+<h3>8.3 O que a comunidade relata, sem filtro</h3>
+<p>O relato mais próximo do seu caso de uso, sobre alimentar desenhos 2D para gerar arquitetura 3D via MCP: <i>"No understanding on how windows attach to walls, misaligned bearing walls between floors, gaps all around the places, chimney not continuous, windows don't line up and are in wrong places, house parts swapped. And still struggling when I explain those things... But I just had to keep prompting to fix this, that, redo this and that and then it breaks other things until I fed up."</i></p>
+<p>No BlenderArtists, numa thread dedicada ao tema em setembro de 2025, praticamente nenhum artista profissional tinha testado, e um deles resumiu: <i>"I didn't see any practical examples that looks good or useful."</i> As 28 mil estrelas vêm do público de desenvolvimento e IA, não do público de 3D.</p>
+<p>Um teste de custo documentado: reproduzir o tutorial do donut do Blender Guru via MCP consumiu 60% dos tokens de sessão de um plano de US$ 200 por mês, levou duas horas, e o render final tinha objetos atravessando outros e ângulo de câmera errado. Um donut.</p>
+<p>Limites estruturais bem identificados: o modelo só conhece o que as tools expõem; cada ação é uma ida e volta (um passe de limpeza em 40 objetos com 10 operações vira 400 chamadas); operações pesadas estouram timeout porque o protocolo não tem vocabulário para trabalho assíncrono; e nomes de sockets de Geometry Nodes mudam entre versões.</p>
+
+<h3>8.4 O padrão que de fato funciona</h3>
+<p>Não é MCP conversacional, é <b>script headless com loop de validação</b>. O caminho: <code>blender --background --python script.py</code>. É a API completa, sem GUI, sem socket, sem ida e volta por operação, determinístico, versionável em git, e paralelizável.</p>
+<p>Sobre a validação visual, a resposta é sim, e há workflows documentados. O padrão consolidado:</p>
+<ol>
+<li><b>Índice da API antes de agir.</b> Fornecer um arquivo de referência da API da sua versão exata, em vez de confiar na memória do modelo. No 3DCodeBench, a maior causa de falha de execução foi incompatibilidade de API com o Blender 5.0, porque o modelo escreve código da versão que estava no treino.</li>
+<li><b>Todo script escreve um render de preview</b>, e o agente lê a imagem. Três ângulos fixos por iteração: topo (layout e sobreposição), altura dos olhos (estética) e o ângulo de captura real.</li>
+<li><b>Anotações no render</b>: grade de coordenadas e rótulos de objeto. O agente raciocina muito melhor sobre "o objeto X está em (3, 0, 12)" via JSON do que sobre pixels.</li>
+<li><b>Sidecar JSON compacto</b> junto do PNG. Nunca jogar blob base64 grande no contexto.</li>
+<li><b>Comparação contra referência</b> (moodboard ou foto real), em vez de crítica aberta.</li>
+<li><b>Validação numérica junto da visual</b>: contagem de polígonos, bounding boxes, testes de interpenetração, normais, escala em metros, densidade de texel. O agente é ruim de olho e bom com números.</li>
+</ol>
+<p>Confirmação acadêmica de que essa direção é a certa: <b>LL3M</b> (arXiv 2508.08228), sistema multiagente com planner, retrieval, coding, critic e verification, escrevendo <code>bpy</code> com RAG da API do Blender, supera a baseline BlenderMCP. E <b>"Thinking in Blender"</b> (arXiv 2606.02580, junho de 2026) reconstrói cena 3D a partir de uma única imagem como programa Blender editável, refinando em estágios (geometria, materiais, composição, iluminação), e conclui que <i>"staged reconstruction substantially improves reconstruction fidelity, highlighting the importance of task decomposition."</i> Isso é literalmente "foto de prédio de favela para cena Blender editável", mas é paper recente, sem produto.</p>
+
+<h3>8.5 Geração de assets por IA: onde entra e onde não entra</h3>
+<p>O bake-off mais útil encontrado construiu o mesmo prédio por seis métodos e concluiu, textualmente: <i>"CC0 kits win for the repeated city mass; Blender headless for bespoke shapes; image-to-3D only for one-off props (messy topology, as predicted)."</i> E o insight estratégico: <i>"Architect the city from real footprint extrusion, NOT AI-generated buildings."</i></p>
+<p>Traduzindo: text/image-to-3D (Meshy 6, Tripo, Hyper3D Rodin, Hunyuan3D, TRELLIS) <b>não serve para os prédios</b>. Serve razoavelmente para props avulsos (caixa d'água, ar-condicionado, antena parabólica, botijão, cadeira de plástico), e mesmo assim com retopologia, reescala (chegam com fator ~10x errado) e correção de eixo (Y-up contra Z-up).</p>
+<p>Sobre world models generativos: <b>World Labs Marble</b> é o único que exporta artefato editável (splat .ply, collider mesh e GLB texturizado de ~600k triângulos), com planos de US$ 20 a 95 por mês, mas a própria documentação declara "reconstruction artifacts, with uneven geometry, holes, and blobby or 'floater' surfaces". Serve como blockout e referência de layout, não como quarteirão final. <b>Genie 3, Odyssey e Decart não exportam geometria</b>: são render neural ou vídeo, inúteis para este pipeline.</p>
