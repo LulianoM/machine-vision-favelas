@@ -18,8 +18,8 @@ Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md
 
 | Item | Estado |
 |---|---|
-| Pacote de 11/09 recebido no desktop | Sim, segundo o autor. O treino está em andamento lá |
-| Estado real do pipeline (missão ARMA 3, dataset, treino, mAP) | DESCONHECIDO deste lado. O desktop ainda não escreveu neste repositório |
+| Pacote de 11/09 recebido no desktop | Sim. Segundo o autor (17/09), o desktop avançou muito, o modelo já foi treinado e há uma pesquisa feita lá a partir do e-mail de 12/09 |
+| Estado real do pipeline (missão ARMA 3, dataset, treino, mAP) | Fora do repositório. Nenhum número, script ou documento do desktop chegou aqui ainda. Esperar divergência com o que este lado registra |
 | `06-resultados/RESULTADOS.md` | Não existe ainda. É a primeira coisa que o desktop deve trazer |
 
 ## Infraestrutura entre as máquinas
@@ -38,7 +38,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 ## Próximos passos, em ordem
 
 1. [AUTOR, no desktop] Seguir `docs/SETUP-DESKTOP.md`: Tailscale, OpenSSH, clonar o repositório.
-2. [DESKTOP] Rodar o prompt de `docs/PROMPT-MIGRACAO-DESKTOP.md`: trazer scripts evoluídos, `RESULTADOS.md` e métricas para dentro do repositório, atualizar este arquivo com o estado real do treino.
+2. [DESKTOP] Rodar o prompt de reconciliação (`docs/PROMPT-MIGRACAO-DESKTOP.md`, versão 2): inventário, tabela de divergências, cópia de código, resultados e pesquisa para o repositório, correção deste arquivo com o estado real. Não depende de Tailscale nem de SSH, só do clone.
 3. [MAC ou DESKTOP] Resolver `01-artigo/PENDENCIAS.md` começando pelas 13 referências ausentes (conferir cada DOI no Crossref).
 4. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições (.docx com controle de alterações ou texto limpo).
 5. [AUTOR] E-mail para cartografia.ipp@prefeitura.rio pedindo a nuvem LiDAR e o MDS de 2024 do recorte do Jacarezinho.
