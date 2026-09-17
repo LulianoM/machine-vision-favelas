@@ -150,7 +150,7 @@
       <h3>Repositório único preparado</h3>
       <ul>
         <li>Estrutura pronta no Mac</li>
-        <li>GitHub privado: <b>aguarda aprovação</b></li>
+        <li>GitHub privado: <b>criado e publicado</b></li>
         <li>Tailscale, SSH e migração do desktop: <b>pendentes</b></li>
       </ul>
     </div>
@@ -161,7 +161,6 @@
       <h2>Próximos passos</h2>
       <!-- ESTADO: passos -->
       <ol class="steps">
-        <li><div><span class="who you">AUTOR</span>Aprovar a criação do repositório privado e o push inicial.</div></li>
         <li><div><span class="who you">AUTOR</span>No desktop: Tailscale, OpenSSH e clone do repositório (comandos abaixo).</div></li>
         <li><div><span class="who">DESKTOP</span>Migrar scripts evoluídos, RESULTADOS.md e métricas para o repositório. Atualizar o estado real do treino.</div></li>
         <li><div><span class="who">MAC / DESKTOP</span>Resolver as pendências do rascunho, começando pelas 13 referências ausentes. Cada DOI conferido no Crossref.</div></li>
@@ -260,7 +259,7 @@ winget install tailscale.tailscale</pre><button type="button" data-copy="c1">Cop
           <div class="cmd"><pre id="c2">gh auth login
 mkdir C:\projetos
 gh repo clone LulianoM/machine-vision-favelas C:\projetos\machine-vision-favelas</pre><button type="button" data-copy="c2">Copiar</button></div>
-          <p class="note">Só funciona depois que o repositório privado for criado (passo 1 da lista acima).</p>
+          <p class="note">O repositório já existe e é privado: o <code>gh auth login</code> precisa ser feito com a conta LulianoM.</p>
         </div>
       </details>
       <details>
@@ -299,7 +298,7 @@ ssh desktop "nvidia-smi --query-gpu=name,memory.used,memory.total --format=csv"<
     <!-- ESTADO: diario (entrada mais recente primeiro, no máximo 5) -->
     <div class="log">
       <span class="when">2026-09-17 · [MAC]</span>
-      <p>Pasta AIM2027 separada em <code>dossie-conferencia/</code> e <code>machine-vision-favelas/</code>. Três pastas soltas fundidas na estrutura numerada do pacote de 11/09. Rascunhos do orientador arquivados, v2 dividida em 8 seções, 24 pendências verificadas. Criados CLAUDE.md, STATUS.md, DIARIO.md, contexto acumulado e guias de setup do desktop.</p>
+      <p>Pasta AIM2027 separada em <code>dossie-conferencia/</code> e <code>machine-vision-favelas/</code>. Três pastas soltas fundidas na estrutura numerada do pacote de 11/09. Rascunhos do orientador arquivados, v2 dividida em 8 seções, 24 pendências verificadas. Criados CLAUDE.md, STATUS.md, DIARIO.md, contexto acumulado e guias de setup do desktop. Repositório privado criado no GitHub, primeiro commit com o texto verbatim da v2.</p>
     </div>
   </section>
 
