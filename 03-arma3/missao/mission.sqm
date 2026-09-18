@@ -1,0 +1,150 @@
+version=53;
+class EditorData
+{
+	moveGridStep=1;
+	angleGridStep=0.2617994;
+	scaleGridStep=1;
+	autoGroupingDist=10;
+	toggles=1;
+	class ItemIDProvider
+	{
+		nextID=5;
+	};
+	class MarkerIDProvider
+	{
+		nextID=3;
+	};
+	class Camera
+	{
+		pos[]={5396.22,120.0,10334.70};
+		dir[]={0,-0.70710677,0.70710677};
+		up[]={0,0.70710677,0.70710677};
+		aside[]={1,0,0};
+	};
+};
+binarizationWanted=0;
+addons[]=
+{
+	"A3_Characters_F",
+	"A3_Ui_F"
+};
+class AddonsMetaData
+{
+	class List
+	{
+		items=2;
+		class Item0
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item1
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+	};
+};
+randomSeed=123456;
+class ScenarioData
+{
+	author="Glados";
+	onLoadMission="dsFavela - captura de dataset sintetico";
+	class Header
+	{
+		gameType="Singleplayer";
+		minPlayers=1;
+		maxPlayers=1;
+	};
+};
+class Mission
+{
+	class Intel
+	{
+		briefingName="dsFavela";
+		startWeather=0;
+		startWind=0;
+		startWaves=0;
+		forecastWeather=0;
+		forecastWind=0;
+		forecastWaves=0;
+		forecastLightnings=0;
+		year=2035;
+		month=6;
+		day=15;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+	class Entities
+	{
+		items=4;
+		class Item0
+		{
+			dataType="Marker";
+			position[]={5396.22,8.0,10334.70};
+			name="ds_centro_1";
+			type="Empty";
+			id=0;
+		};
+		class Item1
+		{
+			dataType="Marker";
+			position[]={5340.0,8.0,10290.0};
+			name="ds_centro_2";
+			type="Empty";
+			id=1;
+		};
+		class Item2
+		{
+			dataType="Marker";
+			position[]={5450.0,8.0,10380.0};
+			name="ds_centro_3";
+			type="Empty";
+			id=2;
+		};
+		class Item3
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5396.22,8.0,10334.70};
+					};
+					side="West";
+					flags=6;
+					class Attributes
+					{
+						isPlayer=1;
+						isPlayable=1;
+					};
+					id=4;
+					type="B_Soldier_F";
+				};
+			};
+			class Attributes
+			{
+			};
+			id=3;
+		};
+		class LinkIDProvider
+		{
+			nextID=0;
+		};
+		class Links
+		{
+			items=0;
+		};
+	};
+};

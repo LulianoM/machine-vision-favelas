@@ -26,15 +26,15 @@
 if (!hasInterface) exitWith {};
 
 // ---------------- PARÂMETROS ----------------
-DS_N_IMAGENS      = 500;
+DS_N_IMAGENS      = 30;
 DS_PREFIXO        = "ds";
 DS_MIN_UNIDADES   = 1;
 DS_MAX_UNIDADES   = 8;
 DS_RAIO_CENA      = 25;      // metros em torno do centro para espalhar unidades
-DS_ALT_MIN        = 25;      // altitude da câmera em metros (acima do terreno)
-DS_ALT_MAX        = 110;
-DS_PITCH_MIN      = 45;      // 90 = câmera apontando para baixo (nadir)
-DS_PITCH_MAX      = 89;
+DS_ALT_MIN        = 95;      // altitude da câmera em metros (acima do terreno)
+DS_ALT_MAX        = 105;
+DS_PITCH_MIN      = 60;      // 90 = câmera apontando para baixo (nadir)
+DS_PITCH_MAX      = 90;
 DS_FOV_MIN        = 0.45;
 DS_FOV_MAX        = 0.90;
 DS_PROB_ARMADO    = 0.5;     // probabilidade de spawnar classe militar/bandido
@@ -68,8 +68,9 @@ if (_centros isEqualTo []) then {
     if ((toLower _x) find "ds_centro" == 0) then { _centros pushBack (getMarkerPos _x); };
   } forEach allMapMarkers;
 };
-if (_centros isEqualTo []) exitWith {
-  hint "capturaDataset: nenhum centro. Crie marcadores ds_centro_1, ds_centro_2... ou preencha DS_CENTROS.";
+if (_centros isEqualTo []) then {
+  _centros = [getPos player];
+  hint "capturaDataset: sem centros; usando a posicao do jogador. Para varias cenas, crie marcadores ds_centro_1, ds_centro_2... no editor.";
 };
 
 private _res = getResolution;

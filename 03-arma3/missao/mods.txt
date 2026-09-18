@@ -1,0 +1,10 @@
+# id_steam | nome | pasta
+450814997   CBA_A3          @cba_a3
+497660133   CUP_Weapons     @cup_weapons
+823636749   MLO             @mlo
+2127118261  RJFAC           @rjfac
+2223739438  BRAF            @braf
+1195440524  OPESP           @opesp
+2938490553  BFMMAPS         @bfmmaps
+2748362927  BFMSTRUCTURES   @bfmstructures
+3027801658  favela-props    @favelaprops

@@ -1,3 +1,5 @@
+> Nota de 2026-09-18 [DESKTOP]: este pipeline foi tentado no desktop em 2026-09-11 e abandonado na mesma noite, sem nenhuma imagem capturada. O experimento que de fato rodou está em `07-blender/`. O que restou da tentativa (missão, mods, automação por OCR) está em `missao/` e `scripts/windows/`. Ver `docs/DIVERGENCIAS.md`, itens 1 e 14.
+
 # Pipeline: ARMA 3 -> bounding box -> YOLO -> teste em imagem real
 
 Objetivo: reproduzir e fechar o pipeline iniciado em 2022 (Fábio Guimarães e Luciano Figueira, UFRJ) e produzir os números que a Seção 7 do artigo precisa: mAP em dado sintético, mAP zero-shot em dado real e mAP após fine-tuning com pouco dado real.
