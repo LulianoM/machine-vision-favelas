@@ -6,7 +6,7 @@ Artigo em coautoria (mestrando FGV EBAPE + orientador prof. Hélio Arthur Reis I
 
 | Máquina | Papel | O que só existe nela |
 |---|---|---|
-| DESKTOP (Windows, GPU, sempre ligado) | Central. ARMA 3, geração de dataset, treino YOLO, avaliação | Datasets, screenshots, pesos `.pt`, `runs/` completos |
+| DESKTOP (Windows, GPU, sempre ligado) | Central. Blender headless (o ARMA 3 foi abandonado em 11/09), OpenDroneMap, geração de dataset, treino YOLO, avaliação | Datasets, fotogrametria e cenas `.blend`, pesos `.pt`, `runs/` completos. Tudo em `C:\arma3-favela\`, inventariado em `06-resultados/ONDE-ESTAO-OS-DADOS.md` |
 | MAC (MacBook Air M1 8 GB) | Cliente leve. Acesso remoto ao desktop e escrita do artigo quando offline | Conectores locais (Obsidian), memórias antigas do Claude |
 
 A memória automática do Claude Code é local por máquina e NÃO é compartilhada. Tudo que o outro lado precisa saber vai para arquivo versionado aqui, nunca só para a memória.
@@ -32,18 +32,19 @@ DIARIO.md                 diário de bordo das duas máquinas
   resumo-artigo-v2.md     resumo por seção
   ferramentas/            docx_para_secoes.py (rodar de novo quando chegar v3)
 02-projeto-ufrj-2022/     histórico do projeto drone PCERJ/UFRJ (Miceli, Fábio Guimarães)
-03-arma3/                 pipeline ARMA 3 -> bounding box -> YOLO (README-PIPELINE.md + scripts)
+03-arma3/                 pipeline ARMA 3 -> bounding box -> YOLO (README-PIPELINE.md + scripts). Tentado em 11/09, sem dado gerado
 04-bibliografia/          índices e notas versionados; PDFs ficam fora do git
 05-levantamento-3d/       levantamento técnico de 12/09: de onde vem a geometria da favela
 06-resultados/            o que o desktop produz: RESULTADOS.md, métricas, figuras leves
+07-blender/               pipeline que de fato rodou: Blender headless -> bounding box -> YOLO (README.md + scripts)
 painel/                   fonte HTML do painel web (artifact) do projeto
-docs/                     guias de setup, briefing do pacote de 11/09, contexto acumulado
+docs/                     guias de setup, briefing do pacote de 11/09, contexto acumulado, DIVERGENCIAS.md, AMBIENTE-DESKTOP.md
 ```
 
 ## Regras duras
 
 - Nunca inventar número, métrica, citação ou DOI. Métrica só entra no artigo se estiver em `06-resultados/` com o comando que a gerou. DOI só depois de conferido no Crossref.
-- Dados sensíveis: os ortomosaicos do Jacarezinho e de Manguinhos são dados operacionais da PCERJ. Não entram no git, em artifact, em pacote, nem em serviço externo. Nenhuma coordenada em nível de endereço, nenhuma imagem que identifique morador.
+- Dados sensíveis: os ortomosaicos do Jacarezinho e de Manguinhos são dados operacionais da PCERJ. Não entram no git, em artifact, em pacote, nem em serviço externo. Nenhuma coordenada em nível de endereço, nenhuma imagem que identifique morador. Vale também para tudo que DERIVA deles: malhas e DSM do OpenDroneMap, cenas `.blend`, renders dos datasets `odm` e `cid150`, mosaicos `train_batch` e `val_batch` desses treinos, e logs com coordenada. Só o braço `v3` (OSM + Poly Haven) pode ser ilustrado.
 - Fora do git (ver `.gitignore`): datasets, screenshots do ARMA, pesos, `runs/`, PDFs de papers, zips. Binário grande trafega por cópia direta entre as máquinas (scp/rsync via Tailscale), não pelo GitHub.
 - Texto entregue ao autor ou ao orientador: sem travessão. Usar vírgula, dois-pontos ou parênteses. O manuscrito herdado do orientador ainda tem travessões; removê-los é item de `PENDENCIAS.md`.
 - Documento acadêmico para leitura sai em PDF ou .docx, não como página estilizada. O painel web é só para estado do projeto.
