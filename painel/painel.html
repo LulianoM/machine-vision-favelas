@@ -120,10 +120,10 @@
   <header>
     <div>
       <h1>Painel Favelas Verticais</h1>
-      <p class="sub">Artigo "Machine Vision from the Global South" e o experimento de dados sintéticos (ARMA 3 para YOLO). Estado compartilhado entre o MacBook e o desktop.</p>
+      <p class="sub">Artigo "Machine Vision from the Global South" e o experimento de dados sintéticos (Blender para YOLO; o ARMA 3 foi tentado e abandonado). Estado compartilhado entre o MacBook e o desktop.</p>
     </div>
     <!-- ESTADO: carimbo -->
-    <p class="stamp">atualizado em <b>2026-09-17</b><br>por <b>[MAC]</b></p>
+    <p class="stamp">atualizado em <b>2026-09-18</b><br>por <b>[DESKTOP]</b></p>
   </header>
 
   <!-- ESTADO: blocos -->
@@ -133,26 +133,28 @@
       <h3>v2 do orientador, 6.304 palavras</h3>
       <ul>
         <li>Dividido em <b>8 seções</b> editáveis</li>
-        <li><b>24 pendências</b> verificadas, 0 resolvidas</li>
+        <li><b>28 pendências</b> verificadas, 0 resolvidas</li>
         <li>O download de 17/09 é idêntico à v2: <b>não há v3</b></li>
       </ul>
     </div>
-    <div class="bbox unk">
-      <span class="tag">experimento · fora do repo</span>
-      <h3>Modelo já treinado no desktop</h3>
+    <div class="bbox pend">
+      <span class="tag">experimento · só sintético</span>
+      <h3>5 treinos em Blender, nenhum teste em imagem real</h3>
       <ul>
-        <li>Relato do autor em 17/09. <b>Nada chegou ao repositório</b></li>
-        <li>Há pesquisa feita lá a partir do e-mail de 12/09</li>
-        <li>Próximo: <b>prompt de reconciliação</b> no desktop</li>
+        <li>Motor: <b>Blender 5.2 headless</b>. O ARMA 3 não gerou nenhuma imagem</li>
+        <li>Melhor no sintético: <b>mAP50 0,676</b> (run cid150_s, 560 imagens 4K a 150 m)</li>
+        <li>Ladrilhar em escala nativa: mAP50 de <b>0,116 para 0,561</b> nas mesmas 120 imagens</li>
+        <li>Sim-to-real: <b>não medido</b>. VisDrone ainda não foi baixado</li>
+        <li>4 divergências esperam decisão do autor (<code>docs/DIVERGENCIAS.md</code>)</li>
       </ul>
     </div>
     <div class="bbox pend">
       <span class="tag">infra · em montagem</span>
-      <h3>Repositório único preparado</h3>
+      <h3>Desktop reconciliado com o repositório</h3>
       <ul>
-        <li>Estrutura pronta no Mac</li>
-        <li>GitHub privado: <b>criado e publicado</b></li>
-        <li>Tailscale, SSH e migração do desktop: <b>pendentes</b></li>
+        <li>Clone em <code>C:\projetos</code>, código e resultados <b>publicados</b> em 18/09</li>
+        <li>Dados, pesos e venv continuam em <code>C:\arma3-favela</code></li>
+        <li>Tailscale e SSH: <b>pendentes</b> (menos urgentes: Blender roda sem tela)</li>
       </ul>
     </div>
   </div>
@@ -162,11 +164,12 @@
       <h2>Próximos passos</h2>
       <!-- ESTADO: passos -->
       <ol class="steps">
-        <li><div><span class="who you">AUTOR</span>No desktop: Tailscale, OpenSSH e clone do repositório (comandos abaixo).</div></li>
-        <li><div><span class="who">DESKTOP</span>Rodar o prompt de reconciliação: inventário, divergências, código, resultados e pesquisa para o repositório. Só precisa do clone, não de Tailscale.</div></li>
+        <li><div><span class="who you">AUTOR</span>Decidir as 4 divergências abertas em <code>docs/DIVERGENCIAS.md</code>: ARMA 3 ou Blender no texto, o papel dos braços com dado sensível, como reportar armado e desarmado, blender-mcp.</div></li>
+        <li><div><span class="who">DESKTOP</span>Sim-to-real no VisDrone: baixar, converter para classe única de pessoa, zero-shot, ajuste fino com 5 a 10% de real, sintético mais real. São os três números do artigo.</div></li>
+        <li><div><span class="who you">AUTOR</span>Pedir ao IPP (cartografia.ipp@prefeitura.rio) a nuvem LiDAR e o MDS de 2024 do Jacarezinho.</div></li>
+        <li><div><span class="who">DESKTOP</span>Refazer a "cidade de sólidos" sobre a ortofoto aberta do IPP, para ter um braço de geometria real sem dado sensível. Tirar os caminhos absolutos dos scripts.</div></li>
         <li><div><span class="who">MAC / DESKTOP</span>Resolver as pendências do rascunho, começando pelas 13 referências ausentes. Cada DOI conferido no Crossref.</div></li>
         <li><div><span class="who you">AUTOR</span>Devolver a lista de pendências ao orientador e combinar o formato das edições.</div></li>
-        <li><div><span class="who you">AUTOR</span>Pedir ao IPP (cartografia.ipp@prefeitura.rio) a nuvem LiDAR e o MDS de 2024 do Jacarezinho.</div></li>
       </ol>
     </section>
 
@@ -194,7 +197,7 @@
       <div class="link">git pull / push</div><div class="gap"></div><div class="link dup">git pull / push</div>
       <div class="node"><b>MacBook</b><small>cliente leve, escrita offline</small></div>
       <div class="link">Tailscale<br>ssh · scp · tela remota</div>
-      <div class="node main"><b>Desktop Windows</b><small>central: ARMA 3, datasets, treino, pesos</small></div>
+      <div class="node main"><b>Desktop Windows</b><small>central: Blender, ODM, datasets, treino, pesos</small></div>
     </div>
     <p class="note">Obsidian é leitor, não transporte. Google Drive serve para o .docx do orientador e para os binários que já estão lá. Cloudflare Tunnel só entra se um dia for preciso mostrar algo do desktop a terceiros. A justificativa completa está em <code>docs/ARQUITETURA.md</code>.</p>
   </section>
@@ -211,7 +214,7 @@
           <tr><td class="mono">03-methodology.md</td><td class="n">416</td><td><div class="bar"><i style="width:32%"></i></div></td><td>Remete a uma "Section 6" que não existe</td></tr>
           <tr><td class="mono">04-situating-the-study.md</td><td class="n">1.145</td><td><div class="bar"><i style="width:89%"></i></div></td><td>Wikipedia citada três vezes</td></tr>
           <tr><td class="mono">05-case-jacarezinho.md</td><td class="n">387</td><td><div class="bar"><i style="width:30%"></i></div></td><td>"Ad Infinitum" citado como autor, a conferir</td></tr>
-          <tr><td class="mono">06-results-proposed-model.md</td><td class="n">289</td><td><div class="bar"><i style="width:22%"></i></div></td><td>Conceitual. Recebe os números do experimento</td></tr>
+          <tr><td class="mono">06-results-proposed-model.md</td><td class="n">289</td><td><div class="bar"><i style="width:22%"></i></div></td><td>Conceitual. "No model has been trained" já é falso: ver pendências C5 e D4 a D8</td></tr>
           <tr><td class="mono">07-conclusion.md</td><td class="n">1.115</td><td><div class="bar"><i style="width:87%"></i></div></td><td>Falta o fecho. Resíduo de XML em Delimitations</td></tr>
           <tr><td class="mono">08-references.md</td><td class="n">660</td><td><div class="bar"><i style="width:51%"></i></div></td><td>Título "eferences". Dois formatos misturados</td></tr>
         </tbody>
@@ -224,7 +227,7 @@
           <tr><td>A. Estrutura</td><td class="n">5</td><td class="n">0</td></tr>
           <tr><td>B. Referências</td><td class="n">10</td><td class="n">0</td></tr>
           <tr><td>C. Texto</td><td class="n">5</td><td class="n">0</td></tr>
-          <tr><td>D. Conteúdo novo a incorporar</td><td class="n">4</td><td class="n">0</td></tr>
+          <tr><td>D. Conteúdo novo a incorporar</td><td class="n">8</td><td class="n">0</td></tr>
         </tbody>
       </table>
     </div>
@@ -238,7 +241,7 @@
       <div class="slot"><span class="v">sem número</span><span class="k">mAP com 5 a 10% de dado real</span></div>
       <div class="slot"><span class="v">sem número</span><span class="k">mAP com sintético mais real</span></div>
     </div>
-    <p class="note">Regra do projeto: número só aparece aqui e no artigo se estiver em <code>06-resultados/</code> com o comando que o gerou.</p>
+    <p class="note">Conferido pelo desktop em 18/09: os três continuam sem número porque nenhum teste em imagem real foi rodado. O que existe é validação no próprio sintético (mAP50 de 0,561, 0,646 e 0,676 em três conjuntos diferentes), com origem em <code>06-resultados/RESULTADOS.md</code>. Regra do projeto: número só aparece aqui e no artigo se estiver em <code>06-resultados/</code> com o comando que o gerou.</p>
   </section>
 
   <section>
@@ -279,8 +282,8 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 ssh desktop "nvidia-smi --query-gpu=name,memory.used,memory.total --format=csv"</pre><button type="button" data-copy="c4">Copiar</button></div>
         </div>
       </details>
-      <details open>
-        <summary>5. Reconciliar o desktop com o repositório <span class="where">DESKTOP · CLAUDE CODE</span></summary>
+      <details>
+        <summary>5. Reconciliar o desktop com o repositório <span class="where">FEITO EM 18/09 · GUARDADO PARA REGISTRO</span></summary>
         <div class="dbody">
           <p class="note">Pode ser feito antes dos passos 1, 3 e 4: só precisa do <code>gh</code> e do clone, e o próprio prompt cuida disso. Abra o Claude Code na pasta de trabalho atual do desktop e cole o bloco abaixo. Ele para três vezes para você aprovar: depois do inventário, depois da tabela de divergências e antes de mudar a base de trabalho.</p>
           <div class="cmd"><pre id="c5" class="long">Contexto. Este projeto (artigo "Machine Vision from the Global South" e o experimento ARMA 3 para YOLO) viveu até hoje em duas máquinas que não se enxergavam. Você, no desktop, avançou muito: pipeline, datasets, modelo treinado, e uma pesquisa feita a partir do e-mail de 12/09. O MacBook, em paralelo, reorganizou o projeto num repositório git privado que passa a ser a fonte única de verdade: https://github.com/LulianoM/machine-vision-favelas. O lado do Mac NÃO sabe nada do que aconteceu aqui; os arquivos de lá dizem "estado desconhecido" e "nada treinado", e isso está desatualizado. Sua tarefa é reconciliar os dois lados dentro do repositório, sem perder nada daqui e sem apagar nada de lá. Espere divergências e trate cada uma às claras.
@@ -358,7 +361,7 @@ Me diga o que é preciso para passar a trabalhar só em `C:\projetos\machine-vis
       <details>
         <summary>6. Tela do desktop no Mac <span class="where">AS DUAS</span></summary>
         <div class="dbody">
-          <p class="note">O ARMA 3 precisa de interface gráfica, e SSH não mostra janela. Opção simples: Parsec (host no desktop, cliente no Mac, mesma conta). Opção aberta: Sunshine no desktop e Moonlight no Mac, conectando em <code>desktop</code> pelo Tailscale.</p>
+          <p class="note">Deixou de ser urgente: o pipeline em Blender roda sem interface gráfica, por SSH. Só é preciso tela remota para inspecionar uma cena no Blender ou se o ARMA 3 voltar. Opção simples: Parsec (host no desktop, cliente no Mac, mesma conta). Opção aberta: Sunshine no desktop e Moonlight no Mac, conectando em <code>desktop</code> pelo Tailscale.</p>
         </div>
       </details>
     </div>
@@ -367,6 +370,10 @@ Me diga o que é preciso para passar a trabalhar só em `C:\projetos\machine-vis
   <section>
     <h2>Diário</h2>
     <!-- ESTADO: diario (entrada mais recente primeiro, no máximo 5) -->
+    <div class="log">
+      <span class="when">2026-09-18 · [DESKTOP]</span>
+      <p>Reconciliação com o repositório. Inventário da pasta real do desktop (44 GB). Descoberto: o experimento rodou em Blender e não no ARMA 3; três dos quatro braços usam fotogrametria de dado sensível, que não saiu do desktop; as classes são pessoa armada e desarmada; nenhum teste em imagem real existe; a pesquisa a partir do e-mail de 12/09 não foi feita lá. Publicados: <code>07-blender/</code>, <code>06-resultados/</code> com ficha do experimento e 5 runs, <code>docs/DIVERGENCIAS.md</code> com 14 itens (4 abertos para o autor), ambiente e contexto. Três citações conferidas no Crossref e no arXiv.</p>
+    </div>
     <div class="log">
       <span class="when">2026-09-17 · [MAC]</span>
       <p>Pasta AIM2027 separada em <code>dossie-conferencia/</code> e <code>machine-vision-favelas/</code>. Três pastas soltas fundidas na estrutura numerada do pacote de 11/09. Rascunhos do orientador arquivados, v2 dividida em 8 seções, 24 pendências verificadas. Criados CLAUDE.md, STATUS.md, DIARIO.md, contexto acumulado e guias de setup do desktop. Repositório privado criado no GitHub, primeiro commit com o texto verbatim da v2.</p>
