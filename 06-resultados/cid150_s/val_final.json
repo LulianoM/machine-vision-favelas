@@ -1,0 +1,10 @@
+{
+  "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\cid150_s\\weights\\best.pt",
+  "val_sintetico": {
+    "metrics/precision(B)": 0.6643,
+    "metrics/recall(B)": 0.6654,
+    "metrics/mAP50(B)": 0.676,
+    "metrics/mAP50-95(B)": 0.3272,
+    "fitness": 0.3272
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "resumo": {
+    "pesos": "runs/detect/cid150_s/weights/best.pt",
+    "data": "teste_denso",
+    "imagens": 40,
+    "gt_total": 1749,
+    "TP": 1305,
+    "FP": 261,
+    "FN": 444,
+    "precisao": 0.8333,
+    "recall": 0.7461,
+    "f1": 0.7873,
+    "acuracia_classe_entre_casadas": 0.7594,
+    "recall_armado": 0.7265,
+    "recall_desarmado": 0.7964,
+    "matriz_confusao_gt_x_pred": [
+      [
+        502,
+        189
+      ],
+      [
+        125,
+        489
+      ]
+    ],
+    "conf": 0.25,
+    "gt_por_imagem": 43.7
+  },
+  "por_imagem": [
+    {
+      "img": "den_000001.jpg",
+      "gt": 57,
+      "pred": 48,
+      "tp": 40
+    },
+    {
+      "img": "den_000002.jpg",
+      "gt": 45,
+      "pred": 43,
+      "tp": 43
+    },
+    {
+      "img": "den_000003.jpg",
+      "gt": 32,
+      "pred": 30,
+      "tp": 23
+    },
+    {
+      "img": "den_000004.jpg",
+      "gt": 49,
+      "pred": 49,
+      "tp": 37
+    },
+    {
+      "img": "den_000005.jpg",
+      "gt": 51,
+      "pred": 43,
+      "tp": 34
+    },
+    {
+      "img": "den_000006.jpg",
+      "gt": 31,
+      "pred": 24,
+      "tp": 23
+    },
+    {
+      "img": "den_000007.jpg",
+      "gt": 60,
+      "pred": 54,
+      "tp": 41
+    },
+    {
+      "img": "den_000008.jpg",
+      "gt": 50,
+      "pred": 50,
+      "tp": 40
+    },
+    {
+      "img": "den_000009.jpg",
+      "gt": 36,
+      "pred": 34,
+      "tp": 24
+    },
+    {
+      "img": "den_000010.jpg",
+      "gt": 43,
+      "pred": 34,
+      "tp": 28
+    },
+    {
+      "img": "den_000011.jpg",
+      "gt": 31,
+      "pred": 30,
+      "tp": 28
+    },
+    {
+      "img": "den_000012.jpg",
+      "gt": 39,
+      "pred": 33,
+      "tp": 26
+    },
+    {
+      "img": "den_000013.jpg",
+      "gt": 57,
+      "pred": 53,
+      "tp": 47
+    },
+    {
+      "img": "den_000014.jpg",
+      "gt": 38,
+      "pred": 36,
+      "tp": 35
+    },
+    {
+      "img": "den_000015.jpg",
+      "gt": 49,
+      "pred": 49,
+      "tp": 47
+    },
+    {
+      "img": "den_000016.jpg",
+      "gt": 33,
+      "pred": 35,
+      "tp": 28
+    },
+    {
+      "img": "den_000017.jpg",
+      "gt": 54,
+      "pred": 43,
+      "tp": 38
+    },
+    {
+      "img": "den_000018.jpg",
+      "gt": 52,
+      "pred": 44,
+      "tp": 38
+    },
+    {
+      "img": "den_000019.jpg",
+      "gt": 31,
+      "pred": 32,
+      "tp": 23
+    },
+    {
+      "img": "den_000020.jpg",
+      "gt": 38,
+      "pred": 37,
+      "tp": 30
+    },
+    {
+      "img": "den_000021.jpg",
+      "gt": 41,
+      "pred": 41,
+      "tp": 36
+    },
+    {
+      "img": "den_000022.jpg",
+      "gt": 34,
+      "pred": 34,
+      "tp": 30
+    },
+    {
+      "img": "den_000023.jpg",
+      "gt": 44,
+      "pred": 39,
+      "tp": 36
+    },
+    {
+      "img": "den_000024.jpg",
+      "gt": 59,
+      "pred": 57,
+      "tp": 48
+    },
+    {
+      "img": "den_000025.jpg",
+      "gt": 55,
+      "pred": 43,
+      "tp": 38
+    },
+    {
+      "img": "den_000026.jpg",
+      "gt": 37,
+      "pred": 30,
+      "tp": 25
+    },
+    {
+      "img": "den_000027.jpg",
+      "gt": 46,
+      "pred": 38,
+      "tp": 30
+    },
+    {
+      "img": "den_000028.jpg",
+      "gt": 43,
+      "pred": 36,
+      "tp": 30
+    },
+    {
+      "img": "den_000029.jpg",
+      "gt": 37,
+      "pred": 29,
+      "tp": 21
+    },
+    {
+      "img": "den_000030.jpg",
+      "gt": 53,
+      "pred": 43,
+      "tp": 37
+    },
+    {
+      "img": "den_000031.jpg",
+      "gt": 38,
+      "pred": 31,
+      "tp": 27
+    },
+    {
+      "img": "den_000032.jpg",
+      "gt": 45,
+      "pred": 41,
+      "tp": 28
+    },
+    {
+      "img": "den_000033.jpg",
+      "gt": 44,
+      "pred": 38,
+      "tp": 24
+    },
+    {
+      "img": "den_000034.jpg",
+      "gt": 44,
+      "pred": 38,
+      "tp": 33
+    },
+    {
+      "img": "den_000035.jpg",
+      "gt": 42,
+      "pred": 37,
+      "tp": 23
+    },
+    {
+      "img": "den_000036.jpg",
+      "gt": 37,
+      "pred": 31,
+      "tp": 29
+    },
+    {
+      "img": "den_000037.jpg",
+      "gt": 46,
+      "pred": 36,
+      "tp": 33
+    },
+    {
+      "img": "den_000038.jpg",
+      "gt": 40,
+      "pred": 34,
+      "tp": 30
+    },
+    {
+      "img": "den_000039.jpg",
+      "gt": 49,
+      "pred": 51,
+      "tp": 41
+    },
+    {
+      "img": "den_000040.jpg",
+      "gt": 39,
+      "pred": 38,
+      "tp": 33
+    }
+  ]
+}

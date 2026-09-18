@@ -1,0 +1,5 @@
+# Extrato de treino_v3_tiles2.log: linhas finais da validacao do Ultralytics sobre best.pt. Log completo so no desktop, em C:/arma3-favela/blender/treino_v3_tiles2.log
+#                Class     Images  Instances      Box(P          R      mAP50  mAP50-95)
+                   all         80        145      0.737      0.497      0.561      0.238
+         pessoa_armada         54         72      0.775        0.5      0.591      0.244
+      pessoa_desarmada         59         73      0.698      0.493      0.532      0.232

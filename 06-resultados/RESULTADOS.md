@@ -1,0 +1,305 @@
+# RESULTADOS
+
+Trazido do desktop em 2026-09-18 [DESKTOP]. A primeira parte (ficha) foi montada na reconciliação, conferindo cada número no arquivo de origem. A segunda parte é o `RESULTADOS-BLENDER.md` escrito no desktop em 12 e 13/09, sem alteração de conteúdo.
+
+Aviso de leitura: o experimento NÃO rodou no ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado no mesmo dia sem gerar nenhuma imagem (ver `docs/DIVERGENCIAS.md`, item 1). Tudo abaixo é Blender 5.2 em modo headless. O código está em `07-blender/scripts/`.
+
+## Ficha do experimento para o artigo
+
+Convenções desta ficha: caminhos relativos são relativos a `06-resultados/`. Caminhos `C:\...` existem só no desktop (ver `ONDE-ESTAO-OS-DADOS.md`). Todos os comandos rodaram a partir de `C:\arma3-favela\blender\` com `BL` = `C:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe` e `PY` = `C:\arma3-favela\venv\Scripts\python.exe`.
+
+### 1. Datasets
+
+Classes em todos: `0 pessoa_armada`, `1 pessoa_desarmada` (origem: `data.yaml` de cada dataset). Contagens feitas em 2026-09-17 lendo os `.txt` de `labels/`.
+
+| Dataset | Base da cena | Usa dado PCERJ | Imagens train / val | Caixas train / val | Armada / desarmada | Resolução |
+|---|---|---|---|---|---|---|
+| `dataset_v3` | Footprints OSM do Jacarezinho + SRTM + materiais Poly Haven + densificação procedural | Não | 103 / 17 | 594 / 77 | 355 / 316 | 3840x2160 |
+| `dataset_v3_tiles` | Ladrilhos de 1280 px do anterior, sobreposição 20% | Não | 520 / 80 | 1.028 / 145 | 598 / 575 | 1280x1280 |
+| `dataset_odm` | Malha texturizada de fotogrametria (ODM) do setor Sudoeste | Sim (textura e geometria) | 105 / 15 | 750 / 107 | 450 / 407 | 3840x2160 |
+| `dataset_odm_tiles` | Ladrilhos do anterior | Sim | 595 / 87 | 1.348 / 203 | 822 / 729 | 1280x1280 |
+| `dataset_cid150` | "Cidade de sólidos": prédios segmentados do DSM do ODM, paredes verticais com PBR, laje com foto do ortomosaico misturada a concreto | Sim (geometria, e textura nas lajes) | 473 / 87 | 4.856 / 889 | 2.977 / 2.768 | 3840x2160 |
+| `dataset_cid150_tiles` | Ladrilhos do anterior, 5% de ladrilhos vazios mantidos | Sim | 2.377 / 437 | 8.646 / 1.593 | 5.253 / 4.986 | 1280x1280 |
+| `teste_angulos` | Mesma cidade, semente nova, ângulo e lente mais abertos | Sim | 0 / 60 | 0 / 596 | 310 / 286 | 3840x2160 |
+| `teste_denso` | Mesma cidade, multidão | Sim | 0 / 40 | 0 / 1.749 | 890 / 859 | 3840x2160 |
+
+Convenção de anotação: AMODAL, recortada na borda do quadro. A caixa é o envelope 2D de todos os vértices deformados do corpo e da arma projetados na câmera, inclusive os encobertos por prédio (`07-blender/scripts/people_mpfb.py`, função `bbox_2d`). A pessoa só é anotada se pelo menos 35% de 14 pontos amostrados do corpo têm linha de visão livre até a câmera (função `visibility`, parâmetro `--min-vis 0.35`). Lado mínimo da caixa: 0,2% do quadro (`--min-lado 0.002`). É a mesma lógica do VisDrone (objeto inteiro), com corte de visibilidade mínima.
+
+Comandos que geraram os datasets:
+
+```
+# dataset_v3 (origem: run_batch_v3.sh)
+BL -b --python gen_jacarezinho.py -- --area jacarezinho --out dataset_v3 --n 120 --res 3840 2160 --samples 48 --seed 2026 --pitch 55 90 --rebuild-every 6
+PY post_process.py --data dataset_v3 --seed 7
+PY tile_dataset.py --data dataset_v3 --out dataset_v3_tiles --tile 1280 --overlap 0.2
+
+# dataset_odm (origem: dataset_real.sh)
+BL -b --python gen_odm.py -- --out dataset_odm --n 120 --res 3840 2160 --samples 40 --seed 5051 --pitch 55 90 --people 5 10 --repool-every 10
+PY post_process.py --data dataset_odm --seed 11 --blur 0.8 1.4
+PY tile_dataset.py --data dataset_odm --out dataset_odm_tiles --tile 1280 --overlap 0.2
+
+# dataset_cid150, teste_angulos, teste_denso (origem: run_batch_cidade.sh)
+COMUM="--blend C:/arma3-favela/odm/quadra.blend --samples 32 --alt 150 --alt-jitter 12 --margem 150"
+BL -b --python gen_cidade.py -- $COMUM --out dataset_cid150 --n 560 --seed 11 --pitch 50 90 --lens 30 50 --people 6 14 --val 0.15
+BL -b --python gen_cidade.py -- $COMUM --out teste_angulos --n 60 --seed 77 --stamp ang --pitch 40 90 --lens 28 55 --people 6 14 --val 1.0
+BL -b --python gen_cidade.py -- $COMUM --out teste_denso --n 40 --seed 99 --stamp den --pitch 50 90 --lens 30 50 --people 30 60 --raio 22 --grupo 0.7 --grupo-n 3 8 --val 1.0
+PY post_process.py --data <cada um> --seed 5 --keep-png
+PY tile_dataset.py --data dataset_cid150 --out dataset_cid150_tiles --tile 1280 --overlap 0.2 --keep-empty 0.05
+```
+
+### 2. Randomização da cena (medida, não nominal)
+
+Faixas efetivamente sorteadas, lidas de `manifests/<dataset>.jsonl` (uma linha por imagem, gravada pelo gerador).
+
+| Dataset | Altitude (m) | Pitch (graus, 90 = nadir) | Lente (mm, sensor 36) | Elevação do sol | Azimute do sol | Pessoas por cena | Luz |
+|---|---|---|---|---|---|---|---|
+| `dataset_v3` | 92,3 a 107,7 | 55,1 a 90,0 | 20,0 a 30,0 | 22,2 a 77,4 | 1,1 a 354,4 | 4 a 9 | céu físico 78, HDRI 42 |
+| `dataset_odm` | 92,4 a 107,9 | 55,1 a 89,5 | 20,2 a 29,8 | 45,1 a 53,9 | -11,8 a 11,7 | 5 a 10 | HDRI + sol fraco, 120 |
+| `dataset_cid150` | 138,1 a 162,0 | 50,0 a 89,9 | 30,1 a 50,0 | 28,0 a 71,9 | 0,0 a 359,5 | 6 a 17 | sol livre |
+| `teste_angulos` | 139,1 a 162,0 | 43,7 a 89,8 | 28,2 a 54,1 | 28,4 a 71,4 | 4,7 a 345,5 | 6 a 17 | sol livre |
+| `teste_denso` | 138,9 a 160,8 | 50,6 a 87,3 | 30,1 a 49,6 | 29,0 a 69,8 | 11,3 a 351,4 | 31 a 61 | sol livre |
+
+Leitura importante: no `dataset_odm` o sol quase não varia (elevação 45 a 54, azimute dentro de 12 graus do norte). Não é descuido: a textura da fotogrametria já tem a sombra das 11h55 de 02/08/2022 gravada no pixel, então o gerador prende o sol perto da direção real. É exatamente o eixo que Liao et al. 2026 mostram custar cerca de 10 pontos de mAP50 quando não é variado. Ver `docs/DIVERGENCIAS.md`, item 5.
+
+Outros eixos randomizados (origem: `07-blender/README.md`, seção "O que a cena v3 contém", e o código): yaw livre de 0 a 360, fração de armados 0,5 (`--prob-armado`), pool de 6 humanos MPFB por lote com idade, sexo, biotipo, roupa e pose sorteados, poses nomeadas no `cid150` (parado, andando, sentado, lado, costas, empunhando, braços cruzados), pavimentos de 1 a 5, adição em laje, cobertura, caixa d'água, props. Pós-processamento de câmera (`post_process.py`): ruído de sensor, desfoque, aberração cromática, vinheta, neblina, compressão JPEG.
+
+### 3. Modelo e hiperparâmetros
+
+Script: `07-blender/scripts/train_yolo_win.py`. Aumentos fixos no script: `hsv_h=0.015, hsv_s=0.6, hsv_v=0.4, degrees=10, scale=0.4, fliplr=0.5, mosaic=1.0, patience=15`. Demais valores: padrão do Ultralytics 8.4.148 (`optimizer=auto, lr0=0.01, amp=true, seed=0`). Origem de cada linha: `<run>/args.yaml`.
+
+| Run | Pesos iniciais | Dataset | Épocas pedidas / feitas | imgsz | batch | workers |
+|---|---|---|---|---|---|---|
+| `blender_v3` | yolo11n.pt (COCO) | `dataset_v3` | 40 / 40 | 1536 | 4 | 4 |
+| `blender_v3_tiles` | yolo11s.pt (COCO) | `dataset_v3_tiles` | 60 / 7 (processo morto por falta de RAM) | 1280 | 4 | 4 |
+| `blender_v3_tiles2` | `best.pt` do run anterior | `dataset_v3_tiles` | 60 / 60 | 1280 | 4 | 2 |
+| `blender_odm_tiles` | yolo11s.pt (COCO) | `dataset_odm_tiles` | 60 / 60 | 1280 | 4 | 2 |
+| `cid150_s` | yolo11s.pt (COCO) | `dataset_cid150_tiles` | 60 / 60 | 1280 | 6 | 4 |
+
+Comando tipo (os outros mudam `--data`, `--model`, `--batch`, `--workers`, `--name`):
+
+```
+PY train_yolo_win.py --data dataset_cid150_tiles/data.yaml --model yolo11s.pt --epochs 60 --imgsz 1280 --batch 6 --workers 4 --name cid150_s
+```
+
+Ressalva para o artigo: o `blender_v3_tiles2` soma 7 + 60 épocas sobre o mesmo dataset, porque partiu do `best.pt` do run interrompido. Não é comparável época a época com os outros.
+
+### 4. Hardware e tempo
+
+Máquina: Ryzen 5 5600X, 32 GB de RAM, NVIDIA GeForce RTX 2060 de 6 GB, Windows 10 Pro, PyTorch 2.14.0+cu126 (detalhes em `docs/AMBIENTE-DESKTOP.md`).
+
+| Etapa | Tempo | Origem |
+|---|---|---|
+| Render `dataset_v3` (120 imagens 4K, Cycles 48 amostras) | 91 min somados, 25 a 29 s por imagem típica (uma imagem isolada levou 452 s com a máquina disputada) | `manifests/dataset_v3.jsonl`, campo `render_s` |
+| Render `dataset_odm` (120 imagens 4K, 40 amostras) | 36 min, 16 a 20 s por imagem | `manifests/dataset_odm.jsonl` |
+| Render `dataset_cid150` (560 imagens 4K, 32 amostras) | 398 min (6 h 38 min), 41 a 49 s por imagem | `manifests/dataset_cid150.jsonl` |
+| Treino `blender_v3` | 1.223 s (20 min) | `blender_v3/results.csv`, coluna `time`, última linha |
+| Treino `blender_v3_tiles` (7 épocas) | 4.585 s (76 min, máquina disputada com Blender e ODM) | `blender_v3_tiles/results.csv` |
+| Treino `blender_v3_tiles2` | 2.155 s (36 min) | `blender_v3_tiles2/results.csv` |
+| Treino `blender_odm_tiles` | 2.325 s (39 min) | `blender_odm_tiles/results.csv` |
+| Treino `cid150_s` | 32.025 s (8 h 54 min) | `cid150_s/results.csv` |
+
+### 5. Métricas no sintético
+
+Validação do `best.pt` no split `val` do próprio dataset, feita automaticamente ao fim de `train_yolo_win.py` (`modelo.val(data=..., imgsz=...)`). Origem do agregado: `<run>/val_final.json`. Origem das linhas por classe: `<run>/val_por_classe.txt` (extrato do log de treino).
+
+| Run | Classe | Precisão | Recall | mAP50 | mAP50-95 |
+|---|---|---|---|---|---|
+| `blender_v3` (4K reduzido a 1536) | todas | 0,272 | 0,186 | 0,116 | 0,031 |
+| `blender_v3_tiles2` (ladrilhos 1280) | todas | 0,737 | 0,497 | 0,561 | 0,238 |
+| | pessoa_armada | 0,775 | 0,500 | 0,591 | 0,244 |
+| | pessoa_desarmada | 0,698 | 0,493 | 0,532 | 0,232 |
+| `blender_odm_tiles` | todas | 0,616 | 0,639 | 0,646 | 0,340 |
+| | pessoa_armada | 0,634 | 0,550 | 0,611 | 0,287 |
+| | pessoa_desarmada | 0,598 | 0,727 | 0,681 | 0,392 |
+| `cid150_s` | todas | 0,664 | 0,665 | 0,676 | 0,327 |
+| | pessoa_armada | 0,712 | 0,665 | 0,732 | 0,358 |
+| | pessoa_desarmada | 0,617 | 0,666 | 0,620 | 0,297 |
+
+Os conjuntos de validação são diferentes entre si: a tabela não ordena pipelines, só mostra que cada fonte produz dado aprendível. A única comparação controlada é `blender_v3` contra `blender_v3_tiles2` (mesmas 120 imagens, muda a escala de treino): mAP50 de 0,116 para 0,561.
+
+Teste do `cid150_s` em imagem 4K inteira com inferência fatiada (conf 0,25, IoU 0,5), em conjuntos sintéticos de semente nova:
+
+```
+PY eval_cidade.py --pesos runs/detect/cid150_s/weights/best.pt --data teste_angulos --out aval_angulos
+PY eval_cidade.py --pesos runs/detect/cid150_s/weights/best.pt --data teste_denso --out aval_denso
+```
+
+A linha de comando exata não ficou gravada em arquivo: foi reconstruída a partir dos campos `pesos`, `data` e `conf` dos JSON de saída e dos valores padrão do script (`--tile 1280 --overlap 0.2 --conf 0.25 --iou-match 0.5`). Rodar de novo reproduz os números, porque o script não tem componente aleatório.
+
+| Conjunto | Imagens | Caixas | TP / FP / FN | Precisão | Recall | F1 | Acurácia armado x desarmado entre caixas casadas | Origem |
+|---|---|---|---|---|---|---|---|---|
+| `teste_angulos` | 60 | 596 | 493 / 72 / 103 | 0,873 | 0,827 | 0,849 | 0,781 | `cid150_s/teste_angulos.json` |
+| `teste_denso` | 40 | 1.749 | 1.305 / 261 / 444 | 0,833 | 0,746 | 0,787 | 0,759 | `cid150_s/teste_denso.json` |
+
+Estes dois testes são sintético contra sintético, na mesma cidade, com a mesma biblioteca de pessoas e a mesma arma. Não são sim-to-real.
+
+### 6. Métricas em imagem real (os três números do artigo)
+
+| Número | Valor | Situação |
+|---|---|---|
+| mAP no VisDrone, zero-shot | NÃO EXISTE | Nenhuma avaliação em imagem real foi feita. O VisDrone não está no disco do desktop |
+| mAP com 5 a 10% de dado real | NÃO EXISTE | Idem |
+| mAP sintético mais real | NÃO EXISTE | Idem |
+
+O script já tem o caminho pronto (`train_yolo_win.py --eval-only --weights <best.pt> --real visdrone_yolo/data.yaml --single-cls`), e `03-arma3/scripts/visdrone_to_yolo.py` converte o VisDrone. Falta baixar o VisDrone-DET, converter mantendo só `pedestrian` e `people` numa classe única, e rodar. Observação de desenho: o VisDrone voa mais baixo do que 100 a 150 m e não tem a classe "armada", então o zero-shot mede detecção de pessoa (classe única), não a distinção armado e desarmado.
+
+### 7. Números sem arquivo de origem
+
+Nenhum dos números desta ficha ficou sem origem. Os números da narrativa abaixo que não constam de arquivo copiado para cá estão marcados:
+
+- "9 das 13 pessoas encontradas, 12 previsões" e "10 de 14 pessoas, 14 previsões" (folhas de `preview_deteccao.py`): [SEM ARQUIVO DE ORIGEM] no repositório. As folhas existem no desktop como PNG (`C:\arma3-favela\odm\exemplo_treino_final.png` e `exemplo_malha_real.png`), a segunda com textura PCERJ. Contagem feita a olho na sessão de 12/09. Não usar no artigo.
+- "38 previsões para 13 pessoas" com o modelo anterior: [SEM ARQUIVO DE ORIGEM]. Não usar.
+- Tempos "23 min contra 20 s" do render com e sem subdivisão: origem em log do desktop (`C:\arma3-favela\blender\build_map_final.log` e `hq_preview.log`), não copiados porque trazem coordenadas. Podem ser citados como ordem de grandeza.
+
+---
+
+## Narrativa original do desktop (RESULTADOS-BLENDER.md, 12 e 13/09/2026)
+
+
+Atualizado em 2026-09-12. Este arquivo registra o que foi feito, o que funcionou, o que não funcionou e os números medidos. Escrito para virar insumo da Seção 7 do artigo.
+
+### 1. Reconstrução do Jacarezinho a partir das fotos da PCERJ
+
+As 567 fotos de agosto de 2022 (Zenmuse Z30, 1920x1080, nadir, 150 m de altura relativa, passo de 21,6 m) foram processadas no OpenDroneMap 3.6.2 nativo em Windows.
+
+| Setor | Fotos | Ortomosaico | Área coberta | Nuvem densa |
+|---|---|---|---|---|
+| Sudoeste | 217 | 7,4 cm/px | 707 x 680 m | 632 MB (cerca de 20 M pontos) |
+| Nordeste | 350 | 6,4 cm/px | 983 x 947 m | processada |
+
+Saídas por setor: ortomosaico GeoTIFF, modelo digital de superfície, nuvem densa e malha texturizada.
+
+Unindo os dois pelo georreferenciamento UTM real, sem ajuste manual, o mapa fica com **1.368 x 1.115 m**, cerca de 1,5 km².
+
+Observação importante para o artigo: as pastas "output" do Drive de 2022 estavam vazias. O processamento fotogramétrico da época se perdeu e foi inteiramente refeito aqui.
+
+### 2. Limite do dado, declarado
+
+Todas as 567 fotos são em nadir. Não existe nenhuma foto oblíqua. Consequência direta: as paredes verticais não têm textura própria e são esticadas a partir dos pixels do telhado e da rua. O mapa se sustenta de cima até cerca de 45 m de altura de câmera e derrete ao nível da rua.
+
+Isso importa para a tese do artigo. A morfologia vertical de favela (altura de edificação, adição em laje, transição de material) é justamente o que um voo em nadir captura pior. Um levantamento voltado a esse problema precisa de câmera oblíqua.
+
+### 3. Mapa navegável no Blender
+
+`build_map.py` monta um `.blend` único com:
+
+- malha de fotogrametria de cada setor, posicionada pelo UTM;
+- malha 2.5D do modelo de superfície com o ortomosaico aplicado, 25 cm por baixo, tapando buracos e bordas (1,16 milhão de faces sem dado removidas nos dois setores);
+- moldura de terreno fechando o horizonte, na cota do percentil 3 do terreno medida por 1.600 raios verticais;
+- sol calculado para a data e hora reais do voo: 02/08/2022, 11h55, elevação 49,4 graus, azimute 1,6 graus;
+- pessoas MPFB vestidas, colocadas por ray cast só onde a superfície é quase horizontal;
+- cinco câmeras e uma rota de voo animada.
+
+### Decisões de iluminação
+
+A textura da fotogrametria já traz o sol e as sombras gravados no pixel. Somar um sol forte escurece a cena duas vezes e a deixa azulada. A solução foi separar o que a câmera vê do que ilumina: o céu físico entra só por raio de câmera (nó Light Path), e a iluminação vem de um ambiente neutro levemente quente.
+
+### Desempenho: a lição mais cara
+
+O MPFB entrega cada peça de corpo e roupa com modificador de subdivisão. Numa vista de drone a 100 m a pessoa ocupa de 11 a 41 px, então subdividir não muda nada na imagem e multiplica o custo de avaliação da cena.
+
+| Render de um quadro, mapa com 200 pessoas | Com subdivisão | Sem subdivisão |
+|---|---|---|
+| Vista de topo | 23 min | 20 s |
+| Câmera de voo | não terminou | 8 s |
+
+O mesmo problema estava tornando a geração do dataset sobre a malha real inviável, a 10 minutos por imagem.
+
+### 4. Detector: o efeito do ladrilhamento
+
+Dataset v3 (favela procedural sobre footprints do OpenStreetMap): 120 imagens 4K, 671 caixas, classes pessoa_armada e pessoa_desarmada.
+
+O problema é de escala. Uma pessoa a 100 m ocupa de 11 a 41 px no 4K. Treinando com `imgsz=1536` a imagem encolhe 2,5 vezes e a pessoa vira de 4 a 16 px. O menor stride do YOLO é 8, então um alvo de 4 px praticamente não chega à rede.
+
+`tile_dataset.py` recorta o 4K em ladrilhos de 1280 px com 20% de sobreposição, preservando o tamanho original do alvo: 600 ladrilhos, 1.173 caixas.
+
+| Treino | Precisão | Recolocação | mAP50 | mAP50-95 |
+|---|---|---|---|---|
+| 4K reduzido para 1536, yolo11n, 40 épocas | 0,272 | 0,186 | 0,116 | 0,031 |
+| ladrilhos 1280 em escala nativa, yolo11s, época 5 | 0,354 | 0,461 | 0,296 | 0,113 |
+| ladrilhos 1280, yolo11s, treino completo | **0,737** | **0,497** | **0,561** | **0,238** |
+
+Por classe, no treino completo:
+
+| Classe | Precisão | Recolocação | mAP50 |
+|---|---|---|---|
+| pessoa_armada | 0,775 | 0,500 | 0,591 |
+| pessoa_desarmada | 0,698 | 0,493 | 0,532 |
+
+O ladrilhamento sozinho multiplicou o mAP50 por 4,8, de 0,116 para 0,561, sem mudar nada no dataset.
+Esse é o achado metodológico mais forte do experimento até aqui: em imagem aérea de favela a 100 m,
+a escolha de escala de treino pesa mais do que o volume de dados.
+
+### O que a folha de detecção mostra
+
+`preview_deteccao.py` monta uma folha com a anotação em verde e a previsão em vermelho ou azul.
+Em 6 ladrilhos de validação, com confiança mínima de 0,35: 9 das 13 pessoas encontradas e apenas
+12 previsões no total, com confiança tipicamente entre 0,7 e 0,8. Com o modelo anterior, o mesmo
+recorte dava 38 previsões para 13 pessoas.
+
+Sobre a distinção armado e desarmado: ela **funciona no dado sintético**, com mAP50 de 0,591 contra
+0,532. Isso contraria a expectativa inicial de que um fuzil de 3 ou 4 px seria indistinguível.
+A ressalva necessária para o artigo é que no sintético a arma é sempre o mesmo modelo, sempre na
+mesma posição em relação ao corpo e sempre com o mesmo contraste. Não há prova nenhuma de que essa
+separação sobreviva ao dado real, e a medida de sim-to-real ainda não foi feita. Reportar essa
+distinção como capacidade validada seria exatamente o tipo de salto que o artigo critica na
+literatura de policiamento aéreo.
+
+### 4b. Dataset sobre a malha real do Jacarezinho
+
+`gen_odm.py` coloca as pessoas MPFB sobre a malha de fotogrametria, por ray cast, só onde a
+superfície é quase horizontal, e renderiza com a câmera de drone. A imagem resultante tem
+**geometria e textura reais do Jacarezinho** com **anotação exata e sem custo humano**.
+
+120 imagens 4K, 857 caixas, 41 minutos de render (18 s por imagem). Ladrilhado em 1280 px:
+682 ladrilhos, 1.551 caixas.
+
+| Dataset (validação própria de cada um) | Precisão | Recolocação | mAP50 | mAP50-95 |
+|---|---|---|---|---|
+| v3 procedural (OSM + PBR + props) | 0,737 | 0,497 | 0,561 | 0,238 |
+| malha real do ODM | 0,616 | 0,639 | 0,646 | 0,340 |
+
+Ressalva metodológica: são dois conjuntos de validação diferentes, então os números não provam
+que um pipeline é melhor que o outro. O que eles mostram é que as duas fontes produzem dado
+aprendível, e que a malha real entrega recolocação e mAP50-95 sensivelmente maiores.
+
+Na folha de detecção sobre a malha real, com confiança 0,35: 10 de 14 pessoas encontradas,
+14 previsões. As falhas se concentram em pessoa sobre vegetação e em pessoa na borda do ladrilho.
+
+Limitação visível nessa imagem: a textura da malha vem de fotos 1080p a 150 m, ou seja, cerca de
+9 cm por pixel no solo. A pessoa aparece como uma mancha escura de poucos pixels, com muito menos
+contraste do que no dataset procedural, onde ela é renderizada em resolução plena. Isso é fiel ao
+que a câmera da PCERJ realmente capta, e por isso é o cenário mais honesto dos dois.
+
+### 5. Falhas encontradas e registradas
+
+- `train_yolo.py` do pacote original trava no Windows: executa o treino no nível do módulo, e o DataLoader com `workers > 0` reimporta o arquivo e dispara o treino dentro de cada worker. Corrigido em `train_yolo_win.py`.
+- A remalhagem do Sudoeste para 3 M e depois 1,5 M de faces parou de consumir CPU nas duas tentativas enquanto disputava memória com outros processos. Retomada isolada.
+- Um treino caiu por falta de RAM do sistema quando Blender, OpenDroneMap e os workers do DataLoader rodavam juntos numa máquina de 32 GB.
+- No Blender 5, `matrix_world` fica desatualizada depois de mover um objeto até chamar `view_layer.update()`. Isso fez o segundo setor entrar com limites errados e centrou as câmeras no lugar errado.
+- No Blender 5, o formato de vídeo só aparece depois de marcar `image_settings.media_type = 'VIDEO'`.
+
+### 6. Próximos passos
+
+1. Terminar o treino em ladrilhos e medir sim-to-real no VisDrone, zero-shot e com ajuste fino.
+2. Gerar o dataset sobre a malha real (`gen_odm.py`), agora viável com a correção de desempenho.
+3. Anotar à mão cerca de 50 pessoas nas fotos reais para ter um teste real interno.
+4. Segundo experimento do artigo: trocar a anotação de pessoa por edificação, usando os dados de pavimentos e footprint que o gerador já guarda.
+
+### Cidade de solidos a 150 m (13/09/2026): treino com 560 imagens e testes de acuracia
+
+Pipeline: `gen_cidade.py` sobre `odm/quadra.blend` (segmentacao DSM + build_cidade.py), pessoas v2 (people_mpfb),
+altitude 150 m +- 12 m, 4K, Cycles 32 amostras (~43 s por imagem), `post_process.py`, `tile_dataset.py` 1280 px,
+`train_yolo_win.py` YOLO11s 60 epocas imgsz 1280. Script da batelada: `run_batch_cidade.sh`. Avaliacao em imagem
+inteira com inferencia fatiada: `eval_cidade.py` (conf 0,25, IoU 0,5).
+
+| Conjunto | Imagens | Caixas | Precisao | Recall | F1 | Acuracia armado x desarmado (caixas casadas) |
+|---|---|---|---|---|---|---|
+| Treino/val (ladrilhos, val) | 473 / 87 (2814 ladrilhos) | 5745 | 0,664 | 0,665 | mAP50 0,676 (armada 0,732 / desarmada 0,620) | |
+| Teste angulos e luz (pitch 40 a 90, lente 28 a 55, sol livre, semente nova) | 60 | 596 | 0,873 | 0,827 | 0,849 | 0,781 (recall armado 0,773, desarmado 0,790) |
+| Teste multidao (30 a 60 pessoas, grupos de 3 a 8) | 40 | 1749 | 0,833 | 0,746 | 0,787 | 0,759 (recall armado 0,727, desarmado 0,796) |
+
+Leitura: a deteccao de pessoas a 150 m fica acima de 80% de F1 nos dois testes; a separacao armado x desarmado
+fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o recall cai (0,75) por oclusao mutua e
+por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
+Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.

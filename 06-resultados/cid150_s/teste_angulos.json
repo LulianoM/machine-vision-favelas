@@ -1,0 +1,391 @@
+{
+  "resumo": {
+    "pesos": "runs/detect/cid150_s/weights/best.pt",
+    "data": "teste_angulos",
+    "imagens": 60,
+    "gt_total": 596,
+    "TP": 493,
+    "FP": 72,
+    "FN": 103,
+    "precisao": 0.8726,
+    "recall": 0.8272,
+    "f1": 0.8493,
+    "acuracia_classe_entre_casadas": 0.7809,
+    "recall_armado": 0.7731,
+    "recall_desarmado": 0.7897,
+    "matriz_confusao_gt_x_pred": [
+      [
+        201,
+        59
+      ],
+      [
+        49,
+        184
+      ]
+    ],
+    "conf": 0.25,
+    "gt_por_imagem": 9.9
+  },
+  "por_imagem": [
+    {
+      "img": "ang_000001.jpg",
+      "gt": 7,
+      "pred": 5,
+      "tp": 4
+    },
+    {
+      "img": "ang_000002.jpg",
+      "gt": 11,
+      "pred": 8,
+      "tp": 8
+    },
+    {
+      "img": "ang_000003.jpg",
+      "gt": 10,
+      "pred": 10,
+      "tp": 8
+    },
+    {
+      "img": "ang_000004.jpg",
+      "gt": 13,
+      "pred": 12,
+      "tp": 8
+    },
+    {
+      "img": "ang_000005.jpg",
+      "gt": 8,
+      "pred": 8,
+      "tp": 6
+    },
+    {
+      "img": "ang_000006.jpg",
+      "gt": 5,
+      "pred": 6,
+      "tp": 5
+    },
+    {
+      "img": "ang_000007.jpg",
+      "gt": 9,
+      "pred": 9,
+      "tp": 9
+    },
+    {
+      "img": "ang_000008.jpg",
+      "gt": 13,
+      "pred": 12,
+      "tp": 12
+    },
+    {
+      "img": "ang_000009.jpg",
+      "gt": 5,
+      "pred": 5,
+      "tp": 3
+    },
+    {
+      "img": "ang_000010.jpg",
+      "gt": 7,
+      "pred": 5,
+      "tp": 4
+    },
+    {
+      "img": "ang_000011.jpg",
+      "gt": 6,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000012.jpg",
+      "gt": 8,
+      "pred": 10,
+      "tp": 8
+    },
+    {
+      "img": "ang_000013.jpg",
+      "gt": 9,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000014.jpg",
+      "gt": 9,
+      "pred": 9,
+      "tp": 7
+    },
+    {
+      "img": "ang_000015.jpg",
+      "gt": 14,
+      "pred": 11,
+      "tp": 11
+    },
+    {
+      "img": "ang_000016.jpg",
+      "gt": 7,
+      "pred": 7,
+      "tp": 7
+    },
+    {
+      "img": "ang_000017.jpg",
+      "gt": 9,
+      "pred": 9,
+      "tp": 9
+    },
+    {
+      "img": "ang_000018.jpg",
+      "gt": 5,
+      "pred": 4,
+      "tp": 2
+    },
+    {
+      "img": "ang_000019.jpg",
+      "gt": 6,
+      "pred": 6,
+      "tp": 6
+    },
+    {
+      "img": "ang_000020.jpg",
+      "gt": 13,
+      "pred": 13,
+      "tp": 13
+    },
+    {
+      "img": "ang_000021.jpg",
+      "gt": 8,
+      "pred": 8,
+      "tp": 8
+    },
+    {
+      "img": "ang_000022.jpg",
+      "gt": 7,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000023.jpg",
+      "gt": 12,
+      "pred": 14,
+      "tp": 12
+    },
+    {
+      "img": "ang_000024.jpg",
+      "gt": 14,
+      "pred": 13,
+      "tp": 11
+    },
+    {
+      "img": "ang_000025.jpg",
+      "gt": 13,
+      "pred": 11,
+      "tp": 10
+    },
+    {
+      "img": "ang_000026.jpg",
+      "gt": 13,
+      "pred": 13,
+      "tp": 12
+    },
+    {
+      "img": "ang_000027.jpg",
+      "gt": 14,
+      "pred": 12,
+      "tp": 11
+    },
+    {
+      "img": "ang_000028.jpg",
+      "gt": 12,
+      "pred": 12,
+      "tp": 9
+    },
+    {
+      "img": "ang_000029.jpg",
+      "gt": 12,
+      "pred": 13,
+      "tp": 11
+    },
+    {
+      "img": "ang_000030.jpg",
+      "gt": 10,
+      "pred": 11,
+      "tp": 10
+    },
+    {
+      "img": "ang_000031.jpg",
+      "gt": 10,
+      "pred": 10,
+      "tp": 6
+    },
+    {
+      "img": "ang_000032.jpg",
+      "gt": 12,
+      "pred": 12,
+      "tp": 12
+    },
+    {
+      "img": "ang_000033.jpg",
+      "gt": 11,
+      "pred": 9,
+      "tp": 7
+    },
+    {
+      "img": "ang_000034.jpg",
+      "gt": 17,
+      "pred": 17,
+      "tp": 17
+    },
+    {
+      "img": "ang_000035.jpg",
+      "gt": 6,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000036.jpg",
+      "gt": 5,
+      "pred": 5,
+      "tp": 4
+    },
+    {
+      "img": "ang_000037.jpg",
+      "gt": 14,
+      "pred": 12,
+      "tp": 11
+    },
+    {
+      "img": "ang_000038.jpg",
+      "gt": 12,
+      "pred": 9,
+      "tp": 7
+    },
+    {
+      "img": "ang_000039.jpg",
+      "gt": 7,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000040.jpg",
+      "gt": 8,
+      "pred": 8,
+      "tp": 5
+    },
+    {
+      "img": "ang_000041.jpg",
+      "gt": 8,
+      "pred": 7,
+      "tp": 7
+    },
+    {
+      "img": "ang_000042.jpg",
+      "gt": 6,
+      "pred": 4,
+      "tp": 4
+    },
+    {
+      "img": "ang_000043.jpg",
+      "gt": 14,
+      "pred": 14,
+      "tp": 14
+    },
+    {
+      "img": "ang_000044.jpg",
+      "gt": 6,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000045.jpg",
+      "gt": 6,
+      "pred": 7,
+      "tp": 6
+    },
+    {
+      "img": "ang_000046.jpg",
+      "gt": 12,
+      "pred": 8,
+      "tp": 4
+    },
+    {
+      "img": "ang_000047.jpg",
+      "gt": 7,
+      "pred": 6,
+      "tp": 6
+    },
+    {
+      "img": "ang_000048.jpg",
+      "gt": 6,
+      "pred": 6,
+      "tp": 6
+    },
+    {
+      "img": "ang_000049.jpg",
+      "gt": 13,
+      "pred": 15,
+      "tp": 11
+    },
+    {
+      "img": "ang_000050.jpg",
+      "gt": 11,
+      "pred": 10,
+      "tp": 9
+    },
+    {
+      "img": "ang_000051.jpg",
+      "gt": 12,
+      "pred": 12,
+      "tp": 12
+    },
+    {
+      "img": "ang_000052.jpg",
+      "gt": 10,
+      "pred": 9,
+      "tp": 9
+    },
+    {
+      "img": "ang_000053.jpg",
+      "gt": 14,
+      "pred": 13,
+      "tp": 11
+    },
+    {
+      "img": "ang_000054.jpg",
+      "gt": 8,
+      "pred": 8,
+      "tp": 8
+    },
+    {
+      "img": "ang_000055.jpg",
+      "gt": 14,
+      "pred": 11,
+      "tp": 9
+    },
+    {
+      "img": "ang_000056.jpg",
+      "gt": 12,
+      "pred": 13,
+      "tp": 12
+    },
+    {
+      "img": "ang_000057.jpg",
+      "gt": 11,
+      "pred": 11,
+      "tp": 10
+    },
+    {
+      "img": "ang_000058.jpg",
+      "gt": 13,
+      "pred": 10,
+      "tp": 9
+    },
+    {
+      "img": "ang_000059.jpg",
+      "gt": 12,
+      "pred": 11,
+      "tp": 10
+    },
+    {
+      "img": "ang_000060.jpg",
+      "gt": 10,
+      "pred": 10,
+      "tp": 7
+    }
+  ]
+}

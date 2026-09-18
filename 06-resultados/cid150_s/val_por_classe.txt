@@ -1,0 +1,5 @@
+# Extrato de treino_cid150.log: linhas finais da validacao do Ultralytics sobre best.pt. Log completo so no desktop, em C:/arma3-favela/blender/treino_cid150.log
+#                Class     Images  Instances      Box(P          R      mAP50  mAP50-95)
+                   all        437       1593      0.664      0.665      0.676      0.327
+         pessoa_armada        338        824      0.712      0.665      0.732      0.358
+      pessoa_desarmada        325        769      0.617      0.666       0.62      0.297
