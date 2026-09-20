@@ -50,12 +50,15 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 1. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 2. [DESKTOP] Sim-to-real no VisDrone: baixar o VisDrone-DET, converter com `03-arma3/scripts/visdrone_to_yolo.py` para classe única de pessoa, rodar zero-shot com `blender_v3_tiles2` e `cid150_s`, depois ajuste fino com 5 a 10% de real, depois sintético mais real. São os três números do artigo.
-3. [AUTOR] E-mail para cartografia.ipp@prefeitura.rio pedindo a nuvem LiDAR e o MDS de 2024 do recorte do Jacarezinho. Continua sendo a ação de maior alavancagem.
-4. [DESKTOP] Baixar recorte da ortofoto do IPP de 2024 e refazer a "cidade de sólidos" sobre ela, para ter um braço de geometria real sem dado sensível.
-5. [DESKTOP] Tirar os caminhos absolutos dos scripts (proposta no item 13 de `docs/DIVERGENCIAS.md`).
-6. [MAC ou DESKTOP] Resolver `01-artigo/PENDENCIAS.md` começando pelas 13 referências ausentes (conferir cada DOI no Crossref).
-7. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições.
-8. [AUTOR, quando quiser] Seguir `docs/SETUP-DESKTOP.md` para Tailscale e OpenSSH.
+3. [DESKTOP] Tirar os caminhos absolutos dos scripts (proposta no item 13 de `docs/DIVERGENCIAS.md`).
+4. [MAC ou DESKTOP] Resolver `01-artigo/PENDENCIAS.md` começando pelas 13 referências ausentes (conferir cada DOI no Crossref).
+5. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições.
+6. [AUTOR, quando quiser] Seguir `docs/SETUP-DESKTOP.md` para Tailscale e OpenSSH.
+
+**Descartado pelo autor em 2026-09-20:** o e-mail ao IPP pedindo LiDAR e MDS de 2024, e o braço
+de "cidade de sólidos" sobre a ortofoto do IPP. Não perseguir de novo. Consequência a assumir no
+texto: o único braço livre de dado PCERJ passa a ser o procedural (`gen_jacarezinho.py` sobre
+OSM e `gen_morro.py`), e é dele que saem as figuras publicáveis.
 
 ## Bloqueios
 
