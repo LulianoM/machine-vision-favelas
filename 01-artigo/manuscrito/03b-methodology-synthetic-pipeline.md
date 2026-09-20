@@ -60,12 +60,16 @@ most clearly reads as a grid of boxes rather than a favela. Storey count is draw
 low-frequency noise field rather than independently per dwelling, so that taller and shorter zones
 form, as they do on a real hillside.
 
+<!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 4K (4.88 cm/px). All geometry is authored by the generator and all materials are public domain. The three construction stages described above are visible: shared party walls with 0.5 to 1.2 m alleys, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
+
 Roof surfaces carry the objects that occupy them in use: water tanks in three commercial volumes,
 clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, and exposed
 reinforcement bar awaiting a further storey. Aerial cabling spans between rooftop anchor points.
 These are not decoration. At the ground sampling distance of the target sensor they are the
 dominant source of local clutter, and Section 6.3 shows that this clutter, rather than
 illumination level, governs how hard a person is to detect.
+
+<!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training, which is conducted entirely from the aerial camera, and is shown because it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
 ### 3.3 Camera model
 
@@ -99,6 +103,8 @@ boxes. In a settlement this dense the discard rate is substantial and expected: 
 retains roughly half the figures placed, the remainder being invisible in the alley from directly
 above.
 
+<!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 6.-->
+
 ### 3.5 Domain randomisation over illumination
 
 Liao et al. (2026) measure that removing variation in sun position, weather, and viewing angle
@@ -112,6 +118,8 @@ haze, heavy overcast, and rain. The angular diameter of the sun is what separate
 physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees the cast shadow
 effectively disappears, which is what a covered sky does. Mean frame luminance across the six
 regimes spans 38 to 110 of 255.
+
+<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Mean frame luminance runs from 110 (haze) to 38 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
 The dataset sweeps the regimes in order rather than sampling them, so that a small corpus remains
 balanced, and the regime of each image is written to its manifest entry. This permits the
