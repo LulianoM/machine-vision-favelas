@@ -1,0 +1,37 @@
+{
+ "weights": "C:\\arma3-favela\\blender\\runs\\detect\\morro_clima_s\\weights\\best.pt",
+ "imgsz": 640,
+ "conf": 0.001,
+ "resultados": [
+  {
+   "metrics/precision(B)": 0.1088,
+   "metrics/recall(B)": 0.1483,
+   "metrics/mAP50(B)": 0.0769,
+   "metrics/mAP50-95(B)": 0.0189,
+   "fitness": 0.0189,
+   "conjunto": "sintetico",
+   "data": "ds_morro_clima_tiles/data.yaml",
+   "single_cls": false
+  },
+  {
+   "metrics/precision(B)": 0.0381,
+   "metrics/recall(B)": 0.0313,
+   "metrics/mAP50(B)": 0.0055,
+   "metrics/mAP50-95(B)": 0.002,
+   "fitness": 0.002,
+   "conjunto": "real",
+   "data": "C:/arma3-favela/visdrone/visdrone_yolo/data.yaml",
+   "single_cls": true
+  },
+  {
+   "metrics/precision(B)": 0.041,
+   "metrics/recall(B)": 0.0369,
+   "metrics/mAP50(B)": 0.0061,
+   "metrics/mAP50-95(B)": 0.0009,
+   "fitness": 0.0009,
+   "conjunto": "real_gsd",
+   "data": "C:/arma3-favela/visdrone/visdrone_yolo_gsd/data.yaml",
+   "single_cls": true
+  }
+ ]
+}

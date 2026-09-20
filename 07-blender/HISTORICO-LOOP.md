@@ -340,3 +340,45 @@ em sol duro**, ao contrário do que a intuição sugere. Vale medir quando o tre
 confirmar é resultado para o artigo, porque contraria a escolha usual de voar em dia claro.
 
 A chuva é o pior caso em termos absolutos, com 6,6 DN, ou seja 2,5 vezes menos que o sol duro.
+
+## Primeiro sim-to-real do projeto, e por que o número não vale ainda
+
+Treino em `ds_morro_clima_tiles` (335 ladrilhos de 640 px, 1198 caixas, YOLO11s, 120 épocas) e
+avaliação em três conjuntos. Resultado em `06-resultados/sim2real_morro_v1.json`:
+
+| Conjunto | P | R | mAP50 | mAP50-95 |
+|---|---|---|---|---|
+| sintético | 0,109 | 0,148 | 0,0769 | 0,0189 |
+| real (VisDrone val) | 0,038 | 0,031 | 0,0055 | 0,0020 |
+| real_gsd (escala casada) | 0,041 | 0,037 | 0,0061 | 0,0009 |
+
+**Estes não são números sobre sim-to-real.** O modelo falhou no próprio mundo (0,077 contra
+0,676 do melhor run anterior), e não se mede transferência de um modelo que não aprendeu.
+
+### A causa, medida
+
+| Dataset | Resolução | Imagens de treino | GSD | Alvo mediana | Abaixo de 8 px |
+|---|---|---|---|---|---|
+| `dataset_cid150` | 3840x2160 | 473 | 4,88 cm/px | **24,6 px** | 0% |
+| `dataset_v3` | 3840x2160 | 103 | 3,25 cm/px | 28,0 px | 0% |
+| `ds_morro_clima` | 1920x1080 | 40 | 9,76 cm/px | **10,1 px** | **25%** |
+
+Dois erros meus, somados:
+
+1. **Renderizei em 1920x1080 e não em 4K.** A câmera Z30 real grava 1080p, então usar 1920x1080
+   parecia o mais fiel. Mas o que decide se a rede enxerga o alvo é a GSD, e reduzir a resolução
+   pela metade dobra a GSD e corta o alvo pela metade: de 24,6 px para 10,1 px, com 25% das
+   caixas caindo abaixo do menor stride do YOLO. Os braços anteriores do projeto renderizavam em
+   4K justamente por isso, e eu não verifiquei antes de escolher.
+2. **40 imagens de treino contra 473.** Comparei por número de CAIXAS (684 contra 671 do `v3`) e
+   concluí que era comparável. Não é: caixa em imagem repetida não traz a variação de cena que o
+   treino precisa.
+
+### Correção a uma afirmação anterior deste documento
+
+Eu havia registrado que o VisDrone tem alvo 2,49 vezes maior que o nosso sintético, e tratei
+isso como um domain shift inerente de altitude entre o projeto e o benchmark. **Está errado.** O
+alvo mediano do `cid150` é de 24,6 px e o do VisDrone val é de 25,0 px: praticamente idênticos.
+A diferença de 2,49 vezes era artefato da MINHA escolha de resolução, não propriedade do
+projeto. O controle de escala em `avalia_sim2real.py` continua valendo como verificação, mas
+deixa de ser necessário para o braço em 4K.
