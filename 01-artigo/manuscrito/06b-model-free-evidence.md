@@ -1,117 +1,150 @@
-## Model-Free Evidence
+## 8. Model-Free Evidence
 
-> **Status note, 2026-09-20.** Every figure in this section is a direct measurement over image
-> and annotation files, computed before any detector was trained and independent of whether any
-> detector succeeds. Sources are given per table. Section 7 reports detector performance and
-> currently carries `[X]` placeholders where measurement is still running.
+> **Provenance note.** Every figure in this section is a direct measurement over image and
+> annotation files, computed before any detector was trained and independent of whether any
+> detector succeeds. Each table names the corpus, the acquisition geometry recorded in its
+> manifest, and the instance count. Section 10 reports detector performance and currently carries
+> `[X]` where measurement is still running.
 
-Before reporting any detector performance, we characterise the problem the detector is being
-asked to solve. This ordering is deliberate. Aerial person detection in dense informal settlement
-is frequently discussed in terms of scene realism, and the implicit assumption is that a corpus
-which looks more like a favela will transfer better. The three measurements below show that the
-variables which actually govern difficulty are not the ones that realism addresses, and two of
-them are invisible in any appearance metric.
+Before reporting detector performance we characterise the problem the detector is asked to solve.
+The ordering follows the convention of this venue, in which model-free evidence precedes
+estimation. It is also substantive here: aerial person detection in dense informal settlement is
+usually discussed in terms of scene realism, and the implicit assumption is that a corpus which
+looks more like a favela will transfer better. The measurements below identify two variables that
+govern difficulty and that no appearance metric captures.
 
-### 6.1 The target is smaller than the sensor specification suggests
+Three corpora are used, and their acquisition geometry differs in ways that matter, so the
+parameters are stated rather than implied.
+
+| Corpus | Geometry recorded in manifest | Render | Instances |
+|---|---|---|---|
+| `dataset_cid150` | pitch 50.0 to 89.9 deg (median 70.0), lens 30.1 to 50.0 mm, altitude 138 to 162 m | 3840 x 2160 | 4,856 (train split) |
+| `dataset_cid150`, near-nadir subset | pitch at or above 88 deg, 32 of 560 images | 3840 x 2160 | 293 |
+| `ds_morro_clima` | pitch 0.0 to 3.5 deg from nadir, 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
+| VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
+
+`dataset_cid150` is an earlier arm of this project built on photogrammetric terrain, and it is
+used here only as a second independent sample of synthetic geometry. It is not the corpus
+described in Section 3, which is `ds_morro_clima` and its 4K successor. Keeping the two separate
+matters, because a measurement reported below changes sign depending on which is used, and an
+earlier version of this analysis conflated them.
+
+### 8.1 Ground sampling distance, not sensor resolution, sets the target size
 
 A person viewed from directly above does not present their height. The vertical dimension, which
-is the one that makes a person conspicuous in a ground-level or oblique image, is precisely the
-dimension that does not project in nadir. What the camera records is the plan of the figure:
-roughly 0.48 metres shoulder to shoulder.
+makes a person conspicuous in a ground level or oblique image, is exactly the dimension that does
+not project in nadir. What the camera records is the plan of the figure, roughly 0.48 metres
+shoulder to shoulder.
 
-At 150 metres with the survey sensor this produces the following, measured over the annotation
-files of three corpora:
-
-| Corpus | Render resolution | GSD | Median target, long side | Below 8 px |
+| Corpus | Render | GSD | Median long side | Below 8 px |
 |---|---|---|---|---|
-| Synthetic, 4K | 3840 x 2160 | 4.88 cm/px | 24.6 px | 0 per cent |
-| Synthetic, 1080p | 1920 x 1080 | 9.76 cm/px | 10.1 px | 25 per cent |
-| VisDrone-DET val (real) | mixed, mostly 1360 x 765 | not applicable | 25.0 px | 2 per cent |
+| `dataset_cid150` | 3840 x 2160 | 4.88 cm/px | 24.6 px | 0.0 per cent |
+| `ds_morro_clima` | 1920 x 1080 | 9.76 cm/px | 10.1 px | 25 per cent |
+| VisDrone-DET val | not applicable | not applicable | 25.0 px | 1.7 per cent |
 
-*Sources: label files of `dataset_cid150` (4,856 instances), `ds_morro_clima` (565 instances) and
-the converted VisDrone validation split (13,969 instances). The smallest stride of the detector is
-8 pixels.*
+*Measured over the label files named in the table above. The smallest stride of the detector is 8
+pixels, so an instance below that size occupies less than one cell of the finest feature map.*
 
-Two consequences follow, and they point in opposite directions.
+Two consequences follow, pointing in opposite directions.
 
 The first is a caution about our own headline figure. The survey camera records at 1080p. A single
-frame from that camera at 150 metres therefore delivers a 10 pixel target, with a quarter of all
-instances falling below one stride of the network. Rendering at 4K delivers a 24.6 pixel target.
-Synthetic imagery rendered at 4K is thus materially easier than a single real frame from the
-sensor it claims to reproduce, and any performance figure must declare the ground sampling
-distance to which it refers. The photogrammetric orthomosaic produced from the same flight falls
-between the two, at 6.4 to 7.4 cm per pixel, because it is stitched from overlapping frames.
+frame from that camera at 150 metres delivers a 10 pixel target, with a quarter of all instances
+below one stride of the network. Rendering at 4K delivers 24.6 pixels. Synthetic imagery rendered
+at 4K is therefore materially easier than a single real frame from the sensor it reproduces, and
+any performance figure must declare the ground sampling distance to which it refers. The
+photogrammetric orthomosaic built from the same flight falls between the two, at 6.4 to 7.4 cm per
+pixel, because it is stitched from overlapping frames.
 
-The second is favourable and was initially mistaken for a problem. Measured at 4K, the median
-synthetic target is 24.6 pixels and the median real benchmark target is 25.0 pixels. In apparent
-size, the corpus and the benchmark are matched almost exactly. An earlier version of this analysis
-reported a 2.49-fold scale gap between the two and attributed it to an altitude domain shift; that
-gap was an artefact of a rendering resolution choice on our side, not a property of either corpus,
-and is withdrawn.
+The second was initially mistaken for a problem. At 4K the median synthetic target is 24.6 pixels
+and the median real benchmark target is 25.0 pixels. An earlier version of this analysis reported
+a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain shift.
+That gap was an artefact of rendering our own corpus at 1920 by 1080, not a property of either
+corpus, and the claim is withdrawn.
 
-### 6.2 Apparent size is matched; apparent shape is not
+We report medians rather than claiming distributional equivalence. Two medians agreeing does not
+establish that two distributions agree, and the comparison below is where the distributions in
+fact separate.
 
-Size, however, is the wrong statistic. A detector learns a silhouette, not an area. Measuring the
-aspect ratio of the same annotation sets gives:
+### 8.2 Apparent size is comparable; apparent shape is not, and it varies with pitch
 
-| Corpus | Median width | Median height | Median h/w | h/w at 90th pct |
+Size is the wrong statistic. A detector learns a silhouette, not an area. Measuring the aspect
+ratio of the same annotation sets, and separating the synthetic corpus by the camera pitch
+recorded in its manifest, gives:
+
+| Corpus and geometry | Median width | Median height | Median h/w | Instances |
 |---|---|---|---|---|
-| VisDrone-DET val (real) | 12.0 px | 25.0 px | **2.20** | 3.17 |
-| Synthetic, nadir at 150 m | 18.5 px | 22.9 px | **1.24** | 2.07 |
+| `dataset_cid150`, pitch at or above 88 deg | 20.8 px | 19.1 px | **0.93** | 293 |
+| `ds_morro_clima`, pitch 0 to 3.5 deg from nadir | 8.3 px | 8.2 px | **0.98** | 565 |
+| `dataset_cid150`, all pitches (median 70 deg) | 18.5 px | 22.9 px | 1.24 | 4,856 |
+| `dataset_cid150`, pitch at or below 60 deg | 16.5 px | 25.5 px | 1.56 | 1,263 |
+| VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
-*Sources: as above, 13,969 and 4,856 instances respectively.*
+*Pitch is taken from the manifest entry of each image, not estimated from the imagery.*
 
-The two corpora contain targets of comparable pixel area and incompatible shape. A height-to-width
-ratio of 2.20 is a standing human figure recorded from an oblique viewpoint. A ratio of 1.24 is
-the plan of a head and shoulders recorded from above. These are not two samples of one appearance
-distribution; they are two different objects as far as the detector is concerned.
+Two synthetic corpora built by different generators, on different terrain, at different render
+resolutions, agree to within 0.05 when both are restricted to true nadir: 0.93 and 0.98. The
+quantity then rises monotonically as the camera is tilted, reaching 1.56 at 40 degrees off nadir,
+and the real benchmark sits at 2.20. This is an ordered relationship across five samples rather
+than a contrast between two, which is what permits the interpretation.
 
-This is the domain shift that matters here, and it is invisible to every appearance-based measure
-of realism. A generator could be made arbitrarily more photorealistic without moving this number
-at all. It is also, unlike photorealism, cheap to manipulate: it is a property of where the camera
-is placed, not of how the scene is built. Section 7 reports the S-oblique arm, in which the same
-generator renders the same settlement from a camera calibrated to this measured ratio, and
-Section 8.2 treats the difference between the two arms as the isolated cost of capture geometry.
+A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio of 2.20 is a
+standing figure recorded obliquely. At comparable pixel area, these are different objects as far
+as the detector is concerned.
 
-### 6.3 Hard sunlight is the worst illumination regime for this task
+This is the domain shift that matters here, and no appearance-based measure of realism detects it.
+A generator could be made arbitrarily more photorealistic without moving this quantity. Unlike
+photorealism it is also cheap to manipulate, being a property of where the camera is placed rather
+than of how the scene is built. Section 10.3 reports the S-oblique arm, in which the same generator
+renders the same settlement from a tilted camera, and Section 11.4 treats the difference between
+the arms as the isolated contribution of acquisition geometry.
 
-The six illumination regimes permit a measurement that bears directly on operational practice.
-For every annotated instance we computed the mean luminance inside the box, the mean luminance of
-a six-pixel ring surrounding it, and the standard deviation of that ring. The first difference is
-raw contrast; the difference divided by the ring deviation is contrast against local clutter,
-which is what the detector actually faces.
+One limit on the interpretation is stated here rather than in limitations. The monotonic series
+above is measured within synthetic corpora, where pitch is known exactly. The benchmark value of
+2.20 comes from real imagery whose acquisition geometry is not recorded, so it anchors the
+direction of the relationship but not its slope.
 
-| Regime | Absolute difference (DN) | Contrast over local clutter |
-|---|---|---|
-| Hard sun | **16.6** | **0.54** |
-| Overcast | 15.3 | **0.83** |
-| Haze | 10.6 | 0.77 |
-| Heavy overcast | 9.8 | 0.71 |
-| Low sun | 9.7 | 0.73 |
-| Rain | **6.6** | 0.67 |
+### 8.3 Hard sunlight maximises raw contrast and minimises contrast over local clutter
 
-*Source: 684 instances across 48 images, eight per regime, corpus `ds_morro_clima`.*
+The six illumination regimes permit a measurement bearing on acquisition practice. For every
+annotated instance we computed mean luminance inside the box, mean luminance of a six pixel ring
+around it, and the standard deviation of that ring. The first difference is raw contrast; the
+difference divided by the ring deviation is contrast against local clutter.
 
-Hard sunlight produces the largest raw separation between figure and background and the worst
-separation once local clutter is accounted for. The mechanism is visible in the images and follows
-from the scene description in Section 3.2: under a hard sun the background is itself filled with
-sharp cast shadow from water tanks, parapets, clotheslines and cabling, the local deviation of the
-background rises, and the figure ceases to stand out from the disorder. Under a covered sky the
-background is smooth, and a smaller difference is more detectable.
+Instances within one image are not independent, so the statistic is aggregated per image and the
+dispersion reported is between images.
 
-This yields a prediction that runs against intuition and against the conventional preference for
-flying in clear weather: **the detector should perform better under overcast than under hard
-sun.** Section 8.3 tests it. If it holds, the operational implication is direct, and it is the
-kind of implication that does not depend on the detector being good, only on it being measured.
+| Regime | Mean frame luminance | Raw difference (DN) | Contrast over clutter, median per image | SD between images |
+|---|---|---|---|---|
+| Hard sun | 81.3 | **16.6** | 0.64 | 0.13 |
+| Low sun | 90.4 | 9.7 | 0.70 | 0.18 |
+| Overcast | 91.7 | 15.3 | **0.88** | 0.25 |
+| Haze | 110.1 | 10.6 | 0.79 | 0.23 |
+| Heavy overcast | 63.2 | 9.8 | 0.72 | 0.35 |
+| Rain | 37.7 | **6.6** | 0.63 | 0.11 |
 
-### 6.4 What these three measurements imply for the proposal
+*684 instances across 48 images, eight images per regime, corpus `ds_morro_clima`.*
 
-Taken together, the measurements reframe the design problem stated in Section 3. The constraint is
-not that a synthetic favela fails to look like a favela. At the scale at which this task operates,
-the constraint is that the target is approximately 25 pixels of low-contrast texture, that its
-silhouette is determined by camera placement rather than by scene content, and that the
-illumination condition which maximises apparent contrast simultaneously maximises the background
-clutter competing with it.
+Hard sunlight produces the largest raw separation between figure and background and one of the two
+lowest separations once local clutter is accounted for. The proposed mechanism follows from the
+scene description in Section 4.2: under a hard sun the background is itself filled with sharp cast
+shadow from water tanks, parapets, clotheslines and cabling, the local deviation of the background
+rises, and the figure ceases to stand out from the disorder. Under a covered sky the background is
+smoother and a smaller difference is more detectable.
 
-Whether these constraints can be overcome by synthesis alone, and by how much of the attainable
-ceiling, is the subject of Section 7.
+What the sample supports and what it does not should be separated. With eight images per regime
+and between-image dispersion of 0.11 to 0.35, the gap between hard sun (0.64) and overcast (0.88)
+is approximately one standard deviation and the ordering of the intermediate regimes is not
+resolvable. The measurement is therefore reported as a hypothesis about detector difficulty, not
+as a finding about it. A contrast statistic is not a detection statistic, and Section 11.3 tests
+whether the ordering survives when a detector is actually evaluated per regime.
+
+### 8.4 What these measurements imply for the proposal
+
+Taken together the measurements reframe the design problem stated in Section 3. The binding
+constraint is not that a synthetic favela fails to look like a favela. At the scale at which this
+task operates, the target is a few tens of pixels of low contrast texture; its silhouette in these
+corpora tracks camera pitch rather than scene content; and the illumination condition that
+maximises apparent contrast also maximises the background clutter competing with it.
+
+Whether these constraints can be overcome by synthesis alone, and what fraction of the attainable
+ceiling is reached, is the subject of Section 10.

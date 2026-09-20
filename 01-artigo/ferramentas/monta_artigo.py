@@ -32,19 +32,25 @@ MAN = os.path.join(RAIZ, "01-artigo", "manuscrito")
 # Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, aditiva, e entram logo depois
 # da secao do professor a que se acoplam.
 ORDEM = [
-    "01-introduction.md",
-    "02-literature-review.md",
-    "03-methodology.md",
-    "03b-methodology-synthetic-pipeline.md",
-    "04-situating-the-study.md",
-    "05-case-jacarezinho.md",
-    "06-results-proposed-model.md",
-    "06b-model-free-evidence.md",
-    "07b-results-placeholder.md",
-    "08b-robustness.md",
-    "07-conclusion.md",
-    "08-references.md",
+    "01-introduction.md",                        # 1  professor
+    "02-literature-review.md",                   # 2  professor
+    "03-methodology.md",                         # 3  professor
+    "03b-methodology-synthetic-pipeline.md",     # 4  tecnico
+    "04-situating-the-study.md",                 # 5  professor
+    "05-case-jacarezinho.md",                    # 6  professor
+    "06-results-proposed-model.md",              # 7  professor
+    "06b-model-free-evidence.md",                # 8  tecnico
+    "07b-results-placeholder.md",                # 9  tecnico
+    "08b-robustness.md",                         # 10 tecnico
+    "09b-technical-limitations.md",              # 11 tecnico
+    "07-conclusion.md",                          # 12 professor
+    "08-references.md",                          # 13 professor
 ]
+
+# As secoes do professor nao trazem numero no titulo, e as tecnicas trazem. O montador numera
+# TODAS na ordem de leitura, para que numero de secao e remissao cruzada nunca possam divergir:
+# foi exatamente esse tipo de deriva silenciosa que a revisao adversarial pegou.
+RE_H2 = re.compile(r"^## (?:\d+\.\s*)?(.+)$", re.M)
 
 # Figura declarada por marcador no texto: <!--FIG:arquivo|legenda-->
 RE_FIG = re.compile(r"<!--\s*FIG:([^|]+)\|(.+?)\s*-->")
@@ -112,7 +118,7 @@ def main():
 
     import markdown
 
-    partes, faltando, n_fig, n_ph = [], [], 0, 0
+    partes, faltando, n_fig, n_ph, n_sec = [], [], 0, 0, 0
     for nome in ORDEM:
         p = os.path.join(MAN, nome)
         if not os.path.exists(p):
@@ -123,6 +129,8 @@ def main():
         if args.sem_notas:
             txt = re.sub(r"^> \*\*Status note.*?(?=\n\n)", "", txt, flags=re.S | re.M)
         txt, n_fig = resolve_figuras(txt, n_fig)
+        n_sec += 1
+        txt = RE_H2.sub(lambda m: f"## {n_sec}. {m.group(1)}", txt, count=1)
         partes.append(txt)
 
     corpo = markdown.markdown("\n\n".join(partes),
