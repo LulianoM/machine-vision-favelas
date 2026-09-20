@@ -66,3 +66,49 @@ Estado: 430 edificações, 204 mil faces, 37% do recorte construído.
 - Brilho médio ainda em 78 de 255, abaixo da faixa de 90 a 140 que a rubrica pede.
 - Pessoas e anotação de bounding box: `people_mpfb.py` e a projeção de vértice com ray cast de
   oclusão ainda não estão plugados neste gerador.
+
+## v4 a v7, dirigidas por validação independente
+
+Dois agentes validadores avaliaram contra a rubrica com medição numérica, não com opinião.
+Notas: **4,5** na linha de base (v0) e **6,3** em v3. A rubrica pede 7,0 para servir de figura.
+
+### O erro de albedo, achado pelo validador
+
+Diagnóstico que eu não tinha feito: a cadeia `tint MULTIPLY` sobre a difusa já colorida,
+seguida de dois `_grime MULTIPLY`, multiplicava dois albedos e esmagava toda cor por um fator
+de 3 a 5 vezes. Branco caiado pretendido em sRGB 226 saía em 112. A cena inteira lia marrom.
+
+Correção: a textura passou a entrar só como MODULAÇÃO DE LUMINÂNCIA (0,78 a 1,18, via RGBToBW
+mais Map Range) sobre a cor pretendida, e `_grime` passou de MULTIPLY para MIX fraco. Assim o
+albedo final cai de fato na cor que a paleta pediu.
+
+### O segundo erro, meu, ao corrigir o primeiro
+
+Com o albedo certo, usei as cores lidas da FOTO como albedo. Cor de foto já é resultado
+iluminado, não albedo de superfície: concreto reflete de 0,20 a 0,35, não 0,50. Todo telhado
+estourou de branco. Entrou o fator `ALB`, e a luz foi recalibrada medindo em vez de chutar
+(sol 3,3, ambiente quase neutro 1,0, exposição 0,0).
+
+### Piso da sombra
+
+O validador mediu sombra em RGB 10,3 / 4,7 / 1,9, ou seja B/R de 0,18: sombra cor de tijolo,
+sem nenhuma componente de céu, e sem informação dentro dela. Nenhum sensor real entrega isso.
+Subir o preenchimento ambiente e torná-lo quase neutro levou o B/R para 0,47 e a fração do
+quadro abaixo de 25 de 20,5% para 12%.
+
+### Medições atuais (v7)
+
+| Métrica | Alvo da rubrica | v0 | v3 | v7 |
+|---|---|---|---|---|
+| Luminância média (8 bits) | 90 a 140 | 56,4 | 80,9 | 106,6 |
+| Saturação média | acima de 0,25 | 0,52 | 0,47 | 0,27 |
+| Fração abaixo de 25 | baixa | 29,4% | 20,5% | 12,1% |
+| B/R na sombra profunda | perto de 1 | 0,18 | 0,18 | 0,47 |
+| Telhado verde | zero | presente | 0,00% | 0,00% |
+
+Outras mudanças de v4 a v7: caixa d'água virou cilindro com base de alvenaria e tampa; antena
+parabólica virou disco inclinado; varal com número, posição e tamanho de peça aleatórios (o
+motivo de 7 retângulos igualmente espaçados, repetido idêntico, foi apontado como sinal de
+"kit de peças"); lote girado em ±0,17 rad em torno do centroide; warp de 9 m em comprimento de
+onda de 38 m em vez de 3,2 m em 85 m; corte do BSP enviesado para lote estreito e profundo;
+copa isolada dentro do miolo; borda de mata mais irregular.

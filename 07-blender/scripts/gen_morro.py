@@ -77,11 +77,20 @@ def hsv(h, s, v):
     return colorsys.hsv_to_rgb(h, s, v)
 
 
-def s2l(h):
-    """hex sRGB para linear, que e o espaco que o Blender espera em Base Color"""
+def s2l(h, alb=1.0):
+    """hex sRGB para linear, que e o espaco que o Blender espera em Base Color.
+
+    `alb` existe por causa de um erro que custou duas iteracoes: a cor lida de uma FOTO ja e o
+    resultado iluminado, nao o albedo da superficie. Usar #c4b9a1 (linear 0,50) como albedo de
+    laje faz o telhado estourar de branco sob sol direto, porque concreto real reflete algo
+    entre 0,20 e 0,35. Toda cor vinda da foto de referencia entra com alb em torno de 0,45."""
     h = h.lstrip("#")
     c = [int(h[i:i + 2], 16) / 255.0 for i in (0, 2, 4)]
-    return tuple(x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c)
+    lin = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+    return tuple(x * alb for x in lin)
+
+
+ALB = 0.82          # fator global de albedo para cor lida de foto
 
 
 # ================================================================= ruido e terreno
@@ -131,7 +140,7 @@ def raio(x, y):
     rx = np.asarray(x, dtype=np.float64) / NUC_A
     ry = np.asarray(y, dtype=np.float64) / NUC_B
     r = np.sqrt(rx * rx + ry * ry)
-    return r * (0.88 + 0.26 * NZ.fbm(x, y, 1 / 90.0, 3))
+    return r * (0.84 + 0.34 * NZ.fbm(x, y, 1 / 45.0, 4))
 
 
 def terreno(x, y):
@@ -152,10 +161,13 @@ def terreno(x, y):
 
 
 def warp(x, y):
-    """deformacao suave de dominio: entorta a malha viaria sem tornar o lote concavo"""
-    a = 3.2
-    dx = (NZ.fbm(x + 2000, y + 1500, 1 / 85.0, 3) - 0.5) * 2 * a
-    dy = (NZ.fbm(x - 1700, y + 900, 1 / 85.0, 3) - 0.5) * 2 * a
+    """deformacao de dominio: entorta a malha viaria sem tornar o lote concavo.
+    Amplitude 3,2 m em comprimento de onda 85 m girava as divisas em 4 a 8 graus, o que nao
+    chegava perto de dissolver a grade (48% da energia de aresta ficava em 0 e 90 graus).
+    Com 9 m em 38 m o beco deixa de correr reto por 30 m."""
+    a = 9.0
+    dx = (NZ.fbm(x + 2000, y + 1500, 1 / 38.0, 4) - 0.5) * 2 * a
+    dy = (NZ.fbm(x - 1700, y + 900, 1 / 38.0, 4) - 0.5) * 2 * a
     return x + dx, y + dy
 
 
@@ -196,10 +208,12 @@ def _grime(nt, cor_out, forca):
     rp.color_ramp.elements[0].position = 0.36
     rp.color_ramp.elements[0].color = (0.42, 0.40, 0.37, 1)
     rp.color_ramp.elements[1].position = 0.66
+    # MIX em direcao a cor de sujeira, nao MULTIPLY. Dois MULTIPLY em cascata sobre um albedo
+    # ja tingido derrubavam a cena inteira umas 2 paradas e meia.
     mx = nt.nodes.new("ShaderNodeMix")
     mx.data_type = "RGBA"
-    mx.blend_type = "MULTIPLY"
-    mx.inputs["Factor"].default_value = forca
+    mx.blend_type = "MIX"
+    mx.inputs["Factor"].default_value = min(forca, 0.20)
     nt.links.new(tc.outputs["Object"], nz.inputs["Vector"])
     nt.links.new(nz.outputs["Fac"], rp.inputs["Fac"])
     nt.links.new(cor_out, mx.inputs[6])
@@ -215,8 +229,8 @@ def _grime(nt, cor_out, forca):
     rp2.color_ramp.elements[1].position = 0.70
     mx2 = nt.nodes.new("ShaderNodeMix")
     mx2.data_type = "RGBA"
-    mx2.blend_type = "MULTIPLY"
-    mx2.inputs["Factor"].default_value = forca * 0.7
+    mx2.blend_type = "MIX"
+    mx2.inputs["Factor"].default_value = min(forca * 0.7, 0.13)
     nt.links.new(tc.outputs["Object"], mp.inputs["Vector"])
     nt.links.new(mp.outputs["Vector"], nz2.inputs["Vector"])
     nt.links.new(nz2.outputs["Fac"], rp2.inputs["Fac"])
@@ -244,12 +258,31 @@ def mat_pbr(nome, texname, escala, tint=None, forca_tint=0.0, sujeira=0.5, metal
     nt.links.new(mp.outputs["Vector"], d.inputs["Vector"])
     cor = d.outputs["Color"]
     if tint is not None and forca_tint > 0:
+        # NAO multiplicar a cor alvo pela difusa: sao dois albedos, e o produto derruba o
+        # branco caiado de 0,70 para 0,15, o que pintava a cena inteira de marrom. Aqui a
+        # textura entra so como MODULACAO de luminancia (0,78 a 1,18) sobre a cor pretendida,
+        # entao o albedo final cai de fato na cor que a paleta pediu.
+        bw = nt.nodes.new("ShaderNodeRGBToBW")
+        nt.links.new(d.outputs["Color"], bw.inputs[0])
+        mr = nt.nodes.new("ShaderNodeMapRange")
+        mr.inputs["From Min"].default_value = 0.08
+        mr.inputs["From Max"].default_value = 0.85
+        mr.inputs["To Min"].default_value = 0.78
+        mr.inputs["To Max"].default_value = 1.18
+        mr.clamp = True
+        nt.links.new(bw.outputs[0], mr.inputs["Value"])
+        alvo = nt.nodes.new("ShaderNodeMix")
+        alvo.data_type = "RGBA"
+        alvo.blend_type = "MULTIPLY"
+        alvo.inputs["Factor"].default_value = 1.0
+        alvo.inputs[6].default_value = (tint[0], tint[1], tint[2], 1)
+        nt.links.new(mr.outputs["Result"], alvo.inputs[7])
         mx = nt.nodes.new("ShaderNodeMix")
         mx.data_type = "RGBA"
-        mx.blend_type = "MULTIPLY"
+        mx.blend_type = "MIX"
         mx.inputs["Factor"].default_value = forca_tint
-        mx.inputs[7].default_value = (tint[0], tint[1], tint[2], 1)
         nt.links.new(cor, mx.inputs[6])
+        nt.links.new(alvo.outputs[2], mx.inputs[7])
         cor = mx.outputs[2]
     if sujeira > 0:
         cor = _grime(nt, cor, sujeira)
@@ -310,8 +343,8 @@ def mat_bloco(nome, tom=0.0):
     br.inputs["Bias"].default_value = 0.0
     br.inputs["Brick Width"].default_value = 0.39
     br.inputs["Row Height"].default_value = 0.19
-    c1 = hsv(0.052 + tom, 0.86, 0.86)
-    c2 = hsv(0.044 + tom, 0.80, 0.70)
+    c1 = hsv(0.045 + tom, 0.70, 0.74)
+    c2 = hsv(0.038 + tom, 0.64, 0.60)
     br.inputs["Color1"].default_value = (c1[0], c1[1], c1[2], 1)
     br.inputs["Color2"].default_value = (c2[0], c2[1], c2[2], 1)
     br.inputs["Mortar"].default_value = (0.50, 0.47, 0.43, 1)
@@ -387,8 +420,9 @@ def mat_mata(nome):
 TELHA_PAL = [
     ("#c4b9a1", 11, "laje"), ("#ad9f87", 10, "laje"), ("#938672", 7, "laje"), ("#75695b", 3, "laje"),
     ("#d2cab6", 6, "fibro"), ("#b0aea4", 4, "zinco"),
-    ("#c05b2c", 12, "ceramica"), ("#a04720", 8, "ceramica"), ("#d47e4c", 6, "ceramica"),
-    ("#1f6dbe", 8, "pint"), ("#3a92d8", 4, "pint"), ("#2356a6", 3, "lona"),
+    ("#c05b2c", 9, "ceramica"), ("#a04720", 5, "ceramica"), ("#d47e4c", 5, "ceramica"),
+    ("#6e6a63", 6, "fibro"), ("#7a5340", 6, "zinco"), ("#8c8a84", 4, "fibro"),
+    ("#1f6dbe", 10, "pint"), ("#3a92d8", 5, "pint"), ("#2356a6", 4, "lona"),
     ("#ebe6d6", 7, "pint"), ("#e8e2d0", 4, "pint"),
     ("#bd3e28", 3, "pint"), ("#e0b95c", 2, "pint"), ("#cf8468", 2, "pint"),
 ]
@@ -404,7 +438,7 @@ def slot(m):
 # fachada: bloco ceramico aparente domina, reboco pintado e concreto completam
 I_FACHADA = []
 for i in range(7):
-    I_FACHADA += [slot(mat_bloco(f"bloco{i}", tom=rng.uniform(-0.012, 0.012)))] * 3
+    I_FACHADA += [slot(mat_bloco(f"bloco{i}", tom=rng.uniform(-0.012, 0.012)))] * 1
 PAL_PAREDE = [(0.58, 0.45, 0.72), (0.33, 0.40, 0.60), (0.14, 0.60, 0.80), (0.06, 0.50, 0.60),
               (0.0, 0.0, 0.84), (0.0, 0.0, 0.66), (0.10, 0.28, 0.82), (0.45, 0.28, 0.62)]
 for i, (h_, s_, v_) in enumerate(PAL_PAREDE):
@@ -417,10 +451,10 @@ for i, t in enumerate(rng.sample(TEX["concrete"], 4)):
 # cobertura, pelos pesos da referencia
 I_TELHA = []
 for i, (hexcor, peso, tipo) in enumerate(TELHA_PAL):
-    cor = s2l(hexcor)
+    cor = s2l(hexcor, ALB)
     if tipo == "laje":
         m = mat_pbr(f"telha_laje{i}", rng.choice(TEX["laje"]), rng.uniform(2.0, 3.0),
-                    tint=cor, forca_tint=0.88, sujeira=rng.uniform(0.3, 0.6))
+                    tint=cor, forca_tint=0.92, sujeira=rng.uniform(0.3, 0.6))
     elif tipo == "fibro":
         m = mat_pbr(f"telha_fibro{i}", rng.choice(TEX["roof_metal"]), rng.uniform(1.0, 1.4),
                     tint=cor, forca_tint=0.88, sujeira=rng.uniform(0.25, 0.45), metal=0.05)
@@ -429,7 +463,7 @@ for i, (hexcor, peso, tipo) in enumerate(TELHA_PAL):
                     tint=cor, forca_tint=0.85, sujeira=0.25, metal=0.6, rough_fixo=0.4)
     elif tipo == "ceramica":
         m = mat_pbr(f"telha_cer{i}", rng.choice(TEX["roof_tile"]), rng.uniform(0.9, 1.3),
-                    tint=cor, forca_tint=0.8, sujeira=rng.uniform(0.25, 0.45))
+                    tint=cor, forca_tint=0.92, sujeira=rng.uniform(0.25, 0.45))
     elif tipo == "lona":
         m = mat_simples(f"telha_lona{i}", cor, rough=0.55)
     else:  # laje pintada
@@ -437,18 +471,18 @@ for i, (hexcor, peso, tipo) in enumerate(TELHA_PAL):
                     tint=cor, forca_tint=0.95, sujeira=rng.uniform(0.2, 0.45))
     I_TELHA += [slot(m)] * peso
 I_LAJE_CRUA = slot(mat_pbr("laje_crua", rng.choice(TEX["laje"]), 2.4,
-                           tint=s2l("#a89a86"), forca_tint=0.8, sujeira=0.6))
+                           tint=s2l("#a89a86", ALB), forca_tint=0.8, sujeira=0.6))
 
 I_ESTRUT = slot(mat_pbr("estrutura", "concrete_wall_006", 1.8, tint=(0.62, 0.61, 0.58),
                         forca_tint=0.6, sujeira=0.5))
-I_FIBRO_CLARO = slot(mat_simples("fibro_claro", s2l("#cfcabd"), rough=0.7))
-I_CXAZUL = slot(mat_simples("caixa_azul", s2l("#1a5fa8"), rough=0.5))
-I_CXPRETA = slot(mat_simples("caixa_preta", s2l("#26262a"), rough=0.55))
+I_FIBRO_CLARO = slot(mat_simples("fibro_claro", s2l("#cfcabd", ALB), rough=0.7))
+I_CXAZUL = slot(mat_simples("caixa_azul", s2l("#1a5fa8", 0.62), rough=0.5))
+I_CXPRETA = slot(mat_simples("caixa_preta", s2l("#26262a", 0.8), rough=0.55))
 I_GRADE = slot(mat_simples("grade", (0.05, 0.05, 0.055), rough=0.6, metal=0.5))
 I_VIDRO = slot(mat_simples("vao", (0.015, 0.015, 0.02), rough=0.35))
-I_PORTA = [slot(mat_simples("porta_mad", s2l("#5a3a22"), rough=0.7)),
-           slot(mat_simples("portao_met", s2l("#3d4246"), rough=0.45, metal=0.55)),
-           slot(mat_simples("portao_verm", s2l("#8a2f24"), rough=0.5, metal=0.35))]
+I_PORTA = [slot(mat_simples("porta_mad", s2l("#5a3a22", 0.8), rough=0.7)),
+           slot(mat_simples("portao_met", s2l("#3d4246", 0.8), rough=0.45, metal=0.55)),
+           slot(mat_simples("portao_verm", s2l("#8a2f24", 0.8), rough=0.5, metal=0.35))]
 I_FIO = slot(mat_simples("fio", (0.02, 0.02, 0.02), rough=0.7))
 I_ROUPA = [slot(mat_simples(f"roupa{i}", hsv(rng.random(), rng.uniform(0.35, 0.9), rng.uniform(0.35, 0.95)),
                             rough=0.9)) for i in range(6)]
@@ -494,6 +528,36 @@ class Acc:
         for a, b, c, d in ((0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1), (1, 5, 6, 2),
                            (2, 6, 7, 3), (3, 7, 4, 0)):
             self.quad([p[a], p[b], p[c], p[d]], mi)
+
+    def cilindro(self, cx, cy, z0, raio_, h, mi, n=12, tampa_mi=None):
+        """caixa d'agua e tambor sao CILINDROS. Cubo alinhado ao eixo, repetido em laje apos
+        laje, foi apontado como um dos tres sinais mais fortes de cena sintetica."""
+        fase = rng.uniform(0, math.tau)
+        pts = [(cx + raio_ * math.cos(fase + k * math.tau / n),
+                cy + raio_ * math.sin(fase + k * math.tau / n)) for k in range(n)]
+        for k in range(n):
+            a, b = pts[k], pts[(k + 1) % n]
+            self.quad([(a[0], a[1], z0), (b[0], b[1], z0),
+                       (b[0], b[1], z0 + h), (a[0], a[1], z0 + h)], mi)
+        # tampa em leque, um pouco menor e levemente acima, como a tampa real
+        tm = tampa_mi if tampa_mi is not None else mi
+        for k in range(0, n, 2):
+            a, b, c = pts[k], pts[(k + 1) % n], pts[(k + 2) % n]
+            self.quad([(cx, cy, z0 + h + 0.04), (a[0], a[1], z0 + h),
+                       (b[0], b[1], z0 + h), (c[0], c[1], z0 + h)], tm)
+
+    def disco(self, cx, cy, cz, raio_, mi, incl=0.5, az=0.0, n=10):
+        """antena parabolica: disco inclinado, que em nadir vira uma elipse clara"""
+        ca, sa = math.cos(az), math.sin(az)
+        ci, si_ = math.cos(incl), math.sin(incl)
+        pts = []
+        for k in range(n):
+            t = k * math.tau / n
+            lx_, ly_ = raio_ * math.cos(t), raio_ * math.sin(t)
+            hx, hy, hz = lx_, ly_ * ci, ly_ * si_          # inclina em torno do eixo local x
+            pts.append((cx + hx * ca - hy * sa, cy + hx * sa + hy * ca, cz + hz))
+        for k in range(0, n, 2):
+            self.quad([(cx, cy, cz), pts[k], pts[(k + 1) % n], pts[(k + 2) % n]], mi)
 
     def fio(self, p0, p1, raio_, mi, barriga=0.35, n=5):
         ant = None
@@ -545,7 +609,7 @@ me.from_pydata(verts.tolist(), [], faces.tolist())
 # de cima e destroi a leitura de tecido continuo.
 me.materials.append(mat_pbr("chao_beco_terreno", "concrete_pavement_02" if "concrete_pavement_02"
                             in PH["textures"] else TEX["ground"][0], 2.2,
-                            tint=s2l("#585349"), forca_tint=0.85, sujeira=0.8))
+                            tint=s2l("#585349", 0.75), forca_tint=0.85, sujeira=0.8))
 me.materials.append(mat_mata("mata_chao"))
 me.polygons.foreach_set("material_index", (rc > 0.92).astype(np.int32).tolist())
 me.update()
@@ -570,24 +634,29 @@ def z_em(x, y):
 def folga():
     """largura da divisa. A maioria e parede geminada, que e o que fecha o tecido."""
     u = rng.random()
-    if u < 0.64:
+    if u < 0.70:
         return 0.0
-    if u < 0.91:
-        return rng.uniform(0.6, 1.3)
-    if u < 0.985:
-        return rng.uniform(1.4, 2.2)
-    return rng.uniform(2.5, 3.4)
+    if u < 0.94:
+        return rng.uniform(0.5, 1.2)
+    if u < 0.992:
+        return rng.uniform(1.3, 2.0)
+    return rng.uniform(2.3, 3.1)
 
 
 def bsp(x0, y0, x1, y1, prof, out):
     w, h = x1 - x0, y1 - y0
     # Lote de favela e pequeno: a referencia aerea tem casa de 4 x 7 a 8 x 11 m, nao quarteirao.
     # Parar cedo demais aqui foi o que deixou a primeira versao com cara de conjunto habitacional.
-    if prof >= 13 or w * h < rng.uniform(22, 62) or min(w, h) < 3.6:
-        if w > 2.2 and h > 2.2:
+    if prof >= 13 or w * h < rng.uniform(38, 104) or min(w, h) < 4.2:
+        if w > 3.0 and h > 3.0:
             out.append((x0, y0, x1, y1))
         return
-    vert = w >= h if abs(w - h) > 1.5 else rng.random() < 0.5
+    # cortar sempre o lado maior enquanto ele for mais que 2,2 vezes o menor: favela tem lote
+    # ESTREITO E PROFUNDO (razao 1,8 a 2,5), nao quadrado. Alternar cegamente dava razao 1,57.
+    if max(w, h) / max(min(w, h), 1e-6) > 2.2:
+        vert = w > h
+    else:
+        vert = w >= h if abs(w - h) > 1.5 else rng.random() < 0.5
     t = rng.uniform(0.34, 0.66)
     g = folga() / 2
     if vert:
@@ -651,7 +720,19 @@ for cant0 in LOTES:
         continue                                    # fora do nucleo: fica para a mata
     if rng.random() < 0.02:
         continue                                    # vazio, quintal, laje de terreno
-    cantos = [warp(px, py) for (px, py) in cant0]
+    # giro proprio de cada lote em torno do centroide, com encolhimento para os vizinhos
+    # girados nao se interpenetrarem. Junto com o warp forte, e o que tira a assinatura
+    # ortogonal que o validador mediu em 4,35 vezes o esperado de uma distribuicao isotropica.
+    gir = rng.uniform(-0.17, 0.17)
+    cg, sg = math.cos(gir), math.sin(gir)
+    cant1 = []
+    for (px, py) in cant0:
+        dx_, dy_ = px - cx, py - cy
+        L_ = math.hypot(dx_, dy_) or 1e-6
+        enc = max(0.0, L_ - 0.15) / L_          # encolhe 15 cm em direcao ao centro
+        rx_, ry_ = dx_ * enc, dy_ * enc
+        cant1.append((cx + rx_ * cg - ry_ * sg, cy + rx_ * sg + ry_ * cg))
+    cantos = [warp(px, py) for (px, py) in cant1]
     zs = [z_em(p[0], p[1]) for p in cantos] + [z_em(cx, cy)]
     zbase = min(zs) - 0.6
     # Numero de pavimentos por campo de ruido: favela tem ZONAS altas e zonas baixas, nao
@@ -764,22 +845,29 @@ for cant0 in LOTES:
             acc.caixa(wcx + s_ * lx * 0.4 * math.cos(ang), wcy + s_ * lx * 0.4 * math.sin(ang),
                       ztopo + 0.11, 0.09, 0.09, 0.22, I_ESTRUT, ang)
 
-    if rng.random() < 0.5:                           # caixa d'agua, o marcador mais visivel a 150 m
+    if rng.random() < 0.62:                          # caixa d'agua, o marcador mais visivel a 150 m
         for _ in range(rng.choice([1, 1, 1, 1, 2])):
-            d = rng.uniform(0.55, 0.9)
-            px = wcx + rng.uniform(-0.3, 0.3) * lx
-            py = wcy + rng.uniform(-0.3, 0.3) * ly
-            acc.caixa(px, py, ztopo + d / 2 + 0.2, d, d, d,
-                      I_CXAZUL if rng.random() < 0.6 else I_CXPRETA, rng.uniform(0, 3))
+            rr = rng.uniform(0.5, 0.7)
+            hh = rng.uniform(0.85, 1.25)
+            px = wcx + rng.uniform(-0.32, 0.32) * lx
+            py = wcy + rng.uniform(-0.32, 0.32) * ly
+            mi_cx = I_CXAZUL if rng.random() < 0.62 else I_CXPRETA
+            # base de alvenaria: caixa d'agua quase nunca fica direto na laje
+            if rng.random() < 0.55:
+                acc.caixa(px, py, ztopo + 0.22, rr * 2.2, rr * 2.2, 0.44, mi_par, rng.uniform(0, 3))
+                acc.cilindro(px, py, ztopo + 0.44, rr, hh, mi_cx, tampa_mi=I_CXPRETA)
+            else:
+                acc.cilindro(px, py, ztopo + 0.05, rr, hh, mi_cx, tampa_mi=I_CXPRETA)
             n_cx += 1
     if rng.random() < 0.3:                           # casinha de escada
         acc.caixa(wcx + rng.uniform(-0.25, 0.25) * lx, wcy + rng.uniform(-0.25, 0.25) * ly,
                   ztopo + 1.1, rng.uniform(1.6, 2.4), rng.uniform(1.6, 2.4), 2.2, mi_par, ang)
     # ---- o resto do que vive numa laje. Laje vazia e o que mais denuncia cena sintetica:
     # na foto aerea quase toda laje tem alguma coisa em cima.
-    if rng.random() < 0.34:                          # antena parabolica
-        acc.caixa(wcx + rng.uniform(-0.35, 0.35) * lx, wcy + rng.uniform(-0.35, 0.35) * ly,
-                  ztopo + 0.45, 0.72, 0.72, 0.12, I_FIBRO_CLARO, rng.uniform(0, 3))
+    if rng.random() < 0.38:                          # antena parabolica, disco inclinado
+        acc.disco(wcx + rng.uniform(-0.38, 0.38) * lx, wcy + rng.uniform(-0.38, 0.38) * ly,
+                  ztopo + rng.uniform(0.35, 0.75), rng.uniform(0.32, 0.48), I_FIBRO_CLARO,
+                  incl=rng.uniform(0.5, 0.95), az=rng.uniform(0, math.tau))
     if rng.random() < 0.42:                          # telha e material empilhado num canto
         px = wcx + rng.uniform(-0.38, 0.38) * lx
         py = wcy + rng.uniform(-0.38, 0.38) * ly
@@ -806,12 +894,15 @@ for cant0 in LOTES:
         bx_ = wcx + lx * 0.3 * math.cos(ang)
         by_ = wcy + lx * 0.3 * math.sin(ang)
         acc.fio((ax_, ay_, ztopo + 1.4), (bx_, by_, ztopo + 1.4), 0.015, I_FIO, barriga=0.12)
-        for k in range(rng.randint(3, 7)):
-            t = (k + 0.5) / 7
+        # numero, posicao e tamanho de peca aleatorios: o motivo de 7 retangulos igualmente
+        # espacados, repetido identico dezenas de vezes, foi apontado como sinal de "kit de pecas"
+        n_pc = rng.randint(2, 9)
+        for k in range(n_pc):
+            t = rng.uniform(0.06, 0.94)
             px = ax_ + (bx_ - ax_) * t
             py = ay_ + (by_ - ay_) * t
-            acc.caixa(px, py, ztopo + 1.05, rng.uniform(0.35, 0.6), 0.03, rng.uniform(0.5, 0.8),
-                      escolha(I_ROUPA), ang)
+            acc.caixa(px, py, ztopo + 1.4 - rng.uniform(0.28, 0.5), rng.uniform(0.22, 0.62),
+                      0.03, rng.uniform(0.35, 0.95), escolha(I_ROUPA), ang + rng.uniform(-0.2, 0.2))
         n_varal += 1
 
 # ---- fiacao aerea atravessando os becos, que e outra assinatura forte da favela
@@ -856,8 +947,8 @@ if arv:
         x = rng.uniform(-AREA_X * 0.86, AREA_X * 0.86)
         y = rng.uniform(-AREA_Y * 0.86, AREA_Y * 0.86)
         r = float(raio(x, y))
-        if r < 1.0:
-            continue                                # nada de mata dentro do nucleo construido
+        if r < 1.0 and rng.random() > 0.028:
+            continue          # mangueira e bananeira entre lajes existem, clareira a machado nao
         src = rng.choice(arv)
         o = bpy.data.objects.new(src.name + f"_{postos}", src.data)
         COLS["MATA"].objects.link(o)
@@ -895,8 +986,8 @@ bg.inputs["Strength"].default_value = 1.0
 # aspecto de maquete fria. A camera continua vendo o ceu; a luz de preenchimento vira um ambiente
 # neutro levemente quente, que e o que uma foto aerea do Rio mostra depois do balanco de branco.
 amb = nt.nodes.new("ShaderNodeBackground")
-amb.inputs["Color"].default_value = (1.0, 0.94, 0.85, 1.0)
-amb.inputs["Strength"].default_value = 0.85
+amb.inputs["Color"].default_value = (1.0, 0.97, 0.98, 1.0)
+amb.inputs["Strength"].default_value = 1.0
 lp = nt.nodes.new("ShaderNodeLightPath")
 mx = nt.nodes.new("ShaderNodeMixShader")
 nt.links.new(lp.outputs["Is Camera Ray"], mx.inputs["Fac"])
@@ -906,7 +997,7 @@ ow = next(n for n in nt.nodes if n.type == "OUTPUT_WORLD")
 nt.links.new(mx.outputs["Shader"], ow.inputs["Surface"])
 
 sol_d = bpy.data.lights.new("Sol", type="SUN")
-sol_d.energy = 5.2
+sol_d.energy = 3.3
 sol_d.color = (1.0, 0.96, 0.90)
 sol_d.angle = math.radians(0.6)      # disco solar real: sombra dura, que e o que escurece o beco
 sol = bpy.data.objects.new("Sol", sol_d)
@@ -914,13 +1005,13 @@ COLS["LUZ_E_CAMERAS"].objects.link(sol)
 sol.rotation_euler = Euler((math.radians(90 - args.elev), 0, math.radians(180 - args.azim)), "XYZ")
 
 scene.view_settings.view_transform = "AgX"
-for look in ("AgX - Punchy", "AgX - Medium High Contrast", "AgX - Base Contrast"):
+for look in ("AgX - Medium High Contrast", "AgX - Base Contrast", "AgX - Punchy"):
     try:
         scene.view_settings.look = look
         break
     except Exception:
         continue
-scene.view_settings.exposure = 1.6
+scene.view_settings.exposure = 0.0
 
 # ----------------------------------------------------------------- cameras
 Z30_LENS = 4.3 * 36 / 5.37            # 4.3 mm num sensor de 5.37 mm, ou seja ~28,8 mm equivalente
