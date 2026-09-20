@@ -207,3 +207,50 @@ tem de ir numa CAIXA que envolve o sítio.
 Os dois subtestes do item 2 da rubrica são incompatíveis entre si: 500 casas de 50 m² dão
 25.000 m² num quadro de 19.635 m². Não dá para perseguir os dois ao mesmo tempo. A rubrica
 precisa ser corrigida numa próxima revisão.
+
+## v10, o terceiro bug da mesma família
+
+Quinta validação: **6,7**, ganho de apenas +0,1 sobre 6,6. O único ganho grande (tampa da caixa
+d'água, +1,5) foi cancelado por uma perda igual em micro-relevo, porque destravar o telhado de
+duas águas devolveu planos grandes e lisos.
+
+### Terceiro bug de código
+
+O laço da fiação sorteia um par de casas na elipse e filtra por distância entre 5 e 22 m. Esse
+filtro aceita 7,4% das tentativas, então `range(260)` construía cerca de **19 fios, não 220**.
+Área total de fio no quadro: 0,24%, contra 0,98% só das tampas de caixa d'água. Por isso o
+detector de cume achava ZERO estruturas lineares: a fiação simplesmente não estava lá.
+
+Agravante: o `print` de diagnóstico reportava edificações, caixas d'água, varais e faces, mas
+não fio. O bug era invisível também no log. Agora reporta, e o número saiu de 19 para 231.
+
+Esse é o terceiro caso, e os três têm a mesma forma: o parâmetro estava certo, o código não
+fazia o que o parâmetro dizia. ColorRamp sem cor, ramo inalcançável, filtro que descarta 93%.
+Nenhum dos três é pego por inspeção visual do render, e os três foram pegos por medição.
+
+### Contraste, e por que névoa não é a resposta inteira
+
+A névoa levanta a sombra mas dessatura o quadro por igual, e saturação é um teste da rubrica.
+A 2,4e-4 o meio-tom foi a 42,9% e o escuro a 1,2%, mas a saturação caiu para 0,151. A solução
+foi levantar a sombra pela RAZÃO SOL/CÉU (física da cena: sol de 6,5 para 5,0, ambiente de 0,54
+para 0,78) e deixar a névoa em 0,9e-4 só para o airlight.
+
+### Medições v10
+
+| Métrica | Alvo | v8 | v9 | v10 |
+|---|---|---|---|---|
+| Luminância média | 90 a 140 | 99,6 | 102,6 | 92,7 |
+| Contraste p90/p10 | 3,5 a 4,5 | 5,45 | 5,20 | 3,09 |
+| B/R na sombra | perto de 1 | 0,89 | 1,02 | **0,98** |
+| Meio-tom L 60 a 150 | 45 a 60% | 23,9% | 25,1% | **37,5%** |
+| Fração abaixo de 25 | baixa | 17,0% | 15,4% | 13,6% |
+| Fios construídos | centenas | 19 | 19 | **231** |
+| Laranja S acima de 0,25 | alto | | | 16,7% |
+
+### O que ainda reprova
+
+Saturação média em 0,221, abaixo do piso de 0,25 da rubrica. É o item que resiste há três
+rodadas. A causa não é a paleta (a cerâmica sai do shader com saturação 0,97 no linear) e não é
+só o tone mapper: é a combinação de AgX com uma paleta cujo maior peso é cinza quente de laje,
+que é de fato pouco saturado na referência. A próxima revisão da rubrica precisa decidir se
+0,25 é o número certo para uma cena cuja cor dominante correta é cinza.

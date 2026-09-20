@@ -214,7 +214,7 @@ def _grime(nt, cor_out, forca):
     mx = nt.nodes.new("ShaderNodeMix")
     mx.data_type = "RGBA"
     mx.blend_type = "MIX"
-    mx.inputs["Factor"].default_value = min(forca, 0.20)
+    mx.inputs["Factor"].default_value = min(forca, 0.13)
     nt.links.new(tc.outputs["Object"], nz.inputs["Vector"])
     nt.links.new(nz.outputs["Fac"], rp.inputs["Fac"])
     nt.links.new(cor_out, mx.inputs[6])
@@ -465,7 +465,7 @@ for i, (hexcor, peso, tipo) in enumerate(TELHA_PAL):
                     tint=cor, forca_tint=0.85, sujeira=0.25, metal=0.6, rough_fixo=0.4)
     elif tipo == "ceramica":
         m = mat_pbr(f"telha_cer{i}", rng.choice(TEX["roof_tile"]), rng.uniform(0.9, 1.3),
-                    tint=tuple(c * 1.45 for c in cor), forca_tint=0.95, sujeira=rng.uniform(0.18, 0.34))
+                    tint=tuple(c * 1.12 for c in cor), forca_tint=0.95, sujeira=rng.uniform(0.18, 0.34))
     elif tipo == "lona":
         m = mat_simples(f"telha_lona{i}", cor, rough=0.55)
     else:  # laje pintada
@@ -712,6 +712,7 @@ for kb, (sxb, syb, angb) in enumerate(SEEDS):
 print(f"[morro] {len(LOTES)} lotes em {N_BAIRRO} bairros com orientacao propria", flush=True)
 
 acc = Acc()
+n_fio = 0
 CASAS = []                     # (cantos, zbase, ztopo), usado depois para achar os becos
 n_casa = n_cx = n_varal = 0
 
@@ -932,7 +933,7 @@ for cant0 in LOTES:
 # laje vizinha e ficavam presos dentro do predio. E com secao de feixe real (16 cm): 2,2 cm a
 # 9,74 cm/px dava 0,45 px, sub-pixel, e a fiacao simplesmente nao aparecia na imagem.
 if CASAS:
-    for _ in range(260):
+    for _ in range(3000):
         ca, _zb, zt = rng.choice(CASAS)
         x = sum(p[0] for p in ca) / 4
         y = sum(p[1] for p in ca) / 4
@@ -945,10 +946,11 @@ if CASAS:
         z1 = zt + rng.uniform(0.6, 2.2)
         z2 = zt2 + rng.uniform(0.6, 2.2)
         acc.fio((x, y, z1), (x2, y2, z2), 0.08, I_FIO, barriga=rng.uniform(0.5, 1.4))
+        n_fio += 1
 
 ob_fav = acc.objeto("Favela", COLS["FAVELA"])
 print(f"[morro] {n_casa} edificacoes, {n_cx} caixas d'agua, {n_varal} varais, "
-      f"{len(acc.f)} faces", flush=True)
+      f"{n_fio} fios, {len(acc.f)} faces", flush=True)
 
 # ----------------------------------------------------------------- mata no morro
 MODELOS = [n for n in ("jacaranda_tree", "tree_small_02", "island_tree_01", "island_tree_02")
@@ -1016,7 +1018,7 @@ bg.inputs["Strength"].default_value = 1.0
 # neutro levemente quente, que e o que uma foto aerea do Rio mostra depois do balanco de branco.
 amb = nt.nodes.new("ShaderNodeBackground")
 amb.inputs["Color"].default_value = (0.72, 0.80, 1.00, 1.0)
-amb.inputs["Strength"].default_value = 0.54
+amb.inputs["Strength"].default_value = 0.78
 lp = nt.nodes.new("ShaderNodeLightPath")
 mx = nt.nodes.new("ShaderNodeMixShader")
 nt.links.new(lp.outputs["Is Camera Ray"], mx.inputs["Fac"])
@@ -1049,7 +1051,7 @@ for _n in list(_nta.nodes):
         _nta.nodes.remove(_n)
 _out_a = _nta.nodes[0]
 _vs = _nta.nodes.new("ShaderNodeVolumeScatter")
-_vs.inputs["Density"].default_value = 0.55e-4
+_vs.inputs["Density"].default_value = 0.9e-4
 _vs.inputs["Color"].default_value = (0.78, 0.85, 1.0, 1.0)
 _vs.inputs["Anisotropy"].default_value = 0.35
 _nta.links.new(_vs.outputs["Volume"], _out_a.inputs["Volume"])
@@ -1059,7 +1061,7 @@ COLS["LUZ_E_CAMERAS"].objects.link(_ob_ar)
 _ob_ar.visible_shadow = False
 
 sol_d = bpy.data.lights.new("Sol", type="SUN")
-sol_d.energy = 6.5
+sol_d.energy = 5.0
 sol_d.color = (1.0, 0.96, 0.90)
 sol_d.angle = math.radians(0.6)      # disco solar real: sombra dura, que e o que escurece o beco
 sol = bpy.data.objects.new("Sol", sol_d)
@@ -1073,7 +1075,7 @@ for look in ("AgX - Medium High Contrast", "AgX - Base Contrast", "AgX - Punchy"
         break
     except Exception:
         continue
-scene.view_settings.exposure = 0.32
+scene.view_settings.exposure = 0.14
 
 # ----------------------------------------------------------------- cameras
 Z30_LENS = 4.3 * 36 / 5.37            # 4.3 mm num sensor de 5.37 mm, ou seja ~28,8 mm equivalente
