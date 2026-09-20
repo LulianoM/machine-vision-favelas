@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-20, [DESKTOP]
+Última atualização: 2026-09-20, [DESKTOP] e [MAC]
 
 ## Artigo
 
@@ -43,6 +43,7 @@ Estado real, levantado na reconciliação de 17 e 18/09. Detalhe em `06-resultad
 | Tailscale nas duas máquinas, SSH no desktop | Pendente |
 | Acesso remoto à tela do desktop | Pendente. Deixou de ser urgente: o pipeline Blender roda sem interface gráfica |
 | Painel web do projeto | Publicado em 17/09 (privado), atualizado pelo desktop em 18/09. Fonte em `painel/painel.html` |
+| Dossiê da AIM 2027 (estratégia, 48 missões, modelos de formato) | Dentro do repositório desde 20/09, em `08-conferencia/`. Antes só existia no Mac |
 
 Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
@@ -54,6 +55,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 4. [MAC ou DESKTOP] Resolver `01-artigo/PENDENCIAS.md` começando pelas 13 referências ausentes (conferir cada DOI no Crossref).
 5. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições.
 6. [AUTOR, quando quiser] Seguir `docs/SETUP-DESKTOP.md` para Tailscale e OpenSSH.
+7. [AUTOR] E-mail para AIM@marshall.usc.edu confirmando o formato exigido na submissão de 19/11/2026 (pendências em `08-conferencia/README.md`).
 
 **Descartado pelo autor em 2026-09-20:** o e-mail ao IPP pedindo LiDAR e MDS de 2024, e o braço
 de "cidade de sólidos" sobre a ortofoto do IPP. Não perseguir de novo. Consequência a assumir no

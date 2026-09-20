@@ -39,3 +39,6 @@ wandb/
 *.7z
 04-bibliografia/papers-fabio-2022/*.pdf
 04-bibliografia/papers/*.pdf
+
+# Exceção: CFP e modelos de formato da AIM 2027 ficam versionados
+!08-conferencia/modelos_2026/*.pdf

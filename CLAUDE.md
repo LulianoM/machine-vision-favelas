@@ -37,6 +37,8 @@ DIARIO.md                 diário de bordo das duas máquinas
 05-levantamento-3d/       levantamento técnico de 12/09: de onde vem a geometria da favela
 06-resultados/            o que o desktop produz: RESULTADOS.md, métricas, figuras leves
 07-blender/               pipeline que de fato rodou: Blender headless -> bounding box -> YOLO (README.md + scripts)
+08-conferencia/           dossiê da AIM 2027: estratégia, roteiro de 48 missões, eixos e os
+                          papers premiados de 2026 que servem de modelo de formato
 painel/                   fonte HTML do painel web (artifact) do projeto
 docs/                     guias de setup, briefing do pacote de 11/09, contexto acumulado, DIVERGENCIAS.md, AMBIENTE-DESKTOP.md
 ```
@@ -45,7 +47,7 @@ docs/                     guias de setup, briefing do pacote de 11/09, contexto 
 
 - Nunca inventar número, métrica, citação ou DOI. Métrica só entra no artigo se estiver em `06-resultados/` com o comando que a gerou. DOI só depois de conferido no Crossref.
 - Dados sensíveis: os ortomosaicos do Jacarezinho e de Manguinhos são dados operacionais da PCERJ. Não entram no git, em artifact, em pacote, nem em serviço externo. Nenhuma coordenada em nível de endereço, nenhuma imagem que identifique morador. Vale também para tudo que DERIVA deles: malhas e DSM do OpenDroneMap, cenas `.blend`, renders dos datasets `odm` e `cid150`, mosaicos `train_batch` e `val_batch` desses treinos, e logs com coordenada. Só o braço `v3` (OSM + Poly Haven) pode ser ilustrado.
-- Fora do git (ver `.gitignore`): datasets, screenshots do ARMA, pesos, `runs/`, PDFs de papers, zips. Binário grande trafega por cópia direta entre as máquinas (scp/rsync via Tailscale), não pelo GitHub.
+- Fora do git (ver `.gitignore`): datasets, screenshots do ARMA, pesos, `runs/`, PDFs de papers, zips. Única exceção: os cinco PDFs de `08-conferencia/modelos_2026/` (CFP e modelos de formato da AIM 2027, 11 MB). Binário grande trafega por cópia direta entre as máquinas (scp/rsync via Tailscale), não pelo GitHub.
 - Texto entregue ao autor ou ao orientador: sem travessão. Usar vírgula, dois-pontos ou parênteses. O manuscrito herdado do orientador ainda tem travessões; removê-los é item de `PENDENCIAS.md`.
 - Documento acadêmico para leitura sai em PDF ou .docx, não como página estilizada. O painel web é só para estado do projeto.
 - Ao citar o pipeline ARMA 3, creditar Fábio H. P. Guimarães (proposta, 2022) e prof. Claudio Miceli de Farias (orientação).

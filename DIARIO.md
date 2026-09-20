@@ -2,6 +2,18 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-20 [MAC] Dossiê da AIM 2027 entra no repositório
+
+A pesquisa sobre a conferência e sobre os artigos do congresso só existia no Mac, na pasta irmã `~/Documents/Mestrado/AIM2027/dossie-conferencia/`. Movida em bloco para `08-conferencia/`, sem alteração de conteúdo, para que o desktop consiga puxar: `ESTRATEGIA_AIM2027.md` (revisão 2), `ROTEIRO.md` (48 missões, todas feitas), `missoes/` (48 arquivos, blocos A a F), `eixos/EIXO_GENAI_CONSUMO.md` e `modelos_2026/` (CFP mais os quatro papers premiados de 2026). Um `README.md` novo explica o conjunto, as datas da conferência e o formato da submissão.
+
+Numeração: a pasta nasceu como `07-conferencia` no Mac e virou `08-conferencia` no rebase, porque o desktop já havia publicado `07-blender/`.
+
+Decidido:
+- Os cinco PDFs de `modelos_2026/` (11 MB) são a única exceção à regra de não versionar PDF de paper: são o CFP e o modelo de formato da submissão, e precisam existir nas duas máquinas. Registrado em `CLAUDE.md` e no `.gitignore`.
+- Os temas T1 a T5 do dossiê são linha de pesquisa distinta (GenAI e consumo), levantada quando ainda se avaliava o que submeter. O que serve ao artigo de visão computacional é o calendário, o formato exigido, os modelos de 2026 e o Bloco F (ofício do paper).
+
+Para o desktop: depois do `git pull`, o dossiê está em `08-conferencia/`. A pasta `dossie-conferencia/` do Mac não existe mais.
+
 ## 2026-09-20 [DESKTOP] Decisão: o método é o Blender
 
 O autor decidiu adotar o Blender como método do trabalho e do artigo, por facilitar a escrita e a criação dos scripts em Python e por ser o caminho mais eficaz pelo que o levantamento mostrou. Isso fecha o item 1 de `docs/DIVERGENCIAS.md`. O ARMA 3 passa a constar como origem da ideia em 2022 e como prior art via G-MAD, não como método executado.
