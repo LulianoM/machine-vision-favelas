@@ -4,16 +4,26 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 
 ## A. Estrutura
 
-- [ ] A1. "Conclusion" não conclui: só contém Limitations, Delimitations e Implications and Directions for Future Research. Falta o parágrafo de fecho (`07-conclusion.md`).
-- [ ] A2. A introdução não tem título de seção (`01-introduction.md`).
+- [x] A1. "Conclusion" não conclui: só contém Limitations, Delimitations e Implications and Directions for Future Research. Falta o parágrafo de fecho (`07-conclusion.md`).
+- [x] A2. A introdução não tem título de seção (`01-introduction.md`).
 - [ ] A3. Remissões a seções numeradas que não existem. O texto não numera as seções, mas cita "Section 2", "3", "4", "5", "6" e "7" em dez pontos, e a numeração implícita não bate com a ordem atual (a revisão de literatura é a segunda seção e é chamada de "Section 4"). Ocorrências: `02-literature-review.md` linha 11; `03-methodology.md` linhas 3 e 13; `06-results-proposed-model.md` linhas 5, 6 e 7; `07-conclusion.md` linhas 5, 17, 21 e 29. Decidir: numerar as seções e corrigir, ou trocar por remissão nominal.
 - [ ] A4. Trecho repetido quase literalmente: o parágrafo das "two bodies of literature that rarely intersect" aparece na introdução e de novo em "Positioning this study" na revisão. A descrição de Gevaert et al. (2016) em Kigali também aparece duas vezes. Manter um e remeter ao outro.
-- [ ] A5. Não há abstract nem palavras-chave.
+- [x] A5. Não há abstract nem palavras-chave.
 
 ## B. Referências
 
+> **Rodada de 2026-09-20 [DESKTOP].** B1 fechado PELA METADE, e a metade que ficou aberta é
+> deliberada. A busca no Crossref por sobrenome e ano devolveu correspondência para as 13, mas
+> comparando o TÍTULO devolvido com a frase que cita a obra, só 8 correspondem de fato. Um
+> exemplo do que a conferência evitou: "Xu (2025)" é citado no texto comparando RRT, ACO e A*
+> para planejamento de rota, e a busca por sobrenome e ano devolveu um artigo de sensoriamento
+> remoto. Inserir aquele DOI teria fabricado uma citação. As 7 restantes (Chen et al. 2025, Xu
+> 2025, Jiang et al. 2026, Wang e Qian 2026, Yan, Hsieh e Lai 2025, Horváth et al. 2023, Watson
+> e Elliott 2025) dependem de quem escreveu a frase dizer qual obra é. Ferramenta em
+> `01-artigo/ferramentas/busca_crossref.py`.
+
 - [ ] B1. Treze obras citadas no texto sem entrada na lista: Chen, Liu, Hu, Zhang e Pan (2025); Rasoulie e Pashazadeh (2026); Xu (2025); Agrawal, Ratnoo e Ghose (2017); Jiang et al. (2026); Wang e Qian (2026); Yan, Hsieh e Lai (2025); Gevaert, Persello, Sliuzas e Vosselman (2016); Du, Xing, Wang, Wei e Zhang (2024); Barisic, Petric e Bogdan (2022); Horváth et al. (2023); Watson e Elliott (2025); da Silva, Kormann da Silva e Westerholt (2024). Localizar cada uma e conferir o DOI no Crossref antes de incluir. Nunca inventar DOI.
-- [ ] B2. Entrada "[Slovo Park study] (2025)" está sem autores. No texto a obra é citada como Sithole e Mhangara (2025). Completar.
+- [x] B2. Entrada "[Slovo Park study] (2025)" está sem autores. No texto a obra é citada como Sithole e Mhangara (2025). Completar.
 - [ ] B3. Wikipedia citada três vezes como fonte ("Wikipedia, 2026" duas vezes e "Wikipedia, 2025a", em `04-situating-the-study.md`) e sem entrada na lista. Substituir por fonte primária.
 - [ ] B4. Amnesty International é mencionada no texto sem referência. A entrada da Inter-American Commission on Human Rights (2021) está na lista e não é citada no texto.
 - [ ] B5. Há duas entradas de Human Rights Watch de 2021 e o texto cita só "Human Rights Watch, 2021". Diferenciar como 2021a e 2021b.
@@ -25,11 +35,11 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 
 ## C. Texto
 
-- [ ] C1. Resíduo de XML no início do último parágrafo de Delimitations: "T", tabulação, "he comparative" (`07-conclusion.md` linha 21).
-- [ ] C2. Título "eferences" sem o R (`08-references.md` linha 1).
-- [ ] C3. "informal áreas,  including" (palavra em português, vírgula e espaço duplo) em `01-introduction.md`. "23,000 ." com espaço antes do ponto e sem a fonte em `05-case-jacarezinho.md`.
-- [ ] C4. Travessões: 27 linhas com travessão no manuscrito. Preferência do autor é texto sem travessão.
-- [ ] C5. O objetivo declarado fala em "propose and conceptually validate". Quando houver número do experimento, o texto de Results e de Limitations ("No model has been trained") precisa mudar de conceitual para empírico preliminar. Atualização de 2026-09-18 [DESKTOP]: a frase "No model has been trained" já é falsa. Há 5 treinos com métricas no sintético em `06-resultados/RESULTADOS.md` (seção 5 da ficha). Ainda não há métrica em imagem real (seção 6), então o máximo que o texto pode afirmar hoje é "validação preliminar em dado sintético". Não mexer no texto antes de o autor decidir os itens 1 a 3 de `docs/DIVERGENCIAS.md`.
+- [x] C1. Resíduo de XML no início do último parágrafo de Delimitations: "T", tabulação, "he comparative" (`07-conclusion.md` linha 21).
+- [x] C2. Título "eferences" sem o R (`08-references.md` linha 1).
+- [x] C3. "informal áreas,  including" (palavra em português, vírgula e espaço duplo) em `01-introduction.md`. "23,000 ." com espaço antes do ponto e sem a fonte em `05-case-jacarezinho.md`.
+- [x] C4. Travessões: 27 linhas com travessão no manuscrito. Preferência do autor é texto sem travessão.
+- [x] C5. O objetivo declarado fala em "propose and conceptually validate". Quando houver número do experimento, o texto de Results e de Limitations ("No model has been trained") precisa mudar de conceitual para empírico preliminar. Atualização de 2026-09-18 [DESKTOP]: a frase "No model has been trained" já é falsa. Há 5 treinos com métricas no sintético em `06-resultados/RESULTADOS.md` (seção 5 da ficha). Ainda não há métrica em imagem real (seção 6), então o máximo que o texto pode afirmar hoje é "validação preliminar em dado sintético". Não mexer no texto antes de o autor decidir os itens 1 a 3 de `docs/DIVERGENCIAS.md`.
 
 ## D. Conteúdo a incorporar (vem do trabalho feito depois da v2)
 

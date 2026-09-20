@@ -2,7 +2,7 @@
 
 ### Limitations
 
-This study is conceptual rather than operational, and that status shapes every limitation that follows. No model has been trained, no synthetic dataset has been generated at scale, and no output has been validated against real imagery of Jacarezinho or any other favela. What is offered here is an architecture and a training strategy, argued for on the basis of adjacent evidence, domain randomization results from aerial and robotic object detection, building-height estimation work in other informal settlements, classification studies on similarly steep and dense terrain, rather than a system whose performance has been measured on the specific problem this article defines. Whether a synthetic-training pipeline designed around the structural features described in Section 4 actually closes the sim-to-real gap for vertically stacked, self-built construction is an empirical question this article does not answer.
+This study is conceptual rather than operational, and that status shapes every limitation that follows. At the time of writing, a synthetic corpus has been generated and detectors have been trained on it, with the results reported in Sections 9 and 10. What has not been established is performance on real imagery of Jacarezinho or of any other favela: the transfer figures reported here are obtained on a public aerial benchmark that is not a favela, for the reasons set out in Section 11.2, and no output of this work has been validated against imagery of the case study territory. What is offered here is an architecture and a training strategy, argued for on the basis of adjacent evidence, domain randomization results from aerial and robotic object detection, building-height estimation work in other informal settlements, classification studies on similarly steep and dense terrain, rather than a system whose performance has been measured on the specific problem this article defines. Whether a synthetic-training pipeline designed around the structural features described in Section 4 actually closes the sim-to-real gap for vertically stacked, self-built construction is an empirical question this article does not answer.
 
 The autoethnographic material discussed in the Methodology section is a second, unavoidable limitation. One researcher's operational familiarity with Jacarezinho comes filtered through a policing role, and the study has been explicit that this yields a partial account: attentive to tactical navigability, choke points, and lines of sight, and correspondingly less attentive to the aspects of the built environment that matter most to the people who live there. The triangulation against journalistic, human-rights, and academic sources described earlier mitigates this bias; it does not remove it. A single institutional vantage point, however well triangulated, is not a substitute for resident testimony, and none was collected.
 
@@ -18,7 +18,7 @@ The study does not collect or propose to collect field data from an active infor
 
 The study is similarly delimited to the technical and conceptual question of whether machine vision can represent vertical informal structure, not to the question of how such a model would be operationally deployed, integrated into an existing UAV platform, or governed once built. Questions of flight authorization, airspace regulation, chain-of-custody for any imagery produced, and integration with the broader public-security apparatus in Rio de Janeiro (including with the drone-countermeasure and UAV-intelligence capabilities Rio's Civil Police is already developing) fall outside the scope of this article.
 
-T	he comparative literature review in Section 4 was restricted to UAV trajectory planning, aerial policing, and machine vision applied to informal settlements. It does not extend to the broader literatures on urban surveillance technology, predictive policing, or the sociology of favela pacification programs, each of which bears on this study's argument but would have diluted its specific technical focus had it been incorporated at length.
+The comparative literature review in Section 4 was restricted to UAV trajectory planning, aerial policing, and machine vision applied to informal settlements. It does not extend to the broader literatures on urban surveillance technology, predictive policing, or the sociology of favela pacification programs, each of which bears on this study's argument but would have diluted its specific technical focus had it been incorporated at length.
 
 ### Implications and Directions for Future Research
 
@@ -29,3 +29,35 @@ On the technical side, the domain-randomization strategy proposed here needs to 
 The population discrepancies noted above point to a further line of inquiry that has value independent of this study's security framing: better demographic and structural characterization of Rio's largest favelas would serve urban planning, disaster-risk assessment, and resource allocation regardless of whether it is ever put to security use, and researchers working in that tradition (the building-height and population-density literature discussed in Section 4) are better positioned to pursue it than a study anchored in a policing perspective.
 
 Finally, the conceptual taxonomy proposed in this article (flat terrain, mountainous terrain, formal three-dimensional urban space, and vertically complex informal urban space) is offered as a starting point, not a finished framework. Testing it against other verticalized informal settlements, in Rio and beyond, would clarify whether the four-stage progression holds generally or whether Jacarezinho's specific combination of steep topography and decades of factional territorial control makes it an unusually hard case rather than a representative one. Either finding would be useful, and neither can be established from a single site.
+
+### Closing
+
+This article set out to ask what changes when computer vision is directed at the vertical
+morphology of a favela rather than at its footprint, and what it costs to answer that question
+responsibly. Three things follow from the work reported above.
+
+The first is that the binding constraints are not the ones the field usually discusses. At the
+ground sampling distance of the survey that motivates this study, a person is a few tens of pixels
+of low contrast texture, the silhouette of that target is set by where the camera is placed rather
+than by how faithfully the scene is built, and the illumination condition that maximises apparent
+contrast also maximises the clutter competing with it. None of these is a question of
+photorealism, and none of them is visible in any appearance-based measure of how convincing a
+synthetic scene looks.
+
+The second is that synthesis buys a specific thing and not a general one. It removes the consent
+problem, which in this territory is not a procedural obstacle but a substantive one, and it
+introduces a transfer problem in its place. This article reports what that trade costs, on a
+benchmark that is not the case study, and declines to extrapolate from it.
+
+The third is the one that matters most for the argument about dual use. The capability this
+pipeline could be built toward is not uniformly available: it appears and disappears as a function
+of acquisition parameters that are measurable in advance. A claim that a system can distinguish an
+armed from an unarmed person from the air is, at the altitudes and sensors described here, a claim
+that can be checked before it is believed, and this article declines to make it. Stating the
+conditions under which a capability does not exist is a contribution of the same kind as
+demonstrating one that does, and in this domain it is the more useful of the two.
+
+What remains open is not primarily technical. A model of vertical morphology that is accurate and
+a model of vertical morphology that is safe to deploy in Jacarezinho are different objects, and
+nothing in the engineering reported here decides the second. That decision belongs to a process
+that includes the residents of the territory, and it has not taken place.

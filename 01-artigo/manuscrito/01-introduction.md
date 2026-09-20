@@ -1,5 +1,36 @@
 # Machine Vision from the Global South: Developing an AI Model for Vertical Favelas
 
+## Abstract
+
+Computer vision applied to informal settlements has largely treated them as a footprint problem,
+classifying built area against unbuilt area from above. The morphology that distinguishes a
+consolidated favela, building height, rooftop addition, material transition, is vertical, and it
+is precisely what a planar classification discards. This article proposes a model directed at that
+vertical morphology, and reports what it costs to train one without collecting aerial imagery of
+residents who have not consented to be imaged.
+
+The technical contribution is a procedurally generated synthetic corpus and the measurements that
+characterise the task before any detector is trained. Three of those measurements reframe the
+problem. Ground sampling distance, rather than scene realism, sets the size of the target: at the
+sensor and altitude of the 2022 survey that motivates this study, a person occupies roughly ten
+pixels in a single frame. Target shape, measured as the ratio of box height to width, tracks
+camera pitch rather than scene content, and separates our corpus from the public benchmark by a
+factor of two while apparent size is matched to within four per cent. Contrast against local
+clutter is lowest under hard sunlight, which produces the largest raw contrast, because the same
+sunlight fills the background with cast shadow from rooftop objects.
+
+Transfer to real imagery is reported as a ratio to what a detector trained on real data achieves
+on the same test set, so that a low figure can be read as either a weak method or a hard
+benchmark. Accuracy for the distinction between armed and unarmed figures is withheld, and the
+reasons are given: at these target sizes a firearm is not resolvable, the distinction is
+learnable in synthetic imagery only because the weapon is an invariant asset, and reporting it
+would be the inferential step this article criticises in the existing literature.
+
+**Keywords:** computer vision; synthetic data; domain randomisation; informal settlements;
+vertical morphology; aerial imagery; dual use; Rio de Janeiro
+
+## Introduction
+
 Unmanned Aerial Vehicles (UAVs) are deployed both for trajectory planning and navigation in complex environments, such as mountainous terrain, urban canyons, and no-fly zones, as well as for policing applications, in which UAVs are used for patrolling, crime deterrence, and target search, typically integrated with ground stations and patrol vehicles (Chen, Liu, Hu, Zhang, & Pan, 2025).
 
 The recent literature on optimization- and computer-vision-based UAV trajectory planning reflects a growing concern with complex three-dimensional environments that cannot be reduced to flat terrain. Rasoulie and Pashazadeh (2026), for instance, propose a task-allocation and archive-guided mutation particle swarm optimization algorithm (TAMOPSO) for 3D UAV route planning, validated on synthetic terrains featuring multiple peaks, altitude variation, obstacles, and no-fly zones. Xu (2025) brings this discussion closer to the urban domain by comparing RRT, ACO, and A* algorithms, combined with Bézier-curve optimization, within a three-dimensional gridded urban environment explicitly designed for law-enforcement operations involving high-rise buildings and dynamic obstacles. Earlier, and in seminal fashion, Agrawal, Ratnoo, and Ghose (2017) had already shown that optical-flow-based navigation allows a forward-facing-camera UAV to react to walls and obstacles while traversing straight, L-shaped, and T-shaped urban canyons, through a steering command inversely proportional to the optical-flow difference between the two sides of the image. Complementing this line of work, the review by Jiang et al. (2026) on UAV GNSS positioning devotes a dedicated section to "Urban Canyons and Low-Altitude Electromagnetically Complex Environments," showing that tall buildings and narrow streets obstruct line-of-sight, generate severe multipath, and increase the incidence of NLOS signals, to the point that GNSS alone tends to be insufficient in these settings, reinforcing the need for fusion with inertial and visual sensors.

@@ -1,0 +1,122 @@
+[
+ {
+  "rotulo": "Chen, Liu, Hu, Zhang & Pan (2025)",
+  "grau": "FORTE",
+  "doi": "10.3390/rs18183179",
+  "titulo": "Gas Plume Detection from Infrared Hyperspectral Remote Sensing Data Based on Deep Learning Algorithms",
+  "veiculo": "Remote Sensing",
+  "ano": 2026
+ },
+ {
+  "rotulo": "Rasoulie & Pashazadeh (2026)",
+  "grau": "FORTE",
+  "doi": "10.1038/s41598-026-42372-8",
+  "titulo": "3D UAV path optimization using a task-allocation and archive-guided mutation particle swarm optimization algorithm",
+  "veiculo": "Scientific Reports",
+  "ano": 2026
+ },
+ {
+  "rotulo": "Xu (2025)",
+  "grau": "FORTE",
+  "doi": "10.3390/rs17213581",
+  "titulo": "Contextual-Semantic Interactive Perception Network for Small Object Detection in UAV Aerial Images",
+  "veiculo": "Remote Sensing",
+  "ano": 2025
+ },
+ {
+  "rotulo": "Agrawal, Ratnoo & Ghose (2017)",
+  "grau": "FORTE",
+  "doi": "10.2514/1.i010457",
+  "titulo": "Image Segmentation-Based Unmanned Aerial Vehicle Safe Navigation",
+  "veiculo": "Journal of Aerospace Information Systems",
+  "ano": 2017
+ },
+ {
+  "rotulo": "Jiang et al. (2026)",
+  "grau": "FRACO",
+  "doi": "10.2139/ssrn.7411559",
+  "titulo": "Comparative Evaluation of YOLO-Based Object Detection Models for Aerial Drone Imagery Analysis",
+  "veiculo": "",
+  "ano": 2026
+ },
+ {
+  "rotulo": "Wang & Qian (2026)",
+  "grau": "FRACO",
+  "doi": "10.1109/icus61736.2024.10839936",
+  "titulo": "Detection Model for Small Vehicle Targets from Unmanned Aerial Vehicle Perspectives",
+  "veiculo": "2024 IEEE International Conference on Unmanned Systems (ICUS)",
+  "ano": 2024
+ },
+ {
+  "rotulo": "Yan, Hsieh & Lai (2025)",
+  "grau": "FRACO",
+  "doi": "10.70675/3fa63c77z4e70z4395zb38fz9d8bfa4499e3",
+  "titulo": "Deep Learning Anomaly Detection for Drone-based Surveillance",
+  "veiculo": "",
+  "ano": 2026
+ },
+ {
+  "rotulo": "Gevaert, Persello, Sliuzas & Vosselman (2016)",
+  "grau": "FORTE",
+  "doi": "10.4314/rj.v1i2s.4d",
+  "titulo": "Opportunities for UAV mapping to support unplanned settlement upgrading",
+  "veiculo": "Rwanda Journal",
+  "ano": 2017
+ },
+ {
+  "rotulo": "Du, Xing, Wang, Wei & Zhang (2024)",
+  "grau": "FORTE",
+  "doi": "10.1109/jstars.2024.3432200",
+  "titulo": "STMNet: Scene Classification-Assisted and Texture Feature-Enhanced Multiscale Network for Large-Scale Urban Informal Settlement Extraction From Remote Sensing Images",
+  "veiculo": "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing",
+  "ano": 2024
+ },
+ {
+  "rotulo": "Barisic, Petric & Bogdan (2022)",
+  "grau": "FORTE",
+  "doi": "10.1109/lra.2022.3147337",
+  "titulo": "Sim2Air - Synthetic Aerial Dataset for UAV Monitoring",
+  "veiculo": "IEEE Robotics and Automation Letters",
+  "ano": 2022
+ },
+ {
+  "rotulo": "Horvath, Erdos, Istenes, Horvath & Foldi (2023)",
+  "grau": "FRACO",
+  "doi": "10.1109/icpr56361.2022.9956710",
+  "titulo": "Leveraging Synthetic Data in Object Detection on Unmanned Aerial Vehicles",
+  "veiculo": "2022 26th International Conference on Pattern Recognition (ICPR)",
+  "ano": 2022
+ },
+ {
+  "rotulo": "Watson & Elliott (2025)",
+  "grau": "FRACO",
+  "doi": "10.3390/rs16173334",
+  "titulo": "Self-Attention Multiresolution Analysis-Based Informal Settlement Identification Using Remote Sensing Data",
+  "veiculo": "Remote Sensing",
+  "ano": 2024
+ },
+ {
+  "rotulo": "da Silva, Kormann da Silva & Westerholt (2024)",
+  "grau": "FORTE",
+  "doi": "10.1016/j.habitatint.2024.103040",
+  "titulo": "Mapping the margins: A systematic scoping review of the impact of digital mapping on public participation in informal settlements",
+  "veiculo": "Habitat International",
+  "ano": 2024
+ },
+ {
+  "rotulo": "Sithole & Mhangara (2025) [Slovo Park]",
+  "grau": "FORTE",
+  "doi": "10.1080/01431161.2025.2518504",
+  "titulo": "Classification of informal settlements using novel object-based machine learning algorithms and drone imagery, Slovo Park, Johannesburg, South Africa",
+  "veiculo": "International Journal of Remote Sensing",
+  "ano": 2025
+ },
+ {
+  "rotulo": "Kiefer, Ott & Zell (2022)",
+  "grau": "FORTE",
+  "doi": "10.1109/icpr56361.2022.9956710",
+  "titulo": "Leveraging Synthetic Data in Object Detection on Unmanned Aerial Vehicles",
+  "veiculo": "2022 26th International Conference on Pattern Recognition (ICPR)",
+  "ano": 2022
+ }
+]
