@@ -40,6 +40,7 @@ import math
 import os
 import random
 import sys
+import time
 
 import numpy as np
 
@@ -59,6 +60,13 @@ ap.add_argument("--elev", type=float, default=66.0, help="elevacao do sol em gra
 ap.add_argument("--azim", type=float, default=35.0, help="azimute do sol em graus")
 ap.add_argument("--vistas", default="nadir", help="nadir, obliqua, beco, contexto (separados por virgula)")
 ap.add_argument("--arvores", type=int, default=2600)
+ap.add_argument("--dataset", type=int, default=0, help="quantas imagens de dataset YOLO gerar")
+ap.add_argument("--people", type=int, nargs=2, default=[10, 26])
+ap.add_argument("--pool", type=int, default=6, help="humanos MPFB distintos")
+ap.add_argument("--val", type=float, default=0.15)
+ap.add_argument("--min-vis", type=float, default=0.35)
+ap.add_argument("--min-lado", type=float, default=0.002)
+ap.add_argument("--alt-jitter", type=float, default=6.0)
 ap.add_argument("--save-blend", default=None)
 ap.add_argument("--no-render", action="store_true")
 args = ap.parse_args(argv)
@@ -174,7 +182,17 @@ def warp(x, y):
 # ================================================================= cena vazia
 # Tem de vir ANTES dos materiais: read_factory_settings descarta todo o datablock, entao
 # qualquer material criado antes daqui viraria referencia morta.
-bpy.ops.wm.read_factory_settings(use_empty=True)
+# NAO usar read_factory_settings: ele reseta as PREFERENCIAS e com isso desabilita a extensao
+# MPFB, entao bpy.ops.mpfb.create_random_human deixa de existir e o dataset sai sem pessoa
+# nenhuma. Limpeza manual da cena de partida faz o mesmo efeito sem tocar nas preferencias.
+for _ob in list(bpy.data.objects):
+    bpy.data.objects.remove(_ob, do_unlink=True)
+for _co in list(bpy.data.collections):
+    bpy.data.collections.remove(_co)
+for _me in list(bpy.data.meshes):
+    bpy.data.meshes.remove(_me)
+for _ma in list(bpy.data.materials):
+    bpy.data.materials.remove(_ma)
 scene = bpy.context.scene
 COLS = {}
 for _nome in ("TERRENO", "FAVELA", "MATA", "LUZ_E_CAMERAS"):
@@ -1224,7 +1242,110 @@ if args.save_blend:
     bpy.ops.wm.save_as_mainfile(filepath=args.save_blend)
     print(f"[morro] cena salva em {args.save_blend}", flush=True)
 
-if not args.no_render:
+# ================================================================= dataset YOLO
+# Reaproveita o mapa de ocupacao ja calculado para a camera de beco: celula livre e beco ou
+# laje de terreno (onde pessoa anda), e CASAS da a cota de cada laje (onde pessoa tambem anda,
+# e onde a vista de drone mais a enxerga). Isso e melhor que o ray cast cego de gen_jacarezinho,
+# porque aqui sabemos de antemao o que e chao e o que e cobertura.
+if args.dataset > 0:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import people_mpfb as PM
+
+    for _sp in ("train", "val"):
+        os.makedirs(os.path.join(args.out, "images", _sp), exist_ok=True)
+        os.makedirs(os.path.join(args.out, "labels", _sp), exist_ok=True)
+
+    LIVRES = np.argwhere(livre)
+    print(f"[morro] {len(LIVRES)} celulas livres para pessoa no chao", flush=True)
+    PM.build_pool(rng, args.pool, print)
+
+    cam_ds = CAMS["nadir"]
+    scene.camera = cam_ds
+    scene.view_settings.exposure = EXPO_BASE
+    mf = open(os.path.join(args.out, "manifest.jsonl"), "a", encoding="utf-8")
+    tot_cx = 0
+
+    for i in range(args.dataset):
+        PM.clear_people()
+        # domain randomization: sol, altura e leve inclinacao da camera, como em cid150
+        el = rng.uniform(32, 74)
+        az = rng.uniform(0, 360)
+        sky.sun_elevation = math.radians(el)
+        sky.sun_rotation = math.radians(az)
+        sol.rotation_euler = Euler((math.radians(90 - el), 0, math.radians(180 - az)), "XYZ")
+        alt = args.alt + rng.uniform(-args.alt_jitter, args.alt_jitter)
+        ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
+        ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
+        cam_ds.location = (ccx, ccy, z_em(ccx, ccy) + alt)
+        cam_ds.rotation_euler = Euler((math.radians(rng.uniform(0, 3.5)), 0, rng.uniform(0, math.tau)), "XYZ")
+
+        n_p = rng.randint(args.people[0], args.people[1])
+        idx = 0
+        meia = alt * (18.0 / Z30_LENS) * 0.52      # meia largura do quadro, com folga
+        for _ in range(n_p * 4):
+            if idx >= n_p:
+                break
+            armed = rng.random() < 0.5
+            if rng.random() < 0.45 and CASAS:      # em cima da laje
+                ca, _zb, zt = rng.choice(CASAS)
+                mx_ = sum(p[0] for p in ca) / 4
+                my_ = sum(p[1] for p in ca) / 4
+                if abs(mx_ - ccx) > meia or abs(my_ - ccy) > meia:
+                    continue
+                px = mx_ + rng.uniform(-0.3, 0.3)
+                py = my_ + rng.uniform(-0.3, 0.3)
+                PM.make_person(rng, idx, px, py, zt + 0.02, armed, on_roof=True)
+            else:                                  # no beco
+                j_, i_ = LIVRES[rng.randrange(len(LIVRES))]
+                px = BX0 + (i_ + 0.5) * GB
+                py = BY0 + (j_ + 0.5) * GB
+                if abs(px - ccx) > meia or abs(py - ccy) > meia:
+                    continue
+                PM.make_person(rng, idx, px, py, z_em(px, py) + 0.02, armed, on_roof=False)
+            idx += 1
+
+        bpy.context.view_layer.update()
+        dg = bpy.context.evaluated_depsgraph_get()
+        dg.update()
+        split = "val" if rng.random() < args.val else "train"
+        nome = f"mr_{i:06d}"
+        rotulos = []
+        for p in PM.PEOPLE:
+            pts = PM.person_points(p, dg)
+            bb = PM.bbox_2d(scene, cam_ds, pts, args.min_lado)
+            if bb is None:
+                continue
+            vis = PM.visibility(scene, cam_ds, p, pts, dg)
+            if vis < args.min_vis:
+                continue
+            x1, y1, x2, y2 = bb
+            rotulos.append((p["cls"], (x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1, round(vis, 2), p["on_roof"]))
+
+        scene.render.filepath = os.path.join(args.out, "images", split, nome + ".png")
+        t0 = time.time()
+        bpy.ops.render.render(write_still=True)
+        with open(os.path.join(args.out, "labels", split, nome + ".txt"), "w") as f:
+            for l in rotulos:
+                f.write(f"{l[0]} {l[1]:.6f} {l[2]:.6f} {l[3]:.6f} {l[4]:.6f}\n")
+        rec = dict(img=nome + ".png", split=split, w=args.res[0], h=args.res[1],
+                   alt=round(alt, 1), elev=round(el, 1), azim=round(az, 1),
+                   n_pessoas=len(PM.PEOPLE), n_caixas=len(rotulos),
+                   n_armadas=sum(1 for l in rotulos if l[0] == 0),
+                   n_laje=sum(1 for l in rotulos if l[6]),
+                   vis=[l[5] for l in rotulos], seed=args.seed,
+                   render_s=round(time.time() - t0, 1))
+        mf.write(json.dumps(rec) + "\n")
+        mf.flush()
+        tot_cx += len(rotulos)
+        print(f"[morro] {nome} {split} caixas={len(rotulos)}/{len(PM.PEOPLE)} "
+              f"alt={alt:.0f} elev={el:.0f} {rec['render_s']}s", flush=True)
+    mf.close()
+    with open(os.path.join(args.out, "data.yaml"), "w") as f:
+        f.write(f"path: {os.path.abspath(args.out).replace(os.sep, '/')}\ntrain: images/train\n"
+                f"val: images/val\nnames:\n  0: pessoa_armada\n  1: pessoa_desarmada\n")
+    print(f"[morro] dataset: {args.dataset} imagens, {tot_cx} caixas", flush=True)
+
+if args.dataset == 0 and not args.no_render:
     for nome in [v.strip() for v in args.vistas.split(",") if v.strip()]:
         if nome not in CAMS:
             print(f"[morro] vista desconhecida: {nome}", flush=True)
