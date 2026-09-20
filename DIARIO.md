@@ -2,6 +2,14 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-20 [DESKTOP] Decisão: o método é o Blender
+
+O autor decidiu adotar o Blender como método do trabalho e do artigo, por facilitar a escrita e a criação dos scripts em Python e por ser o caminho mais eficaz pelo que o levantamento mostrou. Isso fecha o item 1 de `docs/DIVERGENCIAS.md`. O ARMA 3 passa a constar como origem da ideia em 2022 e como prior art via G-MAD, não como método executado.
+
+Também foi feito o levantamento de qual é a melhor modelagem disponível hoje. É a "cidade de sólidos" do braço `cid150`: sólidos por edificação segmentados do DSM da PCERJ, paredes e lajes com PBR autoral do Poly Haven, sol livre. Renders de referência em `C:\arma3-favela\odm\cidade\` (5 câmeras, 1920x1080) e cena em `C:\arma3-favela\odm\quadra.blend`. É também o braço com o melhor mAP50 no sintético (0,676). Nada disso entra no git nem no painel, porque a geometria vem do dado da PCERJ (item 2 das divergências, ainda aberto).
+
+Fica para o autor: aplicar a decisão no texto do manuscrito, e decidir os itens 2, 3 e 4 das divergências.
+
 ## 2026-09-18 [DESKTOP] Reconciliação com o repositório
 
 Feito (17 e 18/09):

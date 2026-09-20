@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-18, [DESKTOP]
+Última atualização: 2026-09-20, [DESKTOP]
 
 ## Artigo
 
@@ -20,7 +20,7 @@ Estado real, levantado na reconciliação de 17 e 18/09. Detalhe em `06-resultad
 
 | Item | Estado |
 |---|---|
-| Motor | **Blender 5.2.1 headless**, não ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado sem gerar imagem. Decisão sobre como o artigo trata isso: aberta (`docs/DIVERGENCIAS.md`, item 1) |
+| Motor | **Blender 5.2.1 headless**, não ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado sem gerar imagem. **Decidido pelo autor em 20/09: o Blender é o método do trabalho e do artigo** (`docs/DIVERGENCIAS.md`, item 1). Falta aplicar no texto do manuscrito |
 | Código | 19 scripts Python e 8 de batelada em `07-blender/scripts/`. Caminhos absolutos da pasta antiga ainda embutidos (`docs/DIVERGENCIAS.md`, item 13) |
 | Classes | `pessoa_armada` e `pessoa_desarmada`. Anotação amodal recortada no quadro, visibilidade mínima 0,35 |
 | Datasets | 3 de treino (cada um com versão em ladrilhos de 1280 px) e 2 de teste, todos sintéticos 4K. `dataset_v3` (OSM, 120 imagens), `dataset_odm` (malha real PCERJ, 120), `dataset_cid150` (cidade de sólidos sobre DSM PCERJ, 560), `teste_angulos` (60), `teste_denso` (40) |
@@ -48,7 +48,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 ## Próximos passos, em ordem
 
-1. [AUTOR] Decidir as quatro divergências abertas em `docs/DIVERGENCIAS.md`: ARMA 3 ou Blender no texto do artigo; o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp.
+1. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 2. [DESKTOP] Sim-to-real no VisDrone: baixar o VisDrone-DET, converter com `03-arma3/scripts/visdrone_to_yolo.py` para classe única de pessoa, rodar zero-shot com `blender_v3_tiles2` e `cid150_s`, depois ajuste fino com 5 a 10% de real, depois sintético mais real. São os três números do artigo.
 3. [AUTOR] E-mail para cartografia.ipp@prefeitura.rio pedindo a nuvem LiDAR e o MDS de 2024 do recorte do Jacarezinho. Continua sendo a ação de maior alavancagem.
 4. [DESKTOP] Baixar recorte da ortofoto do IPP de 2024 e refazer a "cidade de sólidos" sobre ela, para ter um braço de geometria real sem dado sensível.

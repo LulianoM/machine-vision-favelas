@@ -6,7 +6,10 @@ Estados: ABERTA (depende do autor), CORRIGIDA (era fato desatualizado, já acert
 
 ## A. Divergências que dependem do autor
 
-### [ ] 1. O experimento não é ARMA 3, é Blender (ABERTA)
+### [x] 1. O experimento não é ARMA 3, é Blender (DECIDIDA em 2026-09-20 pelo autor)
+
+**Decisão do autor (2026-09-20):** adotar o Blender como método do trabalho e do artigo. Razão dada: facilita a escrita e a criação dos scripts em Python, e é o caminho mais eficaz pelo que o levantamento mostrou. O ARMA 3 passa a constar como origem da ideia em 2022 (Fábio Guimarães, PCERJ) e como prior art via G-MAD, não como método executado. Falta aplicar no texto: `01-artigo/manuscrito/` (método e resultados) e `docs/CONTEXTO.md`.
+
 
 - Mac afirma: o experimento é o "pipeline ARMA 3 -> bounding box -> YOLO" (`CLAUDE.md`, `03-arma3/`, `docs/CONTEXTO.md`), e o levantamento de 12/09 recomenda "ARMA 3 + código do G-MAD" para quem prioriza publicar rápido.
 - Desktop encontrou: o ARMA 3 foi tentado em 2026-09-11 e abandonado no mesmo dia. A missão `dsFavela.Tanoa` chegou a existir, mas nenhuma imagem foi capturada. Motivo registrado na nota do desktop: o jogo não expõe controles, a automação dependia de OCR e de cliques em primeiro plano. Todo o resto (5 treinos, 8 datasets) foi feito no Blender 5.2.1 headless, com anotação por projeção de vértices e oclusão por ray cast.
