@@ -33,7 +33,7 @@ and what does not.
 
 ### 4.2 Scene construction
 
-Scenes are generated procedurally in Blender 5.2 LTS, executed headless with a deterministic seed,
+Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed,
 so that any reported image can be regenerated exactly from the seed recorded in its manifest
 entry. No commercial asset packs are used: surface materials come from a public-domain library
 (Poly Haven, CC0) and all geometry is authored by the generator. This matters twice over. It makes
@@ -55,10 +55,19 @@ probability 0.008. The second band is the alley, or beco, that defines the morph
 or twenty dwellings, and that is the strongest visual signature of procedural generation in a
 nadir view. The generator therefore produces nine sub-districts, each with an independent
 orientation, separated by a Voronoi diagram, reproducing the way consolidated settlement grows by
-nuclei that meet at an angle. The result is measured: the fraction of edge
-energy falling within 7.5 degrees of the cardinal axes, divided by the isotropic expectation of
-15 in 180, is 1.62 in the released configuration, against 2.50 for a single partition of the same
-generator. Unity would indicate no preferred direction.
+nuclei that meet at an angle. The result is measured. The statistic is the
+fraction of edge energy falling within 7.5 degrees of a cardinal axis, divided by the isotropic
+expectation. The measurement window covers 30 degrees of 180, so the isotropic expectation is one
+sixth and unity means no preferred direction. In the released configuration the value is 0.90; in
+the version of the generator that used a single partition it was 2.18
+(`06-resultados/teste_fidelidade.csv`, `07-blender/HISTORICO-LOOP.md`).
+
+An earlier draft of this article reported 1.62 for the same scene. That figure came from a
+measurement script whose normaliser used 15 degrees of 180 rather than 30, inflating the whole
+column by a factor of two. The error mattered beyond the digit: it placed the released
+configuration above the isotropic expectation when it is in fact slightly below it. The script and
+the recorded values were corrected, and the correction is noted here because the uncorrected
+figure appeared in circulated drafts.
 
 **Vertical accretion.** The dwelling is not a single prism. In the majority of cases with two or
 more storeys the upper floor is smaller than the one below and offset toward one boundary, leaving
@@ -68,7 +77,7 @@ most clearly reads as a grid of boxes rather than a favela. Storey count is draw
 low-frequency noise field rather than independently per dwelling, so that taller and shorter zones
 form, as they do on a real hillside.
 
-<!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 4K (4.88 cm/px). All geometry is authored by the generator and all materials are public domain. The three construction stages described above are visible: shared party walls with 0.5 to 1.2 m alleys, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
+<!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 1920 by 1080, which gives 9.76 cm per pixel. The resolution is stated because Section 8.1 shows that ground sampling distance, not scene content, sets the size of the target; the corpus used for training is rendered at 3840 by 2160 and is twice as fine. All geometry is authored by the generator and all materials are public domain. The three construction stages described above are visible: shared party walls with alleys mostly between 0.5 and 1.2 m, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
 
 Roof surfaces carry the objects that occupy them in use: water tanks in three commercial volumes,
 clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, and exposed
@@ -125,9 +134,9 @@ lighting budgets, each governing solar irradiance, the angular diameter of the s
 fill, atmospheric scattering density, and aerosol content together: hard sun, low sun, overcast,
 haze, heavy overcast, and rain. The angular diameter of the sun is what separates these
 physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees the cast shadow
-effectively disappears, which is what a covered sky does. Measured over identical scene and framing, mean frame
-luminance runs 81.3 (hard sun), 90.4 (low sun), 91.7 (overcast), 110.1 (haze), 63.2 (heavy
-overcast) and 37.7 (rain) of 255.
+effectively disappears, which is what a covered sky does. Mean frame luminance over the training corpus runs
+87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1
+(rain) of 255 (`06-resultados/contraste_clima.csv`).
 
 <!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Mean frame luminance runs from 110 (haze) to 38 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
@@ -160,11 +169,11 @@ downscaled frames.
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
 | Initialisation | COCO pretrained weights, identical for every model reported |
 | Tile size, synthetic corpus at 4K | 1280 px, 20 per cent overlap |
-| Empty tiles retained as negatives | 6 per cent |
+| Empty tiles retained as negatives | requested 6 per cent; realised 1.8 to 4.5 per cent depending on corpus density |
 | Minimum retained fraction of a clipped box | 0.40 |
 | Optimiser, learning rate | Ultralytics default, lr0 0.01 |
 | Validation split | 15 per cent of generated scenes, split by scene and not by tile |
-| Inference | conf 0.001, IoU 0.7 NMS, reported at IoU 0.50 and 0.50 to 0.95 |
+| Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95 |
 
 Splitting the validation set by scene rather than by tile is necessary because overlapping tiles
 of one frame are not independent; splitting by tile would place near-duplicates on both sides.

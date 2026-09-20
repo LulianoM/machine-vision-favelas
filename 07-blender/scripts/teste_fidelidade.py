@@ -71,7 +71,12 @@ def mede(caminho):
     ang = (np.degrees(np.arctan2(gy[forte], gx[forte])) % 180.0)
     if len(ang):
         card = float(((ang < 7.5) | (ang > 172.5) | (np.abs(ang - 90) < 7.5)).mean())
-        aniso = card / (15.0 / 180.0)     # 15 graus de 180 e a fracao isotropica
+        # A janela cobre 30 graus de 180, nao 15: [0, 7.5) mais (172.5, 180] da 15 graus em
+        # torno de 0, e (82.5, 97.5) da outros 15 em torno de 90. O normalizador anterior era
+        # 15/180 e inflava TODA a coluna por um fator de 2. O erro foi copiado para o texto do
+        # artigo, onde invertia o sentido do argumento: 1,62 parecia acima do isotropico quando
+        # o valor correto, 0,81, esta abaixo. Achado pela auditoria de numeros de 2026-09-20.
+        aniso = card / (30.0 / 180.0)
     else:
         aniso = float("nan")
 

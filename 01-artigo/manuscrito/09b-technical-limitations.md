@@ -37,15 +37,15 @@ study, and Section 11.3 is the only acquisition recommendation this article make
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
-Section 8.3 measures that hard sunlight produces the largest raw separation between figure and
-background and one of the two lowest ratios of contrast to local clutter, because the background
-under hard sun is itself filled with cast shadow from rooftop objects. If that mechanism holds
-when a detector is evaluated per regime, the practical implication is direct and runs against the
-conventional preference for flying in clear weather.
+Section 8.3 measures that contrast against local clutter is lowest under hard sun and rain and
+highest under overcast, because the background under a hard sun is itself filled with cast shadow
+from rooftop objects. If that mechanism holds when a detector is evaluated per regime, the
+practical implication is direct and runs against the conventional preference for flying in clear
+weather.
 
 The implication is stated conditionally because the evidence is conditional. Eight images per
-regime, with between-image dispersion of 0.11 to 0.35, resolves the gap between hard sun and
-overcast at roughly one standard deviation and does not resolve the ordering of the intermediate
+regime, with between-image dispersion of 0.12 to 0.38, resolves only the gap between the extremes
+at roughly one standard deviation and does not resolve the ordering of the four intermediate
 regimes at all. Section 10.3 specifies the test. If per-regime detector performance does not order
 inversely with raw contrast, this implication is withdrawn and the contrast measurement stands
 only as a description of the imagery.
@@ -82,8 +82,11 @@ grounds, and the ethical ground is the one that would hold even if the technical
 
 ### 11.6 Reproducibility, and what a reader cannot check
 
-Every generated image carries its seed, illumination regime, camera altitude and pitch in a
-manifest entry, and the generator reproduces any image exactly from that entry. The hyperparameter
+Every generated image carries its seed, illumination regime and camera altitude in a manifest
+entry, and the generator reproduces any image exactly from that entry. Camera pitch is recorded
+per image only in corpora generated after the field was added, which is why Section 8.2 reads
+pitch from the manifest for one corpus and from the generator setting for the other, and says so
+in the table. The hyperparameter
 and inference tables in Section 4.6 are in the body of the article for the same reason.
 
 What a reader cannot check from this article is the corpus itself. The procedurally generated arms

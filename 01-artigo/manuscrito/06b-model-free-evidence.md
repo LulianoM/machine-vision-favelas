@@ -19,8 +19,8 @@ parameters are stated rather than implied.
 | Corpus | Geometry recorded in manifest | Render | Instances |
 |---|---|---|---|
 | `dataset_cid150` | pitch 50.0 to 89.9 deg (median 70.0), lens 30.1 to 50.0 mm, altitude 138 to 162 m | 3840 x 2160 | 4,856 (train split) |
-| `dataset_cid150`, near-nadir subset | pitch at or above 88 deg, 32 of 560 images | 3840 x 2160 | 293 |
-| `ds_morro_clima` | pitch 0.0 to 3.5 deg from nadir, 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
+| `dataset_cid150`, near-nadir subset | pitch at or above 88 deg, 29 images of the train split | 3840 x 2160 | 293 |
+| `ds_morro_clima` | pitch 0.0 to 3.5 deg from nadir (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
 | VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
 
 `dataset_cid150` is an earlier arm of this project built on photogrammetric terrain, and it is
@@ -79,12 +79,14 @@ recorded in its manifest, gives:
 | `dataset_cid150`, pitch at or below 60 deg | 16.5 px | 25.5 px | 1.56 | 1,263 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
-*Pitch is taken from the manifest entry of each image, not estimated from the imagery.*
+*For `dataset_cid150`, pitch is read from the manifest entry of each image. For `ds_morro_clima`
+the manifest predates the field, so the value is the generator setting that produced the corpus,
+which bounds pitch at 3.5 degrees from nadir but does not record it per image.*
 
 Two synthetic corpora built by different generators, on different terrain, at different render
 resolutions, agree to within 0.05 when both are restricted to true nadir: 0.93 and 0.98. The
-quantity then rises monotonically as the camera is tilted, reaching 1.56 at 40 degrees off nadir,
-and the real benchmark sits at 2.20. This is an ordered relationship across five samples rather
+quantity then rises monotonically as the camera is tilted, reaching 1.56 over the subset between
+30 and 40 degrees off nadir, and the real benchmark sits at 2.20. This is an ordered relationship across five samples rather
 than a contrast between two, which is what permits the interpretation.
 
 A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio of 2.20 is a
@@ -103,7 +105,7 @@ above is measured within synthetic corpora, where pitch is known exactly. The be
 2.20 comes from real imagery whose acquisition geometry is not recorded, so it anchors the
 direction of the relationship but not its slope.
 
-### 8.3 Hard sunlight maximises raw contrast and minimises contrast over local clutter
+### 8.3 Contrast against local clutter is lowest under hard sun and rain, not under low light
 
 The six illumination regimes permit a measurement bearing on acquisition practice. For every
 annotated instance we computed mean luminance inside the box, mean luminance of a six pixel ring
@@ -113,30 +115,33 @@ difference divided by the ring deviation is contrast against local clutter.
 Instances within one image are not independent, so the statistic is aggregated per image and the
 dispersion reported is between images.
 
-| Regime | Mean frame luminance | Raw difference (DN) | Contrast over clutter, median per image | SD between images |
-|---|---|---|---|---|
-| Hard sun | 81.3 | **16.6** | 0.64 | 0.13 |
-| Low sun | 90.4 | 9.7 | 0.70 | 0.18 |
-| Overcast | 91.7 | 15.3 | **0.88** | 0.25 |
-| Haze | 110.1 | 10.6 | 0.79 | 0.23 |
-| Heavy overcast | 63.2 | 9.8 | 0.72 | 0.35 |
-| Rain | 37.7 | **6.6** | 0.63 | 0.11 |
+| Regime | Mean frame luminance | Raw difference (DN) | Contrast over clutter, median per image | SD between images | Instances |
+|---|---|---|---|---|---|
+| Hard sun | 87.0 | 15.2 | **0.64** | 0.14 | 113 |
+| Low sun | 56.0 | 9.0 | 0.70 | 0.20 | 117 |
+| Overcast | 84.6 | **16.4** | **0.88** | 0.26 | 122 |
+| Haze | 94.4 | 9.6 | 0.79 | 0.25 | 113 |
+| Heavy overcast | 55.6 | 11.2 | 0.72 | 0.38 | 91 |
+| Rain | 35.1 | 6.6 | **0.63** | 0.12 | 128 |
 
-*684 instances across 48 images, eight images per regime, corpus `ds_morro_clima`.*
+*684 instances across 48 images, eight per regime, corpus `ds_morro_clima`. Produced by
+`06-resultados/mede_contraste_clima.py`; values in `06-resultados/contraste_clima.csv`.*
 
-Hard sunlight produces the largest raw separation between figure and background and one of the two
-lowest separations once local clutter is accounted for. The proposed mechanism follows from the
-scene description in Section 4.2: under a hard sun the background is itself filled with sharp cast
-shadow from water tanks, parapets, clotheslines and cabling, the local deviation of the background
-rises, and the figure ceases to stand out from the disorder. Under a covered sky the background is
-smoother and a smaller difference is more detectable.
+Overcast gives both the largest raw separation between figure and background and the largest
+separation once local clutter is accounted for. Hard sun and rain are the two lowest on the latter
+measure, and hard sun achieves that while sitting second on raw contrast. The proposed mechanism
+follows from the scene description in Section 4.2: under a hard sun the background is itself
+filled with sharp cast shadow from water tanks, parapets, clotheslines and cabling, the local
+deviation of the background rises, and the figure stops standing out from the disorder. Under a
+covered sky the background is smoother, so a comparable difference is easier to find.
 
 What the sample supports and what it does not should be separated. With eight images per regime
-and between-image dispersion of 0.11 to 0.35, the gap between hard sun (0.64) and overcast (0.88)
-is approximately one standard deviation and the ordering of the intermediate regimes is not
-resolvable. The measurement is therefore reported as a hypothesis about detector difficulty, not
-as a finding about it. A contrast statistic is not a detection statistic, and Section 11.3 tests
-whether the ordering survives when a detector is actually evaluated per regime.
+and between-image dispersion of 0.12 to 0.38, only the gap between the extremes (rain and hard
+sun at 0.63 and 0.64, against overcast at 0.88) approaches one standard deviation, and the
+ordering of the four intermediate regimes is not resolvable at this sample size. The measurement
+is therefore a hypothesis about detector difficulty, not a finding about it: a contrast statistic
+is not a detection statistic. Section 11.3 states the test and the condition under which the
+hypothesis is withdrawn.
 
 ### 8.4 What these measurements imply for the proposal
 

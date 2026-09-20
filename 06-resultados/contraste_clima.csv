@@ -1,0 +1,7 @@
+regime,clima,n_img,n_caixas,lum_media,bruto_dn,razao_mediana,razao_dp_entre_img
+Hard sun,sol_duro,8,113,87.0,15.2,0.64,0.14
+Low sun,sol_baixo,8,117,56.0,9.0,0.7,0.2
+Overcast,nublado,8,122,84.6,16.4,0.88,0.26
+Haze,neblina,8,113,94.4,9.6,0.79,0.25
+Heavy overcast,encoberto,8,91,55.6,11.2,0.72,0.38
+Rain,chuva,8,128,35.1,6.6,0.63,0.12
