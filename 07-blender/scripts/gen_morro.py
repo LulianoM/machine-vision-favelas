@@ -836,7 +836,7 @@ for cant0 in LOTES:
 
     # ---- cobertura: mureta, caixa d'agua, casinha de escada, ferragem de espera, varal
     r_ = rng.random()
-    if r_ < 0.80:                                    # laje com platibanda
+    if r_ < 0.44:                                    # laje com platibanda
         ph = rng.uniform(0.35, 0.9)
         for lado in range(4):
             a, b = cantos_topo[lado], cantos_topo[(lado + 1) % 4]
@@ -868,7 +868,8 @@ for cant0 in LOTES:
 
     if rng.random() < 0.62:                          # caixa d'agua, o marcador mais visivel a 150 m
         for _ in range(rng.choice([1, 1, 1, 1, 2])):
-            rr = rng.uniform(0.5, 0.7)
+            rr = rng.choice([rng.uniform(0.35, 0.45), rng.uniform(0.50, 0.62),
+                             rng.uniform(0.68, 0.85)])      # 310 L, 500 L, 1000 L
             hh = rng.uniform(0.85, 1.25)
             px = wcx + rng.uniform(-0.32, 0.32) * lx
             py = wcy + rng.uniform(-0.32, 0.32) * ly
@@ -876,9 +877,9 @@ for cant0 in LOTES:
             # base de alvenaria: caixa d'agua quase nunca fica direto na laje
             if rng.random() < 0.55:
                 acc.caixa(px, py, ztopo + 0.22, rr * 2.2, rr * 2.2, 0.44, mi_par, rng.uniform(0, 3))
-                acc.cilindro(px, py, ztopo + 0.44, rr, hh, mi_cx, tampa_mi=I_CXPRETA)
+                acc.cilindro(px, py, ztopo + 0.44, rr, hh, mi_cx, tampa_mi=mi_cx)
             else:
-                acc.cilindro(px, py, ztopo + 0.05, rr, hh, mi_cx, tampa_mi=I_CXPRETA)
+                acc.cilindro(px, py, ztopo + 0.05, rr, hh, mi_cx, tampa_mi=mi_cx)
             n_cx += 1
     if rng.random() < 0.3:                           # casinha de escada
         acc.caixa(wcx + rng.uniform(-0.25, 0.25) * lx, wcy + rng.uniform(-0.25, 0.25) * ly,
@@ -914,7 +915,7 @@ for cant0 in LOTES:
         ay_ = wcy - lx * 0.3 * math.sin(ang)
         bx_ = wcx + lx * 0.3 * math.cos(ang)
         by_ = wcy + lx * 0.3 * math.sin(ang)
-        acc.fio((ax_, ay_, ztopo + 1.4), (bx_, by_, ztopo + 1.4), 0.015, I_FIO, barriga=0.12)
+        acc.fio((ax_, ay_, ztopo + 1.4), (bx_, by_, ztopo + 1.4), 0.05, I_FIO, barriga=0.12)
         # numero, posicao e tamanho de peca aleatorios: o motivo de 7 retangulos igualmente
         # espacados, repetido identico dezenas de vezes, foi apontado como sinal de "kit de pecas"
         n_pc = rng.randint(2, 9)
@@ -927,16 +928,23 @@ for cant0 in LOTES:
         n_varal += 1
 
 # ---- fiacao aerea atravessando os becos, que e outra assinatura forte da favela
-for _ in range(220):
-    x = rng.uniform(-NUC_A, NUC_A)
-    y = rng.uniform(-NUC_B, NUC_B)
-    if raio(x, y) > 0.95:
-        continue
-    ang = rng.uniform(0, math.tau)
-    L = rng.uniform(7, 18)
-    z = z_em(x, y) + rng.uniform(7.5, 12.5)
-    acc.fio((x, y, z), (x + L * math.cos(ang), y + L * math.sin(ang), z + rng.uniform(-1.5, 1.5)),
-            0.022, I_FIO, barriga=rng.uniform(0.5, 1.3))
+# Ancorado no TELHADO, nao numa altura sorteada sobre o terreno: 41% dos fios nasciam abaixo da
+# laje vizinha e ficavam presos dentro do predio. E com secao de feixe real (16 cm): 2,2 cm a
+# 9,74 cm/px dava 0,45 px, sub-pixel, e a fiacao simplesmente nao aparecia na imagem.
+if CASAS:
+    for _ in range(260):
+        ca, _zb, zt = rng.choice(CASAS)
+        x = sum(p[0] for p in ca) / 4
+        y = sum(p[1] for p in ca) / 4
+        cb, _zb2, zt2 = rng.choice(CASAS)
+        x2 = sum(p[0] for p in cb) / 4
+        y2 = sum(p[1] for p in cb) / 4
+        d = math.hypot(x2 - x, y2 - y)
+        if not (5.0 < d < 22.0):
+            continue
+        z1 = zt + rng.uniform(0.6, 2.2)
+        z2 = zt2 + rng.uniform(0.6, 2.2)
+        acc.fio((x, y, z1), (x2, y2, z2), 0.08, I_FIO, barriga=rng.uniform(0.5, 1.4))
 
 ob_fav = acc.objeto("Favela", COLS["FAVELA"])
 print(f"[morro] {n_casa} edificacoes, {n_cx} caixas d'agua, {n_varal} varais, "
@@ -1016,6 +1024,39 @@ nt.links.new(amb.outputs["Background"], mx.inputs[1])
 nt.links.new(bg.outputs["Background"], mx.inputs[2])
 ow = next(n for n in nt.nodes if n.type == "OUTPUT_WORLD")
 nt.links.new(mx.outputs["Shader"], ow.inputs["Surface"])
+
+# AIRLIGHT. Nao havia NADA nos 150 m de ar entre camera e solo, e era isso que matava a sombra:
+# 6,8 paradas entre sol e sombra, com 17% do quadro sem informacao nenhuma dentro. Ar umido do
+# Rio poe de 2 a 4% de luz espalhada dentro de toda sombra a essa distancia. Isso corrige o
+# contraste no lugar certo (a fisica da cena), nao no tone mapper.
+#
+# O volume vai numa CAIXA, nao no World: volume de World e ilimitado, entao o raio do sol
+# atravessa distancia infinita de meio, a transmitancia vai a zero e a cena apaga por completo.
+_vz0 = float(GZ.min()) - 12.0
+_vz1 = float(GZ.max()) + 190.0
+_me_v = bpy.data.meshes.new("Ar")
+_vx, _vy = AREA_X * 1.02, AREA_Y * 1.02
+_me_v.from_pydata(
+    [(-_vx, -_vy, _vz0), (_vx, -_vy, _vz0), (_vx, _vy, _vz0), (-_vx, _vy, _vz0),
+     (-_vx, -_vy, _vz1), (_vx, -_vy, _vz1), (_vx, _vy, _vz1), (-_vx, _vy, _vz1)], [],
+    [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)])
+_me_v.update()
+_mat_ar = bpy.data.materials.new("Ar")
+_mat_ar.use_nodes = True
+_nta = _mat_ar.node_tree
+for _n in list(_nta.nodes):
+    if _n.type != "OUTPUT_MATERIAL":
+        _nta.nodes.remove(_n)
+_out_a = _nta.nodes[0]
+_vs = _nta.nodes.new("ShaderNodeVolumeScatter")
+_vs.inputs["Density"].default_value = 0.55e-4
+_vs.inputs["Color"].default_value = (0.78, 0.85, 1.0, 1.0)
+_vs.inputs["Anisotropy"].default_value = 0.35
+_nta.links.new(_vs.outputs["Volume"], _out_a.inputs["Volume"])
+_me_v.materials.append(_mat_ar)
+_ob_ar = bpy.data.objects.new("Ar", _me_v)
+COLS["LUZ_E_CAMERAS"].objects.link(_ob_ar)
+_ob_ar.visible_shadow = False
 
 sol_d = bpy.data.lights.new("Sol", type="SUN")
 sol_d.energy = 6.5
@@ -1169,7 +1210,7 @@ scene.cycles.use_denoising = True
 scene.cycles.max_bounces = 10          # beco fundo so aparece com luz indireta de varios saltos
 scene.cycles.diffuse_bounces = 8
 scene.cycles.transmission_bounces = 4
-scene.cycles.volume_bounces = 0
+scene.cycles.volume_bounces = 1
 
 # Exposicao por vista: o beco esta cerca de 6 paradas abaixo da laje, e uma camera real
 # compensaria isso. Sem o ajuste a vista sai preta mesmo com a luz correta.

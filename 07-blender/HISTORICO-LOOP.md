@@ -153,3 +153,57 @@ dessatura realce por construção. Trocar para o look "Punchy" recupera saturaç
 para 19%) ao custo de esmagar a média para 73 e levar 28% do quadro abaixo de 25. É um
 compromisso real do tone mapper, não um defeito do gerador, e está registrado aqui para não ser
 perseguido de novo nas próximas rodadas.
+
+## v9, o segundo ramo morto e a névoa aérea
+
+Quarta validação: **6,6** na régua do avaliador, que ele calibrou como **+0,5 real** sobre a
+rodada anterior reavaliando v3 e v7 com o mesmo critério. Primeiro saldo positivo desde v3.
+
+### Segundo bug de código achado pela validação
+
+Ao subir a platibanda de 46% para 80% eu escrevi `if r_ < 0.80:` antes de `elif r_ < 0.70:`.
+Como 0,70 é menor que 0,80, o ramo de telhado de duas águas ficou **inalcançável**: 0,0% de
+telha inclinada medida, contra 24% em v7. É o plano inclinado que devolve laranja vivo em
+nadir, então isso derrubou sozinho o item de paleta, que tem peso 2. Revertido para 0,44.
+
+Lição que vale registrar: nas duas vezes em que o loop andou para trás, a causa foi um bug de
+código que a inspeção visual não pega (ColorRamp sem cor, ramo inalcançável), não uma escolha
+estética errada. Validação com medição numérica é o que encontra isso.
+
+### Névoa aérea
+
+Não havia nada nos 150 m de ar entre câmera e solo. Consequência medida: 6,8 paradas entre sol
+e sombra, com 17% do quadro sem informação nenhuma dentro. Ar úmido do Rio põe de 2 a 4% de luz
+espalhada dentro de toda sombra a essa distância.
+
+Detalhe que custou uma tentativa: volume no World é ilimitado, então o raio do sol atravessa
+distância infinita de meio, a transmitância vai a zero e a cena apaga por completo. O volume
+tem de ir numa CAIXA que envolve o sítio.
+
+### Outras correções da rodada
+
+- Tampa da caixa d'água passou a ter a cor do corpo. Em nadir só a tampa aparece, então 100%
+  das caixas viravam disco escuro idêntico e os 62% de caixa azul nunca eram vistos. Foi
+  apontado como o sinal mais forte de cena sintética: 212 discos iguais, um a cada 93 m².
+- Três volumes de caixa d'água (310 L, 500 L, 1000 L) em vez de um.
+- Fiação: seção de 2,2 cm dava 0,45 px a 9,74 cm/px, ou seja sub-pixel, e a fiação simplesmente
+  não aparecia (zero estruturas lineares detectadas). Passou para 16 cm, que é a seção real de
+  um feixe, e passou a ser ancorada no telhado. Antes, 41% dos fios nasciam abaixo da laje
+  vizinha e ficavam presos dentro do prédio.
+
+### Medições v9
+
+| Métrica | Alvo | v7 | v8 | v9 |
+|---|---|---|---|---|
+| Luminância média | 90 a 140 | 106,6 | 99,6 | 102,6 |
+| Contraste p90/p10 (paradas) | 3,5 a 4,5 | 2,5 | 5,43 | **3,53** |
+| B/R na sombra profunda | perto de 1 | 0,47 | 0,89 | **0,87** |
+| Fração abaixo de 25 | baixa | 12,1% | 17,0% | 15,4% |
+| Telhado de duas águas | presente | 24% | **0%** | 26% |
+| Edificações no quadro | acima de 500 | 282 | 420 | 421 |
+
+### Tensão irredutível registrada pela validação
+
+Os dois subtestes do item 2 da rubrica são incompatíveis entre si: 500 casas de 50 m² dão
+25.000 m² num quadro de 19.635 m². Não dá para perseguir os dois ao mesmo tempo. A rubrica
+precisa ser corrigida numa próxima revisão.
