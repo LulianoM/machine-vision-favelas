@@ -138,8 +138,6 @@ def main():
 
     capa = """<div class="capa">
 <h1>Machine Vision from the Global South:<br>Developing an AI Model for Vertical Favelas</h1>
-<p class="sub">Prévia de leitura, montada automaticamente<br>
-Seções técnicas integradas ao texto do orientador</p>
 </div>"""
 
     aviso = ""

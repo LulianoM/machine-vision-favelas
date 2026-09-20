@@ -17,7 +17,12 @@ Estados: ABERTA (depende do autor), CORRIGIDA (era fato desatualizado, já acert
 - O que isso toca no artigo: a frase "dados sintéticos de motor de jogo", a Seção de resultados, o crédito ao Fábio e ao prof. Miceli (continua devido pela ideia de 2022, mas o método executado mudou), e a relação com o G-MAD (deixa de ser "mesmo método, publicado antes" e passa a ser "linhagem comum, método diferente").
 - Recomendação: descrever o Blender como o método executado; o ARMA 3 entra como origem da ideia em 2022 e como prior art (G-MAD). Não reescrever nada no manuscrito antes de o autor e o orientador decidirem.
 
-### [ ] 2. Três dos quatro braços do experimento usam dado da PCERJ (ABERTA)
+### [x] 2. Três dos quatro braços do experimento usam dado da PCERJ (DECIDIDA em 2026-09-20)
+
+**Decisão do autor:** nenhuma imagem derivada do dado da PCERJ entra no artigo, e a utilização é
+apenas citada de leve, sem desenvolvimento extenso. Não haverá consulta à PCERJ. Consequência
+prática: as figuras saem todas do braço procedural, e o `dataset_cid150` aparece no texto apenas
+como segunda amostra de estatística de rótulo, que é como a Seção 8 já o trata.
 
 - Mac afirma: a base de geometria recomendada é a ortofoto pública do IPP de 2024 (mais o LiDAR, se vier), justamente por não ser dado sensível (`docs/CONTEXTO.md`, `PENDENCIAS.md` D3). Os ortomosaicos da PCERJ não trafegam.
 - Desktop encontrou: as 567 fotos de drone da PCERJ (ago/2022) foram reprocessadas no OpenDroneMap e viraram a base de `dataset_odm`, `dataset_cid150`, `teste_angulos` e `teste_denso`, do mapa navegável e da quadra. Só o `dataset_v3` (OSM + Poly Haven) é livre de dado PCERJ. Nada disso saiu do desktop: a regra foi respeitada, mas o experimento depende do dado sensível.
@@ -25,7 +30,10 @@ Estados: ABERTA (depende do autor), CORRIGIDA (era fato desatualizado, já acert
 - Consequências: (a) as métricas podem ser citadas, as imagens não, então o artigo não pode ilustrar esses braços; (b) reprodutibilidade por terceiros é nula nesses braços; (c) é preciso confirmar com a PCERJ se publicar métrica derivada do dado é aceitável.
 - Recomendação: tratar `blender_v3_tiles2` (OSM) como o braço publicável e ilustrável; tratar os braços PCERJ como resultado interno que mostra o ganho de usar geometria real; e, quando a ortofoto do IPP for baixada, refazer a "cidade de sólidos" sobre ela para ter um braço de geometria real que seja aberto.
 
-### [ ] 3. As classes são armada e desarmada, não "pessoa" (ABERTA quanto ao artigo, CORRIGIDA no contexto)
+### [ ] 3. As classes são armada e desarmada (ABERTA, e virou frente de trabalho em 2026-09-20)
+
+**Direção do autor em 2026-09-20:** em vez de retirar a distinção do artigo, melhorá-la com
+modelagem e teste novos. Ver `07-blender/PLANO-ARMADO.md`.
 
 - Mac afirmava: "As classes atuais são pessoas vistas de cima (reproduz 2022)".
 - Desktop encontrou: duas classes em todos os datasets, `pessoa_armada` e `pessoa_desarmada`, metade de cada.
@@ -33,7 +41,10 @@ Estados: ABERTA (depende do autor), CORRIGIDA (era fato desatualizado, já acert
 - Ponto para o autor: o próprio `RESULTADOS` do desktop avisa que a separação funciona no sintético porque a arma é sempre o mesmo modelo, na mesma posição e com o mesmo contraste, e que reportar isso como capacidade validada seria o salto que o artigo critica. O artigo trata de morfologia vertical e de uso dual; um detector de "pessoa armada" em favela é exatamente o uso policial. Decidir se esse resultado entra no artigo, e como.
 - Recomendação: no artigo, reportar detecção de pessoa (classe única) como validação do método, e mencionar a distinção armado e desarmado só como ilustração do risco de uso dual, sem número de acurácia em destaque. O segundo experimento (edificação, pavimentos, adição em laje) continua sendo o que sustenta a tese.
 
-### [ ] 4. blender-mcp em uso no desktop apesar do alerta de segurança do levantamento (ABERTA)
+### [x] 4. blender-mcp em uso no desktop apesar do alerta de segurança (DESCARTADA em 2026-09-20)
+
+**Decisão do autor:** não perseguir. O pipeline de dataset não depende do MCP (tudo roda com
+`blender -b --python`), então o risco fica contido ao uso interativo.
 
 - Mac afirma (levantamento, parte 4): o `ahujasid/blender-mcp` teve a conta do mantenedor comprometida em agosto de 2026 e tem CVEs abertos; rodar em container ou em safe mode.
 - Desktop encontrou: `blender-mcp 1.9.1` instalado em `C:\arma3-favela\mcp-venv`, registrado como servidor MCP do usuário, rodando fora de container. O addon no Blender é de 2026-09-11.
