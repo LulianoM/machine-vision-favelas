@@ -1,4 +1,4 @@
-## eferences
+## References
 
 - Gram-Hansen, B., Helber, P., Varatharajan, I., Azam, F., Coca-Castro, A., Kopackova, V., & Bilinski, P. (2019). *Mapping Informal Settlements in Developing Countries using Machine Learning and Low Resolution Multi-spectral Data.* AIES '19 / arXiv:1901.00861.
 - Hu, J., Huang, X., Ren, T., & Zhang, L. (2025). *Urban Informal Settlement Classification via Cross-Scale Hierarchical Perception Fusion Network Using Remote Sensing and Street View Images.* Remote Sensing, 17(23), 3841.
@@ -59,3 +59,7 @@ Supremo Tribunal Federal. (2025a, March 26). STF avança em solução conjunta p
 Supremo Tribunal Federal. (2025b, April 3). ADPF das Favelas: STF homologa parcialmente plano do Estado do Rio de Janeiro para reduzir letalidade policial. https://noticias.stf.jus.br/postsnoticias/adpf-das-favelas-stf-homologa-parcialmente-plano-do-estado-do-rio-de-janeiro-para-reduzir-letalidade-policial/
 
 Vanguard Attaché. (2026, March 11). Is Rio de Janeiro safe for tourists in 2026? Neighborhood-by-neighborhood analysis. https://vanguardattache.com/en/insights/is-rio-de-janeiro-safe-tourists-2026
+
+Kiefer, B., Ott, D., &amp; Zell, A. (2022). Leveraging synthetic data in object detection on unmanned aerial vehicles. *26th International Conference on Pattern Recognition (ICPR)*. [VENUE E PAGINAS NAO CONFERIDOS EM FONTE PRIMARIA, ver 01-artigo/PENDENCIAS.md]
+
+Liao, Y., et al. (2026). Bridging the Sim2Real gap in UAV remote sensing: A high-fidelity synthetic data framework for vehicle detection. *Remote Sensing, 18*(2), 361. https://doi.org/10.3390/rs18020361 [Lista de autores incompleta; o objeto do artigo e deteccao de VEICULO, nao de pessoa]

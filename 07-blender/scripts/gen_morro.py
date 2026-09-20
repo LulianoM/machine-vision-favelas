@@ -68,6 +68,8 @@ ap.add_argument("--pool", type=int, default=6, help="humanos MPFB distintos")
 ap.add_argument("--val", type=float, default=0.15)
 ap.add_argument("--min-vis", type=float, default=0.35)
 ap.add_argument("--min-lado", type=float, default=0.002)
+ap.add_argument("--mistura", type=float, nargs=3, default=[0.34, 0.33, 0.33],
+                help="pesos das classes armada, desarmada e desarmada com objeto alongado")
 ap.add_argument("--alt-jitter", type=float, default=6.0)
 ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
                 help="inclinacao da camera em graus a partir do NADIR (0 = nadir puro)")
@@ -1431,7 +1433,11 @@ if args.dataset > 0:
         for _ in range(n_p * 4):
             if idx >= n_p:
                 break
-            armed = rng.random() < 0.5
+            # Tres classes balanceadas. A terceira (desarmada COM objeto alongado) e o negativo
+            # dificil: e ela que permite medir com que frequencia um detector chama de arma uma
+            # vassoura, que e o dano de uso dual que o artigo discute. Ver PLANO-ARMADO.md.
+            cls_ = rng.choices([0, 1, 2], weights=args.mistura)[0]
+            armed = (cls_ == 0)
             if rng.random() < 0.45 and CASAS:      # em cima da laje
                 ca, _zb, zt = rng.choice(CASAS)
                 mx_ = sum(p[0] for p in ca) / 4
@@ -1440,14 +1446,14 @@ if args.dataset > 0:
                     continue
                 px = mx_ + rng.uniform(-0.3, 0.3)
                 py = my_ + rng.uniform(-0.3, 0.3)
-                PM.make_person(rng, idx, px, py, zt + 0.02, armed, on_roof=True)
+                PM.make_person(rng, idx, px, py, zt + 0.02, armed, on_roof=True, classe=cls_)
             else:                                  # no beco
                 j_, i_ = LIVRES[rng.randrange(len(LIVRES))]
                 px = BX0 + (i_ + 0.5) * GB
                 py = BY0 + (j_ + 0.5) * GB
                 if abs(px - ccx) > meia or abs(py - ccy) > meia:
                     continue
-                PM.make_person(rng, idx, px, py, z_em(px, py) + 0.02, armed, on_roof=False)
+                PM.make_person(rng, idx, px, py, z_em(px, py) + 0.02, armed, on_roof=False, classe=cls_)
             idx += 1
 
         bpy.context.view_layer.update()
@@ -1465,7 +1471,8 @@ if args.dataset > 0:
             if vis < args.min_vis:
                 continue
             x1, y1, x2, y2 = bb
-            rotulos.append((p["cls"], (x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1, round(vis, 2), p["on_roof"]))
+            rotulos.append((p["cls"], (x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1,
+                            round(vis, 2), p["on_roof"], p.get("tipo_obj"), p.get("comp_obj", 0.0)))
 
         scene.render.filepath = os.path.join(args.out, "images", split, nome + ".png")
         t0 = time.time()
@@ -1477,6 +1484,10 @@ if args.dataset > 0:
                    alt=round(alt, 1), pitch=round(_pit, 1),
                    n_pessoas=len(PM.PEOPLE), n_caixas=len(rotulos),
                    n_armadas=sum(1 for l in rotulos if l[0] == 0),
+                   n_desarmadas=sum(1 for l in rotulos if l[0] == 1),
+                   n_objeto=sum(1 for l in rotulos if l[0] == 2),
+                   tipos=[l[7] for l in rotulos if l[7]],
+                   comps=[l[8] for l in rotulos if l[8]],
                    n_laje=sum(1 for l in rotulos if l[6]),
                    vis=[l[5] for l in rotulos], seed=args.seed,
                    render_s=round(time.time() - t0, 1))

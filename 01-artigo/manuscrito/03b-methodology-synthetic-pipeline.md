@@ -38,8 +38,10 @@ so that any reported image can be regenerated exactly from the seed recorded in 
 entry. No commercial asset packs are used: surface materials come from a public-domain library
 (Poly Haven, CC0) and all geometry is authored by the generator. This matters twice over. It makes
 the corpus redistributable, which the photogrammetric arms of this project are not, and it avoids
-a documented failure mode, since Liao et al. (2026) measure a loss of 22.5 mAP50 points when a
-photogrammetric base is replaced by generic assets.
+a documented failure mode: Liao et al. (2026) report a substantial loss of accuracy when a
+photogrammetric base is replaced by generic assets. We cite the direction of that result and not
+its magnitude, because the specific figure has not been checked against the published text at the
+time of writing, and because the object class in that study is vehicles rather than people.
 
 Layout is produced in three stages, each addressing a specific way in which naive procedural
 generation betrays itself when viewed from above.
@@ -125,9 +127,12 @@ an alley.
 
 ### 4.5 Domain randomisation over illumination
 
-Liao et al. (2026) measure that removing variation in sun position, weather, and viewing angle
-costs approximately 10 mAP50 points, and approximately 20 on truncated objects. Illumination is
-therefore randomised not as a stylistic choice but as the cheapest axis with a measured return.
+Liao et al. (2026) report that removing variation in sun position, weather, and viewing angle
+costs accuracy, with the largest penalty on truncated objects. As above, we rely on the direction
+of that result rather than on the reported magnitudes, which we have not verified against the
+published text. Illumination is randomised because it is the cheapest axis to vary and the one
+the literature identifies as consequential, not because we can quote a figure for its value
+here.
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent
 lighting budgets, each governing solar irradiance, the angular diameter of the solar disc, sky

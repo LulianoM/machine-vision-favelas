@@ -51,9 +51,10 @@ survey flight, evaluated on the same real test set with no real training image o
 
 **Efficacy of the synthetic method** = mAP50(S-nadir) / mAP50(R) = `[X]`.
 
-Kiefer, Ott and Zell (ICPR 2022) report 1.2 to 2.4 mAP for purely synthetic training evaluated on
-VisDrone. That figure is given as the scale on which to read the row above, not as a defence of
-it. What this article reports is the ratio to the ceiling, together with the comparison in
+Kiefer, Ott and Zell (2022) report low single-digit mAP for purely synthetic training evaluated
+on VisDrone. That order of magnitude is given as the scale on which to read the row above, not as
+a defence of it. The exact interval reported by those authors is not quoted here because the
+reference has not yet been checked against the published proceedings. What this article reports is the ratio to the ceiling, together with the comparison in
 Section 9.3.
 
 ### 9.3 Transfer from synthetic training, oblique geometry

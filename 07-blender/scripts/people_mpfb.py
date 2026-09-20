@@ -20,6 +20,11 @@ import bpy, os, glob, math, colorsys
 from mathutils import Vector, Euler, Matrix
 from bpy_extras.object_utils import world_to_camera_view
 
+try:
+    import objetos_alongados as OA
+except Exception:            # o modulo vive ao lado; se faltar, o gerador segue sem a 3a classe
+    OA = None
+
 POOL = []
 PEOPLE = []
 POOL_Z = -500.0
@@ -371,7 +376,18 @@ _GUN_LOCAL = {
 }
 
 
-def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None):
+def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, classe=None):
+    """classe: 0 armada, 1 desarmada, 2 desarmada COM OBJETO ALONGADO.
+
+    A classe 2 e o negativo dificil, e e a razao de ser deste experimento. A 150 m em 4K um fuzil
+    ocupa 18 px de comprimento por 1 px de largura, entao o que chega ao sensor e uma estrutura
+    linear que quebra a silhueta, nao a forma da arma. Sem alguem carregando uma vassoura no
+    corpus, a rede aprende que linha escura igual a armada, e a taxa de falso positivo real fica
+    sem medida. Ver 07-blender/PLANO-ARMADO.md."""
+    if classe is None:
+        classe = 0 if armed else 1
+    armed = (classe == 0)
+    com_objeto = (classe == 2 and OA is not None)
     h = rng.choice(POOL)
     bpy.ops.object.select_all(action='DESELECT')
     h["rig"].select_set(True)
@@ -408,8 +424,12 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None):
     yaw = rng.uniform(0, 2 * math.pi)
     sc = rng.uniform(0.92, 1.08)
     if pose is None:
-        if armed:
-            pose = rng.choices(["empunhando", "lado", "costas", "andando"], weights=[0.46, 0.24, 0.15, 0.15])[0]
+        if armed or com_objeto:
+            # MESMA distribuicao de pose para arma e para objeto. Se quem carrega vassoura
+            # estivesse sempre numa pose diferente de quem carrega fuzil, a rede separaria pela
+            # pose e o experimento nao mediria a confusao entre os objetos, que e o ponto.
+            pose = rng.choices(["empunhando", "lado", "costas", "andando"],
+                               weights=[0.42, 0.26, 0.16, 0.16])[0]
         else:
             pose = rng.choices(["parado", "andando", "sentado", "bracos_cruzados"], weights=[0.36, 0.38, 0.14, 0.12])[0]
     zz = z
@@ -420,10 +440,18 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None):
     rig.scale = (sc, sc, sc)
     pose_rig(rng, rig, pose)
     gun = None
-    if armed:
-        if arma is None:
-            arma = "pistola" if rng.random() < 0.15 else "fuzil"
-        gun = make_pistol(f"gun_{idx}", rng) if arma == "pistola" else make_rifle(f"gun_{idx}", rng)
+    tipo_obj, comp_obj = None, 0.0
+    if armed or com_objeto:
+        if com_objeto:
+            gun, tipo_obj, comp_obj = OA.faz_objeto(f"obj_{idx}", rng)
+        elif OA is not None:
+            gun, tipo_obj, comp_obj = OA.faz_arma(f"gun_{idx}", rng)
+            arma = "pistola" if tipo_obj == "pistola" else "fuzil"
+        else:
+            if arma is None:
+                arma = "pistola" if rng.random() < 0.15 else "fuzil"
+            gun = make_pistol(f"gun_{idx}", rng) if arma == "pistola" else make_rifle(f"gun_{idx}", rng)
+            tipo_obj, comp_obj = arma, 0.9
         gun.parent = rig
         gun.matrix_parent_inverse = Matrix.Identity(4)
         # o rig do MPFB olha para -Y; direita do corpo = -X. A arma tem o cano em +X local.
@@ -445,11 +473,18 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None):
                 rz, ry = math.radians(-75 + rng.uniform(-10, 10)), math.radians(68 + rng.uniform(-8, 8))    # quase vertical, cano para baixo
             if arma == "pistola":
                 ry = math.radians(8 + rng.uniform(-6, 6)) if pose == "empunhando" else math.radians(60)
+        if comp_obj > 1.15:
+            # objeto de mais de 1,15 m nao se carrega na horizontal: vai apoiado no ombro com a
+            # ponta para cima, ou inclinado com a ponta perto do chao. Sem isso a vassoura sairia
+            # boiando, e a rede separaria por isso e nao pela forma.
+            ry = math.radians(rng.choice([-52, -38, 46, 62]) + rng.uniform(-9, 9))
         # a origem da arma e a empunhadura: recua um pouco para a mao envolver o cabo
         gun.location = base + Vector((0.0, 0.0, -0.03))
         gun.rotation_euler = Euler((0.0, ry, rz), 'XYZ')
         gun.scale = (1 / sc, 1 / sc, 1 / sc)
-    p = dict(rig=rig, kids=[k for k in kids if not k.hide_render], gun=gun, cls=0 if armed else 1, x=x, y=y, z=z, on_roof=on_roof, pose=pose)
+    p = dict(rig=rig, kids=[k for k in kids if not k.hide_render], gun=gun, cls=classe,
+             x=x, y=y, z=z, on_roof=on_roof, pose=pose,
+             tipo_obj=tipo_obj, comp_obj=round(comp_obj, 2))
     PEOPLE.append(p)
     return p
 
