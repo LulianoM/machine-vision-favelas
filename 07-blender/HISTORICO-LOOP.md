@@ -254,3 +254,50 @@ rodadas. A causa não é a paleta (a cerâmica sai do shader com saturação 0,9
 só o tone mapper: é a combinação de AgX com uma paleta cujo maior peso é cinza quente de laje,
 que é de fato pouco saturado na referência. A próxima revisão da rubrica precisa decidir se
 0,25 é o número certo para uma cena cuja cor dominante correta é cinza.
+
+## Achado do primeiro dataset: o alvo em nadir é menor do que o projeto assumia
+
+Medido em 621 caixas de 40 imagens a 1920x1080, câmera Z30 nadir a 150 m (9,76 cm/px):
+
+| Dimensão da caixa | p5 | mediana | p95 | máximo |
+|---|---|---|---|---|
+| Largura | 5,0 px | 8,9 px | 13,4 px | 17,3 px |
+| Altura | 4,9 px | 8,5 px | 12,6 px | 20,5 px |
+| Maior lado | 6,1 px | **10,0 px** | 14,0 px | 20,5 px |
+
+**19% das caixas têm o maior lado abaixo de 8 px, que é o menor stride do YOLO. 83% ficam
+abaixo de 12 px. A área mediana da caixa é de 74 px².**
+
+### Por que o número de 17 px estava errado
+
+O gerador vinha imprimindo "pessoa de 1,7 m ocupa 17 px", e esse número é verdadeiro para
+câmera OBLÍQUA e falso para nadir. Em nadir, a altura é justamente a dimensão que não se
+projeta. O que a câmera vê de cima é a planta da pessoa:
+
+| O que se mede | Extensão | Pixel a 150 m |
+|---|---|---|
+| Altura de pé | 1,70 m | 17,4 px (só em câmera oblíqua) |
+| Ombro a ombro | 0,48 m | **4,9 px** |
+| Planta cabeça e ombro | 0,62 m | **6,4 px** |
+
+A mediana medida de 10 px fica acima da planta pura porque a anotação é amodal e inclui braço
+estendido, pose sentada ou deitada, e a sombra própria não entra mas o membro fora do tronco
+entra. Ainda assim, a ordem de grandeza é a da planta, não a da altura.
+
+### O que isso significa para o artigo
+
+1. **A câmera real de 2022 tem o mesmo limite.** O voo da PCERJ foi nadir a 150 m com a mesma
+   Zenmuse Z30. Não é uma limitação do sintético, é uma limitação do dado real que o artigo
+   pretende usar como alvo de sim-to-real.
+2. **O ladrilhamento não resolve sozinho.** O ganho medido de mAP50 de 0,116 para 0,561 veio de
+   parar de reduzir a imagem, preservando o tamanho nativo do alvo. Mas preservar 10 px continua
+   sendo 10 px, e 19% do conjunto fica abaixo de um único passo da rede.
+3. **Reforça a recomendação do item 3 de `docs/DIVERGENCIAS.md`.** Distinguir pessoa armada de
+   desarmada exige resolver a arma dentro de uma caixa cuja mediana é de 10 px por 7 px. Isso
+   não é plausível, e reportar acurácia de classe nesse regime seria exatamente o salto
+   metodológico que o artigo critica.
+4. **É argumento técnico para a câmera oblíqua**, que até aqui era defendida só pela fachada. A
+   oblíqua é o único ângulo em que a dimensão de 1,70 m projeta em pixel.
+
+Isso não estava em nenhum lugar do projeto e não aparece olhando para o render: só apareceu ao
+medir a distribuição de tamanho de caixa do dataset gerado.

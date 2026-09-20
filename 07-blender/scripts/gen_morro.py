@@ -1300,8 +1300,18 @@ CAMS = {
 }
 
 larg = 2 * args.alt * (18.0 / Z30_LENS)
+_gsd = larg / args.res[0]
+# CUIDADO com o numero que se reporta aqui. "Pessoa de 1,7 m ocupa 17 px" e verdade para camera
+# OBLIQUA e falso para nadir: em nadir a altura e justamente a dimensao que NAO se projeta. O
+# que a camera ve de cima e a PLANTA da pessoa, cerca de 0,48 m de ombro a ombro. Reportar a
+# altura aqui fazia o alvo parecer duas a tres vezes maior do que e.
 print(f"[morro] nadir a {args.alt:.0f} m enquadra {larg:.0f} x {larg*args.res[1]/args.res[0]:.0f} m "
-      f"({larg/args.res[0]*100:.1f} cm/px); pessoa de 1,7 m ~ {1.7/(larg/args.res[0]):.0f} px", flush=True)
+      f"({_gsd*100:.1f} cm/px)", flush=True)
+print(f"[morro] alvo em NADIR: ombro a ombro 0,48 m = {0.48/_gsd:.1f} px; planta cabeca e ombro "
+      f"0,62 m = {0.62/_gsd:.1f} px. (De pe, 1,70 m daria {1.70/_gsd:.0f} px, mas essa dimensao "
+      f"so aparece em camera obliqua.)", flush=True)
+print(f"[morro] o menor stride do YOLO e 8 px: alvo desse tamanho esta no limite da rede.",
+      flush=True)
 
 # ----------------------------------------------------------------- render
 scene.render.engine = "CYCLES"
