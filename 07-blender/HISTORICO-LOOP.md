@@ -301,3 +301,42 @@ entra. Ainda assim, a ordem de grandeza é a da planta, não a da altura.
 
 Isso não estava em nenhum lugar do projeto e não aparece olhando para o render: só apareceu ao
 medir a distribuição de tamanho de caixa do dataset gerado.
+
+## Dataset com os seis regimes de tempo, e um resultado contraintuitivo
+
+48 imagens, 8 por regime, 684 caixas, 1920x1080, Z30 nadir a 150 m.
+
+| Clima | Imagens | Caixas | Caixas por imagem | Visibilidade média |
+|---|---|---|---|---|
+| sol_duro | 8 | 113 | 14,1 | 0,87 |
+| sol_baixo | 8 | 117 | 14,6 | 0,86 |
+| nublado | 8 | 122 | 15,2 | 0,88 |
+| neblina | 8 | 113 | 14,1 | 0,86 |
+| encoberto | 8 | 91 | 11,4 | 0,87 |
+| chuva | 8 | 128 | 16,0 | 0,84 |
+
+### O contraste entre pessoa e fundo, medido
+
+Para cada caixa, a diferença entre a luminância média dentro da caixa e a de um anel de 6 px em
+volta, e essa diferença dividida pelo desvio padrão do próprio anel (ou seja, contraste sobre
+desordem local, que é o que o detector de fato enfrenta).
+
+| Clima | Diferença absoluta (DN) | Contraste sobre ruído |
+|---|---|---|
+| sol_duro | **16,6** | **0,54** |
+| nublado | 15,3 | **0,83** |
+| neblina | 10,6 | 0,77 |
+| encoberto | 9,8 | 0,71 |
+| sol_baixo | 9,7 | 0,73 |
+| chuva | **6,6** | 0,67 |
+
+**O sol duro dá a maior diferença absoluta e o PIOR contraste sobre ruído de todos os regimes.**
+A razão é que sob sol duro o próprio fundo fica cheio de sombra dura de caixa d'água, mureta,
+varal e fiação, então o desvio local do fundo dispara e a pessoa deixa de se destacar da
+desordem. Sob céu encoberto o fundo é liso, e uma diferença menor é mais detectável.
+
+Isso gera uma previsão testável e contraintuitiva: **o detector deve ir melhor em nublado do que
+em sol duro**, ao contrário do que a intuição sugere. Vale medir quando o treino rodar, e se
+confirmar é resultado para o artigo, porque contraria a escolha usual de voar em dia claro.
+
+A chuva é o pior caso em termos absolutos, com 6,6 DN, ou seja 2,5 vezes menos que o sol duro.
