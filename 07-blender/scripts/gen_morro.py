@@ -90,7 +90,7 @@ def s2l(h, alb=1.0):
     return tuple(x * alb for x in lin)
 
 
-ALB = 0.82          # fator global de albedo para cor lida de foto
+ALB = 0.50          # fator global de albedo para cor lida de foto
 
 
 # ================================================================= ruido e terreno
@@ -208,6 +208,7 @@ def _grime(nt, cor_out, forca):
     rp.color_ramp.elements[0].position = 0.36
     rp.color_ramp.elements[0].color = (0.42, 0.40, 0.37, 1)
     rp.color_ramp.elements[1].position = 0.66
+    rp.color_ramp.elements[1].color = (0.30, 0.28, 0.25, 1)
     # MIX em direcao a cor de sujeira, nao MULTIPLY. Dois MULTIPLY em cascata sobre um albedo
     # ja tingido derrubavam a cena inteira umas 2 paradas e meia.
     mx = nt.nodes.new("ShaderNodeMix")
@@ -227,6 +228,7 @@ def _grime(nt, cor_out, forca):
     rp2.color_ramp.elements[0].position = 0.55
     rp2.color_ramp.elements[0].color = (0.55, 0.52, 0.50, 1)
     rp2.color_ramp.elements[1].position = 0.70
+    rp2.color_ramp.elements[1].color = (0.38, 0.36, 0.34, 1)
     mx2 = nt.nodes.new("ShaderNodeMix")
     mx2.data_type = "RGBA"
     mx2.blend_type = "MIX"
@@ -418,10 +420,10 @@ def mat_mata(nome):
 # Os cinzas sao QUENTES: laje de concreto exposta ao sol do Rio puxa para o bege sujo, nao para
 # o azul. Cinza frio foi o erro da primeira versao e deixou o conjunto com cara de maquete.
 TELHA_PAL = [
-    ("#c4b9a1", 11, "laje"), ("#ad9f87", 10, "laje"), ("#938672", 7, "laje"), ("#75695b", 3, "laje"),
+    ("#c4b9a1", 9, "laje"), ("#ad9f87", 8, "laje"), ("#938672", 6, "laje"), ("#75695b", 3, "laje"),
     ("#d2cab6", 6, "fibro"), ("#b0aea4", 4, "zinco"),
-    ("#c05b2c", 9, "ceramica"), ("#a04720", 5, "ceramica"), ("#d47e4c", 5, "ceramica"),
-    ("#6e6a63", 6, "fibro"), ("#7a5340", 6, "zinco"), ("#8c8a84", 4, "fibro"),
+    ("#cf5f24", 15, "ceramica"), ("#b04a18", 10, "ceramica"), ("#e08246", 8, "ceramica"),
+    ("#6e6a63", 5, "fibro"), ("#8a4f30", 6, "zinco"), ("#8c8a84", 3, "fibro"),
     ("#1f6dbe", 10, "pint"), ("#3a92d8", 5, "pint"), ("#2356a6", 4, "lona"),
     ("#ebe6d6", 7, "pint"), ("#e8e2d0", 4, "pint"),
     ("#bd3e28", 3, "pint"), ("#e0b95c", 2, "pint"), ("#cf8468", 2, "pint"),
@@ -463,7 +465,7 @@ for i, (hexcor, peso, tipo) in enumerate(TELHA_PAL):
                     tint=cor, forca_tint=0.85, sujeira=0.25, metal=0.6, rough_fixo=0.4)
     elif tipo == "ceramica":
         m = mat_pbr(f"telha_cer{i}", rng.choice(TEX["roof_tile"]), rng.uniform(0.9, 1.3),
-                    tint=cor, forca_tint=0.92, sujeira=rng.uniform(0.25, 0.45))
+                    tint=tuple(c * 1.45 for c in cor), forca_tint=0.95, sujeira=rng.uniform(0.18, 0.34))
     elif tipo == "lona":
         m = mat_simples(f"telha_lona{i}", cor, rough=0.55)
     else:  # laje pintada
@@ -634,7 +636,7 @@ def z_em(x, y):
 def folga():
     """largura da divisa. A maioria e parede geminada, que e o que fecha o tecido."""
     u = rng.random()
-    if u < 0.70:
+    if u < 0.82:
         return 0.0
     if u < 0.94:
         return rng.uniform(0.5, 1.2)
@@ -647,7 +649,7 @@ def bsp(x0, y0, x1, y1, prof, out):
     w, h = x1 - x0, y1 - y0
     # Lote de favela e pequeno: a referencia aerea tem casa de 4 x 7 a 8 x 11 m, nao quarteirao.
     # Parar cedo demais aqui foi o que deixou a primeira versao com cara de conjunto habitacional.
-    if prof >= 13 or w * h < rng.uniform(38, 104) or min(w, h) < 4.2:
+    if prof >= 13 or w * h < rng.uniform(26, 62) or min(w, h) < 3.4:
         if w > 3.0 and h > 3.0:
             out.append((x0, y0, x1, y1))
         return
@@ -718,8 +720,8 @@ for cant0 in LOTES:
     cy = sum(p[1] for p in cant0) / 4
     if raio(cx, cy) > 0.97:
         continue                                    # fora do nucleo: fica para a mata
-    if rng.random() < 0.02:
-        continue                                    # vazio, quintal, laje de terreno
+    if rng.random() < 0.008:
+        continue                                   # vazio, quintal, laje de terreno
     # giro proprio de cada lote em torno do centroide, com encolhimento para os vizinhos
     # girados nao se interpenetrarem. Junto com o warp forte, e o que tira a assinatura
     # ortogonal que o validador mediu em 4,35 vezes o esperado de uma distribuicao isotropica.
@@ -813,16 +815,35 @@ for cant0 in LOTES:
                         acc.caixa(bx + nxv * 0.06 + dx * u2, by + nyv * 0.06 + dy * u2, zc,
                                   0.025, 0.025, jh, I_GRADE, ang + lado * math.pi / 2)
 
+    # ---- QUEBRA DE NIVEL NA LAJE. Face de telhado lisa acima de 25 m2 foi o item pior avaliado
+    # (34% do quadro). Laje de favela quase nunca esta num plano so: uma metade e mais nova, ou
+    # cobre um comodo acrescentado depois, e fica de 12 a 30 cm acima da outra.
+    if rng.random() < 0.62 and lx > 3.5 and ly > 3.5:
+        c0, c1, c2, c3 = cantos_topo
+        t1, t2 = rng.uniform(0.3, 0.7), rng.uniform(0.3, 0.7)
+        P1 = (c0[0] + (c1[0] - c0[0]) * t1, c0[1] + (c1[1] - c0[1]) * t1)
+        P2 = (c2[0] + (c3[0] - c2[0]) * t2, c2[1] + (c3[1] - c2[1]) * t2)
+        meia = [P1, c1, c2, P2] if rng.random() < 0.5 else [c0, P1, P2, c3]
+        dz = rng.uniform(0.12, 0.30)
+        acc.prisma(meia, ztopo - 0.05, ztopo + dz, I_LAJE_CRUA, escolha(I_TELHA))
+        ztopo += dz
+        cantos_topo = meia
+        lx = math.hypot(meia[1][0] - meia[0][0], meia[1][1] - meia[0][1])
+        ly = math.hypot(meia[3][0] - meia[0][0], meia[3][1] - meia[0][1])
+        ang = math.atan2(meia[1][1] - meia[0][1], meia[1][0] - meia[0][0])
+        wcx = sum(p[0] for p in meia) / 4
+        wcy = sum(p[1] for p in meia) / 4
+
     # ---- cobertura: mureta, caixa d'agua, casinha de escada, ferragem de espera, varal
     r_ = rng.random()
-    if r_ < 0.46:                                    # laje com mureta baixa
+    if r_ < 0.80:                                    # laje com platibanda
         ph = rng.uniform(0.35, 0.9)
         for lado in range(4):
             a, b = cantos_topo[lado], cantos_topo[(lado + 1) % 4]
             L = math.hypot(b[0] - a[0], b[1] - a[1])
             mx_, my_ = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
             ang2 = math.atan2(b[1] - a[1], b[0] - a[0])
-            acc.caixa(mx_, my_, ztopo + ph / 2, L, 0.12, ph, I_LAJE_CRUA, ang2)
+            acc.caixa(mx_, my_, ztopo + ph / 2, L, 0.20, ph, I_LAJE_CRUA, ang2)
     elif r_ < 0.70:                                  # duas aguas: a telha inclinada que a foto mostra
         # dois planos inclinados em torno da cumeeira, no eixo mais longo da casa
         h_cum = rng.uniform(0.5, 1.2)
@@ -986,8 +1007,8 @@ bg.inputs["Strength"].default_value = 1.0
 # aspecto de maquete fria. A camera continua vendo o ceu; a luz de preenchimento vira um ambiente
 # neutro levemente quente, que e o que uma foto aerea do Rio mostra depois do balanco de branco.
 amb = nt.nodes.new("ShaderNodeBackground")
-amb.inputs["Color"].default_value = (1.0, 0.97, 0.98, 1.0)
-amb.inputs["Strength"].default_value = 1.0
+amb.inputs["Color"].default_value = (0.72, 0.80, 1.00, 1.0)
+amb.inputs["Strength"].default_value = 0.54
 lp = nt.nodes.new("ShaderNodeLightPath")
 mx = nt.nodes.new("ShaderNodeMixShader")
 nt.links.new(lp.outputs["Is Camera Ray"], mx.inputs["Fac"])
@@ -997,7 +1018,7 @@ ow = next(n for n in nt.nodes if n.type == "OUTPUT_WORLD")
 nt.links.new(mx.outputs["Shader"], ow.inputs["Surface"])
 
 sol_d = bpy.data.lights.new("Sol", type="SUN")
-sol_d.energy = 3.3
+sol_d.energy = 6.5
 sol_d.color = (1.0, 0.96, 0.90)
 sol_d.angle = math.radians(0.6)      # disco solar real: sombra dura, que e o que escurece o beco
 sol = bpy.data.objects.new("Sol", sol_d)
@@ -1011,7 +1032,7 @@ for look in ("AgX - Medium High Contrast", "AgX - Base Contrast", "AgX - Punchy"
         break
     except Exception:
         continue
-scene.view_settings.exposure = 0.0
+scene.view_settings.exposure = 0.32
 
 # ----------------------------------------------------------------- cameras
 Z30_LENS = 4.3 * 36 / 5.37            # 4.3 mm num sensor de 5.37 mm, ou seja ~28,8 mm equivalente

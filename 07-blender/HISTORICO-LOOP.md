@@ -112,3 +112,44 @@ motivo de 7 retângulos igualmente espaçados, repetido idêntico, foi apontado 
 "kit de peças"); lote girado em ±0,17 rad em torno do centroide; warp de 9 m em comprimento de
 onda de 38 m em vez de 3,2 m em 85 m; corte do BSP enviesado para lote estreito e profundo;
 copa isolada dentro do miolo; borda de mata mais irregular.
+
+## v8, o bug do branco escondido
+
+Terceira validação deu **5,8**, ou seja, o saldo de v4 a v7 foi negativo: o ganho de 3 pontos em
+"ausência de grade" (peso 2) foi anulado pela perda de 4,5 em "paleta" (peso 2). A rodada trocou
+o problema da grade pelo problema da cor.
+
+O validador achou um bug de código, não de parâmetro. Em `_grime`, o elemento 1 dos dois
+ColorRamp recebe `.position` mas nunca recebe `.color`, então fica no branco padrão do Blender.
+Herdado de `build_cidade.py`, onde era inofensivo porque o nó era MULTIPLY e branco é a
+identidade da multiplicação. Ao trocar para MIX, o mesmo branco virou 30% de lavagem branca no
+albedo de TODO material da cena. Era isso que deixava telhado terracota em rosa salmão, e era
+isso que clareava o chão do beco, fazendo a fresta escura sumir.
+
+Também foi refeito o orçamento de luz. Com sol 3,3 e ambiente branco 1,0, o ambiente respondia
+por 51% da luz da laje e a razão sol/céu era 0,96 para 1, quando um dia claro do Rio a 66 graus
+dá de 5 para 1 a 7 para 1. Sol foi para 6,5, ambiente para 0,54 e cor do ambiente para azul de
+céu (0,72 / 0,80 / 1,00), que é o preenchimento fisicamente correto.
+
+Acrescentada a quebra de nível na laje: uma metade da cobertura fica de 12 a 30 cm acima da
+outra, com material diferente. Face de telhado lisa era o item pior avaliado (2,5 de 10), com
+34% do quadro em manchas homogêneas acima de 25 m². Platibanda passou de 46% para 80% das lajes.
+
+### Medições v8
+
+| Métrica | Alvo | v0 | v3 | v7 | v8 |
+|---|---|---|---|---|---|
+| Luminância média | 90 a 140 | 56,4 | 80,9 | 106,6 | 99,6 |
+| Contraste p90/p10 (paradas) | 3,5 a 4,5 | | | 2,5 | 4,11 |
+| Fração abaixo de 25 | baixa | 29,4% | 20,5% | 12,1% | 17,4% |
+| Edificações no quadro | acima de 500 | | 430 | 282 | 420 |
+| Anisotropia de aresta em 0 e 90 graus | 1,0 | 4,35x | 1,37x | 0,90x | |
+
+### Nota sobre um limite do tone mapper
+
+A rubrica pede terracota com saturação acima de 0,45 em ao menos parte da cobertura. O material
+sai do shader com saturação 0,97 no linear, e chega ao pixel abaixo de 0,45 porque o AgX
+dessatura realce por construção. Trocar para o look "Punchy" recupera saturação (laranja de 9%
+para 19%) ao custo de esmagar a média para 73 e levar 28% do quadro abaixo de 25. É um
+compromisso real do tone mapper, não um defeito do gerador, e está registrado aqui para não ser
+perseguido de novo nas próximas rodadas.
