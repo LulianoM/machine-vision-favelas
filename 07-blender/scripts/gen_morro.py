@@ -69,9 +69,25 @@ ap.add_argument("--val", type=float, default=0.15)
 ap.add_argument("--min-vis", type=float, default=0.35)
 ap.add_argument("--min-lado", type=float, default=0.002)
 ap.add_argument("--alt-jitter", type=float, default=6.0)
+ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
+                help="inclinacao da camera em graus a partir do NADIR (0 = nadir puro)")
+ap.add_argument("--obliqua", action="store_true",
+                help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
+                     "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
 ap.add_argument("--save-blend", default=None)
 ap.add_argument("--no-render", action="store_true")
 args = ap.parse_args(argv)
+
+# Preset OBLIQUO, calibrado na medicao do VisDrone val e nao em chute. Medido em 13.969 caixas
+# reais: largura mediana 12 px, altura 25 px, ou seja h/w de 2,20 (p90 em 3,17). Isso e pessoa
+# EM PE vista de camera obliqua. O nosso nadir a 150 m da h/w de 1,24, que e planta de cabeca e
+# ombro. A area em pixel e parecida nos dois, mas a FORMA do alvo e outra, e e essa a diferenca
+# que importa para o detector. Este preset existe para separar as duas perguntas: o sintetico
+# nao transfere, ou a geometria de captura e que nao bate?
+if args.obliqua:
+    args.alt = 60.0
+    args.alt_jitter = 18.0
+    args.pitch = [28.0, 55.0]
 
 rng = random.Random(args.seed)
 os.makedirs(args.out, exist_ok=True)
@@ -1399,7 +1415,15 @@ if args.dataset > 0:
         ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
         ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
         cam_ds.location = (ccx, ccy, z_em(ccx, ccy) + alt)
-        cam_ds.rotation_euler = Euler((math.radians(rng.uniform(0, 3.5)), 0, rng.uniform(0, math.tau)), "XYZ")
+        _pit = rng.uniform(args.pitch[0], args.pitch[1])
+        _yaw = rng.uniform(0, math.tau)
+        cam_ds.rotation_euler = Euler((math.radians(_pit), 0, _yaw), "XYZ")
+        # com camera inclinada o centro do quadro anda para a frente: recuar a camera para o
+        # alvo continuar enquadrado, senao o quadro pega so mata ou so ceu
+        if _pit > 6.0:
+            _d = alt * math.tan(math.radians(_pit))
+            cam_ds.location = (ccx - _d * math.sin(_yaw), ccy + _d * math.cos(_yaw),
+                               z_em(ccx, ccy) + alt)
 
         n_p = rng.randint(args.people[0], args.people[1])
         idx = 0
@@ -1450,7 +1474,7 @@ if args.dataset > 0:
             for l in rotulos:
                 f.write(f"{l[0]} {l[1]:.6f} {l[2]:.6f} {l[3]:.6f} {l[4]:.6f}\n")
         rec = dict(img=nome + ".png", split=split, w=args.res[0], h=args.res[1],
-                   alt=round(alt, 1),
+                   alt=round(alt, 1), pitch=round(_pit, 1),
                    n_pessoas=len(PM.PEOPLE), n_caixas=len(rotulos),
                    n_armadas=sum(1 for l in rotulos if l[0] == 0),
                    n_laje=sum(1 for l in rotulos if l[6]),
