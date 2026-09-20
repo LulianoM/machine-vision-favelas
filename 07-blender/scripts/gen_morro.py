@@ -61,6 +61,8 @@ ap.add_argument("--azim", type=float, default=35.0, help="azimute do sol em grau
 ap.add_argument("--vistas", default="nadir", help="nadir, obliqua, beco, contexto (separados por virgula)")
 ap.add_argument("--arvores", type=int, default=2600)
 ap.add_argument("--dataset", type=int, default=0, help="quantas imagens de dataset YOLO gerar")
+ap.add_argument("--climas", default="todos", help="regimes de tempo, separados por virgula")
+ap.add_argument("--comparar-climas", action="store_true", help="um nadir por regime, mesmo enquadramento")
 ap.add_argument("--people", type=int, nargs=2, default=[10, 26])
 ap.add_argument("--pool", type=int, default=6, help="humanos MPFB distintos")
 ap.add_argument("--val", type=float, default=0.15)
@@ -496,14 +498,23 @@ I_LAJE_CRUA = slot(mat_pbr("laje_crua", rng.choice(TEX["laje"]), 2.4,
 I_ESTRUT = slot(mat_pbr("estrutura", "concrete_wall_006", 1.8, tint=(0.62, 0.61, 0.58),
                         forca_tint=0.6, sujeira=0.5))
 I_FIBRO_CLARO = slot(mat_simples("fibro_claro", s2l("#cfcabd", ALB), rough=0.7))
-I_CXAZUL = slot(mat_simples("caixa_azul", s2l("#1a5fa8", 0.62), rough=0.5))
-I_CXPRETA = slot(mat_simples("caixa_preta", s2l("#26262a", 0.8), rough=0.55))
+# Confete azul era um dos dois sinais mais fortes de cena sintetica: 159 discos de matiz 215
+# graus com desvio de apenas 4 graus e saturacao 0,473, cobrindo 3,57% do quadro em azul forte
+# contra 0,80% da fotogrametria real, ou seja 4,5 vezes demais. Na foto real a caixa aparece
+# pequena, fosca, e boa parte delas e cinza ou preta.
+I_CAIXA = (
+    [slot(mat_simples("caixa_azul", s2l("#4a7ba6", 0.52), rough=0.62))] * 6
+    + [slot(mat_simples("caixa_azul_velha", s2l("#5d7f96", 0.48), rough=0.78))] * 3
+    + [slot(mat_simples("caixa_preta", s2l("#33333a", 0.80), rough=0.60))] * 6
+    + [slot(mat_simples("caixa_fibro", s2l("#b8b4a8", 0.55), rough=0.80))] * 5
+)
+I_CXPRETA = slot(mat_simples("caixa_preta_tampa", s2l("#26262a", 0.8), rough=0.55))
 I_GRADE = slot(mat_simples("grade", (0.05, 0.05, 0.055), rough=0.6, metal=0.5))
 I_VIDRO = slot(mat_simples("vao", (0.015, 0.015, 0.02), rough=0.35))
 I_PORTA = [slot(mat_simples("porta_mad", s2l("#5a3a22", 0.8), rough=0.7)),
            slot(mat_simples("portao_met", s2l("#3d4246", 0.8), rough=0.45, metal=0.55)),
            slot(mat_simples("portao_verm", s2l("#8a2f24", 0.8), rough=0.5, metal=0.35))]
-I_FIO = slot(mat_simples("fio", (0.02, 0.02, 0.02), rough=0.7))
+I_FIO = slot(mat_simples("fio", (0.055, 0.052, 0.050), rough=0.65))
 I_ROUPA = [slot(mat_simples(f"roupa{i}", hsv(rng.random(), rng.uniform(0.35, 0.9), rng.uniform(0.35, 0.95)),
                             rough=0.9)) for i in range(6)]
 I_CHAO = slot(mat_pbr("chao_beco", "concrete_pavement_02" if "concrete_pavement_02" in PH["textures"]
@@ -871,14 +882,24 @@ for cant0 in LOTES:
         co, si = math.cos(ao), math.sin(ao)
         po, qo = -si, co                              # eixo transversal
         beir = rng.uniform(0.15, 0.45)
+        # A agua NAO e um plano liso. Telha ceramica e fibrocimento tem canal e capa: a 9,74
+        # cm/px a canaleta de 16 cm da quase 2 px de periodo, e sem ela a agua vira mancha
+        # homogenea grande, que era 739 m2 de laranja liso e o pior item da rubrica.
+        n_f = rng.randint(8, 13)
         for s_ in (-1, 1):
-            p0 = (wcx - co * (la / 2 + beir) + po * s_ * (lb / 2 + beir),
-                  wcy - si * (la / 2 + beir) + qo * s_ * (lb / 2 + beir), ztopo)
-            p1 = (wcx + co * (la / 2 + beir) + po * s_ * (lb / 2 + beir),
-                  wcy + si * (la / 2 + beir) + qo * s_ * (lb / 2 + beir), ztopo)
-            p2 = (wcx + co * (la / 2 + beir), wcy + si * (la / 2 + beir), ztopo + h_cum)
-            p3 = (wcx - co * (la / 2 + beir), wcy - si * (la / 2 + beir), ztopo + h_cum)
-            acc.quad([p0, p1, p2, p3] if s_ > 0 else [p3, p2, p1, p0], mi_tel)
+            for k_ in range(n_f):
+                t0, t1 = k_ / n_f, (k_ + 1) / n_f
+                dz = 0.03 if k_ % 2 else 0.0           # capa e canal alternados
+                ptos = []
+                for tt, alt_ in ((t0, 0.0), (t1, 0.0), (t1, 1.0), (t0, 1.0)):
+                    # tt corre no sentido da cumeeira, alt_ do beiral para o cume
+                    ex = -(la / 2 + beir) + (la + 2 * beir) * tt
+                    ey = s_ * (lb / 2 + beir) * (1.0 - alt_)
+                    ptos.append((wcx + co * ex + po * ey, wcy + si * ex + qo * ey,
+                                 ztopo + h_cum * alt_ + dz))
+                acc.quad(ptos if s_ > 0 else ptos[::-1], mi_tel)
+        # cumeeira
+        acc.caixa(wcx, wcy, ztopo + h_cum + 0.06, la + 2 * beir, 0.20, 0.12, mi_tel, ao)
     elif r_ < 0.86:                                  # telha de fibrocimento plana sobre a laje
         acc.caixa(wcx, wcy, ztopo + 0.22, lx * 1.06, ly * 1.06, 0.1, mi_tel, ang)
         for s_ in (-1, 1):
@@ -892,7 +913,7 @@ for cant0 in LOTES:
             hh = rng.uniform(0.85, 1.25)
             px = wcx + rng.uniform(-0.32, 0.32) * lx
             py = wcy + rng.uniform(-0.32, 0.32) * ly
-            mi_cx = I_CXAZUL if rng.random() < 0.62 else I_CXPRETA
+            mi_cx = escolha(I_CAIXA)
             # base de alvenaria: caixa d'agua quase nunca fica direto na laje
             if rng.random() < 0.55:
                 acc.caixa(px, py, ztopo + 0.22, rr * 2.2, rr * 2.2, 0.44, mi_par, rng.uniform(0, 3))
@@ -950,14 +971,27 @@ for cant0 in LOTES:
 # Ancorado no TELHADO, nao numa altura sorteada sobre o terreno: 41% dos fios nasciam abaixo da
 # laje vizinha e ficavam presos dentro do predio. E com secao de feixe real (16 cm): 2,2 cm a
 # 9,74 cm/px dava 0,45 px, sub-pixel, e a fiacao simplesmente nao aparecia na imagem.
+def _ponta(ca):
+    """ponto de amarracao na BORDA da laje, nao no centroide. Ancorar no centro fazia dezenas de
+    lajes mostrarem estrelas de 3 a 5 hastes saindo exatamente do mesmo ponto no meio da
+    cobertura, o que nenhuma rede eletrica real faz: o ramal encosta na quina ou na fachada."""
+    k = rng.randrange(4)
+    a, b = ca[k], ca[(k + 1) % 4]
+    t = rng.choice([0.0, 0.5, 1.0, rng.uniform(0.15, 0.85)])
+    return a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t
+
+
+_pontas = {}
 if CASAS:
     for _ in range(3000):
-        ca, _zb, zt = rng.choice(CASAS)
-        x = sum(p[0] for p in ca) / 4
-        y = sum(p[1] for p in ca) / 4
-        cb, _zb2, zt2 = rng.choice(CASAS)
-        x2 = sum(p[0] for p in cb) / 4
-        y2 = sum(p[1] for p in cb) / 4
+        ia = rng.randrange(len(CASAS))
+        ib = rng.randrange(len(CASAS))
+        if _pontas.get(ia, 0) >= 3 or _pontas.get(ib, 0) >= 3:
+            continue                      # no maximo 3 fios por laje, senao vira aranha
+        ca, _zb, zt = CASAS[ia]
+        cb, _zb2, zt2 = CASAS[ib]
+        x, y = _ponta(ca)
+        x2, y2 = _ponta(cb)
         d = math.hypot(x2 - x, y2 - y)
         if not (5.0 < d < 22.0):
             continue
@@ -965,6 +999,8 @@ if CASAS:
         z2 = zt2 + rng.uniform(0.6, 2.2)
         acc.fio((x, y, z1), (x2, y2, z2), 0.08, I_FIO, barriga=rng.uniform(0.5, 1.4))
         n_fio += 1
+        _pontas[ia] = _pontas.get(ia, 0) + 1
+        _pontas[ib] = _pontas.get(ib, 0) + 1
 
 ob_fav = acc.objeto("Favela", COLS["FAVELA"])
 print(f"[morro] {n_casa} edificacoes, {n_cx} caixas d'agua, {n_varal} varais, "
@@ -1035,8 +1071,8 @@ bg.inputs["Strength"].default_value = 1.0
 # aspecto de maquete fria. A camera continua vendo o ceu; a luz de preenchimento vira um ambiente
 # neutro levemente quente, que e o que uma foto aerea do Rio mostra depois do balanco de branco.
 amb = nt.nodes.new("ShaderNodeBackground")
-amb.inputs["Color"].default_value = (0.72, 0.80, 1.00, 1.0)
-amb.inputs["Strength"].default_value = 0.78
+amb.inputs["Color"].default_value = (0.82, 0.87, 1.00, 1.0)
+amb.inputs["Strength"].default_value = 0.92
 lp = nt.nodes.new("ShaderNodeLightPath")
 mx = nt.nodes.new("ShaderNodeMixShader")
 nt.links.new(lp.outputs["Is Camera Ray"], mx.inputs["Fac"])
@@ -1093,7 +1129,66 @@ for look in ("AgX - Medium High Contrast", "AgX - Base Contrast", "AgX - Punchy"
         break
     except Exception:
         continue
-scene.view_settings.exposure = 0.14
+scene.view_settings.exposure = 0.20
+
+# ================================================================= regimes de tempo
+# Domain randomization de iluminacao. Nao e enfeite: Liao et al. 2026 (Remote Sensing 18(2):361)
+# mede que TIRAR a variacao de sol, tempo e angulo custa cerca de 10 pontos de mAP50, e cerca de
+# 20 em objeto truncado. Este e o eixo mais barato de randomizar e o de maior retorno medido.
+#
+# Cada regime e um orcamento de luz coerente, nao um ajuste solto de brilho. O que muda junto:
+#   sol      energia do disco solar
+#   disco    tamanho angular do sol em graus. 0,6 e o sol real (sombra dura). Acima de 20 a
+#            sombra some, que e exatamente o que um ceu encoberto faz.
+#   amb      preenchimento do ceu. Num dia encoberto o ceu INTEIRO vira a fonte, entao sobe muito.
+#   nevoa    densidade do airlight. Nublado e neblina tem muito mais agua em suspensao.
+#   dust     densidade de aerossol no ceu Nishita, que e o que tira o azul e branqueia o ceu.
+CLIMAS = {
+    "sol_duro":  dict(sol=5.0,  cor_sol=(1.00, 0.96, 0.90), disco=0.6,  amb=0.92,
+                      cor_amb=(0.82, 0.87, 1.00), nevoa=0.9e-4, expo=0.20, elev=(46, 74),
+                      ar=1.1, dust=2.2),
+    "sol_baixo": dict(sol=3.6,  cor_sol=(1.00, 0.80, 0.56), disco=0.9,  amb=0.85,
+                      cor_amb=(0.86, 0.86, 1.00), nevoa=2.8e-4, expo=0.40, elev=(9, 25),
+                      ar=1.6, dust=8.0),
+    "nublado":   dict(sol=0.55, cor_sol=(1.00, 0.99, 0.98), disco=24.0, amb=2.45,
+                      cor_amb=(0.90, 0.93, 1.00), nevoa=2.6e-4, expo=-0.10, elev=(30, 70),
+                      ar=1.9, dust=6.0),
+    "encoberto": dict(sol=0.12, cor_sol=(1.00, 1.00, 1.00), disco=38.0, amb=1.70,
+                      cor_amb=(0.86, 0.90, 1.00), nevoa=3.8e-4, expo=-0.55, elev=(28, 66),
+                      ar=2.2, dust=9.5),
+    "neblina":   dict(sol=2.0,  cor_sol=(1.00, 0.97, 0.93), disco=7.0,  amb=1.60,
+                      cor_amb=(0.90, 0.94, 1.00), nevoa=9.0e-4, expo=0.05, elev=(22, 52),
+                      ar=2.4, dust=10.0),
+    "chuva":     dict(sol=0.22, cor_sol=(1.00, 1.00, 1.00), disco=32.0, amb=1.10,
+                      cor_amb=(0.80, 0.87, 1.00), nevoa=5.2e-4, expo=-0.90, elev=(24, 60),
+                      ar=2.3, dust=10.0),
+}
+EXPO_BASE_CLIMA = scene.view_settings.exposure
+
+
+def aplica_clima(nome, rng_, elev=None, azim=None):
+    """poe a cena inteira num regime de tempo. Devolve o que foi aplicado, para o manifesto."""
+    c = CLIMAS[nome]
+    el = elev if elev is not None else rng_.uniform(*c["elev"])
+    az = azim if azim is not None else rng_.uniform(0, 360)
+    sol_d.energy = c["sol"] * rng_.uniform(0.85, 1.15)
+    sol_d.color = c["cor_sol"]
+    sol_d.angle = math.radians(c["disco"])
+    sol.rotation_euler = Euler((math.radians(90 - el), 0, math.radians(180 - az)), "XYZ")
+    amb.inputs["Strength"].default_value = c["amb"] * rng_.uniform(0.9, 1.1)
+    amb.inputs["Color"].default_value = (*c["cor_amb"], 1.0)
+    _vs.inputs["Density"].default_value = c["nevoa"] * rng_.uniform(0.8, 1.25)
+    scene.view_settings.exposure = c["expo"] + rng_.uniform(-0.12, 0.12)
+    for a_, v_ in (("sun_elevation", math.radians(el)), ("sun_rotation", math.radians(az)),
+                   ("air_density", c["ar"]), ("dust_density", c["dust"])):
+        try:
+            setattr(sky, a_, v_)
+        except Exception:
+            pass
+    return dict(clima=nome, elev=round(el, 1), azim=round(az, 1),
+                sol=round(sol_d.energy, 2), amb=round(amb.inputs["Strength"].default_value, 2),
+                nevoa=round(_vs.inputs["Density"].default_value * 1e4, 2),
+                expo=round(scene.view_settings.exposure, 2))
 
 # ----------------------------------------------------------------- cameras
 Z30_LENS = 4.3 * 36 / 5.37            # 4.3 mm num sensor de 5.37 mm, ou seja ~28,8 mm equivalente
@@ -1247,6 +1342,23 @@ if args.save_blend:
 # laje de terreno (onde pessoa anda), e CASAS da a cota de cada laje (onde pessoa tambem anda,
 # e onde a vista de drone mais a enxerga). Isso e melhor que o ray cast cego de gen_jacarezinho,
 # porque aqui sabemos de antemao o que e chao e o que e cobertura.
+CLIMAS_USO = ([k.strip() for k in args.climas.split(",") if k.strip() in CLIMAS]
+              if args.climas != "todos" else list(CLIMAS))
+if not CLIMAS_USO:
+    CLIMAS_USO = ["sol_duro"]
+
+# ---- modo comparacao: a MESMA cena e o MESMO enquadramento em cada regime de tempo, que e a
+# unica forma de ver o efeito da luz isolado da geometria.
+if args.comparar_climas:
+    scene.camera = CAMS["nadir"]
+    for _k in CLIMAS_USO:
+        _i = aplica_clima(_k, rng, elev=58.0, azim=35.0)
+        scene.render.filepath = os.path.join(args.out, f"clima_{_k}.png")
+        print(f"[morro] clima {_k}: sol={_i['sol']} amb={_i['amb']} "
+              f"nevoa={_i['nevoa']}e-4 expo={_i['expo']}", flush=True)
+        bpy.ops.render.render(write_still=True)
+    print("[morro] comparacao de climas gravada", flush=True)
+
 if args.dataset > 0:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import people_mpfb as PM
@@ -1267,12 +1379,12 @@ if args.dataset > 0:
 
     for i in range(args.dataset):
         PM.clear_people()
-        # domain randomization: sol, altura e leve inclinacao da camera, como em cid150
-        el = rng.uniform(32, 74)
-        az = rng.uniform(0, 360)
-        sky.sun_elevation = math.radians(el)
-        sky.sun_rotation = math.radians(az)
-        sol.rotation_euler = Euler((math.radians(90 - el), 0, math.radians(180 - az)), "XYZ")
+        # Domain randomization: regime de tempo completo, nao so posicao do sol. Varrer os
+        # regimes em ordem (e nao sortear) garante que um dataset pequeno fique balanceado,
+        # o que importa porque o eixo de luz e o que mais pesa no sim-to-real.
+        clima = CLIMAS_USO[i % len(CLIMAS_USO)]
+        info_luz = aplica_clima(clima, rng)
+        el, az = info_luz["elev"], info_luz["azim"]
         alt = args.alt + rng.uniform(-args.alt_jitter, args.alt_jitter)
         ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
         ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
@@ -1328,24 +1440,25 @@ if args.dataset > 0:
             for l in rotulos:
                 f.write(f"{l[0]} {l[1]:.6f} {l[2]:.6f} {l[3]:.6f} {l[4]:.6f}\n")
         rec = dict(img=nome + ".png", split=split, w=args.res[0], h=args.res[1],
-                   alt=round(alt, 1), elev=round(el, 1), azim=round(az, 1),
+                   alt=round(alt, 1),
                    n_pessoas=len(PM.PEOPLE), n_caixas=len(rotulos),
                    n_armadas=sum(1 for l in rotulos if l[0] == 0),
                    n_laje=sum(1 for l in rotulos if l[6]),
                    vis=[l[5] for l in rotulos], seed=args.seed,
                    render_s=round(time.time() - t0, 1))
+        rec.update(info_luz)
         mf.write(json.dumps(rec) + "\n")
         mf.flush()
         tot_cx += len(rotulos)
         print(f"[morro] {nome} {split} caixas={len(rotulos)}/{len(PM.PEOPLE)} "
-              f"alt={alt:.0f} elev={el:.0f} {rec['render_s']}s", flush=True)
+              f"{clima} elev={el:.0f} alt={alt:.0f} {rec['render_s']}s", flush=True)
     mf.close()
     with open(os.path.join(args.out, "data.yaml"), "w") as f:
         f.write(f"path: {os.path.abspath(args.out).replace(os.sep, '/')}\ntrain: images/train\n"
                 f"val: images/val\nnames:\n  0: pessoa_armada\n  1: pessoa_desarmada\n")
     print(f"[morro] dataset: {args.dataset} imagens, {tot_cx} caixas", flush=True)
 
-if args.dataset == 0 and not args.no_render:
+if args.dataset == 0 and not args.comparar_climas and not args.no_render:
     for nome in [v.strip() for v in args.vistas.split(",") if v.strip()]:
         if nome not in CAMS:
             print(f"[morro] vista desconhecida: {nome}", flush=True)
