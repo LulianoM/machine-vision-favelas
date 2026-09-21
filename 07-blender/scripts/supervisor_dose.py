@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
 """
-supervisor_dose.py: espera a etapa 18 terminar, corta a 19 e roda o teste de dose antes dela.
+supervisor_dose.py: assume a fila depois do render armado, conserta o data.yaml e reordena.
 
-Por que existe. A fila que esta rodando carregou a lista de etapas em memoria antes de as etapas
-20 a 23 existirem, entao ela nao as conhece: depois da 18 ela emenda direto na 19, que e o treino
-no VisDrone inteiro e leva cerca de 20 h. O teste de dose de variedade vale mais que a 19, porque
-a razao de eficacia ja sai do braco real pareado e a 19 so melhora um denominador que ja temos.
+Duas coisas precisam acontecer entre a etapa 16 e a 17, e a fila em execucao nao sabe de nenhuma
+das duas porque carregou a lista de etapas em memoria antes de elas existirem.
 
-O que ele NAO faz: nao interrompe nada que esteja produzindo resultado. Ele so age depois que a
-etapa 18 estiver gravada como concluida no estado.json, e nesse instante a 19 comecou ha segundos.
-Se a 18 falhar, ele age do mesmo jeito, porque o que interessa e nao deixar a 19 tomar a placa.
+1. O `data.yaml` do lote armado vai sair com DUAS classes. O gerador que esta rodando e o de
+   antes do commit que corrigiu isso: ele declara `pessoa_armada` e `pessoa_desarmada` mesmo
+   quando os rotulos trazem a terceira, `pessoa_objeto`. Conferido no manifesto: o lote tem 274
+   caixas armadas, 255 desarmadas e 263 com objeto alongado. Se o yaml for para o ladrilhamento
+   como esta, a classe 2 vira indice fora de faixa e o treino quebra horas depois.
 
-Ordem depois do corte: 20 a 23 (teste de dose) e so entao a 19, que passa a ser a ultima da fila,
-que e onde ela deveria estar desde o inicio.
+2. Depois da 18 a fila emendaria na 19, o treino no VisDrone inteiro, que leva cerca de 20 h. O
+   teste de dose de variedade vale mais: a razao de eficacia ja sai do braco real pareado, e a 19
+   so melhora um denominador que ja temos.
+
+O corte acontece quando a etapa 16 estiver gravada como concluida. Nesse instante a 17 comecou ha
+segundos e e so ladrilhamento, que custa um minuto e refaz do zero sem prejuizo.
+
+A fila roda como tres processos em arvore (lancador do venv, interpretador de verdade, e o Blender
+ou o treino). Matar so o do meio deixa o filho orfao segurando a GPU, entao o alvo e a raiz, com
+taskkill /T.
 
 Uso:
-  python supervisor_dose.py            # espera a 18 e age
-  python supervisor_dose.py --agora    # corta ja, sem esperar
+  python supervisor_dose.py            # espera a etapa 16 e assume
+  python supervisor_dose.py --agora    # assume ja
 """
 import argparse
 import json
@@ -31,6 +39,7 @@ RAIZ = os.path.join("C:" + os.sep, "arma3-favela", "blender")
 ESTADO = os.path.join(RAIZ, "fila", "estado.json")
 PY = os.path.join("C:" + os.sep, "arma3-favela", "venv", "Scripts", "python.exe")
 FILA = os.path.join(SCR, "fila_noite.py")
+DS_ARM = os.path.join(RAIZ, "ds_armado_75")
 
 
 def log(m):
@@ -38,14 +47,11 @@ def log(m):
 
 
 def pid_da_fila():
-    """acha o processo raiz da fila em execucao pela linha de comando.
-
-    A fila roda como tres processos em arvore: o lancador do venv, o interpretador de verdade e o
-    Blender ou o treino. Matar so o do meio deixa o filho orfao segurando a GPU, entao o alvo e a
-    raiz, com /T para levar a arvore junto."""
+    """raiz da arvore de processos da fila, achada pela linha de comando"""
     try:
         saida = subprocess.check_output(
-            ["wmic", "process", "where", "name like '%python%'", "get", "ProcessId,ParentProcessId,CommandLine", "/format:csv"],
+            ["wmic", "process", "where", "name like '%python%'", "get",
+             "ProcessId,ParentProcessId,CommandLine", "/format:csv"],
             stderr=subprocess.DEVNULL, text=True, errors="replace")
     except Exception as e:
         log(f"wmic falhou: {e!r}")
@@ -62,7 +68,6 @@ def pid_da_fila():
     if not cands:
         return None
     pids = {p for _, p in cands}
-    # a raiz e aquela cujo pai NAO esta no conjunto
     for ppid, pid in cands:
         if ppid not in pids:
             return pid
@@ -76,9 +81,47 @@ def etapa_feita(n):
         return False
 
 
+def classes_nos_rotulos(raiz):
+    """quais indices de classe FORAM de fato escritos. Contar em vez de supor pela --mistura,
+    porque um lote pequeno pode nao produzir nenhuma instancia da terceira."""
+    vistos = set()
+    for split in ("train", "val"):
+        d = os.path.join(raiz, "labels", split)
+        if not os.path.isdir(d):
+            continue
+        for nome in os.listdir(d):
+            for linha in open(os.path.join(d, nome), encoding="utf-8"):
+                p = linha.split()
+                if p:
+                    vistos.add(int(p[0]))
+    return vistos
+
+
+def conserta_yaml(raiz):
+    y = os.path.join(raiz, "data.yaml")
+    if not os.path.exists(y):
+        log(f"{y} nao existe, nada a consertar")
+        return
+    vistos = classes_nos_rotulos(raiz)
+    n = (max(vistos) + 1) if vistos else 2
+    NOMES = ["pessoa_armada", "pessoa_desarmada", "pessoa_objeto"]
+    atual = open(y, encoding="utf-8").read()
+    declaradas = atual.count("\n  ")
+    log(f"{raiz}: classes nos rotulos {sorted(vistos)}, declaradas no yaml {declaradas}")
+    if declaradas >= n:
+        log("yaml ja esta coerente, nao mexo")
+        return
+    with open(y, "w", encoding="utf-8") as f:
+        f.write("path: " + os.path.abspath(raiz).replace(os.sep, "/") + "\n"
+                "train: images/train\nval: images/val\nnames:\n")
+        for i in range(n):
+            f.write(f"  {i}: {NOMES[i]}\n")
+    log(f"yaml reescrito com {n} classes")
+
+
 ap = argparse.ArgumentParser()
 ap.add_argument("--agora", action="store_true")
-ap.add_argument("--espera", type=int, default=18, help="etapa cuja conclusao dispara o corte")
+ap.add_argument("--espera", type=int, default=16)
 a = ap.parse_args()
 
 if not a.agora:
@@ -89,15 +132,18 @@ if not a.agora:
 
 pid = pid_da_fila()
 if pid:
-    log(f"cortando a fila em execucao, pid raiz {pid}, com a arvore junto")
+    log(f"assumindo a fila: matando a arvore da raiz {pid}")
     subprocess.call(["taskkill", "/PID", str(pid), "/T", "/F"],
                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(20)
 else:
     log("nenhuma fila em execucao encontrada, seguindo")
 
-for etapas, nome in (("20,21,22,23", "teste de dose de variedade"),
-                     ("19", "VisDrone inteiro, o que foi adiado")):
+conserta_yaml(DS_ARM)
+
+for etapas, nome in (("17,18", "ladrilhamento e treino do braco armado"),
+                     ("20,21,22,23", "teste de dose de variedade"),
+                     ("19", "VisDrone inteiro, que foi adiado de proposito")):
     log(f"rodando {nome} (etapas {etapas})")
     rc = subprocess.call([PY, FILA, "--so", etapas], cwd=RAIZ)
     log(f"{nome} terminou com rc={rc}")
