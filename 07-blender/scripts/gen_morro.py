@@ -77,6 +77,9 @@ ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
 ap.add_argument("--obliqua", action="store_true",
                 help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
+ap.add_argument("--sitio", type=int, default=-1,
+                help="indice do sitio na colecao de sitios.py. -1 e o sitio historico, identico "
+                     "ao que gerou ds_morro_4k, e serve de controle")
 ap.add_argument("--save-blend", default=None)
 ap.add_argument("--no-render", action="store_true")
 args = ap.parse_args(argv)
@@ -96,10 +99,21 @@ rng = random.Random(args.seed)
 os.makedirs(args.out, exist_ok=True)
 
 # geometria do sitio
-NUC_A, NUC_B = 92.0, 58.0      # semi-eixos do nucleo construido, em metros
-MORRO_H = 62.0                 # altura do morro que cerca o vale
+# geometria do sitio, vinda da colecao em sitios.py. O sitio -1 reproduz o gerador de antes de
+# 2026-09-21, e serve de controle: mesma semente, mesmo lote.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitios  # noqa: E402
+
+SITIO = sitios.sitio(args.sitio)
+NUC_A, NUC_B = SITIO["nuc_a"], SITIO["nuc_b"]   # semi-eixos do nucleo construido, em metros
+MORRO_H = SITIO["morro_h"]                      # altura do morro que cerca o vale
+RELEVO = SITIO["relevo"]
+AVENIDA = SITIO["avenida"]
 AREA_X, AREA_Y = 250.0, 205.0  # semi-extensao do terreno modelado
 PAV_H = 2.72                   # pe-direito medio de um pavimento
+print(f"[morro] sitio {args.sitio}: {SITIO['nome']}, nucleo {NUC_A:.0f}x{NUC_B:.0f} m, "
+      f"relevo {RELEVO}, mata {SITIO['mata']}, "
+      f"avenida {'nao' if not AVENIDA else str(round(AVENIDA['larg'])) + ' m'}", flush=True)
 
 
 def hsv(h, s, v):
@@ -172,6 +186,16 @@ def raio(x, y):
     return r * (0.84 + 0.34 * NZ.fbm(x, y, 1 / 45.0, 4))
 
 
+def _dist_avenida(x, y):
+    """distancia perpendicular ao eixo da avenida. Vetorizado, aceita escalar ou array."""
+    a = AVENIDA["ang"]
+    # normal ao eixo; o eixo passa por um ponto deslocado do centro do nucleo
+    nx, ny = -math.sin(a), math.cos(a)
+    c = AVENIDA["desloc"] * NUC_B
+    return np.abs(np.asarray(x, dtype=np.float64) * nx
+                  + np.asarray(y, dtype=np.float64) * ny - c)
+
+
 def terreno(x, y):
     x = np.asarray(x, dtype=np.float64)
     y = np.asarray(y, dtype=np.float64)
@@ -182,11 +206,42 @@ def terreno(x, y):
     # primeira versao. Aqui o morro sobe muito mais de um lado, entao o nucleo construido fica
     # na meia encosta, que e onde favela de fato se assenta.
     lado = 0.5 + 0.5 * np.tanh((y + 0.55 * x) / 105.0)
-    subida = MORRO_H * t ** 1.3 * (0.32 + 1.30 * lado)
-    incl = 0.075 * y + 0.045 * x                                   # encosta suave no nucleo
+
+    if RELEVO == "plano":
+        # Jacarezinho, que e o caso do artigo, e praticamente plano. A encosta do sitio historico
+        # nao e universal e nao deve virar assinatura do que o detector chama de favela.
+        subida = MORRO_H * t ** 1.3
+        incl = 0.012 * y + 0.008 * x
+        cume = 4.0 * (NZ.fbm(x - 900, y + 700, 1 / 95.0, 4) - 0.5) * 2 * t
+    elif RELEVO == "encosta":
+        # subida monotonica: o nucleo inteiro fica na rampa, como na Rocinha. Muda a silhueta do
+        # alvo visto de cima, porque a pessoa esta num chao inclinado.
+        subida = MORRO_H * (0.30 + 0.70 * t) * (0.25 + 1.05 * lado)
+        incl = 0.190 * y + 0.115 * x
+        cume = 9.0 * (NZ.fbm(x - 900, y + 700, 1 / 95.0, 4) - 0.5) * 2 * t
+    elif RELEVO == "dois_morros":
+        # dois cumes com um vale entre eles cortando o nucleo
+        l2 = 0.5 + 0.5 * np.tanh((-y + 0.40 * x) / 95.0)
+        subida = MORRO_H * t ** 1.3 * (0.28 + 0.80 * lado + 0.70 * l2)
+        incl = 0.045 * y + 0.030 * x
+        cume = 15.0 * (NZ.fbm(x - 900, y + 700, 1 / 78.0, 4) - 0.5) * 2 * t
+    else:                                                          # morro, o sitio historico
+        subida = MORRO_H * t ** 1.3 * (0.32 + 1.30 * lado)
+        incl = 0.075 * y + 0.045 * x                               # encosta suave no nucleo
+        cume = 13.0 * (NZ.fbm(x - 900, y + 700, 1 / 95.0, 4) - 0.5) * 2 * t  # relevo do morro
+
     rug = 3.0 * (NZ.fbm(x + 500, y - 300, 1 / 55.0, 4) - 0.5) * 2   # ondulacao do vale
-    cume = 13.0 * (NZ.fbm(x - 900, y + 700, 1 / 95.0, 4) - 0.5) * 2 * t  # relevo do morro
-    return subida + incl + rug + cume
+    z = subida + incl + rug + cume
+
+    # A avenida corta o nucleo, e uma via nao acompanha ondulacao de 3 m em 55 m: ela e aplainada
+    # em corte e aterro. Sem isto o asfalto fica boiando ou enterrado, que e pior que nao ter via.
+    if AVENIDA is not None:
+        d = _dist_avenida(x, y)
+        k = np.clip(1.0 - d / (AVENIDA["larg"] * 0.5 + AVENIDA["calcada"] + 4.0), 0.0, 1.0)
+        k = k * k * (3 - 2 * k)
+        z = z * (1 - k) + (subida + incl) * k
+
+    return z
 
 
 def warp(x, y):
@@ -725,7 +780,7 @@ sys.setrecursionlimit(5000)
 # Uma subdivisao unica, por mais deformada que seja, deixa fileiras retas legiveis de 10 e 20
 # casas, que e o sinal mais forte de geracao procedural numa vista de cima. Favela consolidada
 # cresce por nucleos que se encontram em angulo, e e isso que esta reproduzido aqui.
-N_BAIRRO = 9
+N_BAIRRO = SITIO['n_bairro']
 SEEDS = []
 while len(SEEDS) < N_BAIRRO:
     sx = rng.uniform(-NUC_A, NUC_A)
@@ -769,7 +824,9 @@ for cant0 in LOTES:
     cy = sum(p[1] for p in cant0) / 4
     if raio(cx, cy) > 0.97:
         continue                                    # fora do nucleo: fica para a mata
-    if rng.random() < 0.008:
+    if AVENIDA is not None and _dist_avenida(cx, cy) < AVENIDA["larg"] * 0.5 + AVENIDA["calcada"]:
+        continue                                    # caixa da via mais calcada: nao se constroi
+    if rng.random() < SITIO['vazio']:
         continue                                   # vazio, quintal, laje de terreno
     # giro proprio de cada lote em torno do centroide, com encolhimento para os vizinhos
     # girados nao se interpenetrarem. Junto com o warp forte, e o que tira a assinatura
@@ -789,8 +846,8 @@ for cant0 in LOTES:
     # Numero de pavimentos por campo de ruido: favela tem ZONAS altas e zonas baixas, nao
     # altura sorteada casa a casa. O sorteio independente deixa a massa homogenea vista de cima.
     campo = float(NZ.fbm(cx + 3000, cy - 2000, 1 / 62.0, 3))
-    pav = int(round(rng.gauss(1.0 + 4.0 * campo, 0.95)))
-    pav = max(1, min(6, pav))
+    pav = int(round(rng.gauss(SITIO['pav_base'] + SITIO['pav_amp'] * campo, 0.95)))
+    pav = max(1, min(SITIO['pav_max'], pav))
     alt = pav * rng.uniform(PAV_H - 0.14, PAV_H + 0.18)
     ztopo = zbase + 0.6 + alt
     mi_par = escolha(I_FACHADA)
@@ -1021,9 +1078,94 @@ if CASAS:
         _pontas[ia] = _pontas.get(ia, 0) + 1
         _pontas[ib] = _pontas.get(ib, 0) + 1
 
+# ----------------------------------------------------------------- avenida, quando o sitio tem
+# Por que uma via principal entra na colecao de sitios: o VisDrone e um benchmark de TRAFEGO, e o
+# nosso sitio historico nao tem asfalto nem carro nenhum. Sem esse elemento, a diferenca entre os
+# dois dominios inclui "existe rua larga" alem de tudo o mais, e nao da para separar.
+#
+# Os carros sao construidos com primitivas, nao importados. A 150 m em 4K um carro tem cerca de
+# 10 x 4 px, e nessa escala o que existe e a silhueta e a cor do teto, nao a modelagem. Um modelo
+# detalhado custaria VRAM e tempo de render sem mudar um pixel. Isto e simplificacao declarada,
+# nao descuido, e vale enquanto a camera ficar a 150 m; para voo baixo precisaria de modelo real.
+n_carro = 0
+if AVENIDA is not None:
+    _ang = AVENIDA["ang"]
+    _ex, _ey = math.cos(_ang), math.sin(_ang)          # direcao do eixo
+    _nx, _ny = -math.sin(_ang), math.cos(_ang)         # normal
+    _c = AVENIDA["desloc"] * NUC_B
+    _meia = AVENIDA["larg"] * 0.5
+    _L = math.hypot(AREA_X, AREA_Y) * 0.92
+
+    mat_asf = mat_simples("asfalto", (0.021, 0.021, 0.023), rough=0.72)
+    mat_cal = mat_simples("calcada", (0.095, 0.092, 0.086), rough=0.88)
+    ia_asf = slot(mat_asf)
+    ia_cal = slot(mat_cal)
+    ia_faixa = slot(mat_simples("faixa_via", (0.52, 0.49, 0.38), rough=0.80))
+
+    # a via segue o terreno em segmentos, senao atravessa o relevo
+    _passo = 4.0
+    _n = int(2 * _L / _passo)
+    for _k in range(_n):
+        t0 = -_L + _k * _passo
+        t1 = t0 + _passo
+        for (w0, w1, mi, dz) in ((-_meia, _meia, ia_asf, 0.06),
+                                 (-_meia - AVENIDA["calcada"], -_meia, ia_cal, 0.20),
+                                 (_meia, _meia + AVENIDA["calcada"], ia_cal, 0.20)):
+            q = []
+            for (tt, ww) in ((t0, w0), (t1, w0), (t1, w1), (t0, w1)):
+                px = _ex * tt + _nx * (ww + _c)
+                py = _ey * tt + _ny * (ww + _c)
+                q.append((px, py, z_em(px, py) + dz))
+            acc.quad(q, mi)
+        # faixa central tracejada, so para o asfalto nao virar um retangulo chapado
+        if _k % 3 == 0:
+            q = []
+            for (tt, ww) in ((t0 + 0.6, -0.16), (t1 - 0.6, -0.16), (t1 - 0.6, 0.16), (t0 + 0.6, 0.16)):
+                px = _ex * tt + _nx * (ww + _c)
+                py = _ey * tt + _ny * (ww + _c)
+                q.append((px, py, z_em(px, py) + 0.08))
+            acc.quad(q, ia_faixa)
+
+    # CORES de carro. Deliberadamente na mesma familia de cinzas e tons foscos das lajes: se o
+    # carro fosse vermelho vivo, o detector separaria carro de pessoa por cor, o que nao sobrevive
+    # a imagem real. Mesma razao pela qual objetos_alongados.py usa a paleta das armas.
+    CORES_CARRO = [(0.32, 0.33, 0.34), (0.55, 0.55, 0.56), (0.08, 0.08, 0.09),
+                   (0.18, 0.20, 0.26), (0.42, 0.40, 0.37), (0.13, 0.22, 0.17),
+                   (0.46, 0.44, 0.40), (0.23, 0.24, 0.25)]
+    # Sortear tt numa faixa fixa e descartar o que cai fora do nucleo rejeitava dois tercos dos
+    # carros, porque o eixo da via pode estar orientado no lado curto do nucleo. Com tentativas,
+    # o numero pedido e o numero entregue.
+    _tent_c = 0
+    while n_carro < AVENIDA["carros"] and _tent_c < AVENIDA["carros"] * 40:
+        _tent_c += 1
+        tt = rng.uniform(-NUC_A * 1.15, NUC_A * 1.15)
+        faixa = rng.choice([-1, 1])
+        ww = faixa * rng.uniform(_meia * 0.22, _meia * 0.74)
+        px = _ex * tt + _nx * (ww + _c)
+        py = _ey * tt + _ny * (ww + _c)
+        if float(raio(px, py)) > 1.15:
+            continue
+        _i = n_carro
+        zc = z_em(px, py) + 0.08
+        comp = rng.uniform(3.9, 4.9)
+        larg = rng.uniform(1.65, 1.86)
+        h1 = rng.uniform(0.62, 0.78)          # altura do corpo
+        h2 = rng.uniform(0.46, 0.58)          # altura da cabine sobre o corpo
+        mi_c = slot(mat_simples(f"carro_{_i}", rng.choice(CORES_CARRO),
+                                rough=rng.uniform(0.18, 0.42)))
+        a_ = _ang + (0 if faixa > 0 else math.pi) + rng.uniform(-0.03, 0.03)
+        ca_, sa_ = math.cos(a_), math.sin(a_)
+
+        acc.caixa(px, py, zc + h1 / 2, comp, larg, h1, mi_c, rot=a_)
+        # cabine encurtada e deslocada, que e o que da a silhueta de carro vista de cima
+        dl = rng.uniform(-0.35, 0.25)
+        acc.caixa(px + dl * ca_, py + dl * sa_, zc + h1 + h2 / 2,
+                  comp * rng.uniform(0.46, 0.56), larg * 0.86, h2, mi_c, rot=a_)
+        n_carro += 1
+
 ob_fav = acc.objeto("Favela", COLS["FAVELA"])
 print(f"[morro] {n_casa} edificacoes, {n_cx} caixas d'agua, {n_varal} varais, "
-      f"{n_fio} fios, {len(acc.f)} faces", flush=True)
+      f"{n_fio} fios, {n_carro} carros, {len(acc.f)} faces", flush=True)
 
 # ----------------------------------------------------------------- mata no morro
 MODELOS = [n for n in ("jacaranda_tree", "tree_small_02", "island_tree_01", "island_tree_02")
@@ -1051,8 +1193,21 @@ if arv:
         x = rng.uniform(-AREA_X * 0.86, AREA_X * 0.86)
         y = rng.uniform(-AREA_Y * 0.86, AREA_Y * 0.86)
         r = float(raio(x, y))
-        if r < 1.0 and rng.random() > 0.028:
+        # Tres regimes de mata. O anel em volta era o unico ate 2026-09-21 e virou assinatura:
+        # o detector podia estar aprendendo "verde em volta de telhado" em vez de telhado.
+        if SITIO["mata"] == "ausente":
+            if r < 1.18:
+                continue                      # so uma franja distante, o morro fica pelado
+        elif SITIO["mata"] == "manchas":
+            # manchas internas: capao de mato dentro do nucleo, alem do anel externo
+            if r < 1.0:
+                mancha = float(NZ.fbm(x + 7000, y - 4000, 1 / 40.0, 3))
+                if mancha < 0.62 or rng.random() > 0.35:
+                    continue
+        elif r < 1.0 and rng.random() > 0.028:
             continue          # mangueira e bananeira entre lajes existem, clareira a machado nao
+        if AVENIDA is not None and float(_dist_avenida(x, y)) < AVENIDA["larg"] * 0.5 + 1.0:
+            continue                          # arvore no meio do asfalto, nao
         src = rng.choice(arv)
         o = bpy.data.objects.new(src.name + f"_{postos}", src.data)
         COLS["MATA"].objects.link(o)

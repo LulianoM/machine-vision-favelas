@@ -53,6 +53,8 @@ DS_OBL = os.path.join(RAIZ, "ds_morro_obl")
 DS_OBL_T = os.path.join(RAIZ, "ds_morro_obl_tiles")
 DS_ARM = os.path.join(RAIZ, "ds_armado_75")
 DS_ARM_T = os.path.join(RAIZ, "ds_armado_75_tiles")
+DS_VAR = os.path.join(RAIZ, "ds_variedade")
+DS_VAR_T = os.path.join(RAIZ, "ds_variedade_tiles")
 VIS_YAML = os.path.join(VIS, "visdrone_yolo", "data.yaml")
 VIS_SUB = os.path.join(VIS, "visdrone_sub", "data.yaml")
 
@@ -167,6 +169,61 @@ def renomeia_nadir(log):
     return 0
 
 
+
+# ---------------------------------------------------------------- teste de dose de variedade
+# A pergunta: com o MESMO numero de imagens, 180, seis lugares diferentes transferem melhor que
+# um lugar so? O controle ja existe e e o `ds_morro_4k`: 180 imagens de um unico sitio.
+#
+# Seis sitios x 30 imagens da 180, e 30 e divisivel por 6, entao cada sitio recebe exatamente
+# cinco imagens de cada regime de tempo. Manter o clima balanceado DENTRO de cada sitio importa
+# porque senao um sitio ficaria com mais sol duro que outro e a comparacao misturaria dois eixos.
+#
+# O sitio -1 entra na lista de proposito: ele e byte a byte o mesmo do controle (conferido em
+# 2026-09-21, 4068 lotes e 208.396 faces com semente 21 nos dois). Assim a pergunta fica limpa:
+# nao e "um lugar contra outros seis", e "180 imagens deste lugar contra 30 deste mais 150 de
+# outros cinco".
+SITIOS_DOSE = [-1, 0, 1, 2, 3, 4]
+POR_SITIO = 30
+
+
+def render_dose(log):
+    import shutil
+    import subprocess as sp
+    destino = DS_VAR
+    for sub in ("images/train", "images/val", "labels/train", "labels/val"):
+        os.makedirs(os.path.join(destino, *sub.split("/")), exist_ok=True)
+    total = 0
+    for k in SITIOS_DOSE:
+        parcial = os.path.join(RAIZ, f"_dose_s{k}")
+        if not os.path.exists(os.path.join(parcial, "data.yaml")):
+            cmd = blender("gen_morro.py", "--out", parcial, "--dataset", POR_SITIO,
+                          "--samples", 96, "--res", 3840, 2160, "--people", 16, 34,
+                          "--pool", 6, "--seed", 21, "--climas", "todos", "--sitio", k)
+            log.write("\n# sitio %d\n# %s\n" % (k, " ".join(cmd)))
+            log.flush()
+            rc = sp.call(cmd, stdout=log, stderr=sp.STDOUT, cwd=RAIZ)
+            if rc != 0:
+                log.write("sitio %d falhou com rc=%d\n" % (k, rc))
+                return rc
+        # junta no dataset unico, prefixando o nome pelo sitio para nao colidir
+        for split in ("train", "val"):
+            for nome in sorted(os.listdir(os.path.join(parcial, "images", split))):
+                base = os.path.splitext(nome)[0]
+                novo = "s%s_%s" % (str(k).replace("-", "m"), base)
+                shutil.copy2(os.path.join(parcial, "images", split, nome),
+                             os.path.join(destino, "images", split, novo + ".png"))
+                lb = os.path.join(parcial, "labels", split, base + ".txt")
+                if os.path.exists(lb):
+                    shutil.copy2(lb, os.path.join(destino, "labels", split, novo + ".txt"))
+                    total += 1
+    with open(os.path.join(destino, "data.yaml"), "w", encoding="utf-8") as f:
+        f.write("path: " + destino.replace(os.sep, "/") + "\n"
+                "train: images/train\nval: images/val\n"
+                "names:\n  0: pessoa_armada\n  1: pessoa_desarmada\n")
+    log.write("\n%d imagens juntadas de %d sitios em %s\n" % (total, len(SITIOS_DOSE), destino))
+    return 0
+
+
 ETAPAS = [
     (1, "espera_render_4k", "espera as 180 imagens de ds_morro_4k terminarem",
      espera_render_4k, None, []),
@@ -250,6 +307,23 @@ ETAPAS = [
                            "proposito: a razao de eficacia ja sai do pareado, e este aqui e o "
                            "mais caro da fila",
      treino(VIS_YAML, "r_cheio"), pesos("r_cheio"), []),
+
+    (20, "render_dose_variedade", "seis sitios x 30 imagens, mesmo total do controle de 180",
+     render_dose, os.path.join(DS_VAR, "data.yaml"), []),
+
+    (21, "ladrilha_variedade", "ladrilhos de 1280 px do braco de variedade",
+     sh(PY, os.path.join(SCR, "tile_dataset.py"), "--data", DS_VAR, "--out", DS_VAR_T,
+        "--tile", 1280, "--overlap", 0.2),
+     os.path.join(DS_VAR_T, "data.yaml"), [20]),
+
+    (22, "treino_S_variedade", "mesmos hiperparametros do s_nadir_4k: muda o DADO e so o dado",
+     treino(os.path.join(DS_VAR_T, "data.yaml"), "s_variedade"),
+     pesos("s_variedade"), [21]),
+
+    (23, "aval_S_variedade", "zero-shot no VisDrone, para comparar com sim2real_s_nadir_4k.json",
+     aval(pesos("s_variedade"), os.path.join(DS_VAR_T, "data.yaml"),
+          os.path.join(RES, "sim2real_s_variedade.json")),
+     os.path.join(RES, "sim2real_s_variedade.json"), [22]),
 ]
 
 
