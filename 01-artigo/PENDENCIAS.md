@@ -52,3 +52,21 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 - [ ] D7. Duas frases novas para Limitations: o levantamento aéreo de 2022 é todo em nadir a 150 m, portanto sem textura de fachada, o que limita justamente a leitura da morfologia vertical; e a textura fotogramétrica traz a sombra do horário do voo gravada, o que restringe a variação de iluminação nesse braço.
 - [ ] D8. Cuidado ético ao reportar a distinção armado e desarmado: funciona no sintético porque a arma é sempre o mesmo modelo, na mesma posição e com o mesmo contraste. Reportar como capacidade validada seria o salto que o artigo critica. Decisão do autor em `docs/DIVERGENCIAS.md`, item 3.
 - Nota sobre D1 e D2 (2026-09-18 [DESKTOP]): os três identificadores foram conferidos. Liao et al., DOI 10.3390/rs18020361, confere no Crossref; o título é "Bridging the Sim2Real Gap in UAV Remote Sensing: A High-Fidelity Synthetic Data Framework for Vehicle Detection" (o objeto é veículo, não pessoa, e isso precisa ficar claro ao citar). G-MAD, arXiv 2607.19942, confere no arXiv (Kim, Park, Yoon, Jung e Jeon; ACM Multimedia 2026). Berwaldt, Bettker e Pozzer, DOI 10.1109/SBGames51465.2020.00027, confere no Crossref. Os valores das ablações de Liao et al. não foram conferidos no texto do artigo.
+
+## E. Conferencias feitas em 2026-09-21 [DESKTOP]
+
+- [x] E1. Ablacoes de Liao et al. conferidas no texto do artigo, o que estava aberto na nota de
+  D1 e D2. Ficha em `04-bibliografia/liao-2026-numeros-conferidos.md`. Achados que mudam o texto:
+  o ganho de trocar assets genericos por base fotogrametrica e de 23,3 pontos pela Tabela 5 e de
+  22,5 pela secao de resultados do proprio artigo, que e inconsistente consigo mesmo; citar como
+  "cerca de 22 a 23 pontos". No YOLOv11, que e o nosso detector, o valor e +27,0. O objeto deles
+  e VEICULO, nao pessoa, e isso precisa aparecer sempre que citarmos.
+- [x] E2. Kiefer et al. conferido. Ficha em `04-bibliografia/kiefer-2022-numeros-conferidos.md`.
+  A metrica e mAP@50, como a nota dizia. O intervalo "1,2 a 2,4" das nossas notas omitia a linha
+  do YOLO, que marca 10,2 sintetico contra 43,9 real. Toda comparacao nossa com esse trabalho
+  precisa usar a linha do YOLO, nao o intervalo.
+- [ ] E3. Corrigir `docs/CONTEXTO.md`, que ainda traz o intervalo "1,2 a 2,4" sem a linha do YOLO
+  e o "22,5" de Liao sem a ressalva de inconsistencia.
+- [ ] E4. Acrescentar ao artigo a ressalva de denominador: a nossa razao de eficacia divide por um
+  real treinado no PROPRIO conjunto de teste, e a da literatura divide por um real treinado fora
+  do dominio. Ver secao 3 de `07-blender/PLANO-EXPERIMENTAL.md`.
