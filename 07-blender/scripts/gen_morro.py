@@ -45,6 +45,7 @@ import time
 import numpy as np
 
 import bpy
+from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Euler, Vector
 
 ASSETS = r"C:\arma3-favela\assets"
@@ -1417,21 +1418,38 @@ if args.dataset > 0:
         alt = args.alt + rng.uniform(-args.alt_jitter, args.alt_jitter)
         ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
         ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
-        cam_ds.location = (ccx, ccy, z_em(ccx, ccy) + alt)
         _pit = rng.uniform(args.pitch[0], args.pitch[1])
         _yaw = rng.uniform(0, math.tau)
-        cam_ds.rotation_euler = Euler((math.radians(_pit), 0, _yaw), "XYZ")
-        # com camera inclinada o centro do quadro anda para a frente: recuar a camera para o
-        # alvo continuar enquadrado, senao o quadro pega so mata ou so ceu
-        if _pit > 6.0:
-            _d = alt * math.tan(math.radians(_pit))
-            cam_ds.location = (ccx - _d * math.sin(_yaw), ccy + _d * math.cos(_yaw),
-                               z_em(ccx, ccy) + alt)
+        # A camera e posicionada e depois APONTADA para o alvo, em vez de receber uma rotacao
+        # calculada a mao. A versao anterior montava o Euler e corrigia a posicao com um recuo
+        # de sinal deduzido no papel; o sinal estava trocado, a camera andava para o mesmo lado
+        # para onde passou a olhar, e o lote obliquo de 2026-09-21 saiu com 992 pessoas na cena e
+        # ZERO caixas, depois de 2,6 h de render. `to_track_quat` nao depende de eu acertar a
+        # convencao de eixo do Blender: dada a direcao, ela devolve a rotacao que olha para la.
+        _alvo = Vector((ccx, ccy, z_em(ccx, ccy)))
+        _d = alt * math.tan(math.radians(_pit))
+        cam_ds.location = (ccx + _d * math.sin(_yaw), ccy - _d * math.cos(_yaw),
+                           z_em(ccx, ccy) + alt)
+        _dir = _alvo - Vector(cam_ds.location)
+        cam_ds.rotation_euler = _dir.to_track_quat("-Z", "Y").to_euler()
+        bpy.context.view_layer.update()
 
         n_p = rng.randint(args.people[0], args.people[1])
         idx = 0
-        meia = alt * (18.0 / Z30_LENS) * 0.52      # meia largura do quadro, com folga
-        for _ in range(n_p * 4):
+
+        def _no_quadro(x, y, z, folga=0.04):
+            """a pessoa entra no quadro? Perguntado por PROJECAO, nao por raio no plano.
+
+            O filtro antigo era `abs(px - ccx) > meia`, com `meia` derivado da largura do quadro
+            NADIR. Isso tem dois defeitos que so aparecem com a camera inclinada: a pegada no
+            chao deixa de ser um quadrado centrado na camera e vira um trapezio deslocado, e
+            `meia` encolhe junto com a altura, que no preset obliquo cai de 150 m para 60 m. O
+            resultado combinado foi rejeitar quase toda candidata e ainda assim enquadrar errado
+            as poucas aceitas. Projetar o ponto do chao custa o mesmo e vale para qualquer pitch."""
+            q = world_to_camera_view(scene, cam_ds, Vector((x, y, z)))
+            return q.z > 0 and -folga <= q.x <= 1 + folga and -folga <= q.y <= 1 + folga
+
+        for _ in range(n_p * 12):
             if idx >= n_p:
                 break
             # Tres classes balanceadas. A terceira (desarmada COM objeto alongado) e o negativo
@@ -1443,7 +1461,7 @@ if args.dataset > 0:
                 ca, _zb, zt = rng.choice(CASAS)
                 mx_ = sum(p[0] for p in ca) / 4
                 my_ = sum(p[1] for p in ca) / 4
-                if abs(mx_ - ccx) > meia or abs(my_ - ccy) > meia:
+                if not _no_quadro(mx_, my_, zt):
                     continue
                 px = mx_ + rng.uniform(-0.3, 0.3)
                 py = my_ + rng.uniform(-0.3, 0.3)
@@ -1452,7 +1470,7 @@ if args.dataset > 0:
                 j_, i_ = LIVRES[rng.randrange(len(LIVRES))]
                 px = BX0 + (i_ + 0.5) * GB
                 py = BY0 + (j_ + 0.5) * GB
-                if abs(px - ccx) > meia or abs(py - ccy) > meia:
+                if not _no_quadro(px, py, z_em(px, py)):
                     continue
                 PM.make_person(rng, idx, px, py, z_em(px, py) + 0.02, armed, on_roof=False, classe=cls_)
             idx += 1
@@ -1497,6 +1515,16 @@ if args.dataset > 0:
         mf.flush()
         tot_cx += len(rotulos)
         tot_obj += sum(1 for l in rotulos if l[0] == 2)
+
+        # Freio. Um lote sem caixa nenhuma e um lote inutil, e o custo de descobrir isso no fim
+        # e alto: o braco obliquo de 2026-09-21 rendeu 180 imagens em 2,6 h com 992 pessoas na
+        # cena e zero anotacoes, e so apareceu no treino, horas depois. Cinco quadros bastam
+        # para saber se a camera esta olhando para onde as pessoas estao.
+        if i == 4 and tot_cx == 0:
+            raise SystemExit(
+                "[morro] ABORTADO: 5 quadros renderizados e nenhuma caixa anotada. A camera "
+                "provavelmente nao esta enquadrando as pessoas. Conferir pitch, posicao da "
+                "camera e o filtro _no_quadro antes de gastar o lote inteiro.")
         print(f"[morro] {nome} {split} caixas={len(rotulos)}/{len(PM.PEOPLE)} "
               f"{clima} elev={el:.0f} alt={alt:.0f} {rec['render_s']}s", flush=True)
     mf.close()
