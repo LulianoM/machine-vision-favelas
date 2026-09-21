@@ -1404,6 +1404,7 @@ if args.dataset > 0:
     scene.view_settings.exposure = EXPO_BASE
     mf = open(os.path.join(args.out, "manifest.jsonl"), "a", encoding="utf-8")
     tot_cx = 0
+    tot_obj = 0
 
     for i in range(args.dataset):
         PM.clear_people()
@@ -1495,12 +1496,23 @@ if args.dataset > 0:
         mf.write(json.dumps(rec) + "\n")
         mf.flush()
         tot_cx += len(rotulos)
+        tot_obj += sum(1 for l in rotulos if l[0] == 2)
         print(f"[morro] {nome} {split} caixas={len(rotulos)}/{len(PM.PEOPLE)} "
               f"{clima} elev={el:.0f} alt={alt:.0f} {rec['render_s']}s", flush=True)
     mf.close()
+    # As classes declaradas precisam bater com as que SAIRAM nos rotulos. Declarar duas quando o
+    # lote tem tres faz o Ultralytics tratar a classe 2 como fora de faixa, e o erro so aparece
+    # no treino, horas depois. Conta-se o que foi ESCRITO em vez de supor pela --mistura, porque
+    # um peso zero ou um lote pequeno podem nao produzir nenhuma instancia da terceira classe.
+    NOMES = ["pessoa_armada", "pessoa_desarmada", "pessoa_objeto"]
+    n_cls = 3 if tot_obj > 0 else 2
     with open(os.path.join(args.out, "data.yaml"), "w") as f:
-        f.write(f"path: {os.path.abspath(args.out).replace(os.sep, '/')}\ntrain: images/train\n"
-                f"val: images/val\nnames:\n  0: pessoa_armada\n  1: pessoa_desarmada\n")
+        cab = "path: " + os.path.abspath(args.out).replace(os.sep, "/") + "\n"
+        cab += "train: images/train\nval: images/val\nnames:\n"
+        for i in range(n_cls):
+            cab += "  %d: %s\n" % (i, NOMES[i])
+        f.write(cab)
+    print(f"[morro] data.yaml com {n_cls} classes, {tot_obj} caixas de objeto alongado", flush=True)
     print(f"[morro] dataset: {args.dataset} imagens, {tot_cx} caixas", flush=True)
 
 if args.dataset == 0 and not args.comparar_climas and not args.no_render:
