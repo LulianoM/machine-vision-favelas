@@ -77,13 +77,27 @@ def treino(data, nome, extra=()):
               "--name", nome, "--single-cls", *extra)
 
 
+# NOTA sobre --real-gsd, que fica de fora de proposito.
+#
+# Aquele conjunto foi construido reescalando o VisDrone por 1/2,49 para casar a escala do alvo
+# quando o nosso dataset ainda saia em 1080p. Medido agora no lote 4K com `06-resultados/
+# mede_alvo.py`, em 3.225 caixas nossas contra 120.365 do VisDrone:
+#
+#            largura med   altura med   area med   h/w med
+#   nosso        17,6 px      17,5 px     301 px2     0,98
+#   VisDrone     13,0 px      24,0 px     300 px2     2,00
+#
+# A AREA bate em 1,00x. O que sobra de diferenca e FORMA, por um fator de 2,04, e nenhum
+# reescalonamento uniforme conserta forma: encolher o VisDrone por 1/1,37 casaria a altura e
+# pioraria a largura na mesma medida. Entao o braco reescalado nao isola nada aqui, e quem
+# responde a pergunta da forma e a etapa 12, o preset obliquo.
+#
+# Correcao de registro: em 2026-09-20 eu escrevi que o alvo do lote 4K tinha "24,6 px contra
+# 25,0 do VisDrone". 24,6 px e o percentil 90 da nossa largura, nao a mediana, que e 17,5 px.
+# A conclusao (nao usar o conjunto reescalado) continua valendo; a razao que eu dei estava errada.
 def aval(pesos, sint, saida):
     return sh(PY, os.path.join(SCR, "avalia_sim2real.py"), "--weights", pesos,
               "--sintetico", sint, "--real", VIS_YAML, "--imgsz", IMGSZ, "--out", saida)
-    # NOTA: --real-gsd fica de fora de proposito. Aquele conjunto foi construido reescalando o
-    # VisDrone por 1/2,49 para casar a escala do alvo quando o nosso dataset estava em 1080p e o
-    # alvo tinha 10 px. Em 4K o alvo tem 24,6 px e o do VisDrone tem 25,0, ou seja ja estao
-    # casados. Aplicar o reescalonamento agora criaria o desencontro que ele existia para corrigir.
 
 
 def pesos(nome):
