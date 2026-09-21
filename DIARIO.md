@@ -2,6 +2,81 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-21 [DESKTOP] Os primeiros números de sim-to-real, e três defeitos que eles revelaram
+
+Primeira vez que o projeto tem a razão de eficácia que o artigo precisa. Também a primeira vez que
+três defeitos de geração aparecem no mesmo dia, todos da mesma família: código que roda sem erro e
+produz dado errado.
+
+### Os números
+
+| | mAP50 | arquivo |
+|---|---|---|
+| S-nadir no próprio sintético | 0,7915 | `resultados/s_nadir_4k.json` |
+| S-nadir zero-shot no VisDrone | 0,0102 | `06-resultados/sim2real_s_nadir_4k.json` |
+| R pareado, 1.106 imagens reais, hiperparâmetros idênticos | 0,6311 | `resultados/r_pareado.json` |
+| razão de eficácia | **1,6%** | |
+
+O braço real usa os MESMOS hiperparâmetros e o MESMO N do sintético (yolo11s, 1280 px, 60 épocas,
+batch 6, init COCO). Na rodada anterior os dois diferiam em modelo, imgsz, épocas e inicialização
+ao mesmo tempo, e por isso a comparação não isolava nada.
+
+### Três defeitos
+
+1. **Braço oblíquo: 180 imagens, 992 pessoas, zero caixas.** O recuo da câmera tinha o sinal
+   trocado, e o filtro de enquadramento usava um raio derivado da largura do quadro NADIR, que não
+   vale com a câmera inclinada. Corrigido apontando a câmera com `to_track_quat` e trocando o
+   filtro por projeção. 2,6 h de render perdidas.
+2. **Lote armado com 7,4 pessoas por imagem em vez de 14 a 30.** Mesma causa: o raio de aceitação
+   encolhe junto com a altura, e a 75 m caía de 49 m para 24 m. Refeito depois da correção.
+3. **`data.yaml` com duas classes tendo três nos rótulos.** O gerador passou a emitir
+   `pessoa_objeto` mas o writer do yaml continuou declarando duas. Quebraria o treino horas depois
+   do render. Agora conta as classes que foram de fato escritas.
+
+Freio novo no gerador: se cinco quadros renderizarem sem nenhuma caixa, aborta. Foi o que faltou
+no item 1, e é o tipo de coisa que só se descobre pagando.
+
+### Correções de número que mudam argumento
+
+- **O alvo mediano é 17,5 px, não 24,6.** 24,6 é o percentil 90 da largura. A área do nosso alvo
+  bate com a do VisDrone em 1,00x (301 contra 300 px²) e o que difere é FORMA, por 2,04x (h/w 0,98
+  contra 2,00). Ferramenta em `06-resultados/mede_alvo.py`.
+- **Kiefer et al. conferido na fonte.** A métrica é mAP@50, como as notas diziam. O intervalo
+  "1,2 a 2,4" omitia a linha do YOLO, que é o nosso detector e marca 10,2 sintético contra 43,9
+  real, ou 23,2% de razão. Estamos catorze vezes abaixo da referência que se aplica, não "na mesma
+  ordem de grandeza" como eu havia dito.
+- **Liao et al. conferido na fonte.** Tirar variação de luz, clima e ângulo custa 30,4 pontos no
+  YOLOv11. Trocar base fotogramétrica por assets genéricos custa 27,0. O artigo é inconsistente
+  consigo mesmo entre 22,5 e 23,3 na média. O objeto deles é VEÍCULO, não pessoa.
+- **O denominador da literatura é outro.** Liao compara contra um real treinado FORA do domínio de
+  teste (36,4 no VisDrone); nós comparamos contra um real treinado no PRÓPRIO VisDrone (63,1). Por
+  isso eles dão 94% e nós 1,6%. O artigo precisa reportar os dois.
+
+Fichas em `04-bibliografia/kiefer-2022-numeros-conferidos.md` e `liao-2026-numeros-conferidos.md`.
+
+### O que entrou no código
+
+- `07-blender/scripts/sitios.py`: coleção de 40 sítios variando relevo (plano, morro, dois morros,
+  encosta), avenida com asfalto e carros, densidade, altura média e regime de mata. O índice -1 é o
+  sítio histórico, e foi conferido que reproduz byte a byte o `ds_morro_4k` (4.068 lotes, 439
+  edificações, 208.396 faces com semente 21).
+- `07-blender/scripts/fila_noite.py`: fila de 22 etapas, uma GPU de cada vez, com log por etapa e
+  retomada pelo arquivo de saída.
+- `07-blender/PLANO-EXPERIMENTAL.md`: quatro frentes com custo de GPU declarado.
+
+### Decidido pelo autor
+
+- Nenhuma imagem real de pessoa armada entra. O braço armado é 100% sintético.
+- O teste de dose de variedade (6 sítios x 30 imagens contra 1 sítio x 180, mesmo total) roda antes
+  do treino no VisDrone inteiro, que passa a ser o último da fila.
+- A escala futura vai por número de SÍTIOS, não por número de imagens do mesmo sítio.
+
+### Para o outro lado
+
+Os três números de sim-to-real do artigo ainda não existem todos: há o zero-shot, falta o com 5 a
+10% de dado real e o sintético mais real. São as frentes C do plano. E o braço oblíquo precisa ser
+refeito: é ele que decide se o 1,6% é problema de síntese ou de geometria de captura.
+
 ## 2026-09-20 [MAC] Dossiê da AIM 2027 entra no repositório
 
 A pesquisa sobre a conferência e sobre os artigos do congresso só existia no Mac, na pasta irmã `~/Documents/Mestrado/AIM2027/dossie-conferencia/`. Movida em bloco para `08-conferencia/`, sem alteração de conteúdo, para que o desktop consiga puxar: `ESTRATEGIA_AIM2027.md` (revisão 2), `ROTEIRO.md` (48 missões, todas feitas), `missoes/` (48 arquivos, blocos A a F), `eixos/EIXO_GENAI_CONSUMO.md` e `modelos_2026/` (CFP mais os quatro papers premiados de 2026). Um `README.md` novo explica o conjunto, as datas da conferência e o formato da submissão.

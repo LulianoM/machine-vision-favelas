@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-20, [DESKTOP] e [MAC]
+Última atualização: 2026-09-21, [DESKTOP]
 
 ## Artigo
 
@@ -27,9 +27,15 @@ Estado real, levantado na reconciliação de 17 e 18/09. Detalhe em `06-resultad
 | Treino | 5 runs YOLO11 numa RTX 2060. Melhor no sintético: `cid150_s`, mAP50 0,676, mAP50-95 0,327, 8 h 54 min |
 | Achado principal | Ladrilhar em escala nativa levou o mAP50 de 0,116 para 0,561 nas mesmas 120 imagens |
 | Teste em imagem inteira (sintético, semente nova) | F1 0,849 (ângulo e luz) e 0,787 (multidão); acurácia armado x desarmado 0,781 e 0,759 |
-| Sim-to-real (os três números do artigo) | **Não medido.** VisDrone não está no disco. Nenhuma imagem real anotada |
+| Sim-to-real | **Um dos três medido em 21/09.** Zero-shot no VisDrone: mAP50 0,0102. Braço real pareado (1.106 imagens, hiperparâmetros idênticos): 0,6311. **Razão de eficácia 1,6%.** Faltam os dois números com dado real misturado. O VisDrone está no disco desde então (6.471 treino, 548 val) |
+| Tamanho do alvo, medido | Nosso 4K: largura 17,6 px, altura 17,5, h/w 0,98. VisDrone: 13,0, 24,0, h/w 2,00. **A área bate em 1,00x e a forma difere em 2,04x.** 30,5% das caixas do VisDrone estão abaixo do stride 8. Ferramenta: `06-resultados/mede_alvo.py` |
+| Comparação com a literatura | Kiefer et al. (YOLO): 10,2 sintético contra 43,9 real, razão 23,2%. Estamos catorze vezes abaixo. Ressalva: o denominador deles é real FORA do domínio, o nosso é real treinado no próprio VisDrone. Fichas em `04-bibliografia/` |
+| Coleção de sítios | `07-blender/scripts/sitios.py`, 40 sítios variando relevo, avenida com carros, densidade, altura e mata. O sítio -1 reproduz byte a byte o `ds_morro_4k`, conferido |
+| Fila de execução | `07-blender/scripts/fila_noite.py`, 22 etapas, uma GPU por vez, log e retomada por etapa. Em curso: lote armado a 75 m com objetos confundíveis, depois o teste de dose de variedade |
+| Braço oblíquo | **Quebrado e corrigido, precisa refazer.** Saiu com 992 pessoas e zero caixas: o recuo da câmera tinha sinal trocado. É ele que decide se o 1,6% é síntese ou geometria de captura |
+| Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Dado sensível | 3 dos 4 braços usam fotogrametria das fotos da PCERJ. Nada saiu do desktop. Só o braço `v3` pode ser ilustrado (`docs/DIVERGENCIAS.md`, item 2) |
-| Pesquisa a partir do e-mail de 12/09 | Não foi feita no desktop. IPP, Liao et al. e G-MAD seguem por ler e por usar (`05-levantamento-3d/desktop/LEIA-ME.md`) |
+| Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
 | Onde estão os binários | `C:\arma3-favela\` (44 GB, arquivo morto intacto). Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md` |
 
 ## Infraestrutura entre as máquinas
