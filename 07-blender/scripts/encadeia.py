@@ -48,8 +48,14 @@ def retoma(run):
     return rc
 
 
-fila("20,21,22,23", "teste de dose de variedade")
-retoma("r_cheio")
+# Cada passo so roda se o anterior fechou. Em 22/09 o teste de dose falhou no primeiro quadro e
+# a cadeia caiu direto na retomada da r_cheio, que era o que devia vir por ultimo. Falhou, para.
+if fila("20,21,22,23", "teste de dose de variedade") != 0:
+    log("teste de dose falhou: parando aqui para nao tomar a GPU com o que vem depois")
+    sys.exit(1)
+if retoma("r_cheio") != 0:
+    log("retomada falhou: parando")
+    sys.exit(1)
 fila("24", "benchmark de otimizacao")
 log("cadeia encerrada")
 sys.exit(0)

@@ -1224,7 +1224,10 @@ print(f"[morro] {len(arv)} modelos de arvore carregados de {len(MODELOS)} arquiv
 # largura do quadro nadir. Arvore fora dessa uniao nao aparece em nenhuma imagem do dataset e so
 # custa: sao 2.600 num sitio de 250x205 m e o quadro cobre 187x105 m, ou seja 3,6 vezes mais area
 # do que a util. A poda vale para NADIR; vista de beco ou obliqua alcanca mais longe.
-_meia_q = 150.0 * (18.0 / Z30_LENS)
+# Z30_LENS so e definido na secao da camera, mais abaixo; usar a constante aqui derrubou TODO
+# render em 22/09 com NameError, com ou sem --podar-arvores. O valor e o mesmo: 4,3 mm num
+# sensor de 5,37 mm, equivalente a 28,8 mm em 36 mm.
+_meia_q = 150.0 * (18.0 / (4.3 * 36 / 5.37))
 if args.podar_arvores:
     _arv_x = min(AREA_X * 0.86, NUC_A * 0.45 + _meia_q + 20.0)
     _arv_y = min(AREA_Y * 0.86, NUC_B * 0.45 + _meia_q * 0.5625 + 20.0)
