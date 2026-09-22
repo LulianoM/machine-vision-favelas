@@ -324,6 +324,12 @@ ETAPAS = [
      aval(pesos("s_variedade"), os.path.join(DS_VAR_T, "data.yaml"),
           os.path.join(RES, "sim2real_s_variedade.json")),
      os.path.join(RES, "sim2real_s_variedade.json"), [22]),
+
+    (24, "bench_otimizacao", "mede QUAL das tres otimizacoes de render paga, e se alguma estraga "
+                             "a imagem. Fica no fim porque nao produz dado para o artigo, "
+                             "produz a decisao de comprar ou nao placa nova",
+     sh(PY, os.path.join(SCR, "bench_otimizacao.py"), "--quadros", 8),
+     os.path.join(RES, "bench_otimizacao.json"), []),
 ]
 
 

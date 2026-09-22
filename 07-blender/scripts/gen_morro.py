@@ -77,12 +77,38 @@ ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
 ap.add_argument("--obliqua", action="store_true",
                 help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
+# Otimizacoes atras de flag, e nao editadas no lugar, para o A/B ficar reprodutivel: a mesma
+# semente roda com e sem, e o teste_fidelidade.py compara as dez metricas nos dois. As tres
+# suspeitas estao em 07-blender/PLANO-OTIMIZACAO.md e nenhuma foi medida em separado ainda.
+ap.add_argument("--otimizado", action="store_true",
+                help="liga as tres otimizacoes de uma vez: dado persistente, caixa de ar "
+                     "encolhida e poda de arvore fora do quadro")
+ap.add_argument("--persistente", action="store_true",
+                help="use_persistent_data: a cena e construida uma vez e so as pessoas mudam "
+                     "entre quadros; sem isso o Cycles ressincroniza tudo a cada imagem")
+ap.add_argument("--nevoa-folga", type=float, default=190.0,
+                help="quantos metros a caixa de ar sobe acima do ponto mais alto do terreno. "
+                     "A camera fica a 150 m acima do terreno do centro, entao 190 e folga grande")
+ap.add_argument("--podar-arvores", action="store_true",
+                help="esconde do render a arvore fora do raio util da camera. Sao 2.600 num "
+                     "sitio de 250x205 m e o quadro nadir cobre 187x105 m")
+ap.add_argument("--start", type=int, default=0,
+                help="retoma o dataset a partir deste indice, pulando o que ja existe. Hoje uma "
+                     "queda em 113 de 180 perde as 113")
 ap.add_argument("--sitio", type=int, default=-1,
                 help="indice do sitio na colecao de sitios.py. -1 e o sitio historico, identico "
                      "ao que gerou ds_morro_4k, e serve de controle")
 ap.add_argument("--save-blend", default=None)
 ap.add_argument("--no-render", action="store_true")
 args = ap.parse_args(argv)
+
+# --otimizado e so um atalho para as tres. Deixar cada uma tambem isolada permite descobrir QUAL
+# delas paga, que e o que PLANO-OTIMIZACAO.md diz nao estar medido.
+if args.otimizado:
+    args.persistente = True
+    args.podar_arvores = True
+    if args.nevoa_folga == 190.0:
+        args.nevoa_folga = 40.0
 
 # Preset OBLIQUO, calibrado na medicao do VisDrone val e nao em chute. Medido em 13.969 caixas
 # reais: largura mediana 12 px, altura 25 px, ou seja h/w de 2,20 (p90 em 3,17). Isso e pessoa
@@ -1185,13 +1211,27 @@ for nome in MODELOS:
         COLS["MATA"].objects.link(o)
 print(f"[morro] {len(arv)} modelos de arvore carregados de {len(MODELOS)} arquivos", flush=True)
 
+# Area de sorteio da arvore. Sem poda, o sitio inteiro; com poda, a UNIAO dos quadros que a
+# camera pode enquadrar, que e o centro sorteado (ate 45% do semi-eixo do nucleo) mais a meia
+# largura do quadro nadir. Arvore fora dessa uniao nao aparece em nenhuma imagem do dataset e so
+# custa: sao 2.600 num sitio de 250x205 m e o quadro cobre 187x105 m, ou seja 3,6 vezes mais area
+# do que a util. A poda vale para NADIR; vista de beco ou obliqua alcanca mais longe.
+_meia_q = 150.0 * (18.0 / Z30_LENS)
+if args.podar_arvores:
+    _arv_x = min(AREA_X * 0.86, NUC_A * 0.45 + _meia_q + 20.0)
+    _arv_y = min(AREA_Y * 0.86, NUC_B * 0.45 + _meia_q * 0.5625 + 20.0)
+    print(f"[morro] poda de arvore LIGADA: sorteio em {2 * _arv_x:.0f} x {2 * _arv_y:.0f} m "
+          f"em vez de {2 * AREA_X * 0.86:.0f} x {2 * AREA_Y * 0.86:.0f} m", flush=True)
+else:
+    _arv_x, _arv_y = AREA_X * 0.86, AREA_Y * 0.86
+
 if arv:
     postos = 0
     tent = 0
     while postos < args.arvores and tent < args.arvores * 30:
         tent += 1
-        x = rng.uniform(-AREA_X * 0.86, AREA_X * 0.86)
-        y = rng.uniform(-AREA_Y * 0.86, AREA_Y * 0.86)
+        x = rng.uniform(-_arv_x, _arv_x)
+        y = rng.uniform(-_arv_y, _arv_y)
         r = float(raio(x, y))
         # Tres regimes de mata. O anel em volta era o unico ate 2026-09-21 e virou assinatura:
         # o detector podia estar aprendendo "verde em volta de telhado" em vez de telhado.
@@ -1263,7 +1303,12 @@ nt.links.new(mx.outputs["Shader"], ow.inputs["Surface"])
 # O volume vai numa CAIXA, nao no World: volume de World e ilimitado, entao o raio do sol
 # atravessa distancia infinita de meio, a transmitancia vai a zero e a cena apaga por completo.
 _vz0 = float(GZ.min()) - 12.0
-_vz1 = float(GZ.max()) + 190.0
+_vz1 = float(GZ.max()) + args.nevoa_folga
+# Todo raio de camera atravessa este meio com volume_bounces = 1, e volumetrico e o
+# multiplicador classico de custo no Cycles. A folga de 190 m acima do ponto MAIS ALTO do
+# morro e generosa: a camera esta a 150 m acima do terreno do CENTRO. Encolher reduz o
+# caminho optico sem mexer no airlight que a camera de fato atravessa, mas mexe em tres das
+# dez metricas de fidelidade (contraste, meio-tom e B/R da sombra), entao exige remedicao.
 _me_v = bpy.data.meshes.new("Ar")
 _vx, _vy = AREA_X * 1.02, AREA_Y * 1.02
 _me_v.from_pydata(
@@ -1510,6 +1555,10 @@ scene.cycles.max_bounces = 10          # beco fundo so aparece com luz indireta 
 scene.cycles.diffuse_bounces = 8
 scene.cycles.transmission_bounces = 4
 scene.cycles.volume_bounces = 1
+if args.persistente:
+    scene.render.use_persistent_data = True
+    print("[morro] dado persistente LIGADO: a cena nao e ressincronizada por quadro",
+          flush=True)
 
 # Exposicao por vista: o beco esta cerca de 6 paradas abaixo da laje, e uma camera real
 # compensaria isso. Sem o ajuste a vista sai preta mesmo com a luz correta.
@@ -1647,6 +1696,15 @@ if args.dataset > 0:
             x1, y1, x2, y2 = bb
             rotulos.append((p["cls"], (x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1,
                             round(vis, 2), p["on_roof"], p.get("tipo_obj"), p.get("comp_obj", 0.0)))
+
+        # RETOMADA. O quadro ja sorteado e descartado aqui, e nao antes: todo o consumo de
+        # numero aleatorio do quadro ja aconteceu, entao a sequencia continua identica a de uma
+        # execucao do zero. Pular o sorteio junto deslocaria o gerador e os quadros seguintes
+        # sairiam diferentes dos que o lote interrompido teria produzido.
+        if i < args.start:
+            if i % 20 == 0:
+                print(f"[morro] retomada: pulando {nome}", flush=True)
+            continue
 
         scene.render.filepath = os.path.join(args.out, "images", split, nome + ".png")
         t0 = time.time()
