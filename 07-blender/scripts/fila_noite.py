@@ -334,13 +334,22 @@ ETAPAS = [
 
 
 def carrega():
+    # Um kill no meio da escrita deixou este arquivo VAZIO em 22/09 e derrubou a fila inteira na
+    # primeira linha. Arquivo ilegivel vale como fila nova, nao como erro fatal.
     if os.path.exists(ESTADO):
-        return json.load(open(ESTADO, encoding="utf-8"))
+        try:
+            return json.load(open(ESTADO, encoding="utf-8"))
+        except (ValueError, OSError):
+            print(f"[fila] {ESTADO} ilegivel, comecando estado vazio", flush=True)
     return {}
 
 
 def grava(e):
-    json.dump(e, open(ESTADO, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+    # escrita atomica: grava num temporario e renomeia, para um kill nunca deixar o arquivo pela metade
+    tmp = ESTADO + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(e, f, indent=1, ensure_ascii=False)
+    os.replace(tmp, ESTADO)
 
 
 def main():
