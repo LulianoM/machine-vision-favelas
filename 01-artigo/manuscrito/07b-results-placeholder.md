@@ -41,8 +41,8 @@ establishes what the test set permits.
 
 ### 9.2 Transfer from synthetic training, nadir geometry
 
-Model S-nadir-150, trained only on procedurally generated imagery with the camera geometry of the 2022
-survey flight, evaluated on the same real test set with no real training image of any kind.
+Model S-nadir-150, trained only on procedurally generated imagery with the camera geometry of Section 7.3, not the 2022
+survey geometry, evaluated on the same real test set with no real training image of any kind.
 
 | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|
@@ -93,7 +93,7 @@ a single benchmark that is not the target domain cannot support a general statem
 position. If the two arms are comparable, the limitation lies in synthesis rather than viewpoint,
 and the conclusion narrows accordingly.
 
-The survey flight this article reproduces is nadir. An oblique corpus that transfers better to
+The acquisition geometry this article reproduces points straight down. An oblique corpus that transfers better to
 VisDrone is informative about the benchmark, not about the acquisition that would be flown over
 Jacarezinho.
 

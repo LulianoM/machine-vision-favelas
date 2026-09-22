@@ -13,21 +13,18 @@ usually discussed in terms of scene realism, and the implicit assumption is that
 looks more like a favela will transfer better. The measurements below identify two variables that
 govern difficulty and that no appearance metric captures.
 
-Three corpora are used, and their acquisition geometry differs in ways that matter, so the
-parameters are stated rather than implied.
+Two corpora are used, one generated and one real, and their acquisition geometry differs in ways
+that matter, so the parameters are stated rather than implied.
 
-| Corpus | Geometry recorded in manifest | Render | Instances |
+| Corpus | Geometry | Render | Instances |
 |---|---|---|---|
-| `dataset_cid150` | pitch 50.0 to 89.9 deg (median 70.0), lens 30.1 to 50.0 mm, altitude 138 to 162 m | 3840 x 2160 | 4,856 (train split) |
-| `dataset_cid150`, near-nadir subset | pitch at or above 88 deg, 29 images of the train split | 3840 x 2160 | 293 |
-| `ds_morro_clima` | pitch 0.0 to 3.5 deg from nadir (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
+| `ds_morro_clima` | camera within 3.5 deg of straight down (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
+| `ds_morro_4k` | same generator and geometry, rendered at 4K | 3840 x 2160 | 3,225 |
 | VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
 
-`dataset_cid150` is an earlier arm of this project built on photogrammetric terrain, and it is
-used here only as a second independent sample of synthetic geometry. It is not the corpus
-described in Section 7, which is `ds_morro_clima` and its 4K successor. Keeping the two separate
-matters, because a measurement reported below changes sign depending on which is used, and an
-earlier version of this analysis conflated them.
+`ds_morro_4k` is the corpus of record: it is what Section 7 specifies and what the models of
+Section 9 are trained on. `ds_morro_clima` is its 1080p predecessor, retained here because the
+comparison between the two isolates the effect of render resolution from every other variable.
 
 ### 8.1 Ground sampling distance, not sensor resolution, sets the target size
 
@@ -36,11 +33,11 @@ makes a person conspicuous in a ground level or oblique image, is exactly the di
 not project in nadir. What the camera records is the plan of the figure, roughly 0.48 metres
 shoulder to shoulder.
 
-| Corpus | Render | GSD | Median long side | Below 8 px |
+| Corpus | Render | GSD | Median long side | Shorter side below 8 px |
 |---|---|---|---|---|
-| `dataset_cid150` | 3840 x 2160 | 4.88 cm/px | 24.6 px | 0.0 per cent |
-| `ds_morro_clima` | 1920 x 1080 | 9.76 cm/px | 10.1 px | 25 per cent |
-| VisDrone-DET val | not applicable | not applicable | 25.0 px | 1.7 per cent |
+| `ds_morro_clima` | 1920 x 1080 | 9.76 cm/px | 10.1 px | 66.9 per cent |
+| `ds_morro_4k` | 3840 x 2160 | 4.88 cm/px | 20.6 px | 0.8 per cent |
+| VisDrone-DET val | not applicable | not applicable | 25.0 px | 30.5 per cent |
 
 *Measured over the label files named in the table above. The smallest stride of the detector is 8
 pixels, so an instance below that size occupies less than one cell of the finest feature map.*
@@ -51,9 +48,14 @@ The first is a caution about our own headline figure. The survey camera records 
 frame from that camera at 150 metres delivers a 10 pixel target, with a quarter of all instances
 below one stride of the network. Rendering at 4K delivers a 20.6 pixel target on its long side. Synthetic imagery rendered
 at 4K is therefore materially easier than a single real frame from the sensor it reproduces, and
-any performance figure must declare the ground sampling distance to which it refers. The
-photogrammetric orthomosaic built from the same flight falls between the two, at 6.4 to 7.4 cm per
-pixel, because it is stitched from overlapping frames.
+any performance figure must declare the ground sampling distance to which it refers.
+
+The column that carries the argument is the last one, and it is measured on the shorter side of
+the box rather than the longer, because it is the shorter side that has to survive one stride of
+the network. Read that way the benchmark is not the easy case: 30.5 per cent of its instances
+have a side below 8 pixels, against 0.8 per cent of ours at 4K. Part of what any transfer figure
+reported later measures is that the real benchmark contains a third of its targets at a scale no
+detector of this family resolves well.
 
 The second was initially mistaken for a problem. At 4K the median synthetic instance covers
 301 square pixels and the median real benchmark instance covers 300, a ratio of 1.00. The long
@@ -75,23 +77,31 @@ recorded in its manifest, gives:
 
 | Corpus and geometry | Median width | Median height | Median h/w | Instances |
 |---|---|---|---|---|
-| `dataset_cid150`, pitch at or above 88 deg | 20.8 px | 19.1 px | **0.93** | 293 |
-| `ds_morro_clima`, pitch 0 to 3.5 deg from nadir | 8.3 px | 8.2 px | **0.98** | 565 |
-| `dataset_cid150`, all pitches (median 70 deg) | 18.5 px | 22.9 px | 1.24 | 4,856 |
-| `dataset_cid150`, pitch at or below 60 deg | 16.5 px | 25.5 px | 1.56 | 1,263 |
+| `ds_morro_clima`, within 3.5 deg of straight down | 8.3 px | 8.2 px | **0.98** | 565 |
+| `ds_morro_4k`, same geometry at 4K | 17.6 px | 17.5 px | **0.98** | 3,225 |
+| VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | 1.95 | 106,396 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
-*For `dataset_cid150`, pitch is read from the manifest entry of each image. For `ds_morro_clima`
-the manifest predates the field, so the value is the generator setting that produced the corpus,
-which bounds pitch at 3.5 degrees from nadir but does not record it per image.*
+*The generated rows carry the generator setting that produced them, which bounds the camera within
+3.5 degrees of vertical but does not record it per image. The benchmark rows are measured
+directly. Both benchmark splits are shown because the two differ, and because the oblique arm of
+Section 9.3 is calibrated on the training split so that the validation split remains untouched.*
 
-Two synthetic corpora built by different generators, on different terrain, at different render
-resolutions, agree to within 0.05 when both are restricted to true nadir: 0.93 and 0.98. The
-quantity then rises monotonically as the camera is tilted, reaching 1.56 over the subset between
-30 and 40 degrees off nadir, and the real benchmark sits at 2.20. This is an ordered relationship across five samples rather
-than a contrast between two, which is what permits the interpretation.
+The two generated corpora differ by a factor of two in render resolution and by a factor of six in
+instance count, and agree on this quantity to the second decimal: 0.98 in both. The real benchmark
+sits at 1.95 and 2.20 on its two splits. The separation is therefore a factor of two, and it is
+stable under a change of resolution that moves apparent size by the same factor.
 
-A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio of 2.20 is a
+This is a contrast between two acquisition geometries rather than a dose-response across several.
+An earlier version of this analysis established the ordering across intermediate camera angles
+using a corpus that has since been withdrawn from the article for reasons of data provenance, and
+the claim is accordingly reduced to what the rows above support: the quantity differs by a factor
+of two between a camera pointing straight down and the benchmark's acquisition, and it does not
+move with render resolution. Section 10.4 states the test that would establish the intermediate
+ordering, which is to render the same settlement at several camera angles and measure the same
+statistic.
+
+A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio near 2.0 is a
 standing figure recorded obliquely. At comparable pixel area, these are different objects as far
 as the detector is concerned.
 

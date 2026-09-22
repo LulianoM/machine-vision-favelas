@@ -31,7 +31,7 @@ article. Establishing it would require annotated real imagery of the territory i
 ethical protocol of Section 5 forecloses and which this project has deliberately not collected.
 
 A second consequence follows. Section 9.3 reports an oblique arm calibrated to the benchmark, but
-the survey flight this work reproduces is nadir. An oblique corpus that transfers better to
+the acquisition geometry this work reproduces points straight down. An oblique corpus that transfers better to
 VisDrone tells us about VisDrone. It does not recommend an acquisition geometry for the case
 study, and Section 11.3 is the only acquisition recommendation this article makes.
 
@@ -103,8 +103,8 @@ pitch from the manifest for one corpus and from the generator setting for the ot
 in the table. The hyperparameter
 and inference tables in Section 7.6 are in the body of the article for the same reason.
 
-What a reader cannot check from this article is the corpus itself. The corpora behind the models
-reported here are redistributable by construction, since all geometry is authored and all
-materials are public domain. Two earlier branches of this project, built on photogrammetric
-reconstruction of operational imagery, cannot be released; where a measurement in Section 8 uses
-one of them, the table says so.
+What a reader cannot check from this article is the corpus itself, although the reason is
+logistical rather than legal: every corpus behind every number reported here is redistributable by
+construction, since all geometry is authored by the generator and all surface materials are public
+domain. Earlier branches of this project were built on photogrammetric reconstruction of imagery
+that cannot be released, and no measurement reported in this article derives from them.

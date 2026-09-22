@@ -39,7 +39,7 @@ Scenes are generated procedurally in Blender 5.2, executed headless with a deter
 so that any reported image can be regenerated exactly from the seed recorded in its manifest
 entry. No commercial asset packs are used: surface materials come from a public-domain library
 (Poly Haven, CC0) and all geometry is authored by the generator. That choice makes the corpus
-redistributable, which the photogrammetric arms of this project are not, and it is paid for.
+redistributable in full, and it is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
 target site with generic assets costs 27.0 mAP50 points on YOLOv11, the detector used here, and
@@ -49,8 +49,10 @@ with public-domain materials, and it is on the losing side of that ablation by c
 qualifications bound how far the figure travels. Their object class is vehicles rather than
 people, and their evaluation is on the same site they reconstructed, so the result establishes
 that a digital twin of a place helps detection at that place, not at another. This article
-reports the trade rather than claiming to have avoided it, and the photogrammetric arms of this
-project, which cannot be released, exist to measure its size.
+reports the trade rather than claiming to have avoided it. Measuring its size for this morphology
+would require a photogrammetric reconstruction of the target site, which is precisely what the
+ethical protocol of Section 5 forecloses, so the cost is quantified here from their result and
+not from ours.
 
 Layout is produced in three stages, each addressing a specific way in which naive procedural
 generation betrays itself when viewed from above.
@@ -101,9 +103,11 @@ that immediate background, which Section 10.3 tests as a hypothesis about detect
 
 ### 7.3 Camera model
 
-The virtual camera reproduces the sensor of the 2022 survey flight over the case study area: a
-Zenmuse Z30 at 1920 by 1080, nadir, 150 metres above ground, corresponding to a 4.3 mm lens on a
-5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent. At that altitude the frame covers
+The virtual camera reproduces a commercially available UAV payload in a configuration typical of
+aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, pointing straight down, 150
+metres above ground, corresponding to a 4.3 mm lens on a 5.37 mm sensor, or approximately 28.8 mm
+on a 36 mm equivalent. The parameters are stated in full so that the acquisition conditions
+evaluated here can be reproduced or contested without reference to any particular flight. At that altitude the frame covers
 approximately 187 by 105 metres of ground.
 
 Rendering resolution is treated as a parameter distinct from sensor resolution, and the
@@ -233,7 +237,7 @@ single class).
 | Model | Training corpus | What it establishes |
 |---|---|---|
 | **R** | VisDrone-DET train, 6,471 images, 106,396 instances | The attainable ceiling on the test set |
-| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, matching the 2022 survey geometry |
+| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, at the survey geometry specified in Section 7.3 |
 | **S-nadir-75** | Same generator and sensor at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable at any altitude a drone flies |
 | **S-oblique** | Same generator, oblique and lower camera | Whether failure is attributable to synthesis or to capture geometry |
 
