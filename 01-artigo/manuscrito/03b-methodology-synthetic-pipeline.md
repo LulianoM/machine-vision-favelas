@@ -1,14 +1,14 @@
-## 4. The Synthetic Data Generation Pipeline
+## 7. The Synthetic Data Generation Pipeline
 
 > **Provenance note.** Every quantity in this section traces to a file under `06-resultados/`
 > together with the command that produced it. Quantities not yet measured appear as `[X]`.
 
-The design-science component of Section 3 proposes a model of vertical morphology and a
+The design-science component of Section 5 proposes a model of vertical morphology and a
 synthetic-training strategy. This section specifies the generative procedure that implements the
 second of those, and reports what happens when it is executed.
 
 A distinction has to be drawn at the outset, because the two are easy to conflate and the article
-would contradict itself otherwise. The conceptual model proposed in Section 3 classifies built
+would contradict itself otherwise. The conceptual model proposed in Section 5 classifies built
 form: building height, rooftop addition, material transition. What is implemented and evaluated
 below detects people, which is a different task on the same imagery. The reason for implementing
 the second rather than the first is that only it has a public benchmark against which transfer
@@ -17,21 +17,21 @@ the annotation procedure, the randomisation and the scale analysis are shared; t
 not. Nothing below should be read as a validated capability over Jacarezinho, and Section 10
 restates the boundary.
 
-### 4.1 Why synthesis, and what it does not solve
+### 7.1 Why synthesis, and what it does not solve
 
 The ethical protocol stated above forecloses the conventional route to a training corpus. Aerial
 imagery of an inhabited favela, at a resolution sufficient to resolve built form, necessarily
 captures residents, rooftop activity, and address-level geometry. Synthesis is therefore not a
 technical convenience. It is the only procedure we identified that yields a labelled corpus of the
 required morphological specificity without collecting imagery of residents who have not consented
-and who cannot meaningfully be asked under the conditions documented in Section 5.
+and who cannot meaningfully be asked under the conditions documented in Section 3.
 
 Synthesis substitutes one problem for another. It removes the consent problem and introduces the
 transfer problem: a detector trained on rendered imagery must operate on photographs. The
 remainder of this subsection describes the generator. Sections 8 through 10 report what transfers
 and what does not.
 
-### 4.2 Scene construction
+### 7.2 Scene construction
 
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed,
 so that any reported image can be regenerated exactly from the seed recorded in its manifest
@@ -90,7 +90,7 @@ illumination level, governs how hard a person is to detect.
 
 <!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training, which is conducted entirely from the aerial camera, and is shown because it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
-### 4.3 Camera model
+### 7.3 Camera model
 
 The virtual camera reproduces the sensor of the 2022 survey flight over the case study area: a
 Zenmuse Z30 at 1920 by 1080, nadir, 150 metres above ground, corresponding to a 4.3 mm lens on a
@@ -104,7 +104,7 @@ metre nadir view at 1920 by 1080 yields 9.76 cm per pixel; rendering the same vi
 yields 4.88 cm per pixel. Section 8.1 reports what this does to the target, and Section 11 states
 the limitation it introduces.
 
-### 4.4 Annotation
+### 7.4 Annotation
 
 Human figures are instantiated from rigged, clothed meshes (MPFB, a MakeHuman derivative), posed
 per instance, and placed both on rooftops and in the alley network. Placement uses an occupancy
@@ -125,7 +125,7 @@ an alley.
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 
-### 4.5 Domain randomisation over illumination
+### 7.5 Domain randomisation over illumination
 
 Liao et al. (2026) report that removing variation in sun position, weather, and viewing angle
 costs accuracy, with the largest penalty on truncated objects. As above, we rely on the direction
@@ -149,7 +149,7 @@ The dataset sweeps the regimes in order rather than sampling them, so that a sma
 balanced, and the regime of each image is written to its manifest entry. This permits the
 per-regime analysis reported in Section 8.3 and the ablation in Section 10.
 
-### 4.6 Training protocol
+### 7.6 Training protocol
 
 The scale at which a target reaches the network is treated here as the governing variable, and the
 reason is arithmetic before it is empirical. Downscaling a 4K frame to a 1536 pixel training input
@@ -183,7 +183,7 @@ downscaled frames.
 Splitting the validation set by scene rather than by tile is necessary because overlapping tiles
 of one frame are not independent; splitting by tile would place near-duplicates on both sides.
 
-### 4.7 Evaluation protocol and the reference ceiling
+### 7.7 Evaluation protocol and the reference ceiling
 
 A detector evaluated on the world in which it was trained reports a ceiling, not evidence. A low
 transfer score reported alone is equally uninterpretable, because nothing establishes the scale

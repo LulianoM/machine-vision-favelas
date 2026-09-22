@@ -25,7 +25,7 @@ parameters are stated rather than implied.
 
 `dataset_cid150` is an earlier arm of this project built on photogrammetric terrain, and it is
 used here only as a second independent sample of synthetic geometry. It is not the corpus
-described in Section 3, which is `ds_morro_clima` and its 4K successor. Keeping the two separate
+described in Section 7, which is `ds_morro_clima` and its 4K successor. Keeping the two separate
 matters, because a measurement reported below changes sign depending on which is used, and an
 earlier version of this analysis conflated them.
 
@@ -130,7 +130,7 @@ dispersion reported is between images.
 Overcast gives both the largest raw separation between figure and background and the largest
 separation once local clutter is accounted for. Hard sun and rain are the two lowest on the latter
 measure, and hard sun achieves that while sitting second on raw contrast. The proposed mechanism
-follows from the scene description in Section 4.2: under a hard sun the background is itself
+follows from the scene description in Section 7.2: under a hard sun the background is itself
 filled with sharp cast shadow from water tanks, parapets, clotheslines and cabling, the local
 deviation of the background rises, and the figure stops standing out from the disorder. Under a
 covered sky the background is smoother, so a comparable difference is easier to find.
@@ -145,7 +145,7 @@ hypothesis is withdrawn.
 
 ### 8.4 What these measurements imply for the proposal
 
-Taken together the measurements reframe the design problem stated in Section 3. The binding
+Taken together the measurements reframe the design problem stated in Section 5. The binding
 constraint is not that a synthetic favela fails to look like a favela. At the scale at which this
 task operates, the target is a few tens of pixels of low contrast texture; its silhouette in these
 corpora tracks camera pitch rather than scene content; and the illumination condition that

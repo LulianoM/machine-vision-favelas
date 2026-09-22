@@ -32,13 +32,22 @@ MAN = os.path.join(RAIZ, "01-artigo", "manuscrito")
 # Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, aditiva, e entram logo depois
 # da secao do professor a que se acoplam.
 ORDEM = [
+    # Ordem revista em 2026-09-22. A anterior punha o pipeline tecnico entre a metodologia e o
+    # contexto de campo, e o leitor saltava de "como geramos a cena" para "historia do
+    # policiamento no Rio" e de volta. Pior: a propria metodologia declara que os componentes sao
+    # "built one on the other", com o contexto de campo dando o chao que o modelo precisa para ser
+    # plausivel, e a ordem antiga contradizia isso.
+    #
+    # A nova ordem segue problema -> territorio -> como estudamos -> o que propomos -> como
+    # construimos -> o que medimos. As secoes 8 a 13 mantem o numero, entao nenhuma remissao
+    # tecnica a 8, 9, 10 ou 11 precisou mudar.
     "01-introduction.md",                        # 1  professor
     "02-literature-review.md",                   # 2  professor
-    "03-methodology.md",                         # 3  professor
-    "03b-methodology-synthetic-pipeline.md",     # 4  tecnico
-    "04-situating-the-study.md",                 # 5  professor
-    "05-case-jacarezinho.md",                    # 6  professor
-    "06-results-proposed-model.md",              # 7  professor
+    "04-situating-the-study.md",                 # 3  delegado
+    "05-case-jacarezinho.md",                    # 4  professor
+    "03-methodology.md",                         # 5  professor
+    "06-results-proposed-model.md",              # 6  professor
+    "03b-methodology-synthetic-pipeline.md",     # 7  tecnico
     "06b-model-free-evidence.md",                # 8  tecnico
     "07b-results-placeholder.md",                # 9  tecnico
     "08b-robustness.md",                         # 10 tecnico
@@ -176,7 +185,18 @@ def main():
             txt = re.sub(r"^> \*\*Status note.*?(?=\n\n)", "", txt, flags=re.S | re.M)
         txt, n_fig = resolve_figuras(txt, n_fig)
         n_sec += 1
-        txt = RE_H2.sub(lambda m: f"## {n_sec}. {m.group(1)}", txt, count=1)
+
+        # O Abstract e as palavras-chave nao sao secao numerada, e o arquivo da introducao tem os
+        # dois como H2 antes do titulo da propria introducao. Numerar o primeiro H2 sem checar
+        # produzia "1. Abstract" e deixava a introducao sem numero, que foi o que o PDF mostrou.
+        def _numera(m):
+            return f"## {n_sec}. {m.group(1)}"
+
+        alvos = [m for m in RE_H2.finditer(txt)
+                 if not m.group(1).strip().lower().startswith(("abstract", "keywords"))]
+        if alvos:
+            m = alvos[0]
+            txt = txt[:m.start()] + _numera(m) + txt[m.end():]
         partes.append(txt)
 
     corpo = markdown.markdown("\n\n".join(partes),

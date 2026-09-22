@@ -7,7 +7,7 @@ qualifications added after the fact.
 
 ### 11.1 The scale finding is arithmetic, not an established effect
 
-Section 4.6 argues that training scale governs whether a target reaches the network, and supports
+Section 7.6 argues that training scale governs whether a target reaches the network, and supports
 the argument by arithmetic: a 4 pixel instance occupies less than one cell of the finest feature
 map of a detector whose smallest stride is 8. The empirical pair quoted alongside it, mAP50 moving
 from 0.116 to 0.561, comes from two runs of an earlier arm that differ in four further respects,
@@ -28,7 +28,7 @@ metres, upper storeys offset from the floor below.
 A transfer figure obtained on VisDrone bounds generalisation to dense aerial urban scenes. It does
 not establish performance over Jacarezinho, and no claim of that kind is made anywhere in this
 article. Establishing it would require annotated real imagery of the territory itself, which the
-ethical protocol of Section 3 forecloses and which this project has deliberately not collected.
+ethical protocol of Section 5 forecloses and which this project has deliberately not collected.
 
 A second consequence follows. Section 9.3 reports an oblique arm calibrated to the benchmark, but
 the survey flight this work reproduces is nadir. An oblique corpus that transfers better to
@@ -52,7 +52,7 @@ only as a description of the imagery.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
 
-The model proposed in Section 3 and Section 7 classifies built form. What is implemented and
+The model proposed in Section 5 and Section 6 classifies built form. What is implemented and
 evaluated in Sections 9 and 10 detects people. They share the generator, the annotation procedure,
 the randomisation and the scale analysis; they do not share the object class, and no performance
 figure reported here transfers from one to the other.
@@ -87,7 +87,7 @@ entry, and the generator reproduces any image exactly from that entry. Camera pi
 per image only in corpora generated after the field was added, which is why Section 8.2 reads
 pitch from the manifest for one corpus and from the generator setting for the other, and says so
 in the table. The hyperparameter
-and inference tables in Section 4.6 are in the body of the article for the same reason.
+and inference tables in Section 7.6 are in the body of the article for the same reason.
 
 What a reader cannot check from this article is the corpus itself. The procedurally generated arms
 are redistributable by construction, since all geometry is authored and all materials are public

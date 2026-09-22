@@ -1,7 +1,7 @@
 ## 9. Results: Transfer to Real Imagery
 
 > **Provenance note.** Quantities marked `[X]` are pending measurement and are not to be filled by
-> estimation. The protocol in Section 4.7 was fixed before any of them was run, and Section 10
+> estimation. The protocol in Section 7.7 was fixed before any of them was run, and Section 10
 > declares in advance what would overturn each claim.
 
 A pilot of the full protocol was run before the corpus reached its final size. Its results are

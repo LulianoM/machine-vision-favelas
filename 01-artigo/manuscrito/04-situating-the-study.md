@@ -1,5 +1,13 @@
 ## Situating the Study: Violence, Policing, and Territorial Control in Rio de Janeiro
 
+> **Nota de autoria e de estado.** Esta seção é de responsabilidade do coautor delegado de
+> polícia, e o texto abaixo é um esboço de trabalho, não a versão final. A redação definitiva
+> trará o enquadramento do problema de segurança pública com a profundidade que a posição dele
+> permite: conhecimento institucional das operações, da dinâmica territorial e das restrições
+> operacionais reais. As seções técnicas deste artigo, da 7 à 11, não dependem do conteúdo desta
+> seção e não devem ser lidas como derivadas dela.
+
+
 Rio de Janeiro presents a paradoxical security landscape. Homicide figures have fallen substantially over the past two decades, the state's intentional homicide rate dropped from a peak in the early 2000s to 17.1 per 100,000 inhabitants in 2024, a 10.8% decline from 2023 (Instituto de Segurança Pública [ISP-RJ], as cited in Vanguard Attaché, 2026), and homicides in the city itself fell from 2,574 in 2003 to 965 in 2025, a 63% reduction (Crime Brasil, 2026). This decline, however, coexists with a persistently high (and in 2025, rising) rate of lethal police intervention. The Fórum Brasileiro de Segurança Pública's (2026) 20th Anuário Brasileiro de Segurança Pública reported 798 deaths from police intervention in Rio de Janeiro state in 2025, up from 703 the year before, and noted that violent deaths of police officers themselves rose 82.1% in the same period, the sharpest increase recorded nationally, with the state alone accounting for more than a third of all such deaths in Brazil (CNN Brasil, 2026a; Defesa em Foco, 2026).
 
 By 2025, police-caused deaths accounted for 20.5% of all intentional violent deaths in the state, placing Rio among the small group of Brazilian states with the highest documented ratio of lethal force to overall violent mortality (Fórum Brasileiro de Segurança Pública, 2026; Sousa, 2026). This dual trajectory (declining civilian homicide alongside sustained or increasing police lethality) is central to understanding why the technical and ethical questions this study raises cannot be separated from the operational environment in which any deployment would occur.
