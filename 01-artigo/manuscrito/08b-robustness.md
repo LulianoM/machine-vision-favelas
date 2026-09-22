@@ -26,9 +26,10 @@ Section 9 must be restated as a property of the generator rather than of corpus 
 
 ### 10.2 Apparent size, not synthesis, may explain the transfer gap
 
-**Threat.** Section 8.1 reports that the synthetic target at 4K and the real benchmark target are
-of near-identical median size, 24.6 and 25.0 pixels. That match is a property of the rendering
-resolution we selected. If it were not exact, a transfer failure attributable to scale could be
+**Threat.** Section 8.1 reports that the synthetic target at 4K and the real benchmark target
+cover near-identical median area, 301 and 300 square pixels. That match is a property of the
+rendering resolution we selected, and it does not extend to the long side, which is 20.6 against
+25.0 pixels. If it were not exact, a transfer failure attributable to scale could be
 mistaken for a failure attributable to synthesis.
 
 **Check.** The real test set is additionally evaluated after rescaling so that its target size

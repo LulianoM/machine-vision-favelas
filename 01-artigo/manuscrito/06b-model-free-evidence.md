@@ -49,14 +49,16 @@ Two consequences follow, pointing in opposite directions.
 
 The first is a caution about our own headline figure. The survey camera records at 1080p. A single
 frame from that camera at 150 metres delivers a 10 pixel target, with a quarter of all instances
-below one stride of the network. Rendering at 4K delivers 24.6 pixels. Synthetic imagery rendered
+below one stride of the network. Rendering at 4K delivers a 20.6 pixel target on its long side. Synthetic imagery rendered
 at 4K is therefore materially easier than a single real frame from the sensor it reproduces, and
 any performance figure must declare the ground sampling distance to which it refers. The
 photogrammetric orthomosaic built from the same flight falls between the two, at 6.4 to 7.4 cm per
 pixel, because it is stitched from overlapping frames.
 
-The second was initially mistaken for a problem. At 4K the median synthetic target is 24.6 pixels
-and the median real benchmark target is 25.0 pixels. An earlier version of this analysis reported
+The second was initially mistaken for a problem. At 4K the median synthetic instance covers
+301 square pixels and the median real benchmark instance covers 300, a ratio of 1.00. The long
+side does not match as closely, 20.6 against 25.0 pixels, because the two differ in shape rather
+than in size, which is the subject of Section 8.2. An earlier version of this analysis reported
 a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain shift.
 That gap was an artefact of rendering our own corpus at 1920 by 1080, not a property of either
 corpus, and the claim is withdrawn.

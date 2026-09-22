@@ -51,11 +51,17 @@ survey flight, evaluated on the same real test set with no real training image o
 
 **Efficacy of the synthetic method** = mAP50(S-nadir) / mAP50(R) = `[X]`.
 
-Kiefer, Ott and Zell (2022) report low single-digit mAP for purely synthetic training evaluated
-on VisDrone. That order of magnitude is given as the scale on which to read the row above, not as
-a defence of it. The exact interval reported by those authors is not quoted here because the
-reference has not yet been checked against the published proceedings. What this article reports is the ratio to the ceiling, together with the comparison in
-Section 9.3.
+Kiefer, Ott and Zell (2022) report mAP@50 on VisDrone for three architectures trained purely on
+synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO, against 24.6,
+48.6 and 43.9 respectively for the same architectures trained on real data. The YOLO row is the
+comparable one, since this article trains YOLO, and it gives a ratio of 23.2 per cent.
+
+The two ratios are not directly comparable, and the reason matters more than the gap. Their
+denominator is a detector trained on real imagery from a different domain and evaluated on
+VisDrone; ours is trained on the VisDrone training split and evaluated on its validation split.
+Ours is the harsher denominator, so our ratio understates the method relative to theirs by an
+amount this design cannot quantify. What this article reports is the ratio to its own declared
+ceiling, together with the comparison in Section 9.3.
 
 ### 9.3 Transfer from synthetic training, oblique geometry
 
@@ -110,13 +116,29 @@ surveyed in Section 2 suggests that 5 to 20 per cent of real data recovers 85 to
 performance given good synthetic pretraining; whether that holds at this ground sampling distance
 and in this scene type is an open question that these rows answer.
 
-### 9.5 What is deliberately not reported here
+### 9.5 The armed and unarmed distinction, by altitude
 
-The detector distinguishes two classes in the synthetic corpus, armed and unarmed. No accuracy
-figure for that distinction is reported here. Section 8.1 measures the median target at approximately 25 pixels on its long side, and at 4K the
-median box measures roughly 18.5 by 22.9 pixels. A firearm is not resolvable within a region of
-that size. In the synthetic corpus the distinction is nevertheless learnable, because the weapon
-is always the same model in the same pose at the same contrast, which makes it an artefact of the
-generator rather than a visual property of the world. Reporting a class accuracy under those
-conditions would be exactly the inferential leap that Section 2 of this article criticises in the
-existing literature, and it is therefore withheld. The point is returned to in Section 11.
+No accuracy for the armed and unarmed distinction is reported at 150 m. At that altitude the
+median instance measures 17.6 by 17.5 pixels and a firearm is not resolvable within it. The
+distinction is nevertheless learnable in a corpus where the weapon is always the same asset in
+the same pose at the same contrast, which makes separability a property of the generator rather
+than of the world, and reporting it would be the inferential leap this article criticises.
+
+At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area, and the corpus is
+built so that the artefact cannot account for the result: five firearm models against nine
+elongated objects carried in the same territory, sharing the weapons' colour and roughness
+palette and the same distribution of carrying poses. The corpus holds `[X]` instances, `[X]` of
+them armed, `[X]` unarmed and `[X]` carrying a confusable object.
+
+| Quantity at 75 m | Value |
+|---|---|
+| mAP50, three classes | `[X]` |
+| Recall, armed | `[X]` |
+| Precision, armed | `[X]` |
+| Rate at which a confusable object is called armed | `[X]` |
+| Rate at which an unarmed person with no object is called armed | `[X]` |
+
+The fourth row is the quantity of interest. It is the rate at which the system would mark a
+resident carrying a broom, a length of pipe or a rolled mat as armed, and it is the concrete form
+of the dual-use harm this article discusses. Section 11.5 states what the two regimes mean
+together, and Section 11.3 states the condition under which the 75 m figures would be withdrawn.

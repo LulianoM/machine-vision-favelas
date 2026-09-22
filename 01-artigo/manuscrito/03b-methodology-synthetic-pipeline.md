@@ -36,12 +36,19 @@ and what does not.
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed,
 so that any reported image can be regenerated exactly from the seed recorded in its manifest
 entry. No commercial asset packs are used: surface materials come from a public-domain library
-(Poly Haven, CC0) and all geometry is authored by the generator. This matters twice over. It makes
-the corpus redistributable, which the photogrammetric arms of this project are not, and it avoids
-a documented failure mode: Liao et al. (2026) report a substantial loss of accuracy when a
-photogrammetric base is replaced by generic assets. We cite the direction of that result and not
-its magnitude, because the specific figure has not been checked against the published text at the
-time of writing, and because the object class in that study is vehicles rather than people.
+(Poly Haven, CC0) and all geometry is authored by the generator. That choice makes the corpus
+redistributable, which the photogrammetric arms of this project are not, and it is paid for.
+
+Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
+target site with generic assets costs 27.0 mAP50 points on YOLOv11, the detector used here, and
+22 to 23 points on average across six architectures. In their taxonomy the corpus released with
+this article sits on the generic side, not the photogrammetric one: it is procedural geometry
+with public-domain materials, and it is on the losing side of that ablation by construction. Two
+qualifications bound how far the figure travels. Their object class is vehicles rather than
+people, and their evaluation is on the same site they reconstructed, so the result establishes
+that a digital twin of a place helps detection at that place, not at another. This article
+reports the trade rather than claiming to have avoided it, and the photogrammetric arms of this
+project, which cannot be released, exist to measure its size.
 
 Layout is produced in three stages, each addressing a specific way in which naive procedural
 generation betrays itself when viewed from above.
@@ -143,7 +150,7 @@ effectively disappears, which is what a covered sky does. Mean frame luminance o
 87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1
 (rain) of 255 (`06-resultados/contraste_clima.csv`).
 
-<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Mean frame luminance runs from 110 (haze) to 38 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
+<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Mean frame luminance runs from 94.4 (haze) to 35.1 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
 The dataset sweeps the regimes in order rather than sampling them, so that a small corpus remains
 balanced, and the regime of each image is written to its manifest entry. This permits the
@@ -174,7 +181,7 @@ downscaled frames.
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
 | Initialisation | COCO pretrained weights, identical for every model reported |
 | Tile size, synthetic corpus at 4K | 1280 px, 20 per cent overlap |
-| Empty tiles retained as negatives | requested 6 per cent; realised 1.8 to 4.5 per cent depending on corpus density |
+| Empty tiles retained as negatives | requested 5 per cent; realised 0.8 to 4.5 per cent depending on corpus density, and 0.8 per cent in the corpus of record |
 | Minimum retained fraction of a clipped box | 0.40 |
 | Optimiser, learning rate | Ultralytics default, lr0 0.01 |
 | Validation split | 15 per cent of generated scenes, split by scene and not by tile |

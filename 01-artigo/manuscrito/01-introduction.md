@@ -1,33 +1,32 @@
-# Machine Vision from the Global South: Developing an AI Model for Vertical Favelas
+# Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Recognition over Vertical Favelas
 
 ## Abstract
 
-Computer vision applied to informal settlements has largely treated them as a footprint problem,
-classifying built area against unbuilt area from above. The morphology that distinguishes a
-consolidated favela, building height, rooftop addition, material transition, is vertical, and it
-is precisely what a planar classification discards. This article proposes a model directed at that
-vertical morphology, and reports what it costs to train one without collecting aerial imagery of
-residents who have not consented to be imaged.
+Claims that aerial machine vision can tell an armed person from an unarmed one are acted on
+without stating the acquisition conditions under which the distinction is visible at all. This
+article treats that as the measurable question it is, using a procedurally generated synthetic
+corpus of a dense self-built settlement.
 
-The technical contribution is a procedurally generated synthetic corpus and the measurements that
-characterise the task before any detector is trained. Three of those measurements reframe the
-problem. Ground sampling distance, rather than scene realism, sets the size of the target: at the
-sensor and altitude of the 2022 survey that motivates this study, a person occupies roughly ten
-pixels in a single frame. Target shape, measured as the ratio of box height to width, tracks
-camera pitch rather than scene content, and separates our corpus from the public benchmark by a
-factor of two while apparent size is matched to within four per cent. Contrast against local
-clutter is lowest under hard sunlight, which produces the largest raw contrast, because the same
-sunlight fills the background with cast shadow from rooftop objects.
+Ground sampling distance, not scene realism, fixes the target. At the sensor and altitude of the
+2022 police survey that motivates this study, nadir at 150 m, a person occupies 17.6 by 17.5
+pixels and a firearm is not resolvable within that region. Halving the altitude yields a 6.4-fold
+increase in area, and the question becomes empirical rather than foreclosed.
 
-Transfer to real imagery is reported as a ratio to what a detector trained on real data achieves
-on the same test set, so that a low figure can be read as either a weak method or a hard
-benchmark. Accuracy for the distinction between armed and unarmed figures is withheld, and the
-reasons are given: at these target sizes a firearm is not resolvable, the distinction is
-learnable in synthetic imagery only because the weapon is an invariant asset, and reporting it
-would be the inferential step this article criticises in the existing literature.
+The corpus is built to defeat the objection that separability in synthetic imagery is an artefact
+of an invariant asset: five firearm models are set against nine elongated objects carried in the
+same territory, brooms, rebar, pipe, umbrellas, drawn from the same colour and roughness palette,
+so that no detector can separate the classes by colour. False positives on those hard negatives
+are reported against altitude.
 
-**Keywords:** computer vision; synthetic data; domain randomisation; informal settlements;
-vertical morphology; aerial imagery; dual use; Rio de Janeiro
+Transfer to real aerial imagery is reported as a ratio to what a detector trained on real data
+achieves on the same test set, and that ratio is [X] per cent. No armed and unarmed accuracy is
+reported at 150 m, because at that ground sampling distance the capability does not exist and a
+figure obtained there would measure the regularity of our asset library. Stating the conditions
+under which a capability is absent is a contribution of the same kind as demonstrating one that
+is present.
+
+**Keywords:** synthetic data, aerial object detection, ground sampling distance, dual use,
+informal settlements
 
 ## Introduction
 

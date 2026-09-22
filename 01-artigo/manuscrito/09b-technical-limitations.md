@@ -62,23 +62,38 @@ issue was whether synthesis transfers at all. The morphological task has no equi
 benchmark at this ground sampling distance, which is itself a finding worth recording: the
 evaluation infrastructure for the task the article actually proposes does not currently exist.
 
-### 11.5 What the class distinction is not, and why it is withheld
+### 11.5 Where the armed and unarmed distinction exists, and where it does not
 
-The synthetic corpus carries two classes, armed and unarmed, inherited from the 2022 project that
-originated this line of work. No accuracy figure for that distinction appears anywhere in this
-article, and the omission is deliberate rather than pending.
+No accuracy figure for the armed and unarmed distinction is reported at the altitude of the
+survey that motivates this study. The omission is a result, not a gap, and this section states
+the conditions that produce it.
 
-The median annotated instance measures roughly 18.5 by 22.9 pixels at 4K. A firearm is not
-resolvable within a region of that size. The distinction is nevertheless learnable in the
-synthetic corpus, because the weapon is always the same model, in the same pose, at the same
-contrast, which makes separability an artefact of the generator rather than a visual property of
-the world. An accuracy figure obtained under those conditions would measure the regularity of our
-own asset library.
+At nadir and 150 m with the survey sensor, the median annotated instance measures 17.6 by 17.5
+pixels. A firearm subtends a fraction of that and is not resolvable within the region. A detector
+trained on such a corpus can still separate the two classes, and that is precisely the problem:
+in a corpus where the weapon is always the same asset, in the same pose, at the same contrast,
+separability measures the regularity of the asset library rather than a visual property of the
+world. An accuracy figure obtained there would be the inferential move this article criticises,
+a number produced under controlled synthetic conditions and presented as evidence of a capability
+that would be exercised on real people in a real territory.
 
-Reporting it would also be the exact inferential move this article criticises in Section 2: a
-number produced under controlled synthetic conditions, presented as evidence of a capability that
-would be exercised on real people in a real territory. The measurement is withheld on both
-grounds, and the ethical ground is the one that would hold even if the technical ground did not.
+Two changes make the question empirical rather than foreclosed, and both are reported in Section
+9. Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold
+increase in area, at which the firearm occupies a region the network can in principle resolve.
+And the corpus at that altitude is built to remove the artefact: five firearm models are set
+against nine elongated objects that a person carries in the same territory, brooms, rakes,
+plastic pipe, rebar, planks, umbrellas, hoes, rolled mats and hose, drawn from the same colour
+and roughness palette as the weapons and carried in the same distribution of poses. A detector
+that separates the classes on this corpus cannot be doing so by colour, and the rate at which it
+calls a broom a rifle is reported directly.
+
+The distinction between the two regimes is the contribution, and it is stated as a condition
+rather than a recommendation. The capability is not a fixed property of the method: it appears
+and disappears as a function of acquisition parameters that can be measured before any system is
+bought or flown. A claim that a system distinguishes an armed from an unarmed person from the air
+is, at the altitudes and sensors described here, a claim that can be checked before it is
+believed. Section 11.3 states the condition under which even the 75 m figure would be withdrawn,
+and nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check
 
