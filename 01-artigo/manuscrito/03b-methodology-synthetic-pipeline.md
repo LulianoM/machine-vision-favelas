@@ -144,10 +144,11 @@ whole figure, including parts hidden by intervening geometry, which is the conve
 real benchmark against which transfer is later measured. Occlusion is evaluated separately, by
 casting fourteen rays from the camera to sample points on the figure, and instances whose visible
 fraction falls below 0.35 are discarded from the label file rather than retained as degenerate
-boxes. In a settlement this dense the discard rate is substantial and expected. Over 48 generated
-frames the retained fraction has a median of 0.65 (10th percentile 0.44, 90th percentile 0.75):
-about a third of the figures placed are invisible from directly above, most of them standing in
-an alley.
+boxes. In a settlement this dense the discard rate is substantial and expected. Over the 180 frames
+of the corpus of record, 4,582 figures were placed and 3,225 retained; the per-frame retained
+fraction has a median of 0.71 (10th percentile 0.57, 90th percentile 0.83), so roughly three
+in ten figures placed are invisible from directly above, most of them standing in an alley
+(`06-resultados/oclusao_ds_morro_4k.json`, produced by `06-resultados/mede_oclusao.py`).
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 

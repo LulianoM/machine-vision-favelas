@@ -99,24 +99,9 @@ Jacarezinho.
 
 <!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that per-regime performance differences in Section 10.3 cannot be attributed to the labelling.-->
 
-### 9.4 Limited real fine-tuning
+### 9.4 Real fine-tuning, deferred
 
-Model S-nadir-150 pretrained, then fine-tuned on 5 and 10 per cent of VisDrone-DET train, against R
-trained on the same fractions from scratch.
-
-| Real data used | S pretrained then fine-tuned | R from scratch | Difference |
-|---|---|---|---|
-| 5 per cent | `[X]` | `[X]` | `[X]` |
-| 10 per cent | `[X]` | `[X]` | `[X]` |
-| 100 per cent | `[X]` | `[X]` | `[X]` |
-
-This is the quantity with the clearest practical meaning for the proposal in Section 6: how much
-real aerial imagery the synthetic pretraining removes the need for, measured on a public
-benchmark. Whether the same fraction holds for consent-bounded imagery of the case study
-territory is not established here, for the reason given in Section 11.2. The sim-to-real
-literature surveyed in Section 2 establishes that a modest volume of real data substantially
-improves generalisation from synthetic pretraining, but not how much is needed at this ground
-sampling distance or in this scene type, which is what these rows answer.
+The proposal of Section 6 reserves a stage in which the synthetic pretraining is fine-tuned on a modest volume of real imagery. That stage is not run in this version, and the reason is one of sequence rather than feasibility: the question this article isolates is what synthesis alone recovers, and adding real data before that figure is settled would make the two contributions inseparable. The measurement is specified in the Conclusion as the next step, on the same public benchmark and with the same protocol as Section 9.2.
 
 ### 9.5 The armed and unarmed distinction, by altitude
 

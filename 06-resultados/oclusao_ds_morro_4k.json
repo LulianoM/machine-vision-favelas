@@ -1,0 +1,9 @@
+{
+ "corpus": "ds_morro_4k",
+ "quadros": 180,
+ "pessoas": 4582,
+ "caixas": 3225,
+ "mediana": 0.706,
+ "p10": 0.571,
+ "p90": 0.833
+}
