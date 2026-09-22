@@ -55,9 +55,10 @@ absent.
 
 ### 10.3 Illumination: the prediction that runs against intuition
 
-**Threat.** Section 8.3 measures that hard sunlight yields the largest raw figure-to-background
-difference and one of the two lowest ratios of contrast to local clutter, and raises the
-hypothesis that the detector performs better under overcast than under hard sun. A contrast
+**Threat.** Section 8.3 measures that overcast yields both the largest raw figure-to-background
+difference and the largest ratio of contrast to local clutter, while hard sun sits second on raw
+contrast and among the two lowest on the ratio. That raises the hypothesis that the detector
+performs better under overcast than under hard sun. A contrast
 statistic is not a detection statistic, the sample is eight images per regime, and between-image
 dispersion is of the same order as several of the gaps.
 

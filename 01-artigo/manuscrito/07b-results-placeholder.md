@@ -20,7 +20,7 @@ These are not results about transfer. The model failed on its own domain, reachi
 earlier arm of this project reached 0.676, and transfer cannot be measured from a model that did
 not learn. Sections 10.1 and 10.2 identify the two causes, both properties of the pilot corpus
 rather than of the method: it contained 40 training scenes against 473, and it was rendered at
-1080p, which doubles the ground sampling distance and places a quarter of all instances below one
+1080p, which doubles the ground sampling distance and places two thirds of all instances below one
 stride of the network (Section 8.1).
 
 The pilot does establish one thing a favourable result could not. This pipeline is capable of
@@ -41,8 +41,8 @@ establishes what the test set permits.
 
 ### 9.2 Transfer from synthetic training, nadir geometry
 
-Model S-nadir-150, trained only on procedurally generated imagery with the camera geometry of Section 7.3, not the 2022
-survey geometry, evaluated on the same real test set with no real training image of any kind.
+Model S-nadir-150, trained only on procedurally generated imagery with the camera geometry of Section 7.3,
+evaluated on the same real test set with no real training image of any kind.
 
 | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|

@@ -126,9 +126,9 @@ the distance doubles each linear dimension of the target and quadruples its area
 and measured on the generated corpora the median instance grows from 17.6 by 17.5 pixels to 47.6
 by 41.7, a factor of 6.4 in area once the change in viewing angle within the frame is included.
 The two altitudes are reported separately throughout, as `S-nadir-150` and `S-nadir-75`, because
-they answer different questions: the first is the geometry a real flight over this territory used,
-and the second is the geometry under which the distinction the article is named after becomes
-measurable at all.
+they answer different questions: the first is the altitude at which aerial survey over urban
+terrain is conventionally flown with this payload, and the second is the geometry under which the
+distinction the article is named after becomes measurable at all.
 
 ### 7.4 Annotation
 
@@ -230,14 +230,17 @@ of one frame are not independent; splitting by tile would place near-duplicates 
 
 A detector evaluated on the world in which it was trained reports a ceiling, not evidence. A low
 transfer score reported alone is equally uninterpretable, because nothing establishes the scale
-against which to read it. The protocol therefore trains three models and evaluates all of them on
-the same real test set, VisDrone-DET validation (548 images, 13,969 person instances, reduced to a
-single class).
+against which to read it. The protocol therefore trains four models. Three of them, R,
+S-nadir-150 and S-oblique, are evaluated on the same real test set, VisDrone-DET validation (548
+images, 13,969 person instances, reduced to a single class). The fourth, S-nadir-75, carries three
+classes and is scored on a held-out synthetic split instead, because no public benchmark annotates
+a carried firearm; Section 9.5 reports it separately and Section 11.5 states why the two cannot be
+read on one scale.
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
 | **R** | VisDrone-DET train, 6,471 images, 106,396 instances | The attainable ceiling on the test set |
-| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, at the survey geometry specified in Section 7.3 |
+| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, at the acquisition geometry specified in Section 7.3 |
 | **S-nadir-75** | Same generator and sensor at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable at any altitude a drone flies |
 | **S-oblique** | Same generator, oblique and lower camera | Whether failure is attributable to synthesis or to capture geometry |
 

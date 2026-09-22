@@ -13,7 +13,7 @@ usually discussed in terms of scene realism, and the implicit assumption is that
 looks more like a favela will transfer better. The measurements below identify two variables that
 govern difficulty and that no appearance metric captures.
 
-Two corpora are used, one generated and one real, and their acquisition geometry differs in ways
+Three corpora are used, two generated and one real, and their acquisition geometry differs in ways
 that matter, so the parameters are stated rather than implied.
 
 | Corpus | Geometry | Render | Instances |
@@ -45,8 +45,8 @@ pixels, so an instance below that size occupies less than one cell of the finest
 Two consequences follow, pointing in opposite directions.
 
 The first is a caution about our own headline figure. The survey camera records at 1080p. A single
-frame from that camera at 150 metres delivers a 10 pixel target, with a quarter of all instances
-below one stride of the network. Rendering at 4K delivers a 20.6 pixel target on its long side. Synthetic imagery rendered
+frame from that camera at 150 metres delivers a 10 pixel target on its long side, with two
+thirds of all instances below one stride on the short side. Rendering at 4K delivers a 20.6 pixel target on its long side. Synthetic imagery rendered
 at 4K is therefore materially easier than a single real frame from the sensor it reproduces, and
 any performance figure must declare the ground sampling distance to which it refers.
 
@@ -97,9 +97,9 @@ An earlier version of this analysis established the ordering across intermediate
 using a corpus that has since been withdrawn from the article for reasons of data provenance, and
 the claim is accordingly reduced to what the rows above support: the quantity differs by a factor
 of two between a camera pointing straight down and the benchmark's acquisition, and it does not
-move with render resolution. Section 10.4 states the test that would establish the intermediate
-ordering, which is to render the same settlement at several camera angles and measure the same
-statistic.
+move with render resolution. Establishing the intermediate ordering would require rendering the same
+settlement seed at several camera pitches between vertical and the benchmark geometry and
+recomputing the ratio on each; that sweep has not been run.
 
 A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio near 2.0 is a
 standing figure recorded obliquely. At comparable pixel area, these are different objects as far
@@ -112,10 +112,10 @@ than of how the scene is built. Section 9.3 reports the S-oblique model, in whic
 renders the same settlement from a tilted camera, and Section 10.4 treats the difference between
 the arms as the isolated contribution of acquisition geometry.
 
-One limit on the interpretation is stated here rather than in limitations. The monotonic series
-above is measured within synthetic corpora, where pitch is known exactly. The benchmark value of
-2.20 comes from real imagery whose acquisition geometry is not recorded, so it anchors the
-direction of the relationship but not its slope.
+One limit on the interpretation is stated here rather than in limitations. The generated value is
+fixed by a generator setting that bounds the camera near vertical without recording it per image.
+The benchmark values come from real imagery whose acquisition geometry is not recorded at all. The
+contrast therefore anchors the direction of the relationship but not its slope.
 
 ### 8.3 Contrast against local clutter is lowest under hard sun and rain, not under low light
 

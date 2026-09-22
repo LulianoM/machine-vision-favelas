@@ -64,11 +64,12 @@ evaluation infrastructure for the task the article actually proposes does not cu
 
 ### 11.5 Where the armed and unarmed distinction exists, and where it does not
 
-No accuracy figure for the armed and unarmed distinction is reported at the altitude of the
-survey that motivates this study. The omission is a result, not a gap, and this section states
+No accuracy figure for the armed and unarmed distinction is reported at 150 m, the altitude this
+article takes as its reference acquisition. The omission is a result, not a gap, and this section states
 the conditions that produce it.
 
-At nadir and 150 m with the survey sensor, the median annotated instance measures 17.6 by 17.5
+At 150 m with the camera pointing straight down, rendered at the 4.88 cm per pixel of the corpus
+of record, the median annotated instance measures 17.6 by 17.5
 pixels. A firearm subtends a fraction of that and is not resolvable within the region. A detector
 trained on such a corpus can still separate the two classes, and that is precisely the problem:
 in a corpus where the weapon is always the same asset, in the same pose, at the same contrast,
@@ -91,7 +92,10 @@ rather than a recommendation. The capability is not a fixed property of the meth
 and disappears as a function of acquisition parameters that can be measured before any system is
 bought or flown. A claim that a system distinguishes an armed from an unarmed person from the air
 is, at the altitudes and sensors described here, a claim that can be checked before it is
-believed. Section 11.3 states the condition under which even the 75 m figure would be withdrawn,
+believed. The 75 m figure itself would be withdrawn under a condition this article states rather
+than delegates: if a detector trained on four of the five firearm models fails to hold its recall
+on the fifth, then what it separates is the asset library and not the object, and no figure from
+that corpus should be read as a capability. That held-out test has not been run: `[X]`.
 and nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check

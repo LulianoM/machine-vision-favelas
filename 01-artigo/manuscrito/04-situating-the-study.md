@@ -19,6 +19,6 @@ One consequence of this record bears directly on what follows. The legal and ope
 on which the use of lethal force turns, in each of the episodes above and in the contestation that
 followed them, is whether the person engaged was armed. That is a visual judgement made at speed,
 and it is increasingly proposed as one an aerial system could assist. Sections 8 to 11 report what
-that judgement actually demands of the acquisition: at the altitude of the survey flown over this
-territory, the distinction is not resolvable at all, and it becomes resolvable only at an altitude
-no operation has flown.
+that judgement actually demands of the acquisition: at the altitude at which aerial survey over
+this kind of terrain is conventionally flown, 150 metres, the distinction is not resolvable at
+all, and it becomes resolvable only at half that altitude.

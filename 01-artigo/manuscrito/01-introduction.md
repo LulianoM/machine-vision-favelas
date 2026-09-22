@@ -7,8 +7,8 @@ without stating the acquisition conditions under which the distinction is visibl
 article treats that as the measurable question it is, using a procedurally generated synthetic
 corpus of a dense self-built settlement.
 
-Ground sampling distance, the ground area a single pixel covers, not scene realism, fixes the target. At the sensor and altitude of the
-sensor and altitude specified in Section 7.3, with the camera pointing straight down at 150 m, a person occupies 17.6 by 17.5
+Ground sampling distance, the ground area a single pixel covers, not scene realism, fixes the target. At 4.88 cm per pixel, the ground sampling distance of the corpus of record, with the camera
+pointing straight down at 150 m, a person occupies 17.6 by 17.5
 pixels and a firearm is not resolvable within that region. Halving the altitude yields a 6.4-fold
 increase in area, and the question becomes empirical rather than foreclosed.
 
