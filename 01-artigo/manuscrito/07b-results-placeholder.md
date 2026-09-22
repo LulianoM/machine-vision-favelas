@@ -10,7 +10,7 @@ would make the rest of this section unreadable as evidence.
 
 | Pilot run | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|---|
-| S-nadir, 40 training scenes at 1080p | synthetic validation | 0.109 | 0.148 | 0.077 | 0.019 |
+| S-nadir-150, 40 training scenes at 1080p | synthetic validation | 0.109 | 0.148 | 0.077 | 0.019 |
 | same model | VisDrone-DET val, zero-shot | 0.038 | 0.031 | 0.0055 | 0.0020 |
 | same model | VisDrone-DET val, scale-matched | 0.041 | 0.037 | 0.0061 | 0.0009 |
 
@@ -41,7 +41,7 @@ establishes what the test set permits.
 
 ### 9.2 Transfer from synthetic training, nadir geometry
 
-Model S-nadir, trained only on procedurally generated imagery with the camera geometry of the 2022
+Model S-nadir-150, trained only on procedurally generated imagery with the camera geometry of the 2022
 survey flight, evaluated on the same real test set with no real training image of any kind.
 
 | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
@@ -49,7 +49,7 @@ survey flight, evaluated on the same real test set with no real training image o
 | Synthetic validation (ceiling of the corpus) | `[X]` | `[X]` | `[X]` | `[X]` |
 | VisDrone-DET val (zero-shot) | `[X]` | `[X]` | `[X]` | `[X]` |
 
-**Efficacy of the synthetic method** = mAP50(S-nadir) / mAP50(R) = `[X]`.
+**Efficacy of the synthetic method** = mAP50(S-nadir-150) / mAP50(R) = `[X]`.
 
 Kiefer, Ott and Zell (2022) report mAP@50 on VisDrone for three architectures trained purely on
 synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO, against 24.6,
@@ -80,11 +80,11 @@ mismatch identified in Section 8.2 is load-bearing on this benchmark.
 
 | Model | mAP50 on VisDrone-DET val | Efficacy vs. ceiling |
 |---|---|---|
-| S-nadir | `[X]` | `[X]` |
+| S-nadir-150 | `[X]` | `[X]` |
 | S-oblique | `[X]` | `[X]` |
 
 **Difference attributable to acquisition geometry, on this benchmark** =
-mAP50(S-oblique) - mAP50(S-nadir) = `[X]`.
+mAP50(S-oblique) - mAP50(S-nadir-150) = `[X]`.
 
 Two outcomes are possible and both are reportable. If the oblique arm substantially outperforms
 the nadir arm, acquisition geometry is load-bearing relative to scene content on this benchmark.
@@ -101,7 +101,7 @@ Jacarezinho.
 
 ### 9.4 Limited real fine-tuning
 
-Model S-nadir pretrained, then fine-tuned on 5 and 10 per cent of VisDrone-DET train, against R
+Model S-nadir-150 pretrained, then fine-tuned on 5 and 10 per cent of VisDrone-DET train, against R
 trained on the same fractions from scratch.
 
 | Real data used | S pretrained then fine-tuned | R from scratch | Difference |

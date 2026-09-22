@@ -81,8 +81,9 @@ AUTORIA = {
         "esboço de trabalho, não é a versão final",
         "A redação definitiva trará o enquadramento do problema de segurança pública com a "
         "profundidade que a posição do autor permite: conhecimento institucional das operações, "
-        "da dinâmica territorial e das restrições operacionais reais. As seções técnicas, 6 a 11, "
-        "não dependem do conteúdo desta seção e não devem ser lidas como derivadas dela."),
+        "da dinâmica territorial e das restrições operacionais reais. As seções técnicas dependem "
+        "desta seção em um ponto e apenas nele: o veto ético à coleta de imagem real, que é a "
+        "premissa de 7.1. Os resultados numéricos não derivam dela."),
     "05-case-jacarezinho.md": (
         "Coautor delegado de polícia",
         "esboço de trabalho, não é a versão final",
@@ -318,7 +319,7 @@ def main():
                               extensions=["tables", "sane_lists", "md_in_html"])
 
     capa = """<div class="capa full">
-<h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Recognition over Vertical Favelas</h1>
+<h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Self-Built Settlements</h1>
 <div class="autores">Luciano Martins Figueira<sup>a</sup>, Helio Arthur Reis Irigaray<sup>a</sup>, <span style="color:#b58900">[coautor delegado, a incluir]</span></div>
 <div class="afil"><sup>a</sup> Funda&ccedil;&atilde;o Get&uacute;lio Vargas, EBAPE, Rio de Janeiro, Brazil</div>
 </div>"""

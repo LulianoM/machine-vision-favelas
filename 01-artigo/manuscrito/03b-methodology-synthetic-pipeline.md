@@ -7,15 +7,17 @@ The design-science component declared in Section 5 and specified in Section 6 pr
 of vertical morphology and a synthetic-training strategy. This section specifies the generative procedure that implements the
 second of those, and reports what happens when it is executed.
 
-A distinction has to be drawn at the outset, because the two are easy to conflate and the article
-would contradict itself otherwise. The conceptual model proposed in Section 6 classifies built
-form: building height, rooftop addition, material transition. What is implemented and evaluated
-below detects people, which is a different task on the same imagery. The reason for implementing
-the second rather than the first is that only it has a public benchmark against which transfer
-can be measured, and the question at issue is whether synthesis transfers at all. The pipeline,
-the annotation procedure, the randomisation and the scale analysis are shared; the object class is
-not. Nothing below should be read as a validated capability over Jacarezinho, and Section 11
-restates the boundary.
+A distinction has to be drawn at the outset, because the two are easy to conflate. What is
+implemented and evaluated below detects people, in three classes: armed, unarmed, and unarmed
+carrying a confusable elongated object. That is the task this article measures, and it was
+chosen because it is the only one of the two with a public benchmark against which transfer
+can be established. The conceptual model proposed in Section 6 classifies built form instead:
+building height, rooftop addition, material transition. The same generator already records the
+footprint, the storey count and the roof height of every structure it builds, so the
+morphological task is a second experiment over the same infrastructure rather than a different
+pipeline; what it lacks is an evaluation set, and Section 11.4 records that absence as a
+finding rather than as an omission. Nothing below should be read as a validated capability
+over Jacarezinho, and Section 11 restates the boundary.
 
 ### 7.1 Why synthesis, and what it does not solve
 
@@ -111,6 +113,19 @@ metre nadir view at 1920 by 1080 yields 9.76 cm per pixel; rendering the same vi
 yields 4.88 cm per pixel. Section 8.1 reports what this does to the target, and Section 11 states
 the limitation it introduces.
 
+A second acquisition geometry is evaluated alongside the first, and the reason is arithmetic
+rather than aesthetic. At 150 metres the target is too small for a carried object to be resolved
+at all, which forecloses the question the article asks rather than answering it. The generator is
+therefore also run with the same sensor at 75 metres, where the frame covers approximately 94 by
+53 metres and the ground sampling distance halves to 2.44 cm per pixel at 3840 by 2160. Halving
+the distance doubles each linear dimension of the target and quadruples its area before occlusion,
+and measured on the generated corpora the median instance grows from 17.6 by 17.5 pixels to 47.6
+by 41.7, a factor of 6.4 in area once the change in viewing angle within the frame is included.
+The two altitudes are reported separately throughout, as `S-nadir-150` and `S-nadir-75`, because
+they answer different questions: the first is the geometry a real flight over this territory used,
+and the second is the geometry under which the distinction the article is named after becomes
+measurable at all.
+
 ### 7.4 Annotation
 
 Human figures are instantiated from rigged, clothed meshes (MPFB, a MakeHuman derivative), posed
@@ -131,6 +146,23 @@ about a third of the figures placed are invisible from directly above, most of t
 an alley.
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
+
+**Carried objects and hard negatives.** At 75 metres the corpus carries three classes rather than
+two: armed, unarmed, and unarmed carrying an elongated object. The third exists because of an
+objection that would otherwise be fatal to any figure reported for the first. If the weapon is
+always the same asset, in the same pose, at the same contrast, a detector can separate the classes
+on properties of the asset library rather than on anything visible in the world.
+
+The corpus is built to remove that possibility. Five firearm models are generated
+procedurally, spanning 0.20 to 1.05 metres in length: two rifles, a carbine, a shotgun and a
+pistol. Against them stand nine elongated objects that a person carries in this territory, spanning
+0.88 to 2.5 metres: brooms, rakes, plastic pipe, reinforcement bar, planks, umbrellas, hoes,
+rolled mats and hose. Weapons and objects are drawn from the same palette of base colours and
+surface roughness, so that no detector can separate the two by colour, and both are carried
+through the same distribution of poses, held forward, at the side, slung on the back, or carried
+while walking, in the same proportions. A detector that separates the classes on this corpus is
+therefore doing so on the silhouette of what is carried, which is the only thing that could
+transfer, and the rate at which it calls a broom a rifle is reported directly in Section 9.5.
 
 ### 7.5 Domain randomisation over illumination
 
@@ -201,10 +233,11 @@ single class).
 | Model | Training corpus | What it establishes |
 |---|---|---|
 | **R** | VisDrone-DET train, 6,471 images, 106,396 instances | The attainable ceiling on the test set |
-| **S-nadir** | Synthetic, nadir at 150 m, six illumination regimes | The method as proposed, matching the 2022 survey geometry |
+| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, matching the 2022 survey geometry |
+| **S-nadir-75** | Same generator and sensor at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable at any altitude a drone flies |
 | **S-oblique** | Same generator, oblique and lower camera | Whether failure is attributable to synthesis or to capture geometry |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)
-minus mAP50(S-nadir) isolates the contribution of capture geometry, which Section 8.2 measures as
+minus mAP50(S-nadir-150) isolates the contribution of capture geometry, which Section 8.2 measures as
 the dominant mismatch between this corpus and the benchmark.

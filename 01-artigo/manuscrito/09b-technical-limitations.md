@@ -80,14 +80,13 @@ that would be exercised on real people in a real territory.
 Two changes make the question empirical rather than foreclosed, and both are reported in Section
 9. Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold
 increase in area, at which the firearm occupies a region the network can in principle resolve.
-And the corpus at that altitude is built to remove the artefact: five firearm models are set
-against nine elongated objects that a person carries in the same territory, brooms, rakes,
-plastic pipe, rebar, planks, umbrellas, hoes, rolled mats and hose, drawn from the same colour
-and roughness palette as the weapons and carried in the same distribution of poses. A detector
-that separates the classes on this corpus cannot be doing so by colour, and the rate at which it
-calls a broom a rifle is reported directly.
+And the corpus at that altitude is built to remove the artefact, by the construction specified in
+Section 7.4: the weapons are set against elongated objects carried in the same territory, drawn
+from the same colour and roughness palette and carried through the same distribution of poses. A
+detector that separates the classes on that corpus cannot be doing so by colour, and the rate at
+which it calls a broom a rifle is reported in Section 9.5.
 
-The distinction between the two regimes is the contribution, and it is stated as a condition
+The distinction between the two altitudes is the contribution, and it is stated as a condition
 rather than a recommendation. The capability is not a fixed property of the method: it appears
 and disappears as a function of acquisition parameters that can be measured before any system is
 bought or flown. A claim that a system distinguishes an armed from an unarmed person from the air
@@ -104,8 +103,8 @@ pitch from the manifest for one corpus and from the generator setting for the ot
 in the table. The hyperparameter
 and inference tables in Section 7.6 are in the body of the article for the same reason.
 
-What a reader cannot check from this article is the corpus itself. The procedurally generated arms
-are redistributable by construction, since all geometry is authored and all materials are public
-domain, but the photogrammetric arms of this project are derived from operational imagery that
-cannot be released. Where a measurement in Section 8 uses a photogrammetric arm, the table says
-so.
+What a reader cannot check from this article is the corpus itself. The corpora behind the models
+reported here are redistributable by construction, since all geometry is authored and all
+materials are public domain. Two earlier branches of this project, built on photogrammetric
+reconstruction of operational imagery, cannot be released; where a measurement in Section 8 uses
+one of them, the table says so.
