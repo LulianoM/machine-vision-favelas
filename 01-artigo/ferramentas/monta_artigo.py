@@ -56,6 +56,99 @@ ORDEM = [
     "08-references.md",                          # 13 professor
 ]
 
+# QUADRO DE AUTORIA, so para esta fase de escrita. Sai do PDF final com --sem-autoria.
+#
+# Existe porque o artigo tem tres autores escrevendo partes diferentes ao mesmo tempo, e sem isso
+# cada um precisa lembrar de cor o que e seu. Fica no montador, e nao dentro dos .md, por duas
+# razoes: os arquivos que os coautores editam continuam limpos, e apagar os quadros e trocar uma
+# opcao de linha de comando em vez de caçar bloco de citacao em treze arquivos.
+#
+# (autor, estado do texto, o que falta ou o que observar)
+AUTORIA = {
+    "01-introduction.md": (
+        "Prof. Hélio Arthur Reis Irigaray",
+        "v2 de 2026-09-10, verbatim",
+        "O abstract e as palavras-chave foram acrescentados em 20/09 pelo mestrando. O abstract "
+        "tem cerca de 280 palavras e os quatro premiados de 2026 têm de 127 a 152, sem nenhuma "
+        "citação: precisa encurtar para perto de 150."),
+    "02-literature-review.md": (
+        "Prof. Hélio Arthur Reis Irigaray",
+        "v2 de 2026-09-10, verbatim",
+        "Sete obras citadas neste texto ainda não têm entrada na lista de referências, item B1 "
+        "de PENDENCIAS.md. Dependem de quem escreveu a frase dizer qual obra é."),
+    "04-situating-the-study.md": (
+        "Coautor delegado de polícia",
+        "esboço de trabalho, não é a versão final",
+        "A redação definitiva trará o enquadramento do problema de segurança pública com a "
+        "profundidade que a posição do autor permite: conhecimento institucional das operações, "
+        "da dinâmica territorial e das restrições operacionais reais. As seções técnicas, 6 a 11, "
+        "não dependem do conteúdo desta seção e não devem ser lidas como derivadas dela."),
+    "05-case-jacarezinho.md": (
+        "Coautor delegado de polícia",
+        "esboço de trabalho, não é a versão final",
+        "É a menor seção do artigo, com 390 palavras. Três números de população divergem entre "
+        "si no texto (35.458, ~37.000 e acima de 60.000) e a divergência é usada como argumento, "
+        "o que funciona, mas precisa ficar explícito de onde vem cada um."),
+    "03-methodology.md": (
+        "Prof. Hélio Arthur Reis Irigaray",
+        "v2 de 2026-09-10, verbatim",
+        "Descreve o protocolo e trata a posicionalidade do coautor delegado de forma direta. "
+        "Nada a fazer além de conferir as remissões remapeadas em 22/09."),
+    "06-results-proposed-model.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "proposta conceitual, escrita antes do experimento",
+        "É a proposta que a seção 7 implementa. O texto ainda fala em classificar altura de "
+        "edificação, e o que foi de fato construído e medido detecta pessoa: a seção 11.4 trata "
+        "dessa diferença e as duas precisam concordar."),
+    "03b-methodology-synthetic-pipeline.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "método executado, com versão e comando de origem",
+        "Descreve o que rodou de fato: Blender 5.2.1 headless, não ARMA 3."),
+    "06b-model-free-evidence.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "medições fechadas, com arquivo de origem",
+        "Segue o desenho de Dai et al., premiado em 2026, que põe a evidência sem modelo antes "
+        "de qualquer regressão."),
+    "07b-results-placeholder.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "esqueleto com marcadores [X] no lugar dos números",
+        "Os números entram conforme os treinos fecham. O protocolo foi fixado antes de qualquer "
+        "treino rodar, e isso está declarado no texto."),
+    "08b-robustness.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "ameaças e testes definidos antes dos resultados",
+        "Cada ameaça traz o teste que a resolveria e o que aconteceria com a conclusão se o teste "
+        "falhar."),
+    "09b-technical-limitations.md": (
+        "Luciano Martins Figueira (mestrando)",
+        "fechada",
+        "Contém a recusa de reportar acurácia entre armado e desarmado, em 11.5, que é decisão "
+        "de conteúdo e precisa do aval dos três autores."),
+    "07-conclusion.md": (
+        "Prof. Hélio Arthur Reis Irigaray",
+        "v2 mais o fecho acrescentado em 20/09",
+        "O parágrafo de fecho foi escrito pelo mestrando porque a v2 não concluía, só trazia "
+        "Limitations, Delimitations e Future Research. Precisa do aval do orientador."),
+    "08-references.md": (
+        "os três autores",
+        "parcial",
+        "Oito entradas conferidas no Crossref em 20/09. Sete citações do texto continuam sem "
+        "entrada, de propósito: sobrenome e ano coincidindo não é evidência, e inserir DOI de "
+        "obra errada é pior do que deixar a referência faltando."),
+}
+
+
+NL2 = chr(10) + chr(10)
+
+
+def quadro_autoria(nome):
+    if nome not in AUTORIA:
+        return ""
+    autor, estado, nota = AUTORIA[nome]
+    return (f'<div class="autoria"><b>Autoria:</b> {autor} &nbsp;&middot;&nbsp; '
+            f'<b>Estado:</b> {estado}<br><span>{nota}</span></div>')
+
+
 # As secoes do professor nao trazem numero no titulo, e as tecnicas trazem. O montador numera
 # TODAS na ordem de leitura, para que numero de secao e remissao cruzada nunca possam divergir:
 # foi exatamente esse tipo de deriva silenciosa que a revisao adversarial pegou.
@@ -65,6 +158,11 @@ RE_H2 = re.compile(r"^## (?:\d+\.\s*)?(.+)$", re.M)
 RE_FIG = re.compile(r"<!--\s*FIG:([^|]+)\|(.+?)\s*-->")
 
 CSS_AIM = """
+.autoria { border: 0.6pt solid #b58900; border-left: 3pt solid #b58900; background: #fffceb;
+           padding: 4pt 7pt; margin: 9pt 0 5pt 0; font-size: 9.5pt; line-height: 1.3;
+           text-align: left; break-inside: avoid; }
+.autoria span { color: #333; }
+
 @page { size: A4; margin: 2.5cm 2.2cm; }
 body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 2.0;
        color: #111; }
@@ -93,6 +191,11 @@ figcaption { font-size: 10pt; line-height: 1.4; text-align: left; margin-top: 5p
 # titulo e avisos atravessando as duas colunas, e figura ou tabela larga promovida a largura
 # total, que e como o periodico trata peca que nao cabe na coluna.
 CSS_ELSEVIER = """
+.autoria { border: 0.6pt solid #b58900; border-left: 3pt solid #b58900; background: #fffceb;
+           padding: 4pt 7pt; margin: 9pt 0 5pt 0; font-size: 7.6pt; line-height: 1.3;
+           text-align: left; break-inside: avoid; }
+.autoria span { color: #333; }
+
 @page { size: A4; margin: 1.9cm 1.6cm 2.2cm 1.6cm; }
 body { font-family: "Times New Roman", Times, serif; font-size: 9.5pt; line-height: 1.30;
        color: #000; column-count: 2; column-gap: 6mm; column-fill: auto; text-align: justify;
@@ -168,6 +271,9 @@ def main():
                 help="aim = uma coluna, Times 12, espaco duplo, que e o que os premiados de "
                      "2026 usam; elsevier = duas colunas de periodico")
     ap.add_argument("--sem-notas", action="store_true")
+    ap.add_argument("--sem-autoria", action="store_true",
+                help="tira os quadros de autoria. E o que se usa quando o artigo for "
+                     "submetido: eles existem so enquanto os tres autores escrevem juntos")
     ap.add_argument("--html", default=None, help="grava tambem o HTML intermediario")
     args = ap.parse_args()
 
@@ -197,6 +303,15 @@ def main():
         if alvos:
             m = alvos[0]
             txt = txt[:m.start()] + _numera(m) + txt[m.end():]
+        if not args.sem_autoria:
+            # o quadro entra ANTES do titulo, e em HTML cru para nao depender do markdown
+            q = quadro_autoria(nome)
+            if q:
+                alvo = RE_H2.search(txt)
+                if alvo:
+                    txt = txt[:alvo.start()] + q + NL2 + txt[alvo.start():]
+                else:
+                    txt = q + NL2 + txt
         partes.append(txt)
 
     corpo = markdown.markdown("\n\n".join(partes),
