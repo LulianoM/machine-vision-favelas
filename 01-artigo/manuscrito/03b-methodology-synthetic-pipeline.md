@@ -30,8 +30,8 @@ and who cannot meaningfully be asked under the conditions documented in Section 
 
 Synthesis substitutes one problem for another. It removes the consent problem and introduces the
 transfer problem: a detector trained on rendered imagery must operate on photographs. The
-remainder of this subsection describes the generator. Sections 8 through 10 report what transfers
-and what does not.
+remainder of this section describes the generator. Section 8 characterises the target before any
+detector is trained, and Sections 9 and 10 report what transfers and what does not.
 
 ### 7.2 Scene construction
 
@@ -170,12 +170,12 @@ transfer, and the rate at which it calls a broom a rifle is reported directly in
 
 ### 7.5 Domain randomisation over illumination
 
-Liao et al. (2026) report that removing variation in sun position, weather, and viewing angle
-costs accuracy, with the largest penalty on truncated objects. As above, we rely on the direction
-of that result rather than on the reported magnitudes, which we have not verified against the
-published text. Illumination is randomised because it is the cheapest axis to vary and the one
-the literature identifies as consequential, not because we can quote a figure for its value
-here.
+Liao et al. (2026) measure that removing variation in sun position, weather and viewing angle
+costs 30.4 mAP50 points on YOLOv11, the detector used here, and 17.5 on average across six
+architectures, with the largest penalty on truncated objects. The qualifications of Section 7.2
+apply: their object is vehicles and their test is on the reconstructed site. Illumination is
+randomised here because it is the cheapest axis to vary and the one that result identifies as
+the single most consequential.
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent
 lighting budgets, each governing solar irradiance, the angular diameter of the solar disc, sky
@@ -246,5 +246,5 @@ read on one scale.
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)
-minus mAP50(S-nadir-150) isolates the contribution of capture geometry, which Section 8.2 measures as
-the dominant mismatch between this corpus and the benchmark.
+minus mAP50(S-nadir-150) isolates the contribution of capture geometry, which Section 8.2 measures
+as a factor-of-two difference in target shape between this corpus and the benchmark.

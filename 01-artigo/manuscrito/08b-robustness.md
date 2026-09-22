@@ -77,11 +77,14 @@ still stand, but they would be describing something other than detector difficul
 placement. It could instead reflect any of the incidental differences between the two synthetic
 arms.
 
-**Check.** The two arms are generated from the same code, the same settlement seed, the same
-material library, the same illumination regimes and the same annotation procedure. Camera pitch
-and altitude are the only parameters that differ, and they are set from the VisDrone training
-split rather than from the validation split on which both arms are scored, so that the
-calibration does not consume the test set. Result: `[X]`.
+**Check.** The two models are trained on corpora generated from the same code, the same
+settlement seed, the same material library, the same illumination regimes and the same
+annotation procedure. What differs is the camera: pitch, altitude and its jitter, and the render
+resolution, which is lowered to 1920 by 1080 at 60 m so that the ground sampling distance (3.9
+cm per pixel) stays close to the 4.88 of the nadir corpus at 4K. The change is therefore designed
+to hold the size of the target and move its shape, which is the variable Section 8.2 isolates.
+Pitch is set from the VisDrone training split rather than from the validation split on which
+both models are scored, so that the calibration does not consume the test set. Result: `[X]`.
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in

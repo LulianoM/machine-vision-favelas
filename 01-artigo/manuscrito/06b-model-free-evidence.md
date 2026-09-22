@@ -110,7 +110,7 @@ A generator could be made arbitrarily more photorealistic without moving this qu
 photorealism it is also cheap to manipulate, being a property of where the camera is placed rather
 than of how the scene is built. Section 9.3 reports the S-oblique model, in which the same generator
 renders the same settlement from a tilted camera, and Section 10.4 treats the difference between
-the arms as the isolated contribution of acquisition geometry.
+the two models as the isolated contribution of acquisition geometry.
 
 One limit on the interpretation is stated here rather than in limitations. The generated value is
 fixed by a generator setting that bounds the camera near vertical without recording it per image.
@@ -160,8 +160,10 @@ hypothesis is withdrawn.
 Taken together the measurements reframe the design problem stated in Section 5. The binding
 constraint is not that a synthetic favela fails to look like a favela. At the scale at which this
 task operates, the target is a few tens of pixels of low contrast texture; its silhouette in these
-corpora tracks camera pitch rather than scene content; and the illumination condition that
-maximises apparent contrast also maximises the background clutter competing with it.
+corpora tracks camera pitch rather than scene content; and hard sun, the illumination
+conventionally preferred for flying, fills the background with the cast shadow that competes
+with the figure, so that the regime with the second largest raw contrast is among the two
+weakest once local clutter is accounted for.
 
 Whether these constraints can be overcome by synthesis alone, and what fraction of the attainable
 ceiling is reached, is the subject of Section 9.

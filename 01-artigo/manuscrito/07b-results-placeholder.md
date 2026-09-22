@@ -72,7 +72,7 @@ Pitch is set from the height-to-width ratio of the VisDrone **training** split, 
 split on which every model in this article is scored. The distinction is load-bearing: the ratio
 of 2.20 quoted in Section 8.2 is measured on the validation split, and calibrating a training
 corpus on a statistic of the test set and then reporting the gain on that same test set would be
-circular. The value used for calibration is `[X]`, measured on the training split alone.
+circular. The value used for calibration is 1.95, measured on the training split alone (Section 8.2).
 
 This arm is therefore an adaptation of the corpus to the benchmark, and is reported as such rather
 than as a discovery about acquisition geometry in general. What it isolates is whether the

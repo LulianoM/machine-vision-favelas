@@ -96,16 +96,16 @@ believed. The 75 m figure itself would be withdrawn under a condition this artic
 than delegates: if a detector trained on four of the five firearm models fails to hold its recall
 on the fifth, then what it separates is the asset library and not the object, and no figure from
 that corpus should be read as a capability. That held-out test has not been run: `[X]`.
-and nothing in this article recommends acquisition over the case study territory.
+Nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check
 
 Every generated image carries its seed, illumination regime and camera altitude in a manifest
 entry, and the generator reproduces any image exactly from that entry. Camera pitch is recorded
-per image only in corpora generated after the field was added, which is why Section 8.2 reads
-pitch from the manifest for one corpus and from the generator setting for the other, and says so
-in the table. The hyperparameter
-and inference tables in Section 7.6 are in the body of the article for the same reason.
+per image only in corpora generated after that field was added; the two corpora of Section 8.2
+predate it, which is why their rows carry the generator setting rather than a per-image value,
+and the table says so. The hyperparameter and inference tables in Section 7.6 are in the body of
+the article for the same reason.
 
 What a reader cannot check from this article is the corpus itself, although the reason is
 logistical rather than legal: every corpus behind every number reported here is redistributable by

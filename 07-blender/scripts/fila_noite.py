@@ -267,7 +267,10 @@ ETAPAS = [
 
     (12, "render_obliquo", "180 imagens no preset obliquo, para separar forma do alvo de sintese",
      blender("gen_morro.py", "--out", DS_OBL, "--dataset", 180, "--samples", 96,
-             "--res", 1920, 1080, "--people", 16, 34, "--pool", 6, "--seed", 31,
+             # MESMA semente do ds_morro_4k (21), senao o braco obliquo e OUTRO morro e a 10.4 do
+             # artigo, que afirma mesma cena e so a camera movida, seria falsa. 1080p a 60 m da
+             # 3,9 cm/px, proximo dos 4,88 do nadir em 4K: segura o TAMANHO do alvo e muda a FORMA.
+             "--res", 1920, 1080, "--people", 16, 34, "--pool", 6, "--seed", 21,
              "--climas", "todos", "--obliqua"),
      os.path.join(DS_OBL, "data.yaml"), [7]),
 
