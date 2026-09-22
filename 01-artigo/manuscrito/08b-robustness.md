@@ -137,15 +137,7 @@ must be reported as inconclusive.
 
 ### 10.8 What this design cannot rule out
 
-Two limitations are structural rather than testable within this study, and are stated here rather
-than left to the reader to notice.
-
-The benchmark is not a favela. VisDrone records dense urban scenes, which is the closest publicly
-available proxy, but the morphology the generator reproduces is specifically that of consolidated
-self-built settlement on a hillside. A transfer figure obtained on this benchmark bounds
-generalisation to dense aerial scenes; it does not establish performance over Jacarezinho, and no
-claim of the latter is made anywhere in this article.
-
-The class distinction between armed and unarmed figures is not evaluated at all, for the reason
-given in Section 9.5. Its exclusion is a limitation of scope that is also a deliberate ethical
-choice, and Section 11 treats it as such rather than as a gap to be closed in future work.
+Two boundaries of this design are structural rather than testable, and are stated in Section 11
+rather than argued here: the benchmark is not a favela (Section 11.2), and the armed and unarmed
+distinction is reported at 75 m and deliberately withheld at 150 m (Section 11.5). Neither is a
+threat this section can check, which is why neither carries a test above.

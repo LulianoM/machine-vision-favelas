@@ -52,7 +52,7 @@ only as a description of the imagery.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
 
-The model proposed in Section 5 and Section 6 classifies built form. What is implemented and
+The model proposed in Section 6 classifies built form. What is implemented and
 evaluated in Sections 9 and 10 detects people. They share the generator, the annotation procedure,
 the randomisation and the scale analysis; they do not share the object class, and no performance
 figure reported here transfers from one to the other.

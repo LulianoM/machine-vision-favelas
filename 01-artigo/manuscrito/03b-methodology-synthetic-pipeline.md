@@ -3,18 +3,18 @@
 > **Provenance note.** Every quantity in this section traces to a file under `06-resultados/`
 > together with the command that produced it. Quantities not yet measured appear as `[X]`.
 
-The design-science component of Section 5 proposes a model of vertical morphology and a
-synthetic-training strategy. This section specifies the generative procedure that implements the
+The design-science component declared in Section 5 and specified in Section 6 proposes a model
+of vertical morphology and a synthetic-training strategy. This section specifies the generative procedure that implements the
 second of those, and reports what happens when it is executed.
 
 A distinction has to be drawn at the outset, because the two are easy to conflate and the article
-would contradict itself otherwise. The conceptual model proposed in Section 5 classifies built
+would contradict itself otherwise. The conceptual model proposed in Section 6 classifies built
 form: building height, rooftop addition, material transition. What is implemented and evaluated
 below detects people, which is a different task on the same imagery. The reason for implementing
 the second rather than the first is that only it has a public benchmark against which transfer
 can be measured, and the question at issue is whether synthesis transfers at all. The pipeline,
 the annotation procedure, the randomisation and the scale analysis are shared; the object class is
-not. Nothing below should be read as a validated capability over Jacarezinho, and Section 10
+not. Nothing below should be read as a validated capability over Jacarezinho, and Section 11
 restates the boundary.
 
 ### 7.1 Why synthesis, and what it does not solve
@@ -92,8 +92,8 @@ Roof surfaces carry the objects that occupy them in use: water tanks in three co
 clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, and exposed
 reinforcement bar awaiting a further storey. Aerial cabling spans between rooftop anchor points.
 These are not decoration. At the ground sampling distance of the target sensor they are the
-dominant source of local clutter, and Section 8.3 shows that this clutter, rather than
-illumination level, governs how hard a person is to detect.
+dominant source of local clutter, and Section 8.3 measures the contrast a person presents against
+that immediate background, which Section 10.3 tests as a hypothesis about detector difficulty.
 
 <!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training, which is conducted entirely from the aerial camera, and is shown because it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
@@ -206,5 +206,5 @@ single class).
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)
-minus mAP50(S-nadir) isolates the contribution of capture geometry, which Section 8.2 shows to be
+minus mAP50(S-nadir) isolates the contribution of capture geometry, which Section 8.2 measures as
 the dominant mismatch between this corpus and the benchmark.

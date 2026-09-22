@@ -24,7 +24,7 @@ The comparative literature review in Section 2 was restricted to UAV trajectory 
 
 The most immediate implication of this study is that closing the gap it identifies (between UAV research organized around policing and UAV research organized around informal-settlement mapping) cannot happen inside a single article, and probably should not happen inside a police institution alone. The ethical protocol adopted here treats that as a starting constraint rather than an obstacle to be engineered around. A natural next step is therefore not technical refinement of the model but the design of the independent ethics review and community engagement process this article defers to: what body would conduct it, what form community consent would need to take in a territory under active criminal-organization control, and whether meaningful consent is even obtainable under those conditions are questions this study leaves open rather than presumes to answer.
 
-On the technical side, the domain-randomization strategy proposed here needs to be built and tested before any of its claims can be taken as more than plausible. That work would ideally proceed in two stages: first, benchmarking against publicly available, already-consented imagery of informal settlements elsewhere (Kigali, Slovo Park, and comparable sites already appear in the published literature) to establish whether the architecture generalizes to dense, irregular, sloped construction before any question of favela-specific deployment arises; second, and only once the first stage succeeds and an ethics process of the kind described above is in place, testing against real Jacarezinho imagery obtained under terms the community itself has agreed to.
+On the technical side, the domain-randomization strategy proposed here has been built and partially tested: the generator, the corpus and the evaluation protocol are reported in Sections 7 to 10, against a public aerial benchmark. What remains untested is specific rather than general: the controlled measurement of training scale described in Section 11.1, the per-regime illumination test specified in Section 10.3, and repetition across independent settlement seeds. Beyond those lies the half of the work that has no evaluation infrastructure at all, the morphological task of Section 11.4, and, separately from any of it, validation against real imagery of the territory, which is the stage the ethics process described above would have to precede. An alternative to the public benchmark fixed in Section 7.7 would be publicly available, already-consented imagery of informal settlements elsewhere (Kigali, Slovo Park, and comparable sites already appear in the published literature), which would test generalisation to dense, irregular, sloped construction on a scene type closer to the target than VisDrone offers.
 
 The population discrepancies noted above point to a further line of inquiry that has value independent of this study's security framing: better demographic and structural characterization of Rio's largest favelas would serve urban planning, disaster-risk assessment, and resource allocation regardless of whether it is ever put to security use, and researchers working in that tradition (the building-height and population-density literature discussed in Section 2) are better positioned to pursue it than a study anchored in a policing perspective.
 
@@ -32,9 +32,9 @@ Finally, the conceptual taxonomy proposed in this article (flat terrain, mountai
 
 ### Closing
 
-This article set out to ask what changes when computer vision is directed at the vertical
-morphology of a favela rather than at its footprint, and what it costs to answer that question
-responsibly. Three things follow from the work reported above.
+This article set out to ask under what acquisition conditions an aerial system can tell an armed
+person from an unarmed one over a dense self-built settlement, and what it costs to answer that
+question responsibly. Three things follow from the work reported above.
 
 The first is that the binding constraints are not the ones the field usually discusses. At the
 ground sampling distance of the survey that motivates this study, a person is a few tens of pixels
@@ -57,7 +57,7 @@ that can be checked before it is believed, and this article declines to make it.
 conditions under which a capability does not exist is a contribution of the same kind as
 demonstrating one that does, and in this domain it is the more useful of the two.
 
-What remains open is not primarily technical. A model of vertical morphology that is accurate and
-a model of vertical morphology that is safe to deploy in Jacarezinho are different objects, and
-nothing in the engineering reported here decides the second. That decision belongs to a process
+What remains open is not primarily technical. A system that can tell an armed person from an
+unarmed one and a system that is safe to point at Jacarezinho are different objects, and nothing
+in the engineering reported here decides the second. That decision belongs to a process
 that includes the residents of the territory, and it has not taken place.

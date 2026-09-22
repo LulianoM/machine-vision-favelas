@@ -3,7 +3,7 @@
 > **Provenance note.** Every figure in this section is a direct measurement over image and
 > annotation files, computed before any detector was trained and independent of whether any
 > detector succeeds. Each table names the corpus, the acquisition geometry recorded in its
-> manifest, and the instance count. Section 10 reports detector performance and currently carries
+> manifest, and the instance count. Section 9 reports detector performance and currently carries
 > `[X]` where measurement is still running.
 
 Before reporting detector performance we characterise the problem the detector is asked to solve.
@@ -98,8 +98,8 @@ as the detector is concerned.
 This is the domain shift that matters here, and no appearance-based measure of realism detects it.
 A generator could be made arbitrarily more photorealistic without moving this quantity. Unlike
 photorealism it is also cheap to manipulate, being a property of where the camera is placed rather
-than of how the scene is built. Section 10.3 reports the S-oblique arm, in which the same generator
-renders the same settlement from a tilted camera, and Section 11.4 treats the difference between
+than of how the scene is built. Section 9.3 reports the S-oblique model, in which the same generator
+renders the same settlement from a tilted camera, and Section 10.4 treats the difference between
 the arms as the isolated contribution of acquisition geometry.
 
 One limit on the interpretation is stated here rather than in limitations. The monotonic series
@@ -154,4 +154,4 @@ corpora tracks camera pitch rather than scene content; and the illumination cond
 maximises apparent contrast also maximises the background clutter competing with it.
 
 Whether these constraints can be overcome by synthesis alone, and what fraction of the attainable
-ceiling is reached, is the subject of Section 10.
+ceiling is reached, is the subject of Section 9.

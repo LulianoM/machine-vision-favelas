@@ -97,7 +97,7 @@ The survey flight this article reproduces is nadir. An oblique corpus that trans
 VisDrone is informative about the benchmark, not about the acquisition that would be flown over
 Jacarezinho.
 
-<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class, and no accuracy figure for that distinction is reported anywhere in this article, for the reason given in Section 11.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that per-regime performance differences in Section 10.3 cannot be attributed to the labelling.-->
+<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that per-regime performance differences in Section 10.3 cannot be attributed to the labelling.-->
 
 ### 9.4 Limited real fine-tuning
 
@@ -111,10 +111,12 @@ trained on the same fractions from scratch.
 | 100 per cent | `[X]` | `[X]` | `[X]` |
 
 This is the quantity with the clearest practical meaning for the proposal in Section 6: how much
-consent-bounded real imagery the synthetic pretraining removes the need for. The literature
-surveyed in Section 2 suggests that 5 to 20 per cent of real data recovers 85 to 95 per cent of
-performance given good synthetic pretraining; whether that holds at this ground sampling distance
-and in this scene type is an open question that these rows answer.
+real aerial imagery the synthetic pretraining removes the need for, measured on a public
+benchmark. Whether the same fraction holds for consent-bounded imagery of the case study
+territory is not established here, for the reason given in Section 11.2. The sim-to-real
+literature surveyed in Section 2 establishes that a modest volume of real data substantially
+improves generalisation from synthetic pretraining, but not how much is needed at this ground
+sampling distance or in this scene type, which is what these rows answer.
 
 ### 9.5 The armed and unarmed distinction, by altitude
 
@@ -140,5 +142,5 @@ them armed, `[X]` unarmed and `[X]` carrying a confusable object.
 
 The fourth row is the quantity of interest. It is the rate at which the system would mark a
 resident carrying a broom, a length of pipe or a rolled mat as armed, and it is the concrete form
-of the dual-use harm this article discusses. Section 11.5 states what the two regimes mean
-together, and Section 11.3 states the condition under which the 75 m figures would be withdrawn.
+of the dual-use harm this article discusses. Section 10 states, for each result above, the
+condition that would overturn it, and Section 11.5 reads the two altitudes together.
