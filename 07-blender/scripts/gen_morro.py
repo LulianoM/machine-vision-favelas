@@ -110,16 +110,24 @@ if args.otimizado:
     if args.nevoa_folga == 190.0:
         args.nevoa_folga = 40.0
 
-# Preset OBLIQUO, calibrado na medicao do VisDrone val e nao em chute. Medido em 13.969 caixas
-# reais: largura mediana 12 px, altura 25 px, ou seja h/w de 2,20 (p90 em 3,17). Isso e pessoa
-# EM PE vista de camera obliqua. O nosso nadir a 150 m da h/w de 1,24, que e planta de cabeca e
-# ombro. A area em pixel e parecida nos dois, mas a FORMA do alvo e outra, e e essa a diferenca
-# que importa para o detector. Este preset existe para separar as duas perguntas: o sintetico
-# nao transfere, ou a geometria de captura e que nao bate?
+# Preset OBLIQUO, calibrado na medicao do VisDrone TREINO. Medido em 106.396 caixas reais:
+# largura mediana 13 px, altura 24 px, ou seja h/w de 1,95 (p90 em 3,00). Isso e pessoa EM PE
+# vista de camera obliqua. O nosso nadir a 150 m da h/w de 0,98, que e planta de cabeca e ombro.
+# A AREA em pixel e praticamente a mesma nos dois (301 contra 300 px2), mas a FORMA do alvo e
+# outra, por um fator de 2,0, e e essa a diferenca que importa para o detector. Este preset
+# existe para separar duas perguntas: o sintetico nao transfere, ou a geometria de captura e que
+# nao bate?
+#
+# CORRECAO de 2026-09-22. Ate aqui o preset estava calibrado no split de VALIDACAO (13.969
+# caixas, h/w 2,20), que e o conjunto de TESTE. Calibrar o gerador no conjunto de teste e
+# circular: o resultado mede o quanto o alvo foi ajustado ao gabarito, nao o quanto a geometria
+# de captura explica a transferencia. Pior, o texto do artigo ja afirmava que a calibracao era
+# no treino, entao codigo e artigo discordavam. Agora e o treino, e os dois numeros ficam
+# registrados para quem comparar: treino h/w 1,95, validacao 2,20.
 if args.obliqua:
     args.alt = 60.0
     args.alt_jitter = 18.0
-    args.pitch = [28.0, 55.0]
+    args.pitch = [26.0, 52.0]      # alvo h/w 1,95, nao 2,20
 
 rng = random.Random(args.seed)
 os.makedirs(args.out, exist_ok=True)
