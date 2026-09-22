@@ -25,6 +25,9 @@ try:
 except Exception:            # o modulo vive ao lado; se faltar, o gerador segue sem a 3a classe
     OA = None
 
+# gen_morro.py liga isto com --porte-realista. Ver comentario em make_person.
+PORTE_REALISTA = False
+
 POOL = []
 PEOPLE = []
 POOL_Z = -500.0
@@ -428,8 +431,18 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, c
             # MESMA distribuicao de pose para arma e para objeto. Se quem carrega vassoura
             # estivesse sempre numa pose diferente de quem carrega fuzil, a rede separaria pela
             # pose e o experimento nao mediria a confusao entre os objetos, que e o ponto.
-            pose = rng.choices(["empunhando", "lado", "costas", "andando"],
-                               weights=[0.42, 0.26, 0.16, 0.16])[0]
+            # EXCECAO de 2026-09-22 (PORTE_REALISTA): 23% das vassouras do corpus a 75 m sairam
+            # chamadas de arma, e a folha de recortes mostrou o motivo: cano de PVC "empunhado"
+            # com as duas maos atravessado no peito, que e uma pose que ninguem faz com cano.
+            # Com a flag, o objeto vai sobretudo ao lado, no ombro ou na mao caminhando, e a pose
+            # de tiro fica rara. A sobreposicao continua existindo (8%), so que na frequencia
+            # em que existe na rua, e nao em 42%.
+            if com_objeto and PORTE_REALISTA:
+                pose = rng.choices(["empunhando", "lado", "costas", "andando"],
+                                   weights=[0.08, 0.34, 0.28, 0.30])[0]
+            else:
+                pose = rng.choices(["empunhando", "lado", "costas", "andando"],
+                                   weights=[0.42, 0.26, 0.16, 0.16])[0]
         else:
             pose = rng.choices(["parado", "andando", "sentado", "bracos_cruzados"], weights=[0.36, 0.38, 0.14, 0.12])[0]
     zz = z

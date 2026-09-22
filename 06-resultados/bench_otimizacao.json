@@ -1,0 +1,20 @@
+[
+ {
+  "nome": "base",
+  "quadros": 4,
+  "mediana": 190.1,
+  "minimo": 174.9,
+  "maximo": 193.7,
+  "caixas": 65,
+  "nadir": "C:\\arma3-favela\\blender\\bench_otim\\base\\images\\train\\mr_000000"
+ },
+ {
+  "nome": "otimizado",
+  "quadros": 4,
+  "mediana": 183.6,
+  "minimo": 169.7,
+  "maximo": 814.4,
+  "caixas": 36,
+  "nadir": "C:\\arma3-favela\\blender\\bench_otim\\otimizado\\images\\train\\mr_000000"
+ }
+]

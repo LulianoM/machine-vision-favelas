@@ -144,6 +144,23 @@ Corre em paralelo, já está na fila (etapa 16, render a 75 m com objetos confun
 das frentes acima e responde a outra pergunta: com que frequência um detector chama de arma uma
 vassoura, em função da distância de amostragem no solo.
 
+**Resultado de 22/09, corpus a 75 m (`runs/detect/armado_75`):** mAP50 0,546; no val, 139 armadas
+acertadas e 75 objetos chamados de arma no limiar 0,25 (23% na matriz de confusão). A folha de
+recortes (`Desktop/recortes_armado`) mostra a causa: a 2,4 cm/px a arma é uma linha de 1 a 2 px, e
+o corpus dava ao objeto a mesma pose de tiro em 42% dos casos. Duas correções, sem mexer na
+malha da arma, que a essa resolução não importa:
+
+- `--porte-realista` (people_mpfb): objeto em pose de tiro cai de 42% para 8%; o resto vai ao
+  lado, no ombro ou na mão caminhando, na frequência em que isso existe na rua.
+- Segunda geometria a 35 m (equivalente ao recorte ampliado da Zenmuse Z30, que tem zoom óptico
+  de 30x): pessoa ~150 px, corpo do fuzil 3 a 4 px, coronha e carregador passam a existir no
+  sensor. Amostra de 10 quadros em `C:rma3-favelalendermostra_zoom35`, sem treino.
+
+Regimes chuva e encoberto: a exposição de -0,9 apaga a distinção; um dos cinco falsos positivos
+da folha é um quadro em que não se vê nada. Decisão pendente: manter esses regimes para pessoa e
+reportar armada/desarmada só nos regimes com contraste, declarando no artigo que em RGB nadir a
+distinção à noite ou na chuva é indefinida (a resposta da literatura é térmico).
+
 ## 5. Ordem e custo
 
 | ordem | frente | custo de GPU | o que fecha |
@@ -154,6 +171,12 @@ vassoura, em função da distância de amostragem no solo.
 | 4 | C, misto com 5, 10 e 20% | 12 h | o segundo modelo do artigo |
 | 5 | A2, curva por pitch | 9 h | dose-resposta da geometria |
 | 6 | B em escala, se o teste de dose der sinal | 40 h | o corpus grande |
+
+**Benchmark de render de 22/09 (`06-resultados/bench_otimizacao.json`, 4 quadros 4K a 96
+samples):** base mediana 190 s por quadro; `--otimizado` (persistent_data, névoa menor, poda de
+árvore) 184 s e 36 caixas contra 65 do base nos mesmos quadros. Ganho de 3% e cena alterada:
+descartado. O que reduz tempo de verdade é cortar o R cheio (43 h, só melhora o denominador que o
+pareado já dá) e baixar samples de 96 para 64 (cerca de 30%, a conferir em par de quadros).
 
 As etapas 1 a 4 cabem em quatro dias de máquina e já dão ao artigo os dois modelos que o autor
 pediu, com denominador duplo e com a causa do 1,6% identificada. A etapa 6 só se justifica se a 3

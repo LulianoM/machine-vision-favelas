@@ -72,6 +72,9 @@ ap.add_argument("--min-lado", type=float, default=0.002)
 ap.add_argument("--mistura", type=float, nargs=3, default=[0.34, 0.33, 0.33],
                 help="pesos das classes armada, desarmada e desarmada com objeto alongado")
 ap.add_argument("--alt-jitter", type=float, default=6.0)
+ap.add_argument("--porte-realista", action="store_true",
+                help="objeto confundivel raramente em pose de tiro (8%% em vez de 42%%); "
+                     "ver people_mpfb.make_person")
 ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
                 help="inclinacao da camera em graus a partir do NADIR (0 = nadir puro)")
 ap.add_argument("--obliqua", action="store_true",
@@ -1606,6 +1609,7 @@ if args.comparar_climas:
 if args.dataset > 0:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import people_mpfb as PM
+    PM.PORTE_REALISTA = args.porte_realista
 
     for _sp in ("train", "val"):
         os.makedirs(os.path.join(args.out, "images", _sp), exist_ok=True)
