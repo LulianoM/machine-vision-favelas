@@ -303,3 +303,17 @@ Leitura: a deteccao de pessoas a 150 m fica acima de 80% de F1 nos dois testes; 
 fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o recall cai (0,75) por oclusao mutua e
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
+
+## 2026-09-23 [DESKTOP] Teste de dose de variedade (Frente B, dois pontos)
+
+Mesmo N (180 imagens 4K), mesma receita de treino (yolo11s, 1280, 60 epocas, batch 6, single_cls), mesmo gerador com `--mistura 0.5 0.5 0 --enquadro quadrado` para so diferir do controle no sitio. Braco: 6 sitios x 30 imagens (`ds_variedade`, sitios -1, 0, 1, 2, 3, 4 de `sitios.py`). Avaliacao zero-shot no VisDrone val (`avalia_sim2real.py`, conf 0,001, imgsz 1280).
+
+| | 1 sitio (`s_nadir_4k`) | 6 sitios (`s_variedade`) |
+|---|---|---|
+| mAP50 VisDrone | 0,0102 | 0,0190 |
+| mAP50-95 VisDrone | 0,0025 | 0,0071 |
+| P / R VisDrone | 0,086 / 0,042 | 0,092 / 0,058 |
+| mAP50 sintetico (teto, val proprio) | 0,7915 | 0,6786 |
+| razao de eficacia vs R pareado (0,6311) | 1,6% | 3,0% |
+
+Arquivos: `sim2real_s_nadir_4k.json`, `sim2real_s_variedade.json`; logs em `C:rma3-favelalenderila_*.log` a `23_*.log`. Leitura: variedade de sitio move o numero na direcao prevista (Liao 2026, Kiefer 2022), quase dobrando o mAP50 e quase triplicando o mAP50-95, e o teto sintetico cai de 0,79 para 0,68 (o modelo deixa de decorar uma cena). O patamar continua uma ordem de grandeza abaixo de Kiefer (10 a 23%): sitio nao e o unico gargalo. Proximo: braco obliquo em 4K (geometria) e, se justificar, Frente B em escala.

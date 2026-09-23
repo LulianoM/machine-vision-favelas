@@ -1,0 +1,27 @@
+{
+ "weights": "C:\\arma3-favela\\blender\\runs\\detect\\s_variedade\\weights\\best.pt",
+ "imgsz": 1280,
+ "conf": 0.001,
+ "resultados": [
+  {
+   "metrics/precision(B)": 0.7642,
+   "metrics/recall(B)": 0.6314,
+   "metrics/mAP50(B)": 0.6786,
+   "metrics/mAP50-95(B)": 0.2729,
+   "fitness": 0.2729,
+   "conjunto": "sintetico",
+   "data": "C:\\arma3-favela\\blender\\ds_variedade_tiles\\data.yaml",
+   "single_cls": true
+  },
+  {
+   "metrics/precision(B)": 0.0915,
+   "metrics/recall(B)": 0.0583,
+   "metrics/mAP50(B)": 0.019,
+   "metrics/mAP50-95(B)": 0.0071,
+   "fitness": 0.0071,
+   "conjunto": "real",
+   "data": "C:\\arma3-favela\\visdrone\\visdrone_yolo\\data.yaml",
+   "single_cls": true
+  }
+ ]
+}
