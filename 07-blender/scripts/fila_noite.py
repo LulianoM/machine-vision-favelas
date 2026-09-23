@@ -55,6 +55,8 @@ DS_ARM = os.path.join(RAIZ, "ds_armado_75")
 DS_ARM_T = os.path.join(RAIZ, "ds_armado_75_tiles")
 DS_VAR = os.path.join(RAIZ, "ds_variedade")
 DS_VAR_T = os.path.join(RAIZ, "ds_variedade_tiles")
+DS_ZOOM = os.path.join(RAIZ, "ds_armado_35")
+DS_ZOOM_T = os.path.join(RAIZ, "ds_armado_35_tiles")
 VIS_YAML = os.path.join(VIS, "visdrone_yolo", "data.yaml")
 VIS_SUB = os.path.join(VIS, "visdrone_sub", "data.yaml")
 
@@ -70,7 +72,9 @@ def sh(*a):
 
 
 def blender(script, *a):
-    return sh(BLENDER, "-b", "--python", os.path.join(SCR, script), "--", *a)
+    # --python-exit-code 1: sem isto o Blender devolve 0 mesmo quando o script levanta excecao,
+    # e a fila marcava "ok" um render que morreu no primeiro quadro (22/09, NameError).
+    return sh(BLENDER, "-b", "--python-exit-code", 1, "--python", os.path.join(SCR, script), "--", *a)
 
 
 def treino(data, nome, extra=()):
@@ -196,9 +200,16 @@ def render_dose(log):
     for k in SITIOS_DOSE:
         parcial = os.path.join(RAIZ, f"_dose_s{k}")
         if not os.path.exists(os.path.join(parcial, "data.yaml")):
+            # --mistura 0.5 0.5 0: o controle (ds_morro_4k, 1.609 armadas e 1.616 desarmadas
+            # nas 180 imagens, sem terceira classe) foi gerado antes de existir o objeto
+            # confundivel. Sem isto um terco das pessoas do braco de variedade sairia carregando
+            # vassoura. --enquadro quadrado: o filtro de candidata do controle (cx entre 0,20 e
+            # 0,81 do quadro); o de projecao espalha ate as bordas. As duas flags existem para
+            # o braco de variedade so diferir do controle no sitio.
             cmd = blender("gen_morro.py", "--out", parcial, "--dataset", POR_SITIO,
                           "--samples", 96, "--res", 3840, 2160, "--people", 16, 34,
-                          "--pool", 6, "--seed", 21, "--climas", "todos", "--sitio", k)
+                          "--pool", 6, "--seed", 21, "--climas", "todos", "--sitio", k,
+                          "--mistura", 0.5, 0.5, 0.0, "--enquadro", "quadrado")
             log.write("\n# sitio %d\n# %s\n" % (k, " ".join(cmd)))
             log.flush()
             rc = sp.call(cmd, stdout=log, stderr=sp.STDOUT, cwd=RAIZ)
@@ -270,8 +281,10 @@ ETAPAS = [
              # MESMA semente do ds_morro_4k (21), senao o braco obliquo e OUTRO morro e a 10.4 do
              # artigo, que afirma mesma cena e so a camera movida, seria falsa. 1080p a 60 m da
              # 3,9 cm/px, proximo dos 4,88 do nadir em 4K: segura o TAMANHO do alvo e muda a FORMA.
-             "--res", 1920, 1080, "--people", 16, 34, "--pool", 6, "--seed", 21,
-             "--climas", "todos", "--obliqua"),
+             # 4K a 120 m (o preset escala a altura com a resolucao, GSD 3,9 cm/px): mesmos
+             # ~7 ladrilhos por imagem do controle. Em 1080p eram 2 por imagem com faixa preta.
+             "--res", 3840, 2160, "--people", 16, 34, "--pool", 6, "--seed", 21,
+             "--climas", "todos", "--obliqua", "--mistura", 0.5, 0.5, 0.0),   # 2 classes, como o nadir
      os.path.join(DS_OBL, "data.yaml"), [7]),
 
     (13, "ladrilha_obliquo", "ladrilhos de 1280 px do braco obliquo",
@@ -327,6 +340,26 @@ ETAPAS = [
      aval(pesos("s_variedade"), os.path.join(DS_VAR_T, "data.yaml"),
           os.path.join(RES, "sim2real_s_variedade.json")),
      os.path.join(RES, "sim2real_s_variedade.json"), [22]),
+
+    (25, "render_zoom35", "tres classes a 35 m (1,1 cm/px), o recorte ampliado que a Zenmuse Z30 "
+                          "faria sobre uma deteccao a 150 m. Porte realista, fio fino, pessoas "
+                          "na laje: e o segundo ponto da curva falso positivo x GSD",
+     blender("gen_morro.py", "--out", DS_ZOOM, "--dataset", 200, "--samples", 64,
+             "--res", 3840, 2160, "--people", 12, 24, "--pool", 6, "--seed", 43,
+             "--climas", "todos", "--alt", 35, "--alt-jitter", 3, "--mistura", 0.34, 0.33, 0.33,
+             "--porte-realista", "--fio-gsd", "--laje", 0.75, "--amostra-no-quadro"),
+     os.path.join(DS_ZOOM, "data.yaml"), []),
+
+    (26, "ladrilha_zoom35", "ladrilhos do lote a 35 m",
+     sh(PY, os.path.join(SCR, "tile_dataset.py"), "--data", DS_ZOOM, "--out", DS_ZOOM_T,
+        "--tile", 1280, "--overlap", 0.2),
+     os.path.join(DS_ZOOM_T, "data.yaml"), [25]),
+
+    (27, "treino_armado_35", "tres classes, mesma receita do armado_75: muda o GSD e so o GSD",
+     sh(PY, os.path.join(SCR, "train_yolo_win.py"), "--data", os.path.join(DS_ZOOM_T, "data.yaml"),
+        "--model", MODELO, "--imgsz", IMGSZ, "--epochs", EPOCAS, "--batch", BATCH,
+        "--workers", WORKERS, "--name", "armado_35"),
+     pesos("armado_35"), [26]),
 
     (24, "bench_otimizacao", "mede QUAL das tres otimizacoes de render paga, e se alguma estraga "
                              "a imagem. Fica no fim porque nao produz dado para o artigo, "
@@ -413,6 +446,8 @@ def main():
             falhou.add(i)
 
     print("\nresumo em " + ESTADO)
+    # codigo de saida: encadeia.py depende disto para parar a cadeia quando um grupo falha
+    sys.exit(1 if falhou else 0)
 
 
 if __name__ == "__main__":

@@ -56,7 +56,11 @@ def main():
         d["single_cls"] = single
         return d
 
-    res = [x for x in (roda("sintetico", args.sintetico, False),
+    # O teto sintetico e avaliado com single_cls igual ao do modelo. Antes era sempre False, e
+    # um modelo de 1 classe (treinado com --single-cls) era conferido contra rotulos de 2
+    # classes: a classe 1 nunca casava e o teto saia rebaixado. Achado da revisao de 22/09.
+    _single_sint = len(m.names) == 1
+    res = [x for x in (roda("sintetico", args.sintetico, _single_sint),
                        roda("real", args.real, True),
                        roda("real_gsd", args.real_gsd, True)) if x]
 

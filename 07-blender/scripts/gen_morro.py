@@ -72,6 +72,22 @@ ap.add_argument("--min-lado", type=float, default=0.002)
 ap.add_argument("--mistura", type=float, nargs=3, default=[0.34, 0.33, 0.33],
                 help="pesos das classes armada, desarmada e desarmada com objeto alongado")
 ap.add_argument("--alt-jitter", type=float, default=6.0)
+ap.add_argument("--laje", type=float, default=0.45,
+                help="fracao das pessoas colocadas em cima de laje (o resto vai ao beco). 0,45 e "
+                     "o valor historico; a 35 m as paredes escondem quase todo o beco, e o "
+                     "preset de zoom sobe para 0,75")
+ap.add_argument("--fio-gsd", action="store_true",
+                help="raio de fio e varal proporcional ao GSD em vez do valor fixo calibrado a "
+                     "150 m (5 e 8 cm, que a 35 m viram vigas de 15 px)")
+ap.add_argument("--enquadro", choices=["projecao", "quadrado"], default="projecao",
+                help="filtro de candidata a pessoa: 'projecao' (qualquer pitch) ou 'quadrado' "
+                     "(o filtro antigo, +-0,26 da largura do quadro em torno do eixo, que e o "
+                     "que gerou o controle ds_morro_4k; o braco de variedade usa este para so "
+                     "diferir do controle no sitio)")
+ap.add_argument("--amostra-no-quadro", action="store_true",
+                help="sorteia lajes e celulas de beco so entre as que caem no quadro. Sem isto, "
+                     "a 35 m o quadro cobre 0,5%% do terreno e quase toda candidata e rejeitada "
+                     "(1 a 3 caixas por quadro)")
 ap.add_argument("--porte-realista", action="store_true",
                 help="objeto confundivel raramente em pose de tiro (8%% em vez de 42%%); "
                      "ver people_mpfb.make_person")
@@ -128,8 +144,14 @@ if args.otimizado:
 # no treino, entao codigo e artigo discordavam. Agora e o treino, e os dois numeros ficam
 # registrados para quem comparar: treino h/w 1,95, validacao 2,20.
 if args.obliqua:
-    args.alt = 60.0
-    args.alt_jitter = 18.0
+    # A altura escala com a resolucao para manter o GSD em 3,9 cm/px: 60 m em 1080p, 120 m em
+    # 4K. Achado da revisao de 22/09: em 1080p cada imagem rende 2 ladrilhos de 1280 (com 200
+    # linhas pretas) contra 7,4 do controle 4K, ou seja 3,7 vezes menos passos de treino, o que
+    # confundia geometria com volume de treino. Em 4K a 120 m o numero de ladrilhos por imagem
+    # e o mesmo do nadir, e so a camera muda.
+    _esc = args.res[0] / 1920.0
+    args.alt = 60.0 * _esc
+    args.alt_jitter = 18.0 * _esc
     args.pitch = [26.0, 52.0]      # alvo h/w 1,95, nao 2,20
 
 rng = random.Random(args.seed)
@@ -147,6 +169,9 @@ MORRO_H = SITIO["morro_h"]                      # altura do morro que cerca o va
 RELEVO = SITIO["relevo"]
 AVENIDA = SITIO["avenida"]
 AREA_X, AREA_Y = 250.0, 205.0  # semi-extensao do terreno modelado
+# fio e varal: raio fixo calibrado para 150 m em 4K (4,88 cm/px). Com --fio-gsd escala pelo GSD
+# relativo, nunca acima de 1, para o corpus de zoom a 35 m nao sair com fios de 15 px.
+FATOR_FIO = min(1.0, (args.alt / 150.0) * (3840.0 / args.res[0])) if args.fio_gsd else 1.0
 PAV_H = 2.72                   # pe-direito medio de um pavimento
 print(f"[morro] sitio {args.sitio}: {SITIO['nome']}, nucleo {NUC_A:.0f}x{NUC_B:.0f} m, "
       f"relevo {RELEVO}, mata {SITIO['mata']}, "
@@ -1089,7 +1114,7 @@ for cant0 in LOTES:
         ay_ = wcy - lx * 0.3 * math.sin(ang)
         bx_ = wcx + lx * 0.3 * math.cos(ang)
         by_ = wcy + lx * 0.3 * math.sin(ang)
-        acc.fio((ax_, ay_, ztopo + 1.4), (bx_, by_, ztopo + 1.4), 0.05, I_FIO, barriga=0.12)
+        acc.fio((ax_, ay_, ztopo + 1.4), (bx_, by_, ztopo + 1.4), 0.05 * FATOR_FIO, I_FIO, barriga=0.12)
         # numero, posicao e tamanho de peca aleatorios: o motivo de 7 retangulos igualmente
         # espacados, repetido identico dezenas de vezes, foi apontado como sinal de "kit de pecas"
         n_pc = rng.randint(2, 9)
@@ -1131,7 +1156,7 @@ if CASAS:
             continue
         z1 = zt + rng.uniform(0.6, 2.2)
         z2 = zt2 + rng.uniform(0.6, 2.2)
-        acc.fio((x, y, z1), (x2, y2, z2), 0.08, I_FIO, barriga=rng.uniform(0.5, 1.4))
+        acc.fio((x, y, z1), (x2, y2, z2), 0.08 * FATOR_FIO, I_FIO, barriga=rng.uniform(0.5, 1.4))
         n_fio += 1
         _pontas[ia] = _pontas.get(ia, 0) + 1
         _pontas[ib] = _pontas.get(ib, 0) + 1
@@ -1702,6 +1727,35 @@ if args.dataset > 0:
             q = world_to_camera_view(scene, cam_ds, Vector((x, y, z)))
             return q.z > 0 and -folga <= q.x <= 1 + folga and -folga <= q.y <= 1 + folga
 
+        if args.enquadro == "quadrado":
+            # O filtro que gerou o controle: quadrado de +-0,52 da meia largura em torno do eixo
+            # nadir. Medido no ds_morro_4k: cx entre 0,20 e 0,81 do quadro. O de projecao espalha
+            # ate 0,04 e 0,998, e isso seria uma segunda diferenca entre controle e tratamento.
+            _meia_q = alt * (18.0 / Z30_LENS) * 0.52
+
+            def _no_quadro(x, y, z, folga=0.04):
+                return abs(x - ccx) <= _meia_q and abs(y - ccy) <= _meia_q
+
+        CASAS_Q, LIVRES_Q = CASAS, LIVRES
+        if args.amostra_no_quadro:
+            _rp = alt * (18.0 / Z30_LENS) * 1.3          # pre-filtro barato no plano
+            CASAS_Q = []
+            for _c in CASAS:
+                _cx = sum(p[0] for p in _c[0]) / 4
+                _cy = sum(p[1] for p in _c[0]) / 4
+                if abs(_cx - ccx) < _rp and abs(_cy - ccy) < _rp and _no_quadro(_cx, _cy, _c[2]):
+                    CASAS_Q.append(_c)
+            LIVRES_Q = [(j_, i_) for (j_, i_) in LIVRES
+                        if abs(BX0 + (i_ + 0.5) * GB - ccx) < _rp
+                        and abs(BY0 + (j_ + 0.5) * GB - ccy) < _rp]
+            LIVRES_Q = [(j_, i_) for (j_, i_) in LIVRES_Q
+                        if _no_quadro(BX0 + (i_ + 0.5) * GB, BY0 + (j_ + 0.5) * GB,
+                                      z_em(BX0 + (i_ + 0.5) * GB, BY0 + (j_ + 0.5) * GB))]
+            if not LIVRES_Q:
+                LIVRES_Q = LIVRES
+            print(f"[morro] no quadro: {len(CASAS_Q)} lajes, {len(LIVRES_Q)} celulas de beco",
+                  flush=True)
+
         for _ in range(n_p * 12):
             if idx >= n_p:
                 break
@@ -1710,8 +1764,8 @@ if args.dataset > 0:
             # vassoura, que e o dano de uso dual que o artigo discute. Ver PLANO-ARMADO.md.
             cls_ = rng.choices([0, 1, 2], weights=args.mistura)[0]
             armed = (cls_ == 0)
-            if rng.random() < 0.45 and CASAS:      # em cima da laje
-                ca, _zb, zt = rng.choice(CASAS)
+            if rng.random() < args.laje and CASAS_Q:  # em cima da laje
+                ca, _zb, zt = rng.choice(CASAS_Q)
                 mx_ = sum(p[0] for p in ca) / 4
                 my_ = sum(p[1] for p in ca) / 4
                 if not _no_quadro(mx_, my_, zt):
@@ -1720,7 +1774,7 @@ if args.dataset > 0:
                 py = my_ + rng.uniform(-0.3, 0.3)
                 PM.make_person(rng, idx, px, py, zt + 0.02, armed, on_roof=True, classe=cls_)
             else:                                  # no beco
-                j_, i_ = LIVRES[rng.randrange(len(LIVRES))]
+                j_, i_ = LIVRES_Q[rng.randrange(len(LIVRES_Q))]
                 px = BX0 + (i_ + 0.5) * GB
                 py = BY0 + (j_ + 0.5) * GB
                 if not _no_quadro(px, py, z_em(px, py)):

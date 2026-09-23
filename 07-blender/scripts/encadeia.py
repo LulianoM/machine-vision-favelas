@@ -50,12 +50,14 @@ def retoma(run):
 
 # Cada passo so roda se o anterior fechou. Em 22/09 o teste de dose falhou no primeiro quadro e
 # a cadeia caiu direto na retomada da r_cheio, que era o que devia vir por ultimo. Falhou, para.
-if fila("20,21,22,23", "teste de dose de variedade") != 0:
-    log("teste de dose falhou: parando aqui para nao tomar a GPU com o que vem depois")
-    sys.exit(1)
-if retoma("r_cheio") != 0:
-    log("retomada falhou: parando")
-    sys.exit(1)
-fila("24", "benchmark de otimizacao")
+#
+# Ordem de 22/09 (noite): dose, obliquo, zoom. O R cheio (43 h) saiu da fila: so melhora o
+# denominador que o pareado ja da. O benchmark (24) ja rodou e descartou o --otimizado.
+for ids, nome in (("20,21,22,23", "teste de dose de variedade"),
+                  ("25,26,27", "armado a 35 m (zoom)"),
+                  ("12,13,14,15", "braco obliquo refeito em 4K")):
+    if fila(ids, nome) != 0:
+        log(f"{nome} falhou: parando aqui para nao tomar a GPU com o que vem depois")
+        sys.exit(1)
 log("cadeia encerrada")
 sys.exit(0)
