@@ -73,3 +73,5 @@ OSM e `gen_morro.py`), e é dele que saem as figuras publicáveis.
 - Nenhum número de sim-to-real existe. Causa conhecida: o teste em imagem real nunca foi rodado e o VisDrone não foi baixado. Não depende de ninguém além do desktop.
 - O texto do artigo sobre o método não pode ser escrito antes da decisão do item 1 (ARMA 3 ou Blender, e o papel do dado PCERJ).
 - Os braços com dado PCERJ não podem ser ilustrados no artigo nem no painel.
+
+**[DESKTOP 2026-09-22 22:28] Cadeia da noite disparada** (`encadeia.py`, log em `C:\arma3-favela\blender\encadeia.log`), ordem: (1) teste de dose, 6 sitios x 30 imagens 4K, 2 classes, enquadro do controle, treino e VisDrone (~12,5 h); (2) armado a 35 m, 200 quadros, porte realista, fio fino, amostragem em quadro, 64 samples, treino (~7,5 h); (3) obliquo refeito em 4K a 120 m, treino, VisDrone (~10 h). R cheio (43 h) fora da fila. Logs por etapa em `C:\arma3-favela\blender\fila\NN_*.log`. A cadeia para sozinha se um grupo falhar (codigos de saida corrigidos).

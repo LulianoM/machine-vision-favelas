@@ -1,6 +1,14 @@
 # DIÁRIO DE BORDO
 
-Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
+Entradas novas no topo. Formato: `## 2026-09-22 [DESKTOP] Revisao da fila e disparo da cadeia da noite
+
+- Recortes do modelo armado a 75 m: 23% de objeto chamado de arma porque a arma e uma linha de 1 a 2 px e o objeto ia em pose de tiro em 42% dos casos. Flags novas no gerador: `--porte-realista`, `--fio-gsd`, `--laje`, `--amostra-no-quadro`, `--enquadro quadrado`. Amostra a 35 m mostra coronha e carregador.
+- Sitios: mata varre por sitio, 5 paletas, rua estreita e rio; MPFB semeado (quadros agora reproduziveis; os corpora anteriores nao eram, e o artigo 10.6 e 11.6 foi corrigido).
+- Benchmark de render: `--otimizado` da 3%, descartado. Perfil: 42 s fixos + 1,6 s por sample no 4K.
+- Revisao por agentes, verificada: Blender devolvia rc=0 em excecao (`--python-exit-code 1`); fila_noite saia sempre 0 (agora 1 se falhou); controle tem 2 classes e alvos so no centro (dose usa `--mistura 0.5 0.5 0 --enquadro quadrado`); obliquo em 1080p dava 3,7x menos ladrilhos (agora 4K a 120 m); zoom a 35 m so tinha 1 a 3 caixas por quadro (amostragem em quadro: 9 a 11); residuos do obliquo de zero caixas afastados; teto sintetico do avaliador com single_cls do modelo (numero nao mudou: 0,7915 / 0,0102).
+- Cadeia disparada as 22:28: dose, zoom, obliquo. ~30 h.
+
+## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
 ## 2026-09-21 [DESKTOP] Os primeiros números de sim-to-real, e três defeitos que eles revelaram
 
