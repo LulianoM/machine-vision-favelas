@@ -101,7 +101,11 @@ Nothing in this article recommends acquisition over the case study territory.
 ### 11.6 Reproducibility, and what a reader cannot check
 
 Every generated image carries its seed, illumination regime and camera altitude in a manifest
-entry, and the generator reproduces any image exactly from that entry. Camera pitch is recorded
+entry. The settlement is reproduced exactly from the seed; the figures in it were not, in the
+corpora reported here, because the human generator drew from an unseeded random stream, a defect
+found and closed after those corpora were rendered. The settlement, the camera and the
+illumination of every reported image are therefore reproducible from the manifest, and the exact
+placement of figures is reproducible only for corpora generated after the fix. Camera pitch is recorded
 per image only in corpora generated after that field was added; the two corpora of Section 8.2
 predate it, which is why their rows carry the generator setting rather than a per-image value,
 and the table says so. The hyperparameter and inference tables in Section 7.6 are in the body of

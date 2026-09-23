@@ -61,6 +61,14 @@ def _mat(nome, cor, rough=0.8, metal=0.0):
 def build_pool(rng, k, log=print):
     global POOL
     clear_pool()
+    # O MPFB sorteia o corpo com o `random` GLOBAL quando a propriedade de semente da cena esta
+    # vazia (createrandomhuman.py: `seed = random.randint(...)`). Medido em 22/09: dois lotes com
+    # a mesma semente e o mesmo sitio davam cena identica (439 edificacoes, 208.396 faces) e
+    # quadros diferentes (elev 64 contra 61, 13 contra 11 caixas), porque a altura e a largura de
+    # cada corpo entram na oclusao e na contagem, e dai tudo diverge. Semear o global aqui com um
+    # valor derivado do rng do lote fecha isso sem consumir um sorteio a mais do rng.
+    import random as _random
+    _random.seed(0x5EED ^ (k * 2654435761 % (2 ** 31)) ^ (rng.getstate()[1][0] & 0xFFFF))
     suits = _suits()
     for i in range(k):
         before = set(bpy.data.objects)

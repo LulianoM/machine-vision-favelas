@@ -36,7 +36,7 @@ import random
 # O sítio -1 reproduz exatamente o gerador de antes desta mudança. Serve de controle: qualquer
 # lote gerado com --sitio -1 tem de sair igual ao ds_morro_4k para a mesma semente.
 HISTORICO = dict(
-    nome="historico",
+    nome="historico", paleta="referencia",
     nuc_a=92.0, nuc_b=58.0, morro_h=62.0,
     relevo="morro", n_bairro=9, arvores=2600,
     pav_base=1.0, pav_amp=4.0, pav_max=6,
@@ -46,6 +46,13 @@ HISTORICO = dict(
 
 RELEVOS = ["morro", "plano", "dois_morros", "encosta"]
 MATAS = ["anel", "manchas", "ausente"]
+# Paleta de cobertura e fachada. "referencia" é a do ds_morro_4k (pesos medidos na ortofoto);
+# as outras deslocam os pesos entre laje crua, cerâmica e laje pintada, e giram o matiz das
+# fachadas. Variedade de lugar sem isto era só traçado; a aparência era a mesma em todo sítio.
+PALETAS = ["ceramica", "laje", "pintada", "referencia", "escura"]
+# Corredor dos seis primeiros sítios, fixado para o teste de dose: avenida, rua estreita, rio,
+# nenhum, avenida, rua. O sítio -1 (histórico) não tem corredor.
+VIAS_FIXAS = ["avenida", "rua", "rio", None, "avenida", "rua"]
 N_SITIOS = 40
 
 
@@ -57,7 +64,11 @@ def sitio(idx):
     r = random.Random(90000 + idx * 7919)
 
     relevo = RELEVOS[idx % len(RELEVOS)]          # varre em ordem, não sorteia: com 4 sítios no
-    mata = MATAS[(idx // 4) % len(MATAS)]         # teste de dose, sorteio pode dar 4 iguais
+    mata = MATAS[idx % len(MATAS)]                # teste de dose, sorteio pode dar 4 iguais.
+    # Mata varre a cada sítio (era a cada 4): na prévia de 22/09, 5 dos 6 sítios saíram com anel
+    # e 40 a 50% do quadro era árvore, a mesma árvore. 4 e 3 são primos entre si, então relevo
+    # e mata só se repetem juntos a cada 12 sítios.
+    paleta = PALETAS[idx % len(PALETAS)]
 
     # O núcleo precisa continuar enchendo o quadro nadir a 150 m, que cobre 187 x 105 m. Deixar o
     # núcleo pequeno demais faz o quadro virar mata, e aí o lote não tem alvo nenhum.
@@ -73,17 +84,34 @@ def sitio(idx):
     else:
         morro_h = r.uniform(48.0, 72.0)
 
-    # Avenida em pouco mais de um terço dos sítios. Nem toda favela tem via de porte; forçar em
-    # todas criaria uma correlação falsa entre asfalto e favela que o detector aprenderia.
+    # Corredor cortando o núcleo: avenida larga com faixa e carros, rua estreita sem faixa, ou
+    # rio (água, margem de barro, sem carro). Nem toda favela tem via de porte; forçar em todas
+    # criaria uma correlação falsa entre asfalto e favela que o detector aprenderia. Nos seis
+    # primeiros sítios o tipo é fixado à mão para o teste de dose ter um de cada; daí em diante
+    # sorteia. O sorteio consome o mesmo número de chamadas em todos os ramos, para os sítios já
+    # vistos não mudarem de núcleo ou de bairro quando o tipo muda.
+    u_tipo = r.random()
+    if idx < len(VIAS_FIXAS):
+        tipo = VIAS_FIXAS[idx]
+    else:
+        tipo = ("avenida" if u_tipo < 0.22 else "rua" if u_tipo < 0.42
+                else "rio" if u_tipo < 0.52 else None)
     avenida = None
-    if r.random() < 0.38:
-        avenida = dict(
-            ang=r.uniform(0, math.pi),                 # orientação no plano
-            larg=r.uniform(9.0, 16.0),                 # largura da caixa da via, em metros
-            desloc=r.uniform(-0.35, 0.35),             # deslocamento do eixo em relação ao centro
-            carros=r.randint(6, 22),
-            calcada=r.uniform(1.6, 2.8),
-        )
+    if tipo is not None:
+        ang = r.uniform(0, math.pi)                    # orientação no plano
+        u_larg = r.uniform(0, 1)
+        desloc = r.uniform(-0.35, 0.35)                # deslocamento do eixo em relação ao centro
+        u_car = r.randint(6, 22)
+        u_cal = r.uniform(0, 1)
+        if tipo == "avenida":
+            avenida = dict(tipo=tipo, ang=ang, larg=9.0 + 7.0 * u_larg, desloc=desloc,
+                           carros=u_car, calcada=1.6 + 1.2 * u_cal)
+        elif tipo == "rua":
+            avenida = dict(tipo=tipo, ang=ang, larg=4.5 + 2.5 * u_larg, desloc=desloc,
+                           carros=max(1, u_car // 4), calcada=0.8 + 0.6 * u_cal)
+        else:                                          # rio: a "calçada" é a margem de barro
+            avenida = dict(tipo=tipo, ang=ang, larg=6.0 + 10.0 * u_larg, desloc=desloc,
+                           carros=0, calcada=2.5 + 3.0 * u_cal)
 
     if mata == "ausente":
         arvores = r.randint(120, 400)
@@ -93,7 +121,8 @@ def sitio(idx):
         arvores = r.randint(1900, 3000)
 
     return dict(
-        nome=f"s{idx:02d}_{relevo}" + ("_av" if avenida else "") + f"_{mata}",
+        nome=f"s{idx:02d}_{relevo}" + (f"_{avenida['tipo']}" if avenida else "") + f"_{mata}_{paleta}",
+        paleta=paleta,
         nuc_a=round(nuc_a, 1), nuc_b=round(nuc_b, 1), morro_h=round(morro_h, 1),
         relevo=relevo, n_bairro=r.randint(6, 13), arvores=arvores,
         pav_base=round(r.uniform(0.6, 1.7), 2),

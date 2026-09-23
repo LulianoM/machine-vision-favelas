@@ -117,7 +117,7 @@ Two further threats have a check specified in advance and no result in this vers
 
 **Annotation convention.** Synthetic boxes are amodal and projected from vertices; benchmark boxes are human-drawn. A systematic difference in tightness would move overlap scores without any difference in detection. The check is sensitivity of every reported figure to the intersection-over-union threshold at 0.50, 0.60 and 0.75; if the ordering of the models changes with the threshold, the comparison is an artefact of annotation and must be reported at several thresholds.
 
-**Seed dependence.** A single settlement seed may be favourable by chance. The check is repetition of the protocol across independent seeds with the between-seed dispersion reported alongside the mean; if that dispersion is of the same order as the differences reported in Section 9, those differences are not resolvable at this corpus size. Every image carries its seed in a manifest entry and the generator reproduces it exactly, so the check is a matter of compute rather than of design.
+**Seed dependence.** A single settlement seed may be favourable by chance. The check is repetition of the protocol across independent seeds with the between-seed dispersion reported alongside the mean; if that dispersion is of the same order as the differences reported in Section 9, those differences are not resolvable at this corpus size. Every image carries its seed in a manifest entry and the generator reproduces the settlement exactly from it (Section 11.6 states what it did not reproduce in the corpora of record), so the check is a matter of compute rather than of design.
 
 ### 10.7 What this design cannot rule out
 

@@ -560,6 +560,25 @@ TELHA_PAL = [
     ("#bd3e28", 3, "pint"), ("#e0b95c", 2, "pint"), ("#cf8468", 2, "pint"),
 ]
 
+# Paleta do sitio (sitios.py). "referencia" deixa TELHA_PAL e PAL_PAREDE como estao, e e o que
+# o ds_morro_4k usou; nenhum ramo abaixo consome o rng, entao o sitio -1 continua reproduzivel.
+_PALETA = SITIO.get("paleta", "referencia")
+_FATOR_TELHA = {
+    "referencia": {},
+    "ceramica": {"ceramica": 2.2, "laje": 0.6, "pint": 0.7},
+    "laje":     {"laje": 2.4, "fibro": 1.5, "ceramica": 0.45, "pint": 0.5},
+    "pintada":  {"pint": 2.6, "lona": 1.8, "ceramica": 0.7, "laje": 0.6},
+    "escura":   {"zinco": 2.5, "fibro": 2.0, "laje": 0.8, "ceramica": 0.6, "pint": 0.4},
+}[_PALETA]
+_GIRO_PAREDE = {"referencia": 0.0, "ceramica": 0.06, "laje": -0.05, "pintada": 0.14, "escura": -0.11}[_PALETA]
+if _FATOR_TELHA:
+    TELHA_PAL = [(hexcor, max(1, int(round(peso * _FATOR_TELHA.get(tipo, 1.0)))), tipo)
+                 for (hexcor, peso, tipo) in TELHA_PAL]
+if _GIRO_PAREDE:
+    PAL_PAREDE_GIRO = _GIRO_PAREDE
+else:
+    PAL_PAREDE_GIRO = 0.0
+
 MATS = []          # lista de materiais na ordem dos slots do objeto principal
 
 
@@ -575,6 +594,8 @@ for i in range(7):
 PAL_PAREDE = [(0.58, 0.45, 0.72), (0.33, 0.40, 0.60), (0.14, 0.60, 0.80), (0.06, 0.50, 0.60),
               (0.0, 0.0, 0.84), (0.0, 0.0, 0.66), (0.10, 0.28, 0.82), (0.45, 0.28, 0.62)]
 for i, (h_, s_, v_) in enumerate(PAL_PAREDE):
+    if s_ > 0.05:                                   # brancos e cinzas nao giram
+        h_ = (h_ + PAL_PAREDE_GIRO) % 1.0
     I_FACHADA.append(slot(mat_pbr(f"reboco{i}", rng.choice(TEX["plaster"]), rng.uniform(1.4, 2.4),
                                   tint=hsv(h_, s_, v_), forca_tint=rng.uniform(0.72, 0.95),
                                   sujeira=rng.uniform(0.35, 0.7))))
@@ -1133,11 +1154,23 @@ if AVENIDA is not None:
     _meia = AVENIDA["larg"] * 0.5
     _L = math.hypot(AREA_X, AREA_Y) * 0.92
 
-    mat_asf = mat_simples("asfalto", (0.021, 0.021, 0.023), rough=0.72)
-    mat_cal = mat_simples("calcada", (0.095, 0.092, 0.086), rough=0.88)
+    _TIPO_VIA = AVENIDA.get("tipo", "avenida")
+    if _TIPO_VIA == "rio":
+        # Agua escura, margem de barro.
+        # Sem carro, sem faixa. Cor de rio urbano: verde-pardo, nao azul de piscina.
+        # rough 0,08 virou espelho do ceu e, em nadir, a agua saiu cinza-clara de concreto. Rio
+        # urbano e turvo: reflexo difuso, verde-pardo escuro.
+        mat_asf = mat_simples("agua_rio", (0.018, 0.038, 0.030), rough=0.32)
+        mat_cal = mat_simples("margem_barro", (0.115, 0.090, 0.060), rough=0.95)
+    else:
+        mat_asf = mat_simples("asfalto", (0.021, 0.021, 0.023), rough=0.72)
+        mat_cal = mat_simples("calcada", (0.095, 0.092, 0.086), rough=0.88)
     ia_asf = slot(mat_asf)
     ia_cal = slot(mat_cal)
     ia_faixa = slot(mat_simples("faixa_via", (0.52, 0.49, 0.38), rough=0.80))
+    # O leito nao pode ficar abaixo do terreno sem escavar a malha: na previa de 22/09 a agua a
+    # -1,2 m sumiu debaixo do chao e a faixa saiu cor de terra. Fica no nivel, como o asfalto.
+    _dz_leito = 0.30 if _TIPO_VIA == "rio" else 0.06   # acima da ondulacao do terreno entre vertices
 
     # a via segue o terreno em segmentos, senao atravessa o relevo
     _passo = 4.0
@@ -1145,7 +1178,7 @@ if AVENIDA is not None:
     for _k in range(_n):
         t0 = -_L + _k * _passo
         t1 = t0 + _passo
-        for (w0, w1, mi, dz) in ((-_meia, _meia, ia_asf, 0.06),
+        for (w0, w1, mi, dz) in ((-_meia, _meia, ia_asf, _dz_leito),
                                  (-_meia - AVENIDA["calcada"], -_meia, ia_cal, 0.20),
                                  (_meia, _meia + AVENIDA["calcada"], ia_cal, 0.20)):
             q = []
@@ -1154,8 +1187,9 @@ if AVENIDA is not None:
                 py = _ey * tt + _ny * (ww + _c)
                 q.append((px, py, z_em(px, py) + dz))
             acc.quad(q, mi)
-        # faixa central tracejada, so para o asfalto nao virar um retangulo chapado
-        if _k % 3 == 0:
+        # faixa central tracejada, so para o asfalto nao virar um retangulo chapado. Rua
+        # estreita e rio nao tem.
+        if _k % 3 == 0 and _TIPO_VIA == "avenida":
             q = []
             for (tt, ww) in ((t0 + 0.6, -0.16), (t1 - 0.6, -0.16), (t1 - 0.6, 0.16), (t0 + 0.6, 0.16)):
                 px = _ex * tt + _nx * (ww + _c)
