@@ -1,0 +1,39 @@
+{
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35\\weights\\best.pt",
+ "ds": "C:\\arma3-favela\\blender\\ds_armado_35",
+ "split": "val",
+ "imagens": 35,
+ "conf": 0.25,
+ "iou_casamento": 0.5,
+ "imgsz": 3840,
+ "protocolo": "imagem inteira, casamento 1:1",
+ "taxa_por_classe_real": {
+  "armada": {
+   "armada": 0.5693,
+   "desarmada": 0.0803,
+   "objeto": 0.0511,
+   "perdida": 0.2993,
+   "n": 137
+  },
+  "desarmada": {
+   "armada": 0.1681,
+   "desarmada": 0.4286,
+   "objeto": 0.0084,
+   "perdida": 0.395,
+   "n": 119
+  },
+  "objeto": {
+   "armada": 0.2727,
+   "desarmada": 0.0331,
+   "objeto": 0.4132,
+   "perdida": 0.281,
+   "n": 121
+  }
+ },
+ "por_tipo": {},
+ "predicoes_sem_par": {
+  "armada": 57,
+  "desarmada": 41,
+  "objeto": 48
+ }
+}

@@ -283,6 +283,53 @@ OBJETOS = [
 ]
 
 
+# ===================================================================== ARMAS INEDITAS
+# Nunca entram em corpus de treino. Existem so para o teste da secao 11.5 do artigo: um detector
+# que separa armada de desarmada so por ter decorado os cinco modelos acima perde o recall nestes
+# dois. Sao escolhidos para cair dentro da faixa de comprimento dos cinco (um longo e um curto),
+# de modo que o teste mede o asset, nao o tamanho.
+
+def arma_fuzil_fal(nome, rng, M):
+    """fuzil padrao FAL, coronha fixa, alca de transporte, carregador reto. 1,10 m."""
+    c = Construtor(nome)
+    met = M["metal"] if rng.random() < 0.6 else M["metal_gasto"]
+    cor = M["polimero"] if rng.random() < 0.6 else M["madeira"]
+    c.box(0.02, 0, 0.0, 0.30, 0.05, 0.08, met)
+    c.cyl_x(0.17, 0.62, 0, 0.012, 0.013, met)
+    c.cyl_x(0.62, 0.70, 0, 0.012, 0.017, met)
+    c.box(0.29, 0, -0.005, 0.22, 0.055, 0.06, cor)
+    c.box(-0.27, 0, -0.012, 0.26, 0.04, 0.07, cor, rot_y=0.04)
+    c.box(-0.05, 0, -0.085, 0.04, 0.034, 0.11, cor, rot_y=-0.3)
+    c.box(0.08, 0, -0.105, 0.07, 0.03, 0.16, met, rot_y=-0.08)
+    c.box(0.06, 0, 0.055, 0.12, 0.012, 0.02, met)
+    return c.build(), 1.10
+
+
+def arma_submetralhadora(nome, rng, M):
+    """submetralhadora compacta, coronha de arame recolhida, carregador curvo. 0,55 m."""
+    c = Construtor(nome)
+    met = M["metal"]
+    pol = M["polimero"]
+    c.box(0.02, 0, 0.0, 0.28, 0.045, 0.07, pol if rng.random() < 0.5 else met)
+    c.cyl_x(0.16, 0.26, 0, 0.010, 0.011, met)
+    c.box(0.15, 0, -0.045, 0.10, 0.05, 0.04, pol)
+    c.box(-0.21, 0, 0.0, 0.18, 0.03, 0.025, met)
+    c.box(-0.03, 0, -0.08, 0.04, 0.032, 0.10, pol, rot_y=-0.25)
+    c.box(0.07, 0, -0.12, 0.04, 0.028, 0.18, met, rot_y=-0.22)
+    return c.build(), 0.55
+
+
+ARMAS_INEDITAS = [
+    ("fuzil_fal", arma_fuzil_fal, 50),
+    ("submetralhadora", arma_submetralhadora, 50),
+]
+
+# "padrao": so os cinco modelos de treino. "mista_inedita": metade das armas sai dos cinco,
+# metade dos dois ineditos, para comparar o recall dentro do MESMO corpus de teste (mesmas cenas,
+# mesma luz), com o tipo de cada caixa gravado no manifest. gen_morro.py liga com --armas.
+MODO_ARMAS = "padrao"
+
+
 def _sorteia(rng, tabela):
     tot = sum(p for _, _, p in tabela)
     u = rng.uniform(0, tot)
@@ -297,7 +344,10 @@ def _sorteia(rng, tabela):
 def faz_arma(nome_obj, rng):
     """devolve (objeto, tipo, comprimento_m)"""
     M = mats()
-    tipo, fn = _sorteia(rng, ARMAS)
+    tabela = ARMAS
+    if MODO_ARMAS == "mista_inedita" and rng.random() < 0.5:
+        tabela = ARMAS_INEDITAS
+    tipo, fn = _sorteia(rng, tabela)
     o, L = fn(nome_obj, rng, M)
     return o, tipo, L
 

@@ -93,6 +93,17 @@ ap.add_argument("--porte-realista", action="store_true",
                      "ver people_mpfb.make_person")
 ap.add_argument("--pitch", type=float, nargs=2, default=[0.0, 3.5],
                 help="inclinacao da camera em graus a partir do NADIR (0 = nadir puro)")
+ap.add_argument("--pitch-obl", type=float, nargs=2, default=None,
+                help="substitui a faixa de pitch do preset --obliqua (26 a 52). Calibrado em "
+                     "24/09 no proprio corpus obliquo: h/w das pessoas sem arma sobe de 1,35 "
+                     "(26-30 graus) para 1,97 (50-55); 45 a 56 centra a mediana perto de 1,95")
+ap.add_argument("--camera-livre", action="store_true",
+                help="sorteia de novo alvo, pitch e rumo ate a camera ficar acima do dossel e "
+                     "ver o alvo sem mata ou morro no caminho. No obliquo de 24/09, a pitch "
+                     "acima de 50 graus, 2 dos 6 quadros sairam so com copa de arvore")
+ap.add_argument("--armas", choices=["padrao", "mista_inedita"], default="padrao",
+                help="mista_inedita: metade das armas de dois modelos que nunca entram em "
+                     "treino (teste da secao 11.5)")
 ap.add_argument("--obliqua", action="store_true",
                 help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
@@ -152,7 +163,7 @@ if args.obliqua:
     _esc = args.res[0] / 1920.0
     args.alt = 60.0 * _esc
     args.alt_jitter = 18.0 * _esc
-    args.pitch = [26.0, 52.0]      # alvo h/w 1,95, nao 2,20
+    args.pitch = list(args.pitch_obl) if args.pitch_obl else [26.0, 52.0]
 
 rng = random.Random(args.seed)
 os.makedirs(args.out, exist_ok=True)
@@ -1669,6 +1680,8 @@ if args.dataset > 0:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import people_mpfb as PM
     PM.PORTE_REALISTA = args.porte_realista
+    if getattr(PM, "OA", None) is not None:
+        PM.OA.MODO_ARMAS = args.armas
 
     for _sp in ("train", "val"):
         os.makedirs(os.path.join(args.out, "images", _sp), exist_ok=True)
@@ -1694,10 +1707,31 @@ if args.dataset > 0:
         info_luz = aplica_clima(clima, rng)
         el, az = info_luz["elev"], info_luz["azim"]
         alt = args.alt + rng.uniform(-args.alt_jitter, args.alt_jitter)
-        ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
-        ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
-        _pit = rng.uniform(args.pitch[0], args.pitch[1])
-        _yaw = rng.uniform(0, math.tau)
+        _tent_cam = 0
+        while True:
+            _tent_cam += 1
+            ccx = rng.uniform(-NUC_A * 0.45, NUC_A * 0.45)
+            ccy = rng.uniform(-NUC_B * 0.45, NUC_B * 0.45)
+            _pit = rng.uniform(args.pitch[0], args.pitch[1])
+            _yaw = rng.uniform(0, math.tau)
+            if not args.camera_livre or _tent_cam >= 30:
+                break
+            # camera livre: acima do dossel (45 m sobre o chao sob ela; arvore passa de 25 m) e
+            # com o raio central chegando ao alvo, e nao batendo numa copa ou encosta antes.
+            # So consome numero aleatorio, entao a retomada por --start continua deterministica.
+            _zc = z_em(ccx, ccy) + alt
+            _dd = alt * math.tan(math.radians(_pit))
+            _cx, _cy = ccx + _dd * math.sin(_yaw), ccy - _dd * math.cos(_yaw)
+            if _zc - float(z_em(_cx, _cy)) < 45.0:
+                continue
+            _org = Vector((_cx, _cy, _zc))
+            _alv = Vector((ccx, ccy, float(z_em(ccx, ccy))))
+            _v = _alv - _org
+            _hit, _loc, _n, _ix, _ob, _mt = scene.ray_cast(
+                bpy.context.evaluated_depsgraph_get(), _org, _v.normalized(), distance=_v.length + 5)
+            if _hit and (_loc - _alv).length > 30.0:
+                continue
+            break
         # A camera e posicionada e depois APONTADA para o alvo, em vez de receber uma rotacao
         # calculada a mao. A versao anterior montava o Euler e corrigia a posicao com um recuo
         # de sinal deduzido no papel; o sinal estava trocado, a camera andava para o mesmo lado
@@ -1825,6 +1859,10 @@ if args.dataset > 0:
                    comps=[l[8] for l in rotulos if l[8]],
                    n_laje=sum(1 for l in rotulos if l[6]),
                    vis=[l[5] for l in rotulos], seed=args.seed,
+                   # uma entrada por linha do arquivo de rotulo, na mesma ordem: classe, tipo do
+                   # objeto carregado (vazio se nenhum) e laje. Permite recall por modelo de arma
+                   # e falso positivo por tipo de objeto, que antes se perdiam.
+                   caixas=[[l[0], l[7] or "", 1 if l[6] else 0] for l in rotulos],
                    render_s=round(time.time() - t0, 1))
         rec.update(info_luz)
         mf.write(json.dumps(rec) + "\n")
