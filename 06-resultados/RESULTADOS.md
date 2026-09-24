@@ -317,3 +317,20 @@ Mesmo N (180 imagens 4K), mesma receita de treino (yolo11s, 1280, 60 epocas, bat
 | razao de eficacia vs R pareado (0,6311) | 1,6% | 3,0% |
 
 Arquivos: `sim2real_s_nadir_4k.json`, `sim2real_s_variedade.json`; logs em `C:rma3-favelalenderila_*.log` a `23_*.log`. Leitura: variedade de sitio move o numero na direcao prevista (Liao 2026, Kiefer 2022), quase dobrando o mAP50 e quase triplicando o mAP50-95, e o teto sintetico cai de 0,79 para 0,68 (o modelo deixa de decorar uma cena). O patamar continua uma ordem de grandeza abaixo de Kiefer (10 a 23%): sitio nao e o unico gargalo. Proximo: braco obliquo em 4K (geometria) e, se justificar, Frente B em escala.
+
+## 2026-09-24 [DESKTOP] Armado a 35 m (segundo ponto de GSD), resultado NEGATIVO
+
+Corpus `ds_armado_35`: 200 imagens 4K a 35 m (1,1 cm/px), 2.223 caixas (777 armada, 706 desarmada, 740 objeto), `--porte-realista --fio-gsd --laje 0.75 --amostra-no-quadro`, 64 samples. Treino `armado_35`: mesma receita do `armado_75` (yolo11s, 1280, 60 epocas, batch 6, 3 classes). Matriz de confusao por casamento IoU >= 0,5 no val proprio, conf 0,25 (script no log da sessao de 24/09; `runs/detect/armado_35`):
+
+| real | chamado de armada | de desarmada | de objeto | perdida | n |
+|---|---|---|---|---|---|
+| armada, 75 m | 0,53 | 0,10 | 0,16 | 0,20 | 193 |
+| armada, 35 m | 0,69 | 0,05 | 0,07 | 0,18 | 219 |
+| desarmada, 75 m | 0,15 | 0,48 | 0,07 | 0,29 | 260 |
+| desarmada, 35 m | 0,18 | 0,45 | 0,02 | 0,35 | 193 |
+| objeto, 75 m | 0,25 | 0,07 | 0,46 | 0,23 | 215 |
+| objeto, 35 m | **0,31** | 0,04 | 0,37 | 0,28 | 186 |
+
+mAP50 no val proprio: 0,546 (75 m) contra 0,489 (35 m). A hipotese "a 1 cm/px a arma vira arma e a confusao cai" NAO se confirmou neste corpus: o recall de armada subiu (0,53 -> 0,69), mas objeto chamado de arma subiu junto (0,25 -> 0,31) e desarmada chamada de arma tambem (0,15 -> 0,18). O modelo a 35 m esta enviesado para "armada".
+
+Leituras possiveis, a testar antes de escrever qualquer conclusao: (a) o corpus a 35 m muda GSD e pose ao mesmo tempo (`--porte-realista` tirou do objeto a pose de tiro, que a 75 m era um atalho para separar as classes; sem o atalho, a tarefa ficou mais dificil, nao mais facil); (b) 64 samples contra 96; (c) 1.166 ladrilhos de treino contra 1.331, com menos instancias por ladrilho; (d) a 35 m com nadir a perspectiva nas bordas do quadro inclina a pessoa. Para isolar (a), falta o 75 m com `--porte-realista` (1,5 h de render); para (b), o 35 m a 96 samples. Nenhum dos dois esta na fila.
