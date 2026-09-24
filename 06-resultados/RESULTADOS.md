@@ -334,3 +334,15 @@ Corpus `ds_armado_35`: 200 imagens 4K a 35 m (1,1 cm/px), 2.223 caixas (777 arma
 mAP50 no val proprio: 0,546 (75 m) contra 0,489 (35 m). A hipotese "a 1 cm/px a arma vira arma e a confusao cai" NAO se confirmou neste corpus: o recall de armada subiu (0,53 -> 0,69), mas objeto chamado de arma subiu junto (0,25 -> 0,31) e desarmada chamada de arma tambem (0,15 -> 0,18). O modelo a 35 m esta enviesado para "armada".
 
 Leituras possiveis, a testar antes de escrever qualquer conclusao: (a) o corpus a 35 m muda GSD e pose ao mesmo tempo (`--porte-realista` tirou do objeto a pose de tiro, que a 75 m era um atalho para separar as classes; sem o atalho, a tarefa ficou mais dificil, nao mais facil); (b) 64 samples contra 96; (c) 1.166 ladrilhos de treino contra 1.331, com menos instancias por ladrilho; (d) a 35 m com nadir a perspectiva nas bordas do quadro inclina a pessoa. Para isolar (a), falta o 75 m com `--porte-realista` (1,5 h de render); para (b), o 35 m a 96 samples. Nenhum dos dois esta na fila.
+
+## 2026-09-24 [DESKTOP] Braco obliquo em 4K (geometria de captura): 6x no VisDrone
+
+Corpus `ds_morro_obl`: 180 imagens 4K a 120 m com camera inclinada 26 a 52 graus (preset `--obliqua`, GSD 3,9 cm/px), mesma cena e semente do nadir (21), 2 classes, `--mistura 0.5 0.5 0`. 1.912 caixas; forma do alvo h/w mediana 1,46 (nadir 0,98; VisDrone treino 1,95: o preset moveu a forma, mas nao ate o alvo). 968 ladrilhos de treino. Treino `s_obliquo` com a mesma receita do nadir (yolo11s, 1280, 60 epocas, single_cls); avaliacao `sim2real_s_obliquo.json`.
+
+| modelo | mAP50 VisDrone | mAP50-95 | P / R | teto sintetico | eficacia vs R pareado (0,6311) |
+|---|---|---|---|---|---|
+| S-nadir-150 (1 sitio) | 0,0102 | 0,0025 | 0,086 / 0,042 | 0,79 | 1,6% |
+| S-variedade (6 sitios, nadir) | 0,0190 | 0,0071 | 0,092 / 0,058 | 0,68 | 3,0% |
+| **S-obliquo (1 sitio, inclinada)** | **0,0614** | **0,0192** | 0,203 / 0,106 | 0,75 | **9,7%** |
+
+Leitura: a geometria de captura e o fator dominante do gap medido no VisDrone, seis vezes o nadir com a mesma cena, contra duas vezes com seis sitios. A eficacia de 9,7% entra na faixa de Kiefer, Ott e Zell 2022 (1,2 a 10,2 mAP50 em sintetico puro). Ressalvas: (1) o VisDrone e obliquo, entao este resultado mede aderencia ao benchmark, nao ao alvo operacional (nadir a 150 m), e a 11.2 do artigo precisa dizer isso; (2) h/w 1,46 ainda esta abaixo de 1,95, o que sugere que ha margem com pitch maior; (3) sitio e geometria ainda nao foram combinados (6 sitios obliquos e a proxima rodada obvia, ~10 h de render).
