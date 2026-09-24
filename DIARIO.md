@@ -1,6 +1,15 @@
 # DIÁRIO DE BORDO
 
-Entradas novas no topo. Formato: `## 2026-09-22 [DESKTOP] Revisao da fila e disparo da cadeia da noite
+Entradas novas no topo. Formato: `## 2026-09-24 [DESKTOP] Rodada 2 encerrada e rodada 3 disparada
+
+- Rodada 2 (22/09 22:28 a 24/09 16:54, com queda às 17:16 de 23/09 quando o app atualizou): teste de dose 0,0102 → 0,0190 no VisDrone; oblíquo 4K 0,0614 (6x o nadir, eficácia 9,7%); armado a 35 m negativo.
+- Confusão refeita em imagem inteira com casamento um para um (`06-resultados/confusao_armado.py`): 75 m objeto→armada 23,7%, 35 m 27,3%. Os 25% e 31% do e-mail de 24/09 05:05 vinham de ladrilhos, que contam a mesma pessoa mais de uma vez; corrigido ao autor por e-mail.
+- Calibração do braço combinado medida no próprio corpus oblíquo (`mede_forma.py`): h/w sobe com o pitch, 1,35 a 26-30° e 1,97 a 50-52° nas pessoas sem arma; a caixa da pessoa armada inclui a arma e é mais larga (1,38 contra 1,58). Acima de 50°, 2 de 6 quadros saíam só com copa de árvore: gerador ganhou `--camera-livre`, `--pitch-obl`, `--armas mista_inedita` e o tipo de cada caixa no manifest.
+- Teste de arma inédita (11.5) redesenhado antes de rodar: em vez de treinar em 4 modelos e testar no 5º (um corpus e um treino novos), dois modelos que nunca entram em treino (FAL 1,10 m, submetralhadora 0,55 m) misturados meio a meio com os cinco de treino num corpus de teste de 50 quadros; recall comparado nas mesmas imagens. Critério fixado antes: retirar o número de 75 m se o recall nas inéditas cair abaixo de 4/5 do recall nas vistas.
+- Bug latente corrigido na nova cadeia: a fila antiga usava best.pt como prova de treino feito, e o Ultralytics grava best.pt já na primeira época.
+- Artigo: números oficiais em 7.7, 8.2 (curva h/w por pitch), 9.1 a 9.5, 10.1, 10.2, 10.4, 10.5, 11.2 e 11.5; 9.4 deixa de ser adiada e vira ajuste fino no VisDrone, com resultado `[X]`.
+
+## 2026-09-22 [DESKTOP] Revisao da fila e disparo da cadeia da noite
 
 - Recortes do modelo armado a 75 m: 23% de objeto chamado de arma porque a arma e uma linha de 1 a 2 px e o objeto ia em pose de tiro em 42% dos casos. Flags novas no gerador: `--porte-realista`, `--fio-gsd`, `--laje`, `--amostra-no-quadro`, `--enquadro quadrado`. Amostra a 35 m mostra coronha e carregador.
 - Sitios: mata varre por sitio, 5 paletas, rua estreita e rio; MPFB semeado (quadros agora reproduziveis; os corpora anteriores nao eram, e o artigo 10.6 e 11.6 foi corrigido).

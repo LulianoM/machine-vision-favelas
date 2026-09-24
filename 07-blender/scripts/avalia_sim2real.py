@@ -40,6 +40,7 @@ def main():
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--conf", type=float, default=0.001)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--device", default=None, help="cpu para medir sem tirar a GPU de um render")
     args = ap.parse_args()
 
     from ultralytics import YOLO
@@ -48,7 +49,7 @@ def main():
     def roda(nome, data, single):
         if not data:
             return None
-        r = m.val(data=data, imgsz=args.imgsz, conf=args.conf, single_cls=single,
+        r = m.val(data=data, imgsz=args.imgsz, conf=args.conf, single_cls=single, device=args.device,
                   split="val", verbose=False, plots=False)
         d = {k: round(float(v), 4) for k, v in (r.results_dict or {}).items()}
         d["conjunto"] = nome

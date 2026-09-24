@@ -231,19 +231,23 @@ of one frame are not independent; splitting by tile would place near-duplicates 
 
 A detector evaluated on the world in which it was trained reports a ceiling, not evidence. A low
 transfer score reported alone is equally uninterpretable, because nothing establishes the scale
-against which to read it. The protocol therefore trains four models. Three of them, R,
-S-nadir-150 and S-oblique, are evaluated on the same real test set, VisDrone-DET validation (548
-images, 13,969 person instances, reduced to a single class). The fourth, S-nadir-75, carries three
-classes and is scored on a held-out synthetic split instead, because no public benchmark annotates
-a carried firearm; Section 9.5 reports it separately and Section 11.5 states why the two cannot be
-read on one scale.
+against which to read it. The protocol therefore trains the models below. The single-class
+models are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
+instances, reduced to a single class). The three-class models are scored on held-out synthetic
+splits instead, because no public benchmark annotates a carried firearm; Section 9.5 reports them
+separately and Section 11.5 states why the two groups cannot be read on one scale. Every synthetic
+corpus holds the same number of images, 180 for the single-class models and 200 for the
+three-class ones, so that no comparison below is a comparison of data volume.
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
-| **R** | VisDrone-DET train, 6,471 images, 106,396 instances | The attainable ceiling on the test set |
-| **S-nadir-150** | Synthetic, camera straight down at 150 m, six illumination regimes | The method as proposed, at the acquisition geometry specified in Section 7.3 |
-| **S-nadir-75** | Same generator and sensor at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable at any altitude a drone flies |
-| **S-oblique** | Same generator, oblique and lower camera | Whether failure is attributable to synthesis or to capture geometry |
+| **R** | VisDrone-DET train, 1,106 images drawn at random, the number of training tiles in the synthetic corpus of record | The ceiling on the test set at matched volume |
+| **S-nadir-150** | Synthetic, one settlement, camera straight down at 150 m, six illumination regimes | The method as proposed, at the acquisition geometry specified in Section 7.3 |
+| **S-nadir-150-six** | The same, spread over six settlements | Whether variety of settlement is a term in the gap |
+| **S-oblique** | The same generator and settlement, oblique camera | Whether failure is attributable to synthesis or to capture geometry |
+| **S-oblique-six** | Six settlements, oblique camera at the calibrated pitch, figures carrying nothing | The best configuration of the generator: the synthetic model of this article |
+| **S-nadir-75** | The same generator at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable |
+| **S-nadir-35**, and its twin at 75 m | At 35 m with realistic carrying poses; the same corpus rendered at 75 m | Whether resolution or carrying pose drives the confusion |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)

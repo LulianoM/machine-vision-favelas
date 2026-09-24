@@ -2,7 +2,21 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-21, [DESKTOP]
+Última atualização: 2026-09-24, 19h30, [DESKTOP]
+
+## Rodada 3 (em curso, disparada 24/09 19:06, término previsto sáb 26/09 ~07:00)
+
+Cadeia única, idempotente e retomável: `07-blender/scripts/rodada3.py` (estado em `C:rma3-favelalenderila3\estado.json`, log em `rodada3.log`). Vigia silencioso `vigia_rodada3.sh` relança se morrer ou travar; análise do Claude de 1 em 1 h (`status_rodada3.py`) com e-mail ao autor a cada etapa.
+
+| Grupo | O que | Previsão |
+|---|---|---|
+| Z | Confusão dos modelos armados no protocolo de imagem inteira | feito: objeto→armada 23,7% (75 m), 27,3% (35 m) |
+| A | Oblíquo combinado S-oblique-six: 6 sítios × 30, pitch 45 a 56°, só pessoas sem arma, câmera livre de mata; treino e VisDrone | sex 25/09 ~08:15 |
+| B | Teste de arma inédita (11.5): 50 quadros a 75 m, metade FAL e submetralhadora nunca vistos | sex ~11:00 |
+| C | Gêmeo a 75 m do corpus de 35 m (separa resolução de pose) | sex ~22:45 |
+| D | Ajuste fino 5% e 10% do VisDrone, do sintético e do COCO, seleção fora do teste | sáb ~07:00 |
+
+Se o app do Claude reiniciar (atualização), a cadeia e o vigia morrem junto; relançar é um comando e nada se perde. O Agendador de Tarefas do Windows NÃO serve: o Blender sobe sem as extensões do usuário (MPFB).
 
 ## Artigo
 

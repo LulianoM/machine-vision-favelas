@@ -79,6 +79,7 @@ recorded in its manifest, gives:
 |---|---|---|---|---|
 | `ds_morro_clima`, within 3.5 deg of straight down | 8.3 px | 8.2 px | **0.98** | 565 |
 | `ds_morro_4k`, same geometry at 4K | 17.6 px | 17.5 px | **0.98** | 3,225 |
+| `ds_morro_obl`, same settlement, pitch 26 to 52 deg recorded per image | 17.9 px | 26.4 px | **1.46** | 1,912 |
 | VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | 1.95 | 106,396 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
@@ -92,14 +93,30 @@ instance count, and agree on this quantity to the second decimal: 0.98 in both. 
 sits at 1.95 and 2.20 on its two splits. The separation is therefore a factor of two, and it is
 stable under a change of resolution that moves apparent size by the same factor.
 
-This is a contrast between two acquisition geometries rather than a dose-response across several.
-An earlier version of this analysis established the ordering across intermediate camera angles
-using a corpus that has since been withdrawn from the article for reasons of data provenance, and
-the claim is accordingly reduced to what the rows above support: the quantity differs by a factor
-of two between a camera pointing straight down and the benchmark's acquisition, and it does not
-move with render resolution. Establishing the intermediate ordering would require rendering the same
-settlement seed at several camera pitches between vertical and the benchmark geometry and
-recomputing the ratio on each; that sweep has not been run.
+The oblique corpus records the pitch of every image, so the same measurement can be split by
+camera angle. It gives the dose-response that a contrast of two geometries cannot:
+
+| Pitch recorded in the manifest | Instances | Median h/w, all figures | Median h/w, figures carrying nothing |
+|---|---|---|---|
+| 26 to 30 deg | 482 | 1.28 | 1.35 |
+| 30 to 35 deg | 512 | 1.41 | 1.50 |
+| 35 to 40 deg | 231 | 1.49 | 1.58 |
+| 40 to 45 deg | 359 | 1.64 | 1.82 |
+| 45 to 50 deg | 222 | 1.64 | 1.78 |
+| 50 to 52 deg | 106 | 1.70 | 1.97 |
+
+*Source: `06-resultados/forma_corpora.json`, produced by `06-resultados/mede_forma.py` from the
+full-frame labels.*
+
+The ratio rises with pitch, from 0.98 at the vertical to 1.70 at the steepest angle in the corpus, and for
+figures carrying nothing it reaches 1.97, the value of the benchmark's training split, only between 50 and
+52 degrees. Two consequences follow for Section 9.3. The oblique corpus as rendered, with pitch
+drawn uniformly between 26 and 52 degrees, realised a median of 1.46 rather than the 1.95 it was
+calibrated for, because most of its images sit below the angle at which the benchmark's shape is
+reached. And the annotated box of an armed figure includes the weapon, which widens it:
+1.38 against 1.58 for figures carrying nothing in the same images. The benchmark contains no
+carried firearms, so for transfer to it the weapon is a source of shape mismatch rather than of
+signal. The combined model of Section 9.3 is built from these two measurements.
 
 A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio near 2.0 is a
 standing figure recorded obliquely. At comparable pixel area, these are different objects as far
@@ -112,10 +129,10 @@ than of how the scene is built. Section 9.3 reports the S-oblique model, in whic
 renders the same settlement from a tilted camera, and Section 10.4 treats the difference between
 the two models as the isolated contribution of acquisition geometry.
 
-One limit on the interpretation is stated here rather than in limitations. The generated value is
-fixed by a generator setting that bounds the camera near vertical without recording it per image.
-The benchmark values come from real imagery whose acquisition geometry is not recorded at all. The
-contrast therefore anchors the direction of the relationship but not its slope.
+One limit on the interpretation is stated here rather than in limitations. The nadir corpora
+record a generator setting rather than a per-image pitch, and the benchmark values come from real
+imagery whose acquisition geometry is not recorded at all. The oblique corpus anchors the slope on
+the synthetic side; on the benchmark side only the endpoint is known.
 
 ### 8.3 Contrast against local clutter is lowest under hard sun and rain, not under low light
 

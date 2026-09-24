@@ -18,7 +18,9 @@ instructive, not because it is a result: it establishes that this pipeline is ca
 and identifies scene count as one of two causes.
 
 **Check.** Learning curve over the number of distinct generated scenes, holding the illumination
-regimes balanced and the tiling protocol fixed: `[X]`.
+regimes balanced and the tiling protocol fixed. A two-point version has been run at a fixed 180
+images, one settlement against six (Section 9.2): 0.0102 against 0.0190 on the real test set. The full
+curve: `[X]`.
 
 **What would overturn the claim.** If performance on the real test set does not separate the
 largest corpus from the smallest, scene count is not the operative variable and the conclusion of
@@ -40,8 +42,11 @@ This check has already been run once, on the pilot reported in Section 9, and it
 here rather than withheld: mAP50 of 0.0055 at native scale against 0.0061 at matched scale, a
 difference of 0.0006 (`06-resultados/sim2real_morro_v1.json`). On that pilot, matching the scale
 did not recover performance. That is evidence against scale as the operative confound, and
-therefore against the explanation most favourable to us. The check is repeated on the corrected
-corpus: `[X]` at native scale, `[X]` at matched scale.
+therefore against the explanation most favourable to us. On the corrected corpus the check
+reduces to its native-scale half: the synthetic and benchmark targets already match in median area
+(301 against 300 square pixels, Section 8.1), so rescaling the benchmark to the corpus leaves it
+where it is, and the native-scale figure of Section 9.2, 0.0102, is also the matched-scale figure. What
+still differs at matched area is shape, which Section 10.4 tests.
 
 **What would overturn the claim.** If the two figures diverge substantially on the corrected
 corpus, scale is a live confound after all and the efficacy ratio in Section 9.2 must be reported
@@ -78,13 +83,16 @@ placement. It could instead reflect any of the incidental differences between th
 arms.
 
 **Check.** The two models are trained on corpora generated from the same code, the same
-settlement seed, the same material library, the same illumination regimes and the same
-annotation procedure. What differs is the camera: pitch, altitude and its jitter, and the render
-resolution, which is lowered to 1920 by 1080 at 60 m so that the ground sampling distance (3.9
-cm per pixel) stays close to the 4.88 of the nadir corpus at 4K. The change is therefore designed
-to hold the size of the target and move its shape, which is the variable Section 8.2 isolates.
-Pitch is set from the VisDrone training split rather than from the validation split on which
-both models are scored, so that the calibration does not consume the test set. Result: `[X]`.
+settlement seed, the same material library, the same illumination regimes, the same share of armed
+and unarmed figures and the same annotation procedure, with the same training recipe and the same
+number of images, both at 4K. What differs is the camera: pitch, drawn between 26 and 52 degrees
+and recorded per image, altitude (120 m for the oblique camera) and its jitter. At the centre of the
+frame that puts the ground sampling distance between about 4.3 and 6.3 cm per pixel across the pitch
+range, against 4.88 for the nadir corpus, so the change moves the shape of the target (h/w 1.46
+against 0.98) and leaves its size in the same range, somewhat larger in area (456 against 301
+square pixels). Pitch is set from the VisDrone training split rather than from the validation
+split on which both models are scored, so that the calibration does not consume the test set.
+Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set (Section 9.3).
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in
@@ -97,9 +105,9 @@ of the study.
 Small-object aerial detection is difficult for real-data models too, and a reader has no way to
 distinguish a weak synthetic method from a hard benchmark.
 
-**Check.** Model R, trained on the real training split of the same benchmark under the same
-detector, the same input size, the same initialisation and the same schedule: `[X]`. All synthetic
-figures are reported as a ratio to it.
+**Check.** Model R, trained on 1,106 images of the real training split of the same benchmark under
+the same detector, the same input size, the same initialisation and the same schedule, reaches
+mAP50 0.6311 (Section 9.1). All synthetic figures are reported as a ratio to it.
 
 One asymmetry is declared here rather than left for the reader to find. Model R selects its
 checkpoint on the same distribution it is later scored on, while the synthetic models select

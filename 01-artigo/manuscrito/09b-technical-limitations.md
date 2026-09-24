@@ -33,7 +33,11 @@ ethical protocol of Section 5 forecloses and which this project has deliberately
 A second consequence follows. Section 9.3 reports an oblique arm calibrated to the benchmark, but
 the acquisition geometry this work reproduces points straight down. An oblique corpus that transfers better to
 VisDrone tells us about VisDrone. It does not recommend an acquisition geometry for the case
-study, and Section 11.3 is the only acquisition recommendation this article makes.
+study, and Section 11.3 is the only acquisition recommendation this article makes. The size of the
+effect is itself the clearest statement of this limit: the same settlement rendered from a tilted
+camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), not because it is a
+better model of a settlement seen from a drone at 150 m, but because it resembles the benchmark's
+acquisition. The nadir figure is the one that bears on the case study, and it is the lower one.
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
@@ -87,15 +91,26 @@ from the same colour and roughness palette and carried through the same distribu
 detector that separates the classes on that corpus cannot be doing so by colour, and the rate at
 which it calls a broom a rifle is reported in Section 9.5.
 
-The distinction between the two altitudes is the contribution, and it is stated as a condition
-rather than a recommendation. The capability is not a fixed property of the method: it appears
-and disappears as a function of acquisition parameters that can be measured before any system is
-bought or flown. A claim that a system distinguishes an armed from an unarmed person from the air
-is, at the altitudes and sensors described here, a claim that can be checked before it is
-believed. The 75 m figure itself would be withdrawn under a condition this article states rather
-than delegates: if a detector trained on four of the five firearm models fails to hold its recall
-on the fifth, then what it separates is the asset library and not the object, and no figure from
-that corpus should be read as a capability. That held-out test has not been run: `[X]`.
+The distinction between altitudes is the contribution, and it is stated as a condition rather
+than a recommendation. At 150 m the capability does not exist. At 75 m it exists with the error
+profile of Section 9.5, which calls 24 per cent of confusable objects armed. The measurements do not show it
+improving as resolution increases further: at 35 m the same rate is 27 per cent. Whether that reflects a
+limit of what these figures and carrying poses allow a detector to learn, or the change of pose
+distribution between the two corpora, is what the matched corpus of Section 9.5 decides: `[X]`.
+Either way, a claim that a system distinguishes an armed from an unarmed person from the air is, at
+the altitudes and sensors described here, a claim that can be checked before it is believed.
+
+The 75 m figure itself would be withdrawn under a condition this article states rather than
+delegates, and fixes before running: if the detector's recall on firearm models it has never seen
+falls below four fifths of its recall on the models it was trained on, then what it separates is
+the asset library and not the object, and no figure from that corpus should be read as a
+capability. The test renders 50 new frames at 75 m, in a new realisation of the settlement and with
+the generator settings of the training corpus, in which half the firearms are drawn from the five
+training models and half from two models that enter no training corpus, a rifle of 1.10 m and a
+compact submachine gun of 0.55 m, chosen inside the length range of the five so that the test
+measures the asset and not its size. The type of every annotated instance is recorded, so the two
+recalls come from the same images under the same light. Recall on seen models: `[X]`; on unseen
+models: `[X]`.
 Nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check

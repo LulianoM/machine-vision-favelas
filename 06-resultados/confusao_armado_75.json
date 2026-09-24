@@ -1,9 +1,30 @@
 {
- "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75\\weights\\best.pt",
- "ds": "C:\\arma3-favela\\blender\\ds_armado_75",
+ "pesos": "C:/arma3-favela/blender/runs/detect/armado_75/weights/best.pt",
+ "ds": "C:/arma3-favela/blender/ds_armado_75",
  "split": "val",
  "imagens": 27,
  "conf": 0.25,
+ "val_imagem_inteira": {
+  "mAP50": 0.5786,
+  "mAP50-95": 0.3179,
+  "por_classe": {
+   "pessoa_armada": {
+    "P": 0.5551,
+    "R": 0.6239,
+    "mAP50": 0.553
+   },
+   "pessoa_desarmada": {
+    "P": 0.6599,
+    "R": 0.5752,
+    "mAP50": 0.5723
+   },
+   "pessoa_objeto": {
+    "P": 0.641,
+    "R": 0.5481,
+    "mAP50": 0.6105
+   }
+  }
+ },
  "iou_casamento": 0.5,
  "imgsz": 3840,
  "protocolo": "imagem inteira, casamento 1:1",

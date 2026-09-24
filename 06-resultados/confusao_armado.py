@@ -47,6 +47,7 @@ def main():
     ap.add_argument("--iou", type=float, default=0.50)
     ap.add_argument("--imgsz", type=int, default=3840)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--device", default=None, help="cpu para medir sem tirar a GPU de um render")
     a = ap.parse_args()
 
     from ultralytics import YOLO
@@ -75,7 +76,7 @@ def main():
         lab = os.path.join(a.ds, "labels", split, base + ".txt")
         if not os.path.exists(lab):
             continue
-        r = m.predict(p, imgsz=a.imgsz, conf=a.conf, verbose=False)[0]
+        r = m.predict(p, imgsz=a.imgsz, conf=a.conf, verbose=False, device=a.device)[0]
         W, H = r.orig_shape[1], r.orig_shape[0]
         gts = []
         for ln in open(lab):
@@ -112,7 +113,19 @@ def main():
     tipo_out = {t: {NOMES[c]: cnt[c] for c in range(4)} | {"n": sum(cnt.values()),
                 "chamada_de_armada": round(cnt[0] / max(1, sum(cnt.values())), 4)}
                 for t, cnt in sorted(por_tipo.items())}
-    saida = dict(pesos=a.pesos, ds=a.ds, split=a.split, imagens=n_imgs, conf=a.conf,
+    # mAP e precisao/recall por classe no MESMO protocolo (imagem inteira, imgsz nativo), pelo
+    # validador do Ultralytics. So para os splits que o data.yaml do corpus declara.
+    val = None
+    if a.split in ("val", "train") and os.path.exists(os.path.join(a.ds, "data.yaml")):
+        rv = m.val(data=os.path.join(a.ds, "data.yaml"), split=a.split, imgsz=a.imgsz, batch=1,
+                   conf=0.001, plots=False, verbose=False, device=a.device)
+        nomes = rv.names
+        val = {"mAP50": round(float(rv.box.map50), 4), "mAP50-95": round(float(rv.box.map), 4),
+               "por_classe": {nomes[int(c)]: {"P": round(float(rv.box.p[i]), 4),
+                                               "R": round(float(rv.box.r[i]), 4),
+                                               "mAP50": round(float(rv.box.ap50[i]), 4)}
+                              for i, c in enumerate(rv.box.ap_class_index)}}
+    saida = dict(pesos=a.pesos, ds=a.ds, split=a.split, imagens=n_imgs, conf=a.conf, val_imagem_inteira=val,
                  iou_casamento=a.iou, imgsz=a.imgsz, protocolo="imagem inteira, casamento 1:1",
                  taxa_por_classe_real=taxa, por_tipo=tipo_out,
                  predicoes_sem_par={NOMES[c]: fp_sem_par[c] for c in range(3)})
