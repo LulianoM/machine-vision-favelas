@@ -6,6 +6,20 @@ ESTADO=/c/arma3-favela/blender/vigia.estado
 touch "$ESTADO"
 ultimo_tb=$(cat "$ESTADO")
 
+# 0. etapa nova concluida? (o Claude manda e-mail ao autor a cada uma; pedido de 23/09)
+REL=/c/arma3-favela/blender/vigia.relatadas
+touch "$REL"
+for id in 25 26 27 12 13 14 15; do
+  est=$(python -c "import json;e=json.load(open('fila/estado.json'));print(e.get('$id',{}).get('estado',''))" 2>/dev/null)
+  if [ "$est" = "ok" ] && ! grep -qx "$id" "$REL"; then
+    echo "$id" >> "$REL"
+    echo "ETAPA OK: $id $(python -c "import json;e=json.load(open('fila/estado.json'));print(e['$id'].get('nome',''), e['$id'].get('segundos',''), 's')" 2>/dev/null)"
+  fi
+done
+# zoom render (25) roda pelo retoma_cadeia, nao pela fila: conclui quando o data.yaml existe
+if [ -f ds_armado_35/data.yaml ] && ! grep -qx "25" "$REL"; then echo "25" >> "$REL"; echo "ETAPA OK: 25 render_zoom35 $(wc -l < ds_armado_35/manifest.jsonl) quadros"; fi
+if [ -f ds_morro_obl/data.yaml ] && ! grep -qx "12" "$REL"; then echo "12" >> "$REL"; echo "ETAPA OK: 12 render_obliquo $(wc -l < ds_morro_obl/manifest.jsonl) quadros"; fi
+
 # 1. cadeia encerrada?
 if tail -3 encadeia.log | grep -q "cadeia encerrada"; then
   echo "FIM: cadeia encerrada. $(grep -h '^real ' fila/15_aval_S_obliquo.log 2>/dev/null | tail -1)"
