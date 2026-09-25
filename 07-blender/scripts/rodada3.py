@@ -317,7 +317,8 @@ def trava():
     if os.path.exists(TRAVA):
         try:
             pid = int(open(TRAVA).read().strip())
-            if psutil.pid_exists(pid) and "rodada3" in " ".join(psutil.Process(pid).cmdline()):
+            if psutil.pid_exists(pid) and any(os.path.basename(a) == "rodada3.py"
+                                              for a in psutil.Process(pid).cmdline()):
                 return False
         except (ValueError, OSError, psutil.Error):
             pass

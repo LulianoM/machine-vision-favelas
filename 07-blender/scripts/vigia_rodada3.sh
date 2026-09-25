@@ -5,6 +5,9 @@
 # relancar nunca duplica trabalho. Sai sozinho quando a rodada grava "fim" no estado.
 # A analise de 1 em 1 h e do Claude (status_rodada3.py); isto aqui so garante que nada fica parado
 # esperando a proxima analise.
+# 25/09: depois de uma queda de energia a sessao subiu sem coreutils nem System32 no PATH
+export PATH="/usr/bin:/bin:/mingw64/bin:/c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:$PATH"
+PYV=/c/arma3-favela/venv/Scripts/python.exe
 RAIZ=/c/arma3-favela/blender
 LOGV=$RAIZ/vigia3.log
 relanca() {
@@ -12,10 +15,10 @@ relanca() {
 }
 echo "$(date '+%F %T') vigia iniciado" >> $LOGV
 while true; do
-  if python -c "import json,sys; e=json.load(open(r'C:\arma3-favela\blender\fila3\estado.json')); sys.exit(0 if e.get('fim') else 1)" 2>/dev/null; then
+  if $PYV -c "import json,sys; e=json.load(open(r'C:\arma3-favela\blender\fila3\estado.json')); sys.exit(0 if e.get('fim') else 1)" 2>/dev/null; then
     echo "$(date '+%F %T') rodada encerrada, vigia sai" >> $LOGV; exit 0
   fi
-  vivo=$(wmic process where "name='python.exe'" get commandline 2>/dev/null | grep -c "rodada3.py")
+  vivo=$(wmic process where "name='python.exe'" get commandline 2>/dev/null | grep -v "status_rodada3" | grep -c "rodada3.py")
   if [ "$vivo" = "0" ]; then
     echo "$(date '+%F %T') cadeia morta: relancando" >> $LOGV
     rm -f $RAIZ/fila3/rodada3.trava

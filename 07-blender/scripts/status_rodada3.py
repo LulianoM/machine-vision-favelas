@@ -31,7 +31,8 @@ def vivo():
     try:
         import psutil
         for p in psutil.process_iter(["name", "cmdline"]):
-            if "rodada3.py" in " ".join(p.info.get("cmdline") or []):
+            # por nome exato de argumento: "status_rodada3.py" tambem contem "rodada3.py"
+            if any(os.path.basename(a) == "rodada3.py" for a in (p.info.get("cmdline") or [])):
                 return True
     except Exception:
         pass
