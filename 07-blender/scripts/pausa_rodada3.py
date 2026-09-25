@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 pausa_rodada3.py: pausa ou retoma a rodada 3 para o autor usar o PC.
 
@@ -41,7 +41,7 @@ def encerra():
         if p.pid in eu:
             continue
         c = cmd(p)
-        if any(k in c for k in ("supervisiona_rodada3.py", "rodada3.py", "gen_morro.py",
+        if any(k in c for k in ("supervisiona_rodada3.py", "vigia_rodada3.sh", "rodada3.py", "gen_morro.py",
                                 "train_yolo_win.py", "resume=True", "avalia_sim2real.py",
                                 "confusao_armado.py", "tile_dataset.py", "prepara_ft.py")) \
                 and "status_rodada3" not in c and "pausa_rodada3" not in c:

@@ -1,4 +1,7 @@
-#!/bin/bash
+﻿#!/bin/bash
+# APOSENTADO em 25/09: substituido por supervisiona_rodada3.py. Uma copia orfa deste script (o TaskStop
+# matou so o invólucro) relancou a cadeia seis minutos depois da pausa pedida pelo autor.
+exit 0
 # vigia_rodada3.sh: roda em segundo plano durante a rodada 3 e nao fala nada (so escreve em
 # vigia3.log). A cada 10 min: se a cadeia morreu, relanca; se esta viva mas nenhum log de fila3 foi
 # escrito em 45 min, mata o que for dela e relanca. A cadeia e idempotente e tem trava, entao
