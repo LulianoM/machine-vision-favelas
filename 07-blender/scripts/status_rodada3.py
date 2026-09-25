@@ -111,6 +111,9 @@ def resultado(eid):
 def main():
     e = R.carrega()
     agora = datetime.now()
+    pausa = os.path.join(R.FILA, "PAUSA")
+    if os.path.exists(pausa):
+        print(f"PAUSADA pelo autor desde {open(pausa).read().strip()} (pausa_rodada3.py retoma para voltar)")
     print(f"{agora:%d/%m %H:%M}  cadeia {'VIVA' if vivo() else 'PARADA'}"
           + (f"  | encerrada {e['fim']}" if e.get("fim") else "")
           + (f"  | FALHA nos grupos {e['grupos_com_falha']}" if e.get("grupos_com_falha") else ""))

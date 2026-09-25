@@ -113,6 +113,11 @@ def main():
         return 0
     log("iniciado")
     while True:
+        # PAUSA: o autor pediu para usar o PC (jogar). Nada e lancado enquanto o arquivo existir,
+        # inclusive quando o atalho de inicializacao abre o supervisor depois de um reinicio.
+        if os.path.exists(os.path.join(FILA, "PAUSA")):
+            log("PAUSA presente: supervisor sai sem lancar nada")
+            return 0
         if fim():
             log("rodada encerrada; apagando o atalho de inicializacao e saindo")
             try:
