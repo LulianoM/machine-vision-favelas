@@ -346,3 +346,8 @@ Corpus `ds_morro_obl`: 180 imagens 4K a 120 m com camera inclinada 26 a 52 graus
 | **S-obliquo (1 sitio, inclinada)** | **0,0614** | **0,0192** | 0,203 / 0,106 | 0,75 | **9,7%** |
 
 Leitura: a geometria de captura e o fator dominante do gap medido no VisDrone, seis vezes o nadir com a mesma cena, contra duas vezes com seis sitios. A eficacia de 9,7% entra na faixa de Kiefer, Ott e Zell 2022 (1,2 a 10,2 mAP50 em sintetico puro). Ressalvas: (1) o VisDrone e obliquo, entao este resultado mede aderencia ao benchmark, nao ao alvo operacional (nadir a 150 m), e a 11.2 do artigo precisa dizer isso; (2) h/w 1,46 ainda esta abaixo de 1,95, o que sugere que ha margem com pitch maior; (3) sitio e geometria ainda nao foram combinados (6 sitios obliquos e a proxima rodada obvia, ~10 h de render).
+
+## 2026-09-25 [DESKTOP] Rodada 3, grupo A: corpus obliquo combinado pronto (A1, A2)
+
+`ds_oblvar`: 180 imagens 4K em 6 sitios (-1 a 4, 30 cada), camera inclinada 45 a 56 graus com `--camera-livre`, so pessoas sem arma (`--mistura 0 1 0`), 96 samples, semente 21. Render em 277 min de maquina (com a queda do PC e a pausa no meio). 1.521 caixas, 8,5 por imagem. Forma do alvo (`06-resultados/forma_corpora.json`, `mede_forma.py`): **h/w mediana 1,85** (alvo de calibracao 1,95, treino do VisDrone), largura 13,3 px e altura 25,2 px contra 13,0 e 24,0 do VisDrone treino, area 324 contra 300 px2. Por pitch: 1,81 (45-50), 1,92 (50-55), 1,99 (55-56). O corpus obliquo anterior tinha 1,46 e 456 px2. Ladrilhos: 890 de treino, 144 de validacao (28 imagens). Treino `s_oblvar` em curso.
+
