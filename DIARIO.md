@@ -1,6 +1,13 @@
-# DIÁRIO DE BORDO
+﻿# DIÁRIO DE BORDO
 
-Entradas novas no topo. Formato: `## 2026-09-24 [DESKTOP] Rodada 2 encerrada e rodada 3 disparada
+Entradas novas no topo. Formato: `## 2026-09-25 [DESKTOP] Queda do PC e supervisor fora do app
+
+- O PC desligou de forma abrupta por volta das 23:25 de 24/09 (Kernel-Power 41, sem tela azul, sem erro de hardware ou de driver antes; padrão de queda de energia ou fonte desarmando) e religou às 23:26. A fila morreu e só voltou às 08:49 de 25/09, quando uma sessão foi aberta: 9,5 h perdidas, nenhum quadro perdido (80/180 íntegros, retomada do 81).
+- O status dizia 'cadeia VIVA' com ela morta: 'rodada3.py' casa com 'status_rodada3.py'. Corrigido no status, na trava e no vigia.
+- A pedido do autor: atalho na pasta Inicializar do Windows que abre `supervisiona_rodada3.py` numa janela própria. Teste de 25/09: processo nascido da sessão (descendente do explorer do usuário) carrega o MPFB; nascido de um explorer lançado por DCOM (pai svchost), como no Agendador e no WMI, não carrega. O atalho roda pelo shell do usuário no login, como a sessão. O supervisor substitui o vigia em bash, que morria com a sessão, e apaga o atalho ao terminar a rodada.
+- Armadilha: o python.exe do venv é um lançador que abre o interpretador real como filho com a mesma linha de comando; qualquer detecção de 'outra instância' precisa excluir os ancestrais.
+
+## 2026-09-24 [DESKTOP] Rodada 2 encerrada e rodada 3 disparada
 
 - Rodada 2 (22/09 22:28 a 24/09 16:54, com queda às 17:16 de 23/09 quando o app atualizou): teste de dose 0,0102 → 0,0190 no VisDrone; oblíquo 4K 0,0614 (6x o nadir, eficácia 9,7%); armado a 35 m negativo.
 - Confusão refeita em imagem inteira com casamento um para um (`06-resultados/confusao_armado.py`): 75 m objeto→armada 23,7%, 35 m 27,3%. Os 25% e 31% do e-mail de 24/09 05:05 vinham de ladrilhos, que contam a mesma pessoa mais de uma vez; corrigido ao autor por e-mail.

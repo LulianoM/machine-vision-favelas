@@ -1,12 +1,12 @@
-# STATUS
+﻿# STATUS
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
 Última atualização: 2026-09-24, 19h30, [DESKTOP]
 
-## Rodada 3 (em curso, disparada 24/09 19:06, término previsto sáb 26/09 ~07:00)
+## Rodada 3 (em curso, disparada 24/09 19:06, término previsto sáb 26/09 ~15:45; o PC caiu às 23:25 de 24/09 e a fila ficou parada até 08:49 de 25/09)
 
-Cadeia única, idempotente e retomável: `07-blender/scripts/rodada3.py` (estado em `C:rma3-favelalenderila3\estado.json`, log em `rodada3.log`). Vigia silencioso `vigia_rodada3.sh` relança se morrer ou travar; análise do Claude de 1 em 1 h (`status_rodada3.py`) com e-mail ao autor a cada etapa.
+Cadeia única, idempotente e retomável: `07-blender/scripts/rodada3.py` (estado em `C:rma3-favelalenderila3\estado.json`, log em `rodada3.log`). Supervisor `supervisiona_rodada3.py` numa janela própria minimizada ("rodada3 - nao feche", fora do app do Claude) relança se morrer ou travar, e um atalho na pasta Inicializar do Windows (`retoma_rodada3.lnk` → `C:\arma3-favela\blender\retoma_rodada3.cmd`) o reabre no login depois de um reinício; o atalho se apaga quando a rodada termina; análise do Claude de 1 em 1 h (`status_rodada3.py`) com e-mail ao autor a cada etapa.
 
 | Grupo | O que | Previsão |
 |---|---|---|
