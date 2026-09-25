@@ -351,3 +351,15 @@ Leitura: a geometria de captura e o fator dominante do gap medido no VisDrone, s
 
 `ds_oblvar`: 180 imagens 4K em 6 sitios (-1 a 4, 30 cada), camera inclinada 45 a 56 graus com `--camera-livre`, so pessoas sem arma (`--mistura 0 1 0`), 96 samples, semente 21. Render em 277 min de maquina (com a queda do PC e a pausa no meio). 1.521 caixas, 8,5 por imagem. Forma do alvo (`06-resultados/forma_corpora.json`, `mede_forma.py`): **h/w mediana 1,85** (alvo de calibracao 1,95, treino do VisDrone), largura 13,3 px e altura 25,2 px contra 13,0 e 24,0 do VisDrone treino, area 324 contra 300 px2. Por pitch: 1,81 (45-50), 1,92 (50-55), 1,99 (55-56). O corpus obliquo anterior tinha 1,46 e 456 px2. Ladrilhos: 890 de treino, 144 de validacao (28 imagens). Treino `s_oblvar` em curso.
 
+
+## 2026-09-25 [DESKTOP] Rodada 3, grupo A: S-oblique-six no VisDrone (A3, A4)
+
+Treino `s_oblvar` (yolo11s, 1280, batch 6, single_cls, receita de todos os bracos): parada antecipada na epoca 46, melhor peso na 31, 153 min. Avaliacao `06-resultados/sim2real_s_oblvar.json` (`avalia_sim2real.py`, conf 0,001, imgsz 1280):
+
+| | P | R | mAP50 | mAP50-95 |
+|---|---|---|---|---|
+| sintetico (validacao propria) | 0,7648 | 0,6540 | 0,7047 | 0,3453 |
+| **VisDrone val, zero-shot** | 0,2631 | 0,1716 | **0,1055** | 0,0329 |
+
+Eficacia contra o R pareado (0,6311): **16,7%**. Serie completa no VisDrone: nadir um sitio 0,0102 (1,6%); nadir seis sitios 0,0190 (3,0%); obliquo um sitio 0,0614 (9,7%); obliquo seis sitios calibrado 0,1055 (16,7%). O combinado rende 10,3 vezes o nadir e 1,7 vez o obliquo de um sitio. Em mAP50 absoluto (10,6%) fica no topo da faixa sintetica de Kiefer, Ott e Zell 2022 (1,2 a 10,2). Nao e ablacao: mudam juntos sitios, pitch, figuras sem arma e camera livre de mata.
+
