@@ -2,7 +2,8 @@
 
 > **Provenance note.** Every quantity below traces to a file under `06-resultados/` together with
 > the command that produced it. The protocol in Section 7.7 was fixed before any of them was run,
-> and Section 10 declares in advance what would overturn each claim.
+> and Section 10 declares in advance what would overturn the transfer results of Sections 9.1 to
+> 9.3, as Section 11.5 does for the 75 m result of Section 9.5.
 
 A pilot of the full protocol was run before the corpus reached its final size. Its results are
 reported first, because they bound what follows and because withholding an unfavourable pilot
@@ -16,16 +17,18 @@ would make the rest of this section unreadable as evidence.
 
 *Source: `06-resultados/sim2real_morro_v1.json`.*
 
-These are not results about transfer. The model failed on its own domain, reaching 0.077 where an
-earlier arm of this project reached 0.676, and transfer cannot be measured from a model that did
-not learn. Sections 10.1 and 10.2 identify the two causes, both properties of the pilot corpus
-rather than of the method: it contained 40 training scenes against 473, and it was rendered at
+These are not results about transfer. The model failed on its own domain, reaching 0.077 where the
+corpus of record, with 180 images at 4K, reaches 0.79 (Section 9.2), and transfer cannot be
+measured from a model that did not learn. Section 10.1 identifies the first of two causes and
+Section 8.1 the second, both properties of the pilot corpus rather than of the method: it
+contained 40 training scenes, and it was rendered at
 1080p, which doubles the ground sampling distance and places two thirds of all instances below one
 stride of the network (Section 8.1).
 
 The pilot does establish one thing a favourable result could not. This pipeline is capable of
-failing, and the failure is legible in the corpus statistics before any training. The rows below
-report the protocol re-run with both defects corrected.
+failing, and the failure is legible in the corpus statistics before any training. It was also trained with a different
+recipe (tiles and input of 640 pixels, 120 epochs). The rows below report the protocol re-run with
+both defects corrected and with the recipe of Section 7.6.
 
 ### 9.1 Ceiling: what real training data achieves on this test set
 
@@ -92,7 +95,7 @@ ceiling, together with the comparison in Section 9.3.
 ### 9.3 Transfer from synthetic training, oblique geometry
 
 Model S-oblique. Identical generator, identical settlement, identical illumination regimes; only
-the camera is moved.
+the camera is moved, together with the figure-placement filter that depends on it (Section 10.4).
 
 Pitch is set from the height-to-width ratio of the VisDrone **training** split, not the validation
 split on which every model in this article is scored. The distinction is load-bearing: the ratio
@@ -150,7 +153,7 @@ The acquisition geometry this article reproduces points straight down. An obliqu
 VisDrone is informative about the benchmark, not about the acquisition that would be flown over
 Jacarezinho.
 
-<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that per-regime performance differences in Section 10.3 cannot be attributed to the labelling.-->
+<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that any per-regime performance difference found by the test specified in Section 10.3, not yet run, cannot be attributed to the labelling.-->
 
 ### 9.4 Limited real fine-tuning, on the public benchmark only
 
@@ -168,7 +171,7 @@ scored is not used for selection, which removes for this comparison the asymmetr
 Section 10.5. Thirty epochs, the same detector, input size and augmentation
 (`07-blender/scripts/prepara_ft.py`).
 
-| Real training data | From synthetic pretraining | From generic initialisation | Difference |
+| Real training data | F-synthetic (from S-oblique-six) | F-generic (from COCO) | Difference |
 |---|---|---|---|
 | 5 per cent (324 images) | 0.4424 | 0.5220 | -0.0796 |
 | 10 per cent (647 images) | 0.5095 | 0.5709 | -0.0614 |
@@ -213,7 +216,7 @@ palette and the same distribution of carrying poses. The corpus holds 2,887 inst
 933 of them armed, 973 unarmed and 981 carrying a confusable object. A second corpus
 at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by 103.1 pixels.
 
-| Quantity | 75 m | 35 m | 75 m, settings of the 35 m corpus |
+| Quantity | S-nadir-75 (75 m) | S-nadir-35 (35 m) | Twin of S-nadir-35 at 75 m |
 |---|---|---|---|
 | mAP50, three classes | 0.579 | 0.514 | 0.508 |
 | Recall, armed | 0.547 | 0.569 | 0.471 |
@@ -245,8 +248,8 @@ halving the ground sampling distance did not reduce the confusion: the 35 m mode
 armed more often, armed persons included, at the same mAP50, so the 35 m result is not an artefact
 of the change of pose. The difference in the object rate is suggestive rather than established:
 10.8 points, p = 0.06 in a two-proportion test that does not correct for clustering by frame
-(`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`). At 75 m, moving from the corpus
-of record to the generator settings of the 35 m corpus, realistic carrying poses among them,
+(`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`). At 75 m, moving from the original
+75 m corpus to the generator settings of the 35 m corpus, realistic carrying poses among them,
 lowers the object rate from 0.237 to 0.165
-(p = 0.19). Section 10 states, for each result above, the condition that would overturn it, and
-Section 11.5 reads the altitudes together.
+(p = 0.19). Section 11.5 states the condition under which the 75 m figure would be withdrawn and reads
+the altitudes together; Section 10.7 explains why Section 10 carries no test for this distinction.

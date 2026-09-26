@@ -12,15 +12,16 @@ written after seeing the number.
 
 **Threat.** The synthetic corpus is generated, so its size is a choice rather than a constraint,
 and a detector trained on few scenes can memorise them. An earlier pilot of this pipeline used 40
-training images and reached mAP50 of 0.077 on its own validation split, against 0.676 obtained by
-a previous arm of this project with 473 images. The pilot is reported here because it is
+training images and reached mAP50 of 0.077 on its own validation split, against 0.79 for the
+corpus of record with 180 images at 4K (Section 9.2). The pilot is reported here because it is
 instructive, not because it is a result: it establishes that this pipeline is capable of failing,
 and identifies scene count as one of two causes.
 
 **Check.** Learning curve over the number of distinct generated scenes, holding the illumination
-regimes balanced and the tiling protocol fixed. A two-point version has been run at a fixed 180
-images, one settlement against six (Section 9.2): 0.0102 against 0.0190 on the real test set. The full
-curve: `[X]`.
+regimes balanced and the tiling protocol fixed. A related comparison has been run at a fixed 180
+images, one settlement against six (Section 9.2): 0.0102 against 0.0190 on the real test set. It
+varies the variety of settlement at a fixed number of scenes, so it is not a point on this curve,
+which remains `[X]`.
 
 **What would overturn the claim.** If performance on the real test set does not separate the
 largest corpus from the smallest, scene count is not the operative variable and the conclusion of
@@ -138,5 +139,5 @@ Two further threats have a check specified in advance and no result in this vers
 
 Two boundaries of this design are structural rather than testable, and are stated in Section 11
 rather than argued here: the benchmark is not a favela (Section 11.2), and the armed and unarmed
-distinction is reported at 75 m and deliberately withheld at 150 m (Section 11.5). Neither is a
+distinction is reported at 75 m and 35 m and deliberately withheld at 150 m (Section 11.5). Neither is a
 threat this section can check, which is why neither carries a test above.

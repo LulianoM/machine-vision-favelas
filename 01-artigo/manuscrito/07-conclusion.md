@@ -39,9 +39,10 @@ question responsibly. Three things follow from the work reported above.
 The first is that the binding constraints are not the ones the field usually discusses. At the
 ground sampling distance of the acquisition specified in Section 7.3, a person is a few tens of pixels
 of low contrast texture, the silhouette of that target is set by where the camera is placed rather
-than by how faithfully the scene is built, and the illumination condition conventionally
-preferred for flying, hard sun, is the one whose cast shadow fills the background with the clutter
-that competes with the figure. None of these is a question of
+than by how faithfully the scene is built, and under the illumination condition conventionally
+preferred for flying, hard sun, cast shadow fills the background with clutter against which the
+figure shows among the lowest contrast of the six regimes, although whether that makes detection
+harder is the test Section 10.3 has not yet run. None of these is a question of
 photorealism, and none of them is visible in any appearance-based measure of how convincing a
 synthetic scene looks.
 

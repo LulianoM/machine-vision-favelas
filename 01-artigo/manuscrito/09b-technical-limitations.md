@@ -56,8 +56,8 @@ only as a description of the imagery.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
 
-The model proposed in Section 6 classifies built form. What is implemented and
-evaluated in Sections 9 and 10 detects people. They share the generator, the annotation procedure,
+The model proposed in Section 6 classifies built form. What is implemented in Section 7
+and evaluated in Sections 9 and 10 detects people. They share the generator, the annotation procedure,
 the randomisation and the scale analysis; they do not share the object class, and no performance
 figure reported here transfers from one to the other.
 
@@ -129,17 +129,19 @@ Nothing in this article recommends acquisition over the case study territory.
 
 Every generated image carries its seed, illumination regime and camera altitude in a manifest
 entry. The settlement is reproduced exactly from the seed; the figures in it were not, in the
-corpora reported here, because the human generator drew from an unseeded random stream, a defect
+three corpora rendered before the defect was found (the pilot corpus, the corpus of record and the
+original 75 m corpus), because the human generator drew from an unseeded random stream, a defect
 found and closed after those corpora were rendered. The settlement, the camera and the
 illumination of every reported image are therefore reproducible from the manifest, and the exact
 placement of figures is reproducible only for corpora generated after the fix. Camera pitch is recorded
 per image only in corpora generated after that field was added; the two nadir corpora of Section
 8.2 predate it, which is why their rows carry the generator setting rather than a per-image value,
-and the table says so. The hyperparameter and inference tables in Section 7.6 are in the body of
-the article for the same reason.
+and the table says so. The hyperparameter and inference table of Section 7.6 is in the body of
+the article, rather than in an appendix, so that every parameter needed to reproduce a run is in
+the article itself.
 
 What a reader cannot check from this article is the corpus itself, although the reason is
 logistical rather than legal: every corpus behind every number reported here is redistributable by
-construction, since all geometry is authored by the generator and all surface materials are public
-domain. Earlier branches of this project were built on photogrammetric reconstruction of imagery
+construction, since all geometry other than the CC0 human figures of Section 7.4 is authored by the
+generator and all surface materials are public domain. Earlier branches of this project were built on photogrammetric reconstruction of imagery
 that cannot be released, and no measurement reported in this article derives from them.

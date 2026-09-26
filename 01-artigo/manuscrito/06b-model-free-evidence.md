@@ -1,8 +1,9 @@
 ## 8. Model-Free Evidence
 
 > **Provenance note.** Every figure in this section is a direct measurement over image and
-> annotation files, independent of whether any detector succeeds. Each table names the corpus,
-> the acquisition geometry recorded in its manifest, and the instance count. Section 9 reports
+> annotation files, independent of whether any detector succeeds. The tables name each corpus,
+> the acquisition geometry that produced it (recorded per image or fixed by a generator setting,
+> as each table states), and the instance count. Section 9 reports
 > detector performance.
 
 Before reporting detector performance we characterise the problem the detector is asked to solve.
@@ -22,8 +23,8 @@ stated rather than implied.
 | `ds_morro_4k` | same generator and geometry, rendered at 4K | 3840 x 2160 | 3,225 |
 | VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
 
-`ds_morro_4k` is the corpus of record: it is what Section 7 specifies and what the models of
-Section 9 are trained on. `ds_morro_clima` is its 1080p predecessor, retained here because the
+`ds_morro_4k` is the corpus of record: it renders the reference acquisition specified in Section
+7.3 and is the training corpus of model S-nadir-150 in Section 9. `ds_morro_clima` is its 1080p predecessor, retained here because the
 comparison between the two isolates the effect of render resolution from every other variable.
 
 ### 8.1 Ground sampling distance, not sensor resolution, sets the target size
@@ -178,7 +179,7 @@ hypothesis is withdrawn.
 
 ### 8.4 What these measurements imply for the proposal
 
-Taken together the measurements reframe the design problem stated in Section 5. The binding
+Taken together the measurements reframe the design problem stated in Section 6. The binding
 constraint is not that a synthetic favela fails to look like a favela. At the scale at which this
 task operates, the target is a few tens of pixels of low contrast texture; its silhouette in these
 corpora tracks camera pitch rather than scene content; and hard sun, the illumination

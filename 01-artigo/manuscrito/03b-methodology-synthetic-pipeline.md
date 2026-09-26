@@ -8,8 +8,10 @@ of vertical morphology and a synthetic-training strategy. This section specifies
 second of those, and reports what happens when it is executed.
 
 A distinction has to be drawn at the outset, because the two are easy to conflate. What is
-implemented and evaluated below detects people, in three classes: armed, unarmed, and unarmed
-carrying a confusable elongated object. That is the task this article measures, and it was
+implemented and evaluated below detects people: as a single class wherever transfer to the public
+benchmark is measured, and at 75 m and 35 m in three classes, armed, unarmed, and unarmed carrying
+a confusable elongated object, which no public benchmark annotates. Person detection is the task
+this article measures, and it was
 chosen because it is the only one of the two with a public benchmark against which transfer
 can be established. The conceptual model proposed in Section 6 classifies built form instead:
 building height, rooftop addition, material transition. The same generator already records the
@@ -30,15 +32,17 @@ and who cannot meaningfully be asked under the conditions documented in Section 
 
 Synthesis substitutes one problem for another. It removes the consent problem and introduces the
 transfer problem: a detector trained on rendered imagery must operate on photographs. The
-remainder of this section describes the generator. Section 8 characterises the target before any
-detector is trained, and Sections 9 and 10 report what transfers and what does not.
+remainder of this section describes the generator. Section 8 characterises the target independently
+of any detector, and Sections 9 and 10 report what transfers and what does not.
 
 ### 7.2 Scene construction
 
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed,
-so that any reported image can be regenerated exactly from the seed recorded in its manifest
-entry. No commercial asset packs are used: surface materials come from a public-domain library
-(Poly Haven, CC0) and all geometry is authored by the generator. That choice makes the corpus
+so that the settlement, the camera and the illumination of any reported image can be regenerated
+exactly from the seed recorded in its manifest entry, and the figures as well in every corpus but
+the three that Section 11.6 names. No commercial asset packs are used: surface materials come from a public-domain library
+(Poly Haven, CC0), the human figures are built from the CC0 assets of MakeHuman through MPFB
+(Section 7.4), and all other geometry is authored by the generator. That choice makes the corpus
 redistributable in full, and it is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
@@ -71,11 +75,12 @@ orientation, separated by a Voronoi diagram, reproducing the way consolidated se
 nuclei that meet at an angle. The result is measured. The statistic is the
 fraction of edge energy falling within 7.5 degrees of a cardinal axis, divided by the isotropic
 expectation. The measurement window covers 30 degrees of 180, so the isotropic expectation is one
-sixth and unity means no preferred direction. In the released configuration the value is 0.90; in
-the version of the generator that used a single partition it was 2.18
+sixth and unity means no preferred direction. In the configuration of the corpus of record, rendered
+at 4K, the value is 0.94; in the version of the generator that used a single partition it was 2.18
 (`06-resultados/teste_fidelidade.csv`, `07-blender/HISTORICO-LOOP.md`).
 
-An earlier draft of this article reported 1.62 for the same scene. That figure came from a
+An earlier draft of this article reported 1.62 for the configuration then released, an earlier
+iteration of the generator. That figure came from a
 measurement script whose normaliser used 15 degrees of 180 rather than 30, inflating the whole
 column by a factor of two. The error mattered beyond the digit: it placed the released
 configuration above the isotropic expectation when it is in fact slightly below it. The script and
@@ -97,7 +102,8 @@ clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, 
 reinforcement bar awaiting a further storey. Aerial cabling spans between rooftop anchor points.
 These are not decoration. At the ground sampling distance of the target sensor they are the
 dominant source of local clutter, and Section 8.3 measures the contrast a person presents against
-that immediate background, which Section 10.3 tests as a hypothesis about detector difficulty.
+that immediate background, which Section 10.3 treats as a hypothesis about detector difficulty,
+with a test not yet run.
 
 <!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training, which is conducted entirely from the aerial camera, and is shown because it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
@@ -114,8 +120,8 @@ Rendering resolution is treated as a parameter distinct from sensor resolution, 
 distinction is consequential enough to state plainly. Ground sampling distance, not the nominal
 resolution of the camera, determines whether a target survives to the network. Rendering the 150
 metre nadir view at 1920 by 1080 yields 9.76 cm per pixel; rendering the same view at 3840 by 2160
-yields 4.88 cm per pixel. Section 8.1 reports what this does to the target, and Section 11 states
-the limitation it introduces.
+yields 4.88 cm per pixel. Section 8.1 reports what this does to the target and states the limitation
+it introduces: imagery rendered at 4K is easier than a single real frame from the sensor it reproduces.
 
 A second acquisition geometry is evaluated alongside the first, and the reason is arithmetic
 rather than aesthetic. At 150 metres the target is too small for a carried object to be resolved
@@ -181,8 +187,9 @@ Liao et al. (2026) measure that removing variation in sun position, weather and 
 costs 30.4 mAP50 points on YOLOv11, the detector used here, and 17.5 on average across six
 architectures, with the largest penalty on truncated objects. The qualifications of Section 7.2
 apply: their object is vehicles and their test is on the reconstructed site. Illumination is
-randomised here because it is the cheapest axis to vary and the one that result identifies as
-the single most consequential.
+randomised here because it is the cheapest axis to vary and, for YOLOv11, the more costly of the
+two ablations in that study (30.4 points against 27.0), though not on average across
+architectures (17.5 against 22 to 23).
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent
 lighting budgets, each governing solar irradiance, the angular diameter of the solar disc, sky
@@ -243,7 +250,8 @@ against which to read it. The protocol therefore trains the models below. The si
 models are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
 instances, reduced to a single class). The three-class models are scored on held-out synthetic
 splits instead, because no public benchmark annotates a carried firearm; Section 9.5 reports them
-separately and Section 11.5 states why the two groups cannot be read on one scale. Every synthetic
+separately: scored on the world in which they were trained, their figures are ceilings rather
+than evidence of transfer, so the two groups cannot be read on one scale. Every synthetic
 corpus holds the same number of images, 180 for the single-class models and 200 for the
 three-class ones, so that no comparison below is a comparison of data volume.
 

@@ -20,8 +20,8 @@ are reported against altitude.
 
 Transfer to real aerial imagery is reported as a ratio to what a detector trained on real data
 achieves on the same test set: 1.6 per cent for the nadir acquisition taken as reference,
-9.7 per cent when the same settlement is rendered from an oblique camera, and 16.7 per cent when
-six settlements are rendered obliquely. Given 5 or 10 per cent of the benchmark's real training
+9.7 per cent when the same settlement is rendered from an oblique camera, and 16.7 per cent for
+the best oblique configuration, six settlements at a pitch recalibrated to the benchmark. Given 5 or 10 per cent of the benchmark's real training
 images, a generic initialisation still outperforms the synthetic one. No armed and unarmed accuracy is
 reported at 150 m, because at that ground sampling distance the capability does not exist and a
 figure obtained there would measure the regularity of our asset library. Stating the conditions
@@ -47,7 +47,7 @@ This article accordingly poses the following research question: **Under what acq
 
 Our objective, correspondingly, is to establish the acquisition conditions (altitude, sensor, camera geometry, and illumination) under which a person observed from the air can be distinguished as armed or unarmed, and to measure what a detector trained on synthetic imagery alone recovers of that capability, using Jacarezinho, in Rio de Janeiro, as the morphology the synthetic corpus reproduces and as the site whose vertical complexity motivates the choice.
 
-Two object classes are in play, and they should be separated at the outset. The vertical morphology of the settlement is what the model proposed in Section 6 is designed to classify, and it is the reason this site was chosen. The instrument evaluated in Sections 7 to 11 detects people, and at the lower of the two altitudes, armed people. Only the second has a public benchmark against which transfer can be measured, which is why it, and not the first, carries the empirical claims of this article.
+Two object classes are in play, and they should be separated at the outset. The vertical morphology of the settlement is what the model proposed in Section 6 is designed to classify, and it is the reason this site was chosen. The instrument evaluated in Sections 7 to 11 detects people and, at 75 and 35 m, the two lower of its three altitudes, armed people. Only the second has a public benchmark against which transfer can be measured, which is why it, and not the first, carries the empirical claims of this article.
 
 This research is relevant to society and to urban studies because favelas remain systematically underrepresented in official geospatial datasets, which constrains equitable resource allocation for sanitation, risk mapping, and disaster response. It is also relevant to police institutions, because operations in vertically dense, informally built territories are widely documented as high-risk for all parties (officers, criminal actors, and, overwhelmingly, uninvolved residents), partly due to poor advance knowledge of the built environment. Finally, it is relevant to communities themselves, because the same technology that could, in principle, support safer emergency response or infrastructure planning also carries a serious risk of being repurposed for surveillance, profiling, or the operational targeting of residents who have not consented to being mapped. This dual-use tension is treated as a central, rather than peripheral, concern of this research.
 
