@@ -60,7 +60,10 @@ def epocas(nome):
     if not rows:
         return 0, None, None
     t = [float(r["time"]) for r in rows if r.get("time")]
-    ritmo = (t[-1] / len(t)) if t else None
+    # "time" e acumulado e zera quando o treino e retomado de last.pt (pausa): o ritmo sai da mediana
+    # das diferencas positivas entre epocas, nao de time/epocas
+    d = [b - a for a, b in zip(t, t[1:]) if b > a]
+    ritmo = sorted(d)[len(d) // 2] if d else ((t[-1] / len(t)) if t else None)
     m50 = rows[-1].get("metrics/mAP50(B)")
     return len(rows), ritmo, m50
 
