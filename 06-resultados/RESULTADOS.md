@@ -419,3 +419,7 @@ D1 (`prepara_ft.py`, `C:\arma3-favela\visdrone\ft\fatias.json`): do treino do Vi
 | COCO (D3) | 0,034 | 0,168 | 0,306 | 0,336 | 0,430 | 0,465 (29) | 0,180 |
 
 Leitura provisoria (selecao, nao teste): com 5% do VisDrone o inicio sintetico so fica na frente nas tres primeiras epocas; o COCO passa na quarta e termina 6,8 pontos de mAP50 acima (3,2 de mAP50-95). O numero do artigo e o do teste no val inteiro do VisDrone (D6, `ft_visdrone.json`).
+
+## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 10% a partir do sintetico (D4)
+
+`ft10_sint` (etapa D4 de `07-blender/scripts/rodada3.py`): pesos `s_oblvar` ajustados na fatia de 10% do VisDrone (647 imagens, contem a de 5%), receita do D2. mAP50 na selecao (`runs/detect/ft10_sint/results.csv`): 0,180 na epoca 1, 0,383 na 10, 0,426 na 20 e **0,449 na 27** (melhor); mAP50-95 0,171. Leitura provisoria (selecao, nao teste): dobrar o dado real sobe o inicio sintetico de 0,396 para 0,449, ainda abaixo do inicio COCO com metade do dado (0,465 com 5%).
