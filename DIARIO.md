@@ -1,6 +1,14 @@
 ﻿# DIÁRIO DE BORDO
 
-Entradas novas no topo. Formato: `## 2026-09-25 [DESKTOP] Queda do PC e supervisor fora do app
+Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
+
+## 2026-09-25 [DESKTOP] Rodada 3: teste de arma inédita passa; pausas a pedido do autor
+
+- B1 e B2 (teste de arma inédita da 11.5): `armado_75` sem retreino, 50 quadros novos a 75 m com metade das armas de dois modelos nunca vistos (FAL, submetralhadora). Recall de armada 0,466 (61/131) nos inéditos contra 0,400 (50/125) nos cinco de treino, nas mesmas imagens; razão 1,16, acima do limiar pré-declarado de 0,8: a afirmação fica. O reconhecimento segue comprimento e silhueta, não o modelo (FAL 0,50 junto das armas longas vistas; pistola 0,20; guarda-chuva 0,38). Critério em `06-resultados/holdout_criterio.py`.
+- Pausas a pedido do autor para usar o PC: 10:46 a 13:20, 18:30 a 19:44 e desde 22:26 (`pausa_rodada3.py`). Na primeira, uma cópia órfã do vigia em bash relançou a cadeia seis minutos depois; o vigia foi aposentado e a pausa encerra tudo, supervisor primeiro. Às 22:26 a cadeia estava no C1 (gêmeo a 75 m), 16/200 quadros, todos íntegros; faltam ~19 h de máquina.
+- Consertos: caminhos com `\a`, `\b` e `\f` tinham virado caracteres de controle no STATUS e no RESULTADOS; o formato no topo deste diário tinha sido partido por inserções anteriores.
+
+## 2026-09-25 [DESKTOP] Queda do PC e supervisor fora do app
 
 - O PC desligou de forma abrupta por volta das 23:25 de 24/09 (Kernel-Power 41, sem tela azul, sem erro de hardware ou de driver antes; padrão de queda de energia ou fonte desarmando) e religou às 23:26. A fila morreu e só voltou às 08:49 de 25/09, quando uma sessão foi aberta: 9,5 h perdidas, nenhum quadro perdido (80/180 íntegros, retomada do 81).
 - O status dizia 'cadeia VIVA' com ela morta: 'rodada3.py' casa com 'status_rodada3.py'. Corrigido no status, na trava e no vigia.
@@ -23,8 +31,6 @@ Entradas novas no topo. Formato: `## 2026-09-25 [DESKTOP] Queda do PC e supervis
 - Benchmark de render: `--otimizado` da 3%, descartado. Perfil: 42 s fixos + 1,6 s por sample no 4K.
 - Revisao por agentes, verificada: Blender devolvia rc=0 em excecao (`--python-exit-code 1`); fila_noite saia sempre 0 (agora 1 se falhou); controle tem 2 classes e alvos so no centro (dose usa `--mistura 0.5 0.5 0 --enquadro quadrado`); obliquo em 1080p dava 3,7x menos ladrilhos (agora 4K a 120 m); zoom a 35 m so tinha 1 a 3 caixas por quadro (amostragem em quadro: 9 a 11); residuos do obliquo de zero caixas afastados; teto sintetico do avaliador com single_cls do modelo (numero nao mudou: 0,7915 / 0,0102).
 - Cadeia disparada as 22:28: dose, zoom, obliquo. ~30 h.
-
-## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
 ## 2026-09-21 [DESKTOP] Os primeiros números de sim-to-real, e três defeitos que eles revelaram
 

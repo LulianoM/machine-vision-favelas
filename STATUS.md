@@ -2,21 +2,21 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-24, 19h30, [DESKTOP]
+Última atualização: 2026-09-25, 22h40, [DESKTOP]
 
-## Rodada 3 (em curso, disparada 24/09 19:06, término previsto sáb 26/09 ~15:45; o PC caiu às 23:25 de 24/09 e a fila ficou parada até 08:49 de 25/09)
+## Rodada 3 (disparada 24/09 19:06; PAUSADA a pedido do autor desde 25/09 22:26, no C1 com 16/200 quadros; faltam ~19 h de máquina depois da retomada)
 
-Cadeia única, idempotente e retomável: `07-blender/scripts/rodada3.py` (estado em `C:rma3-favelalenderila3\estado.json`, log em `rodada3.log`). Supervisor `supervisiona_rodada3.py` numa janela própria minimizada ("rodada3 - nao feche", fora do app do Claude) relança se morrer ou travar, e um atalho na pasta Inicializar do Windows (`retoma_rodada3.lnk` → `C:\arma3-favela\blender\retoma_rodada3.cmd`) o reabre no login depois de um reinício; o atalho se apaga quando a rodada termina; análise do Claude de 1 em 1 h (`status_rodada3.py`) com e-mail ao autor a cada etapa.
+Cadeia única, idempotente e retomável: `07-blender/scripts/rodada3.py` (estado em `C:\arma3-favela\blender\fila3\estado.json`, log em `rodada3.log`). Supervisor `supervisiona_rodada3.py` numa janela própria minimizada ("rodada3 - nao feche", fora do app do Claude) relança se morrer ou travar, e um atalho na pasta Inicializar do Windows (`retoma_rodada3.lnk` → `C:\arma3-favela\blender\retoma_rodada3.cmd`) o reabre no login depois de um reinício; o atalho se apaga quando a rodada termina; análise do Claude de 1 em 1 h (`status_rodada3.py`) com e-mail ao autor a cada etapa. Pausa e retomada: `python 07-blender/scripts/pausa_rodada3.py pausa` (ou `retoma`); com `fila3\PAUSA` presente nada é lançado, nem pelo atalho.
 
-| Grupo | O que | Previsão |
+| Grupo | O que | Estado |
 |---|---|---|
 | Z | Confusão dos modelos armados no protocolo de imagem inteira | feito: objeto→armada 23,7% (75 m), 27,3% (35 m) |
-| A | Oblíquo combinado S-oblique-six: 6 sítios × 30, pitch 45 a 56°, só pessoas sem arma, câmera livre de mata; treino e VisDrone | sex 25/09 ~08:15 |
-| B | Teste de arma inédita (11.5): 50 quadros a 75 m, metade FAL e submetralhadora nunca vistos | sex ~11:00 |
-| C | Gêmeo a 75 m do corpus de 35 m (separa resolução de pose) | sex ~22:45 |
-| D | Ajuste fino 5% e 10% do VisDrone, do sintético e do COCO, seleção fora do teste | sáb ~07:00 |
+| A | Oblíquo combinado S-oblique-six: 6 sítios × 30, pitch 45 a 56°, só pessoas sem arma, câmera livre de mata; treino e VisDrone | feito: mAP50 VisDrone 0,1055, eficácia 16,7% (10x o nadir) |
+| B | Teste de arma inédita (11.5): 50 quadros a 75 m, metade FAL e submetralhadora nunca vistos | feito: recall 0,466 nas inéditas contra 0,400 nas vistas, razão 1,16 (limiar 0,8): afirmação mantida |
+| C | Gêmeo a 75 m do corpus de 35 m (separa resolução de pose) | em curso, pausado: render 16/200 (~6,4 h), depois treino (~3,8 h) |
+| D | Ajuste fino 5% e 10% do VisDrone, do sintético e do COCO, seleção fora do teste | pendente (~8,6 h) |
 
-Se o app do Claude reiniciar (atualização), a cadeia e o vigia morrem junto; relançar é um comando e nada se perde. O Agendador de Tarefas do Windows NÃO serve: o Blender sobe sem as extensões do usuário (MPFB).
+A cadeia roda fora do app do Claude (supervisor em janela própria) e volta sozinha depois de um reinício do PC, pelo atalho de inicialização, salvo com PAUSA presente. O Agendador de Tarefas do Windows NÃO serve: o Blender sobe sem as extensões do usuário (MPFB).
 
 ## Artigo
 
@@ -26,7 +26,7 @@ Se o app do Claude reiniciar (atualização), a cadeia e o vigia morrem junto; r
 | Manuscrito por seção | Feito em 17/09, 8 arquivos em `01-artigo/manuscrito/`, texto verbatim da v2 |
 | Pendências do rascunho | Levantadas e verificadas em `01-artigo/PENDENCIAS.md`. Nenhuma resolvida ainda. Em 18/09 o desktop atualizou C5 e D4 e acrescentou D5 a D8 |
 | Seção "Conclusion" | Só tem Limitations, Delimitations e Future Research. Falta o fecho |
-| Resultados empíricos | Há números no sintético, com origem em arquivo (`06-resultados/RESULTADOS.md`). Nenhum número em imagem real. Nada entrou no texto do artigo ainda |
+| Resultados empíricos | Números do sintético e do VisDrone (imagem real), com origem em arquivo (`06-resultados/RESULTADOS.md`), já no manuscrito. Restam `[X]` da rodada 3 (S-oblique-six na 9.3, ajuste fino na 9.4, gêmeo a 75 m na 9.5 e na 11.5, recall do teste de arma inédita na 11.5), a preencher quando a rodada terminar, e os da seção de robustez, sem medida na fila |
 
 ## Experimento (desktop)
 

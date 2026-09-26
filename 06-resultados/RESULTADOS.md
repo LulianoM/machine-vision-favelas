@@ -316,7 +316,7 @@ Mesmo N (180 imagens 4K), mesma receita de treino (yolo11s, 1280, 60 epocas, bat
 | mAP50 sintetico (teto, val proprio) | 0,7915 | 0,6786 |
 | razao de eficacia vs R pareado (0,6311) | 1,6% | 3,0% |
 
-Arquivos: `sim2real_s_nadir_4k.json`, `sim2real_s_variedade.json`; logs em `C:rma3-favelalenderila_*.log` a `23_*.log`. Leitura: variedade de sitio move o numero na direcao prevista (Liao 2026, Kiefer 2022), quase dobrando o mAP50 e quase triplicando o mAP50-95, e o teto sintetico cai de 0,79 para 0,68 (o modelo deixa de decorar uma cena). O patamar continua uma ordem de grandeza abaixo de Kiefer (10 a 23%): sitio nao e o unico gargalo. Proximo: braco obliquo em 4K (geometria) e, se justificar, Frente B em escala.
+Arquivos: `sim2real_s_nadir_4k.json`, `sim2real_s_variedade.json`; logs em `C:\arma3-favela\blender\fila_*.log` a `23_*.log`. Leitura: variedade de sitio move o numero na direcao prevista (Liao 2026, Kiefer 2022), quase dobrando o mAP50 e quase triplicando o mAP50-95, e o teto sintetico cai de 0,79 para 0,68 (o modelo deixa de decorar uma cena). O patamar continua uma ordem de grandeza abaixo de Kiefer (10 a 23%): sitio nao e o unico gargalo. Proximo: braco obliquo em 4K (geometria) e, se justificar, Frente B em escala.
 
 ## 2026-09-24 [DESKTOP] Armado a 35 m (segundo ponto de GSD), resultado NEGATIVO
 
@@ -363,3 +363,17 @@ Treino `s_oblvar` (yolo11s, 1280, batch 6, single_cls, receita de todos os braco
 
 Eficacia contra o R pareado (0,6311): **16,7%**. Serie completa no VisDrone: nadir um sitio 0,0102 (1,6%); nadir seis sitios 0,0190 (3,0%); obliquo um sitio 0,0614 (9,7%); obliquo seis sitios calibrado 0,1055 (16,7%). O combinado rende 10,3 vezes o nadir e 1,7 vez o obliquo de um sitio. Em mAP50 absoluto (10,6%) fica no topo da faixa sintetica de Kiefer, Ott e Zell 2022 (1,2 a 10,2). Nao e ablacao: mudam juntos sitios, pitch, figuras sem arma e camera livre de mata.
 
+## 2026-09-25 [DESKTOP] Rodada 3, grupo B: teste de arma inedita (B1, B2)
+
+Corpus `ds_armado_75_inedita`: 50 quadros 4K a 75 m com o comando que gerou `ds_armado_75` (96 samples, 14 a 30 pessoas, `--mistura 0.34 0.33 0.33`, `--climas todos`), semente nova (47) e `--armas mista_inedita`: metade das armas sai dos cinco modelos de treino (fuzil AK, fuzil AR, carabina, espingarda, pistola) e metade de dois modelos que nunca entraram em treino (FAL 1,10 m, submetralhadora 0,55 m), com o tipo de cada caixa no manifest. Modelo `armado_75` sem retreino, protocolo de imagem inteira: `confusao_armado.py --pesos runs/detect/armado_75/weights/best.pt --ds ds_armado_75_inedita --split todos --out holdout_armas_armado_75.json` (imgsz 3840, conf 0,25, casamento 1:1 com IoU >= 0,5). Criterio aplicado por `python holdout_criterio.py` (saida `holdout_armas_criterio.json`).
+
+| grupo | chamadas de armada / caixas | recall | IC 95% (Wilson) |
+|---|---|---|---|
+| cinco modelos de treino | 50 / 125 | 0,400 | 0,318 a 0,488 |
+| dois modelos ineditos | 61 / 131 | 0,466 | 0,382 a 0,551 |
+
+Razao ineditos/vistos **1,16** (IC 95% de Katz 0,88 a 1,54, que ignora o agrupamento das caixas por quadro). Criterio pre-declarado: retirar a afirmacao se a razao ficar abaixo de 0,8. **Afirmacao mantida**: o detector nao depende de ter visto o modelo especifico de arma.
+
+Chamada de armada por modelo: fuzil AK 0,52; FAL (inedito) 0,50; espingarda 0,47; carabina 0,46; submetralhadora (inedita) 0,43; fuzil AR 0,34; pistola 0,20. Objetos: guarda-chuva 0,38; vergalhao 0,17; mangueira 0,17; enxada 0,16; tapete 0,13; cano PVC 0,11; rodo 0,10; vassoura 0,10; tabua 0,07.
+
+Leitura: o reconhecimento acompanha comprimento e silhueta, nao o modelo. O FAL inedito fica junto das armas longas vistas (0,34 a 0,52); as armas curtas ficam abaixo e sao chamadas de desarmada com frequencia (pistola 45%, submetralhadora 32%); o guarda-chuva e chamado de arma quase tanto quanto o fuzil AR. A mesma generalizacao que faz o teste passar explica a confusao com objetos alongados. Ressalva: neste teste todas as taxas de chamada de armada ficam abaixo das do val do `armado_75` (`confusao_armado_75.json`, 27 imagens): armada 0,434 contra 0,547, desarmada 0,068 contra 0,131, objeto 0,152 contra 0,237. A causa nao foi isolada (semente e quadros novos, mesmo comando); a comparacao entre vistas e ineditas e feita nas mesmas imagens e nao e afetada.

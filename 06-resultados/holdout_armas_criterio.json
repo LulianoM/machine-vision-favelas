@@ -1,0 +1,54 @@
+{
+ "entrada": "holdout_armas_armado_75.json",
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75\\weights\\best.pt",
+ "protocolo": "imagem inteira, casamento 1:1",
+ "imagens": 50,
+ "conf": 0.25,
+ "criterio": "retirar se recall_ineditas < 0.8 x recall_vistas",
+ "vistas": {
+  "modelos": [
+   "fuzil_ak",
+   "fuzil_ar",
+   "carabina",
+   "espingarda",
+   "pistola"
+  ],
+  "armada": 50,
+  "n": 125,
+  "recall": 0.4,
+  "ic95": [
+   0.3183,
+   0.4876
+  ]
+ },
+ "ineditas": {
+  "modelos": [
+   "fuzil_fal",
+   "submetralhadora"
+  ],
+  "armada": 61,
+  "n": 131,
+  "recall": 0.4656,
+  "ic95": [
+   0.3824,
+   0.5508
+  ]
+ },
+ "razao": 1.1641,
+ "razao_ic95": [
+  0.8777,
+  1.544
+ ],
+ "limiar": 0.8,
+ "retirar": false,
+ "por_modelo": {
+  "fuzil_ak": 0.5185,
+  "fuzil_ar": 0.3429,
+  "carabina": 0.4643,
+  "espingarda": 0.4667,
+  "pistola": 0.2,
+  "fuzil_fal": 0.5,
+  "submetralhadora": 0.4348
+ },
+ "nota": "IC ignora o agrupamento das caixas por quadro"
+}
