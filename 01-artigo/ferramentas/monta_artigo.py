@@ -112,14 +112,14 @@ AUTORIA = {
         "de qualquer regressão."),
     "07b-results-placeholder.md": (
         "Luciano Martins Figueira (mestrando)",
-        "esqueleto com marcadores [X] no lugar dos números",
-        "Os números entram conforme os treinos fecham. O protocolo foi fixado antes de qualquer "
-        "treino rodar, e isso está declarado no texto."),
+        "resultados medidos, cada número com arquivo de origem",
+        "Cada modelo foi especificado antes de rodar, mas o protocolo cresceu em etapas, e o texto "
+        "diz quais modelos entraram depois de resultados anteriores."),
     "08b-robustness.md": (
         "Luciano Martins Figueira (mestrando)",
         "ameaças e testes definidos antes dos resultados",
         "Cada ameaça traz o teste que a resolveria e o que aconteceria com a conclusão se o teste "
-        "falhar."),
+        "falhar; os testes ainda não rodados estão marcados como tal."),
     "09b-technical-limitations.md": (
         "Luciano Martins Figueira (mestrando)",
         "fechada",

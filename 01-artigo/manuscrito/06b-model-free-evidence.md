@@ -174,8 +174,8 @@ and between-image dispersion of 0.12 to 0.38, only the gap between the extremes 
 sun at 0.63 and 0.64, against overcast at 0.88) approaches one standard deviation, and the
 ordering of the four intermediate regimes is not resolvable at this sample size. The measurement
 is therefore a hypothesis about detector difficulty, not a finding about it: a contrast statistic
-is not a detection statistic. Section 11.3 states the test and the condition under which the
-hypothesis is withdrawn.
+is not a detection statistic. Section 10.3 states the test and the condition under which the
+hypothesis is withdrawn, and Section 11.3 the implication that is withdrawn with it.
 
 ### 8.4 What these measurements imply for the proposal
 
@@ -185,7 +185,8 @@ task operates, the target is a few tens of pixels of low contrast texture; its s
 corpora tracks camera pitch rather than scene content; and hard sun, the illumination
 conventionally preferred for flying, fills the background with the cast shadow that competes
 with the figure, so that the regime with the second largest raw contrast is among the two
-weakest once local clutter is accounted for.
+weakest once local clutter is accounted for, although whether that makes detection harder is the
+test of Section 10.3, which has not been run.
 
 Whether these constraints can be overcome by synthesis alone, and what fraction of the attainable
 ceiling is reached, is the subject of Section 9.

@@ -35,9 +35,12 @@ the acquisition geometry this work reproduces points straight down. An oblique c
 VisDrone tells us about VisDrone. It does not recommend an acquisition geometry for the case
 study, and Section 11.3 is the only acquisition recommendation this article makes. The size of the
 effect is itself the clearest statement of this limit: the same settlement rendered from a tilted
-camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), and six settlements at
-the calibrated pitch score 10 times (0.1055), not because either is a better model of a settlement
-seen from a drone at 150 m, but because both resemble the benchmark's acquisition. The nadir figure is the one that bears on the case study, and it is the lower one.
+camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), not because it is a
+better model of a settlement seen from a drone at 150 m, but because it resembles the benchmark's
+acquisition. The best oblique configuration scores 10 times (0.1055), but it is not an ablation:
+besides the camera it adds six settlements and keeps only figures carrying nothing, chosen because
+their shape is closer to the benchmark's, so that factor is not attributable to acquisition alone
+(Section 9.3). The nadir figure is the one that bears on the case study, and it is the lower one.
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
@@ -50,8 +53,9 @@ weather.
 The implication is stated conditionally because the evidence is conditional. Eight images per
 regime, with between-image dispersion of 0.12 to 0.38, resolves only the gap between the extremes
 at roughly one standard deviation and does not resolve the ordering of the four intermediate
-regimes at all. Section 10.3 specifies the test. If per-regime detector performance does not order
-with contrast against local clutter, this implication is withdrawn and the contrast measurement stands
+regimes at all. Section 10.3 specifies the test, which has not been run. If per-regime detector
+performance is not higher under overcast than under both hard sun and rain, or if hard sun is not
+among the two weakest regimes, this implication is withdrawn and the contrast measurement stands
 only as a description of the imagery.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
@@ -93,14 +97,17 @@ detector that separates the classes on that corpus cannot be doing so by colour,
 which it calls a broom a rifle is reported in Section 9.5.
 
 The distinction between altitudes is the contribution, and it is stated as a condition rather
-than a recommendation. At 150 m the capability does not exist. At 75 m it exists with the error
-profile of Section 9.5, which calls 24 per cent of confusable objects armed. The measurements do not show it
+than a recommendation. At 150 m the capability does not exist. At 75 m it exists in the sense that the
+classes are separated above chance on the synthetic validation split, with the error profile of
+Section 9.5, which calls 24 per cent of confusable objects armed; no threshold for calling the
+capability present was fixed in advance. The measurements do not show it
 improving as resolution increases further: at 35 m the same rate is 27 per cent. Whether that reflects a
 limit of what these figures and carrying poses allow a detector to learn, or the change of pose
 distribution between the two corpora, is what the matched corpus of Section 9.5 decides: it is not
 the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 16 per cent against
-27 at 35 m, and the finer ground sampling distance moved the detector towards calling every class
-armed rather than towards separating them.
+27 at 35 m: with the pose held, the finer ground sampling distance did not reduce the confusion, and
+the 35 m model calls every class armed more often rather than separating them better, a difference
+that is suggestive rather than established at these sample sizes (Section 9.5).
 Either way, a claim that a system distinguishes an armed from an unarmed person from the air is, at
 the altitudes and sensors described here, a claim that can be checked before it is believed.
 

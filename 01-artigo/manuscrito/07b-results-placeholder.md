@@ -1,8 +1,10 @@
 ## 9. Results: Transfer to Real Imagery
 
 > **Provenance note.** Every quantity below traces to a file under `06-resultados/` together with
-> the command that produced it. The protocol in Section 7.7 was fixed before any of them was run,
-> and Section 10 declares in advance what would overturn the transfer results of Sections 9.1 to
+> the command that produced it. Each model of the protocol in Section 7.7 was
+> specified before that model was run, but the protocol grew in stages: S-nadir-150-six,
+> S-oblique-six, S-nadir-35 and its twin, and the fine-tuning models of Section 9.4 were added after
+> earlier results in this section were known. Section 10 declares in advance what would overturn the transfer results of Sections 9.1 to
 > 9.3, as Section 11.5 does for the 75 m result of Section 9.5.
 
 A pilot of the full protocol was run before the corpus reached its final size. Its results are
@@ -19,8 +21,9 @@ would make the rest of this section unreadable as evidence.
 
 These are not results about transfer. The model failed on its own domain, reaching 0.077 where the
 corpus of record, with 180 images at 4K, reaches 0.79 (Section 9.2), and transfer cannot be
-measured from a model that did not learn. Section 10.1 identifies the first of two causes and
-Section 8.1 the second, both properties of the pilot corpus rather than of the method: it
+measured from a model that did not learn. Sections 10.1 and 8.1 name two
+candidate causes, properties of the pilot corpus rather than of the method if they hold, and
+neither has been isolated (the test of the first, specified in Section 10.1, has not been run): it
 contained 40 training scenes, and it was rendered at
 1080p, which doubles the ground sampling distance and places two thirds of all instances below one
 stride of the network (Section 8.1).
@@ -127,8 +130,10 @@ and the conclusion narrows accordingly.
 
 The first outcome obtained. With the settlement, the generator and the training recipe held fixed,
 the oblique model transfers 6 times better than the nadir model, against a factor of 1.9 for six
-settlements instead of one. By the criterion fixed before the run (Section 10.4), acquisition
-geometry is load-bearing on this benchmark, and more so than variety of settlement. The oblique
+settlements instead of one. By the criteria fixed before the run (the two outcomes above and
+Section 10.4), acquisition geometry is load-bearing on this benchmark. The comparison with variety
+of settlement is not part of those criteria, since the variety arm was added after the nadir
+result; on it, the change of camera moves the transfer figure more than six settlements do. The oblique
 figure falls within the synthetic-only range reported by Kiefer, Ott and Zell (2022), although
 their figures average ten VisDrone classes and ours scores a single person class.
 
@@ -187,8 +192,9 @@ smaller volume.
 It is negative at both. Initialised from the synthetic model, the detector finishes 8.0 points of
 mAP50 below the generic initialisation with 5 per cent of the real data and 6.1 points below with
 10 per cent, and the synthetic start given 647 real images (0.5095) does not reach the generic start
-given 324 (0.5220). The gap narrows as real data grows, as expected, but what narrows is a cost, not
-a benefit. On the selection slice the generic start overtakes the synthetic one by the fourth epoch at 5 per
+given 324 (0.5220). The expectation stated before the run therefore fails: the difference
+is not largest at the smaller volume but most negative there. Its magnitude narrows as real data
+grows, but what narrows is a cost, not a benefit. On the selection slice the generic start overtakes the synthetic one by the fourth epoch at 5 per
 cent and in the first epoch at 10 per cent, after which the synthetic start leads only
 intermittently (`06-resultados/ft_curvas_selecao.json`). Fine-tuning does
 transform the synthetic model itself, from 0.1055 to 0.4424 with 324 real images, which is the
