@@ -408,3 +408,14 @@ D1 (`prepara_ft.py`, `C:\arma3-favela\visdrone\ft\fatias.json`): do treino do Vi
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 5% a partir do sintetico (D2)
 
 `ft05_sint` (etapa D2 de `07-blender/scripts/rodada3.py`): pesos `s_oblvar` (S-oblique-six) ajustados na fatia de 5% do VisDrone (324 imagens de treino), 30 epocas, yolo11s, 1280, batch 6, single_cls, selecao na fatia `sel` (324 imagens disjuntas). mAP50 na selecao (`runs/detect/ft05_sint/results.csv`): 0,159 na epoca 1, 0,251 na 5, 0,320 na 10, 0,378 na 20 e **0,396 na 30** (melhor, ainda subindo); mAP50-95 0,148. E numero de selecao, nao de teste: o teste no val inteiro do VisDrone e a etapa D6 (`ft_visdrone.json`). A comparacao com o braco COCO (D3) entra junto com ele.
+
+## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 5% a partir do COCO (D3)
+
+`ft05_coco` (etapa D3 de `07-blender/scripts/rodada3.py`): `yolo11s.pt` (COCO) ajustado na mesma fatia de 5% do VisDrone (324 imagens), com a receita do D2 (30 epocas, 1280, batch 6, single_cls, selecao em `sel`). mAP50 na selecao (`runs/detect/ft05_sint/results.csv` e `runs/detect/ft05_coco/results.csv`):
+
+| inicio | epoca 1 | 3 | 4 | 10 | 20 | melhor (epoca) | mAP50-95 no melhor |
+|---|---|---|---|---|---|---|---|
+| sintetico (`s_oblvar`, D2) | 0,159 | 0,226 | 0,244 | 0,320 | 0,378 | 0,396 (30) | 0,148 |
+| COCO (D3) | 0,034 | 0,168 | 0,306 | 0,336 | 0,430 | 0,465 (29) | 0,180 |
+
+Leitura provisoria (selecao, nao teste): com 5% do VisDrone o inicio sintetico so fica na frente nas tres primeiras epocas; o COCO passa na quarta e termina 6,8 pontos de mAP50 acima (3,2 de mAP50-95). O numero do artigo e o do teste no val inteiro do VisDrone (D6, `ft_visdrone.json`).
