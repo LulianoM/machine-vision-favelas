@@ -1,0 +1,168 @@
+{
+ "protocolo": "imagem inteira, conf 0,25, casamento 1:1 IoU >= 0,5, split val de cada corpus",
+ "modelos": {
+  "armado_75": {
+   "imagens": 27,
+   "split": "val",
+   "taxas": {
+    "armada": {
+     "chamada_armada": 64,
+     "n": 117,
+     "taxa": 0.547,
+     "ic95": [
+      0.4567,
+      0.6343
+     ]
+    },
+    "desarmada": {
+     "chamada_armada": 20,
+     "n": 153,
+     "taxa": 0.1307,
+     "ic95": [
+      0.0862,
+      0.1933
+     ]
+    },
+    "objeto": {
+     "chamada_armada": 32,
+     "n": 135,
+     "taxa": 0.237,
+     "ic95": [
+      0.1732,
+      0.3154
+     ]
+    }
+   },
+   "d_linha_armada_contra": {
+    "desarmada": 1.241,
+    "objeto": 0.834
+   },
+   "mAP50_imagem_inteira": 0.5786
+  },
+  "armado_35": {
+   "imagens": 35,
+   "split": "val",
+   "taxas": {
+    "armada": {
+     "chamada_armada": 78,
+     "n": 137,
+     "taxa": 0.5693,
+     "ic95": [
+      0.4857,
+      0.6493
+     ]
+    },
+    "desarmada": {
+     "chamada_armada": 20,
+     "n": 119,
+     "taxa": 0.1681,
+     "ic95": [
+      0.1115,
+      0.2454
+     ]
+    },
+    "objeto": {
+     "chamada_armada": 33,
+     "n": 121,
+     "taxa": 0.2727,
+     "ic95": [
+      0.2013,
+      0.3582
+     ]
+    }
+   },
+   "d_linha_armada_contra": {
+    "desarmada": 1.136,
+    "objeto": 0.779
+   },
+   "mAP50_imagem_inteira": 0.5139
+  },
+  "armado_75g": {
+   "imagens": 24,
+   "split": "val",
+   "taxas": {
+    "armada": {
+     "chamada_armada": 40,
+     "n": 85,
+     "taxa": 0.4706,
+     "ic95": [
+      0.3681,
+      0.5757
+     ]
+    },
+    "desarmada": {
+     "chamada_armada": 10,
+     "n": 92,
+     "taxa": 0.1087,
+     "ic95": [
+      0.0601,
+      0.1886
+     ]
+    },
+    "objeto": {
+     "chamada_armada": 15,
+     "n": 91,
+     "taxa": 0.1648,
+     "ic95": [
+      0.1025,
+      0.2543
+     ]
+    }
+   },
+   "d_linha_armada_contra": {
+    "desarmada": 1.16,
+    "objeto": 0.901
+   },
+   "mAP50_imagem_inteira": 0.5079
+  }
+ },
+ "contrastes": {
+  "altitude: armado_75g -> armado_35": {
+   "armada": {
+    "de": 0.4706,
+    "para": 0.5693,
+    "dif_pontos": 9.9,
+    "z": 1.43,
+    "p_bilateral": 0.152
+   },
+   "desarmada": {
+    "de": 0.1087,
+    "para": 0.1681,
+    "dif_pontos": 5.9,
+    "z": 1.22,
+    "p_bilateral": 0.221
+   },
+   "objeto": {
+    "de": 0.1648,
+    "para": 0.2727,
+    "dif_pontos": 10.8,
+    "z": 1.86,
+    "p_bilateral": 0.063
+   }
+  },
+  "gerador a 75 m: armado_75 -> armado_75g": {
+   "armada": {
+    "de": 0.547,
+    "para": 0.4706,
+    "dif_pontos": -7.6,
+    "z": -1.07,
+    "p_bilateral": 0.283
+   },
+   "desarmada": {
+    "de": 0.1307,
+    "para": 0.1087,
+    "dif_pontos": -2.2,
+    "z": -0.51,
+    "p_bilateral": 0.611
+   },
+   "objeto": {
+    "de": 0.237,
+    "para": 0.1648,
+    "dif_pontos": -7.2,
+    "z": -1.31,
+    "p_bilateral": 0.19
+   }
+  }
+ },
+ "nota": "z e IC ignoram o agrupamento por quadro; taxas = fracao chamada de pessoa_armada"
+}

@@ -385,3 +385,22 @@ Corpus `ds_armado_75g`: 200 quadros 4K com o comando que gerou `ds_armado_35` (6
 Forma (`python mede_forma.py`, `forma_corpora.json`): pessoa armada com mediana 48,1 x 42,7 px, igual a `ds_armado_75` (48,1 x 42,5) e cerca de 2,5 vezes menor em cada lado que `ds_armado_35` (122,3 x 107,7); h/w de todas as caixas 0,87 (75 m original 0,88; 35 m 0,84). Ladrilhos (`tile_dataset.py --tile 1280 --overlap 0.2`): 1.287 de treino e 176 de validacao (24 quadros), contra 1.166 e 242 do 35 m.
 
 Para que serve: na rodada 2 os corpora de 75 m e 35 m mudavam altitude e pose juntas (o de 75 m e anterior ao `--porte-realista`, com o objeto em pose de tiro em 42% dos casos; o de 35 m tem 8%). O gemeo muda so a altitude. Treino `armado_75g` (C3) em curso; a matriz de confusao (C4) decide se a diferenca entre 35 m e 75 m vem da resolucao ou da pose.
+
+## 2026-09-26 [DESKTOP] Rodada 3, grupo C: gemeo a 75 m (C3, C4) e fatias do VisDrone (D1)
+
+Treino `armado_75g` (yolo11s, 1280, batch 6, 3 classes, receita do `armado_75` e do `armado_35`), com pausa do autor na epoca 28 e retomada de `last.pt`: parada antecipada na epoca 59 (paciencia 15), melhor peso na 44, mAP50 0,473 no val de ladrilhos. Matriz de confusao de imagem inteira no val do gemeo, 24 imagens (`confusao_armado.py --pesos runs/detect/armado_75g/weights/best.pt --ds ds_armado_75g --split val --out confusao_armado_75g.json`), comparada com os outros dois modelos por `python compara_gemeo.py` (saida `gemeo_75_35.json`):
+
+| fracao chamada de armada | 75 m original | 35 m | gemeo 75 m |
+|---|---|---|---|
+| pessoa armada (recall) | 0,547 (n 117) | 0,569 (137) | 0,471 (85) |
+| pessoa desarmada | 0,131 (153) | 0,168 (119) | 0,109 (92) |
+| pessoa com objeto | 0,237 (135) | 0,273 (121) | 0,165 (91) |
+| d' armada contra objeto | 0,83 | 0,78 | 0,90 |
+| d' armada contra desarmada | 1,24 | 1,14 | 1,16 |
+| mAP50 imagem inteira | 0,579 | 0,514 | 0,508 |
+
+Contraste de altitude (gemeo -> 35 m, so a altura muda): objeto +10,8 pontos (z 1,86, p 0,063), desarmada +5,9 (p 0,22), armada +9,9 (p 0,15). Contraste do gerador a 75 m (original -> gemeo: `--porte-realista --fio-gsd --laje 0.75 --amostra-no-quadro`, 64 samples, 12 a 24 pessoas): objeto -7,2 pontos (p 0,19), desarmada -2,2 (p 0,61), armada -7,6 (p 0,28). Testes de duas proporcoes sem correcao para o agrupamento por quadro.
+
+Leitura: com tudo igual menos a altitude, descer a 35 m nao reduz a confusao entre arma e objeto; o modelo de 35 m chama mais gente de armada em todas as classes (mais acerto e mais alarme falso), com mAP50 igual e d' igual ou menor. A leitura (a) da entrada de 24/09 (o 35 m piorou porque perdeu o atalho da pose) nao se sustenta: a 75 m, as mudancas do gerador baixaram a confusao em vez de subir. O negativo de 35 m e da altitude, com a ressalva de que nenhum contraste passa de p 0,05 com vals de 24 a 35 imagens. Por tipo, o guarda-chuva segue como o objeto mais chamado de arma (0,40 no gemeo; 0,38 no teste de arma inedita).
+
+D1 (`prepara_ft.py`, `C:\arma3-favela\visdrone\ft\fatias.json`): do treino do VisDrone (6.471 imagens), 324 para a fatia de 5% e 647 para a de 10% (a de 5% contida na de 10%), mais 324 de selecao disjuntas, semente 2609; o teste e o val inteiro do VisDrone.
