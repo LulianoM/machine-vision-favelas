@@ -161,13 +161,16 @@ on properties of the asset library rather than on anything visible in the world.
 The corpus is built to remove that possibility. Five firearm models are generated
 procedurally, spanning 0.20 to 1.05 metres in length: two rifles, a carbine, a shotgun and a
 pistol. Against them stand nine elongated objects that a person carries in this territory, spanning
-0.88 to 2.5 metres: brooms, rakes, plastic pipe, reinforcement bar, planks, umbrellas, hoes,
+0.88 to 2.5 metres: brooms, floor squeegees, plastic pipe, reinforcement bar, planks, umbrellas, hoes,
 rolled mats and hose. Weapons and objects are drawn from the same palette of base colours and
 surface roughness, so that no detector can separate the two by colour, and both are carried
 through the same distribution of poses, held forward, at the side, slung on the back, or carried
 while walking, in the same proportions. A detector that separates the classes on this corpus is
 therefore doing so on the silhouette of what is carried, which is the only thing that could
 transfer, and the rate at which it calls a broom a rifle is reported directly in Section 9.5.
+Two later corpora, at 35 m and its twin at 75 m, depart from this in one respect, stated where
+they are reported: the object is held in the firing pose in 8 per cent of cases rather than as
+often as the weapon, which is closer to how such objects are carried.
 
 ### 7.5 Domain randomisation over illumination
 
@@ -216,11 +219,13 @@ downscaled frames.
 |---|---|
 | Detector | YOLO11s, Ultralytics 8.4.148, PyTorch 2.14.0, CUDA 12.6 |
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
-| Initialisation | COCO pretrained weights, identical for every model reported |
+| Initialisation | COCO pretrained weights for every model trained from scratch; the synthetic-start fine-tuning models of Section 9.4 start from S-oblique-six |
 | Tile size, synthetic corpus at 4K | 1280 px, 20 per cent overlap |
 | Empty tiles retained as negatives | requested 5 per cent; realised 0.8 to 4.5 per cent depending on corpus density, and 0.8 per cent in the corpus of record |
 | Minimum retained fraction of a clipped box | 0.40 |
 | Optimiser, learning rate | Ultralytics default, lr0 0.01 |
+| Input size, batch | 1280 px, batch 6 |
+| Epochs | 60, stopping early after 15 epochs without improvement; 30 for the fine-tuning models of Section 9.4 |
 | Validation split | 15 per cent of generated scenes, split by scene and not by tile |
 | Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95 |
 
@@ -248,6 +253,7 @@ three-class ones, so that no comparison below is a comparison of data volume.
 | **S-oblique-six** | Six settlements, oblique camera at the calibrated pitch, figures carrying nothing | The best configuration of the generator: the synthetic model of this article |
 | **S-nadir-75** | The same generator at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable |
 | **S-nadir-35**, and its twin at 75 m | At 35 m with realistic carrying poses; the same corpus rendered at 75 m | Whether resolution or carrying pose drives the confusion |
+| **F-synthetic, F-generic** | 5 or 10 per cent of VisDrone-DET train (324 or 647 images), starting from S-oblique-six or from COCO | What the synthetic pretraining is worth once some real data exists |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)

@@ -35,9 +35,9 @@ the acquisition geometry this work reproduces points straight down. An oblique c
 VisDrone tells us about VisDrone. It does not recommend an acquisition geometry for the case
 study, and Section 11.3 is the only acquisition recommendation this article makes. The size of the
 effect is itself the clearest statement of this limit: the same settlement rendered from a tilted
-camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), not because it is a
-better model of a settlement seen from a drone at 150 m, but because it resembles the benchmark's
-acquisition. The nadir figure is the one that bears on the case study, and it is the lower one.
+camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), and six settlements at
+the calibrated pitch score 10 times (0.1055), not because either is a better model of a settlement
+seen from a drone at 150 m, but because both resemble the benchmark's acquisition. The nadir figure is the one that bears on the case study, and it is the lower one.
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
@@ -109,16 +109,17 @@ falls below four fifths of its recall on the models it was trained on, then what
 the asset library and not the object, and no figure from that corpus should be read as a
 capability. The test renders 50 new frames at 75 m, in a new realisation of the settlement and with
 the generator settings of the training corpus, in which half the firearms are drawn from the five
-training models and half from two models that enter no training corpus, a rifle of 1.10 m and a
-compact submachine gun of 0.55 m, chosen inside the length range of the five so that the test
-measures the asset and not its size. The type of every annotated instance is recorded, so the two
+training models and half from two models that enter no training corpus, a rifle of 1.10 m, at the
+upper edge of the length range of the five (the longest, a shotgun, measures 1.05 m), and a
+compact submachine gun of 0.55 m, inside it, so that the test measures the asset rather than a new
+size. The type of every annotated instance is recorded, so the two
 recalls come from the same images under the same light. Recall on seen models: 0.400 (50 of 125);
 on unseen models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to
 1.54) against the threshold of 0.80, so the condition is not met and the 75 m figure stands
 (`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). What the detector
 generalises to is length and silhouette rather than the asset: the unseen 1.10 m rifle is called
-armed at 0.50, among the seen long arms (0.34 to 0.52), the pistol at 0.20, and an umbrella at
-0.38. The generalisation that passes this test is the one that produces the confusion of Section
+armed at 0.50, among the seen long arms (0.34 to 0.52), the pistol at 0.20, and a closed
+umbrella, 0.88 m long, at 0.38. The generalisation that passes this test is the one that produces the confusion of Section
 9.5. Every rate is lower in the new realisation than on the validation split (armed recall 0.43
 against 0.55), which does not affect the comparison, made within the same images.
 Nothing in this article recommends acquisition over the case study territory.

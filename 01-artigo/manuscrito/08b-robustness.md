@@ -92,7 +92,8 @@ range, against 4.88 for the nadir corpus, so the change moves the shape of the t
 against 0.98) and leaves its size in the same range, somewhat larger in area (456 against 301
 square pixels). Pitch is set from the VisDrone training split rather than from the validation
 split on which both models are scored, so that the calibration does not consume the test set.
-Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set (Section 9.3).
+Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set, and
+0.1055 once the oblique camera is combined with six settlements and the calibrated pitch (Section 9.3).
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in
