@@ -423,3 +423,18 @@ Leitura provisoria (selecao, nao teste): com 5% do VisDrone o inicio sintetico s
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 10% a partir do sintetico (D4)
 
 `ft10_sint` (etapa D4 de `07-blender/scripts/rodada3.py`): pesos `s_oblvar` ajustados na fatia de 10% do VisDrone (647 imagens, contem a de 5%), receita do D2. mAP50 na selecao (`runs/detect/ft10_sint/results.csv`): 0,180 na epoca 1, 0,383 na 10, 0,426 na 20 e **0,449 na 27** (melhor); mAP50-95 0,171. Leitura provisoria (selecao, nao teste): dobrar o dado real sobe o inicio sintetico de 0,396 para 0,449, ainda abaixo do inicio COCO com metade do dado (0,465 com 5%).
+
+## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino no VisDrone, teste (D5, D6); rodada encerrada
+
+`ft10_coco` (D5): `yolo11s.pt` ajustado na fatia de 10% (647 imagens) com a receita do D2; melhor mAP50 na selecao 0,507 (epoca 30). D6 (`ft_resumo` de `07-blender/scripts/rodada3.py`): os quatro melhores pesos avaliados no val inteiro do VisDrone com o protocolo do R pareado (`avalia_sim2real.py`, conf 0,001, imgsz 1280). Resumo em `ft_visdrone.json`, metricas completas em `sim2real_ft05_sint.json`, `sim2real_ft05_coco.json`, `sim2real_ft10_sint.json`, `sim2real_ft10_coco.json`; curvas de selecao em `ft_curvas_selecao.json` (`python ft_curvas.py`).
+
+| dado real | inicio | P | R | mAP50 | mAP50-95 | eficacia vs R pareado (0,6311) |
+|---|---|---|---|---|---|---|
+| 5% (324) | sintetico (`s_oblvar`) | 0,5869 | 0,4068 | 0,4424 | 0,1657 | 70,1% |
+| 5% (324) | COCO | 0,6410 | 0,4718 | 0,5220 | 0,2025 | 82,7% |
+| 10% (647) | sintetico (`s_oblvar`) | 0,6372 | 0,4579 | 0,5095 | 0,1984 | 80,7% |
+| 10% (647) | COCO | 0,6823 | 0,5160 | 0,5709 | 0,2216 | 90,5% |
+
+Diferenca sintetico menos COCO: -0,0796 com 5% e -0,0614 com 10% de mAP50 (-0,0368 e -0,0232 de mAP50-95). Leitura: o pre-treino sintetico custa em vez de ajudar, nas duas fracoes, e o sintetico com 647 imagens reais nao alcanca o COCO com 324. A diferenca encolhe com mais dado real, como declarado antes da rodada, mas o que encolhe e um custo. O ajuste fino transforma o proprio modelo sintetico (0,1055 para 0,4424 com 324 imagens), que e o efeito da literatura; o que ele nao faz aqui e superar um inicio generico com o mesmo dado. Hipotese nao testada: 46 epocas em 890 ladrilhos sinteticos sobrescrevem parte do que o COCO codifica sobre pessoas reais. Na selecao, o inicio COCO passa o sintetico na epoca 4 com 5% e ja na 1 com 10%.
+
+Rodada 3 encerrada em 26/09 17:54, sem grupo com falha. Todos os `[X]` da rodada preenchidos no manuscrito (9.3, 9.4, 9.5, 11.5, mais a linha do `ds_oblvar` na tabela da 8.2); ficam `[X]` so as checagens de robustez 10.1 (curva completa) e 10.3 (por regime), que nao estavam na rodada.

@@ -37,6 +37,7 @@
     "desarmada": 1.241,
     "objeto": 0.834
    },
+   "precisao_armada": 0.3855,
    "mAP50_imagem_inteira": 0.5786
   },
   "armado_35": {
@@ -75,6 +76,7 @@
     "desarmada": 1.136,
     "objeto": 0.779
    },
+   "precisao_armada": 0.4149,
    "mAP50_imagem_inteira": 0.5139
   },
   "armado_75g": {
@@ -113,6 +115,7 @@
     "desarmada": 1.16,
     "objeto": 0.901
    },
+   "precisao_armada": 0.4396,
    "mAP50_imagem_inteira": 0.5079
   }
  },

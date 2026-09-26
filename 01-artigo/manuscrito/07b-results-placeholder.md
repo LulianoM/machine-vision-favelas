@@ -107,7 +107,7 @@ mismatch identified in Section 8.2 is load-bearing on this benchmark.
 |---|---|---|
 | S-nadir-150 | 0.0102 | 1.6% |
 | S-oblique | 0.0614 | 9.7% |
-| S-oblique-six | `[X]` | `[X]` |
+| S-oblique-six | 0.1055 | 16.7% |
 
 *Source: `06-resultados/sim2real_s_obliquo.json` and `sim2real_s_oblvar.json`.*
 
@@ -133,7 +133,14 @@ calibration: six settlements of 30 images; pitch between 45 and 56 degrees, the 
 figures carrying nothing reach the benchmark's shape; only such figures; and a camera placement
 redrawn until the centre of the frame is not occluded by forest or hillside. It is not an ablation, since several
 things change at once; it is the best configuration this generator supports and the model the rest
-of this article calls the synthetic model. Result: `[X]`.
+of this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val (precision
+0.2631, recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the nadir model
+and 1.7 times the single-settlement oblique model, against 0.7047 on its own synthetic validation.
+The rendered figure reaches the calibration target, a median height-to-width ratio of 1.85 at 13.3
+by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the benchmark's training split (Section 8.2). In
+absolute terms, 10.6 points of mAP50 sit at the upper end of the synthetic-only range reported by
+Kiefer, Ott and Zell (2022), while the ratio to our own ceiling stays below theirs for the reason
+given in Section 9.2.
 
 The acquisition geometry this article reproduces points straight down. An oblique corpus that transfers better to
 VisDrone is informative about the benchmark, not about the acquisition that would be flown over
@@ -159,12 +166,31 @@ Section 10.5. Thirty epochs, the same detector, input size and augmentation
 
 | Real training data | From synthetic pretraining | From generic initialisation | Difference |
 |---|---|---|---|
-| 5 per cent (324 images) | `[X]` | `[X]` | `[X]` |
-| 10 per cent (647 images) | `[X]` | `[X]` | `[X]` |
+| 5 per cent (324 images) | 0.4424 | 0.5220 | -0.0796 |
+| 10 per cent (647 images) | 0.5095 | 0.5709 | -0.0614 |
+
+*mAP50 on VisDrone-DET val under the protocol of Section 9.1. Source: `06-resultados/ft_visdrone.json`;
+precision, recall and mAP50-95 of each model in `sim2real_ft05_sint.json`, `sim2real_ft05_coco.json`,
+`sim2real_ft10_sint.json` and `sim2real_ft10_coco.json`.*
 
 The quantity of interest is the difference at each volume: what the synthetic pretraining is worth
 when real data is scarce. The expectation, stated before the run, is that it is largest at the
 smaller volume.
+
+It is negative at both. Initialised from the synthetic model, the detector finishes 8.0 points of
+mAP50 below the generic initialisation with 5 per cent of the real data and 6.1 points below with
+10 per cent, and the synthetic start given 647 real images (0.5095) does not reach the generic start
+given 324 (0.5220). The gap narrows as real data grows, as expected, but what narrows is a cost, not
+a benefit. On the selection slice the synthetic start leads only in the first epochs, and at 5 per
+cent it is overtaken by the fourth (`06-resultados/ft_curvas_selecao.json`). Fine-tuning does
+transform the synthetic model itself, from 0.1055 to 0.4424 with 324 real images, which is the
+effect the sim-to-real literature reports; what it does not do here is outperform a generic start
+given the same real images. Relative to the ceiling of Section 9.1, trained on 1,106 real images for
+twice as many epochs, the generic start recovers 82.7 and 90.5 per cent and the synthetic start 70.1
+and 80.7 per cent. On this benchmark and at these volumes, the synthetic corpus does not substitute
+for real data; it costs some. One candidate explanation, not tested here, is that training on 890
+tiles of generated figures overwrites part of what the generic initialisation encodes about real
+people.
 
 ### 9.5 The armed and unarmed distinction, by altitude
 
@@ -181,18 +207,19 @@ palette and the same distribution of carrying poses. The corpus holds 2,887 inst
 933 of them armed, 973 unarmed and 981 carrying a confusable object. A second corpus
 at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by 103.1 pixels.
 
-| Quantity | 75 m | 35 m |
-|---|---|---|
-| mAP50, three classes | 0.579 | 0.514 |
-| Recall, armed | 0.547 | 0.569 |
-| Precision, armed | 0.386 | 0.415 |
-| Rate at which a confusable object is called armed | 0.237 | 0.273 |
-| Rate at which an unarmed person with no object is called armed | 0.131 | 0.168 |
+| Quantity | 75 m | 35 m | 75 m, settings of the 35 m corpus |
+|---|---|---|---|
+| mAP50, three classes | 0.579 | 0.514 | 0.508 |
+| Recall, armed | 0.547 | 0.569 | 0.471 |
+| Precision, armed | 0.386 | 0.415 | 0.440 |
+| Rate at which a confusable object is called armed | 0.237 | 0.273 | 0.165 |
+| Rate at which an unarmed person with no object is called armed | 0.131 | 0.168 | 0.109 |
 
 *Protocol: inference on the full 4K frame at native scale; confidence 0.25 and one-to-one matching
 at an intersection-over-union of 0.50 for the rates; the validation split of each corpus
-(27 and 35 images). Source: `06-resultados/confusao_armado_75.json` and
-`confusao_armado_35.json`, produced by `06-resultados/confusao_armado.py`.*
+(27, 35 and 24 images). Source: `06-resultados/confusao_armado_75.json`,
+`confusao_armado_35.json` and `confusao_armado_75g.json`, produced by `06-resultados/confusao_armado.py`;
+precision from `compara_gemeo.py`. The third column is the matched corpus described below.*
 
 The fourth row is the quantity of interest. It is the rate at which the system would mark a
 resident carrying a broom, a length of pipe or a rolled mat as armed, and it is the concrete form
@@ -206,6 +233,13 @@ the weapon, while at 35 m it is held that way in 8 per cent and otherwise over t
 side or in one hand. That removes a cue the 75 m model may have used, and it is the more realistic
 distribution, but it confounds resolution with pose (and with render sampling, 64 against 96
 samples per pixel). A third corpus separates them: identical to the 35 m corpus in every setting
-except altitude, rendered at 75 m. Confusable objects called armed: `[X]`; unarmed persons called
-armed: `[X]`. Section 10 states, for each result above, the condition that would overturn it, and
+except altitude, rendered at 75 m. Confusable objects called armed: 0.165; unarmed persons called
+armed: 0.109 (third column above). Against 0.273 and 0.168 at 35 m with every other setting held,
+halving the ground sampling distance did not reduce the confusion: the 35 m model calls every class
+armed more often, armed persons included, at the same mAP50, so the 35 m result is not an artefact
+of the change of pose. The difference in the object rate is suggestive rather than established:
+10.8 points, p = 0.06 in a two-proportion test that does not correct for clustering by frame
+(`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`). At 75 m, moving from the corpus
+of record to the realistic carrying distribution lowers the object rate from 0.237 to 0.165
+(p = 0.19). Section 10 states, for each result above, the condition that would overturn it, and
 Section 11.5 reads the altitudes together.

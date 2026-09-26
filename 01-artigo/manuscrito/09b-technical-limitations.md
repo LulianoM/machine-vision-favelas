@@ -96,7 +96,10 @@ than a recommendation. At 150 m the capability does not exist. At 75 m it exists
 profile of Section 9.5, which calls 24 per cent of confusable objects armed. The measurements do not show it
 improving as resolution increases further: at 35 m the same rate is 27 per cent. Whether that reflects a
 limit of what these figures and carrying poses allow a detector to learn, or the change of pose
-distribution between the two corpora, is what the matched corpus of Section 9.5 decides: `[X]`.
+distribution between the two corpora, is what the matched corpus of Section 9.5 decides: it is not
+the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 17 per cent against
+27 at 35 m, and the finer ground sampling distance moved the detector towards calling every class
+armed rather than towards separating them.
 Either way, a claim that a system distinguishes an armed from an unarmed person from the air is, at
 the altitudes and sensors described here, a claim that can be checked before it is believed.
 
@@ -109,8 +112,15 @@ the generator settings of the training corpus, in which half the firearms are dr
 training models and half from two models that enter no training corpus, a rifle of 1.10 m and a
 compact submachine gun of 0.55 m, chosen inside the length range of the five so that the test
 measures the asset and not its size. The type of every annotated instance is recorded, so the two
-recalls come from the same images under the same light. Recall on seen models: `[X]`; on unseen
-models: `[X]`.
+recalls come from the same images under the same light. Recall on seen models: 0.400 (50 of 125);
+on unseen models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to
+1.54) against the threshold of 0.80, so the condition is not met and the 75 m figure stands
+(`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). What the detector
+generalises to is length and silhouette rather than the asset: the unseen 1.10 m rifle is called
+armed at 0.50, among the seen long arms (0.34 to 0.52), the pistol at 0.20, and an umbrella at
+0.38. The generalisation that passes this test is the one that produces the confusion of Section
+9.5. Every rate is lower in the new realisation than on the validation split (armed recall 0.43
+against 0.55), which does not affect the comparison, made within the same images.
 Nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check

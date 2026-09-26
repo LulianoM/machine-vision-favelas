@@ -19,8 +19,10 @@ so that no detector can separate the classes by colour. False positives on those
 are reported against altitude.
 
 Transfer to real aerial imagery is reported as a ratio to what a detector trained on real data
-achieves on the same test set: 1.6 per cent for the nadir acquisition taken as reference, and
-9.7 per cent when the same settlement is rendered from an oblique camera. No armed and unarmed accuracy is
+achieves on the same test set: 1.6 per cent for the nadir acquisition taken as reference,
+9.7 per cent when the same settlement is rendered from an oblique camera, and 16.7 per cent when
+six settlements are rendered obliquely. Given 5 or 10 per cent of the benchmark's real training
+images, a generic initialisation still outperforms the synthetic one. No armed and unarmed accuracy is
 reported at 150 m, because at that ground sampling distance the capability does not exist and a
 figure obtained there would measure the regularity of our asset library. Stating the conditions
 under which a capability is absent is a contribution of the same kind as demonstrating one that

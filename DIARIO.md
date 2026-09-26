@@ -2,6 +2,14 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-26 [DESKTOP] Rodada 3 encerrada: gêmeo a 75 m e ajuste fino no VisDrone
+
+- Gêmeo a 75 m (C1 a C4): o comando do corpus de 35 m mudando só a altitude (2.257 caixas, pessoa armada 48 × 43 px). Objeto chamado de arma 16,5% contra 27,3% a 35 m (p 0,06), desarmada 10,9% contra 16,8%, mesmo mAP50 (0,508 contra 0,514). O negativo de 35 m não vem da pose: o modelo de 35 m chama mais gente de armada em todas as classes. Análise em `06-resultados/compara_gemeo.py`.
+- Ajuste fino (D1 a D6), teste no val inteiro do VisDrone: com 5% (324 imagens), 0,4424 partindo do sintético contra 0,5220 do COCO; com 10% (647), 0,5095 contra 0,5709. O pré-treino sintético custa 6 a 8 pontos, e o sintético com 647 imagens reais não alcança o COCO com 324. A expectativa declarada (benefício maior no volume menor) não se confirmou: o que encolhe com mais dado é um custo.
+- Artigo: `[X]` da rodada 3 preenchidos (9.3, 9.4, 9.5, 11.5), linha do `ds_oblvar` na tabela da 8.2, uma frase no abstract e uma na conclusão; PDFs regerados. Ficam `[X]` só na robustez 10.1 e 10.3.
+- Pausa do autor às 10:04, no meio do treino do gêmeo; retomada de `last.pt` às 10:49 sem perda. A coluna `time` do results.csv zera na retomada, e o status passou a estimar o ritmo pela mediana das diferenças entre épocas.
+- Para o autor decidir: se o resultado da 9.4 muda a proposta da seção 6, e qual a próxima rodada (sintético e real misturados; ajuste fino mais longo ou com camadas congeladas; robustez).
+
 ## 2026-09-25 [DESKTOP] Rodada 3: teste de arma inédita passa; pausas a pedido do autor
 
 - B1 e B2 (teste de arma inédita da 11.5): `armado_75` sem retreino, 50 quadros novos a 75 m com metade das armas de dois modelos nunca vistos (FAL, submetralhadora). Recall de armada 0,466 (61/131) nos inéditos contra 0,400 (50/125) nos cinco de treino, nas mesmas imagens; razão 1,16, acima do limiar pré-declarado de 0,8: a afirmação fica. O reconhecimento segue comprimento e silhueta, não o modelo (FAL 0,50 junto das armas longas vistas; pistola 0,20; guarda-chuva 0,38). Critério em `06-resultados/holdout_criterio.py`.

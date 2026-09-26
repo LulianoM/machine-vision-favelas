@@ -80,6 +80,7 @@ recorded in its manifest, gives:
 | `ds_morro_clima`, within 3.5 deg of straight down | 8.3 px | 8.2 px | **0.98** | 565 |
 | `ds_morro_4k`, same geometry at 4K | 17.6 px | 17.5 px | **0.98** | 3,225 |
 | `ds_morro_obl`, same settlement, pitch 26 to 52 deg recorded per image | 17.9 px | 26.4 px | **1.46** | 1,912 |
+| `ds_oblvar`, six settlements, pitch 45 to 56 deg, figures carrying nothing | 13.3 px | 25.2 px | **1.85** | 1,521 |
 | VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | 1.95 | 106,396 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
@@ -116,7 +117,8 @@ calibrated for, because most of its images sit below the angle at which the benc
 reached. And the annotated box of an armed figure includes the weapon, which widens it:
 1.38 against 1.58 for figures carrying nothing in the same images. The benchmark contains no
 carried firearms, so for transfer to it the weapon is a source of shape mismatch rather than of
-signal. The combined model of Section 9.3 is built from these two measurements.
+signal. The combined model of Section 9.3 is built from these two measurements, and its corpus,
+`ds_oblvar`, realises a median of 1.85.
 
 A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio near 2.0 is a
 standing figure recorded obliquely. At comparable pixel area, these are different objects as far

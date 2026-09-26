@@ -1,0 +1,8 @@
+{
+ "ft05_sint": 0.4424,
+ "ft05_coco": 0.522,
+ "ft10_sint": 0.5095,
+ "ft10_coco": 0.5709,
+ "base_sintetica": "s_oblvar",
+ "protocolo": "treino em 5% ou 10% do treino do VisDrone, escolha do peso em outros 5% do treino, teste na validacao inteira; 30 epocas, mesma receita"
+}

@@ -44,7 +44,11 @@ def carrega(nome):
     hit = taxas["armada"]["taxa"]
     dl = {c: round(N.inv_cdf(hit) - N.inv_cdf(taxas[c]["taxa"]), 3) for c in ("desarmada", "objeto")}
     vi = d.get("val_imagem_inteira") or {}
+    # precisao de armada: acertos / todas as caixas chamadas de armada (inclui as que nao casam com
+    # nenhuma pessoa anotada)
+    chamadas = sum(t["chamada_armada"] for t in taxas.values()) + (d.get("predicoes_sem_par") or {}).get("armada", 0)
     return dict(imagens=d.get("imagens"), split=d.get("split"), taxas=taxas, d_linha_armada_contra=dl,
+                precisao_armada=round(taxas["armada"]["chamada_armada"] / chamadas, 4),
                 mAP50_imagem_inteira=vi.get("mAP50"))
 
 
@@ -73,7 +77,8 @@ def main():
         t = v["taxas"]
         print(f"{n:<11} armada {t['armada']['taxa']:.3f}  desarmada {t['desarmada']['taxa']:.3f}  "
               f"objeto {t['objeto']['taxa']:.3f}  d'(obj) {v['d_linha_armada_contra']['objeto']:.2f}  "
-              f"d'(desarm) {v['d_linha_armada_contra']['desarmada']:.2f}  mAP50 {v['mAP50_imagem_inteira']}")
+              f"d'(desarm) {v['d_linha_armada_contra']['desarmada']:.2f}  precisao {v['precisao_armada']:.3f}  "
+              f"mAP50 {v['mAP50_imagem_inteira']}")
     for k, v in comp.items():
         print(k)
         for c, r in v.items():
