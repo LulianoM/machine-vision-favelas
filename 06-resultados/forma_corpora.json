@@ -283,5 +283,71 @@
     "h_px": 124.6
    }
   }
+ },
+ "ds_armado_75g": {
+  "imagens": 200,
+  "todas": {
+   "n": 2257,
+   "h_w": 0.87,
+   "area_px2": 1964,
+   "w_px": 48.4,
+   "h_px": 41.5
+  },
+  "por_classe": {
+   "armada": {
+    "n": 735,
+    "h_w": 0.88,
+    "area_px2": 1999,
+    "w_px": 48.1,
+    "h_px": 42.7
+   },
+   "desarmada": {
+    "n": 730,
+    "h_w": 0.83,
+    "area_px2": 1277,
+    "w_px": 40.3,
+    "h_px": 33.2
+   },
+   "objeto": {
+    "n": 792,
+    "h_w": 0.89,
+    "area_px2": 2799,
+    "w_px": 55.7,
+    "h_px": 50.6
+   }
+  }
+ },
+ "ds_armado_75_inedita": {
+  "imagens": 50,
+  "todas": {
+   "n": 708,
+   "h_w": 0.85,
+   "area_px2": 1610,
+   "w_px": 44.4,
+   "h_px": 37.4
+  },
+  "por_classe": {
+   "armada": {
+    "n": 256,
+    "h_w": 0.85,
+    "area_px2": 1549,
+    "w_px": 44.4,
+    "h_px": 36.3
+   },
+   "desarmada": {
+    "n": 222,
+    "h_w": 0.83,
+    "area_px2": 1051,
+    "w_px": 37.9,
+    "h_px": 31.1
+   },
+   "objeto": {
+    "n": 230,
+    "h_w": 0.89,
+    "area_px2": 2410,
+    "w_px": 52.1,
+    "h_px": 47.8
+   }
+  }
  }
 }
