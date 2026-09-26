@@ -51,7 +51,7 @@ The implication is stated conditionally because the evidence is conditional. Eig
 regime, with between-image dispersion of 0.12 to 0.38, resolves only the gap between the extremes
 at roughly one standard deviation and does not resolve the ordering of the four intermediate
 regimes at all. Section 10.3 specifies the test. If per-regime detector performance does not order
-inversely with raw contrast, this implication is withdrawn and the contrast measurement stands
+with contrast against local clutter, this implication is withdrawn and the contrast measurement stands
 only as a description of the imagery.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
@@ -84,7 +84,8 @@ that would be exercised on real people in a real territory.
 
 Two changes make the question empirical rather than foreclosed, and both are reported in Section
 9. Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold
-increase in area, at which the firearm occupies a region the network can in principle resolve.
+increase in area over all classes and 5.2-fold for armed figures alone, at which the firearm
+occupies a region the network can in principle resolve.
 And the corpus at that altitude is built to remove the artefact, by the construction specified in
 Section 7.4: the weapons are set against elongated objects carried in the same territory, drawn
 from the same colour and roughness palette and carried through the same distribution of poses. A
@@ -97,7 +98,7 @@ profile of Section 9.5, which calls 24 per cent of confusable objects armed. The
 improving as resolution increases further: at 35 m the same rate is 27 per cent. Whether that reflects a
 limit of what these figures and carrying poses allow a detector to learn, or the change of pose
 distribution between the two corpora, is what the matched corpus of Section 9.5 decides: it is not
-the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 17 per cent against
+the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 16 per cent against
 27 at 35 m, and the finer ground sampling distance moved the detector towards calling every class
 armed rather than towards separating them.
 Either way, a claim that a system distinguishes an armed from an unarmed person from the air is, at
@@ -120,7 +121,7 @@ on unseen models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent in
 generalises to is length and silhouette rather than the asset: the unseen 1.10 m rifle is called
 armed at 0.50, among the seen long arms (0.34 to 0.52), the pistol at 0.20, and a closed
 umbrella, 0.88 m long, at 0.38. The generalisation that passes this test is the one that produces the confusion of Section
-9.5. Every rate is lower in the new realisation than on the validation split (armed recall 0.43
+9.5. Every rate at which a class is called armed is lower in the new realisation than on the validation split (armed recall 0.43
 against 0.55), which does not affect the comparison, made within the same images.
 Nothing in this article recommends acquisition over the case study territory.
 
@@ -132,8 +133,8 @@ corpora reported here, because the human generator drew from an unseeded random 
 found and closed after those corpora were rendered. The settlement, the camera and the
 illumination of every reported image are therefore reproducible from the manifest, and the exact
 placement of figures is reproducible only for corpora generated after the fix. Camera pitch is recorded
-per image only in corpora generated after that field was added; the two corpora of Section 8.2
-predate it, which is why their rows carry the generator setting rather than a per-image value,
+per image only in corpora generated after that field was added; the two nadir corpora of Section
+8.2 predate it, which is why their rows carry the generator setting rather than a per-image value,
 and the table says so. The hyperparameter and inference tables in Section 7.6 are in the body of
 the article for the same reason.
 

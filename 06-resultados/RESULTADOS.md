@@ -361,7 +361,7 @@ Treino `s_oblvar` (yolo11s, 1280, batch 6, single_cls, receita de todos os braco
 | sintetico (validacao propria) | 0,7648 | 0,6540 | 0,7047 | 0,3453 |
 | **VisDrone val, zero-shot** | 0,2631 | 0,1716 | **0,1055** | 0,0329 |
 
-Eficacia contra o R pareado (0,6311): **16,7%**. Serie completa no VisDrone: nadir um sitio 0,0102 (1,6%); nadir seis sitios 0,0190 (3,0%); obliquo um sitio 0,0614 (9,7%); obliquo seis sitios calibrado 0,1055 (16,7%). O combinado rende 10,3 vezes o nadir e 1,7 vez o obliquo de um sitio. Em mAP50 absoluto (10,6%) fica no topo da faixa sintetica de Kiefer, Ott e Zell 2022 (1,2 a 10,2). Nao e ablacao: mudam juntos sitios, pitch, figuras sem arma e camera livre de mata.
+Eficacia contra o R pareado (0,6311): **16,7%**. Serie completa no VisDrone: nadir um sitio 0,0102 (1,6%); nadir seis sitios 0,0190 (3,0%); obliquo um sitio 0,0614 (9,7%); obliquo seis sitios calibrado 0,1055 (16,7%). O combinado rende 10,3 vezes o nadir e 1,7 vez o obliquo de um sitio. Em mAP50 absoluto (10,5 pontos: o valor bruto fica entre 0,10545 e 0,1055, pelo log da etapa A4) fica logo acima da faixa sintetica de Kiefer, Ott e Zell 2022 (1,2 a 10,2), que mede 10 classes contra a nossa uma. [Corrigido em 26/09 na rodada 1 da validacao; antes dizia 10,6 e topo da faixa.] Nao e ablacao: mudam juntos sitios, pitch, figuras sem arma e camera livre de mata.
 
 ## 2026-09-25 [DESKTOP] Rodada 3, grupo B: teste de arma inedita (B1, B2)
 

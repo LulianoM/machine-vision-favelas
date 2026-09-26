@@ -1,8 +1,8 @@
 ## 9. Results: Transfer to Real Imagery
 
-> **Provenance note.** Quantities marked `[X]` are pending measurement and are not to be filled by
-> estimation. The protocol in Section 7.7 was fixed before any of them was run, and Section 10
-> declares in advance what would overturn each claim.
+> **Provenance note.** Every quantity below traces to a file under `06-resultados/` together with
+> the command that produced it. The protocol in Section 7.7 was fixed before any of them was run,
+> and Section 10 declares in advance what would overturn each claim.
 
 A pilot of the full protocol was run before the corpus reached its final size. Its results are
 reported first, because they bound what follows and because withholding an unfavourable pilot
@@ -82,10 +82,11 @@ synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO,
 comparable one, since this article trains YOLO, and it gives a ratio of 23.2 per cent.
 
 The two ratios are not directly comparable, and the reason matters more than the gap. Their
-denominator is a detector trained on real imagery from a different domain and evaluated on
-VisDrone; ours is trained on the VisDrone training split and evaluated on its validation split.
-Ours is the harsher denominator, so our ratio understates the method relative to theirs by an
-amount this design cannot quantify. What this article reports is the ratio to its own declared
+denominator is a detector trained on the full VisDrone training split and scored over ten object
+classes; ours is trained on 1,106 images of that split, evaluated on its validation split and
+scored on a single person class. Their synthetic corpus is also larger, 40,000 images rendered in
+a game engine against 180 scenes here. These differences do not all act in the same direction,
+so this design cannot say which of the two ratios is the harsher. What this article reports is the ratio to its own declared
 ceiling, together with the comparison in Section 9.3.
 
 ### 9.3 Transfer from synthetic training, oblique geometry
@@ -125,22 +126,25 @@ The first outcome obtained. With the settlement, the generator and the training 
 the oblique model transfers 6 times better than the nadir model, against a factor of 1.9 for six
 settlements instead of one. By the criterion fixed before the run (Section 10.4), acquisition
 geometry is load-bearing on this benchmark, and more so than variety of settlement. The oblique
-figure falls within the synthetic-only range reported by Kiefer, Ott and Zell (2022).
+figure falls within the synthetic-only range reported by Kiefer, Ott and Zell (2022), although
+their figures average ten VisDrone classes and ours scores a single person class.
 
 The oblique corpus did not reach the shape it was calibrated for, 1.46 against 1.95, for the two
 reasons measured in Section 8.2. Model S-oblique-six combines the two terms and corrects the
-calibration: six settlements of 30 images; pitch between 45 and 56 degrees, the range in which
-figures carrying nothing reach the benchmark's shape; only such figures; and a camera placement
+calibration: six settlements of 30 images; pitch between 45 and 56 degrees, chosen to centre
+the median of figures carrying nothing on the benchmark's shape, which in the single-settlement
+oblique corpus they reach only between 50 and 52 degrees; only such figures; and a camera placement
 redrawn until the centre of the frame is not occluded by forest or hillside. It is not an ablation, since several
 things change at once; it is the best configuration this generator supports and the model the rest
 of this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val (precision
 0.2631, recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the nadir model
 and 1.7 times the single-settlement oblique model, against 0.7047 on its own synthetic validation.
-The rendered figure reaches the calibration target, a median height-to-width ratio of 1.85 at 13.3
-by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the benchmark's training split (Section 8.2). In
-absolute terms, 10.6 points of mAP50 sit at the upper end of the synthetic-only range reported by
-Kiefer, Ott and Zell (2022), while the ratio to our own ceiling stays below theirs for the reason
-given in Section 9.2.
+The rendered figure approaches the calibration target without reaching it: a median
+height-to-width ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the benchmark's training split (Section 8.2). In
+absolute terms, 10.5 points of mAP50 sit just above the upper end of the synthetic-only range
+reported by Kiefer, Ott and Zell (2022), although their figures average ten VisDrone classes and
+ours scores a single person class, while the ratio to our own ceiling stays below theirs (Section
+9.2).
 
 The acquisition geometry this article reproduces points straight down. An oblique corpus that transfers better to
 VisDrone is informative about the benchmark, not about the acquisition that would be flown over
@@ -181,8 +185,9 @@ It is negative at both. Initialised from the synthetic model, the detector finis
 mAP50 below the generic initialisation with 5 per cent of the real data and 6.1 points below with
 10 per cent, and the synthetic start given 647 real images (0.5095) does not reach the generic start
 given 324 (0.5220). The gap narrows as real data grows, as expected, but what narrows is a cost, not
-a benefit. On the selection slice the synthetic start leads only in the first epochs, and at 5 per
-cent it is overtaken by the fourth (`06-resultados/ft_curvas_selecao.json`). Fine-tuning does
+a benefit. On the selection slice the generic start overtakes the synthetic one by the fourth epoch at 5 per
+cent and in the first epoch at 10 per cent, after which the synthetic start leads only
+intermittently (`06-resultados/ft_curvas_selecao.json`). Fine-tuning does
 transform the synthetic model itself, from 0.1055 to 0.4424 with 324 real images, which is the
 effect the sim-to-real literature reports; what it does not do here is outperform a generic start
 given the same real images. Relative to the ceiling of Section 9.1, trained on 1,106 real images for
@@ -200,7 +205,8 @@ distinction is nevertheless learnable in a corpus where the weapon is always the
 the same pose at the same contrast, which makes separability a property of the generator rather
 than of the world, and reporting it would be the inferential leap this article criticises.
 
-At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area, and the corpus is
+At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area over all classes
+(5.2 times for armed figures alone, Section 7.3), and the corpus is
 built so that the artefact cannot account for the result: five firearm models against nine
 elongated objects carried in the same territory, sharing the weapons' colour and roughness
 palette and the same distribution of carrying poses. The corpus holds 2,887 instances in 200 images,
@@ -240,6 +246,7 @@ armed more often, armed persons included, at the same mAP50, so the 35 m result 
 of the change of pose. The difference in the object rate is suggestive rather than established:
 10.8 points, p = 0.06 in a two-proportion test that does not correct for clustering by frame
 (`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`). At 75 m, moving from the corpus
-of record to the realistic carrying distribution lowers the object rate from 0.237 to 0.165
+of record to the generator settings of the 35 m corpus, realistic carrying poses among them,
+lowers the object rate from 0.237 to 0.165
 (p = 0.19). Section 10 states, for each result above, the condition that would overturn it, and
 Section 11.5 reads the altitudes together.

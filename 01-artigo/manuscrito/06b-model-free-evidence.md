@@ -1,10 +1,9 @@
 ## 8. Model-Free Evidence
 
 > **Provenance note.** Every figure in this section is a direct measurement over image and
-> annotation files, computed before any detector was trained and independent of whether any
-> detector succeeds. Each table names the corpus, the acquisition geometry recorded in its
-> manifest, and the instance count. Section 9 reports detector performance and currently carries
-> `[X]` where measurement is still running.
+> annotation files, independent of whether any detector succeeds. Each table names the corpus,
+> the acquisition geometry recorded in its manifest, and the instance count. Section 9 reports
+> detector performance.
 
 Before reporting detector performance we characterise the problem the detector is asked to solve.
 The ordering follows the convention of this venue, in which model-free evidence precedes
@@ -13,8 +12,9 @@ usually discussed in terms of scene realism, and the implicit assumption is that
 looks more like a favela will transfer better. The measurements below identify two variables that
 govern difficulty and that no appearance metric captures.
 
-Three corpora are used, two generated and one real, and their acquisition geometry differs in ways
-that matter, so the parameters are stated rather than implied.
+Three corpora are used throughout, two generated and one real, and Section 8.2 adds two oblique
+generated corpora; their acquisition geometry differs in ways that matter, so the parameters are
+stated rather than implied.
 
 | Corpus | Geometry | Render | Instances |
 |---|---|---|---|
@@ -58,7 +58,8 @@ reported later measures is that the real benchmark contains a third of its targe
 detector of this family resolves well.
 
 The second was initially mistaken for a problem. At 4K the median synthetic instance covers
-301 square pixels and the median real benchmark instance covers 300, a ratio of 1.00. The long
+301 square pixels and the median instance of the real benchmark, its training and validation splits pooled, covers 300,
+a ratio of 1.00. The long
 side does not match as closely, 20.6 against 25.0 pixels, because the two differ in shape rather
 than in size, which is the subject of Section 8.2. An earlier version of this analysis reported
 a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain shift.
@@ -84,12 +85,13 @@ recorded in its manifest, gives:
 | VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | 1.95 | 106,396 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
-*The generated rows carry the generator setting that produced them, which bounds the camera within
-3.5 degrees of vertical but does not record it per image. The benchmark rows are measured
+*The two nadir rows carry the generator setting that produced them, which bounds the camera within
+3.5 degrees of vertical but does not record it per image; the two oblique rows record pitch per
+image. The benchmark rows are measured
 directly. Both benchmark splits are shown because the two differ, and because the oblique arm of
 Section 9.3 is calibrated on the training split so that the validation split remains untouched.*
 
-The two generated corpora differ by a factor of two in render resolution and by a factor of six in
+The two nadir corpora differ by a factor of two in render resolution and by a factor of six in
 instance count, and agree on this quantity to the second decimal: 0.98 in both. The real benchmark
 sits at 1.95 and 2.20 on its two splits. The separation is therefore a factor of two, and it is
 stable under a change of resolution that moves apparent size by the same factor.
@@ -110,8 +112,8 @@ camera angle. It gives the dose-response that a contrast of two geometries canno
 full-frame labels.*
 
 The ratio rises with pitch, from 0.98 at the vertical to 1.70 at the steepest angle in the corpus, and for
-figures carrying nothing it reaches 1.97, the value of the benchmark's training split, only between 50 and
-52 degrees. Two consequences follow for Section 9.3. The oblique corpus as rendered, with pitch
+figures carrying nothing it reaches the value of the benchmark's training split, 1.95, only between 50 and
+52 degrees, where it measures 1.97. Two consequences follow for Section 9.3. The oblique corpus as rendered, with pitch
 drawn uniformly between 26 and 52 degrees, realised a median of 1.46 rather than the 1.95 it was
 calibrated for, because most of its images sit below the angle at which the benchmark's shape is
 reached. And the annotated box of an armed figure includes the weapon, which widens it:

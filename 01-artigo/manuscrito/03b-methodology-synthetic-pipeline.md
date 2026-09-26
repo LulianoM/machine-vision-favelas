@@ -124,7 +124,10 @@ therefore also run with the same sensor at 75 metres, where the frame covers app
 53 metres and the ground sampling distance halves to 2.44 cm per pixel at 3840 by 2160. Halving
 the distance doubles each linear dimension of the target and quadruples its area before occlusion,
 and measured on the generated corpora the median instance grows from 17.6 by 17.5 pixels to 47.6
-by 41.7, a factor of 6.4 in area once the change in viewing angle within the frame is included.
+by 41.7, a factor of 6.4 in area. That exceeds the four the geometry alone gives, and part of the
+excess is composition: the corpus at 75 m adds a class carrying elongated objects, whose boxes are
+the largest, and taken class by class the factor is 5.2 for armed and 5.7 for unarmed figures
+(`06-resultados/forma_corpora.json`).
 The two altitudes are reported separately throughout, as `S-nadir-150` and `S-nadir-75`, because
 they answer different questions: the first is the altitude at which aerial survey over urban
 terrain is conventionally flown with this payload, and the second is the geometry under which the

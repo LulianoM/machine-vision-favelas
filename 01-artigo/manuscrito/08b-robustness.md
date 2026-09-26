@@ -29,7 +29,8 @@ Section 9 must be restated as a property of the generator rather than of corpus 
 ### 10.2 Apparent size, not synthesis, may explain the transfer gap
 
 **Threat.** Section 8.1 reports that the synthetic target at 4K and the real benchmark target
-cover near-identical median area, 301 and 300 square pixels. That match is a property of the
+cover near-identical median area, 301 and 300 square pixels, the second with the benchmark's
+training and validation splits pooled. That match is a property of the
 rendering resolution we selected, and it does not extend to the long side, which is 20.6 against
 25.0 pixels. If it were not exact, a transfer failure attributable to scale could be
 mistaken for a failure attributable to synthesis.
@@ -43,9 +44,9 @@ here rather than withheld: mAP50 of 0.0055 at native scale against 0.0061 at mat
 difference of 0.0006 (`06-resultados/sim2real_morro_v1.json`). On that pilot, matching the scale
 did not recover performance. That is evidence against scale as the operative confound, and
 therefore against the explanation most favourable to us. On the corrected corpus the check
-reduces to its native-scale half: the synthetic and benchmark targets already match in median area
-(301 against 300 square pixels, Section 8.1), so rescaling the benchmark to the corpus leaves it
-where it is, and the native-scale figure of Section 9.2, 0.0102, is also the matched-scale figure. What
+reduces to its native-scale half: the synthetic and benchmark targets already match closely in
+median area (301 against 300 square pixels with the benchmark's two splits pooled, Section 8.1),
+so rescaling the benchmark to the corpus leaves it essentially where it is, and the native-scale figure of Section 9.2, 0.0102, is also the matched-scale figure. What
 still differs at matched area is shape, which Section 10.4 tests.
 
 **What would overturn the claim.** If the two figures diverge substantially on the corrected
@@ -71,10 +72,12 @@ dispersion is of the same order as several of the gaps.
 Ablation against a corpus generated under hard sun only, evaluated on the full six-regime split
 and on the real test set: `[X]`.
 
-**What would overturn the claim.** If per-regime performance does not order inversely with raw
-contrast, or if hard sun is not among the weakest regimes, the mechanism proposed in Section 8.3
+**What would overturn the claim.** If per-regime performance does not order with contrast against
+local clutter, or if hard sun is not among the weakest regimes, the mechanism proposed in Section 8.3
 is wrong and the operational implication in Section 11 is withdrawn. The image statistics would
-still stand, but they would be describing something other than detector difficulty.
+still stand, but they would be describing something other than detector difficulty. An earlier
+wording of this condition referred to raw contrast, from a superseded measurement in which hard
+sun had the largest raw difference; it is corrected here, before the per-regime test has been run.
 
 ### 10.4 Capture geometry against scene content
 
@@ -86,9 +89,12 @@ arms.
 settlement seed, the same material library, the same illumination regimes, the same share of armed
 and unarmed figures and the same annotation procedure, with the same training recipe and the same
 number of images, both at 4K. What differs is the camera: pitch, drawn between 26 and 52 degrees
-and recorded per image, altitude (120 m for the oblique camera) and its jitter. At the centre of the
-frame that puts the ground sampling distance between about 4.3 and 6.3 cm per pixel across the pitch
-range, against 4.88 for the nadir corpus, so the change moves the shape of the target (h/w 1.46
+and recorded per image, altitude (120 m for the oblique camera) and its jitter. One further setting differs because the
+camera does: the nadir corpus keeps figures within a central band about three fifths of the frame
+wide, the filter that produced it, while the oblique corpus places them anywhere the projected
+frame covers, since an oblique frame is not a square on the ground. At the centre of the
+frame and at the nominal 120 m, that puts the ground sampling distance between about 4.3 and 6.3 cm
+per pixel across the pitch range, a span the altitude jitter widens, against 4.88 for the nadir corpus, so the change moves the shape of the target (h/w 1.46
 against 0.98) and leaves its size in the same range, somewhat larger in area (456 against 301
 square pixels). Pitch is set from the VisDrone training split rather than from the validation
 split on which both models are scored, so that the calibration does not consume the test set.
@@ -111,7 +117,7 @@ the same detector, the same input size, the same initialisation and the same sch
 mAP50 0.6311 (Section 9.1). All synthetic figures are reported as a ratio to it.
 
 One asymmetry is declared here rather than left for the reader to find. Model R selects its
-checkpoint on the same distribution it is later scored on, while the synthetic models select
+checkpoint on the very split it is later scored on, the 548 validation images, while the synthetic models select
 theirs on a synthetic validation split. This favours R, so the efficacy ratio reported in
 Section 9.2 is conservative: it understates the synthetic method rather than flattering it.
 
