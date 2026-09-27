@@ -1,0 +1,9 @@
+{
+ "quadros_inedita": 50,
+ "quadros_porte": 50,
+ "quadros_com_caixas_identicas": 49,
+ "quadros_diferentes": [
+  "mr_000031.png"
+ ],
+ "nota": "caixas = [classe, tipo, laje] por linha de rotulo; quadro identico permite parear instancia a instancia"
+}
