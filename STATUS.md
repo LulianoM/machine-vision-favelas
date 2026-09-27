@@ -2,7 +2,23 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-26, 18h50, [DESKTOP]
+Última atualização: 2026-09-27, 11h45, [DESKTOP]
+
+## Rodada 4 (em curso desde 27/09 11:31, término previsto terça 29/09 à noite)
+
+Pacote recomendado para amarrar o artigo. Plano, critérios fixados antes do primeiro resultado e custo em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9). Cadeia `07-blender/scripts/rodada4.py`; supervisor `supervisiona_rodada4.py` em janela própria com atalho na pasta Inicializar; pausa com `pausa_rodada4.py`; retrato com `status_rodada4.py`; os critérios saem de `06-resultados/rodada4_criterios.py`. E-mails de etapa no fio "Rodada 4 disparada".
+
+| Grupo | O que | Fecha |
+|---|---|---|
+| K | VisDrone pela regra oficial das regiões ignoradas e a IoU 0,5/0,6/0,75; escala casada pelo lado maior | 10.6, 10.2 |
+| H | Gêmeo do teste de arma inédita com o objeto no porte de arma | 9.5 (limite inferior) |
+| F | Sintético e real no mesmo treino (S-oblique-six + 5% e + 10%) | 9.4, seção 6 |
+| E | Gêmeo do corpus de 35 m a 150 m, 3 classes | 11.5, 10.7 |
+| I | 80 quadros novos a 35 m e os gêmeos a 75 m | 27 contra 16% (p 0,06) |
+| J | 120 quadros novos do nadir, 20 por regime de luz | 10.3, 11.3 |
+| G | Sementes de treino 1 e 2 dos modelos que sustentam afirmações | 10.6 |
+
+Achado ao desenhar a 10.2: o validador do Ultralytics redimensiona toda imagem para o lado maior valer imgsz, então a checagem de escala do piloto (0,0055 contra 0,0061) comparou a mesma escala de entrada. A frase da 10.2 será corrigida com o resultado novo; o casamento agora se faz pelo imgsz (1024).
 
 ## Rodada 3 (encerrada 26/09 17:54, sem grupo com falha)
 
@@ -47,7 +63,7 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
 | Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
-| Fila de execução | Nada rodando. Rodadas 2 (22 a 24/09) e 3 (24 a 26/09) encerradas |
+| Fila de execução | **Rodada 4 rodando** (27 a 29/09). Rodadas 2 (22 a 24/09) e 3 (24 a 26/09) encerradas |
 | Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
 | Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |
 
@@ -69,7 +85,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 ## Próximos passos, em ordem
 
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.
-2. [AUTOR] Escolher a próxima rodada. Candidatas: sintético e real misturados no mesmo treino (o número que falta); ajuste fino mais longo ou com camadas congeladas, para testar a hipótese de que o treino sintético apaga o que o COCO sabia; robustez 10.1 (curva de escala), 10.3 (por regime) e 10.6 (limiar de IoU e sementes).
+2. [DESKTOP] Acompanhar a rodada 4 de hora em hora; no fim, aplicar os critérios do `PLANO-RODADA4.md`, registrar em `RESULTADOS.md`, atualizar o manuscrito e os PDFs. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
 3. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 4. [DESKTOP] Pôr no inventário `06-resultados/ONDE-ESTAO-OS-DADOS.md` os corpora e pesos das rodadas 2 e 3, e atualizar o painel.
 5. [DESKTOP] Tirar os caminhos absolutos dos scripts (item 13 de `docs/DIVERGENCIAS.md`).

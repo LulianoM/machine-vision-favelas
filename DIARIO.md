@@ -2,6 +2,17 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-27 [DESKTOP] Rodada 4 disparada para amarrar o artigo
+
+- Pedido do autor: montar e rodar o pacote recomendado (150 m com objetos confundíveis, sintético e real no mesmo treino, sementes, objeto no porte de arma, validação maior a 35 e 75 m, regime de luz, VisDrone oficial e IoU, escala casada). Plano e critérios em `07-blender/PLANO-RODADA4.md`, versionados antes do primeiro resultado (6ebbaa9). Disparada às 11:31; previsão de cerca de 60 h.
+- Código novo:
+  - `06-resultados/avalia_visdrone_oficial.py`: validador do Ultralytics com a regra de `dropObjectsInIgr.m` do kit oficial, conferida na fonte. Sem regiões, reproduz o número padrão (0,1055 do S-oblique-six); com a regra, o mesmo modelo dá 0,1074 no teste prévio.
+  - `escala_casada.py`, `por_regime.py` e `rodada4_criterios.py`.
+  - Flag `--objeto-porte-arma` no gerador: mesmos sorteios, então os quadros saem gêmeos caixa a caixa (conferido em 3 quadros).
+  - `--seed` no `train_yolo_win.py` e `--instancias` no `confusao_armado.py`.
+- Achado: o validador do Ultralytics redimensiona toda imagem para o lado maior valer imgsz (`data/base.py`). A checagem de escala do piloto na 10.2 comparou a mesma escala de entrada; a frase será corrigida com o resultado novo. No protocolo de 1280, a mediana do lado maior do VisDrone val na entrada da rede é 25,33 px (perto dos 25,0 nativos); o casamento com os 20,55 px do corpus nadir se faz a imgsz 1024.
+- Pendência para o autor: meu primeiro teste do gerador, com caminho relativo, deixou as pastas `C:\_teste_porte_a` e `C:\_teste_porte_b` (três quadros pequenos cada, procedurais). A proteção do Claude Code bloqueou a remoção na raiz do C:; podem ser apagadas à mão.
+
 ## 2026-09-27 [DESKTOP] Artigo validado em 10 rodadas depois da rodada 3
 
 - Pedido do autor: resumo leigo por e-mail (enviado), atualizar os resultados no artigo e validar num loop de 10 rodadas. Cada rodada foi um revisor independente, só leitura, com uma lente: números contra fontes; consistência e remissões; critérios declarados antes; força das afirmações; proveniência; texto desatualizado; método contra código; revisor cético; forma; passe final. Todo achado foi conferido antes de entrar. Registro completo em `01-artigo/VALIDACAO-2026-09-26.md`.
