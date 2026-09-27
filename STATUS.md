@@ -1,0 +1,88 @@
+# STATUS
+
+Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
+
+Última atualização: 2026-09-26, 18h50, [DESKTOP]
+
+## Rodada 3 (encerrada 26/09 17:54, sem grupo com falha)
+
+Disparada em 24/09 19:06. Ficou parada 9,5 h pela queda do PC (24/09 23:25) e mais 6 h em três pausas pedidas pelo autor. Cadeia `07-blender/scripts/rodada3.py`; o supervisor `supervisiona_rodada3.py` saiu sozinho e apagou o atalho de inicialização. Números e comandos em `06-resultados/RESULTADOS.md`, entradas de 25 e 26/09.
+
+| Grupo | O que | Resultado |
+|---|---|---|
+| Z | Confusão dos modelos armados no protocolo de imagem inteira | objeto chamado de arma: 23,7% (75 m) e 27,3% (35 m) |
+| A | S-oblique-six: 6 sítios × 30, pitch 45 a 56°, só pessoas sem arma, câmera livre de mata | VisDrone mAP50 0,1055, eficácia 16,7% (nadir 1,6%, oblíquo de um sítio 9,7%) |
+| B | Teste de arma inédita (11.5): metade FAL e submetralhadora nunca vistos | recall 0,466 nas inéditas contra 0,400 nas vistas, razão 1,16 (limiar 0,8): afirmação mantida |
+| C | Gêmeo a 75 m do corpus de 35 m (só a altitude muda) | objeto chamado de arma 16,5% a 75 m contra 27,3% a 35 m (p 0,06): o negativo de 35 m vem da altitude, não da pose |
+| D | Ajuste fino com 5% e 10% do VisDrone, partindo do sintético e do COCO, teste no val inteiro | 5%: 0,4424 contra 0,5220; 10%: 0,5095 contra 0,5709. O pré-treino sintético custa 6 a 8 pontos de mAP50 |
+
+Tudo entrou no manuscrito (9.3, 9.4, 9.5, 11.5, tabela da 8.2, abstract e conclusão) e os dois PDFs foram regerados na Área de Trabalho. Ficam `[X]` só nas checagens de robustez 10.1 e 10.3, que não estavam na rodada.
+
+Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; supervisor em janela própria aberto por atalho na pasta Inicializar (nunca pelo Agendador de Tarefas: o Blender sobe sem o MPFB); pausa e retomada com `pausa_rodada3.py`; retrato com `status_rodada3.py`. Os três servem de molde.
+
+## Artigo
+
+| Item | Estado |
+|---|---|
+| Versão vigente do orientador | v2 de 2026-09-10 (`01-artigo/rascunhos-professor/2026-09-10_v2_Irigaray.docx`). O arquivo baixado em 17/09 é idêntico a ela: não há v3 |
+| Manuscrito por seção | `01-artigo/manuscrito/`, texto do orientador mais as seções técnicas "b"; PDF de leitura por `01-artigo/ferramentas/monta_artigo.py` |
+| Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
+| Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/RESULTADOS.md`), todos no manuscrito. **A revisar pelo autor:** o abstract e a conclusão ganharam uma frase com o resultado negativo do ajuste fino, e a 9.4 o relata por inteiro |
+
+## Experimento (desktop)
+
+Detalhe em `06-resultados/RESULTADOS.md`.
+
+| Item | Estado |
+|---|---|
+| Motor | **Blender 5.2.1 headless**, não ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado sem gerar imagem. **Decidido pelo autor em 20/09: o Blender é o método do trabalho e do artigo** (`docs/DIVERGENCIAS.md`, item 1) |
+| Código | `07-blender/scripts/` (gerador `gen_morro.py`, sítios, pessoas MPFB, objetos, cadeias) e `06-resultados/` (avaliação e análise). Caminhos absolutos ainda embutidos (`docs/DIVERGENCIAS.md`, item 13) |
+| Classes | Pessoa única nos braços de transferência; `pessoa_armada`, `pessoa_desarmada` e `pessoa_objeto` nos braços armados. Anotação amodal recortada no quadro, visibilidade mínima 0,35 |
+| Receita de treino | YOLO11s, imgsz 1280, 60 épocas, batch 6, início COCO, ladrilhos de 1280 px com sobreposição 0,2; ajuste fino com 30 épocas. RTX 2060 6 GB |
+| Sim-to-real | **Os três números medidos.** Teto real pareado (1.106 imagens): 0,6311. Zero-shot: nadir 0,0102 (1,6%), oblíquo 0,0614 (9,7%), S-oblique-six 0,1055 (16,7%). Ajuste fino, teste no val inteiro: 0,4424 e 0,5095 partindo do sintético, 0,5220 e 0,5709 partindo do COCO. Não medido: sintético e real misturados no mesmo treino |
+| Armado x desarmado | 75 m: objeto chamado de arma 23,7%, recall de armada 0,547; 35 m: 27,3% e 0,569; gêmeo a 75 m: 16,5% e 0,471. Arma inédita reconhecida como as vistas (razão 1,16). O guarda-chuva é o objeto mais chamado de arma (38 a 40%) |
+| Tamanho do alvo | Nadir 4K: 17,6 × 17,5 px, h/w 0,98. VisDrone treino: 13,0 × 24,0, h/w 1,95. `ds_oblvar`: 13,3 × 25,2, h/w 1,85. Ferramentas: `06-resultados/mede_forma.py` (corpora sintéticos) e `06-resultados/mede_alvo_split.py` (VisDrone e piloto, por split) |
+| Comparação com a literatura | Kiefer et al. (YOLO): 10,2 sintético contra 43,9 real, razão 23,2%. O S-oblique-six faz 10,5 absoluto (logo acima da faixa deles) e razão 16,7%. Não é comparação direta: o real deles é o treino inteiro do VisDrone com 10 classes, o nosso são 1.106 imagens com uma classe, e o sintético deles tem 40.000 imagens |
+| Achado de método | Ladrilhar em escala nativa levou o mAP50 de 0,116 para 0,561 nas mesmas 120 imagens (12/09); a escala de treino pesa mais que o volume |
+| Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
+| Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
+| Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
+| Fila de execução | Nada rodando. Rodadas 2 (22 a 24/09) e 3 (24 a 26/09) encerradas |
+| Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
+| Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |
+
+## Infraestrutura entre as máquinas
+
+| Item | Estado |
+|---|---|
+| Estrutura do repositório no Mac | Pronta em 17/09 |
+| Repositório privado no GitHub | Criado em 17/09: https://github.com/LulianoM/machine-vision-favelas (primeiro commit marcado com a tag `v2-irigaray-verbatim`) |
+| Desktop clonado e migrado para o repositório | **Feito em 17 e 18/09.** Clone em `C:\projetos\machine-vision-favelas`, `gh` instalado e autenticado. Ambiente em `docs/AMBIENTE-DESKTOP.md` |
+| Base de trabalho do desktop | Em transição: o clone é a base de texto e código; dados, pesos e venv continuam em `C:\arma3-favela\` (proposta de mudança aguardando OK do autor) |
+| Tailscale nas duas máquinas, SSH no desktop | Pendente |
+| Acesso remoto à tela do desktop | Pendente. Deixou de ser urgente: o pipeline Blender roda sem interface gráfica |
+| Painel web do projeto | Publicado em 17/09 (privado), atualizado pelo desktop em 18/09; não reflete as rodadas 2 e 3. Fonte em `painel/painel.html` |
+| Dossiê da AIM 2027 (estratégia, 48 missões, modelos de formato) | Dentro do repositório desde 20/09, em `08-conferencia/` |
+
+Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
+
+## Próximos passos, em ordem
+
+1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.
+2. [AUTOR] Escolher a próxima rodada. Candidatas: sintético e real misturados no mesmo treino (o número que falta); ajuste fino mais longo ou com camadas congeladas, para testar a hipótese de que o treino sintético apaga o que o COCO sabia; robustez 10.1 (curva de escala), 10.3 (por regime) e 10.6 (limiar de IoU e sementes).
+3. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
+4. [DESKTOP] Pôr no inventário `06-resultados/ONDE-ESTAO-OS-DADOS.md` os corpora e pesos das rodadas 2 e 3, e atualizar o painel.
+5. [DESKTOP] Tirar os caminhos absolutos dos scripts (item 13 de `docs/DIVERGENCIAS.md`).
+6. [MAC ou DESKTOP] Resolver as 20 pendências abertas de `01-artigo/PENDENCIAS.md`, começando pelas referências ausentes (conferir cada DOI no Crossref).
+7. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições.
+8. [AUTOR, quando quiser] Seguir `docs/SETUP-DESKTOP.md` para Tailscale e OpenSSH.
+9. [AUTOR] E-mail para AIM@marshall.usc.edu confirmando o formato exigido na submissão de 19/11/2026 (pendências em `08-conferencia/README.md`).
+
+**Descartado pelo autor em 2026-09-20:** o e-mail ao IPP pedindo LiDAR e MDS de 2024, e o braço
+de "cidade de sólidos" sobre a ortofoto do IPP. Não perseguir de novo. Consequência a assumir no
+texto: o único braço livre de dado PCERJ passa a ser o procedural (`gen_jacarezinho.py` sobre
+OSM e `gen_morro.py`), e é dele que saem as figuras publicáveis.
+
+## Bloqueios
+
+- Os braços com dado PCERJ não podem ser ilustrados no artigo nem no painel.
