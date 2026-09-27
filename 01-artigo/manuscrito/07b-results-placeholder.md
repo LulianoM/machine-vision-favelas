@@ -36,13 +36,13 @@ specified in Section 10.1, has not been run.
 
 The pilot does establish one thing a favourable result could not. This pipeline is capable of
 failing, and a candidate cause of the failure is legible in the corpus statistics before any
-training. It was also trained with a different recipe (tiles and input of 640 pixels, 120 epochs,
-batch 8) and on two classes, armed and unarmed, rather than one: its synthetic validation row is the
-mean over those two classes, so the 0.077 above is not on the single-class scale of the 0.79 of the
-corpus of record (the same holds for the comparison in Section 10.1), while its two VisDrone rows
-merge the classes as every other model does. The rows below report the protocol re-run with both
-defects of the pilot corpus (scene count and render resolution) corrected and with the recipe of
-Section 7.6.
+training. It was also trained with a different recipe (tiles and input of 640 pixels, a budget of
+120 epochs that early stopping with the same patience of 15 epochs cut short, batch 8) and on two
+classes, armed and unarmed, rather than one: its synthetic validation row is the mean over those two
+classes, so the 0.077 above is not on the single-class scale of the 0.79 of the corpus of record
+(the same holds for the comparison in Section 10.1), while its two VisDrone rows merge the classes
+as every other model does. The rows below report the protocol re-run with both defects of the pilot
+corpus (scene count and render resolution) corrected and with the recipe of Section 7.6.
 
 ### 9.1 Ceiling: what real training data achieves on this test set
 
@@ -253,10 +253,13 @@ initialisation encodes about real people.
 ### 9.5 The armed and unarmed distinction, by altitude
 
 No accuracy for the armed and unarmed distinction is reported at 150 m. At that altitude the median
-instance measures 17.6 by 17.5 pixels and a firearm is not resolvable within it. The distinction is
-nevertheless learnable in a corpus where a weapon, drawn from three rifle patterns and a pistol, is
-the only elongated object any figure carries, so that separability cannot be told apart from a
-property of the generator, and reporting it would be the inferential leap this article criticises.
+instance measures 17.6 by 17.5 pixels, and a firearm is argued from resolution, not shown by
+measurement, to be unresolvable within it. No model was trained to separate the two classes on the
+corpus of record, since S-nadir-150 detects a single person class, and the two-class pilot above did
+not learn its own domain. A detector that did separate them there could be relying on the fact that
+a weapon, drawn from three rifle patterns and a pistol, is the only elongated object any figure
+carries, so its separability could not be told apart from a property of the generator, and reporting
+it would be the inferential leap this article criticises.
 
 At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area over all classes (5.2
 times for armed figures alone, Section 7.3), and the corpus is built so that the artefact cannot

@@ -48,15 +48,15 @@ is paid for.
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
 target site with generic assets costs 27.0 mAP50 points on YOLOv11 (their name for YOLO11, the
 family of the detector used here), and 22 to 23 points on average across the architectures they
-test. In their taxonomy the corpus released with this article sits on the generic side, not the
-photogrammetric one: it is procedural geometry with public-domain materials, and it is on the losing
-side of that ablation by construction. Two qualifications bound how far the figure travels. Their
-object class is vehicles rather than people, and their evaluation is on the same site they
-reconstructed, so the result establishes that a digital twin of a place helps detection at that
-place, not at another. This article reports the trade rather than claiming to have avoided it.
-Measuring its size for this morphology would require a photogrammetric reconstruction of the target
-site, which is precisely what the ethical protocol of Section 5 forecloses, so the cost is
-quantified here from their result and not from ours.
+test. In their taxonomy the corpora of this article sit on the generic side, not the photogrammetric
+one: they are procedural geometry with public-domain materials, and they are on the losing side of
+that ablation by construction. Two qualifications bound how far the figure travels. Their object
+class is vehicles rather than people, and their evaluation is on the same site they reconstructed,
+so the result establishes that a digital twin of a place helps detection at that place, not at
+another. This article reports the trade rather than claiming to have avoided it. Measuring its size
+for this morphology would require a photogrammetric reconstruction of the target site, which is
+precisely what the ethical protocol of Section 5 forecloses, so the cost is quantified here from
+their result and not from ours.
 
 Layout is produced in three stages, each addressing a specific way in which naive procedural
 generation betrays itself when viewed from above.
@@ -66,7 +66,7 @@ boundary receives a gap drawn from a distribution whose modal value is zero, so 
 abut their neighbours, as they do in consolidated self-built settlement; because each lot is then
 shrunk by 0.15 m towards its centroid and rotated about it (see Orientation below), a zero gap
 leaves a narrow seam or a wedge between neighbours rather than an exactly shared wall. In the
-released configuration the gap is zero with probability 0.82, falls between 0.5 and 1.2 m with
+configuration used here the gap is zero with probability 0.82, falls between 0.5 and 1.2 m with
 probability 0.12, between 1.3 and 2.0 m with probability 0.05, and above 2.0 m with probability
 0.008. The second band is the alley, or *beco*, that defines the morphology.
 
@@ -85,12 +85,12 @@ configuration of the corpus of record, rendered at 4K, the value is 0.94
 `07-blender/scripts/teste_fidelidade.py`). The version of the generator that used a single partition
 was never measured with the corrected script, so no value is reported for it.
 
-An earlier draft of this article reported 1.62 for the configuration then released, an earlier
+An earlier draft of this article reported 1.62 for the configuration then in use, an earlier
 iteration of the generator. That figure came from a measurement script whose normaliser used 15
 degrees of 180 rather than 30, inflating the whole column by a factor of two. The error mattered
-beyond the digit: it placed the released configuration above the isotropic expectation when it is in
-fact slightly below it. The script and the recorded values were corrected, and the correction is
-noted here because the uncorrected figure appeared in circulated drafts.
+beyond the digit: it placed that configuration above the isotropic expectation when it is in fact
+below it (0.81, row v10 of the same file). The script and the recorded values were corrected, and
+the correction is noted here because the uncorrected figure appeared in circulated drafts.
 
 **Vertical accretion.** The dwelling is not a single prism. In the majority of cases with two or
 more storeys the upper floor is smaller than the one below and offset towards one boundary, leaving
@@ -114,13 +114,13 @@ as a hypothesis about detector difficulty, with a test not yet run.
 
 ### 7.3 Camera model
 
-The virtual camera reproduces a commercially available UAV payload in a configuration typical of
-aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, corresponding to a 4.3 mm lens on a
-5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent, pointing down within 3.5 degrees of
-vertical at a heading drawn per image, 150 m above ground with a per-image jitter of up to 6 m
-either way (3 m in the 35 m corpus of Section 9.5). The parameters are stated in full so that the
-acquisition conditions evaluated here can be reproduced or contested without reference to any
-particular flight. At that altitude the frame covers approximately 187 by 105 m of ground.
+The virtual camera reproduces a commercially available UAV payload in a nadir survey configuration:
+a Zenmuse Z30 at 1920 by 1080, corresponding to a 4.3 mm lens on a 5.37 mm sensor, or approximately
+28.8 mm on a 36 mm equivalent, pointing down within 3.5 degrees of vertical at a heading drawn per
+image, 150 m above ground with a per-image jitter of up to 6 m either way (3 m in the 35 m corpus of
+Section 9.5). The parameters are stated in full so that the acquisition conditions evaluated here
+can be reproduced or contested without reference to any particular flight. At that altitude the
+frame covers approximately 187 by 105 m of ground.
 
 Rendering resolution is treated as a parameter distinct from sensor resolution, and the distinction
 is consequential enough to state plainly. Ground sampling distance, not the nominal resolution of
@@ -142,9 +142,9 @@ carrying elongated objects, whose boxes are the largest, and taken class by clas
 for armed and 5.7 for unarmed figures (`06-resultados/forma_corpora.json`).
 
 The nadir altitudes are reported separately throughout, as S-nadir-150, S-nadir-75 and, in Section
-9.5, S-nadir-35, because they answer different questions: the first is the altitude at which aerial
-survey over urban terrain is conventionally flown with this payload, and the other two are the
-geometries under which the distinction the article is named after was measured.
+9.5, S-nadir-35, because they answer different questions: the first is the altitude of the reference
+acquisition specified above, and the other two are the geometries under which the distinction the
+article is named after was measured.
 
 ### 7.4 Annotation
 
@@ -204,12 +204,13 @@ are carried.
 ### 7.5 Domain randomisation over illumination
 
 Liao et al. (2026) measure that removing variation in sun position, weather and viewing angle costs
-30.4 mAP50 points on YOLOv11, the detector used here, and 17.5 on average across the architectures
-they test, with the largest penalty on truncated objects. The qualifications of Section 7.2 apply:
-their object is vehicles and their test is on the reconstructed site. Illumination is randomised
-here because it is the cheapest axis to vary and, for YOLOv11, the more costly of the two ablations
-in that study (30.4 points against 27.0), though not on average across architectures (17.5 against
-22 to 23).
+30.4 mAP50 points on YOLOv11, the family of the detector used here, and 17.5 on average across the
+architectures they test; averaged over architectures the penalty is largest on truncated objects,
+though for YOLOv11 it is smaller on truncated objects than on the whole set. The qualifications of
+Section 7.2 apply: their object is vehicles and their test is on the reconstructed site.
+Illumination is randomised here because it is the cheapest axis to vary and, for YOLOv11, the more
+costly of the two ablations in that study (30.4 points against 27.0), though not on average across
+architectures (17.5 against 22 to 23).
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent lighting
 budgets, each governing solar irradiance and colour, the angular diameter of the solar disc, a band
@@ -260,7 +261,7 @@ resized so that the long side is 1280 px, which downscales the most common train
 |---|---|
 | Detector | YOLO11s, Ultralytics 8.4.148, PyTorch 2.14.0, CUDA 12.6 |
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
-| Initialisation | COCO pretrained weights for every model trained from scratch; the synthetic-start fine-tuning models of Section 9.4 start from S-oblique-six |
+| Initialisation | COCO pretrained weights for every model except the synthetic-start fine-tuning models of Section 9.4, which start from S-oblique-six |
 | Tile size, synthetic corpus at 4K | 1280 px at a stride of 1024 px (20 per cent overlap), with the last column and row aligned to the frame edge, so each 3840 by 2160 frame yields eight tiles and the edge tiles overlap their neighbours by more |
 | Empty tiles retained as negatives | each tile without a box kept with probability 0.05 (`--keep-empty`, default of `07-blender/scripts/tile_dataset.py`); the realised share is printed in each tiling log and is not recorded under `06-resultados/` |
 | Minimum retained fraction of a clipped box | 0.40 |
@@ -304,7 +305,7 @@ still differ (Section 8.2).
 | **S-nadir-150** | Synthetic, one settlement, camera straight down at 150 m, six illumination regimes | The method as proposed, at the acquisition geometry specified in Section 7.3 |
 | **S-nadir-150-six** | The same, spread over six settlements | Whether variety of settlement is a term in the gap |
 | **S-oblique** | The same settlement and generator settings, oblique camera (with the later weapon library, Section 9.3) | Whether failure is attributable to synthesis or to capture geometry |
-| **S-oblique-six** | Six settlements, oblique camera at the calibrated pitch, figures carrying nothing | The best configuration of the generator: the synthetic model of this article |
+| **S-oblique-six** | Six settlements, oblique camera at the calibrated pitch, figures carrying nothing | The best configuration of the generator tried here: the synthetic model of this article |
 | **S-nadir-75** | The same generator at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable |
 | **S-nadir-35**, and its twin at 75 m | At 35 m with realistic carrying poses; the same corpus rendered at 75 m | Whether resolution or carrying pose drives the confusion |
 | **F-synthetic, F-generic** | 5 or 10 per cent of VisDrone-DET train (324 or 647 images), starting from S-oblique-six or from COCO | What the synthetic pretraining is worth once some real data exists |

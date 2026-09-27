@@ -70,7 +70,7 @@ AUTORIA = {
         "Prof. Hélio Arthur Reis Irigaray",
         "v2 de 2026-09-10 com edições do mestrando (22 a 26/09)",
         "O abstract e as palavras-chave foram acrescentados em 20/09 pelo mestrando e atualizados "
-        "até 26/09. O abstract tem hoje cerca de 390 palavras e os quatro premiados de 2026 têm de "
+        "até 26/09. O abstract tem hoje cerca de 450 palavras e os quatro premiados de 2026 têm de "
         "127 a 152, sem nenhuma citação: precisa encurtar para perto de 150. Na introdução, o "
         "mestrando reescreveu a pergunta de pesquisa e o objetivo, acrescentou o parágrafo de "
         "abertura, o das duas tarefas e o do Global South, e condensou o bloco de planejamento de "

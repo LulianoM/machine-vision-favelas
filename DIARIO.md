@@ -2,6 +2,24 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-27 [DESKTOP] Artigo validado em 10 rodadas depois da rodada 3
+
+- Pedido do autor: resumo leigo por e-mail (enviado), atualizar os resultados no artigo e validar num loop de 10 rodadas. Cada rodada foi um revisor independente, só leitura, com uma lente: números contra fontes; consistência e remissões; critérios declarados antes; força das afirmações; proveniência; texto desatualizado; método contra código; revisor cético; forma; passe final. Todo achado foi conferido antes de entrar. Registro completo em `01-artigo/VALIDACAO-2026-09-26.md`.
+- 287 achados aplicados. Os que mudam o argumento:
+  - A expectativa da 9.4 falhou, e o texto dizia "as expected".
+  - O denominador de Kiefer é o VisDrone inteiro, não real de outro domínio.
+  - A ausência a 150 m é argumentada pela resolução, não medida, e a frase "learnable a 150 m" era resto do braço fotogramétrico.
+  - Cada modelo treinou uma vez só, e isso agora está declarado no corpo do texto.
+  - O protocolo cresceu em etapas.
+  - A taxa de aprendizado real era AdamW 0,002, não 0,01.
+  - Objetos longos são carregados em ângulo que nenhuma arma usa.
+  - O S-oblique usou uma biblioteca de armas posterior à do nadir.
+  - A taxa de objeto chamado de arma é um limite inferior.
+  - O VisDrone foi reduzido a uma classe, e as regiões ignoradas contam como falso positivo.
+- Fontes novas em `06-resultados/`: `mede_alvo_split.py` (`alvo_por_split.json`) e `ft_curvas.py` (`ft_curvas_selecao.json`). PDFs Elsevier regerados na Área de Trabalho a pedido do autor.
+- Engano meu na rodada 5: um comando de PowerShell gravou STATUS.md vazio no commit 0ddf0d8, e ele foi restaurado da versão anterior no commit seguinte.
+- Para o autor: abstract com ~450 palavras (meta ~150); liberar ou não o corpus; periódico; fonte para voar com céu limpo; aval nas passagens reescritas; rótulos em português nas figuras 2, 4 e 5; pendências de referências.
+
 ## 2026-09-26 [DESKTOP] Rodada 3 encerrada: gêmeo a 75 m e ajuste fino no VisDrone
 
 - Gêmeo a 75 m (C1 a C4): o comando do corpus de 35 m mudando só a altitude (2.257 caixas, pessoa armada 48 × 43 px). Objeto chamado de arma 16,5% contra 27,3% a 35 m (p 0,06), desarmada 10,9% contra 16,8%, mesmo mAP50 (0,508 contra 0,514). O negativo de 35 m não vem da pose: o modelo de 35 m chama mais gente de armada em todas as classes. Análise em `06-resultados/compara_gemeo.py`.

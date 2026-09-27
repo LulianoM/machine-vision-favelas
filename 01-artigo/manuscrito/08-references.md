@@ -67,19 +67,19 @@ Supremo Tribunal Federal. (2025b, April 3). ADPF das Favelas: STF homologa parci
 
 Vanguard Attaché. (2026, March 11). Is Rio de Janeiro safe for tourists in 2026? Neighborhood-by-neighborhood analysis. https://vanguardattache.com/en/insights/is-rio-de-janeiro-safe-tourists-2026
 
-Liao, Y., et al. (2026). Bridging the Sim2Real gap in UAV remote sensing: A high-fidelity synthetic data framework for vehicle detection. *Remote Sensing, 18*(2), 361. https://doi.org/10.3390/rs18020361 [Lista de autores incompleta; o objeto do artigo e deteccao de VEICULO, nao de pessoa]
+Liao, F., Liu, Y., Xu, W., Wang, X., Liu, G., Yang, K., &amp; Li, J. (2026). Bridging the Sim2Real gap in UAV remote sensing: A high-fidelity synthetic data framework for vehicle detection. *Remote Sensing, 18*(2), 361. https://doi.org/10.3390/rs18020361
 
-Agrawal, K., Ratnoo, A., &amp; Ghose, D. (2017). Inverse optical flow based guidance for UAV navigation through urban canyons. *Aerospace Science and Technology, 68*, 163 a 178. https://doi.org/10.1016/j.ast.2017.05.012
+Agrawal, K., Ratnoo, A., &amp; Ghose, D. (2017). Inverse optical flow based guidance for UAV navigation through urban canyons. *Aerospace Science and Technology, 68*, 163-178. https://doi.org/10.1016/j.ast.2017.05.012
 
-Barisic, A., Petric, F., &amp; Bogdan, S. (2022). Sim2Air: Synthetic aerial dataset for UAV monitoring. *IEEE Robotics and Automation Letters, 7*(2), 3757 a 3764. https://doi.org/10.1109/LRA.2022.3147337
+Barisic, A., Petric, F., &amp; Bogdan, S. (2022). Sim2Air: Synthetic aerial dataset for UAV monitoring. *IEEE Robotics and Automation Letters, 7*(2), 3757-3764. https://doi.org/10.1109/LRA.2022.3147337
 
 da Silva, A. A., Kormann da Silva, I., &amp; Westerholt, R. (2024). Mapping the margins: A systematic scoping review of the impact of digital mapping on public participation in informal settlements. *Habitat International, 150*, 103040. https://doi.org/10.1016/j.habitatint.2024.103040
 
-Du, S., Xing, J., Wang, S., Wei, L., &amp; Zhang, Y. (2024). STMNet: Scene classification-assisted and texture feature-enhanced multiscale network for large-scale urban informal settlement extraction from remote sensing images. *IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 17*, 14074 a 14090. https://doi.org/10.1109/JSTARS.2024.3432200
+Du, S., Xing, J., Wang, S., Wei, L., &amp; Zhang, Y. (2024). STMNet: Scene classification-assisted and texture feature-enhanced multiscale network for large-scale urban informal settlement extraction from remote sensing images. *IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 17*, 14074-14090. https://doi.org/10.1109/JSTARS.2024.3432200
 
-Gevaert, C. M., Persello, C., Sliuzas, R., &amp; Vosselman, G. (2016). Classification of informal settlements through the integration of 2D and 3D features extracted from UAV data. *ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, III-3*, 317 a 324. https://doi.org/10.5194/isprsannals-III-3-317-2016
+Gevaert, C. M., Persello, C., Sliuzas, R., &amp; Vosselman, G. (2016). Classification of informal settlements through the integration of 2D and 3D features extracted from UAV data. *ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, III-3*, 317-324. https://doi.org/10.5194/isprsannals-III-3-317-2016
 
-Kiefer, B., Ott, D., &amp; Zell, A. (2022). Leveraging synthetic data in object detection on unmanned aerial vehicles. *2022 26th International Conference on Pattern Recognition (ICPR)*, 3564 a 3571. https://doi.org/10.1109/ICPR56361.2022.9956710
+Kiefer, B., Ott, D., &amp; Zell, A. (2022). Leveraging synthetic data in object detection on unmanned aerial vehicles. *2022 26th International Conference on Pattern Recognition (ICPR)*, 3564-3571. https://doi.org/10.1109/ICPR56361.2022.9956710
 
 Rasoulie, M., &amp; Pashazadeh, S. (2026). 3D UAV path optimization using a task-allocation and archive-guided mutation particle swarm optimization algorithm. *Scientific Reports, 16*. https://doi.org/10.1038/s41598-026-42372-8
 

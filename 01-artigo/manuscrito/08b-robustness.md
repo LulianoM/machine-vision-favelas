@@ -98,24 +98,25 @@ arms.
 
 **Check.** The two models are trained on corpora generated with the same settings (though not from
 the same code: the nadir corpus predates the five-model weapon library of Section 7.4, so its armed
-figures carry one of three rifle patterns or a pistol), the same settlement seed, the same material
-library, the same illumination regimes, the same share of armed and unarmed figures and the same
-annotation procedure, with the same training recipe and the same number of images, both at 4K. What
-differs is the camera: pitch, drawn between 26 and 52 degrees and recorded per image, altitude (120
-m for the oblique camera) and its jitter. One further setting differs because the camera does: the
-nadir corpus keeps figures within a square around the camera axis whose side is 0.52 of the nadir
-frame width (`--enquadro quadrado` in `07-blender/scripts/gen_morro.py`), the filter that produced
-it, while the oblique corpus places them anywhere the projected frame covers, since an oblique frame
-is not a square on the ground. At the centre of the frame and at the nominal 120 m, the oblique
-camera puts the ground sampling distance between about 4.3 and 6.3 cm per pixel across the pitch
-range, a span the altitude jitter widens, against 4.88 for the nadir corpus, so the change of camera
-moves the shape of the target (h/w 1.46 against 0.98) and leaves its size in the same range,
-somewhat larger in area (456 against 301 square pixels). Pitch is set from the VisDrone training
-split rather than from the validation split on which both models are scored, so that the calibration
-does not consume the test set. Result: 0.0614 for the oblique model against 0.0102 for the nadir
-model on the real test set. The figure of 0.1055 for S-oblique-six (Section 9.3) is not a result of
-this check: that corpus also changes the settlements, the pitch range, the figures, which carry
-nothing, and the placement of the camera.
+figures carry one of three rifle patterns or a pistol and are held forward with probability 0.46
+rather than 0.42), the same settlement seed, the same material library, the same illumination
+regimes, the same share of armed and unarmed figures and the same annotation procedure, with the
+same training recipe and the same number of images, both at 4K. What differs is the camera: pitch,
+drawn between 26 and 52 degrees and recorded per image, altitude (120 m for the oblique camera) and
+its jitter. One further setting differs because the camera does: the nadir corpus keeps figures
+within a square around the camera axis whose side is 0.52 of the nadir frame width (`--enquadro
+quadrado` in `07-blender/scripts/gen_morro.py`), the filter that produced it, while the oblique
+corpus places them anywhere the projected frame covers, since an oblique frame is not a square on
+the ground. At the centre of the frame and at the nominal 120 m, the oblique camera puts the ground
+sampling distance between about 4.3 and 6.3 cm per pixel across the pitch range, a span the altitude
+jitter widens, against 4.88 for the nadir corpus, so the change of camera moves the shape of the
+target (h/w 1.46 against 0.98) and leaves its size in the same range, somewhat larger in area (456
+against 301 square pixels). Pitch is set from the VisDrone training split rather than from the
+validation split on which both models are scored, so that the calibration does not consume the test
+set. Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set.
+The figure of 0.1055 for S-oblique-six (Section 9.3) is not a result of this check: that corpus also
+changes the settlements, the pitch range, the figures, which carry nothing, and the placement of the
+camera.
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in

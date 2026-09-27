@@ -2,7 +2,7 @@
 
 ### Limitations
 
-This study is conceptual rather than operational, and that status shapes every limitation that follows. Synthetic corpora have been generated and detectors have been trained on them, with the results reported in Sections 9 to 11. What has not been established is performance on real imagery of Jacarezinho or of any other favela: the transfer figures reported here are obtained on a public aerial benchmark that is not a favela, for the reasons set out in Section 11.2, and no output of this work has been validated against imagery of the case study territory. What is offered here is an architecture, a training strategy, and a measurement of what that strategy transfers to a public benchmark that is not the target domain. Whether it closes the sim-to-real gap for vertically stacked, self-built construction as such, rather than for the dense urban scenes the benchmark records, is an empirical question this article does not answer, for the reason given in Section 11.2.
+This study is conceptual rather than operational, and that status shapes every limitation that follows. Synthetic corpora have been generated and detectors have been trained on them, with the results reported in Sections 9 to 11. What has not been established is performance on real imagery of Jacarezinho or of any other favela: the transfer figures reported here are obtained on a public aerial benchmark that is not a favela, for the reasons set out in Section 11.2, and no output of this work has been validated against imagery of the case study territory. What is offered here is an architecture, a training strategy, and a measurement of what that strategy transfers to a public benchmark that is not the target domain. Whether it closes the sim-to-real gap for vertically stacked, self-built construction as such, rather than for the dense urban scenes the benchmark records, is an empirical question this article does not answer, for the reason given in Section 11.2. Of the four acquisition conditions the objective names, only altitude was varied for the armed and unarmed distinction, and only on synthetic imagery; camera geometry was varied for person detection alone, illumination only in an image statistic whose detection test (Section 10.3) has not been run, and a single sensor was simulated, at two render resolutions. The transfer measured is that of person detection, since no public benchmark annotates a carried firearm.
 
 The autoethnographic material discussed in the Methodology section is a second, unavoidable limitation. One researcher's operational familiarity with Jacarezinho comes filtered through a policing role, and the study has been explicit that this yields a partial account: attentive to tactical navigability, choke points, and lines of sight, and correspondingly less attentive to the aspects of the built environment that matter most to the people who live there. The triangulation against journalistic, human-rights, and academic sources described earlier mitigates this bias; it does not remove it. A single institutional vantage point, however well triangulated, is not a substitute for resident testimony, and none was collected.
 
@@ -32,9 +32,10 @@ Finally, the four-stage progression sketched in the Introduction (flat urban ter
 
 ### Closing
 
-This article set out to ask under what acquisition conditions an aerial system can tell an armed
-person from an unarmed one over a dense self-built settlement, and what it costs to answer that
-question responsibly. Three things follow from the work reported above.
+This article set out to ask under what acquisition conditions, and at what cost in transfer,
+synthetic imagery of a dense self-built settlement supports telling an armed person from an unarmed
+one from the air, and what it costs to answer that question responsibly. Three things follow from
+the work reported above.
 
 The first is that the constraints measured here are not the ones the field usually discusses. At the
 ground sampling distance of the acquisition specified in Section 7.3, a person is a few tens of

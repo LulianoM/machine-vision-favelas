@@ -35,14 +35,17 @@ not collected.
 A second consequence follows. Section 9.3 reports an oblique arm calibrated to the benchmark, but
 the acquisition geometry this work reproduces points straight down. An oblique corpus that transfers
 better to VisDrone tells us about VisDrone. It does not recommend an acquisition geometry for the
-case study, and Section 11.3 is the only acquisition recommendation this article makes. The size of
-the effect is itself the clearest statement of this limit: the same settlement rendered from a
-tilted camera scores 6 times the nadir figure on VisDrone (0.0614 against 0.0102), not because it is
-a better model of a settlement seen from a drone at 150 m, but because it resembles the benchmark's
-acquisition. The best oblique configuration scores 10 times (0.1055), but it is not an ablation:
-besides the camera it adds six settlements and keeps only figures carrying nothing, chosen because
-their shape is closer to the benchmark's, so that factor is not attributable to acquisition alone
-(Section 9.3). The nadir figure is the one that bears on the case study, and it is the lower one.
+case study, and Section 11.3 is the only acquisition recommendation this article makes, and it is
+conditional and concerns how to fly, not whether to acquire imagery of the case study territory,
+which nothing in this article recommends (Section 11.5). The size of the effect is itself the
+clearest statement of this limit: the same settlement rendered from a tilted camera scores 6 times
+the nadir figure on VisDrone (0.0614 against 0.0102), not because it is a better model of a
+settlement seen from a drone at 150 m, but most plausibly because it resembles the benchmark's
+acquisition; Section 10.4 lists what else differs between the two corpora. The best oblique
+configuration scores 10 times (0.1055), but it is not an ablation: besides the camera it adds six
+settlements and keeps only figures carrying nothing, chosen because their shape is closer to the
+benchmark's, so that factor is not attributable to acquisition alone (Section 9.3). The nadir figure
+is the one that bears on the case study, and it is the lower one.
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
@@ -75,18 +78,20 @@ infrastructure for the morphological task that Section 6 proposes does not curre
 ### 11.5 Where the armed and unarmed distinction exists, and where it does not
 
 No accuracy figure for the armed and unarmed distinction is reported at 150 m, the altitude this
-article takes as its reference acquisition. The omission is argued from resolution rather than
-measured, and this section states the conditions that produce it.
+article takes as its reference acquisition. The absence of the capability there is argued from
+resolution rather than measured, and this section states the conditions that produce it.
 
 At 150 m with the camera pointing straight down, rendered at the 4.88 cm per pixel of the corpus of
 record, the median annotated instance measures 17.6 by 17.5 pixels. A firearm subtends a fraction of
-that and is not resolvable within the region. A detector trained on such a corpus can still separate
-the two classes, and that is precisely the problem: in a corpus where a weapon, drawn from three
-rifle patterns and a pistol in four carrying poses, is the only elongated object any figure carries,
-separability cannot be told apart from the regularity of the asset library. An accuracy figure
-obtained there would be the inferential move this article criticises, a number produced under
-controlled synthetic conditions and presented as evidence of a capability that would be exercised on
-real people in a real territory.
+that and is not resolvable within the region. A detector trained on such a corpus might still
+separate the two classes, although none was trained to do so here (S-nadir-150 detects a single
+person class, and the two-class pilot of Section 9 did not learn its own domain), and that
+possibility is precisely the problem: in a corpus where a weapon, drawn from three rifle patterns
+and a pistol in four carrying poses, is the only elongated object any figure carries, separability
+could not be told apart from the regularity of the asset library. An accuracy figure obtained there
+would be the inferential move this article criticises, a number produced under controlled synthetic
+conditions and presented as evidence of a capability that would be exercised on real people in a
+real territory.
 
 Two changes make the question empirical rather than foreclosed, and both are reported in Section 9.
 Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold increase

@@ -27,7 +27,7 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 | Versão vigente do orientador | v2 de 2026-09-10 (`01-artigo/rascunhos-professor/2026-09-10_v2_Irigaray.docx`). O arquivo baixado em 17/09 é idêntico a ela: não há v3 |
 | Manuscrito por seção | `01-artigo/manuscrito/`, texto do orientador mais as seções técnicas "b"; PDF de leitura por `01-artigo/ferramentas/monta_artigo.py` |
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
-| Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/RESULTADOS.md`), todos no manuscrito. **A revisar pelo autor:** o abstract e a conclusão ganharam uma frase com o resultado negativo do ajuste fino, e a 9.4 o relata por inteiro |
+| Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Ficam 3 `[X]` (robustez 10.1 e 10.3, não rodadas). Decisões do autor na lista final do arquivo de validação (abstract com ~450 palavras contra meta de ~150, liberação do corpus, periódico, figuras com rótulos em português) |
 
 ## Experimento (desktop)
 

@@ -168,3 +168,38 @@ Revisor com 88 consultas, 31 min. Renderizou os arquivos com as próprias funç�
   - O texto nunca cita figura por número.
   - A introdução do orientador mistura grafia britânica e americana.
   - O abstract tem 386 palavras, contra a meta de cerca de 150.
+
+## Rodada 10: passe final integrado
+
+Revisor com 74 consultas, 27 min. Leu o artigo inteiro, em ordem, como um argumento só, e conferiu por amostragem pelo menos três correções de cada rodada anterior (todas presentes e íntegras). 29 achados (2 erros, 8 inconsistências, 19 melhorias). Todos aceitos, menos um: o travessão dentro do título de uma referência fica, porque é citação literal de título publicado.
+
+- **Erros que sobreviveram às nove rodadas.** A 9.5 e a 11.5 diziam que a distinção armado/desarmado é "aprendível" a 150 m, mas nenhum modelo do artigo sustenta isso: o S-nadir-150 é de classe única, e o piloto de duas classes não aprendeu o próprio domínio. A frase é resto do braço fotogramétrico retirado em 22/09 (o único modelo de duas classes a 150 m era o `cid150_s`). Agora o texto diz que um detector ali *poderia* separar as classes pelo motivo errado, e que nenhum foi treinado para isso.
+- **Abstract e conclusão.** O abstract não trazia nenhum resultado armado/desarmado, justamente o assunto do título. Agora traz as taxas de 75 m, de 35 m e do gêmeo, com a ressalva de que são só em imagem sintética e de que a diferença é sugestiva. Também passou a dizer que a transferência medida é de detecção de pessoa em classe única e que cada modelo treinou uma vez. A conclusão reformulava a pergunta de pesquisa de outro jeito; agora a repete. E ganhou uma frase que diz quais das quatro condições de aquisição do objetivo foram de fato variadas: só a altitude, para a distinção, e só em imagem sintética.
+- **Resíduos.**
+  - A 7.2 dizia que o corpus é "liberado com o artigo", contra a 11.6.
+  - A tabela 7.7 não tinha o "tried here" da rodada 4.
+  - A 10.4 omitia a diferença de pose 0,46 contra 0,42.
+  - A 3 ainda afirmava a ausência a 150 m sem ressalva.
+  - A frase de abertura do artigo afirmava sem fonte que sistemas "são comprados" com essa promessa; agora remete à seção 3.
+  - "Convencionalmente voado a 150 m" não tinha fonte; virou "a altitude de referência deste estudo".
+  - O piloto não treinou 120 épocas: a parada antecipada o cortou.
+  - A frase de Liao na seção 2 subestimava a ablação de iluminação.
+- **Texto herdado.** Duas frases sem verbo principal na introdução do orientador. Três vírgulas soltas deixadas pela retirada dos travessões (seções 3 e 4). Os títulos embutidos da seção 2 foram para negrito. Na lista de referências, Liao ganhou a lista de autores conferida na ficha e perdeu a nota em português, e os intervalos de página passaram a usar hífen.
+
+## Resultado do loop
+
+- **287 achados em 10 rodadas, todos conferidos antes de entrar no texto.** Nenhum foi recusado por estar errado; um foi mantido por ser citação literal. Houve ainda o passe próprio anterior ao loop.
+- **Arquivos novos em `06-resultados/`:** `mede_alvo_split.py` e `alvo_por_split.json` (a fonte dos números da 8.1, da 8.2 e do R), `ft_curvas.py` e `ft_curvas_selecao.json`, e a precisão de armada no `compara_gemeo.py`.
+- **Veredito da rodada 10:**
+  - Todo número conferido bate com a fonte, toda remissão resolve, e o PDF sai limpo, com 3 `[X]`, todos das checagens de robustez não rodadas.
+  - Resta um travessão, dentro de um título de referência.
+
+**Para o autor decidir antes de mandar ao orientador:**
+1. Encurtar o abstract, hoje com cerca de 450 palavras contra a meta de cerca de 150, sem perder as ressalvas de 150 m, do ajuste fino, de 75/35 m e do treino único.
+2. Decidir se o corpus e o código serão liberados; hoje o repositório é privado, e a 11.6 diz que o leitor não confere o corpus.
+3. Confirmar o periódico ou evento, porque a seção 8 fala em "this venue" e o montador usa o formato Elsevier.
+4. Dar fonte à "preferência convencional por voar com céu limpo" (11.3).
+5. Aprovar as passagens reescritas nas seções do orientador e do coautor; as caixas de estado do PDF dizem quais são.
+6. Decidir se o resultado da 9.4 muda a proposta da seção 6.
+7. Trocar os rótulos em português dentro das figuras 2, 4 e 5, e decidir se o texto deve citar figuras por número.
+8. Resolver as pendências B1 a B10 das referências.
