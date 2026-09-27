@@ -9,9 +9,10 @@
 > once, with a single seed, so no difference between models carries a measured run-to-run
 > dispersion; Section 10.6 specifies the repetition that would supply one.
 
-A pilot of the full protocol was run before the corpus reached its final size. Its results are
-reported first, because they bound what follows and because withholding an unfavourable pilot would
-make the rest of this section unreadable as evidence.
+A pilot of the full protocol was run first, on a smaller corpus from another realisation of the
+settlement rendered at 1080p. Its results are reported first, because they bound what follows and
+because withholding an unfavourable pilot would make the rest of this section unreadable as
+evidence.
 
 | Pilot run | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|---|
@@ -31,9 +32,12 @@ below one stride of the network (Section 8.1).
 
 The pilot does establish one thing a favourable result could not. This pipeline is capable of
 failing, and a candidate cause of the failure is legible in the corpus statistics before any
-training. It was also trained with a different recipe (tiles and input of 640 pixels, 120 epochs).
-The rows below report the protocol re-run with both defects corrected and with the recipe of Section
-7.6.
+training. It was also trained with a different recipe (tiles and input of 640 pixels, 120 epochs,
+batch 8) and on two classes, armed and unarmed, rather than one: its synthetic validation row is the
+mean over those two classes, so the 0.077 above is not on the single-class scale of the 0.79 of the
+corpus of record (the same holds for the comparison in Section 10.1), while its two VisDrone rows
+merge the classes as every other model does. The rows below report the protocol re-run with both
+defects corrected and with the recipe of Section 7.6.
 
 ### 9.1 Ceiling: what real training data achieves on this test set
 
@@ -76,8 +80,11 @@ Section 7.3, evaluated on the same real test set with no real training image of 
 **Variety of settlement at fixed volume.** The corpus of record renders one settlement. Model
 S-nadir-150-six keeps every generator setting and the number of images fixed and spreads the 180
 images over six settlements, 30 each, differing in relief, forest cover, a corridor through the core
-(an avenue, a narrow street or a river) and the palette of roofs and facades
-(`07-blender/scripts/sitios.py`, settlements -1 to 4).
+(an avenue, a narrow street or a river) and the palette of roofs and facades, and also in the extent
+of the built core, the number of sub-districts, the distribution of storey counts and the share of
+vacant lots (`07-blender/scripts/sitios.py`, settlements -1 to 4). It was rendered with the later
+generator, so its armed figures carry the five weapon models of Section 7.4, which the corpus of
+record predates.
 
 | Model | Synthetic validation mAP50 | VisDrone-DET val mAP50 | mAP50-95 | Efficacy |
 |---|---|---|---|---|
@@ -107,8 +114,13 @@ its own declared ceiling, together with the comparison in Section 9.3.
 
 ### 9.3 Transfer from synthetic training, oblique geometry
 
-Model S-oblique. Identical generator, identical settlement, identical illumination regimes; only the
-camera is moved, together with the figure-placement filter that depends on it (Section 10.4).
+Model S-oblique. Identical settlement, identical illumination regimes and identical generator
+settings; the camera is moved, together with the figure-placement filter that depends on it (Section
+10.4). One further difference comes from the generator's history rather than from the camera: the
+nadir corpus was rendered before the five-model weapon library of Section 7.4 existed, so its armed
+figures carry one of three rifle patterns or a pistol and are held forward with probability 0.46
+rather than 0.42, while those of the oblique corpus carry the five models; the share of armed
+figures is the same in both.
 
 Pitch is set from the height-to-width ratio of the VisDrone **training** split, not the validation
 split on which every model in this article is scored. The distinction is load-bearing: the ratio of
@@ -153,17 +165,19 @@ The oblique corpus did not reach the shape it was calibrated for, 1.46 against 1
 reasons measured in Section 8.2. Model S-oblique-six combines the two terms and corrects the
 calibration: six settlements of 30 images; pitch between 45 and 56 degrees, chosen to centre the
 median of figures carrying nothing on the benchmark's shape, which in the single-settlement oblique
-corpus they reach only between 50 and 52 degrees; only such figures; and a camera placement redrawn
-until the centre of the frame is not occluded by forest or hillside. It is not an ablation, since
-several things change at once; it is the best configuration of this generator tried here and the
-model the rest of this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val
-(precision 0.2631, recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the
-nadir model and 1.7 times the single-settlement oblique model, against 0.7047 on its own synthetic
-validation. The rendered figure approaches the calibration target without reaching it: a median
-height-to-width ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the
-benchmark's training split (Section 8.2). In absolute terms, 10.5 points of mAP50 sit just above the
-upper end of that synthetic-only range, under the same difference in classes, while the ratio to our
-own ceiling stays below theirs (Section 9.2).
+corpus they reach only between 50 and 52 degrees; only such figures; and a camera placement redrawn,
+target, pitch and heading together and at most 30 times, until the camera stands at least 45 m above
+the ground beneath it and the ray through the centre of the frame first strikes the scene within 30
+m of the target rather than on forest or hillside. It is not an ablation, since several things
+change at once; it is the best configuration of this generator tried here and the model the rest of
+this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val (precision 0.2631,
+recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the nadir model and 1.7
+times the single-settlement oblique model, against 0.7047 on its own synthetic validation. The
+rendered figure approaches the calibration target without reaching it: a median height-to-width
+ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the benchmark's training split
+(Section 8.2). In absolute terms, 10.5 points of mAP50 sit just above the upper end of that
+synthetic-only range, under the same difference in classes, while the ratio to our own ceiling stays
+below theirs (Section 9.2).
 
 The acquisition geometry this article reproduces points straight down. An oblique corpus that
 transfers better to VisDrone is informative about the benchmark, not about the acquisition that
@@ -222,18 +236,18 @@ initialisation encodes about real people.
 
 No accuracy for the armed and unarmed distinction is reported at 150 m. At that altitude the median
 instance measures 17.6 by 17.5 pixels and a firearm is not resolvable within it. The distinction is
-nevertheless learnable in a corpus where the weapon is always the same asset in the same pose at the
-same contrast, so that separability cannot be told apart from a property of the generator, and
-reporting it would be the inferential leap this article criticises.
+nevertheless learnable in a corpus where a weapon, drawn from three rifle patterns and a pistol, is
+the only elongated object any figure carries, so that separability cannot be told apart from a
+property of the generator, and reporting it would be the inferential leap this article criticises.
 
 At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area over all classes (5.2
 times for armed figures alone, Section 7.3), and the corpus is built so that the artefact cannot
 account for the result: five firearm models against nine elongated objects carried in the same
-territory, sharing the weapons' colour and roughness palette and the same distribution of carrying
-poses. The corpus holds 2,887 instances in 200 images, 933 of them armed, 973 unarmed and 981
-carrying a confusable object. A second corpus at 35 m, 1.1 cm per pixel, holds 2,223 instances with
-a median of 121.8 by 103.1 pixels (`06-resultados/forma_corpora.json`, produced by
-`06-resultados/mede_forma.py`).
+territory, sharing the weapons' colour and roughness palette and the same distribution of body
+poses, though objects longer than any weapon are held at other angles (Section 7.4). The corpus
+holds 2,887 instances in 200 images, 933 of them armed, 973 unarmed and 981 carrying a confusable
+object. A second corpus at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by
+103.1 pixels (`06-resultados/forma_corpora.json`, produced by `06-resultados/mede_forma.py`).
 
 | Quantity | S-nadir-75 (75 m) | S-nadir-35 (35 m) | Twin of S-nadir-35 at 75 m |
 |---|---|---|---|
@@ -243,9 +257,11 @@ a median of 121.8 by 103.1 pixels (`06-resultados/forma_corpora.json`, produced 
 | Rate at which a confusable object is called armed | 0.237 | 0.273 | 0.165 |
 | Rate at which an unarmed person with no object is called armed | 0.131 | 0.168 | 0.109 |
 
-*Protocol: inference on the full 4K frame at native scale; confidence 0.25 and one-to-one matching
-at an intersection-over-union of 0.50 for the rates; the validation split of each corpus (27, 35 and
-24 images). Source: `06-resultados/confusao_armado_75.json`, `confusao_armado_35.json` and
+*Protocol: inference on the full 4K frame at native scale; for the rates, confidence 0.25 and
+one-to-one matching at an intersection-over-union of 0.50 that ignores the predicted class, each
+person taking the class of its best-overlapping prediction, so that a second box of another class on
+the same person counts only against precision; the validation split of each corpus (27, 35 and 24
+images). Source: `06-resultados/confusao_armado_75.json`, `confusao_armado_35.json` and
 `confusao_armado_75g.json`, produced by `06-resultados/confusao_armado.py`; precision from
 `06-resultados/gemeo_75_35.json`, produced by `06-resultados/compara_gemeo.py`. The third column is
 the matched corpus described below.*
@@ -261,18 +277,22 @@ The two corpora differ in more than altitude. The 35 m corpus also changed how c
 are carried: at 75 m the object was drawn in the firing pose with probability 0.42, as the weapon
 is, while at 35 m it is drawn that way with probability 0.08 (`07-blender/scripts/people_mpfb.py`)
 and otherwise over the shoulder, at the side or in one hand. That removes a cue the 75 m model may
-have used, and it is the more realistic distribution, but it confounds resolution with pose (and
-with render sampling, 64 against 96 samples per pixel). A third corpus separates them: identical to
-the 35 m corpus in every setting except altitude, rendered at 75 m. Confusable objects called armed:
-0.165; unarmed persons called armed: 0.109 (third column above). Against 0.273 and 0.168 at 35 m
-with every other setting held, halving the ground sampling distance did not reduce the confusion:
-the 35 m model calls every class armed more often in point estimate, armed persons included (p =
-0.15 and 0.22 for the armed and unarmed rates in the same test), at the same mAP50, so the 35 m
-result does not appear to be an artefact of the change of pose. The difference in the object rate is
-suggestive rather than established: 10.8 points, p = 0.06 in a two-proportion test that does not
-correct for clustering by frame (`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`).
-At 75 m, moving from the original 75 m corpus to the generator settings of the 35 m corpus,
-realistic carrying poses among them, is followed by an object rate of 0.165 against 0.237, a
-difference the same test does not support (p = 0.19). Section 11.5 states the condition under which
-the 75 m figure would be withdrawn and reads the altitudes together; Section 10.7 explains why
-Section 10 carries no test for this distinction.
+have used, and it is the more realistic distribution, but it confounds resolution with pose and with
+every other setting that changed between the two corpora: render sampling (64 against 96 samples per
+pixel), the share of figures placed on rooftops (0.75 against 0.45), figures per frame (12 to 24
+against 14 to 30), wire and clothesline radius scaled to the ground sampling distance, candidate
+positions drawn only inside the frame, and the settlement seed. A third corpus separates them:
+identical to the 35 m corpus in every setting except altitude and its jitter (up to 6 m either way
+against 3 m), rendered at 75 m. Confusable objects called armed: 0.165; unarmed persons called
+armed: 0.109 (third column above). Against 0.273 and 0.168 at 35 m with every other setting held,
+halving the ground sampling distance did not reduce the confusion: the 35 m model calls every class
+armed more often in point estimate, armed persons included (p = 0.15 and 0.22 for the armed and
+unarmed rates in the same test), at the same mAP50, so the 35 m result does not appear to be an
+artefact of the change of pose. The difference in the object rate is suggestive rather than
+established: 10.8 points, p = 0.06 in a two-proportion test that does not correct for clustering by
+frame (`06-resultados/gemeo_75_35.json`, produced by `compara_gemeo.py`). At 75 m, moving from the
+original 75 m corpus to the generator settings of the 35 m corpus, realistic carrying poses among
+them, is followed by an object rate of 0.165 against 0.237, a difference the same test does not
+support (p = 0.19). Section 11.5 states the condition under which the 75 m figure would be withdrawn
+and reads the altitudes together; Section 10.7 explains why Section 10 carries no test for this
+distinction.

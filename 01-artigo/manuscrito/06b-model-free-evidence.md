@@ -26,8 +26,10 @@ stated rather than implied.
 
 `ds_morro_4k` is the corpus of record: it renders the reference acquisition specified in Section 7.3
 and is the training corpus of model S-nadir-150 in Section 9. `ds_morro_clima` is its 1080p
-predecessor, retained here because the comparison between the two isolates the effect of render
-resolution from every other variable.
+predecessor, retained here because the comparison between the two shows the effect of render
+resolution, although the two also differ in the realisation of the settlement (seed 11 against 21),
+in the number of images (48 against 180) and in the figures placed per frame (14 to 30 against 16 to
+34).
 
 ### 8.1 Ground sampling distance, not sensor resolution, sets the target size
 

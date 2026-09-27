@@ -11,7 +11,7 @@ Section 7.6 argues that training scale governs whether a target reaches the netw
 the argument by arithmetic: the median instance of the corpus of record, about 7 by 7 pixels once
 the frame is downscaled to a 1536 pixel input, occupies less than one cell of the finest feature map
 of a detector whose smallest stride is 8. The empirical pair quoted alongside it, mAP50 moving from
-0.116 to 0.561 (files in Section 7.6), comes from two runs of an earlier arm that differ in four
+0.116 to 0.561 (files in Section 7.6), comes from two runs of an earlier arm that differ in five
 further respects, and it is therefore consistent with the argument rather than evidence for it.
 
 Obtaining the controlled measurement requires one experiment that has not been run: the same
@@ -81,11 +81,12 @@ measured, and this section states the conditions that produce it.
 At 150 m with the camera pointing straight down, rendered at the 4.88 cm per pixel of the corpus of
 record, the median annotated instance measures 17.6 by 17.5 pixels. A firearm subtends a fraction of
 that and is not resolvable within the region. A detector trained on such a corpus can still separate
-the two classes, and that is precisely the problem: in a corpus where the weapon is always the same
-asset, in the same pose, at the same contrast, separability cannot be told apart from the regularity
-of the asset library. An accuracy figure obtained there would be the inferential move this article
-criticises, a number produced under controlled synthetic conditions and presented as evidence of a
-capability that would be exercised on real people in a real territory.
+the two classes, and that is precisely the problem: in a corpus where a weapon, drawn from three
+rifle patterns and a pistol in four carrying poses, is the only elongated object any figure carries,
+separability cannot be told apart from the regularity of the asset library. An accuracy figure
+obtained there would be the inferential move this article criticises, a number produced under
+controlled synthetic conditions and presented as evidence of a capability that would be exercised on
+real people in a real territory.
 
 Two changes make the question empirical rather than foreclosed, and both are reported in Section 9.
 Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold increase
@@ -93,9 +94,9 @@ in area over all classes and 5.2-fold for armed figures alone, at which the fire
 region the network can in principle resolve. And the corpus at that altitude is built to remove the
 artefact, by the construction specified in Section 7.4: the weapons are set against elongated
 objects carried in the same territory, drawn from the same colour and roughness palette and carried
-through the same distribution of poses. A detector that separates the classes on that corpus cannot
-be doing so by colour alone, and the rate at which it calls a broom a rifle is reported in Section
-9.5.
+through the same distribution of body poses, although objects longer than any weapon are held at
+other angles (Section 7.4). A detector that separates the classes on that corpus cannot be doing so
+by colour alone, and the rate at which it calls a broom a rifle is reported in Section 9.5.
 
 The distinction between altitudes is the contribution, and it is stated as a condition rather than a
 recommendation. At 150 m the capability is argued from resolution, not measured, to be absent: no
@@ -120,16 +121,17 @@ falls below four fifths of its recall on the models it was trained on, then what
 asset library and not the object, and no figure from that corpus should be read as a capability. The
 test renders 50 new frames at 75 m, in a new realisation of the settlement and with the generator
 settings of the training corpus, in which half the firearms are drawn from the five training models
-and half from two models that enter no training corpus, a rifle of 1.10 m, at the upper edge of the
-length range of the five (the longest, a shotgun, measures 1.05 m), and a compact submachine gun of
-0.55 m, inside it, so that the test measures the asset rather than a new size. The type of every
-annotated instance is recorded, so the two recalls come from the same images under the same light.
-Recall on seen models: 0.400 (50 of 125); on unseen models: 0.466 (61 of 131), a ratio of 1.16
-(approximate 95 per cent interval 0.88 to 1.54, which ignores the clustering of boxes within the 50
-frames and is therefore optimistic) against the threshold of 0.80, which the criterion applies to
-the ratio itself, so the condition is not met and the 75 m figure stands
-(`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). The per-model
-rates, from 15 to 69 instances each and without intervals
+and half from two models that enter no training corpus, a rifle of 1.10 m, longer than the recorded
+length of any of the five (the longest, a shotgun, is recorded at 1.05 m) but inside their range as
+modelled, since the meshes of the two training rifles and of the shotgun are longer than their
+recorded lengths, and a compact submachine gun of 0.55 m, inside it, so that the test measures the
+asset rather than a new size. The type of every annotated instance is recorded, so the two recalls
+come from the same images under the same light. Recall on seen models: 0.400 (50 of 125); on unseen
+models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54, which
+ignores the clustering of boxes within the 50 frames and is therefore optimistic) against the
+threshold of 0.80, which the criterion applies to the ratio itself, so the condition is not met and
+the 75 m figure stands (`06-resultados/holdout_armas_criterio.json`, produced by
+`holdout_criterio.py`). The per-model rates, from 15 to 69 instances each and without intervals
 (`06-resultados/holdout_armas_armado_75.json`, produced by `06-resultados/confusao_armado.py` in
 step B2 of `07-blender/scripts/rodada3.py`), are consistent with the detector generalising to length
 and silhouette rather than to the asset: the unseen 1.10 m rifle is called armed at 0.50, among the
@@ -156,8 +158,9 @@ an appendix, so that every parameter needed to reproduce a run is in the article
 
 What a reader cannot check from this article is the corpus itself, although the reason is logistical
 rather than legal: every corpus generated for this article is redistributable by construction, since
-all geometry other than the CC0 human figures of Section 7.4 is authored by the generator and all
-surface materials are public domain; the earlier arm behind the 0.116 to 0.561 pair of Section 7.6
-draws building footprints from OpenStreetMap, and the real benchmark, VisDrone, is distributed by
-its own authors. Earlier branches of this project were built on photogrammetric reconstruction of
-imagery that cannot be released, and no measurement reported in this article derives from them.
+all geometry other than the CC0 human figures of Section 7.4 and the CC0 tree models of Section 7.2
+is authored by the generator and all surface materials are public domain; the earlier arm behind the
+0.116 to 0.561 pair of Section 7.6 draws building footprints from OpenStreetMap, and the real
+benchmark, VisDrone, is distributed by its own authors. Earlier branches of this project were built
+on photogrammetric reconstruction of imagery that cannot be released, and no measurement reported in
+this article derives from them.

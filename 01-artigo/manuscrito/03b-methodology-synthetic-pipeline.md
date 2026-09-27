@@ -39,10 +39,11 @@ detector, and Sections 9 and 10 report what transfers and what does not.
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed, so
 that the settlement, the camera and the illumination of any reported image can be regenerated
 exactly from the seed recorded in its manifest entry, and the figures as well in every corpus but
-the three that Section 11.6 names. No commercial asset packs are used: surface materials come from a
-public-domain library (Poly Haven, CC0), the human figures are built from the CC0 assets of
-MakeHuman through MPFB (Section 7.4), and all other geometry is authored by the generator. That
-choice makes the corpus redistributable in full, and it is paid for.
+the three that Section 11.6 names. No commercial asset packs are used: surface materials and the
+four tree models of the vegetation come from a public-domain library (Poly Haven, CC0), the human
+figures are built from the CC0 assets of MakeHuman through MPFB (Section 7.4), and all other
+geometry is authored by the generator. That choice makes the corpus redistributable in full, and it
+is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
 target site with generic assets costs 27.0 mAP50 points on YOLOv11, the detector used here, and 22
@@ -60,20 +61,25 @@ Layout is produced in three stages, each addressing a specific way in which naiv
 generation betrays itself when viewed from above.
 
 **Parcelling.** The built core is subdivided by recursive binary partition. At each split the
-boundary receives a gap drawn from a distribution whose modal value is zero: most party walls are
-shared, as they are in consolidated self-built settlement. In the released configuration the gap is
-zero with probability 0.82, falls between 0.5 and 1.2 metres with probability 0.12, between 1.3 and
-2.0 metres with probability 0.05, and above 2.0 metres with probability 0.008. The second band is
-the alley, or beco, that defines the morphology.
+boundary receives a gap drawn from a distribution whose modal value is zero, so that most dwellings
+abut their neighbours, as they do in consolidated self-built settlement; because each lot is then
+shrunk by 0.15 m toward its centroid and rotated about it (see Orientation below), a zero gap leaves
+a narrow seam or a wedge between neighbours rather than an exactly shared wall. In the released
+configuration the gap is zero with probability 0.82, falls between 0.5 and 1.2 metres with
+probability 0.12, between 1.3 and 2.0 metres with probability 0.05, and above 2.0 metres with
+probability 0.008. The second band is the alley, or beco, that defines the morphology.
 
 **Orientation.** A single binary partition, however deformed, leaves legible straight runs of ten or
 twenty dwellings, and that is the strongest visual signature of procedural generation in a nadir
-view. The generator therefore produces nine sub-districts, each with an independent orientation,
-separated by a Voronoi diagram, reproducing the way consolidated settlement grows by nuclei that
-meet at an angle. The result is measured. The statistic is the fraction of edge energy falling
-within 7.5 degrees of a cardinal axis, divided by the isotropic expectation. The measurement window
-covers 30 degrees of 180, so the isotropic expectation is one sixth and unity means no preferred
-direction. In the configuration of the corpus of record, rendered at 4K, the value is 0.94
+view. The generator therefore divides the core into sub-districts, nine in the settlement of the
+corpus of record and between 6 and 12 in the other five settlements of Section 9.2, each with an
+independent orientation, separated by a Voronoi diagram, reproducing the way consolidated settlement
+grows by nuclei that meet at an angle. Each lot is also rotated about its centroid by up to 0.17
+radians and every corner passes through a smooth domain warp, so the statistic below measures the
+three mechanisms together. The result is measured. The statistic is the fraction of edge energy
+falling within 7.5 degrees of a cardinal axis, divided by the isotropic expectation. The measurement
+window covers 30 degrees of 180, so the isotropic expectation is one sixth and unity means no
+preferred direction. In the configuration of the corpus of record, rendered at 4K, the value is 0.94
 (`06-resultados/teste_fidelidade.csv`, row v12, written by
 `07-blender/scripts/teste_fidelidade.py`). The version of the generator that used a single partition
 was never measured with the corrected script, so no value is reported for it.
@@ -89,9 +95,9 @@ noted here because the uncorrected figure appeared in circulated drafts.
 more storeys the upper floor is smaller than the one below and offset toward one boundary, leaving
 part of the lower slab exposed. Seen from above this produces the L-shaped footprint that
 characterises the texture of the settlement, and it is the single geometric feature whose absence
-most clearly reads as a grid of boxes rather than a favela. Storey count is drawn from a
-low-frequency noise field rather than independently per dwelling, so that taller and shorter zones
-form, as they do on a real hillside.
+most clearly reads as a grid of boxes rather than a favela. Storey count is drawn around a
+low-frequency noise field, with an independent per-dwelling scatter of 0.95 storeys (standard
+deviation), so that taller and shorter zones form, as they do on a real hillside.
 
 <!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 1920 by 1080, which gives 9.76 cm per pixel. The resolution is stated because Section 8.1 shows that ground sampling distance, not scene content, sets the size of the target; the corpus used for training is rendered at 3840 by 2160 and is twice as fine. All geometry is authored by the generator and all materials are public domain. The three construction stages described above are visible: shared party walls with alleys mostly between 0.5 and 1.2 m, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
 
@@ -108,11 +114,12 @@ as a hypothesis about detector difficulty, with a test not yet run.
 ### 7.3 Camera model
 
 The virtual camera reproduces a commercially available UAV payload in a configuration typical of
-aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, pointing straight down, 150 metres
-above ground, corresponding to a 4.3 mm lens on a 5.37 mm sensor, or approximately 28.8 mm on a 36
-mm equivalent. The parameters are stated in full so that the acquisition conditions evaluated here
-can be reproduced or contested without reference to any particular flight. At that altitude the
-frame covers approximately 187 by 105 metres of ground.
+aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, pointing down within 3.5 degrees of
+vertical at a heading drawn per image, 150 metres above ground with a per-image jitter of up to 6
+metres either way (3 metres in the 35 m corpus of Section 9.5), corresponding to a 4.3 mm lens on a
+5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent. The parameters are stated in full so
+that the acquisition conditions evaluated here can be reproduced or contested without reference to
+any particular flight. At that altitude the frame covers approximately 187 by 105 metres of ground.
 
 Rendering resolution is treated as a parameter distinct from sensor resolution, and the distinction
 is consequential enough to state plainly. Ground sampling distance, not the nominal resolution of
@@ -140,23 +147,28 @@ are the geometries under which the distinction the article is named after was me
 
 ### 7.4 Annotation
 
-Human figures are instantiated from rigged, clothed meshes (MPFB, a MakeHuman derivative), posed per
-instance, and placed both on rooftops and in the alley network. Placement uses an occupancy map
-computed from the generated footprints, so that ground placement is known to fall in open space
-rather than inferred by ray casting against arbitrary geometry.
+Human figures are copies of a small pool of rigged, clothed meshes built for each rendering run
+(MPFB, a MakeHuman derivative; `--pool`, six in the corpora rendered by the chains of Sections 9.2
+to 9.5), each copy recoloured, rescaled and posed per instance, and placed both on rooftops and in
+the alley network. Placement uses an occupancy map computed from the generated footprints, so that
+ground placement is known to fall in open space rather than inferred by ray casting against
+arbitrary geometry.
 
 Bounding boxes are neither drawn by hand nor inferred from a segmentation pass. For each figure the
-generator projects the mesh vertices into image space, takes the axis-aligned extent, and clips it
-to the frame. The convention is therefore amodal within the frame: the box covers the whole figure,
-including parts hidden by intervening geometry, which is the convention used by the real benchmark
-against which transfer is later measured. Occlusion is evaluated separately, by casting fourteen
-rays from the camera to sample points on the figure, and instances whose visible fraction falls
-below 0.35 are discarded from the label file rather than retained as degenerate boxes. In a
+generator projects a subsample of the body and clothing vertices (every k-th vertex, about 500 per
+figure) and every vertex of any carried object into image space, takes the axis-aligned extent, and
+clips it to the frame. The convention is therefore amodal within the frame: the box covers the whole
+figure, including parts hidden by intervening geometry, which is the convention used by the real
+benchmark against which transfer is later measured. Occlusion is evaluated separately, by casting
+fourteen rays from the camera to sample points on the figure, and instances whose visible fraction
+falls below 0.35 are discarded from the label file rather than retained as degenerate boxes. In a
 settlement this dense the discard rate is substantial and expected. Over the 180 frames of the
 corpus of record, 4,582 figures were placed and 3,225 retained; the per-frame retained fraction has
 a median of 0.71 (10th percentile 0.57, 90th percentile 0.83), so roughly three in ten figures
-placed fall below the visibility threshold from directly above
-(`06-resultados/oclusao_ds_morro_4k.json`, produced by `06-resultados/mede_oclusao.py`).
+placed yield no label (`06-resultados/oclusao_ds_morro_4k.json`, produced by
+`06-resultados/mede_oclusao.py`); the count does not separate the visibility threshold from the two
+other reasons a placed figure is dropped, a box that falls outside the frame or a clipped box with a
+side below 0.002 of the frame (`--min-lado`).
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 
@@ -166,21 +178,25 @@ objection that would otherwise be fatal to any figure reported for the first. If
 always the same asset, in the same pose, at the same contrast, a detector can separate the classes
 on properties of the asset library rather than on anything visible in the world.
 
-The corpus is built to remove that possibility. Five firearm models are generated procedurally,
-spanning 0.20 to 1.05 metres in length: two rifles, a carbine, a shotgun and a pistol. Against them
-stand nine elongated objects that a person carries in this territory, spanning 0.88 to 2.5 metres:
-brooms, floor squeegees, plastic pipe, reinforcement bar, planks, umbrellas, hoes, rolled mats and
-hose. Weapons and objects are drawn from one palette of base colours and surface roughness, so that
-dark and metallic surfaces occur on both and colour alone cannot separate the two, although light
-PVC and coloured plastic occur only on objects; both are carried through the same distribution of
-poses, held forward, at the side, slung on the back, or carried while walking, in the same
-proportions. A detector that separates the classes on this corpus is therefore doing so on the
-silhouette of what is carried, which is the only thing that could transfer, and the rate at which it
-calls a broom a rifle is reported directly in Section 9.5. Two later corpora, at 35 m and its twin
-at 75 m, depart from this in one respect, stated where they are reported: the object is drawn in the
-firing pose with probability 0.08 rather than 0.42, the probability used for the weapon
-(`07-blender/scripts/people_mpfb.py`, `make_person`), which is closer to how such objects are
-carried.
+The corpus is built to remove that possibility. Five firearm models are generated procedurally, two
+rifles, a carbine, a shotgun and a pistol, with recorded lengths of 0.20 to 1.05 metres; the meshes
+of the two rifles and of the shotgun are longer than the lengths recorded for them
+(`07-blender/scripts/objetos_alongados.py`). Against them stand nine elongated objects that a person
+carries in this territory, spanning 0.88 to 2.5 metres: brooms, floor squeegees, plastic pipe,
+reinforcement bar, planks, umbrellas, hoes, rolled mats and hose. Weapons and objects are drawn from
+one palette of base colours and surface roughness, so that dark and metallic surfaces occur on both
+and colour alone cannot separate the two, although light PVC and coloured plastic occur only on
+objects; both are carried through the same distribution of body poses, held forward, at the side,
+slung on the back, or carried while walking, in the same proportions, although an object longer than
+1.15 m, which no weapon is, is then re-angled in every pose to rest on the shoulder or to point
+toward the ground (`07-blender/scripts/people_mpfb.py`, `make_person`), so most confusable objects
+are carried at angles no weapon takes. A detector that separates the classes on this corpus is
+therefore doing so on the silhouette of what is carried, which is the only thing that could
+transfer, and the rate at which it calls a broom a rifle is reported directly in Section 9.5. Two
+later corpora, at 35 m and its twin at 75 m, depart from this in one respect, stated where they are
+reported: the object is drawn in the firing pose with probability 0.08 rather than 0.42, the
+probability used for the weapon (`07-blender/scripts/people_mpfb.py`, `make_person`), which is
+closer to how such objects are carried.
 
 ### 7.5 Domain randomisation over illumination
 
@@ -193,14 +209,15 @@ in that study (30.4 points against 27.0), though not on average across architect
 22 to 23).
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent lighting
-budgets, each governing solar irradiance, the angular diameter of the solar disc, sky fill,
-atmospheric scattering density, and aerosol content together: hard sun, low sun, overcast, haze,
-heavy overcast, and rain. The angular diameter of the sun is what separates these physically. At 0.6
-degrees the shadow edge is hard; above roughly 20 degrees the cast shadow effectively disappears,
-which is what a covered sky does. Mean frame luminance over the 48 images of the pilot corpus
-`ds_morro_clima` (Section 8.3) runs 87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze),
-55.6 (heavy overcast) and 35.1 (rain) of 255 (`06-resultados/contraste_clima.csv`, produced by
-`06-resultados/mede_contraste_clima.py`).
+budgets, each governing solar irradiance and colour, the angular diameter of the solar disc, a band
+of solar elevation, sky fill and colour, atmospheric scattering density, aerosol content and a
+camera exposure offset together (the mean frame luminances below include each regime's exposure
+offset): hard sun, low sun, overcast, haze, heavy overcast, and rain. The angular diameter of the
+sun is what separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20
+degrees the cast shadow effectively disappears, which is what a covered sky does. Mean frame
+luminance over the 48 images of the pilot corpus `ds_morro_clima` (Section 8.3) runs 87.0 (hard
+sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255
+(`06-resultados/contraste_clima.csv`, produced by `06-resultados/mede_contraste_clima.py`).
 
 <!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the corpus `ds_morro_clima`, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) (`06-resultados/contraste_clima.csv`). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
@@ -223,29 +240,35 @@ An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561
 written by `07-blender/scripts/train_yolo_win.py`, with the settings in the `args.yaml` beside each
 run) between a run trained on downscaled frames and a run trained on tiles at native scale. That
 pair is reported here as consistent with the arithmetic and **not** as an isolated effect of
-training scale, because the two runs differ in four further respects: detector size (YOLO11n against
-YOLO11s), input size (1536 against 1280), epoch count (40 against 60) and initialisation (COCO
-weights against the checkpoint of a previous interrupted run). No controlled measurement of training
-scale alone exists in this project, and Section 11.1 states what would be required to obtain one.
+training scale, because the two runs differ in five further respects: detector size (YOLO11n against
+YOLO11s), input size (1536 against 1280), epoch count (40 against 60), initialisation (COCO weights
+against the checkpoint of a previous interrupted run) and the validation set on which each score is
+computed (whole frames downscaled to 1536 px against native-scale tiles). No controlled measurement
+of training scale alone exists in this project, and Section 11.1 states what would be required to
+obtain one.
 
-Training therefore operates on tiles cut at native scale with 20 per cent overlap, never on
-downscaled frames.
+Synthetic training therefore operates on tiles cut at native scale with 20 per cent overlap, never
+on downscaled frames, although the scale augmentation of the recipe rescales them at random; the
+real-data models, R and the fine-tuning models of Section 9.4, train on whole VisDrone images
+resized so that the long side is 1280 px, which downscales the most common training size, 1400 by
+1050 (`06-resultados/alvo_por_split.json`).
 
 | Parameter | Value |
 |---|---|
 | Detector | YOLO11s, Ultralytics 8.4.148, PyTorch 2.14.0, CUDA 12.6 |
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
 | Initialisation | COCO pretrained weights for every model trained from scratch; the synthetic-start fine-tuning models of Section 9.4 start from S-oblique-six |
-| Tile size, synthetic corpus at 4K | 1280 px, 20 per cent overlap |
+| Tile size, synthetic corpus at 4K | 1280 px at a stride of 1024 px (20 per cent overlap), with the last column and row aligned to the frame edge, so each 3840 by 2160 frame yields eight tiles and the edge tiles overlap their neighbours by more |
 | Empty tiles retained as negatives | each tile without a box kept with probability 0.05 (`--keep-empty`, default of `07-blender/scripts/tile_dataset.py`); the realised share is printed in each tiling log and is not recorded under `06-resultados/` |
 | Minimum retained fraction of a clipped box | 0.40 |
-| Optimiser, learning rate | Ultralytics default, lr0 0.01 |
+| Optimiser, learning rate | Ultralytics default (`optimizer=auto`), which ignores lr0 0.01 and at these training lengths selects AdamW, momentum 0.9, with an initial learning rate of 0.002 for the single-class models and 0.001429 for the three-class models (training logs), decaying linearly to 0.01 of that value after 3 warm-up epochs |
 | Input size, batch | 1280 px, batch 6 |
-| Epochs | 60, stopping early after 15 epochs without improvement; 30 for the fine-tuning models of Section 9.4 |
-| Validation split | 15 per cent of generated scenes, split by scene and not by tile |
+| Augmentation | mosaic 1.0, switched off for the last 10 epochs; horizontal flip 0.5; rotation up to 10 degrees; scale gain 0.4; translation 0.1; HSV gains 0.015, 0.6 and 0.4 (`07-blender/scripts/train_yolo_win.py`; rotation, scale and saturation differ from the Ultralytics defaults of 0, 0.5 and 0.7) |
+| Epochs | 60, stopping early after 15 epochs without improvement in validation mAP50-95, the Ultralytics fitness that also selects the reported checkpoint; 30 for the fine-tuning models of Section 9.4, selected the same way on their selection slice |
+| Validation split | each rendered frame assigned to validation with probability 0.15 (`--val`, default of `07-blender/scripts/gen_morro.py`), realised as 24 to 35 frames per corpus; split by frame and not by tile, and within a corpus the validation frames show the same settlement as the training frames, from other camera positions, with other figures and light |
 | Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95 |
 
-Splitting the validation set by scene rather than by tile is necessary because overlapping tiles of
+Splitting the validation set by frame rather than by tile is necessary because overlapping tiles of
 one frame are not independent; splitting by tile would place near-duplicates on both sides.
 
 ### 7.7 Evaluation protocol and the reference ceiling
@@ -254,27 +277,31 @@ A detector evaluated on the world in which it was trained reports a ceiling, not
 transfer score reported alone is equally uninterpretable, because nothing establishes the scale
 against which to read it. The protocol therefore trains the models below. The single-class models
 are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
-instances, reduced to a single class). The three-class models are scored on held-out synthetic
-splits instead, because no public benchmark annotates a carried firearm; Section 9.5 reports them
-separately: scored on the world in which they were trained, their figures are ceilings rather than
-evidence of transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds
-the same number of images, 180 for the single-class models and 200 for the three-class ones, so that
-no comparison below is a comparison of the number of frames, although instance counts still differ
-(Section 8.2).
+instances, reduced to a single class). Because no public benchmark annotates a carried firearm, the
+three-class models are scored instead on the validation split of their own corpus, whose tiles also
+served for early stopping and for selecting the checkpoint, so that split is held out from training
+but not from model selection; Section 9.5 reports them separately: scored on the world in which they
+were trained, their figures are ceilings rather than evidence of transfer, so the two groups cannot
+be read on one scale. Every synthetic corpus holds the same number of images, 180 for the
+single-class models and 200 for the three-class ones, so that no comparison below is a comparison of
+the number of frames, although instance counts still differ (Section 8.2).
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
 | **R** | VisDrone-DET train, 1,106 images drawn at random, the number of training tiles in the synthetic corpus of record | The ceiling on the test set at matched volume |
 | **S-nadir-150** | Synthetic, one settlement, camera straight down at 150 m, six illumination regimes | The method as proposed, at the acquisition geometry specified in Section 7.3 |
 | **S-nadir-150-six** | The same, spread over six settlements | Whether variety of settlement is a term in the gap |
-| **S-oblique** | The same generator and settlement, oblique camera | Whether failure is attributable to synthesis or to capture geometry |
+| **S-oblique** | The same settlement and generator settings, oblique camera (with the later weapon library, Section 9.3) | Whether failure is attributable to synthesis or to capture geometry |
 | **S-oblique-six** | Six settlements, oblique camera at the calibrated pitch, figures carrying nothing | The best configuration of the generator: the synthetic model of this article |
 | **S-nadir-75** | The same generator at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable |
 | **S-nadir-35**, and its twin at 75 m | At 35 m with realistic carrying poses; the same corpus rendered at 75 m | Whether resolution or carrying pose drives the confusion |
 | **F-synthetic, F-generic** | 5 or 10 per cent of VisDrone-DET train (324 or 647 images), starting from S-oblique-six or from COCO | What the synthetic pretraining is worth once some real data exists |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
-matched-volume ceiling reached without a single real training image. The difference mAP50(S-oblique)
-minus mAP50(S-nadir-150) estimates, from one training run per model, the contribution of capture
-geometry, one effect of which Section 8.2 measures as a factor-of-two difference in target shape
-between this corpus and the benchmark.
+ceiling reached without a single real training image. R is matched to the 1,106 training tiles of
+the corpus of record; because tiling discards most empty tiles, the oblique models train on fewer
+tiles, 968 for S-oblique and 890 for S-oblique-six (`06-resultados/RESULTADOS.md`), so for them the
+match is by frame count rather than by training volume. The difference mAP50(S-oblique) minus
+mAP50(S-nadir-150) estimates, from one training run per model, the contribution of capture geometry,
+one effect of which Section 8.2 measures as a factor-of-two difference in target shape between this
+corpus and the benchmark.
