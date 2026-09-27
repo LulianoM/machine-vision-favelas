@@ -48,6 +48,9 @@ def main():
     ap.add_argument("--imgsz", type=int, default=3840)
     ap.add_argument("--out", required=True)
     ap.add_argument("--device", default=None, help="cpu para medir sem tirar a GPU de um render")
+    ap.add_argument("--instancias", action="store_true",
+                    help="grava o destino de cada caixa verdadeira (quadro, indice, classe, tipo, coluna), "
+                         "para teste pareado entre dois corpus gemeos (rodada 4)")
     a = ap.parse_args()
 
     from ultralytics import YOLO
@@ -70,6 +73,7 @@ def main():
     por_tipo = defaultdict(Counter)       # tipo -> Counter(coluna)
     fp_sem_par = Counter()                # predicoes que nao casaram com nenhuma verdade
     n_imgs = 0
+    inst = []                             # (quadro, indice da caixa, classe, tipo, coluna)
     for p in imgs:
         base = os.path.splitext(os.path.basename(p))[0]
         split = os.path.basename(os.path.dirname(p))
@@ -103,6 +107,7 @@ def main():
             tot[c] += 1
             if tipos is not None and tipos[gi][1]:
                 por_tipo[tipos[gi][1]][col] += 1
+            inst.append([base, gi, c, tipos[gi][1] if tipos is not None else "", col])
         for pi, (_, pc) in enumerate(preds):
             if pi not in p_usado:
                 fp_sem_par[pc] += 1
@@ -129,6 +134,8 @@ def main():
                  iou_casamento=a.iou, imgsz=a.imgsz, protocolo="imagem inteira, casamento 1:1",
                  taxa_por_classe_real=taxa, por_tipo=tipo_out,
                  predicoes_sem_par={NOMES[c]: fp_sem_par[c] for c in range(3)})
+    if a.instancias:
+        saida["instancias"] = inst
     with open(a.out, "w", encoding="utf-8") as f:
         json.dump(saida, f, indent=1, ensure_ascii=False)
     for g, d in taxa.items():

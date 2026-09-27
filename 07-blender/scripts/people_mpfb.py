@@ -27,6 +27,11 @@ except Exception:            # o modulo vive ao lado; se faltar, o gerador segue
 
 # gen_morro.py liga isto com --porte-realista. Ver comentario em make_person.
 PORTE_REALISTA = False
+# gen_morro.py liga isto com --objeto-porte-arma (rodada 4, teste da secao 9.5): o objeto confundivel
+# e carregado exatamente como a arma, na mesma distribuicao de pose e no mesmo angulo, inclusive
+# o de mais de 1,15 m. Os sorteios sao os mesmos com e sem a flag, entao o mesmo comando com a
+# mesma semente gera os mesmos quadros e so o angulo desses objetos muda.
+OBJETO_PORTE_ARMA = False
 
 POOL = []
 PEOPLE = []
@@ -445,7 +450,7 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, c
             # Com a flag, o objeto vai sobretudo ao lado, no ombro ou na mao caminhando, e a pose
             # de tiro fica rara. A sobreposicao continua existindo (8%), so que na frequencia
             # em que existe na rua, e nao em 42%.
-            if com_objeto and PORTE_REALISTA:
+            if com_objeto and PORTE_REALISTA and not OBJETO_PORTE_ARMA:
                 pose = rng.choices(["empunhando", "lado", "costas", "andando"],
                                    weights=[0.08, 0.34, 0.28, 0.30])[0]
             else:
@@ -498,7 +503,11 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, c
             # objeto de mais de 1,15 m nao se carrega na horizontal: vai apoiado no ombro com a
             # ponta para cima, ou inclinado com a ponta perto do chao. Sem isso a vassoura sairia
             # boiando, e a rede separaria por isso e nao pela forma.
-            ry = math.radians(rng.choice([-52, -38, 46, 62]) + rng.uniform(-9, 9))
+            # Com OBJETO_PORTE_ARMA o sorteio acontece do mesmo jeito (para nao deslocar o gerador)
+            # e o angulo de arma fica; o objeto longo pode atravessar o chao ou a laje.
+            ry_longo = math.radians(rng.choice([-52, -38, 46, 62]) + rng.uniform(-9, 9))
+            if not OBJETO_PORTE_ARMA:
+                ry = ry_longo
         # a origem da arma e a empunhadura: recua um pouco para a mao envolver o cabo
         gun.location = base + Vector((0.0, 0.0, -0.03))
         gun.rotation_euler = Euler((0.0, ry, rz), 'XYZ')

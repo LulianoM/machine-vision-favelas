@@ -104,6 +104,10 @@ ap.add_argument("--camera-livre", action="store_true",
 ap.add_argument("--armas", choices=["padrao", "mista_inedita"], default="padrao",
                 help="mista_inedita: metade das armas de dois modelos que nunca entram em "
                      "treino (teste da secao 11.5)")
+ap.add_argument("--objeto-porte-arma", action="store_true",
+                help="objeto confundivel carregado como a arma: mesma distribuicao de pose e mesmo "
+                     "angulo, sem o reangulo dos de mais de 1,15 m (teste da secao 9.5, rodada 4). "
+                     "Nao muda nenhum sorteio: a mesma semente da os mesmos quadros")
 ap.add_argument("--obliqua", action="store_true",
                 help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
@@ -1680,6 +1684,7 @@ if args.dataset > 0:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import people_mpfb as PM
     PM.PORTE_REALISTA = args.porte_realista
+    PM.OBJETO_PORTE_ARMA = args.objeto_porte_arma
     if getattr(PM, "OA", None) is not None:
         PM.OA.MODO_ARMAS = args.armas
 

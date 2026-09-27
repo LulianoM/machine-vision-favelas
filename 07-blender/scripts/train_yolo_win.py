@@ -29,6 +29,8 @@ def main():
     ap.add_argument("--single-cls", action="store_true")
     ap.add_argument("--eval-only", action="store_true")
     ap.add_argument("--real", default=None, help="data.yaml de um dataset real para medir sim-to-real")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="semente de treino do Ultralytics (0 e o padrao, usado em todos os treinos ate a rodada 3; a rodada 4 repete modelos com 1 e 2 para medir a dispersao entre treinos)")
     args = ap.parse_args()
 
     from ultralytics import YOLO
@@ -43,7 +45,7 @@ def main():
         modelo.train(data=args.data, epochs=args.epochs, imgsz=args.imgsz, batch=args.batch,
                      workers=args.workers, name=args.name, single_cls=args.single_cls, exist_ok=True,
                      hsv_h=0.015, hsv_s=0.6, hsv_v=0.4, degrees=10, scale=0.4, fliplr=0.5, mosaic=1.0,
-                     patience=15, plots=True)
+                     patience=15, plots=True, seed=args.seed, deterministic=True)
         best = Path(modelo.trainer.save_dir) / "weights" / "best.pt"
         modelo = YOLO(best)
         saida["pesos"] = str(best)
