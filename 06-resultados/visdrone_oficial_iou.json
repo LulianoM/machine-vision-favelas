@@ -1,0 +1,198 @@
+{
+ "protocolo": "VisDrone val (548 imagens), classe unica, imgsz 1280, conf 0,001; regra oficial = dropObjectsInIgr.m do VisDrone2018-DET-toolkit (caixa verdadeira ou detectada com metade ou mais da area em regiao ignorada sai da avaliacao)",
+ "modelos": {
+  "r_pareado": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\r_pareado\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.6311,
+    "AP60": 0.4871,
+    "AP75": 0.1363,
+    "mAP50-95": 0.2538,
+    "P": 0.7312,
+    "R": 0.5729
+   },
+   "regra_oficial": {
+    "mAP50": 0.6548,
+    "AP60": 0.5035,
+    "AP75": 0.14,
+    "mAP50-95": 0.2623,
+    "P": 0.75,
+    "R": 0.5907
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:32:46"
+  },
+  "s_nadir_4k": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0102,
+    "AP60": 0.0042,
+    "AP75": 0.0002,
+    "mAP50-95": 0.0025,
+    "P": 0.0856,
+    "R": 0.0421
+   },
+   "regra_oficial": {
+    "mAP50": 0.0104,
+    "AP60": 0.0043,
+    "AP75": 0.0002,
+    "mAP50-95": 0.0026,
+    "P": 0.0866,
+    "R": 0.0426
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:34:18"
+  },
+  "s_variedade": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_variedade\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.019,
+    "AP60": 0.0097,
+    "AP75": 0.0052,
+    "mAP50-95": 0.0071,
+    "P": 0.0915,
+    "R": 0.0583
+   },
+   "regra_oficial": {
+    "mAP50": 0.0194,
+    "AP60": 0.0098,
+    "AP75": 0.0052,
+    "mAP50-95": 0.0072,
+    "P": 0.0935,
+    "R": 0.0585
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:35:50"
+  },
+  "s_obliquo": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_obliquo\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0614,
+    "AP60": 0.0313,
+    "AP75": 0.0082,
+    "mAP50-95": 0.0192,
+    "P": 0.2032,
+    "R": 0.1059
+   },
+   "regra_oficial": {
+    "mAP50": 0.0624,
+    "AP60": 0.0318,
+    "AP75": 0.0082,
+    "mAP50-95": 0.0195,
+    "P": 0.2034,
+    "R": 0.1075
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:37:22"
+  },
+  "s_oblvar": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.1055,
+    "AP60": 0.0562,
+    "AP75": 0.0136,
+    "mAP50-95": 0.0329,
+    "P": 0.2631,
+    "R": 0.1716
+   },
+   "regra_oficial": {
+    "mAP50": 0.1074,
+    "AP60": 0.0572,
+    "AP75": 0.0138,
+    "mAP50-95": 0.0335,
+    "P": 0.2652,
+    "R": 0.1728
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:38:54"
+  },
+  "ft05_sint": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.4424,
+    "AP60": 0.3225,
+    "AP75": 0.0779,
+    "mAP50-95": 0.1657,
+    "P": 0.5869,
+    "R": 0.4068
+   },
+   "regra_oficial": {
+    "mAP50": 0.4555,
+    "AP60": 0.3313,
+    "AP75": 0.0797,
+    "mAP50-95": 0.1702,
+    "P": 0.6047,
+    "R": 0.4115
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:40:26"
+  },
+  "ft05_coco": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.522,
+    "AP60": 0.3912,
+    "AP75": 0.1033,
+    "mAP50-95": 0.2025,
+    "P": 0.641,
+    "R": 0.4718
+   },
+   "regra_oficial": {
+    "mAP50": 0.5404,
+    "AP60": 0.4039,
+    "AP75": 0.106,
+    "mAP50-95": 0.2091,
+    "P": 0.6558,
+    "R": 0.4835
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:41:59"
+  },
+  "ft10_sint": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_sint\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5095,
+    "AP60": 0.3845,
+    "AP75": 0.1025,
+    "mAP50-95": 0.1984,
+    "P": 0.6372,
+    "R": 0.4579
+   },
+   "regra_oficial": {
+    "mAP50": 0.5271,
+    "AP60": 0.3976,
+    "AP75": 0.105,
+    "mAP50-95": 0.2047,
+    "P": 0.653,
+    "R": 0.4691
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:43:31"
+  },
+  "ft10_coco": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_coco\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5709,
+    "AP60": 0.4311,
+    "AP75": 0.1136,
+    "mAP50-95": 0.2216,
+    "P": 0.6823,
+    "R": 0.516
+   },
+   "regra_oficial": {
+    "mAP50": 0.5939,
+    "AP60": 0.4469,
+    "AP75": 0.1169,
+    "mAP50-95": 0.2298,
+    "P": 0.703,
+    "R": 0.5309
+   },
+   "confere_padrao": true,
+   "quando": "2026-09-27T11:45:04"
+  }
+ },
+ "regioes_ignoradas": {
+  "regioes": 1378,
+  "imagens_com_regiao": 340
+ }
+}

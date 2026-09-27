@@ -1,0 +1,60 @@
+{
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35\\weights\\best.pt",
+ "ds": "C:\\arma3-favela\\blender\\ds_armado_35",
+ "split": "val",
+ "imagens": 35,
+ "conf": 0.25,
+ "val_imagem_inteira": {
+  "mAP50": 0.5139,
+  "mAP50-95": 0.2973,
+  "por_classe": {
+   "pessoa_armada": {
+    "P": 0.4804,
+    "R": 0.5912,
+    "mAP50": 0.5596
+   },
+   "pessoa_desarmada": {
+    "P": 0.6072,
+    "R": 0.4874,
+    "mAP50": 0.5112
+   },
+   "pessoa_objeto": {
+    "P": 0.494,
+    "R": 0.405,
+    "mAP50": 0.4708
+   }
+  }
+ },
+ "iou_casamento": 0.6,
+ "imgsz": 3840,
+ "protocolo": "imagem inteira, casamento 1:1",
+ "taxa_por_classe_real": {
+  "armada": {
+   "armada": 0.5255,
+   "desarmada": 0.0584,
+   "objeto": 0.0511,
+   "perdida": 0.365,
+   "n": 137
+  },
+  "desarmada": {
+   "armada": 0.1345,
+   "desarmada": 0.4118,
+   "objeto": 0.0084,
+   "perdida": 0.4454,
+   "n": 119
+  },
+  "objeto": {
+   "armada": 0.2231,
+   "desarmada": 0.0331,
+   "objeto": 0.3884,
+   "perdida": 0.3554,
+   "n": 121
+  }
+ },
+ "por_tipo": {},
+ "predicoes_sem_par": {
+  "armada": 73,
+  "desarmada": 46,
+  "objeto": 51
+ }
+}

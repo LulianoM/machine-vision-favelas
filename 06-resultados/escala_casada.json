@@ -1,0 +1,181 @@
+{
+ "alvo_lado_maior_treino_px": 20.55,
+ "caixas_visdrone_val": 13969,
+ "imgsz_protocolo": 1280,
+ "no_protocolo": {
+  "lado_maior_med": 25.33,
+  "area_med": 283.5
+ },
+ "imgsz_casado": 1024,
+ "no_casado": {
+  "lado_maior_med": 20.27,
+  "area_med": 181.4
+ },
+ "tabela": {
+  "640": {
+   "lado_maior_med": 12.67,
+   "area_med": 70.9
+  },
+  "672": {
+   "lado_maior_med": 13.3,
+   "area_med": 78.1
+  },
+  "704": {
+   "lado_maior_med": 13.93,
+   "area_med": 85.7
+  },
+  "736": {
+   "lado_maior_med": 14.57,
+   "area_med": 93.7
+  },
+  "768": {
+   "lado_maior_med": 15.2,
+   "area_med": 102.0
+  },
+  "800": {
+   "lado_maior_med": 15.83,
+   "area_med": 110.7
+  },
+  "832": {
+   "lado_maior_med": 16.47,
+   "area_med": 119.8
+  },
+  "864": {
+   "lado_maior_med": 17.1,
+   "area_med": 129.2
+  },
+  "896": {
+   "lado_maior_med": 17.73,
+   "area_med": 138.9
+  },
+  "928": {
+   "lado_maior_med": 18.37,
+   "area_med": 149.0
+  },
+  "960": {
+   "lado_maior_med": 19.0,
+   "area_med": 159.5
+  },
+  "992": {
+   "lado_maior_med": 19.63,
+   "area_med": 170.3
+  },
+  "1024": {
+   "lado_maior_med": 20.27,
+   "area_med": 181.4
+  },
+  "1056": {
+   "lado_maior_med": 20.9,
+   "area_med": 192.9
+  },
+  "1088": {
+   "lado_maior_med": 21.53,
+   "area_med": 204.8
+  },
+  "1120": {
+   "lado_maior_med": 22.17,
+   "area_med": 217.0
+  },
+  "1152": {
+   "lado_maior_med": 22.8,
+   "area_med": 229.6
+  },
+  "1184": {
+   "lado_maior_med": 23.43,
+   "area_med": 242.5
+  },
+  "1216": {
+   "lado_maior_med": 24.07,
+   "area_med": 255.8
+  },
+  "1248": {
+   "lado_maior_med": 24.7,
+   "area_med": 269.5
+  },
+  "1280": {
+   "lado_maior_med": 25.33,
+   "area_med": 283.5
+  },
+  "1312": {
+   "lado_maior_med": 25.97,
+   "area_med": 297.8
+  },
+  "1344": {
+   "lado_maior_med": 26.6,
+   "area_med": 312.5
+  },
+  "1376": {
+   "lado_maior_med": 27.23,
+   "area_med": 327.6
+  },
+  "1408": {
+   "lado_maior_med": 27.87,
+   "area_med": 343.0
+  },
+  "1440": {
+   "lado_maior_med": 28.5,
+   "area_med": 358.8
+  },
+  "1472": {
+   "lado_maior_med": 29.13,
+   "area_med": 374.9
+  },
+  "1504": {
+   "lado_maior_med": 29.77,
+   "area_med": 391.4
+  },
+  "1536": {
+   "lado_maior_med": 30.4,
+   "area_med": 408.2
+  },
+  "1568": {
+   "lado_maior_med": 31.03,
+   "area_med": 425.4
+  },
+  "1600": {
+   "lado_maior_med": 31.67,
+   "area_med": 442.9
+  },
+  "1632": {
+   "lado_maior_med": 32.3,
+   "area_med": 460.8
+  },
+  "1664": {
+   "lado_maior_med": 32.93,
+   "area_med": 479.1
+  },
+  "1696": {
+   "lado_maior_med": 33.57,
+   "area_med": 497.7
+  },
+  "1728": {
+   "lado_maior_med": 34.2,
+   "area_med": 516.6
+  },
+  "1760": {
+   "lado_maior_med": 34.83,
+   "area_med": 535.9
+  },
+  "1792": {
+   "lado_maior_med": 35.47,
+   "area_med": 555.6
+  },
+  "1824": {
+   "lado_maior_med": 36.1,
+   "area_med": 575.6
+  },
+  "1856": {
+   "lado_maior_med": 36.73,
+   "area_med": 596.0
+  },
+  "1888": {
+   "lado_maior_med": 37.37,
+   "area_med": 616.7
+  },
+  "1920": {
+   "lado_maior_med": 38.0,
+   "area_med": 637.8
+  }
+ },
+ "regra": "imgsz multiplo de 32 cuja mediana do lado maior na entrada da rede fica mais perto do alvo"
+}

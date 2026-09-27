@@ -1,0 +1,173 @@
+{
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g\\weights\\best.pt",
+ "ds": "C:\\arma3-favela\\blender\\ds_armado_75g",
+ "split": "val",
+ "imagens": 24,
+ "conf": 0.25,
+ "val_imagem_inteira": {
+  "mAP50": 0.5079,
+  "mAP50-95": 0.2569,
+  "por_classe": {
+   "pessoa_armada": {
+    "P": 0.4839,
+    "R": 0.5059,
+    "mAP50": 0.4948
+   },
+   "pessoa_desarmada": {
+    "P": 0.5972,
+    "R": 0.5479,
+    "mAP50": 0.5082
+   },
+   "pessoa_objeto": {
+    "P": 0.4827,
+    "R": 0.5844,
+    "mAP50": 0.5205
+   }
+  }
+ },
+ "iou_casamento": 0.6,
+ "imgsz": 3840,
+ "protocolo": "imagem inteira, casamento 1:1",
+ "taxa_por_classe_real": {
+  "armada": {
+   "armada": 0.4588,
+   "desarmada": 0.1176,
+   "objeto": 0.1882,
+   "perdida": 0.2353,
+   "n": 85
+  },
+  "desarmada": {
+   "armada": 0.087,
+   "desarmada": 0.4239,
+   "objeto": 0.0652,
+   "perdida": 0.4239,
+   "n": 92
+  },
+  "objeto": {
+   "armada": 0.1648,
+   "desarmada": 0.011,
+   "objeto": 0.4396,
+   "perdida": 0.3846,
+   "n": 91
+  }
+ },
+ "por_tipo": {
+  "cano_pvc": {
+   "armada": 2,
+   "desarmada": 0,
+   "objeto": 3,
+   "perdida": 8,
+   "n": 13,
+   "chamada_de_armada": 0.1538
+  },
+  "carabina": {
+   "armada": 5,
+   "desarmada": 3,
+   "objeto": 2,
+   "perdida": 5,
+   "n": 15,
+   "chamada_de_armada": 0.3333
+  },
+  "enxada": {
+   "armada": 1,
+   "desarmada": 0,
+   "objeto": 4,
+   "perdida": 5,
+   "n": 10,
+   "chamada_de_armada": 0.1
+  },
+  "espingarda": {
+   "armada": 9,
+   "desarmada": 1,
+   "objeto": 5,
+   "perdida": 5,
+   "n": 20,
+   "chamada_de_armada": 0.45
+  },
+  "fuzil_ak": {
+   "armada": 14,
+   "desarmada": 2,
+   "objeto": 4,
+   "perdida": 1,
+   "n": 21,
+   "chamada_de_armada": 0.6667
+  },
+  "fuzil_ar": {
+   "armada": 8,
+   "desarmada": 2,
+   "objeto": 5,
+   "perdida": 3,
+   "n": 18,
+   "chamada_de_armada": 0.4444
+  },
+  "guarda_chuva": {
+   "armada": 4,
+   "desarmada": 0,
+   "objeto": 5,
+   "perdida": 1,
+   "n": 10,
+   "chamada_de_armada": 0.4
+  },
+  "mangueira": {
+   "armada": 0,
+   "desarmada": 0,
+   "objeto": 3,
+   "perdida": 1,
+   "n": 4,
+   "chamada_de_armada": 0.0
+  },
+  "pistola": {
+   "armada": 3,
+   "desarmada": 2,
+   "objeto": 0,
+   "perdida": 6,
+   "n": 11,
+   "chamada_de_armada": 0.2727
+  },
+  "rodo": {
+   "armada": 2,
+   "desarmada": 0,
+   "objeto": 7,
+   "perdida": 2,
+   "n": 11,
+   "chamada_de_armada": 0.1818
+  },
+  "tabua": {
+   "armada": 2,
+   "desarmada": 1,
+   "objeto": 3,
+   "perdida": 4,
+   "n": 10,
+   "chamada_de_armada": 0.2
+  },
+  "tapete": {
+   "armada": 1,
+   "desarmada": 0,
+   "objeto": 2,
+   "perdida": 3,
+   "n": 6,
+   "chamada_de_armada": 0.1667
+  },
+  "vassoura": {
+   "armada": 2,
+   "desarmada": 0,
+   "objeto": 5,
+   "perdida": 5,
+   "n": 12,
+   "chamada_de_armada": 0.1667
+  },
+  "vergalhao": {
+   "armada": 1,
+   "desarmada": 0,
+   "objeto": 8,
+   "perdida": 6,
+   "n": 15,
+   "chamada_de_armada": 0.0667
+  }
+ },
+ "predicoes_sem_par": {
+  "armada": 29,
+  "desarmada": 42,
+  "objeto": 44
+ }
+}
