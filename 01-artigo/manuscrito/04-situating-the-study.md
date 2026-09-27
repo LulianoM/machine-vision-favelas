@@ -15,10 +15,11 @@ These episodes are not aberrations but recurring features of a policy model that
 Structurally, these outcomes reflect difficulties that predate any single operation or judicial ruling. Rio's security forces operate against criminal organizations, principally the Comando Vermelho, founded in 1979 within the Cândido Mendes prison and now estimated to have up to 30,000 members with territorial reach well beyond Rio de Janeiro (Wikipedia, 2025a), that maintain durable, often decades-long territorial control over specific favelas, financed largely through drug trafficking and increasingly contested by rival factions and expanding milícias (paramilitary groups frequently composed of active or former security personnel). This territorial permanence, combined with the built environment of the favelas themselves, has repeatedly been cited (by both security officials and independent researchers) as a central obstacle to policing: dense, self-built, vertically stacked construction obstructs sightlines and vehicle access, narrow alleys and improvised barricades slow or halt armored incursions, and the absence of reliable, up-to-date maps of informal circulation routes leaves operational planning dependent on outdated or incomplete intelligence (InSight Crime, as cited in Ad Infinitum, 2023; Small Wars Journal, 2021, 2025).
 
 
-One consequence of this record bears directly on what follows. The legal and operational category
-on which the use of lethal force turns, in each of the episodes above and in the contestation that
+One consequence of this record bears directly on what follows. The legal and operational category on
+which the use of lethal force turns, in each of the episodes above and in the contestation that
 followed them, is whether the person engaged was armed. That is a visual judgement made at speed,
 and it is increasingly proposed as one an aerial system could assist. Sections 8 to 11 report what
-that judgement actually demands of the acquisition: at the altitude at which aerial survey over
-this kind of terrain is conventionally flown, 150 metres, a firearm is not resolvable within
-the figure, and at half that altitude, the highest at which the distinction was tested, it becomes measurable on synthetic imagery, with the error profile of Section 9.5.
+that judgement actually demands of the acquisition: at the altitude at which aerial survey over this
+kind of terrain is conventionally flown, 150 metres, a firearm is not resolvable within the figure,
+and at half that altitude, the highest at which the distinction was tested, it becomes measurable on
+synthetic imagery, with the error profile of Section 9.5.

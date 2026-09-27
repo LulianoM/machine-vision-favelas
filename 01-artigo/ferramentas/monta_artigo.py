@@ -3,16 +3,17 @@
 monta_artigo.py: junta as seções do manuscrito num único PDF de leitura.
 
 Não é diagramação final de submissão. É uma PRÉVIA fiel o bastante para julgar extensão,
-ordem das seções, posição das figuras e se o texto fecha. A formatação segue o que os quatro
-papers premiados de 2026 da AIM usam (`08-conferencia/modelos_2026/`): Times New Roman 12,
-espaço duplo, uma coluna.
+ordem das seções, posição das figuras e se o texto fecha. O formato padrão (--formato elsevier) é
+o de periódico em duas colunas; --formato aim reproduz o que os quatro papers premiados de 2026 da
+AIM usam (`08-conferencia/modelos_2026/`): Times New Roman 12, espaço duplo, uma coluna.
 
 Por que não pandoc: não está instalado nesta máquina e não quero acrescentar dependência para
 gerar uma prévia. O caminho é markdown para HTML e depois Edge em modo headless para PDF, que
 já existe no Windows.
 
-As notas de estado (blocos de citação que começam com `> **Status note`) são renderizadas em
-destaque, de propósito: enquanto houver placeholder no texto, quem lê tem de ver onde está.
+As notas de proveniência e de estado (blocos de citação que começam com `> **Provenance note`,
+`> **Nota de estado` ou `> **Status note`) são renderizadas em destaque, de propósito: enquanto
+houver placeholder no texto, quem lê tem de ver onde está.
 
 Uso:
   python monta_artigo.py --out C:\\Users\\marti\\Desktop\\artigo.pdf
@@ -29,8 +30,8 @@ import tempfile
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 MAN = os.path.join(RAIZ, "01-artigo", "manuscrito")
 
-# Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, aditiva, e entram logo depois
-# da secao do professor a que se acoplam.
+# Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, escrita pelo mestrando; desde a
+# reordenacao de 22/09 entram em bloco depois da secao 6.
 ORDEM = [
     # Ordem revista em 2026-09-22. A anterior punha o pipeline tecnico entre a metodologia e o
     # contexto de campo, e o leitor saltava de "como geramos a cena" para "historia do
@@ -44,9 +45,9 @@ ORDEM = [
     "01-introduction.md",                        # 1  professor
     "02-literature-review.md",                   # 2  professor
     "04-situating-the-study.md",                 # 3  delegado
-    "05-case-jacarezinho.md",                    # 4  professor
+    "05-case-jacarezinho.md",                    # 4  delegado
     "03-methodology.md",                         # 5  professor
-    "06-results-proposed-model.md",              # 6  professor
+    "06-results-proposed-model.md",              # 6  mestrando
     "03b-methodology-synthetic-pipeline.md",     # 7  tecnico
     "06b-model-free-evidence.md",                # 8  tecnico
     "07b-results-placeholder.md",                # 9  tecnico
@@ -67,15 +68,22 @@ ORDEM = [
 AUTORIA = {
     "01-introduction.md": (
         "Prof. Hélio Arthur Reis Irigaray",
-        "v2 de 2026-09-10, verbatim",
-        "O abstract e as palavras-chave foram acrescentados em 20/09 pelo mestrando. O abstract "
-        "tem cerca de 280 palavras e os quatro premiados de 2026 têm de 127 a 152, sem nenhuma "
-        "citação: precisa encurtar para perto de 150."),
+        "v2 de 2026-09-10 com edições do mestrando (22 a 26/09)",
+        "O abstract e as palavras-chave foram acrescentados em 20/09 pelo mestrando e atualizados "
+        "até 26/09. O abstract tem hoje cerca de 370 palavras e os quatro premiados de 2026 têm de "
+        "127 a 152, sem nenhuma citação: precisa encurtar para perto de 150. Na introdução, o "
+        "mestrando reescreveu a pergunta de pesquisa e o objetivo, acrescentou o parágrafo de "
+        "abertura, o das duas tarefas e o do Global South, e condensou o bloco de planejamento de "
+        "trajetória; essas passagens precisam do aval do orientador."),
     "02-literature-review.md": (
         "Prof. Hélio Arthur Reis Irigaray",
-        "v2 de 2026-09-10, verbatim",
-        "Sete obras citadas neste texto ainda não têm entrada na lista de referências, item B1 "
-        "de PENDENCIAS.md. Dependem de quem escreveu a frase dizer qual obra é."),
+        "v2 de 2026-09-10 com acréscimos do mestrando (22/09)",
+        "O mestrando acrescentou o bloco sobre detecção aérea de pessoa e limite de resolução "
+        "(Kiefer, Liao, VisDrone) e o parágrafo de fecho, e trocou por uma remissão à introdução "
+        "a lista que a repetia (item A4 de PENDENCIAS.md); isso precisa do aval do orientador. "
+        "Duas obras citadas neste texto, Horváth et al. (2023) e Watson e Elliott (2025), ainda "
+        "não têm entrada na lista de referências (item B1); as outras cinco do B1 são citadas na "
+        "introdução. Dependem de quem escreveu a frase dizer qual obra é."),
     "04-situating-the-study.md": (
         "Coautor delegado de polícia",
         "esboço de trabalho, não é a versão final",
@@ -83,24 +91,34 @@ AUTORIA = {
         "profundidade que a posição do autor permite: conhecimento institucional das operações, "
         "da dinâmica territorial e das restrições operacionais reais. As seções técnicas dependem "
         "desta seção em um ponto e apenas nele: o veto ético à coleta de imagem real, que é a "
-        "premissa de 7.1. Os resultados numéricos não derivam dela."),
+        "premissa de 7.1. Os resultados numéricos não derivam dela. O parágrafo final, que liga a "
+        "seção à pergunta do artigo e às seções 8 a 11, e a frase que declara como séries "
+        "diferentes os números de 2024 do Fórum e do JOTA foram acrescentados pelo mestrando "
+        "(22 a 26/09) e precisam do aval do coautor."),
     "05-case-jacarezinho.md": (
         "Coautor delegado de polícia",
         "esboço de trabalho, não é a versão final",
-        "É a menor seção do artigo, com 390 palavras. Três números de população divergem entre "
-        "si no texto (35.458, ~37.000 e acima de 60.000) e a divergência é usada como argumento, "
-        "o que funciona, mas precisa ficar explícito de onde vem cada um."),
+        "É a menor seção do artigo, com cerca de 400 palavras. Três números de população divergem "
+        "entre si no texto (35.458, ~37.000 e acima de 60.000) e a divergência é usada como "
+        "argumento, o que funciona, mas precisa ficar explícito de onde vem cada um. A última "
+        "frase, que entrega o leitor na pergunta do artigo, foi reescrita pelo mestrando em 22/09 "
+        "e precisa do aval do coautor."),
     "03-methodology.md": (
         "Prof. Hélio Arthur Reis Irigaray",
-        "v2 de 2026-09-10, verbatim",
-        "Descreve o protocolo e trata a posicionalidade do coautor delegado de forma direta. "
-        "Nada a fazer além de conferir as remissões remapeadas em 22/09."),
+        "v2 de 2026-09-10 com acréscimos do mestrando (22 a 26/09)",
+        "O primeiro parágrafo foi reescrito pelo mestrando: quatro componentes em vez de três, "
+        "com o componente computacional e a declaração de que o protocolo cresceu em etapas. "
+        "Precisa do aval do orientador, além da conferência das remissões remapeadas em 22/09. "
+        "O resto descreve o protocolo e trata a posicionalidade do coautor delegado de forma "
+        "direta."),
     "06-results-proposed-model.md": (
         "Luciano Martins Figueira (mestrando)",
-        "proposta conceitual, escrita antes do experimento",
-        "É a proposta que a seção 7 implementa. O texto ainda fala em classificar altura de "
-        "edificação, e o que foi de fato construído e medido detecta pessoa: a seção 11.4 trata "
-        "dessa diferença e as duas precisam concordar."),
+        "proposta conceitual, atualizada com o resultado da 9.4",
+        "É a proposta que a seção 7 implementa. Continua a propor a classificação de altura de "
+        "edificação, e o que foi construído e medido detecta pessoa; o último parágrafo e a seção "
+        "11.4 já declaram essa diferença. O terceiro componente cita o resultado da 9.4, em que o "
+        "início genérico supera o sintético com 5 e 10% do dado real: falta o autor decidir se "
+        "esse resultado muda a proposta."),
     "03b-methodology-synthetic-pipeline.md": (
         "Luciano Martins Figueira (mestrando)",
         "método executado, com versão e comando de origem",
@@ -123,19 +141,25 @@ AUTORIA = {
     "09b-technical-limitations.md": (
         "Luciano Martins Figueira (mestrando)",
         "fechada",
-        "Contém a recusa de reportar acurácia entre armado e desarmado, em 11.5, que é decisão "
-        "de conteúdo e precisa do aval dos três autores."),
+        "Contém, em 11.5, a decisão de não reportar acurácia entre armado e desarmado a 150 m e o "
+        "relato a 75 m e 35 m, com o teste de arma inédita e a condição de retirada fixada antes; "
+        "é decisão de conteúdo e precisa do aval dos três autores."),
     "07-conclusion.md": (
         "Prof. Hélio Arthur Reis Irigaray",
-        "v2 mais o fecho acrescentado em 20/09",
-        "O parágrafo de fecho foi escrito pelo mestrando porque a v2 não concluía, só trazia "
-        "Limitations, Delimitations e Future Research. Precisa do aval do orientador."),
+        "v2 com edições do mestrando e o fecho acrescentado em 20/09",
+        "O fecho (Closing) foi escrito pelo mestrando porque a v2 não concluía, só trazia "
+        "Limitations, Delimitations e Future Research, e foi atualizado até 26/09 com os "
+        "resultados das rodadas 2 e 3. O mestrando também reescreveu o primeiro parágrafo de "
+        "Limitations, a delimitação da pergunta técnica e o parágrafo técnico de Future Research. "
+        "Tudo isso precisa do aval do orientador."),
     "08-references.md": (
         "os três autores",
         "parcial",
-        "Oito entradas conferidas no Crossref em 20/09. Sete citações do texto continuam sem "
-        "entrada, de propósito: sobrenome e ano coincidindo não é evidência, e inserir DOI de "
-        "obra errada é pior do que deixar a referência faltando."),
+        "Oito entradas conferidas no Crossref em 20/09. Sete citações acadêmicas do texto "
+        "continuam sem entrada, de propósito: sobrenome e ano coincidindo não é evidência, e "
+        "inserir DOI de obra errada é pior do que deixar a referência faltando. As citações da "
+        "Wikipedia na seção 3 também não têm entrada e devem ser trocadas por fonte primária "
+        "(item B3 de PENDENCIAS.md)."),
 }
 
 
@@ -287,9 +311,11 @@ def main():
             faltando.append(nome)
             continue
         txt = open(p, encoding="utf-8").read()
-        n_ph += txt.count("[X]")
+        # a legenda "aparece como [X]" das notas de proveniencia (blocos de citacao) nao e marcador
+        n_ph += sum(ln.count("[X]") for ln in txt.splitlines() if not ln.lstrip().startswith(">"))
         if args.sem_notas:
-            txt = re.sub(r"^> \*\*Status note.*?(?=\n\n)", "", txt, flags=re.S | re.M)
+            txt = re.sub(r"^> \*\*(Status note|Provenance note|Nota de estado).*?(?=\n\n)", "", txt,
+                         flags=re.S | re.M)
         txt, n_fig = resolve_figuras(txt, n_fig)
         n_sec += 1
 
@@ -328,8 +354,8 @@ def main():
     if n_ph:
         aviso = (f'<div class="aviso full"><b>PRÉVIA, NÃO SUBMISSÃO.</b> Este documento contém '
                  f'<b>{n_ph} marcadores <code>[X]</code></b> de números ainda não medidos. '
-                 f'Nenhum deles pode ser preenchido por estimativa. Os blocos em vermelho são '
-                 f'notas de estado e não fazem parte do texto final.</div>')
+                 f'Nenhum deles pode ser preenchido por estimativa. Os blocos de citação em destaque '
+                 f'são notas de proveniência e de estado e não fazem parte do texto final.</div>')
     if faltando:
         aviso += ('<div class="aviso full"><b>Seções ausentes:</b> ' + ", ".join(faltando) + "</div>")
 

@@ -77,3 +77,28 @@ Revisor com 87 consultas, 24 min; recontou nos rótulos do desktop, só leitura,
 - **Luminância.** A 7.5 atribuía ao corpus de treino as médias do corpus piloto (48 imagens do `ds_morro_clima`), e a legenda da figura 2 as atribuía aos seis painéis mostrados, que são outro render.
 - **Citações que faltavam.** O par 0,116 / 0,561 (`val_final.json` dos dois runs). As taxas por modelo e as duas revocações da 11.5. As contagens do corpus de 35 m. A precisão da tabela da 9.5 (`gemeo_75_35.json`: não é o P dos arquivos de confusão). O `sim2real_s_nadir_4k.json` nas legendas da 9.2 e da 9.3. O R, que agora cita o `avalia_sim2real.py` e os passos 9 e 10 do `fila_noite.py`.
 - **Sem fonte, reescritos.** "Alvo de 11 a 41 px" (do braço antigo a 100 m, sem comando) virou a conta com a mediana do corpus de registro (17,6 / 2,5 ≈ 7 px). "Dois dias" do R cheio virou "seis vezes mais imagens por época". "Faixa central de três quintos" virou o parâmetro do filtro (quadrado de 0,52 da largura). "Seis arquiteturas" de Liao não está na ficha conferida e virou "as arquiteturas que eles testam". "8% e 42% dos casos" de pose de tiro são probabilidades de sorteio do gerador, não frequências medidas, e agora o texto diz assim.
+
+## Rodada 6: texto desatualizado
+
+Revisor com 91 consultas, 29 min. 45 achados (3 erros, 17 inconsistências, 25 melhorias) e 1 observação fora da lente. Todos conferidos e aceitos.
+
+- **Erros: caixas de estado do PDF.** As caixas de estado (`monta_artigo.py`) chamavam de "v2 verbatim" a introdução, a revisão e a metodologia do orientador, mas o mestrando reescreveu partes das três: a pergunta de pesquisa, o objetivo, os quatro componentes, o bloco de detecção aérea. A conclusão aparecia como "v2 mais o fecho", embora o primeiro parágrafo de Limitations, a delimitação técnica e o Future Research técnico também tenham sido reescritos. As caixas agora dizem o que mudou e que precisa do aval do orientador (ou do coautor, nas seções 3 e 4). O abstract tem hoje cerca de 370 palavras, e a caixa registra isso contra a meta de 150.
+- **Texto velho no manuscrito.**
+  - A 7.3 falava em "duas altitudes"; hoje são três.
+  - A 7.5 citava como existente a ablação da 10.
+  - A 11.1 ainda falava da "instância de 4 pixels", aritmética que a rodada 5 trocou.
+  - A 10.2 mantinha "If it were not exact", da redação de 20/09.
+  - A 10.6 falava em "corpora of record".
+  - A 6 chamava a detecção de pessoa de "proxy", enquadramento anterior a 22/09.
+  - A conclusão dizia "a synthetic corpus" e "at the time of writing".
+  - A seção 5 descrevia um único corpus e parava na seção 10.
+  - A 11.4 falava da "tarefa que o artigo de fato propõe".
+  - A expectativa da 9.4 estava no presente, três linhas antes do veredito.
+  - A ressalva de Kiefer aparecia duas vezes seguidas na 9.3.
+  - A remissão 17,6 × 17,5 apontava para a 8.1 (é a 8.2).
+  - A frase "Nada neste artigo recomenda aquisição" ficou órfã depois de uma divisão de parágrafo.
+  - A conclusão restringia a revisão de literatura a temas que hoje estão na introdução, e não listava a ablação da 10.3 entre o que falta.
+- **PENDENCIAS.** A4, D1, D4, D6, D7 e E4 resolvidos ou superados pelo texto e fechados. D5 e D8 ganharam a situação atual. B8 descrevia a lista de referências antiga.
+- **Ferramenta.** O `--sem-notas` procurava "Status note", nome abandonado em 20/09. A contagem de `[X]` do aviso do PDF contava também a legenda das notas; agora dá 3, os reais. A docstring e o aviso ainda descreviam o formato AIM e "blocos em vermelho".
+- **Quebras de linha.** As edições automáticas deixaram linhas longas e fragmentos no meio de frases, e numa linha da 11.5 o texto começava com "9. ", que o markdown poderia ler como item de lista. `reflui.py` (scratchpad) refluiu os parágrafos quebrados a mão para cerca de 100 colunas, com verificação de que nenhuma palavra mudou. Os parágrafos de linha única do orientador ficaram intactos.
+- **Fora da lente, aplicada.** A 11.6 dizia que todo corpus por trás de todo número é redistribuível por construção. O par 0,116 / 0,561 vem do braço anterior, com plantas do OpenStreetMap, e o R e o ajuste fino usam o VisDrone, distribuído pelos próprios autores. O texto agora diz isso.
