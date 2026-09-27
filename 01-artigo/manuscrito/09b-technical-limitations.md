@@ -25,7 +25,8 @@ available proxy, and it is not a favela. The morphology this generator reproduce
 that of consolidated self-built settlement on a hillside: shared party walls, alleys under 1.2
 metres, upper storeys offset from the floor below.
 
-A transfer figure obtained on VisDrone bounds generalisation to dense aerial urban scenes. It does
+A transfer figure obtained on VisDrone measures generalisation to the dense urban scenes that
+benchmark records. It does
 not establish performance over Jacarezinho, and no claim of that kind is made anywhere in this
 article. Establishing it would require annotated real imagery of the territory itself, which the
 ethical protocol of Section 5 forecloses and which this project has deliberately not collected.
@@ -44,9 +45,9 @@ their shape is closer to the benchmark's, so that factor is not attributable to 
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
-Section 8.3 measures that contrast against local clutter is lowest under hard sun and rain and
-highest under overcast, because the background under a hard sun is itself filled with cast shadow
-from rooftop objects. If that mechanism holds when a detector is evaluated per regime, the
+Section 8.3 measures contrast against local clutter lower under hard sun and rain than under
+overcast, and proposes as the mechanism that the background under a hard sun is itself filled with
+cast shadow from rooftop objects. If that mechanism holds when a detector is evaluated per regime, the
 practical implication is direct and runs against the conventional preference for flying in clear
 weather.
 
@@ -73,16 +74,15 @@ evaluation infrastructure for the task the article actually proposes does not cu
 ### 11.5 Where the armed and unarmed distinction exists, and where it does not
 
 No accuracy figure for the armed and unarmed distinction is reported at 150 m, the altitude this
-article takes as its reference acquisition. The omission is a result, not a gap, and this section states
-the conditions that produce it.
+article takes as its reference acquisition. The omission is argued from resolution rather than measured, and this
+section states the conditions that produce it.
 
 At 150 m with the camera pointing straight down, rendered at the 4.88 cm per pixel of the corpus
 of record, the median annotated instance measures 17.6 by 17.5
 pixels. A firearm subtends a fraction of that and is not resolvable within the region. A detector
 trained on such a corpus can still separate the two classes, and that is precisely the problem:
 in a corpus where the weapon is always the same asset, in the same pose, at the same contrast,
-separability measures the regularity of the asset library rather than a visual property of the
-world. An accuracy figure obtained there would be the inferential move this article criticises,
+separability cannot be told apart from the regularity of the asset library. An accuracy figure obtained there would be the inferential move this article criticises,
 a number produced under controlled synthetic conditions and presented as evidence of a capability
 that would be exercised on real people in a real territory.
 
@@ -93,18 +93,19 @@ occupies a region the network can in principle resolve.
 And the corpus at that altitude is built to remove the artefact, by the construction specified in
 Section 7.4: the weapons are set against elongated objects carried in the same territory, drawn
 from the same colour and roughness palette and carried through the same distribution of poses. A
-detector that separates the classes on that corpus cannot be doing so by colour, and the rate at
+detector that separates the classes on that corpus cannot be doing so by colour alone, and the rate at
 which it calls a broom a rifle is reported in Section 9.5.
 
 The distinction between altitudes is the contribution, and it is stated as a condition rather
-than a recommendation. At 150 m the capability does not exist. At 75 m it exists in the sense that the
+than a recommendation. At 150 m the capability is argued from resolution, not measured, to be absent: no corpus with
+confusable objects was rendered at that altitude. At 75 m it exists in the sense that the
 classes are separated above chance on the synthetic validation split, with the error profile of
 Section 9.5, which calls 24 per cent of confusable objects armed; no threshold for calling the
 capability present was fixed in advance. The measurements do not show it
 improving as resolution increases further: at 35 m the same rate is 27 per cent. Whether that reflects a
 limit of what these figures and carrying poses allow a detector to learn, or the change of pose
-distribution between the two corpora, is what the matched corpus of Section 9.5 decides: it is not
-the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 16 per cent against
+distribution between the two corpora, is what the matched corpus of Section 9.5 addresses, and in one
+training run per model it points away from the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 16 per cent against
 27 at 35 m: with the pose held, the finer ground sampling distance did not reduce the confusion, and
 the 35 m model calls every class armed more often rather than separating them better, a difference
 that is suggestive rather than established at these sample sizes (Section 9.5).
@@ -123,12 +124,15 @@ compact submachine gun of 0.55 m, inside it, so that the test measures the asset
 size. The type of every annotated instance is recorded, so the two
 recalls come from the same images under the same light. Recall on seen models: 0.400 (50 of 125);
 on unseen models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to
-1.54) against the threshold of 0.80, so the condition is not met and the 75 m figure stands
-(`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). What the detector
-generalises to is length and silhouette rather than the asset: the unseen 1.10 m rifle is called
-armed at 0.50, among the seen long arms (0.34 to 0.52), the pistol at 0.20, and a closed
-umbrella, 0.88 m long, at 0.38. The generalisation that passes this test is the one that produces the confusion of Section
-9.5. Every rate at which a class is called armed is lower in the new realisation than on the validation split (armed recall 0.43
+1.54, which ignores the clustering of boxes within the 50 frames and is therefore optimistic)
+against the threshold of 0.80, which the criterion applies to the ratio itself, so the condition
+is not met and the 75 m figure stands
+(`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). The per-model
+rates, from 15 to 69 instances each and without intervals, are consistent with the detector
+generalising to length and silhouette rather than to the asset: the unseen 1.10 m rifle is called
+armed at 0.50, among the seen long arms (0.34 to 0.52), the unseen 0.55 m submachine gun at 0.43,
+the pistol at 0.20, and a closed umbrella, 0.88 m long, at 0.38. The generalisation that passes
+this test is plausibly the one that produces the confusion of Section 9.5. Every rate at which a class is called armed is lower in the new realisation than on the validation split (armed recall 0.43
 against 0.55), which does not affect the comparison, made within the same images.
 Nothing in this article recommends acquisition over the case study territory.
 

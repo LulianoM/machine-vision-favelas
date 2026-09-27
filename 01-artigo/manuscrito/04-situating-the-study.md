@@ -20,5 +20,5 @@ on which the use of lethal force turns, in each of the episodes above and in the
 followed them, is whether the person engaged was armed. That is a visual judgement made at speed,
 and it is increasingly proposed as one an aerial system could assist. Sections 8 to 11 report what
 that judgement actually demands of the acquisition: at the altitude at which aerial survey over
-this kind of terrain is conventionally flown, 150 metres, the distinction is not resolvable at
-all, and it becomes resolvable only at half that altitude.
+this kind of terrain is conventionally flown, 150 metres, a firearm is not resolvable within
+the figure, and at half that altitude, the highest at which the distinction was tested, it becomes measurable on synthetic imagery, with the error profile of Section 9.5.

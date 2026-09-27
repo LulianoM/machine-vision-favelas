@@ -36,13 +36,14 @@ This article set out to ask under what acquisition conditions an aerial system c
 person from an unarmed one over a dense self-built settlement, and what it costs to answer that
 question responsibly. Three things follow from the work reported above.
 
-The first is that the binding constraints are not the ones the field usually discusses. At the
+The first is that the constraints measured here are not the ones the field usually discusses. At the
 ground sampling distance of the acquisition specified in Section 7.3, a person is a few tens of pixels
 of low contrast texture, the silhouette of that target is set by where the camera is placed rather
 than by how faithfully the scene is built, and under the illumination condition conventionally
-preferred for flying, hard sun, cast shadow fills the background with clutter against which the
-figure shows among the lowest contrast of the six regimes, although whether that makes detection
-harder is the test Section 10.3 has not yet run. None of these is a question of
+preferred for flying, hard sun, the figure shows among the lowest point estimates of contrast
+against local clutter of the six regimes, which Section 8.3 attributes, as a hypothesis, to cast
+shadow in the background; whether that makes detection harder is the test Section 10.3 has not
+yet run. None of these is a question of
 photorealism, and none of them is visible in any appearance-based measure of how convincing a
 synthetic scene looks.
 
@@ -50,14 +51,15 @@ The second is that synthesis buys a specific thing and not a general one. It rem
 problem, which in this territory is not a procedural obstacle but a substantive one, and it
 introduces a transfer problem in its place. This article reports what that trade costs, on a
 benchmark that is not the case study, and declines to extrapolate from it. Where some real
-imagery does exist, the synthetic corpus did not substitute for it: on that benchmark, a generic
-initialisation given the same real images outperformed the synthetic one.
+imagery does exist, the synthetic corpus did not substitute for it: on that benchmark and in one training run
+per model, a generic initialisation given the same real images outperformed the synthetic one.
 
 The third is the one that matters most for the argument about dual use. The capability this
-pipeline could be built toward is not uniformly available: it appears and disappears as a function
-of acquisition parameters that are measurable in advance. Where it appears, at 75 m, it carries a
-false-alarm rate against residents carrying ordinary objects, and it does not sharpen as the camera
-descends: at 35 m the detector calls more of every class armed, not fewer. A claim that a system can distinguish an
+pipeline could be built toward is not uniformly available: it appears, and is argued to disappear, as
+a function of acquisition parameters that are measurable in advance. Where it appears, at 75 m and
+on synthetic imagery only, it carries a false-alarm rate against figures carrying ordinary objects,
+and it does not sharpen as the camera descends: at 35 m the detector calls more of every class
+armed, not fewer, a difference suggestive rather than established (Section 9.5). A claim that a system can distinguish an
 armed from an unarmed person from the air is, at the altitudes and sensors described here, a claim
 that can be checked before it is believed, and this article declines to make it. Stating the
 conditions under which a capability does not exist is a contribution of the same kind as

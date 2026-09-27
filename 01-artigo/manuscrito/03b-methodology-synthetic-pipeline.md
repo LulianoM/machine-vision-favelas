@@ -100,8 +100,8 @@ form, as they do on a real hillside.
 Roof surfaces carry the objects that occupy them in use: water tanks in three commercial volumes,
 clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, and exposed
 reinforcement bar awaiting a further storey. Aerial cabling spans between rooftop anchor points.
-These are not decoration. At the ground sampling distance of the target sensor they are the
-dominant source of local clutter, and Section 8.3 measures the contrast a person presents against
+These are not decoration. At the ground sampling distance of the target sensor they are
+intended as a main source of local clutter, although no measurement here isolates their share, and Section 8.3 measures the contrast a person presents against
 that immediate background, which Section 10.3 treats as a hypothesis about detector difficulty,
 with a test not yet run.
 
@@ -124,8 +124,9 @@ yields 4.88 cm per pixel. Section 8.1 reports what this does to the target and s
 it introduces: imagery rendered at 4K is easier than a single real frame from the sensor it reproduces.
 
 A second acquisition geometry is evaluated alongside the first, and the reason is arithmetic
-rather than aesthetic. At 150 metres the target is too small for a carried object to be resolved
-at all, which forecloses the question the article asks rather than answering it. The generator is
+rather than aesthetic. At 150 metres a carried object is too thin for its form to be resolved,
+which this article takes to foreclose the question rather than to answer it; no corpus of
+confusable objects was rendered at that altitude to test that. The generator is
 therefore also run with the same sensor at 75 metres, where the frame covers approximately 94 by
 53 metres and the ground sampling distance halves to 2.44 cm per pixel at 3840 by 2160. Halving
 the distance doubles each linear dimension of the target and quadruples its area before occlusion,
@@ -137,7 +138,7 @@ the largest, and taken class by class the factor is 5.2 for armed and 5.7 for un
 The two altitudes are reported separately throughout, as `S-nadir-150` and `S-nadir-75`, because
 they answer different questions: the first is the altitude at which aerial survey over urban
 terrain is conventionally flown with this payload, and the second is the geometry under which the
-distinction the article is named after becomes measurable at all.
+distinction the article is named after was measured.
 
 ### 7.4 Annotation
 
@@ -156,7 +157,7 @@ fraction falls below 0.35 are discarded from the label file rather than retained
 boxes. In a settlement this dense the discard rate is substantial and expected. Over the 180 frames
 of the corpus of record, 4,582 figures were placed and 3,225 retained; the per-frame retained
 fraction has a median of 0.71 (10th percentile 0.57, 90th percentile 0.83), so roughly three
-in ten figures placed are invisible from directly above, most of them standing in an alley
+in ten figures placed fall below the visibility threshold from directly above
 (`06-resultados/oclusao_ds_morro_4k.json`, produced by `06-resultados/mede_oclusao.py`).
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
@@ -171,8 +172,9 @@ The corpus is built to remove that possibility. Five firearm models are generate
 procedurally, spanning 0.20 to 1.05 metres in length: two rifles, a carbine, a shotgun and a
 pistol. Against them stand nine elongated objects that a person carries in this territory, spanning
 0.88 to 2.5 metres: brooms, floor squeegees, plastic pipe, reinforcement bar, planks, umbrellas, hoes,
-rolled mats and hose. Weapons and objects are drawn from the same palette of base colours and
-surface roughness, so that no detector can separate the two by colour, and both are carried
+rolled mats and hose. Weapons and objects are drawn from one palette of base colours and
+surface roughness, so that dark and metallic surfaces occur on both and colour alone cannot
+separate the two, although light PVC and coloured plastic occur only on objects; both are carried
 through the same distribution of poses, held forward, at the side, slung on the back, or carried
 while walking, in the same proportions. A detector that separates the classes on this corpus is
 therefore doing so on the silhouette of what is carried, which is the only thing that could
@@ -253,7 +255,8 @@ splits instead, because no public benchmark annotates a carried firearm; Section
 separately: scored on the world in which they were trained, their figures are ceilings rather
 than evidence of transfer, so the two groups cannot be read on one scale. Every synthetic
 corpus holds the same number of images, 180 for the single-class models and 200 for the
-three-class ones, so that no comparison below is a comparison of data volume.
+three-class ones, so that no comparison below is a comparison of the number of frames, although
+instance counts still differ (Section 8.2).
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
@@ -267,6 +270,6 @@ three-class ones, so that no comparison below is a comparison of data volume.
 | **F-synthetic, F-generic** | 5 or 10 per cent of VisDrone-DET train (324 or 647 images), starting from S-oblique-six or from COCO | What the synthetic pretraining is worth once some real data exists |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
-attainable ceiling reached without a single real training image. The difference mAP50(S-oblique)
-minus mAP50(S-nadir-150) isolates the contribution of capture geometry, which Section 8.2 measures
-as a factor-of-two difference in target shape between this corpus and the benchmark.
+matched-volume ceiling reached without a single real training image. The difference mAP50(S-oblique)
+minus mAP50(S-nadir-150) estimates, from one training run per model, the contribution of capture
+geometry, one effect of which Section 8.2 measures as a factor-of-two difference in target shape between this corpus and the benchmark.

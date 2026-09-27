@@ -11,7 +11,7 @@ The ordering follows the convention of this venue, in which model-free evidence 
 estimation. It is also substantive here: aerial person detection in dense informal settlement is
 usually discussed in terms of scene realism, and the implicit assumption is that a corpus which
 looks more like a favela will transfer better. The measurements below identify two variables that
-govern difficulty and that no appearance metric captures.
+plausibly govern difficulty and that no appearance metric captures.
 
 Three corpora are used throughout, two generated and one real, and Section 8.2 adds two oblique
 generated corpora; their acquisition geometry differs in ways that matter, so the parameters are
@@ -114,7 +114,7 @@ full-frame labels.*
 
 The ratio rises with pitch, from 0.98 at the vertical to 1.70 at the steepest angle in the corpus, and for
 figures carrying nothing it reaches the value of the benchmark's training split, 1.95, only between 50 and
-52 degrees, where it measures 1.97. Two consequences follow for Section 9.3. The oblique corpus as rendered, with pitch
+52 degrees, where it measures 1.97 on 49 figures. Two consequences follow for Section 9.3. The oblique corpus as rendered, with pitch
 drawn uniformly between 26 and 52 degrees, realised a median of 1.46 rather than the 1.95 it was
 calibrated for, because most of its images sit below the angle at which the benchmark's shape is
 reached. And the annotated box of an armed figure includes the weapon, which widens it:
@@ -127,19 +127,20 @@ A ratio near 1.0 is the plan of a head and shoulders recorded from above. A rati
 standing figure recorded obliquely. At comparable pixel area, these are different objects as far
 as the detector is concerned.
 
-This is the domain shift that matters here, and no appearance-based measure of realism detects it.
+This is a domain shift that matters here, and no appearance-based measure of realism detects it.
 A generator could be made arbitrarily more photorealistic without moving this quantity. Unlike
 photorealism it is also cheap to manipulate, being a property of where the camera is placed rather
 than of how the scene is built. Section 9.3 reports the S-oblique model, in which the same generator
 renders the same settlement from a tilted camera, and Section 10.4 treats the difference between
-the two models as the isolated contribution of acquisition geometry.
+the two models as the contribution of acquisition geometry, together with the settings that change
+with it.
 
 One limit on the interpretation is stated here rather than in limitations. The nadir corpora
 record a generator setting rather than a per-image pitch, and the benchmark values come from real
 imagery whose acquisition geometry is not recorded at all. The oblique corpus anchors the slope on
 the synthetic side; on the benchmark side only the endpoint is known.
 
-### 8.3 Contrast against local clutter is lowest under hard sun and rain, not under low light
+### 8.3 Contrast against local clutter is higher under overcast than under hard sun and rain
 
 The six illumination regimes permit a measurement bearing on acquisition practice. For every
 annotated instance we computed mean luminance inside the box, mean luminance of a six pixel ring
@@ -180,13 +181,13 @@ hypothesis is withdrawn, and Section 11.3 the implication that is withdrawn with
 ### 8.4 What these measurements imply for the proposal
 
 Taken together the measurements reframe the design problem stated in Section 6. The binding
-constraint is not that a synthetic favela fails to look like a favela. At the scale at which this
+constraint is not only that a synthetic favela fails to look like a favela. At the scale at which this
 task operates, the target is a few tens of pixels of low contrast texture; its silhouette in these
-corpora tracks camera pitch rather than scene content; and hard sun, the illumination
-conventionally preferred for flying, fills the background with the cast shadow that competes
-with the figure, so that the regime with the second largest raw contrast is among the two
-weakest once local clutter is accounted for, although whether that makes detection harder is the
+corpora tracks camera pitch rather than scene content; and under hard sun, the illumination
+conventionally preferred for flying, the regime with the second largest raw contrast has the
+second lowest point estimate once local clutter is accounted for, which Section 8.3 attributes, as
+a proposed mechanism, to cast shadow in the background; whether that makes detection harder is the
 test of Section 10.3, which has not been run.
 
-Whether these constraints can be overcome by synthesis alone, and what fraction of the attainable
+Whether these constraints can be overcome by synthesis alone, and what fraction of the matched-volume
 ceiling is reached, is the subject of Section 9.
