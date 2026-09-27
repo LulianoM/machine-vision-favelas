@@ -126,3 +126,45 @@ Revisor com 76 consultas, 27 min. Fez recontagens só de leitura nas anotações
 - **Taxa de objeto chamado de arma.** Pelo casamento que ignora a classe, uma caixa de armada sobre uma pessoa já casada com outra caixa não entra na taxa, então ela é um limite inferior do alerta que um operador veria. A taxa também depende da regra do gerador que reinclina os objetos longos: o guarda-chuva, curto o bastante para ser carregado como arma, é o mais chamado de arma (0,38 contra 0,10 da vassoura). E depende do limiar de 0,25, não ajustado, e da realização do assentamento; o d' do `gemeo_75_35.json` separa discriminação de viés e confirma a leitura de que a 35 m o modelo não separa melhor. Na 7.4, "o detector separa pela silhueta, a única coisa que poderia transferir" não se seguia mais: ele pode usar comprimento, cor e ângulo de carregamento, e o ângulo é regra do gerador.
 - **Ajuste fino.** O cronograma não foi ajustado e é o mesmo para as duas partidas. Os quatro modelos atingem o melhor valor entre as épocas 27 e 30 de 30, ou seja, a comparação é a orçamento fixo, não a convergência (a vantagem do COCO não diminui da época 20 para a 30). O início sintético herda a cabeça de detecção já treinada para pessoa, enquanto o COCO reinicia a camada de classes; a vantagem do COCO vale mesmo contra essa largada. O sinal é o mesmo em mAP50-95, a métrica de seleção.
 - **Outras.** A 9.3 ainda dizia "gerador mantido fixo" logo depois de a rodada 7 declarar a diferença. No teste inédito, o grupo das armas vistas inclui a pistola, e parte da razão acima de 1 é composição (sem a pistola, a razão continua acima do limiar). O abstract agora diz que o denominador é o mesmo detector com número casado de imagens reais e que os falsos positivos são medidos só em imagem sintética.
+
+## Rodada 9: forma e estilo
+
+Revisor com 88 consultas, 31 min. Renderizou os arquivos com as próprias funções do montador, fora do repositório. 37 achados (1 erro, 16 inconsistências, 20 melhorias). Todos aceitos. Das 7 observações fora da lente, 5 foram aplicadas e 2 ficam para o autor.
+
+- **Erro.** A legenda da figura 4 saía no PDF com crases literais, porque o montador cola a legenda como HTML cru. Trocado por `<code>`.
+- **Mistura de formas.** A grafia técnica é britânica e ficou consistente:
+  - "metres" virou "m" depois de numeral (13 ocorrências);
+  - "%" virou "per cent" nas tabelas da 9.2 e da 9.3;
+  - "toward" virou "towards";
+  - "deg" virou "degrees" e "x" virou "by" nas tabelas da 8;
+  - "low contrast" ganhou hífen;
+  - "mAP@50" virou "mAP50";
+  - "YOLOv11" (nome de Liao) ganhou a glosa;
+  - *beco* foi para itálico;
+  - os nomes de modelo saíram do formato de código;
+  - o caminho do `holdout_criterio.py` ficou completo;
+  - o 1,95 da tabela da 8.2 passou a negrito como os outros.
+- **Estragos das rodadas anteriores.**
+  - "The result is measured." ficou solto depois de uma inserção.
+  - Na 7.3, a lente passou a se ligar ao corpus de 35 m.
+  - Na 7.5, a lista dos seis regimes passou a ler como parte de um parêntese.
+  - O parêntese de fonte do par 0,116 / 0,561 separava o verbo do complemento.
+  - "Both defects" do piloto e "the same test" da 9.5 ficaram sem antecedente.
+  - Na 10.4, "that puts" e "the change" passaram a se referir ao filtro de posicionamento.
+  - A 10.2 repetia os números de 15 linhas antes.
+  - A 11.5 repetia a remissão à 7.4.
+  - A 11.6 dizia duas vezes que o defeito foi achado depois.
+  - Cinco frases com mais de 90 palavras foram divididas sem perder fato: 7.4, S-oblique-six, teste inédito, 8.4 e conclusão.
+- **Fora da lente, aplicadas.**
+  - A legenda da figura 1 e a 11.2 ainda diziam "parede compartilhada" e "toda geometria é do gerador".
+  - A 8.2 dizia "o mesmo gerador" para o S-oblique.
+  - A 9.2 dizia "mantém toda configuração do gerador" duas linhas antes de dizer que era outra versão; agora diz "toda configuração de linha de comando".
+  - O abstract definia GSD como área; é distância.
+  - "The corpus" do abstract não tinha antecedente.
+  - "domain-randomization" estava no parágrafo reescrito da conclusão.
+  - A contagem do abstract na caixa de estado passou a cerca de 390 palavras.
+- **Para o autor.**
+  - As figuras 2, 4 e 5 têm rótulos em português dentro da imagem ("sol_duro", "caixas", "verde = armada").
+  - O texto nunca cita figura por número.
+  - A introdução do orientador mistura grafia britânica e americana.
+  - O abstract tem 386 palavras, contra a meta de cerca de 150.

@@ -23,8 +23,8 @@ isolated effect of training scale, and no figure in it should be cited as one.
 
 VisDrone records dense urban scenes from uncontrolled acquisition. It is the closest publicly
 available proxy, and it is not a favela. The morphology this generator reproduces is specifically
-that of consolidated self-built settlement on a hillside: shared party walls, alleys under 1.2
-metres, upper storeys offset from the floor below.
+that of consolidated self-built settlement on a hillside: abutting dwellings, alleys under 1.2 m,
+upper storeys offset from the floor below.
 
 A transfer figure obtained on VisDrone measures generalisation to the dense urban scenes that
 benchmark records. It does not establish performance over Jacarezinho, and no claim of that kind is
@@ -95,8 +95,8 @@ region the network can in principle resolve. And the corpus at that altitude is 
 artefact, by the construction specified in Section 7.4: the weapons are set against elongated
 objects carried in the same territory, drawn from the same colour and roughness palette and carried
 through the same distribution of body poses, although objects longer than any weapon are held at
-other angles (Section 7.4). A detector that separates the classes on that corpus cannot be doing so
-by colour alone, and the rate at which it calls a broom a rifle is reported in Section 9.5.
+other angles. A detector that separates the classes on that corpus cannot be doing so by colour
+alone, and the rate at which it calls a broom a rifle is reported in Section 9.5.
 
 The distinction between altitudes is the contribution, and it is stated as a condition rather than a
 recommendation. At 150 m the capability is argued from resolution, not measured, to be absent: no
@@ -121,44 +121,45 @@ falls below four fifths of its recall on the models it was trained on, then what
 asset library and not the object, and no figure from that corpus should be read as a capability. The
 test renders 50 new frames at 75 m, in a new realisation of the settlement and with the generator
 settings of the training corpus, in which half the firearms are drawn from the five training models
-and half from two models that enter no training corpus, a rifle of 1.10 m, longer than the recorded
-length of any of the five (the longest, a shotgun, is recorded at 1.05 m) but inside their range as
-modelled, since the meshes of the two training rifles and of the shotgun are longer than their
-recorded lengths, and a compact submachine gun of 0.55 m, inside it, so that the test measures the
-asset rather than a new size. The type of every annotated instance is recorded, so the two recalls
-come from the same images under the same light. Recall on seen models: 0.400 (50 of 125); on unseen
-models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54, which
-ignores the clustering of boxes within the 50 frames and is therefore optimistic) against the
-threshold of 0.80, which the criterion applies to the ratio itself, so the condition is not met and
-the 75 m figure stands (`06-resultados/holdout_armas_criterio.json`, produced by
-`holdout_criterio.py`). The two groups are not matched in composition: the seen group includes the
-pistol, 20 of its 125 instances, shorter than either unseen model and the weapon least often called
-armed, so part of the ratio above one reflects that composition rather than better recognition of
-the unseen models; with the pistol set aside, the ratio still stays above the threshold. The
-per-model rates, from 15 to 69 instances each and without intervals
-(`06-resultados/holdout_armas_armado_75.json`, produced by `06-resultados/confusao_armado.py` in
-step B2 of `07-blender/scripts/rodada3.py`), are consistent with the detector generalising to length
-and silhouette rather than to the asset: the unseen 1.10 m rifle is called armed at 0.50, among the
-seen long arms (0.34 to 0.52), the unseen 0.55 m submachine gun at 0.43, the pistol at 0.20, and a
-closed umbrella, 0.88 m long, at 0.38. The generalisation that passes this test is plausibly the one
-that produces the confusion of Section 9.5. Every rate at which a class is called armed is lower in
-the new realisation than on the validation split (armed recall 0.43 in
-`holdout_armas_armado_75.json` against 0.55 in `06-resultados/confusao_armado_75.json`), which does
-not affect the comparison, made within the same images.
+and half from two models that enter no training corpus: a rifle of 1.10 m and a compact submachine
+gun of 0.55 m. The rifle is longer than the recorded length of any of the five (the longest, a
+shotgun, is recorded at 1.05 m) but inside their range as modelled, since the meshes of the two
+training rifles and of the shotgun are longer than their recorded lengths, and the submachine gun is
+inside that range, so that the test measures the asset rather than a new size. The type of every
+annotated instance is recorded, so the two recalls come from the same images under the same light.
+Recall on seen models: 0.400 (50 of 125); on unseen models: 0.466 (61 of 131), a ratio of 1.16
+(approximate 95 per cent interval 0.88 to 1.54, which ignores the clustering of boxes within the 50
+frames and is therefore optimistic) against the threshold of 0.80, which the criterion applies to
+the ratio itself, so the condition is not met and the 75 m figure stands
+(`06-resultados/holdout_armas_criterio.json`, produced by `06-resultados/holdout_criterio.py`). The
+two groups are not matched in composition: the seen group includes the pistol, 20 of its 125
+instances, shorter than either unseen model and the weapon least often called armed, so part of the
+ratio above one reflects that composition rather than better recognition of the unseen models; with
+the pistol set aside, the ratio still stays above the threshold. The per-model rates, from 15 to 69
+instances each and without intervals (`06-resultados/holdout_armas_armado_75.json`, produced by
+`06-resultados/confusao_armado.py` in step B2 of `07-blender/scripts/rodada3.py`), are consistent
+with the detector generalising to length and silhouette rather than to the asset: the unseen 1.10 m
+rifle is called armed at 0.50, among the seen long arms (0.34 to 0.52), the unseen 0.55 m submachine
+gun at 0.43, the pistol at 0.20, and a closed umbrella, 0.88 m long, at 0.38. The generalisation
+that passes this test is plausibly the one that produces the confusion of Section 9.5. Every rate at
+which a class is called armed is lower in the new realisation than on the validation split (armed
+recall 0.43 in `holdout_armas_armado_75.json` against 0.55 in
+`06-resultados/confusao_armado_75.json`), which does not affect the comparison, made within the same
+images.
 
 ### 11.6 Reproducibility, and what a reader cannot check
 
 Every generated image carries its seed, illumination regime and camera altitude in a manifest entry.
-The settlement is reproduced exactly from the seed; the figures in it were not, in the three corpora
+The settlement is reproduced exactly from the seed; the figures in it are not, in the three corpora
 rendered before the defect was found (the pilot corpus, the corpus of record and the original 75 m
-corpus), because the human generator drew from an unseeded random stream, a defect found and closed
-after those corpora were rendered. The settlement, the camera and the illumination of every reported
-image are therefore reproducible from the manifest, and the exact placement of figures is
-reproducible only for corpora generated after the fix. Camera pitch is recorded per image only in
-corpora generated after that field was added; the two nadir corpora of Section 8.2 predate it, which
-is why their rows carry the generator setting rather than a per-image value, and the table says so.
-The hyperparameter and inference table of Section 7.6 is in the body of the article, rather than in
-an appendix, so that every parameter needed to reproduce a run is in the article itself.
+corpus), because the human generator drew from an unseeded random stream, a defect since closed. The
+settlement, the camera and the illumination of every reported image are therefore reproducible from
+the manifest, and the exact placement of figures is reproducible only for corpora generated after
+the fix. Camera pitch is recorded per image only in corpora generated after that field was added;
+the two nadir corpora of Section 8.2 predate it, which is why their rows carry the generator setting
+rather than a per-image value, and the table says so. The hyperparameter and inference table of
+Section 7.6 is in the body of the article, rather than in an appendix, so that every parameter
+needed to reproduce a run is in the article itself.
 
 What a reader cannot check from this article is the corpus itself, although the reason is logistical
 rather than legal: every corpus generated for this article is redistributable by construction, since

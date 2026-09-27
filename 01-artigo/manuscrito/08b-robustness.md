@@ -51,13 +51,12 @@ not recover performance. Because the pilot did not learn its own domain (Section
 uninformative about scale as a confound: it neither supports nor rules out the explanation most
 favourable to us. On the corrected corpus only the native-scale half has been run: 0.0102 (Section
 9.2). The pilot matched the benchmark to the corpus on the median long side of the box. On the
-corrected corpus the two targets match closely in median area (301 against 300 square pixels with
-the benchmark's two splits pooled, Section 8.1) but not on the long side (20.6 against 25.0 pixels),
-and because they differ in shape no uniform rescaling matches both. The matched-scale half was
-dropped before the native-scale figure was known, on the argument that rescaling by area would leave
-the benchmark essentially where it is; that argument is not a measurement, and a rescaling on the
-long side, as in the pilot, has not been run. What still differs at matched area is shape, which
-Section 10.4 tests.
+corrected corpus the two targets match closely in median area but not on the long side, as the
+threat above records, and because they differ in shape no uniform rescaling matches both. The
+matched-scale half was dropped before the native-scale figure was known, on the argument that
+rescaling by area would leave the benchmark essentially where it is; that argument is not a
+measurement, and a rescaling on the long side, as in the pilot, has not been run. What still differs
+at matched area is shape, which Section 10.4 tests.
 
 **What would overturn the claim.** If the two figures diverge substantially on the corrected corpus,
 scale is a live confound after all and the efficacy ratio in Section 9.2 must be reported at matched
@@ -107,16 +106,16 @@ m for the oblique camera) and its jitter. One further setting differs because th
 nadir corpus keeps figures within a square around the camera axis whose side is 0.52 of the nadir
 frame width (`--enquadro quadrado` in `07-blender/scripts/gen_morro.py`), the filter that produced
 it, while the oblique corpus places them anywhere the projected frame covers, since an oblique frame
-is not a square on the ground. At the centre of the frame and at the nominal 120 m, that puts the
-ground sampling distance between about 4.3 and 6.3 cm per pixel across the pitch range, a span the
-altitude jitter widens, against 4.88 for the nadir corpus, so the change moves the shape of the
-target (h/w 1.46 against 0.98) and leaves its size in the same range, somewhat larger in area (456
-against 301 square pixels). Pitch is set from the VisDrone training split rather than from the
-validation split on which both models are scored, so that the calibration does not consume the test
-set. Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set.
-The figure of 0.1055 for S-oblique-six (Section 9.3) is not a result of this check: that corpus also
-changes the settlements, the pitch range, the figures, which carry nothing, and the placement of the
-camera.
+is not a square on the ground. At the centre of the frame and at the nominal 120 m, the oblique
+camera puts the ground sampling distance between about 4.3 and 6.3 cm per pixel across the pitch
+range, a span the altitude jitter widens, against 4.88 for the nadir corpus, so the change of camera
+moves the shape of the target (h/w 1.46 against 0.98) and leaves its size in the same range,
+somewhat larger in area (456 against 301 square pixels). Pitch is set from the VisDrone training
+split rather than from the validation split on which both models are scored, so that the calibration
+does not consume the test set. Result: 0.0614 for the oblique model against 0.0102 for the nadir
+model on the real test set. The figure of 0.1055 for S-oblique-six (Section 9.3) is not a result of
+this check: that corpus also changes the settlements, the pitch range, the figures, which carry
+nothing, and the placement of the camera.
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in

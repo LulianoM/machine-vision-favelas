@@ -29,10 +29,10 @@ evidence.
 These are not results about transfer. The model failed on its own domain, reaching 0.077 where the
 corpus of record, with 180 images at 4K, reaches 0.79 (Section 9.2), and transfer cannot be measured
 from a model that did not learn. Sections 10.1 and 8.1 name two candidate causes, properties of the
-pilot corpus rather than of the method if they hold, and neither has been isolated (the test of the
-first, specified in Section 10.1, has not been run): it contained 40 training scenes, and it was
+pilot corpus rather than of the method if they hold: it contained 40 training scenes, and it was
 rendered at 1080p, which doubles the ground sampling distance and places two thirds of all instances
-below one stride of the network (Section 8.1).
+below one stride of the network (Section 8.1). Neither has been isolated, and the test of the first,
+specified in Section 10.1, has not been run.
 
 The pilot does establish one thing a favourable result could not. This pipeline is capable of
 failing, and a candidate cause of the failure is legible in the corpus statistics before any
@@ -41,7 +41,8 @@ batch 8) and on two classes, armed and unarmed, rather than one: its synthetic v
 mean over those two classes, so the 0.077 above is not on the single-class scale of the 0.79 of the
 corpus of record (the same holds for the comparison in Section 10.1), while its two VisDrone rows
 merge the classes as every other model does. The rows below report the protocol re-run with both
-defects corrected and with the recipe of Section 7.6.
+defects of the pilot corpus (scene count and render resolution) corrected and with the recipe of
+Section 7.6.
 
 ### 9.1 Ceiling: what real training data achieves on this test set
 
@@ -82,18 +83,18 @@ Section 7.3, evaluated on the same real test set with no real training image of 
 **Efficacy of the synthetic method** = mAP50(S-nadir-150) / mAP50(R) = 0.0102 / 0.6311 = 1.6 per cent.
 
 **Variety of settlement at fixed volume.** The corpus of record renders one settlement. Model
-S-nadir-150-six keeps every generator setting and the number of images fixed and spreads the 180
-images over six settlements, 30 each, differing in relief, forest cover, a corridor through the core
-(an avenue, a narrow street or a river) and the palette of roofs and facades, and also in the extent
-of the built core, the number of sub-districts, the distribution of storey counts and the share of
-vacant lots (`07-blender/scripts/sitios.py`, settlements -1 to 4). It was rendered with the later
-generator, so its armed figures carry the five weapon models of Section 7.4, which the corpus of
-record predates.
+S-nadir-150-six keeps every command-line setting of the generator and the number of images fixed and
+spreads the 180 images over six settlements, 30 each, differing in relief, forest cover, a corridor
+through the core (an avenue, a narrow street or a river) and the palette of roofs and facades, and
+also in the extent of the built core, the number of sub-districts, the distribution of storey counts
+and the share of vacant lots (`07-blender/scripts/sitios.py`, settlements -1 to 4). It was rendered
+with the later generator, so its armed figures carry the five weapon models of Section 7.4, which
+the corpus of record predates.
 
 | Model | Synthetic validation mAP50 | VisDrone-DET val mAP50 | mAP50-95 | Efficacy |
 |---|---|---|---|---|
-| S-nadir-150, one settlement | 0.7915 | 0.0102 | 0.0025 | 1.6% |
-| S-nadir-150-six, six settlements | 0.6786 | 0.0190 | 0.0071 | 3.0% |
+| S-nadir-150, one settlement | 0.7915 | 0.0102 | 0.0025 | 1.6 per cent |
+| S-nadir-150-six, six settlements | 0.6786 | 0.0190 | 0.0071 | 3.0 per cent |
 
 *Source: `06-resultados/sim2real_s_nadir_4k.json` and `sim2real_s_variedade.json`, written by
 `07-blender/scripts/avalia_sim2real.py`.*
@@ -103,10 +104,10 @@ which is consistent with a model that has stopped memorising one scene, although
 splits are different sets. From one training run per model it is a candidate term in the gap, and in
 Section 9.3 it moves the transfer figure less than capture geometry does.
 
-Kiefer, Ott and Zell (2022) report mAP@50 on VisDrone for three architectures trained purely on
-synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO, against 24.6, 48.6
-and 43.9 respectively for the same architectures trained on real data. The YOLO row is the
-comparable one, since this article trains YOLO, and it gives a ratio of 23.2 per cent.
+Kiefer, Ott and Zell (2022) report mAP50 on VisDrone, in points, for three architectures trained
+purely on synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO, against
+24.6, 48.6 and 43.9 respectively for the same architectures trained on real data. The YOLO row is
+the comparable one, since this article trains YOLO, and it gives a ratio of 23.2 per cent.
 
 The two ratios are not directly comparable, and the reason matters more than the gap. Their
 denominator is a detector trained on the full VisDrone training split and scored over ten object
@@ -139,9 +140,9 @@ scene, is load-bearing on this benchmark.
 
 | Model | mAP50 on VisDrone-DET val | Efficacy vs. ceiling |
 |---|---|---|
-| S-nadir-150 | 0.0102 | 1.6% |
-| S-oblique | 0.0614 | 9.7% |
-| S-oblique-six | 0.1055 | 16.7% |
+| S-nadir-150 | 0.0102 | 1.6 per cent |
+| S-oblique | 0.0614 | 9.7 per cent |
+| S-oblique-six | 0.1055 | 16.7 per cent |
 
 *Source: `06-resultados/sim2real_s_nadir_4k.json`, `sim2real_s_obliquo.json` and
 `sim2real_s_oblvar.json`, written by `07-blender/scripts/avalia_sim2real.py`.*
@@ -170,25 +171,25 @@ The oblique corpus did not reach the shape it was calibrated for, 1.46 against 1
 reasons measured in Section 8.2. Model S-oblique-six combines the two terms and corrects the
 calibration: six settlements of 30 images; pitch between 45 and 56 degrees, chosen to centre the
 median of figures carrying nothing on the benchmark's shape, which in the single-settlement oblique
-corpus they reach only between 50 and 52 degrees; only such figures; and a camera placement redrawn,
-target, pitch and heading together and at most 30 times, until the camera stands at least 45 m above
-the ground beneath it and the ray through the centre of the frame first strikes the scene within 30
-m of the target rather than on forest or hillside. It is not an ablation, since several things
-change at once; it is the best configuration of this generator tried here and the model the rest of
-this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val (precision 0.2631,
-recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the nadir model and 1.7
-times the single-settlement oblique model, against 0.7047 on its own synthetic validation. The
-rendered figure approaches the calibration target without reaching it: a median height-to-width
-ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the benchmark's training split
-(Section 8.2). In absolute terms, 10.5 points of mAP50 sit just above the upper end of that
-synthetic-only range, under the same difference in classes, while the ratio to our own ceiling stays
-below theirs (Section 9.2).
+corpus they reach only between 50 and 52 degrees; and only such figures. Its camera placement is
+also redrawn, target, pitch and heading together and at most 30 times, until the camera stands at
+least 45 m above the ground beneath it and the ray through the centre of the frame first strikes the
+scene within 30 m of the target rather than on forest or hillside. It is not an ablation, since
+several things change at once; it is the best configuration of this generator tried here and the
+model the rest of this article calls the synthetic model. Result: mAP50 0.1055 on VisDrone-DET val
+(precision 0.2631, recall 0.1716, mAP50-95 0.0329), an efficacy of 16.7 per cent: 10.3 times the
+nadir model and 1.7 times the single-settlement oblique model, against 0.7047 on its own synthetic
+validation. The rendered figure approaches the calibration target without reaching it: a median
+height-to-width ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at 13.0 by 24.0 in the
+benchmark's training split (Section 8.2). In absolute terms, 10.5 points of mAP50 sit just above the
+upper end of that synthetic-only range, under the same difference in classes, while the ratio to our
+own ceiling stays below theirs (Section 9.2).
 
 The acquisition geometry this article reproduces points straight down. An oblique corpus that
 transfers better to VisDrone is informative about the benchmark, not about the acquisition that
 would be flown over Jacarezinho.
 
-<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that any per-regime performance difference found by the test specified in Section 10.3, not yet run, cannot be attributed to the labelling.-->
+<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at the reference altitude of these nadir frames, for the reason given in Section 11.5; the 75 m result is reported in Section 9.5. The figure is included to show that annotation and occlusion handling behave identically across regimes, so that any per-regime performance difference found by the test specified in Section 10.3, not yet run, cannot be attributed to the labelling.-->
 
 ### 9.4 Limited real fine-tuning, on the public benchmark only
 
@@ -321,12 +322,12 @@ against 3 m), rendered at 75 m. Confusable objects called armed: 0.165; unarmed 
 armed: 0.109 (third column above). Against 0.273 and 0.168 at 35 m with every other setting held,
 halving the ground sampling distance did not reduce the confusion: the 35 m model calls every class
 armed more often in point estimate, armed persons included (p = 0.15 and 0.22 for the armed and
-unarmed rates in the same test), at the same mAP50 and with a d′ no larger than the twin's, so the
-35 m result does not appear to be an artefact of the change of pose. The difference in the object
-rate is suggestive rather than established: 10.8 points, p = 0.06 in a two-proportion test that does
-not correct for clustering by frame (`06-resultados/gemeo_75_35.json`, produced by
-`compara_gemeo.py`). At 75 m, moving from the original 75 m corpus to the generator settings of the
-35 m corpus, realistic carrying poses among them, is followed by an object rate of 0.165 against
-0.237, a difference the same test does not support (p = 0.19). Section 11.5 states the condition
-under which the 75 m figure would be withdrawn and reads the altitudes together; Section 10.7
-explains why Section 10 carries no test for this distinction.
+unarmed rates in the two-proportion test of the next sentence), at the same mAP50 and with a d′ no
+larger than the twin's, so the 35 m result does not appear to be an artefact of the change of pose.
+The difference in the object rate is suggestive rather than established: 10.8 points, p = 0.06 in a
+two-proportion test that does not correct for clustering by frame (`06-resultados/gemeo_75_35.json`,
+produced by `compara_gemeo.py`). At 75 m, moving from the original 75 m corpus to the generator
+settings of the 35 m corpus, realistic carrying poses among them, is followed by an object rate of
+0.165 against 0.237, a difference the same test does not support (p = 0.19). Section 11.5 states the
+condition under which the 75 m figure would be withdrawn and reads the altitudes together; Section
+10.7 explains why Section 10 carries no test for this distinction.

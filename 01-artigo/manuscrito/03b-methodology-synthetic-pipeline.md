@@ -22,7 +22,7 @@ and Section 11 restates the boundary.
 
 ### 7.1 Why synthesis, and what it does not solve
 
-The ethical protocol stated above forecloses the conventional route to a training corpus. Aerial
+The ethical protocol of Section 5 forecloses the conventional route to a training corpus. Aerial
 imagery of an inhabited favela, at a resolution sufficient to resolve built form, necessarily
 captures residents, rooftop activity, and address-level geometry. Synthesis is therefore not a
 technical convenience. It is the only procedure we identified that yields a labelled corpus of the
@@ -46,16 +46,17 @@ geometry is authored by the generator. That choice makes the corpus redistributa
 is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
-target site with generic assets costs 27.0 mAP50 points on YOLOv11, the detector used here, and 22
-to 23 points on average across the architectures they test. In their taxonomy the corpus released
-with this article sits on the generic side, not the photogrammetric one: it is procedural geometry
-with public-domain materials, and it is on the losing side of that ablation by construction. Two
-qualifications bound how far the figure travels. Their object class is vehicles rather than people,
-and their evaluation is on the same site they reconstructed, so the result establishes that a
-digital twin of a place helps detection at that place, not at another. This article reports the
-trade rather than claiming to have avoided it. Measuring its size for this morphology would require
-a photogrammetric reconstruction of the target site, which is precisely what the ethical protocol of
-Section 5 forecloses, so the cost is quantified here from their result and not from ours.
+target site with generic assets costs 27.0 mAP50 points on YOLOv11 (their name for YOLO11, the
+family of the detector used here), and 22 to 23 points on average across the architectures they
+test. In their taxonomy the corpus released with this article sits on the generic side, not the
+photogrammetric one: it is procedural geometry with public-domain materials, and it is on the losing
+side of that ablation by construction. Two qualifications bound how far the figure travels. Their
+object class is vehicles rather than people, and their evaluation is on the same site they
+reconstructed, so the result establishes that a digital twin of a place helps detection at that
+place, not at another. This article reports the trade rather than claiming to have avoided it.
+Measuring its size for this morphology would require a photogrammetric reconstruction of the target
+site, which is precisely what the ethical protocol of Section 5 forecloses, so the cost is
+quantified here from their result and not from ours.
 
 Layout is produced in three stages, each addressing a specific way in which naive procedural
 generation betrays itself when viewed from above.
@@ -63,11 +64,11 @@ generation betrays itself when viewed from above.
 **Parcelling.** The built core is subdivided by recursive binary partition. At each split the
 boundary receives a gap drawn from a distribution whose modal value is zero, so that most dwellings
 abut their neighbours, as they do in consolidated self-built settlement; because each lot is then
-shrunk by 0.15 m toward its centroid and rotated about it (see Orientation below), a zero gap leaves
-a narrow seam or a wedge between neighbours rather than an exactly shared wall. In the released
-configuration the gap is zero with probability 0.82, falls between 0.5 and 1.2 metres with
-probability 0.12, between 1.3 and 2.0 metres with probability 0.05, and above 2.0 metres with
-probability 0.008. The second band is the alley, or beco, that defines the morphology.
+shrunk by 0.15 m towards its centroid and rotated about it (see Orientation below), a zero gap
+leaves a narrow seam or a wedge between neighbours rather than an exactly shared wall. In the
+released configuration the gap is zero with probability 0.82, falls between 0.5 and 1.2 m with
+probability 0.12, between 1.3 and 2.0 m with probability 0.05, and above 2.0 m with probability
+0.008. The second band is the alley, or *beco*, that defines the morphology.
 
 **Orientation.** A single binary partition, however deformed, leaves legible straight runs of ten or
 twenty dwellings, and that is the strongest visual signature of procedural generation in a nadir
@@ -76,10 +77,10 @@ corpus of record and between 6 and 12 in the other five settlements of Section 9
 independent orientation, separated by a Voronoi diagram, reproducing the way consolidated settlement
 grows by nuclei that meet at an angle. Each lot is also rotated about its centroid by up to 0.17
 radians and every corner passes through a smooth domain warp, so the statistic below measures the
-three mechanisms together. The result is measured. The statistic is the fraction of edge energy
-falling within 7.5 degrees of a cardinal axis, divided by the isotropic expectation. The measurement
-window covers 30 degrees of 180, so the isotropic expectation is one sixth and unity means no
-preferred direction. In the configuration of the corpus of record, rendered at 4K, the value is 0.94
+three mechanisms together. The statistic is the fraction of edge energy falling within 7.5 degrees
+of a cardinal axis, divided by the isotropic expectation. The measurement window covers 30 degrees
+of 180, so the isotropic expectation is one sixth and unity means no preferred direction. In the
+configuration of the corpus of record, rendered at 4K, the value is 0.94
 (`06-resultados/teste_fidelidade.csv`, row v12, written by
 `07-blender/scripts/teste_fidelidade.py`). The version of the generator that used a single partition
 was never measured with the corrected script, so no value is reported for it.
@@ -92,14 +93,14 @@ fact slightly below it. The script and the recorded values were corrected, and t
 noted here because the uncorrected figure appeared in circulated drafts.
 
 **Vertical accretion.** The dwelling is not a single prism. In the majority of cases with two or
-more storeys the upper floor is smaller than the one below and offset toward one boundary, leaving
+more storeys the upper floor is smaller than the one below and offset towards one boundary, leaving
 part of the lower slab exposed. Seen from above this produces the L-shaped footprint that
 characterises the texture of the settlement, and it is the single geometric feature whose absence
 most clearly reads as a grid of boxes rather than a favela. Storey count is drawn around a
 low-frequency noise field, with an independent per-dwelling scatter of 0.95 storeys (standard
 deviation), so that taller and shorter zones form, as they do on a real hillside.
 
-<!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 1920 by 1080, which gives 9.76 cm per pixel. The resolution is stated because Section 8.1 shows that ground sampling distance, not scene content, sets the size of the target; the corpus used for training is rendered at 3840 by 2160 and is twice as fine. All geometry is authored by the generator and all materials are public domain. The three construction stages described above are visible: shared party walls with alleys mostly between 0.5 and 1.2 m, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
+<!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 1920 by 1080, which gives 9.76 cm per pixel. The resolution is stated because Section 8.1 shows that ground sampling distance, not scene content, sets the size of the target; the corpus used for training is rendered at 3840 by 2160 and is twice as fine. All geometry except the CC0 tree models and human figures is authored by the generator, and all materials are public domain. The three construction stages described above are visible: dwellings abutting their neighbours with alleys mostly between 0.5 and 1.2 m, nine sub-districts meeting at an angle rather than a single orthogonal grid, and upper storeys offset from the floor below, which produces the L-shaped footprints that characterise the texture.-->
 
 Roof surfaces carry the objects that occupy them in use: water tanks in three commercial volumes,
 clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, and exposed
@@ -114,36 +115,36 @@ as a hypothesis about detector difficulty, with a test not yet run.
 ### 7.3 Camera model
 
 The virtual camera reproduces a commercially available UAV payload in a configuration typical of
-aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, pointing down within 3.5 degrees of
-vertical at a heading drawn per image, 150 metres above ground with a per-image jitter of up to 6
-metres either way (3 metres in the 35 m corpus of Section 9.5), corresponding to a 4.3 mm lens on a
-5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent. The parameters are stated in full so
-that the acquisition conditions evaluated here can be reproduced or contested without reference to
-any particular flight. At that altitude the frame covers approximately 187 by 105 metres of ground.
+aerial survey over urban terrain: a Zenmuse Z30 at 1920 by 1080, corresponding to a 4.3 mm lens on a
+5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent, pointing down within 3.5 degrees of
+vertical at a heading drawn per image, 150 m above ground with a per-image jitter of up to 6 m
+either way (3 m in the 35 m corpus of Section 9.5). The parameters are stated in full so that the
+acquisition conditions evaluated here can be reproduced or contested without reference to any
+particular flight. At that altitude the frame covers approximately 187 by 105 m of ground.
 
 Rendering resolution is treated as a parameter distinct from sensor resolution, and the distinction
 is consequential enough to state plainly. Ground sampling distance, not the nominal resolution of
-the camera, determines whether a target survives to the network. Rendering the 150 metre nadir view
-at 1920 by 1080 yields 9.76 cm per pixel; rendering the same view at 3840 by 2160 yields 4.88 cm per
+the camera, determines whether a target survives to the network. Rendering the 150 m nadir view at
+1920 by 1080 yields 9.76 cm per pixel; rendering the same view at 3840 by 2160 yields 4.88 cm per
 pixel. Section 8.1 reports what this does to the target and states the limitation it introduces:
 imagery rendered at 4K is easier than a single real frame from the sensor it reproduces.
 
 A second acquisition geometry is evaluated alongside the first, and the reason is arithmetic rather
-than aesthetic. At 150 metres a carried object is too thin for its form to be resolved, which this
+than aesthetic. At 150 m a carried object is too thin for its form to be resolved, which this
 article takes to foreclose the question rather than to answer it; no corpus of confusable objects
 was rendered at that altitude to test that. The generator is therefore also run with the same sensor
-at 75 metres, where the frame covers approximately 94 by 53 metres and the ground sampling distance
-halves to 2.44 cm per pixel at 3840 by 2160. Halving the distance doubles each linear dimension of
-the target and quadruples its area before occlusion, and measured on the generated corpora the
-median instance grows from 17.6 by 17.5 pixels to 47.6 by 41.7, a factor of 6.4 in area. That
-exceeds the four the geometry alone gives, and part of the excess is composition: the corpus at 75 m
-adds a class carrying elongated objects, whose boxes are the largest, and taken class by class the
-factor is 5.2 for armed and 5.7 for unarmed figures (`06-resultados/forma_corpora.json`).
+at 75 m, where the frame covers approximately 94 by 53 m and the ground sampling distance halves to
+2.44 cm per pixel at 3840 by 2160. Halving the distance doubles each linear dimension of the target
+and quadruples its area before occlusion, and measured on the generated corpora the median instance
+grows from 17.6 by 17.5 pixels to 47.6 by 41.7, a factor of 6.4 in area. That exceeds the four the
+geometry alone gives, and part of the excess is composition: the corpus at 75 m adds a class
+carrying elongated objects, whose boxes are the largest, and taken class by class the factor is 5.2
+for armed and 5.7 for unarmed figures (`06-resultados/forma_corpora.json`).
 
-The nadir altitudes are reported separately throughout, as `S-nadir-150`, `S-nadir-75` and, in
-Section 9.5, `S-nadir-35`, because they answer different questions: the first is the altitude at
-which aerial survey over urban terrain is conventionally flown with this payload, and the other two
-are the geometries under which the distinction the article is named after was measured.
+The nadir altitudes are reported separately throughout, as S-nadir-150, S-nadir-75 and, in Section
+9.5, S-nadir-35, because they answer different questions: the first is the altitude at which aerial
+survey over urban terrain is conventionally flown with this payload, and the other two are the
+geometries under which the distinction the article is named after was measured.
 
 ### 7.4 Annotation
 
@@ -172,24 +173,24 @@ side below 0.002 of the frame (`--min-lado`).
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 
-**Carried objects and hard negatives.** At 75 metres the corpus carries three classes rather than
-two: armed, unarmed, and unarmed carrying an elongated object. The third exists because of an
-objection that would otherwise be fatal to any figure reported for the first. If the weapon is
-always the same asset, in the same pose, at the same contrast, a detector can separate the classes
-on properties of the asset library rather than on anything visible in the world.
+**Carried objects and hard negatives.** At 75 m the corpus carries three classes rather than two:
+armed, unarmed, and unarmed carrying an elongated object. The third exists because of an objection
+that would otherwise be fatal to any figure reported for the first. If the weapon is always the same
+asset, in the same pose, at the same contrast, a detector can separate the classes on properties of
+the asset library rather than on anything visible in the world.
 
 The corpus is built to remove that possibility. Five firearm models are generated procedurally, two
-rifles, a carbine, a shotgun and a pistol, with recorded lengths of 0.20 to 1.05 metres; the meshes
-of the two rifles and of the shotgun are longer than the lengths recorded for them
+rifles, a carbine, a shotgun and a pistol, with recorded lengths of 0.20 to 1.05 m; the meshes of
+the two rifles and of the shotgun are longer than the lengths recorded for them
 (`07-blender/scripts/objetos_alongados.py`). Against them stand nine elongated objects that a person
-carries in this territory, spanning 0.88 to 2.5 metres: brooms, floor squeegees, plastic pipe,
+carries in this territory, spanning 0.88 to 2.5 m: brooms, floor squeegees, plastic pipe,
 reinforcement bar, planks, umbrellas, hoes, rolled mats and hose. Weapons and objects are drawn from
 one palette of base colours and surface roughness, so that dark and metallic surfaces occur on both
 and colour alone cannot separate the two, although light PVC and coloured plastic occur only on
-objects; both are carried through the same distribution of body poses, held forward, at the side,
-slung on the back, or carried while walking, in the same proportions, although an object whose
+objects. Both are carried through the same distribution of body poses, held forward, at the side,
+slung on the back, or carried while walking, in the same proportions. However, an object whose
 recorded length exceeds 1.15 m, which no weapon's recorded length does, is then re-angled in every
-pose to rest on the shoulder or to point toward the ground (`07-blender/scripts/people_mpfb.py`,
+pose to rest on the shoulder or to point towards the ground (`07-blender/scripts/people_mpfb.py`,
 `make_person`), so most confusable objects are carried at angles no weapon takes. A detector that
 separates the classes on this corpus may therefore be using the length and silhouette of what is
 carried, the light and coloured materials that only objects have, and the angle at which it is
@@ -213,15 +214,15 @@ in that study (30.4 points against 27.0), though not on average across architect
 Rather than jittering a single sun parameter, the generator defines six internally coherent lighting
 budgets, each governing solar irradiance and colour, the angular diameter of the solar disc, a band
 of solar elevation, sky fill and colour, atmospheric scattering density, aerosol content and a
-camera exposure offset together (the mean frame luminances below include each regime's exposure
-offset): hard sun, low sun, overcast, haze, heavy overcast, and rain. The angular diameter of the
-sun is what separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20
-degrees the cast shadow effectively disappears, which is what a covered sky does. Mean frame
-luminance over the 48 images of the pilot corpus `ds_morro_clima` (Section 8.3) runs 87.0 (hard
-sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255
+camera exposure offset together: hard sun, low sun, overcast, haze, heavy overcast, and rain (the
+mean frame luminances below include each regime's exposure offset). The angular diameter of the sun
+is what separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees
+the cast shadow effectively disappears, which is what a covered sky does. Mean frame luminance over
+the 48 images of the pilot corpus `ds_morro_clima` (Section 8.3) runs 87.0 (hard sun), 56.0 (low
+sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255
 (`06-resultados/contraste_clima.csv`, produced by `06-resultados/mede_contraste_clima.py`).
 
-<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the corpus `ds_morro_clima`, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) (`06-resultados/contraste_clima.csv`). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
+<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the corpus <code>ds_morro_clima</code>, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) (<code>06-resultados/contraste_clima.csv</code>). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
 The dataset sweeps the regimes in order rather than sampling them, so that a small corpus remains
 balanced, and the regime of each image is written to its manifest entry. This permits the per-regime
@@ -237,17 +238,17 @@ pixels (Section 8.2), falls to about 7 by 7. The smallest stride of the detector
 instance occupies less than one cell of the finest feature map and is close to invisible to the
 network by construction.
 
-An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561
+An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561 between a run trained on
+downscaled frames and a run trained on tiles at native scale
 (`06-resultados/blender_v3/val_final.json` and `06-resultados/blender_v3_tiles2/val_final.json`,
 written by `07-blender/scripts/train_yolo_win.py`, with the settings in the `args.yaml` beside each
-run) between a run trained on downscaled frames and a run trained on tiles at native scale. That
-pair is reported here as consistent with the arithmetic and **not** as an isolated effect of
-training scale, because the two runs differ in five further respects: detector size (YOLO11n against
-YOLO11s), input size (1536 against 1280), epoch count (40 against 60), initialisation (COCO weights
-against the checkpoint of a previous interrupted run) and the validation set on which each score is
-computed (whole frames downscaled to 1536 px against native-scale tiles). No controlled measurement
-of training scale alone exists in this project, and Section 11.1 states what would be required to
-obtain one.
+run). That pair is reported here as consistent with the arithmetic and **not** as an isolated effect
+of training scale, because the two runs differ in five further respects: detector size (YOLO11n
+against YOLO11s), input size (1536 against 1280), epoch count (40 against 60), initialisation (COCO
+weights against the checkpoint of a previous interrupted run) and the validation set on which each
+score is computed (whole frames downscaled to 1536 px against native-scale tiles). No controlled
+measurement of training scale alone exists in this project, and Section 11.1 states what would be
+required to obtain one.
 
 Synthetic training therefore operates on tiles cut at native scale with 20 per cent overlap, never
 on downscaled frames, although the scale augmentation of the recipe rescales them at random; the

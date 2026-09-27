@@ -7,18 +7,18 @@ stating the acquisition conditions under which the distinction is visible at all
 treats that as the measurable question it is, using a procedurally generated synthetic corpus of a
 dense self-built settlement.
 
-Ground sampling distance, the ground area a single pixel covers, not scene realism, fixes the
+Ground sampling distance, the width of ground a single pixel spans, not scene realism, fixes the
 target. At 4.88 cm per pixel, the ground sampling distance of the corpus of record, with the camera
 pointing straight down at 150 m, a person occupies 17.6 by 17.5 pixels and a firearm is not
 resolvable within that region. Halving the altitude enlarges the median box of a figure more than
 five-fold, and the question becomes empirical rather than foreclosed.
 
-The corpus is built to defeat the objection that separability in synthetic imagery is an artefact of
-an invariant asset: five firearm models are set against nine elongated objects carried in the same
-territory, brooms, rebar, pipe, umbrellas, drawn from the same colour and roughness palette, so that
-colour alone cannot separate the classes. False positives on those hard negatives are reported
-against altitude, on synthetic validation imagery only, since no public benchmark annotates a
-carried firearm.
+The corpus at half the altitude is built to defeat the objection that separability in synthetic
+imagery is an artefact of an invariant asset: five firearm models are set against nine elongated
+objects carried in the same territory (brooms, rebar, pipe, umbrellas), drawn from the same colour
+and roughness palette, so that colour alone cannot separate the classes. False positives on those
+hard negatives are reported against altitude, on synthetic validation imagery only, since no public
+benchmark annotates a carried firearm.
 
 Transfer to real aerial imagery, a public urban benchmark that is not a favela, is reported as a
 ratio to what the same detector achieves on the same test set when trained on a matched number of

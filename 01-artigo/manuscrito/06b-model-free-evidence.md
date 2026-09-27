@@ -18,11 +18,11 @@ stated rather than implied.
 
 | Corpus | Geometry | Render | Instances |
 |---|---|---|---|
-| `ds_morro_clima` | camera within 3.5 deg of straight down (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 x 1080 | 565 (train split) |
-| `ds_morro_4k` | same generator and geometry, rendered at 4K | 3840 x 2160 | 3,225 |
-| VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
+| `ds_morro_clima` | camera within 3.5 degrees of straight down (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 by 1080 | 565 (train split) |
+| `ds_morro_4k` | same generator and geometry, rendered at 4K | 3840 by 2160 | 3,225 |
+| VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 by 765 | 13,969 |
 
-*Instance counts and image sizes: `06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py` (408 of the 548 benchmark images are 1360 x 765).*
+*Instance counts and image sizes: `06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py` (408 of the 548 benchmark images are 1360 by 765).*
 
 `ds_morro_4k` is the corpus of record: it renders the reference acquisition specified in Section 7.3
 and is the training corpus of model S-nadir-150 in Section 9. `ds_morro_clima` is its 1080p
@@ -35,13 +35,13 @@ in the number of images (48 against 180) and in the figures placed per frame (14
 
 A person viewed from directly above does not present their height. The vertical dimension, which
 makes a person conspicuous in a ground level or oblique image, is exactly the dimension that does
-not project in nadir. What the camera records is the plan of the figure, roughly 0.48 metres
-shoulder to shoulder.
+not project in nadir. What the camera records is the plan of the figure, roughly 0.48 m shoulder to
+shoulder.
 
 | Corpus | Render | GSD | Median long side | Shorter side below 8 px |
 |---|---|---|---|---|
-| `ds_morro_clima` | 1920 x 1080 | 9.76 cm/px | 10.1 px | 66.9 per cent |
-| `ds_morro_4k` | 3840 x 2160 | 4.88 cm/px | 20.6 px | 0.8 per cent |
+| `ds_morro_clima` | 1920 by 1080 | 9.76 cm/px | 10.1 px | 66.9 per cent |
+| `ds_morro_4k` | 3840 by 2160 | 4.88 cm/px | 20.6 px | 0.8 per cent |
 | VisDrone-DET val | not applicable | not applicable | 25.0 px | 30.5 per cent |
 
 *Measured over the label files named in the table above: `06-resultados/alvo_por_split.json`,
@@ -53,11 +53,11 @@ feature map.*
 Two consequences follow, pointing in opposite directions.
 
 The first is a caution about our own headline figure. The survey camera records at 1080p. A single
-frame from that camera at 150 metres delivers a 10 pixel target on its long side, with two thirds of
-all instances below one stride on the short side. Rendering at 4K delivers a 20.6 pixel target on
-its long side. Synthetic imagery rendered at 4K is therefore materially easier than a single real
-frame from the sensor it reproduces, and any performance figure must declare the ground sampling
-distance to which it refers.
+frame from that camera at 150 m delivers a 10 pixel target on its long side, with two thirds of all
+instances below one stride on the short side. Rendering at 4K delivers a 20.6 pixel target on its
+long side. Synthetic imagery rendered at 4K is therefore materially easier than a single real frame
+from the sensor it reproduces, and any performance figure must declare the ground sampling distance
+to which it refers.
 
 The column that carries the argument is the last one, and it is measured on the shorter side of the
 box rather than the longer, because it is the shorter side that has to survive one stride of the
@@ -90,11 +90,11 @@ manifest, gives:
 
 | Corpus and geometry | Median width | Median height | Median h/w | Instances |
 |---|---|---|---|---|
-| `ds_morro_clima`, within 3.5 deg of straight down | 8.3 px | 8.2 px | **0.98** | 565 |
+| `ds_morro_clima`, within 3.5 degrees of straight down | 8.3 px | 8.2 px | **0.98** | 565 |
 | `ds_morro_4k`, same geometry at 4K | 17.6 px | 17.5 px | **0.98** | 3,225 |
-| `ds_morro_obl`, same settlement, pitch 26 to 52 deg recorded per image | 17.9 px | 26.4 px | **1.46** | 1,912 |
-| `ds_oblvar`, six settlements, pitch 45 to 56 deg, figures carrying nothing | 13.3 px | 25.2 px | **1.85** | 1,521 |
-| VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | 1.95 | 106,396 |
+| `ds_morro_obl`, same settlement, pitch 26 to 52 degrees recorded per image | 17.9 px | 26.4 px | **1.46** | 1,912 |
+| `ds_oblvar`, six settlements, pitch 45 to 56 degrees, figures carrying nothing | 13.3 px | 25.2 px | **1.85** | 1,521 |
+| VisDrone-DET train, real acquisition | 13.0 px | 24.0 px | **1.95** | 106,396 |
 | VisDrone-DET val, real acquisition | 12.0 px | 25.0 px | **2.20** | 13,969 |
 
 *The two nadir rows carry the generator setting that produced them, which bounds the camera within
@@ -116,12 +116,12 @@ angle. It gives the dose-response that a contrast of two geometries cannot:
 
 | Pitch recorded in the manifest | Instances | Median h/w, all figures | Median h/w, figures carrying nothing |
 |---|---|---|---|
-| 26 to 30 deg | 482 | 1.28 | 1.35 |
-| 30 to 35 deg | 512 | 1.41 | 1.50 |
-| 35 to 40 deg | 231 | 1.49 | 1.58 |
-| 40 to 45 deg | 359 | 1.64 | 1.82 |
-| 45 to 50 deg | 222 | 1.64 | 1.78 |
-| 50 to 52 deg | 106 | 1.70 | 1.97 |
+| 26 to 30 degrees | 482 | 1.28 | 1.35 |
+| 30 to 35 degrees | 512 | 1.41 | 1.50 |
+| 35 to 40 degrees | 231 | 1.49 | 1.58 |
+| 40 to 45 degrees | 359 | 1.64 | 1.82 |
+| 45 to 50 degrees | 222 | 1.64 | 1.78 |
+| 50 to 52 degrees | 106 | 1.70 | 1.97 |
 
 *Source: `06-resultados/forma_corpora.json`, produced by `06-resultados/mede_forma.py` from the
 full-frame labels.*
@@ -145,9 +145,9 @@ This is a domain shift that matters here, and no appearance-based measure of rea
 generator could be made arbitrarily more photorealistic without moving this quantity. Unlike
 photorealism it is also cheap to manipulate, being a property of where the camera is placed rather
 than of how the scene is built. Section 9.3 reports the S-oblique model, in which the same generator
-renders the same settlement from a tilted camera, and Section 10.4 treats the difference between the
-two models as the contribution of acquisition geometry, together with the settings that change with
-it.
+settings render the same settlement from a tilted camera, and Section 10.4 treats the difference
+between the two models as the contribution of acquisition geometry, together with the settings that
+change with it.
 
 One limit on the interpretation is stated here rather than in limitations. The nadir corpora record
 a generator setting rather than a per-image pitch, and the benchmark values come from real imagery
@@ -196,10 +196,10 @@ withdrawn, and Section 11.3 the implication that is withdrawn with it.
 
 Taken together the measurements reframe the design problem stated in Section 6. The binding
 constraint is not only that a synthetic favela fails to look like a favela. At the scale at which
-this task operates, the target is a few tens of pixels of low contrast texture; its silhouette in
-these corpora tracks camera pitch rather than scene content; and under hard sun, the illumination
-conventionally preferred for flying, the regime with the second largest raw contrast has the second
-lowest point estimate once local clutter is accounted for, which Section 8.3 attributes, as a
+this task operates, the target is a few tens of pixels of low-contrast texture; its silhouette in
+these corpora tracks camera pitch rather than scene content; and hard sun, the illumination
+conventionally preferred for flying, is the regime with the second largest raw contrast and the
+second lowest point estimate once local clutter is accounted for. Section 8.3 attributes this, as a
 proposed mechanism, to cast shadow in the background; whether that makes detection harder is the
 test of Section 10.3, which has not been run.
 
