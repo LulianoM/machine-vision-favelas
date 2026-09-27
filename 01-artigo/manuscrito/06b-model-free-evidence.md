@@ -23,6 +23,8 @@ stated rather than implied.
 | `ds_morro_4k` | same generator and geometry, rendered at 4K | 3840 x 2160 | 3,225 |
 | VisDrone-DET validation | uncontrolled, real acquisition | mixed, mostly 1360 x 765 | 13,969 |
 
+*Instance counts and image sizes: `06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py` (408 of the 548 benchmark images are 1360 x 765).*
+
 `ds_morro_4k` is the corpus of record: it renders the reference acquisition specified in Section
 7.3 and is the training corpus of model S-nadir-150 in Section 9. `ds_morro_clima` is its 1080p predecessor, retained here because the
 comparison between the two isolates the effect of render resolution from every other variable.
@@ -40,7 +42,8 @@ shoulder to shoulder.
 | `ds_morro_4k` | 3840 x 2160 | 4.88 cm/px | 20.6 px | 0.8 per cent |
 | VisDrone-DET val | not applicable | not applicable | 25.0 px | 30.5 per cent |
 
-*Measured over the label files named in the table above. The smallest stride of the detector is 8
+*Measured over the label files named in the table above: `06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py` (the `ds_morro_clima` row on its
+training split, `ds_morro_4k` on both splits, the benchmark on its validation split). The smallest stride of the detector is 8
 pixels, so an instance below that size occupies less than one cell of the finest feature map.*
 
 Two consequences follow, pointing in opposite directions.
@@ -60,7 +63,8 @@ detector of this family resolves well.
 
 The second was initially mistaken for a problem. At 4K the median synthetic instance covers
 301 square pixels and the median instance of the real benchmark, its training and validation splits pooled, covers 300,
-a ratio of 1.00. The long
+a ratio of 1.00 (`06-resultados/alvo_4k_vs_visdrone.csv`, produced by `06-resultados/mede_alvo.py`;
+the values per split are in `alvo_por_split.json`). The long
 side does not match as closely, 20.6 against 25.0 pixels, because the two differ in shape rather
 than in size, which is the subject of Section 8.2. An earlier version of this analysis reported
 a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain shift.
@@ -90,7 +94,10 @@ recorded in its manifest, gives:
 3.5 degrees of vertical but does not record it per image; the two oblique rows record pitch per
 image. The benchmark rows are measured
 directly. Both benchmark splits are shown because the two differ, and because the oblique arm of
-Section 9.3 is calibrated on the training split so that the validation split remains untouched.*
+Section 9.3 is calibrated on the training split so that the validation split remains untouched.
+The `ds_morro_4k`, `ds_morro_obl` and `ds_oblvar` rows are in `06-resultados/forma_corpora.json`,
+produced by `06-resultados/mede_forma.py`; the `ds_morro_clima` row and the two benchmark rows are in
+`06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py`.*
 
 The two nadir corpora differ by a factor of two in render resolution and by a factor of six in
 instance count, and agree on this quantity to the second decimal: 0.98 in both. The real benchmark

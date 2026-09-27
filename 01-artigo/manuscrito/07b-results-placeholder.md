@@ -42,14 +42,18 @@ instances), the same number of training images as the tiled synthetic corpus of 
 evaluated on VisDrone-DET validation. Holding the number of training images equal lets the ratio in
 Section 9.2 speak to the data at a matched number of images, though not of instances: the images
 of R hold 18,858 persons against 3,225 in the whole synthetic corpus of record. A run on the full training split
-(6,471 images) was started and stopped before completion: at this hardware's pace it would have
-taken two days to improve a denominator whose role is to be matched, not maximised.
+(6,471 images) was started and stopped before completion: with roughly six times as many images per
+epoch, it would have cost far more machine time than the matched run to improve a denominator whose
+role is to be matched, not maximised.
 
 | Model | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|
 | R (1,106 real training images) | 0.7312 | 0.5729 | 0.6311 | 0.2538 |
 
-*Source: `06-resultados/sim2real_r_pareado.json`.*
+*Source: `06-resultados/sim2real_r_pareado.json`, written by `07-blender/scripts/avalia_sim2real.py`.
+Images and person instances of the training set of R: `06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py` (`visdrone_sub`).
+The images were drawn by step 9 of `07-blender/scripts/fila_noite.py`, which sets their number equal
+to the training tiles of the corpus of record, and R was trained by its step 10.*
 
 This figure is the denominator for everything that follows. It is not a claim about our method; it
 establishes what the test set permits at this volume of data.
@@ -79,7 +83,8 @@ core (an avenue, a narrow street or a river) and the palette of roofs and facade
 | S-nadir-150, one settlement | 0.7915 | 0.0102 | 0.0025 | 1.6% |
 | S-nadir-150-six, six settlements | 0.6786 | 0.0190 | 0.0071 | 3.0% |
 
-*Source: `06-resultados/sim2real_s_variedade.json`.*
+*Source: `06-resultados/sim2real_s_nadir_4k.json` and `sim2real_s_variedade.json`, written by
+`07-blender/scripts/avalia_sim2real.py`.*
 
 Variety nearly doubles the transfer figure and lowers the score on the model's own validation
 split, which is consistent with a model that has stopped memorising one scene, although the two
@@ -121,7 +126,8 @@ rest of the scene, is load-bearing on this benchmark.
 | S-oblique | 0.0614 | 9.7% |
 | S-oblique-six | 0.1055 | 16.7% |
 
-*Source: `06-resultados/sim2real_s_obliquo.json` and `sim2real_s_oblvar.json`.*
+*Source: `06-resultados/sim2real_s_nadir_4k.json`, `sim2real_s_obliquo.json` and
+`sim2real_s_oblvar.json`, written by `07-blender/scripts/avalia_sim2real.py`.*
 
 **Difference attributable to acquisition geometry, on this benchmark** =
 mAP50(S-oblique) - mAP50(S-nadir-150) = 0.0512, a factor of 6.0.
@@ -225,7 +231,8 @@ built so that the artefact cannot account for the result: five firearm models ag
 elongated objects carried in the same territory, sharing the weapons' colour and roughness
 palette and the same distribution of carrying poses. The corpus holds 2,887 instances in 200 images,
 933 of them armed, 973 unarmed and 981 carrying a confusable object. A second corpus
-at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by 103.1 pixels.
+at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by 103.1 pixels
+(`06-resultados/forma_corpora.json`, produced by `06-resultados/mede_forma.py`).
 
 | Quantity | S-nadir-75 (75 m) | S-nadir-35 (35 m) | Twin of S-nadir-35 at 75 m |
 |---|---|---|---|
@@ -239,7 +246,7 @@ at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by 103.1
 at an intersection-over-union of 0.50 for the rates; the validation split of each corpus
 (27, 35 and 24 images). Source: `06-resultados/confusao_armado_75.json`,
 `confusao_armado_35.json` and `confusao_armado_75g.json`, produced by `06-resultados/confusao_armado.py`;
-precision from `compara_gemeo.py`. The third column is the matched corpus described below.*
+precision from `06-resultados/gemeo_75_35.json`, produced by `06-resultados/compara_gemeo.py`. The third column is the matched corpus described below.*
 
 The fourth row is the quantity of interest. It is the synthetic estimate, unmeasured on real
 imagery, of the rate at which the system would mark a resident carrying a broom, a length of pipe or a rolled mat as armed, and it is the concrete form
@@ -248,8 +255,9 @@ halved again: at 35 m, where a rifle spans some 80 pixels, about one confusable 
 still called armed, and so is about one unarmed person in six.
 
 The two corpora differ in more than altitude. The 35 m corpus also changed how confusable objects
-are carried: at 75 m the object was held in the firing pose in 42 per cent of cases, as often as
-the weapon, while at 35 m it is held that way in 8 per cent and otherwise over the shoulder, at the
+are carried: at 75 m the object was drawn in the firing pose with probability 0.42, as the
+weapon is, while at 35 m it is drawn that way with probability 0.08 (`07-blender/scripts/people_mpfb.py`)
+and otherwise over the shoulder, at the
 side or in one hand. That removes a cue the 75 m model may have used, and it is the more realistic
 distribution, but it confounds resolution with pose (and with render sampling, 64 against 96
 samples per pixel). A third corpus separates them: identical to the 35 m corpus in every setting

@@ -10,7 +10,7 @@ qualifications added after the fact.
 Section 7.6 argues that training scale governs whether a target reaches the network, and supports
 the argument by arithmetic: a 4 pixel instance occupies less than one cell of the finest feature
 map of a detector whose smallest stride is 8. The empirical pair quoted alongside it, mAP50 moving
-from 0.116 to 0.561, comes from two runs of an earlier arm that differ in four further respects,
+from 0.116 to 0.561 (files in Section 7.6), comes from two runs of an earlier arm that differ in four further respects,
 and it is therefore consistent with the argument rather than evidence for it.
 
 Obtaining the controlled measurement requires one experiment that has not been run: the same
@@ -128,12 +128,13 @@ on unseen models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent in
 against the threshold of 0.80, which the criterion applies to the ratio itself, so the condition
 is not met and the 75 m figure stands
 (`06-resultados/holdout_armas_criterio.json`, produced by `holdout_criterio.py`). The per-model
-rates, from 15 to 69 instances each and without intervals, are consistent with the detector
+rates, from 15 to 69 instances each and without intervals (`06-resultados/holdout_armas_armado_75.json`,
+produced by `06-resultados/confusao_armado.py` in step B2 of `07-blender/scripts/rodada3.py`), are consistent with the detector
 generalising to length and silhouette rather than to the asset: the unseen 1.10 m rifle is called
 armed at 0.50, among the seen long arms (0.34 to 0.52), the unseen 0.55 m submachine gun at 0.43,
 the pistol at 0.20, and a closed umbrella, 0.88 m long, at 0.38. The generalisation that passes
 this test is plausibly the one that produces the confusion of Section 9.5. Every rate at which a class is called armed is lower in the new realisation than on the validation split (armed recall 0.43
-against 0.55), which does not affect the comparison, made within the same images.
+in `holdout_armas_armado_75.json` against 0.55 in `06-resultados/confusao_armado_75.json`), which does not affect the comparison, made within the same images.
 Nothing in this article recommends acquisition over the case study territory.
 
 ### 11.6 Reproducibility, and what a reader cannot check

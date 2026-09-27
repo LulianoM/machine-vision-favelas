@@ -103,8 +103,9 @@ settlement seed, the same material library, the same illumination regimes, the s
 and unarmed figures and the same annotation procedure, with the same training recipe and the same
 number of images, both at 4K. What differs is the camera: pitch, drawn between 26 and 52 degrees
 and recorded per image, altitude (120 m for the oblique camera) and its jitter. One further setting differs because the
-camera does: the nadir corpus keeps figures within a central band about three fifths of the frame
-wide, the filter that produced it, while the oblique corpus places them anywhere the projected
+camera does: the nadir corpus keeps figures within a square around the camera axis whose side is
+0.52 of the nadir frame width (`--enquadro quadrado` in `07-blender/scripts/gen_morro.py`), the filter
+that produced it, while the oblique corpus places them anywhere the projected
 frame covers, since an oblique frame is not a square on the ground. At the centre of the
 frame and at the nominal 120 m, that puts the ground sampling distance between about 4.3 and 6.3 cm
 per pixel across the pitch range, a span the altitude jitter widens, against 4.88 for the nadir corpus, so the change moves the shape of the target (h/w 1.46

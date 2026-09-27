@@ -47,7 +47,7 @@ redistributable in full, and it is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
 target site with generic assets costs 27.0 mAP50 points on YOLOv11, the detector used here, and
-22 to 23 points on average across six architectures. In their taxonomy the corpus released with
+22 to 23 points on average across the architectures they test. In their taxonomy the corpus released with
 this article sits on the generic side, not the photogrammetric one: it is procedural geometry
 with public-domain materials, and it is on the losing side of that ablation by construction. Two
 qualifications bound how far the figure travels. Their object class is vehicles rather than
@@ -76,8 +76,9 @@ nuclei that meet at an angle. The result is measured. The statistic is the
 fraction of edge energy falling within 7.5 degrees of a cardinal axis, divided by the isotropic
 expectation. The measurement window covers 30 degrees of 180, so the isotropic expectation is one
 sixth and unity means no preferred direction. In the configuration of the corpus of record, rendered
-at 4K, the value is 0.94; in the version of the generator that used a single partition it was 2.18
-(`06-resultados/teste_fidelidade.csv`, `07-blender/HISTORICO-LOOP.md`).
+at 4K, the value is 0.94 (`06-resultados/teste_fidelidade.csv`, row v12, written by
+`07-blender/scripts/teste_fidelidade.py`). The version of the generator that used a single
+partition was never measured with the corrected script, so no value is reported for it.
 
 An earlier draft of this article reported 1.62 for the configuration then released, an earlier
 iteration of the generator. That figure came from a
@@ -180,14 +181,15 @@ while walking, in the same proportions. A detector that separates the classes on
 therefore doing so on the silhouette of what is carried, which is the only thing that could
 transfer, and the rate at which it calls a broom a rifle is reported directly in Section 9.5.
 Two later corpora, at 35 m and its twin at 75 m, depart from this in one respect, stated where
-they are reported: the object is held in the firing pose in 8 per cent of cases rather than as
-often as the weapon, which is closer to how such objects are carried.
+they are reported: the object is drawn in the firing pose with probability 0.08 rather than
+0.42, the probability used for the weapon (`07-blender/scripts/people_mpfb.py`, `make_person`),
+which is closer to how such objects are carried.
 
 ### 7.5 Domain randomisation over illumination
 
 Liao et al. (2026) measure that removing variation in sun position, weather and viewing angle
-costs 30.4 mAP50 points on YOLOv11, the detector used here, and 17.5 on average across six
-architectures, with the largest penalty on truncated objects. The qualifications of Section 7.2
+costs 30.4 mAP50 points on YOLOv11, the detector used here, and 17.5 on average across the
+architectures they test, with the largest penalty on truncated objects. The qualifications of Section 7.2
 apply: their object is vehicles and their test is on the reconstructed site. Illumination is
 randomised here because it is the cheapest axis to vary and, for YOLOv11, the more costly of the
 two ablations in that study (30.4 points against 27.0), though not on average across
@@ -198,11 +200,12 @@ lighting budgets, each governing solar irradiance, the angular diameter of the s
 fill, atmospheric scattering density, and aerosol content together: hard sun, low sun, overcast,
 haze, heavy overcast, and rain. The angular diameter of the sun is what separates these
 physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees the cast shadow
-effectively disappears, which is what a covered sky does. Mean frame luminance over the training corpus runs
-87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1
-(rain) of 255 (`06-resultados/contraste_clima.csv`).
+effectively disappears, which is what a covered sky does. Mean frame luminance over the 48 images of the pilot
+corpus `ds_morro_clima` (Section 8.3) runs 87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4
+(haze), 55.6 (heavy overcast) and 35.1 (rain) of 255 (`06-resultados/contraste_clima.csv`, produced
+by `06-resultados/mede_contraste_clima.py`).
 
-<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Mean frame luminance runs from 94.4 (haze) to 35.1 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
+<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the corpus `ds_morro_clima`, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) (`06-resultados/contraste_clima.csv`). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
 The dataset sweeps the regimes in order rather than sampling them, so that a small corpus remains
 balanced, and the regime of each image is written to its manifest entry. This permits the
@@ -212,11 +215,15 @@ per-regime analysis reported in Section 8.3 and the ablation in Section 10.
 
 The scale at which a target reaches the network is treated here as the governing variable, and the
 reason is arithmetic before it is empirical. Downscaling a 4K frame to a 1536 pixel training input
-reduces a target occupying 11 to 41 pixels to 4 to 16 pixels. The smallest stride of the detector
-is 8, so a 4 pixel instance occupies less than one cell of the finest feature map and is close to
+divides every linear dimension by 2.5, so the median instance of the corpus of record, 17.6 by 17.5
+pixels (Section 8.1), falls to about 7 by 7. The smallest stride of the detector is 8, so such an
+instance occupies less than one cell of the finest feature map and is close to
 invisible to the network by construction.
 
-An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561 between a run trained on
+An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561
+(`06-resultados/blender_v3/val_final.json` and `06-resultados/blender_v3_tiles2/val_final.json`,
+written by `07-blender/scripts/train_yolo_win.py`, with the settings in the `args.yaml` beside each
+run) between a run trained on
 downscaled frames and a run trained on tiles at native scale. That pair is reported here as
 consistent with the arithmetic and **not** as an isolated effect of training scale, because the
 two runs differ in four further respects: detector size (YOLO11n against YOLO11s), input size
@@ -233,7 +240,7 @@ downscaled frames.
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
 | Initialisation | COCO pretrained weights for every model trained from scratch; the synthetic-start fine-tuning models of Section 9.4 start from S-oblique-six |
 | Tile size, synthetic corpus at 4K | 1280 px, 20 per cent overlap |
-| Empty tiles retained as negatives | requested 5 per cent; realised 0.8 to 4.5 per cent depending on corpus density, and 0.8 per cent in the corpus of record |
+| Empty tiles retained as negatives | each tile without a box kept with probability 0.05 (`--keep-empty`, default of `07-blender/scripts/tile_dataset.py`); the realised share is printed in each tiling log and is not recorded under `06-resultados/` |
 | Minimum retained fraction of a clipped box | 0.40 |
 | Optimiser, learning rate | Ultralytics default, lr0 0.01 |
 | Input size, batch | 1280 px, batch 6 |
