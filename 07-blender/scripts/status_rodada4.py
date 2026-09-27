@@ -24,7 +24,7 @@ QUADRO = {"H1": (["ds_armado_75_porte"], 50, 170, 0), "E1": (["ds_armado_150g"],
           "I1": (["ds_armado_35_extra"], 80, 125, 1500), "I2": (["ds_armado_75g_extra"], 80, 125, 1500),
           "J1": (["ds_regime_4k"], 120, 190, 1440)}
 # treino: (nome, epocas, s por epoca)
-EPOCA = {"F2": ("misto05", 30, 260), "F3": ("misto10", 30, 380), "E3": ("armado_150g", 60, 230),
+EPOCA = {"F2": ("misto05", 30, 416), "F3": ("misto10", 30, 560), "E3": ("armado_150g", 60, 230),
          "G1": ("s_oblvar_sd1", 60, 175), "G2": ("s_oblvar_sd2", 60, 175),
          "G3": ("ft05_sint_sd1", 30, 100), "G4": ("ft05_sint_sd2", 30, 100),
          "G5": ("ft05_coco_sd1", 30, 100), "G6": ("ft05_coco_sd2", 30, 100),
