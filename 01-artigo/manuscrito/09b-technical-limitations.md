@@ -131,7 +131,11 @@ models: 0.466 (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.8
 ignores the clustering of boxes within the 50 frames and is therefore optimistic) against the
 threshold of 0.80, which the criterion applies to the ratio itself, so the condition is not met and
 the 75 m figure stands (`06-resultados/holdout_armas_criterio.json`, produced by
-`holdout_criterio.py`). The per-model rates, from 15 to 69 instances each and without intervals
+`holdout_criterio.py`). The two groups are not matched in composition: the seen group includes the
+pistol, 20 of its 125 instances, shorter than either unseen model and the weapon least often called
+armed, so part of the ratio above one reflects that composition rather than better recognition of
+the unseen models; with the pistol set aside, the ratio still stays above the threshold. The
+per-model rates, from 15 to 69 instances each and without intervals
 (`06-resultados/holdout_armas_armado_75.json`, produced by `06-resultados/confusao_armado.py` in
 step B2 of `07-blender/scripts/rodada3.py`), are consistent with the detector generalising to length
 and silhouette rather than to the asset: the unseen 1.10 m rifle is called armed at 0.50, among the

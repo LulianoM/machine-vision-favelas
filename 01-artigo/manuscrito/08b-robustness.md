@@ -1,12 +1,13 @@
 ## 10. Robustness and Alternative Explanations
 
-> **Provenance note.** Each overturning condition below was fixed before the corresponding
-> measurement was run. Quantities appear as `[X]` until measured, and each check is reported whether
+> **Provenance note.** Quantities appear as `[X]` until measured, and each check is reported whether
 > or not its outcome is favourable.
 
 Each threat below is named, given a check, and given an explicit condition that would overturn the
 result it protects; where the check has not been run, the text says so. Stating that condition in
-advance is what distinguishes a check from a defence written after seeing the number.
+advance is what distinguishes a check from a defence written after seeing the number. Each
+overturning condition below was fixed before the corresponding measurement was run; the two made
+more precise afterwards, in Sections 10.1 and 10.3, were changed before their tests and say so.
 
 ### 10.1 The corpus is small, and small corpora flatter themselves
 

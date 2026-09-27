@@ -17,19 +17,20 @@ The corpus is built to defeat the objection that separability in synthetic image
 an invariant asset: five firearm models are set against nine elongated objects carried in the same
 territory, brooms, rebar, pipe, umbrellas, drawn from the same colour and roughness palette, so that
 colour alone cannot separate the classes. False positives on those hard negatives are reported
-against altitude.
+against altitude, on synthetic validation imagery only, since no public benchmark annotates a
+carried firearm.
 
 Transfer to real aerial imagery, a public urban benchmark that is not a favela, is reported as a
-ratio to what a detector trained on real data achieves on the same test set: 1.6 per cent for the
-nadir acquisition taken as reference, 9.7 per cent when the same settlement is rendered from an
-oblique camera, and 16.7 per cent for the best oblique configuration, six settlements at a pitch
-recalibrated to the benchmark. Given 5 or 10 per cent of the benchmark's real training images, a
-generic initialisation outperformed the synthetic one, in one training run per model. No armed and
-unarmed accuracy is reported at 150 m: at that ground sampling distance a carried object reaches the
-image as a thin line whose form cannot be resolved, an absence argued from resolution rather than
-measured, and a figure obtained there could not be told apart from the regularity of our asset
-library. Stating the conditions under which a capability is absent is a contribution of the same
-kind as demonstrating one that is present.
+ratio to what the same detector achieves on the same test set when trained on a matched number of
+real images: 1.6 per cent for the nadir acquisition taken as reference, 9.7 per cent when the same
+settlement is rendered from an oblique camera, and 16.7 per cent for the best oblique configuration,
+six settlements at a pitch recalibrated to the benchmark. Given 5 or 10 per cent of the benchmark's
+real training images, a generic initialisation outperformed the synthetic one, in one training run
+per model. No armed and unarmed accuracy is reported at 150 m: at that ground sampling distance a
+carried object reaches the image as a thin line whose form cannot be resolved, an absence argued
+from resolution rather than measured, and a figure obtained there could not be told apart from the
+regularity of our asset library. Stating the conditions under which a capability is absent is a
+contribution of the same kind as demonstrating one that is present.
 
 **Keywords:** synthetic data, aerial object detection, ground sampling distance, dual use, informal
 settlements

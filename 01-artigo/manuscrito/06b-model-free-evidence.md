@@ -64,7 +64,9 @@ box rather than the longer, because it is the shorter side that has to survive o
 network. Read that way the benchmark is not the easy case: 30.5 per cent of its instances have a
 side below 8 pixels, against 0.8 per cent of ours at 4K. Part of what any transfer figure reported
 later measures is that the real benchmark contains a third of its targets at a scale no detector of
-this family resolves well.
+this family resolves well. These sizes are measured at native resolution; at evaluation each
+benchmark image is resized to 1280 px on its long side (Section 7.6), so the share below one stride
+at the network input differs somewhat from the column above.
 
 The second was initially mistaken for a problem. At 4K the median synthetic instance covers 301
 square pixels and the median instance of the real benchmark, its training and validation splits

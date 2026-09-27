@@ -187,16 +187,18 @@ reinforcement bar, planks, umbrellas, hoes, rolled mats and hose. Weapons and ob
 one palette of base colours and surface roughness, so that dark and metallic surfaces occur on both
 and colour alone cannot separate the two, although light PVC and coloured plastic occur only on
 objects; both are carried through the same distribution of body poses, held forward, at the side,
-slung on the back, or carried while walking, in the same proportions, although an object longer than
-1.15 m, which no weapon is, is then re-angled in every pose to rest on the shoulder or to point
-toward the ground (`07-blender/scripts/people_mpfb.py`, `make_person`), so most confusable objects
-are carried at angles no weapon takes. A detector that separates the classes on this corpus is
-therefore doing so on the silhouette of what is carried, which is the only thing that could
-transfer, and the rate at which it calls a broom a rifle is reported directly in Section 9.5. Two
-later corpora, at 35 m and its twin at 75 m, depart from this in one respect, stated where they are
-reported: the object is drawn in the firing pose with probability 0.08 rather than 0.42, the
-probability used for the weapon (`07-blender/scripts/people_mpfb.py`, `make_person`), which is
-closer to how such objects are carried.
+slung on the back, or carried while walking, in the same proportions, although an object whose
+recorded length exceeds 1.15 m, which no weapon's recorded length does, is then re-angled in every
+pose to rest on the shoulder or to point toward the ground (`07-blender/scripts/people_mpfb.py`,
+`make_person`), so most confusable objects are carried at angles no weapon takes. A detector that
+separates the classes on this corpus may therefore be using the length and silhouette of what is
+carried, the light and coloured materials that only objects have, and the angle at which it is
+carried, which is a rule of this generator rather than an observation of how residents carry things;
+the rate at which it calls a broom a rifle is reported directly in Section 9.5. Two later corpora,
+at 35 m and its twin at 75 m, depart from this in one respect, stated where they are reported: the
+object is drawn in the firing pose with probability 0.08 rather than 0.42, the probability used for
+the weapon (`07-blender/scripts/people_mpfb.py`, `make_person`), which is closer to how such objects
+are carried.
 
 ### 7.5 Domain randomisation over illumination
 
@@ -266,10 +268,14 @@ resized so that the long side is 1280 px, which downscales the most common train
 | Augmentation | mosaic 1.0, switched off for the last 10 epochs; horizontal flip 0.5; rotation up to 10 degrees; scale gain 0.4; translation 0.1; HSV gains 0.015, 0.6 and 0.4 (`07-blender/scripts/train_yolo_win.py`; rotation, scale and saturation differ from the Ultralytics defaults of 0, 0.5 and 0.7) |
 | Epochs | 60, stopping early after 15 epochs without improvement in validation mAP50-95, the Ultralytics fitness that also selects the reported checkpoint; 30 for the fine-tuning models of Section 9.4, selected the same way on their selection slice |
 | Validation split | each rendered frame assigned to validation with probability 0.15 (`--val`, default of `07-blender/scripts/gen_morro.py`), realised as 24 to 35 frames per corpus; split by frame and not by tile, and within a corpus the validation frames show the same settlement as the training frames, from other camera positions, with other figures and light |
-| Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95 |
+| Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95; on VisDrone every model receives each image resized to 1280 px on its long side, as R is trained, so the 408 validation images of 1360 by 765 are slightly reduced and images of other sizes are enlarged or reduced accordingly |
+| Seeds | training seed 0 with deterministic operations (Ultralytics defaults); the 1,106 images of R drawn with seed 21 (step 9 of `07-blender/scripts/fila_noite.py`); the fine-tuning and selection slices of Section 9.4 drawn with seed 2609 (`07-blender/scripts/prepara_ft.py`) |
 
 Splitting the validation set by frame rather than by tile is necessary because overlapping tiles of
 one frame are not independent; splitting by tile would place near-duplicates on both sides.
+Precision and recall reported in Section 9, except in the table of Section 9.5, are those the
+Ultralytics validator returns at the confidence that maximises F1, not at the 0.001 threshold used
+to compute mAP.
 
 ### 7.7 Evaluation protocol and the reference ceiling
 
@@ -277,14 +283,19 @@ A detector evaluated on the world in which it was trained reports a ceiling, not
 transfer score reported alone is equally uninterpretable, because nothing establishes the scale
 against which to read it. The protocol therefore trains the models below. The single-class models
 are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
-instances, reduced to a single class). Because no public benchmark annotates a carried firearm, the
-three-class models are scored instead on the validation split of their own corpus, whose tiles also
-served for early stopping and for selecting the checkpoint, so that split is held out from training
-but not from model selection; Section 9.5 reports them separately: scored on the world in which they
-were trained, their figures are ceilings rather than evidence of transfer, so the two groups cannot
-be read on one scale. Every synthetic corpus holds the same number of images, 180 for the
-single-class models and 200 for the three-class ones, so that no comparison below is a comparison of
-the number of frames, although instance counts still differ (Section 8.2).
+instances: the benchmark's pedestrian and people categories merged into one class, with its other
+categories and its annotated ignored regions dropped by `03-arma3/scripts/visdrone_to_yolo.py`).
+Every model is scored by the Ultralytics validator rather than the official VisDrone toolkit, so a
+detection inside an ignored region, which that toolkit disregards, counts here as a false positive,
+for R as for the synthetic models, though not necessarily to the same degree. Because no public
+benchmark annotates a carried firearm, the three-class models are scored instead on the validation
+split of their own corpus, whose tiles also served for early stopping and for selecting the
+checkpoint, so that split is held out from training but not from model selection; Section 9.5
+reports them separately: scored on the world in which they were trained, their figures are ceilings
+rather than evidence of transfer, so the two groups cannot be read on one scale. Every synthetic
+corpus holds the same number of images, 180 for the single-class models and 200 for the three-class
+ones, so that no comparison below is a comparison of the number of frames, although instance counts
+still differ (Section 8.2).
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
