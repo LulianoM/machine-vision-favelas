@@ -1,0 +1,130 @@
+{
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k\\weights\\best.pt",
+ "ds": "C:\\arma3-favela\\blender\\ds_regime_4k",
+ "tiles": "C:\\arma3-favela\\blender\\ds_regime_4k_tiles",
+ "por_regime": {
+  "sol_duro": {
+   "regime_no_artigo": "hard sun",
+   "ladrilhos": 149,
+   "quadros": 20,
+   "mAP50": 0.675,
+   "mAP50-95": 0.2443,
+   "P": 0.7999,
+   "R": 0.617,
+   "recall_conf025": {
+    "acertos": 249,
+    "n": 379,
+    "recall": 0.657,
+    "ic95_bootstrap_quadros": [
+     0.5914,
+     0.7204
+    ]
+   }
+  },
+  "sol_baixo": {
+   "regime_no_artigo": "low sun",
+   "ladrilhos": 148,
+   "quadros": 20,
+   "mAP50": 0.7903,
+   "mAP50-95": 0.35,
+   "P": 0.8465,
+   "R": 0.7606,
+   "recall_conf025": {
+    "acertos": 298,
+    "n": 366,
+    "recall": 0.8142,
+    "ic95_bootstrap_quadros": [
+     0.7676,
+     0.8542
+    ]
+   }
+  },
+  "nublado": {
+   "regime_no_artigo": "overcast",
+   "ladrilhos": 142,
+   "quadros": 20,
+   "mAP50": 0.7906,
+   "mAP50-95": 0.3539,
+   "P": 0.8778,
+   "R": 0.7544,
+   "recall_conf025": {
+    "acertos": 277,
+    "n": 348,
+    "recall": 0.796,
+    "ic95_bootstrap_quadros": [
+     0.7604,
+     0.8273
+    ]
+   }
+  },
+  "neblina": {
+   "regime_no_artigo": "haze",
+   "ladrilhos": 149,
+   "quadros": 20,
+   "mAP50": 0.7796,
+   "mAP50-95": 0.347,
+   "P": 0.8569,
+   "R": 0.7385,
+   "recall_conf025": {
+    "acertos": 300,
+    "n": 413,
+    "recall": 0.7264,
+    "ic95_bootstrap_quadros": [
+     0.6973,
+     0.7571
+    ]
+   }
+  },
+  "encoberto": {
+   "regime_no_artigo": "heavy overcast",
+   "ladrilhos": 145,
+   "quadros": 20,
+   "mAP50": 0.7545,
+   "mAP50-95": 0.3372,
+   "P": 0.8361,
+   "R": 0.725,
+   "recall_conf025": {
+    "acertos": 281,
+    "n": 366,
+    "recall": 0.7678,
+    "ic95_bootstrap_quadros": [
+     0.7139,
+     0.8155
+    ]
+   }
+  },
+  "chuva": {
+   "regime_no_artigo": "rain",
+   "ladrilhos": 152,
+   "quadros": 20,
+   "mAP50": 0.7589,
+   "mAP50-95": 0.3335,
+   "P": 0.877,
+   "R": 0.7105,
+   "recall_conf025": {
+    "acertos": 262,
+    "n": 332,
+    "recall": 0.7892,
+    "ic95_bootstrap_quadros": [
+     0.7477,
+     0.8267
+    ]
+   }
+  }
+ },
+ "ordem_mAP50_crescente": [
+  "hard sun",
+  "heavy overcast",
+  "rain",
+  "haze",
+  "low sun",
+  "overcast"
+ ],
+ "criterio_10_3": {
+  "overcast_acima_de_hard_sun": true,
+  "overcast_acima_de_rain": true,
+  "hard_sun_entre_os_dois_mais_fracos": true,
+  "implicacao_11_3_fica": true
+ },
+ "protocolo": "mAP50: ladrilhos 1280, classe unica, conf 0,001; recall: imagem inteira imgsz 3840, conf 0,25, casamento 1:1 IoU >= 0,5, IC por bootstrap de quadros"
+}
