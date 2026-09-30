@@ -114,56 +114,83 @@ def L(*linhas):
 
 
 def fig_desenho():
-    fig, ax = plt.subplots(figsize=(7.0, 3.8), dpi=300)
+    """Fluxo em quatro colunas com setas so horizontais (e um cotovelo pela calha entre colunas),
+    para nenhuma seta cruzar texto; refeito em 30/09 depois de o autor apontar a versao anterior
+    como mal formatada (setas diagonais sobre o texto e linhas saindo das caixas)."""
+    fig, ax = plt.subplots(figsize=(7.2, 4.2), dpi=300)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
-    X1, W1 = 0.235, 0.235   # corpora
-    X2, W2 = 0.53, 0.19     # detectores
-    X3, W3 = 0.78, 0.21     # avaliacao
-    R1 = (0.75, 0.16)       # (base, altura) linha nadir
-    R2 = (0.55, 0.16)       # obliquo
-    R3 = (0.20, 0.31)       # tres classes
-    R4 = (0.01, 0.15)       # dado real
+    XA, WA = 0.01, 0.185    # gerador
+    XB, WB = 0.245, 0.265   # corpora
+    XC, WC = 0.56, 0.175    # detectores
+    XD, WD = 0.785, 0.205   # avaliacao
+    R1 = (0.79, 0.16)       # (base, altura) nadir
+    R2 = (0.575, 0.19)      # obliquo
+    R3 = (0.24, 0.31)       # tres classes
+    R4 = (0.02, 0.15)       # dado real
     mid = lambda r: r[0] + r[1] / 2  # noqa: E731
+    TIT, CORPO = 6.6, 5.9
 
-    caixa(ax, 0.01, 0.34, 0.17, 0.57, "Procedural generator",
-          L("Blender, deterministic seed", "settlement, alleys,", "stacked storeys", "rooftop clutter, cabling",
-            "six illumination regimes", "MakeHuman figures", "five weapons, nine objects", "boxes projected",
-            "from geometry"), cor="#eef3fb")
-    for r in (R1, R2, R3):
-        seta(ax, 0.18, 0.62, X1, mid(r))
+    def bloco(x, y, w, h, titulo, corpo="", cor="#f7f7f5"):
+        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.004,rounding_size=0.012",
+                                    fc=cor, ec="#555", lw=0.7, zorder=2))
+        n_tit = titulo.count(NL) + 1
+        if corpo:
+            ax.text(x + w / 2, y + h - 0.02, titulo, ha="center", va="top", fontsize=TIT, fontweight="bold",
+                    zorder=3, linespacing=1.15)
+            ax.text(x + w / 2, y + h - 0.02 - 0.03 * n_tit - 0.016, corpo, ha="center", va="top",
+                    fontsize=CORPO, zorder=3, linespacing=1.32)
+        else:
+            ax.text(x + w / 2, y + h / 2, titulo, ha="center", va="center", fontsize=TIT, fontweight="bold",
+                    zorder=3, linespacing=1.25)
 
-    ax.text(X1 + W1 / 2, 0.94, "Synthetic corpora (tiles at native scale)", ha="center", fontsize=6.6, style="italic")
-    caixa(ax, X1, R1[0], W1, R1[1], "Nadir, 150 m, single class",
-          L("corpus of record: 180 frames, 1 settlement", "six settlements: 180 frames"), cor="#f7f7f5")
-    caixa(ax, X1, R2[0], W1, R2[1], "Oblique, single class",
-          L("S-oblique: 180 frames, pitch 26 to 52", "S-oblique-six: 180 frames, six settlements"), cor="#f7f7f5")
-    caixa(ax, X1, R3[0], W1, R3[1], L("Three classes: armed, unarmed,", "carrying an object"),
+    def cabeca(x, w, txt):
+        ax.text(x + w / 2, 0.978, txt, ha="center", va="center", fontsize=6.6, style="italic")
+
+    def seta_h(x0, x1, y):
+        seta(ax, x0, y, x1, y)
+
+    cabeca(XA, WA, "Generator")
+    bloco(XA, R3[0], WA, R1[0] + R1[1] - R3[0], "Procedural generator",
+          L("Blender, deterministic seed", "", "settlement, alleys,", "stacked storeys", "rooftop clutter, cabling",
+            "", "six illumination regimes", "", "MakeHuman figures", "five weapons,", "nine confusable objects", "",
+            "boxes projected", "from geometry"), cor="#eef3fb")
+
+    cabeca(XB, WB, "Synthetic corpora (tiles at native scale)")
+    bloco(XB, R1[0], WB, R1[1], "Nadir, 150 m, one class",
+          L("corpus of record: 180 frames,", "one settlement", "six settlements: 180 frames"))
+    bloco(XB, R2[0], WB, R2[1], "Oblique, one class",
+          L("S-oblique: 180 frames, one settlement,", "pitch 26 to 52 degrees",
+            "S-oblique-six: 180 frames,", "six settlements, pitch 45 to 56"))
+    bloco(XB, R3[0], WB, R3[1], L("Three classes: armed, unarmed,", "carrying a confusable object"),
           L("75 m: 200 frames", "35 m: 200 frames, realistic carrying", "twin of 35 m at 75 m: 200 frames",
             "twin of 35 m at 150 m: 200 frames", "new frames at 35 and 75 m: 80 each"), cor="#fbf1ec")
-    caixa(ax, X1, R4[0], W1, R4[1], "VisDrone-DET train (real)",
+    bloco(XB, R4[0], WB, R4[1], "VisDrone-DET train (real)",
           L("1,106 images for R", "slices of 5% and 10% for fine-tuning"), cor="#eef8f3")
+    for r in (R1, R2, R3):
+        seta_h(XA + WA, XB, mid(r))
 
-    ax.text(X2 + W2 / 2, 0.94, "Detectors (YOLO11s)", ha="center", fontsize=6.6, style="italic")
-    caixa(ax, X2, R1[0], W2, R1[1], L("S-nadir-150", "S-nadir-150-six"), cor="#f7f7f5")
-    caixa(ax, X2, R2[0], W2, R2[1], L("S-oblique", "S-oblique-six"), cor="#f7f7f5")
-    caixa(ax, X2, R3[0], W2, R3[1], L("S-nadir-75", "S-nadir-35 and its twins"), cor="#fbf1ec")
-    caixa(ax, X2, R4[0], W2, R4[1], L("R (ceiling); F-generic,", "F-synthetic, F-joint"),
-          "F-synthetic starts from S-oblique-six", cor="#eef8f3")
+    cabeca(XC, WC, "Detectors (YOLO11s)")
+    bloco(XC, R1[0], WC, R1[1], L("S-nadir-150", "S-nadir-150-six"))
+    bloco(XC, R2[0], WC, R2[1], L("S-oblique", "S-oblique-six"))
+    bloco(XC, R3[0], WC, R3[1], L("S-nadir-75", "S-nadir-35", "and its twins"), cor="#fbf1ec")
+    bloco(XC, R4[0], WC, R4[1], L("R (ceiling)", "F-generic, F-synthetic,", "F-joint"), cor="#eef8f3")
     for r in (R1, R2, R3, R4):
-        seta(ax, X1 + W1, mid(r), X2, mid(r))
+        seta_h(XB + WB, XC, mid(r))
 
-    ax.text(X3 + W3 / 2, 0.94, "Evaluation", ha="center", fontsize=6.6, style="italic")
-    caixa(ax, X3, R2[0], W3, R1[0] + R1[1] - R2[0], "Real test set",
-          L("VisDrone-DET val, 548 images", "single person class", "efficacy = mAP50(S) / mAP50(R)"), cor="#eef8f3")
-    caixa(ax, X3, R3[0], W3, R3[1], L("Synthetic validation", "and new frames"),
-          L("rates at which each class", "is called armed; d-prime;", "unseen-weapon test"), cor="#fbf1ec")
-    ymid_real = (R2[0] + R1[0] + R1[1]) / 2
-    seta(ax, X2 + W2, mid(R1), X3, ymid_real + 0.05)
-    seta(ax, X2 + W2, mid(R2), X3, ymid_real - 0.05)
-    seta(ax, X2 + W2, mid(R3), X3, mid(R3))
-    seta(ax, X2 + W2, mid(R4), X3, R2[0] + 0.02)
+    cabeca(XD, WD, "Evaluation")
+    bloco(XD, R2[0], WD, R1[0] + R1[1] - R2[0], "Real test set",
+          L("VisDrone-DET val,", "548 images, one class", "", "efficacy =", "mAP50(S) / mAP50(R)"), cor="#eef8f3")
+    bloco(XD, R3[0], WD, R3[1], L("Synthetic validation", "and new frames"),
+          L("rate at which each class", "is called armed", "d-prime", "unseen-weapon test"), cor="#fbf1ec")
+    seta_h(XC + WC, XD, mid(R1))
+    seta_h(XC + WC, XD, mid(R2))
+    seta_h(XC + WC, XD, mid(R3))
+    # R e os modelos de ajuste fino vao ao mesmo conjunto de teste real: cotovelo pela calha
+    xg = XC + WC + (XD - XC - WC) / 2
+    ax.plot([XC + WC, xg, xg], [mid(R4), mid(R4), R2[0] + 0.035], color="#444", lw=0.7, zorder=1)
+    seta_h(xg, XD, R2[0] + 0.035)
 
     fig.savefig(os.path.join(OUT, "fig9_desenho_experimental.png"), bbox_inches="tight", pad_inches=0.05)
     plt.close(fig)
