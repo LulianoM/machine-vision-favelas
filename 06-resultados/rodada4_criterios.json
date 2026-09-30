@@ -1,0 +1,677 @@
+{
+ "plano": "07-blender/PLANO-RODADA4.md",
+ "10.6_iou_e_visdrone_oficial": {
+  "pares": {
+   "padrao_ultralytics: r_pareado - s_oblvar": {
+    "mAP50": 0.5256,
+    "AP60": 0.4309,
+    "AP75": 0.1227,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: s_oblvar - s_obliquo": {
+    "mAP50": 0.0441,
+    "AP60": 0.0249,
+    "AP75": 0.0054,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: s_obliquo - s_nadir_4k": {
+    "mAP50": 0.0512,
+    "AP60": 0.0271,
+    "AP75": 0.008,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: s_variedade - s_nadir_4k": {
+    "mAP50": 0.0088,
+    "AP60": 0.0055,
+    "AP75": 0.005,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: ft05_coco - ft05_sint": {
+    "mAP50": 0.0796,
+    "AP60": 0.0687,
+    "AP75": 0.0254,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: ft10_coco - ft10_sint": {
+    "mAP50": 0.0614,
+    "AP60": 0.0466,
+    "AP75": 0.0111,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: misto05 - ft05_coco": {
+    "mAP50": -0.0613,
+    "AP60": -0.0562,
+    "AP75": -0.0155,
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: misto10 - ft10_coco": {
+    "mAP50": -0.0281,
+    "AP60": -0.0254,
+    "AP75": -0.0153,
+    "ordem_muda": false
+   },
+   "regra_oficial: r_pareado - s_oblvar": {
+    "mAP50": 0.5474,
+    "AP60": 0.4463,
+    "AP75": 0.1262,
+    "ordem_muda": false
+   },
+   "regra_oficial: s_oblvar - s_obliquo": {
+    "mAP50": 0.045,
+    "AP60": 0.0254,
+    "AP75": 0.0056,
+    "ordem_muda": false
+   },
+   "regra_oficial: s_obliquo - s_nadir_4k": {
+    "mAP50": 0.052,
+    "AP60": 0.0275,
+    "AP75": 0.008,
+    "ordem_muda": false
+   },
+   "regra_oficial: s_variedade - s_nadir_4k": {
+    "mAP50": 0.009,
+    "AP60": 0.0055,
+    "AP75": 0.005,
+    "ordem_muda": false
+   },
+   "regra_oficial: ft05_coco - ft05_sint": {
+    "mAP50": 0.0849,
+    "AP60": 0.0726,
+    "AP75": 0.0263,
+    "ordem_muda": false
+   },
+   "regra_oficial: ft10_coco - ft10_sint": {
+    "mAP50": 0.0668,
+    "AP60": 0.0493,
+    "AP75": 0.0119,
+    "ordem_muda": false
+   },
+   "regra_oficial: misto05 - ft05_coco": {
+    "mAP50": -0.0646,
+    "AP60": -0.0587,
+    "AP75": -0.0162,
+    "ordem_muda": false
+   },
+   "regra_oficial: misto10 - ft10_coco": {
+    "mAP50": -0.0305,
+    "AP60": -0.0272,
+    "AP75": -0.0158,
+    "ordem_muda": false
+   }
+  },
+  "eficacia": {
+   "s_nadir_4k": {
+    "padrao_ultralytics": {
+     "mAP50": 0.0162,
+     "AP60": 0.0086,
+     "AP75": 0.0015
+    },
+    "regra_oficial": {
+     "mAP50": 0.0159,
+     "AP60": 0.0085,
+     "AP75": 0.0014
+    }
+   },
+   "s_variedade": {
+    "padrao_ultralytics": {
+     "mAP50": 0.0301,
+     "AP60": 0.0199,
+     "AP75": 0.0382
+    },
+    "regra_oficial": {
+     "mAP50": 0.0296,
+     "AP60": 0.0195,
+     "AP75": 0.0371
+    }
+   },
+   "s_obliquo": {
+    "padrao_ultralytics": {
+     "mAP50": 0.0973,
+     "AP60": 0.0643,
+     "AP75": 0.0602
+    },
+    "regra_oficial": {
+     "mAP50": 0.0953,
+     "AP60": 0.0632,
+     "AP75": 0.0586
+    }
+   },
+   "s_oblvar": {
+    "padrao_ultralytics": {
+     "mAP50": 0.1672,
+     "AP60": 0.1154,
+     "AP75": 0.0998
+    },
+    "regra_oficial": {
+     "mAP50": 0.164,
+     "AP60": 0.1136,
+     "AP75": 0.0986
+    }
+   },
+   "s_oblvar_sd1": {
+    "padrao_ultralytics": {
+     "mAP50": 0.1518,
+     "AP60": 0.102,
+     "AP75": 0.0719
+    },
+    "regra_oficial": {
+     "mAP50": 0.1494,
+     "AP60": 0.1007,
+     "AP75": 0.0721
+    }
+   },
+   "s_oblvar_sd2": {
+    "padrao_ultralytics": {
+     "mAP50": 0.1405,
+     "AP60": 0.092,
+     "AP75": 0.0858
+    },
+    "regra_oficial": {
+     "mAP50": 0.1385,
+     "AP60": 0.0906,
+     "AP75": 0.0843
+    }
+   }
+  },
+  "objeto_chamado_de_armada_por_limiar": {
+   "armado_75": {
+    "0.50": 0.237,
+    "0.60": 0.2296,
+    "0.75": 0.1407
+   },
+   "armado_35": {
+    "0.50": 0.2727,
+    "0.60": 0.2231,
+    "0.75": 0.1322
+   },
+   "armado_75g": {
+    "0.50": 0.1648,
+    "0.60": 0.1648,
+    "0.75": 0.1319
+   }
+  },
+  "ordem_armados_por_limiar": {
+   "0.50": [
+    "armado_35",
+    "armado_75",
+    "armado_75g"
+   ],
+   "0.60": [
+    "armado_75",
+    "armado_35",
+    "armado_75g"
+   ],
+   "0.75": [
+    "armado_75",
+    "armado_35",
+    "armado_75g"
+   ]
+  },
+  "ordens_que_mudam": [
+   "armados: ordem da taxa de objeto chamado de armada"
+  ],
+  "regra": "se a ordem de um par muda entre 0,50, 0,60 e 0,75, esse par e artefato de anotacao e vai ao texto nos tres limiares",
+  "veredito": "ordem muda em: armados: ordem da taxa de objeto chamado de armada"
+ },
+ "10.2_escala_casada": {
+  "imgsz_casado": 1024,
+  "no_protocolo": {
+   "lado_maior_med": 25.33,
+   "area_med": 283.5
+  },
+  "no_casado": {
+   "lado_maior_med": 20.27,
+   "area_med": 181.4
+  },
+  "s_nadir_4k_mAP50_protocolo": 0.0102,
+  "s_nadir_4k_mAP50_casado": 0.0128,
+  "diferenca_relativa": 0.255,
+  "r_pareado_mAP50_protocolo": 0.6311,
+  "r_pareado_mAP50_casado": 0.5849,
+  "eficacia_protocolo": 0.0162,
+  "eficacia_casada": 0.0219,
+  "regra": "diverge substancialmente se a diferenca relativa passar de 50%; ai a razao da 9.2 vai so na escala casada",
+  "veredito": "nao diverge substancialmente"
+ },
+ "9.5_objeto_no_porte_de_arma": {
+  "armado_75": {
+   "objetos_pareados": 227,
+   "taxa_porte_normal": 0.1542,
+   "taxa_porte_de_arma": 0.1366,
+   "discordantes_so_no_porte_de_arma": 11,
+   "discordantes_so_no_normal": 15,
+   "p_mcnemar_exato": 0.5572,
+   "por_tipo": {
+    "cano_pvc": {
+     "n": 28,
+     "normal": 0.107,
+     "porte_de_arma": 0.0
+    },
+    "enxada": {
+     "n": 18,
+     "normal": 0.167,
+     "porte_de_arma": 0.222
+    },
+    "guarda_chuva": {
+     "n": 29,
+     "normal": 0.379,
+     "porte_de_arma": 0.379
+    },
+    "mangueira": {
+     "n": 12,
+     "normal": 0.167,
+     "porte_de_arma": 0.167
+    },
+    "rodo": {
+     "n": 20,
+     "normal": 0.1,
+     "porte_de_arma": 0.05
+    },
+    "tabua": {
+     "n": 29,
+     "normal": 0.069,
+     "porte_de_arma": 0.034
+    },
+    "tapete": {
+     "n": 14,
+     "normal": 0.143,
+     "porte_de_arma": 0.214
+    },
+    "vassoura": {
+     "n": 41,
+     "normal": 0.098,
+     "porte_de_arma": 0.049
+    },
+    "vergalhao": {
+     "n": 36,
+     "normal": 0.167,
+     "porte_de_arma": 0.194
+    }
+   },
+   "nao_pareado": {
+    "normal": {
+     "armada": 0.1522,
+     "desarmada": 0.0609,
+     "objeto": 0.5,
+     "perdida": 0.287,
+     "n": 230
+    },
+    "porte_de_arma": {
+     "armada": 0.1342,
+     "desarmada": 0.0476,
+     "objeto": 0.5541,
+     "perdida": 0.2641,
+     "n": 231
+    }
+   },
+   "regra": "se a taxa sobe no porte de arma com McNemar p < 0,05, o texto passa a dar a taxa medida no porte de arma; senao a ressalva do angulo de porte sai",
+   "veredito": "nao sobe de forma resolvivel: retirar a ressalva do angulo"
+  },
+  "armado_75g": {
+   "objetos_pareados": 227,
+   "taxa_porte_normal": 0.1806,
+   "taxa_porte_de_arma": 0.141,
+   "discordantes_so_no_porte_de_arma": 9,
+   "discordantes_so_no_normal": 18,
+   "p_mcnemar_exato": 0.1221,
+   "por_tipo": {
+    "cano_pvc": {
+     "n": 28,
+     "normal": 0.0,
+     "porte_de_arma": 0.036
+    },
+    "enxada": {
+     "n": 18,
+     "normal": 0.278,
+     "porte_de_arma": 0.278
+    },
+    "guarda_chuva": {
+     "n": 29,
+     "normal": 0.276,
+     "porte_de_arma": 0.276
+    },
+    "mangueira": {
+     "n": 12,
+     "normal": 0.083,
+     "porte_de_arma": 0.083
+    },
+    "rodo": {
+     "n": 20,
+     "normal": 0.2,
+     "porte_de_arma": 0.05
+    },
+    "tabua": {
+     "n": 29,
+     "normal": 0.207,
+     "porte_de_arma": 0.103
+    },
+    "tapete": {
+     "n": 14,
+     "normal": 0.143,
+     "porte_de_arma": 0.214
+    },
+    "vassoura": {
+     "n": 41,
+     "normal": 0.122,
+     "porte_de_arma": 0.098
+    },
+    "vergalhao": {
+     "n": 36,
+     "normal": 0.278,
+     "porte_de_arma": 0.167
+    }
+   },
+   "nao_pareado": {
+    "normal": {
+     "armada": 0.1826,
+     "desarmada": 0.0565,
+     "objeto": 0.4739,
+     "perdida": 0.287,
+     "n": 230
+    },
+    "porte_de_arma": {
+     "armada": 0.1429,
+     "desarmada": 0.0346,
+     "objeto": 0.5195,
+     "perdida": 0.303,
+     "n": 231
+    }
+   },
+   "regra": "se a taxa sobe no porte de arma com McNemar p < 0,05, o texto passa a dar a taxa medida no porte de arma; senao a ressalva do angulo de porte sai",
+   "veredito": "nao sobe de forma resolvivel: retirar a ressalva do angulo"
+  }
+ },
+ "9.4_misto": {
+  "misto05": 0.4607,
+  "misto10": 0.5428,
+  "ft05_coco": 0.522,
+  "ft10_coco": 0.5709,
+  "ft05_sint": 0.4424,
+  "ft10_sint": 0.5095,
+  "dp_entre_sementes_ft05_coco": 0.0035,
+  "regra": "misto melhor que so real se a diferenca passar de 2 dp entre sementes do ft05_coco; pior se ficar abaixo de -2 dp (a 10% usa o mesmo dp, declarado como aproximacao)",
+  "veredito": {
+   "5%": "misto pior (-0.0613)",
+   "10%": "misto pior (-0.0281)"
+  }
+ },
+ "11.5_150m": {
+  "curva_de_altitude": {
+   "35 m": {
+    "quadros": 35,
+    "pessoas": 377,
+    "recall_deteccao_qualquer_classe": 0.6764,
+    "chamada_de_armada": {
+     "armada": {
+      "k": 78,
+      "n": 137,
+      "taxa": 0.5693
+     },
+     "desarmada": {
+      "k": 20,
+      "n": 119,
+      "taxa": 0.1681
+     },
+     "objeto": {
+      "k": 33,
+      "n": 121,
+      "taxa": 0.2727
+     }
+    },
+    "dlinha_armada_contra_objeto": 0.772,
+    "dlinha_armada_contra_objeto_ic95": [
+     0.46,
+     1.14
+    ],
+    "dlinha_armada_contra_desarmada": 1.124,
+    "dlinha_armada_contra_desarmada_ic95": [
+     0.786,
+     1.546
+    ]
+   },
+   "75 m gemeo": {
+    "quadros": 24,
+    "pessoas": 268,
+    "recall_deteccao_qualquer_classe": 0.7575,
+    "chamada_de_armada": {
+     "armada": {
+      "k": 40,
+      "n": 85,
+      "taxa": 0.4706
+     },
+     "desarmada": {
+      "k": 10,
+      "n": 92,
+      "taxa": 0.1087
+     },
+     "objeto": {
+      "k": 15,
+      "n": 91,
+      "taxa": 0.1648
+     }
+    },
+    "dlinha_armada_contra_objeto": 0.887,
+    "dlinha_armada_contra_objeto_ic95": [
+     0.552,
+     1.331
+    ],
+    "dlinha_armada_contra_desarmada": 1.138,
+    "dlinha_armada_contra_desarmada_ic95": [
+     0.712,
+     1.576
+    ]
+   },
+   "150 m gemeo": {
+    "quadros": 27,
+    "pessoas": 297,
+    "recall_deteccao_qualquer_classe": 0.4983,
+    "chamada_de_armada": {
+     "armada": {
+      "k": 31,
+      "n": 92,
+      "taxa": 0.337
+     },
+     "desarmada": {
+      "k": 18,
+      "n": 104,
+      "taxa": 0.1731
+     },
+     "objeto": {
+      "k": 14,
+      "n": 101,
+      "taxa": 0.1386
+     }
+    },
+    "dlinha_armada_contra_objeto": 0.655,
+    "dlinha_armada_contra_objeto_ic95": [
+     0.202,
+     1.129
+    ],
+    "dlinha_armada_contra_desarmada": 0.514,
+    "dlinha_armada_contra_desarmada_ic95": [
+     0.14,
+     0.921
+    ]
+   }
+  },
+  "regra": "validade: recall de deteccao >= 0,5; ausencia medida se o IC 95% (bootstrap de quadros) de d' armada contra objeto incluir 0",
+  "veredito": "nao interpretavel: o modelo de 150 m nao aprendeu o proprio dominio (recall de deteccao < 0,5)"
+ },
+ "9.5_validacao_maior": {
+  "35 m": {
+   "quadros": 80,
+   "pessoas": 953,
+   "recall_deteccao_qualquer_classe": 0.6842,
+   "chamada_de_armada": {
+    "armada": {
+     "k": 188,
+     "n": 346,
+     "taxa": 0.5434
+    },
+    "desarmada": {
+     "k": 49,
+     "n": 315,
+     "taxa": 0.1556
+    },
+    "objeto": {
+     "k": 74,
+     "n": 292,
+     "taxa": 0.2534
+    }
+   },
+   "dlinha_armada_contra_objeto": 0.77,
+   "dlinha_armada_contra_objeto_ic95": [
+    0.574,
+    0.99
+   ],
+   "dlinha_armada_contra_desarmada": 1.117,
+   "dlinha_armada_contra_desarmada_ic95": [
+    0.917,
+    1.345
+   ]
+  },
+  "75 m gemeo": {
+   "quadros": 80,
+   "pessoas": 837,
+   "recall_deteccao_qualquer_classe": 0.7658,
+   "chamada_de_armada": {
+    "armada": {
+     "k": 111,
+     "n": 257,
+     "taxa": 0.4319
+    },
+    "desarmada": {
+     "k": 41,
+     "n": 292,
+     "taxa": 0.1404
+    },
+    "objeto": {
+     "k": 36,
+     "n": 288,
+     "taxa": 0.125
+    }
+   },
+   "dlinha_armada_contra_objeto": 0.973,
+   "dlinha_armada_contra_objeto_ic95": [
+    0.767,
+    1.199
+   ],
+   "dlinha_armada_contra_desarmada": 0.902,
+   "dlinha_armada_contra_desarmada_ic95": [
+    0.67,
+    1.164
+   ]
+  },
+  "objeto_35_menos_75g": 0.1284,
+  "z": 3.94,
+  "p_bilateral": 0.0001,
+  "somado_ao_val_original": {
+   "35 m": [
+    107,
+    413
+   ],
+   "75 m gemeo": [
+    51,
+    379
+   ],
+   "z": 4.38,
+   "p_bilateral": 0.0
+  },
+  "regra": "so os quadros novos: 35 m acima do gemeo com p bilateral < 0,05 = estabelecida; direcao invertida = retirar 'a resolucao mais fina nao reduziu a confusao'; o resto = continua sugestiva",
+  "veredito": "estabelecida"
+ },
+ "10.3_por_regime": {
+  "overcast_acima_de_hard_sun": true,
+  "overcast_acima_de_rain": true,
+  "hard_sun_entre_os_dois_mais_fracos": true,
+  "implicacao_11_3_fica": true
+ },
+ "10.6_sementes": {
+  "s_oblvar_mAP50": {
+   "valores": [
+    0.1055,
+    0.0958,
+    0.0887
+   ],
+   "media": 0.0967,
+   "dp": 0.0084,
+   "min": 0.0887,
+   "max": 0.1055
+  },
+  "eficacia_s_oblvar": 0.1532,
+  "ft05_sint": {
+   "valores": [
+    0.4424,
+    0.4608,
+    0.4554
+   ],
+   "media": 0.4529,
+   "dp": 0.0095,
+   "min": 0.4424,
+   "max": 0.4608
+  },
+  "ft05_coco": {
+   "valores": [
+    0.522,
+    0.5228,
+    0.5285
+   ],
+   "media": 0.5244,
+   "dp": 0.0035,
+   "min": 0.522,
+   "max": 0.5285
+  },
+  "ft05_sint_x_coco": "resolvivel (faixas nao se sobrepoem)",
+  "objeto_armada_35_val": {
+   "valores": [
+    0.2727,
+    0.2314,
+    0.2397
+   ],
+   "media": 0.2479,
+   "dp": 0.0218,
+   "min": 0.2314,
+   "max": 0.2727
+  },
+  "objeto_armada_75g_val": {
+   "valores": [
+    0.1648,
+    0.1319,
+    0.2418
+   ],
+   "media": 0.1795,
+   "dp": 0.0564,
+   "min": 0.1319,
+   "max": 0.2418
+  },
+  "35_x_75g_val": "nao resolvivel (faixas se sobrepoem)",
+  "objeto_armada_35_quadros_novos": {
+   "valores": [
+    0.2534,
+    0.2021,
+    0.2089
+   ],
+   "media": 0.2215,
+   "dp": 0.0279,
+   "min": 0.2021,
+   "max": 0.2534
+  },
+  "objeto_armada_75g_quadros_novos": {
+   "valores": [
+    0.125,
+    0.0972,
+    0.1806
+   ],
+   "media": 0.1343,
+   "dp": 0.0425,
+   "min": 0.0972,
+   "max": 0.1806
+  },
+  "35_x_75g_quadros_novos": "resolvivel (faixas nao se sobrepoem)",
+  "regra": "tres treinos por modelo (semente 0 original, 1 e 2); diferenca resolvivel se as faixas min-max nao se sobrepoem",
+  "veredito": {
+   "ft05": "resolvivel (faixas nao se sobrepoem)",
+   "35_x_75g": "nao resolvivel (faixas se sobrepoem)"
+  }
+ }
+}

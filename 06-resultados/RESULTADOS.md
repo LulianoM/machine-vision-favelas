@@ -438,3 +438,101 @@ Leitura provisoria (selecao, nao teste): com 5% do VisDrone o inicio sintetico s
 Diferenca sintetico menos COCO: -0,0796 com 5% e -0,0614 com 10% de mAP50 (-0,0368 e -0,0232 de mAP50-95). Leitura: o pre-treino sintetico custa em vez de ajudar, nas duas fracoes, e o sintetico com 647 imagens reais nao alcanca o COCO com 324. A expectativa declarada antes da rodada (o valor do pre-treino sintetico e maior no volume menor) falhou: a diferenca e mais negativa no volume menor, e o que encolhe com mais dado real e um custo. [Corrigido em 26/09 na rodada 3 da validacao; antes dizia 'como declarado antes da rodada'.] O ajuste fino transforma o proprio modelo sintetico (0,1055 para 0,4424 com 324 imagens), que e o efeito da literatura; o que ele nao faz aqui e superar um inicio generico com o mesmo dado. Hipotese nao testada: 46 epocas em 890 ladrilhos sinteticos sobrescrevem parte do que o COCO codifica sobre pessoas reais. Na selecao, o inicio COCO passa o sintetico na epoca 4 com 5% e ja na 1 com 10%.
 
 Rodada 3 encerrada em 26/09 17:54, sem grupo com falha. Todos os `[X]` da rodada preenchidos no manuscrito (9.3, 9.4, 9.5, 11.5, mais a linha do `ds_oblvar` na tabela da 8.2); ficam `[X]` so as checagens de robustez 10.1 (curva completa) e 10.3 (por regime), que nao estavam na rodada.
+
+## 2026-09-30 [DESKTOP] Rodada 4 (27 a 30/09): resultados e criterios
+
+Cadeia `07-blender/scripts/rodada4.py`, plano e criterios fixados antes do primeiro resultado em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9). Disparada em 27/09 11:31, encerrada em 30/09 10:25 sem grupo com falha, com quatro pausas do autor. Os criterios foram aplicados por `python rodada4_criterios.py` (saida `rodada4_criterios.json`), que so le arquivos desta pasta.
+
+### K. VisDrone pela regra oficial e a IoU 0,50/0,60/0,75 (10.6), armados a IoU 0,60 e 0,75, escala casada (10.2)
+
+`python avalia_visdrone_oficial.py --modelos <nomes> --out visdrone_oficial_iou.json` (etapas K1 e Y1). Validador do Ultralytics com o filtro de `dropObjectsInIgr.m` (VisDrone2018-DET-toolkit): caixa verdadeira ou detectada com metade ou mais da area em regiao ignorada sai da avaliacao; 1.378 regioes em 340 das 548 imagens. Sem regioes, o avaliador reproduz o numero padrao em todos os modelos (`confere_padrao`). Classe unica, imgsz 1280, conf 0,001.
+
+| modelo | mAP50 | AP60 | AP75 | mAP50 oficial | AP60 oficial | AP75 oficial |
+|---|---|---|---|---|---|---|
+| `r_pareado` | 0,6311 | 0,4871 | 0,1363 | 0,6548 | 0,5035 | 0,1400 |
+| `s_nadir_4k` | 0,0102 | 0,0042 | 0,0002 | 0,0104 | 0,0043 | 0,0002 |
+| `s_variedade` | 0,0190 | 0,0097 | 0,0052 | 0,0194 | 0,0098 | 0,0052 |
+| `s_obliquo` | 0,0614 | 0,0313 | 0,0082 | 0,0624 | 0,0318 | 0,0082 |
+| `s_oblvar` | 0,1055 | 0,0562 | 0,0136 | 0,1074 | 0,0572 | 0,0138 |
+| `ft05_sint` | 0,4424 | 0,3225 | 0,0779 | 0,4555 | 0,3313 | 0,0797 |
+| `ft05_coco` | 0,5220 | 0,3912 | 0,1033 | 0,5404 | 0,4039 | 0,1060 |
+| `ft10_sint` | 0,5095 | 0,3845 | 0,1025 | 0,5271 | 0,3976 | 0,1050 |
+| `ft10_coco` | 0,5709 | 0,4311 | 0,1136 | 0,5939 | 0,4469 | 0,1169 |
+| `misto05` | 0,4607 | 0,3350 | 0,0878 | 0,4758 | 0,3452 | 0,0898 |
+| `misto10` | 0,5428 | 0,4057 | 0,0983 | 0,5634 | 0,4197 | 0,1011 |
+| `s_oblvar_sd1` | 0,0958 | 0,0497 | 0,0098 | 0,0978 | 0,0507 | 0,0101 |
+| `s_oblvar_sd2` | 0,0887 | 0,0448 | 0,0117 | 0,0907 | 0,0456 | 0,0118 |
+| `ft05_sint_sd1` | 0,4608 | 0,3319 | 0,0824 | 0,4735 | 0,3406 | 0,0840 |
+| `ft05_sint_sd2` | 0,4554 | 0,3240 | 0,0796 | 0,4721 | 0,3356 | 0,0819 |
+| `ft05_coco_sd1` | 0,5228 | 0,3952 | 0,1122 | 0,5428 | 0,4092 | 0,1153 |
+| `ft05_coco_sd2` | 0,5285 | 0,3863 | 0,0995 | 0,5499 | 0,4010 | 0,1025 |
+
+Eficacia pela regra oficial (R 0,6548): nadir 1,59%, variedade 2,96%, obliquo 9,53%, S-oblique-six 16,40%. Nenhum par comparado no artigo troca de ordem entre 0,50, 0,60 e 0,75, em nenhuma das duas regras (`rodada4_criterios.json`, item 10.6).
+
+Armados a IoU 0,60 e 0,75 (`confusao_armado.py --iou 0.6` e `--iou 0.75`, saidas `confusao_armado_{75,35,75g}_iou60.json` e `_iou75.json`), fracao chamada de armada a 0,50 / 0,60 / 0,75:
+
+| modelo | pessoa armada | pessoa desarmada | pessoa com objeto |
+|---|---|---|---|
+| `armado_75` | 0,547 / 0,504 / 0,376 | 0,131 / 0,124 / 0,085 | 0,237 / 0,230 / 0,141 |
+| `armado_35` | 0,569 / 0,526 / 0,416 | 0,168 / 0,135 / 0,076 | 0,273 / 0,223 / 0,132 |
+| `armado_75g` | 0,471 / 0,459 / 0,365 | 0,109 / 0,087 / 0,054 | 0,165 / 0,165 / 0,132 |
+
+Pelo criterio, a ordem da taxa de objeto chamado de arma muda com o limiar (35 m acima de 75 m a 0,50, abaixo a 0,60 e a 0,75), entao essas taxas vao ao texto nos tres limiares. A 0,75 o 35 m e o gemeo empatam (0,132).
+
+Escala casada (`python escala_casada.py`, saidas `escala_casada.json`, `sim2real_s_nadir_4k_casada.json`, `sim2real_r_pareado_casada.json`). O validador redimensiona cada imagem para o lado maior valer imgsz (`ultralytics/data/base.py`), entao a escala se casa pelo imgsz: a 1280 (protocolo) a mediana do lado maior das caixas do VisDrone val na entrada da rede e 25,33 px; a 1024 e 20,27 px, a mais perto dos 20,55 px do `ds_morro_4k`. `s_nadir_4k` a 1024: mAP50 0,0128 (contra 0,0102 a 1280, +25%); `r_pareado` a 1024: 0,5849. Criterio: diverge substancialmente se passar de 50%; **nao diverge**. Consequencia para o texto: a checagem do piloto (0,0055 contra 0,0061, `sim2real_morro_v1.json`) avaliou o conjunto reescalado e o nativo ambos a imgsz 640, isto e, na mesma escala de entrada; nao foi uma comparacao de escala.
+
+### H. Objeto carregado como arma (9.5)
+
+Corpus `ds_armado_75_porte`: o comando do teste de arma inedita (semente 47) com `--objeto-porte-arma` (objeto na distribuicao de pose da arma, sem o reangulo dos de mais de 1,15 m, mesmos sorteios). Gemeo caixa a caixa em 49 de 50 quadros (`porte_arma_gemeo.json`). `confusao_armado.py --split todos --instancias` no corpus normal e no de porte (`holdout_armas_armado_75_inst.json`, `porte_arma_armado_75.json`; idem com `75g`). Pareado objeto a objeto (227 objetos, `armado_75`): chamado de armada 0,154 no porte normal e 0,137 no porte de arma, 11 discordantes num sentido e 15 no outro, McNemar exato p 0,56. `armado_75g`: 0,181 e 0,141, p 0,12. Por tipo (`armado_75`): guarda-chuva 0,379 e 0,379; cano PVC 0,107 e 0,000; vassoura 0,098 e 0,049; enxada 0,167 e 0,222; vergalhao 0,167 e 0,194. Recall de armada igual nos dois corpora (0,434). Criterio: **a taxa nao sobe; sai a ressalva do angulo de porte**.
+
+### F. Sintetico e real no mesmo treino (9.4)
+
+`ds_misto05` e `ds_misto10`: os 890 ladrilhos de treino do `ds_oblvar_tiles` mais as 324 ou 647 imagens das fatias `ft05` e `ft10`, por link fisico (`monta_misto` em `rodada4.py`). Treino a partir do `yolo11s.pt`, 30 epocas, 1280, batch 6, single_cls, selecao em `sel`; teste `avalia_sim2real.py` no val inteiro (`sim2real_misto05.json`, `sim2real_misto10.json`):
+
+| dado real | so real (COCO) | misto | sintetico e depois real |
+|---|---|---|---|
+| 5% | 0,5220 | 0,4607 (P 0,6073, R 0,4235, mAP50-95 0,1748) | 0,4424 |
+| 10% | 0,5709 | 0,5428 (P 0,6540, R 0,4966, mAP50-95 0,2081) | 0,5095 |
+
+Criterio: desvio entre as tres sementes do `ft05_coco` 0,0035; o misto fica 0,0613 (5%) e 0,0281 (10%) abaixo do so real, alem de 2 desvios: **misto pior nas duas fracoes** (a 10% com o desvio de 5%, declarado como aproximacao). O misto da mais passos de gradiente que o so real; cada imagem real e vista 30 vezes nos dois.
+
+### E. Gemeo a 150 m (11.5)
+
+`ds_armado_150g`: o comando do `ds_armado_35` com `--alt 150 --alt-jitter 13` (`GEMEO150`), 200 quadros, 2.248 caixas (784 armada, 723 desarmada, 741 objeto), 27 de validacao. Treino `armado_150g` (receita dos armados, 3 classes): parada antecipada na epoca 36. `confusao_armado.py --split val --instancias` (`confusao_armado_150g.json`): chamada de armada 0,337 (armada, n 92), 0,173 (desarmada, 104), 0,139 (objeto, 101); perdidas 41%, 64% e 44%; mAP50 de imagem inteira 0,368. Criterio de validade: detectar pelo menos metade das pessoas anotadas; o modelo detectou 148 de 297 (**0,498**): **nao interpretavel**, a ausencia a 150 m continua argumentada. Descritivo (`rodada4_criterios.json`): d' armada contra objeto 0,66 (IC 95% por bootstrap de quadros 0,20 a 1,13), contra 0,77 a 35 m e 0,89 no gemeo de 75 m.
+
+### I. Validacao maior a 35 m e 75 m (9.5, 11.5)
+
+`ds_armado_35_extra` e `ds_armado_75g_extra`: indices 200 a 279 da semente 43, todos em validacao, pelos comandos do 35 m e do gemeo. `confusao_armado.py --split val --instancias` (`extra_armado_35.json`, `extra_armado_75g.json`). Objeto chamado de arma: 35 m 0,253 (74 de 292), gemeo 0,125 (36 de 288), z 3,94, p bilateral 0,0001; somado ao val original 107 de 413 contra 51 de 379 (p < 0,001). Armada: 0,543 e 0,432; desarmada 0,156 e 0,140. d' armada contra objeto 0,77 (0,57 a 0,99) e 0,97 (0,77 a 1,20). Criterio: **estabelecida** (quadros novos, IoU 0,5).
+
+### J. Regime de luz (10.3)
+
+`ds_regime_4k`: indices 180 a 299 da semente 21 com o comando do `ds_morro_4k`, todos em validacao, 20 quadros por regime. `python por_regime.py --pesos runs/detect/s_nadir_4k/weights/best.pt --ds ds_regime_4k --tiles ds_regime_4k_tiles` (saida `por_regime_s_nadir_4k.json`):
+
+| regime | mAP50 (ladrilhos) | recall a conf 0,25 (IC 95% bootstrap de quadros) |
+|---|---|---|
+| hard sun (sol_duro) | 0,675 | 0,657 (0,591 a 0,720) |
+| heavy overcast (encoberto) | 0,755 | 0,768 (0,714 a 0,816) |
+| rain (chuva) | 0,759 | 0,789 (0,748 a 0,827) |
+| haze (neblina) | 0,780 | 0,726 (0,697 a 0,757) |
+| low sun (sol_baixo) | 0,790 | 0,814 (0,768 a 0,854) |
+| overcast (nublado) | 0,791 | 0,796 (0,760 a 0,827) |
+
+Criterio da 10.3: overcast acima de hard sun e de rain, hard sun entre os dois mais fracos: **cumprido, a implicacao da 11.3 fica**. A vantagem de overcast sobre rain e pequena e os intervalos de recall se sobrepoem.
+
+### G. Sementes de treino 1 e 2 (10.6)
+
+Mesma receita com `--seed 1` e `--seed 2` (`train_yolo_win.py`); corpus fixo. O ajuste fino sintetico parte do S-oblique-six da mesma semente. VisDrone: `sim2real_s_oblvar_sd1.json` e analogos para `ft05_sint` e `ft05_coco`, sementes 1 e 2; armados: `confusao_armado_35_sd1.json` e analogos (val) e `extra_armado_35_sd1.json` e analogos (quadros novos).
+
+| medida | semente 0 | 1 | 2 | criterio (faixas min-max) |
+|---|---|---|---|---|
+| S-oblique-six, mAP50 VisDrone | 0,1055 | 0,0958 | 0,0887 | media 0,0967, eficacia 15,3% (14,1 a 16,7%) |
+| ajuste fino 5%, sintetico | 0,4424 | 0,4608 | 0,4554 | contra COCO: resolvivel |
+| ajuste fino 5%, COCO | 0,5220 | 0,5228 | 0,5285 | dp 0,0035 |
+| objeto chamado de arma, 35 m, val | 0,273 | 0,231 | 0,240 | contra gemeo: nao resolvivel |
+| idem, gemeo 75 m, val | 0,165 | 0,132 | 0,242 | |
+| objeto chamado de arma, 35 m, quadros novos | 0,253 | 0,202 | 0,209 | contra gemeo: resolvivel |
+| idem, gemeo 75 m, quadros novos | 0,125 | 0,097 | 0,181 | |
+
+Leitura: a vantagem do COCO no ajuste fino sobrevive a variacao entre treinos. O 16,7% do S-oblique-six foi o melhor de tres treinos. A diferenca de altitude nos armados se separa entre treinos nos 80 quadros novos (292 e 288 objetos), mas nao no val original (121 e 91), onde o gemeo de semente 2 chega a 0,242.
+
+Rodada 4 encerrada em 30/09 10:25. Ficam `[X]` a curva de aprendizado da 10.1 e a ablacao so com sol duro da 10.3, que nao estavam na rodada.

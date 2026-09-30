@@ -2,23 +2,26 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-27, 11h45, [DESKTOP]
+Última atualização: 2026-09-30, 11h, [DESKTOP]
 
-## Rodada 4 (em curso desde 27/09 11:31, término previsto terça 29/09 à noite)
+## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
-Pacote recomendado para amarrar o artigo. Plano, critérios fixados antes do primeiro resultado e custo em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9). Cadeia `07-blender/scripts/rodada4.py`; supervisor `supervisiona_rodada4.py` em janela própria com atalho na pasta Inicializar; pausa com `pausa_rodada4.py`; retrato com `status_rodada4.py`; os critérios saem de `06-resultados/rodada4_criterios.py`. E-mails de etapa no fio "Rodada 4 disparada".
+Disparada em 27/09 11:31, com quatro pausas do autor. Plano e critérios fixados antes do primeiro resultado em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9); vereditos em `06-resultados/rodada4_criterios.json`; números e comandos em `06-resultados/RESULTADOS.md`, entrada de 30/09. O supervisor saiu sozinho e apagou o atalho de inicialização.
 
-| Grupo | O que | Fecha |
+| Critério | Resultado | Veredito |
 |---|---|---|
-| K | VisDrone pela regra oficial das regiões ignoradas e a IoU 0,5/0,6/0,75; escala casada pelo lado maior | 10.6, 10.2 |
-| H | Gêmeo do teste de arma inédita com o objeto no porte de arma | 9.5 (limite inferior) |
-| F | Sintético e real no mesmo treino (S-oblique-six + 5% e + 10%) | 9.4, seção 6 |
-| E | Gêmeo do corpus de 35 m a 150 m, 3 classes | 11.5, 10.7 |
-| I | 80 quadros novos a 35 m e os gêmeos a 75 m | 27 contra 16% (p 0,06) |
-| J | 120 quadros novos do nadir, 20 por regime de luz | 10.3, 11.3 |
-| G | Sementes de treino 1 e 2 dos modelos que sustentam afirmações | 10.6 |
+| 10.6, IoU 0,5/0,6/0,75 no VisDrone | nenhum par troca de ordem, nas duas regras | ordem estável |
+| 10.6, IoU nos armados | objeto chamado de arma: 35 m acima de 75 m a 0,5, abaixo a 0,6 e 0,75; 35 m e gêmeo empatam a 0,75 (0,132) | ordem muda: taxas vão ao texto nos três limiares |
+| Regra oficial do VisDrone (regiões ignoradas) | tudo sobe um pouco; eficácia do S-oblique-six 16,4% | sem regra de derrubada |
+| 10.2, escala casada (imgsz 1024) | nadir 0,0128 contra 0,0102 (+25%) | não diverge; corrigir a frase do piloto |
+| 9.5, objeto no porte de arma | 15,4% contra 13,7%, McNemar p 0,56 | não sobe: sai a ressalva do ângulo |
+| 9.4, sintético e real juntos | 0,4607 contra 0,5220 (5%); 0,5428 contra 0,5709 (10%) | misto pior nas duas frações |
+| 11.5, gêmeo a 150 m | detectou 148 de 297 pessoas (0,498 < 0,5) | não interpretável: ausência continua argumentada |
+| 9.5, validação maior | quadros novos: 25,3% contra 12,5%, p 0,0001 | estabelecida |
+| 10.3, regime de luz | hard sun 0,675 (o pior), overcast 0,791 (o melhor) | cumprido: a 11.3 fica |
+| 10.6, sementes | S-oblique-six 15,3% (14,1 a 16,7%); ajuste fino COCO acima do sintético nas três; armados separam nos quadros novos, não no val original | ajuste fino resolvível; armados em parte |
 
-Achado ao desenhar a 10.2: o validador do Ultralytics redimensiona toda imagem para o lado maior valer imgsz, então a checagem de escala do piloto (0,0055 contra 0,0061) comparou a mesma escala de entrada. A frase da 10.2 será corrigida com o resultado novo; o casamento agora se faz pelo imgsz (1024).
+Em curso: aplicar as consequências ao manuscrito e regerar os PDFs.
 
 ## Rodada 3 (encerrada 26/09 17:54, sem grupo com falha)
 
@@ -63,7 +66,7 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
 | Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
-| Fila de execução | **Rodada 4 rodando** (27 a 29/09). Rodadas 2 (22 a 24/09) e 3 (24 a 26/09) encerradas |
+| Fila de execução | Nada rodando. Rodadas 2 (22 a 24/09), 3 (24 a 26/09) e 4 (27 a 30/09) encerradas |
 | Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
 | Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |
 
@@ -85,7 +88,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 ## Próximos passos, em ordem
 
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.
-2. [DESKTOP] Acompanhar a rodada 4 de hora em hora; no fim, aplicar os critérios do `PLANO-RODADA4.md`, registrar em `RESULTADOS.md`, atualizar o manuscrito e os PDFs. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
+2. [DESKTOP] Aplicar ao manuscrito as consequências dos vereditos da rodada 4 e regerar os PDFs. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
 3. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 4. [DESKTOP] Pôr no inventário `06-resultados/ONDE-ESTAO-OS-DADOS.md` os corpora e pesos das rodadas 2 e 3, e atualizar o painel.
 5. [DESKTOP] Tirar os caminhos absolutos dos scripts (item 13 de `docs/DIVERGENCIAS.md`).

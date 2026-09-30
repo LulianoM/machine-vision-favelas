@@ -2,6 +2,15 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Rodada 4 encerrada: vereditos dos critérios fixados antes
+
+- Encerrada às 10:25, sem grupo com falha, depois de quatro pausas do autor. Números e comandos em `06-resultados/RESULTADOS.md` (entrada de 30/09); vereditos em `rodada4_criterios.json`.
+- Confirmado: a vantagem do COCO no ajuste fino a 5% sobrevive a três sementes; misturar sintético e real também fica abaixo do só real (5% e 10%); nenhuma comparação do VisDrone troca de ordem entre IoU 0,5, 0,6 e 0,75; a regra oficial das regiões ignoradas não muda nada; o sol duro é o pior regime (a 11.3 fica); a diferença de 35 m contra o gêmeo de 75 m se replica em 80 quadros novos (p 0,0001) e entre as três sementes nesses quadros.
+- Muda o texto: o 16,7% do S-oblique-six foi o melhor de três treinos (média 15,3%, faixa 14,1 a 16,7%); o objeto no porte de arma não é chamado de arma com mais frequência (sai a ressalva do ângulo); a ordem dos armados muda com o limiar de IoU e a diferença 35 m contra gêmeo some a 0,75 no val original; no val original as sementes não separam 35 m do gêmeo.
+- Não interpretável pela regra: o gêmeo a 150 m detectou 148 de 297 pessoas (0,498, limite 0,5). A ausência a 150 m continua argumentada.
+- Correção: a checagem de escala do piloto na 10.2 não casava escala (o validador leva toda imagem ao mesmo lado maior). Casada pelo imgsz (1024), o nadir vai de 0,0102 a 0,0128, abaixo do limite de 50% fixado antes.
+- A seguir: consequências no manuscrito e PDFs, em commit separado.
+
 ## 2026-09-27 [DESKTOP] Rodada 4 disparada para amarrar o artigo
 
 - Pedido do autor: montar e rodar o pacote recomendado (150 m com objetos confundíveis, sintético e real no mesmo treino, sementes, objeto no porte de arma, validação maior a 35 e 75 m, regime de luz, VisDrone oficial e IoU, escala casada). Plano e critérios em `07-blender/PLANO-RODADA4.md`, versionados antes do primeiro resultado (6ebbaa9). Disparada às 11:31; previsão de cerca de 60 h.
