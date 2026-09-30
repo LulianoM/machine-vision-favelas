@@ -19,7 +19,7 @@ import glob
 import os
 import random
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 CORES = {0: (60, 230, 90), 1: (80, 170, 255)}
 NOMES = {0: "armada", 1: "desarmada"}
@@ -36,6 +36,13 @@ ap.add_argument("--out", default="previa.jpg")
 ap.add_argument("--en", action="store_true",
                 help="rotulos em ingles e sem nome de arquivo (figura do artigo, pedido do autor em 30/09)")
 args = ap.parse_args()
+
+# a fonte bitmap padrao do PIL come os espacos em JPEG reduzido; na figura do artigo vai Arial
+try:
+    FONTE = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 15) if args.en else None
+    FONTE_P = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13) if args.en else None
+except OSError:
+    FONTE = FONTE_P = None
 
 rng = random.Random(args.seed)
 imgs = sorted(glob.glob(os.path.join(args.ds, "images", "*", "*.png")))
@@ -108,21 +115,23 @@ for k, (im, cap) in enumerate(celulas):
     x = (k % cols) * args.larg
     y = (k // cols) * (ch + FAIXA)
     folha.paste(im, (x, y))
-    dd.text((x + 6, y + ch + 5), cap, fill=(200, 200, 205))
+    dd.text((x + 6, y + ch + 3), cap, fill=(200, 200, 205), font=FONTE)
 
 if recortes:
     y0 = alt_grade + 8
     dd.text((6, y0), (f"crops enlarged {args.zoom} times: green, armed; blue, unarmed "
                       f"(width by height in pixels of the original frame)") if args.en else
                      (f"recortes ampliados {args.zoom}x: verde = armada, azul = desarmada "
-                      f"(largura x altura em pixel na imagem original)"), fill=(210, 210, 215))
+                      f"(largura x altura em pixel na imagem original)"), fill=(210, 210, 215),
+            font=FONTE)
     x = 6
     y0 += 20
     for cz, w, h, c in recortes:
         if x + cz.width > larg_total - 6:
             break
         folha.paste(cz, (x, y0))
-        dd.text((x, y0 + cz.height + 2), f"{w} by {h}" if args.en else f"{w}x{h}", fill=CORES[c])
+        dd.text((x, y0 + cz.height + 2), f"{w} by {h}" if args.en else f"{w}x{h}", fill=CORES[c],
+                font=FONTE_P)
         x += cz.width + 10
 
 folha.save(args.out, quality=92)

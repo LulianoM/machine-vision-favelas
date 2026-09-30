@@ -2,6 +2,26 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Revisão geral do manuscrito, figuras em inglês, PDF enviado
+
+- Pedido do autor: trocar os rótulos em português das figuras 2, 4 e 5, revisar o texto inteiro atrás de inconsistências, corrigir e mandar o PDF Elsevier por e-mail.
+- Figuras 2, 4 e 5 com rótulos em inglês; a 5 refeita com Arial (a fonte bitmap do PIL comia os espaços). Comandos em `06-resultados/figuras_artigo.py` e em `RESULTADOS.md`.
+- Revisão em três lentes (números, lógica, forma), com cada achado conferido na fonte antes de entrar: 128 trocas nas 12 seções. As que mudam o sentido:
+  - 10.3: "Both parts of the condition hold" invertia o resultado; agora "Neither part of the condition is met".
+  - "dense favela" no abstract, na pergunta de pesquisa e na conclusão (restos de "self-built settlement").
+  - Intervenção no Jacarezinho em janeiro de 2022, não 2023 (Cidade Integrada, 19/01/2022), e "less than seven months" depois da decisão da ADPF.
+  - Pela regra oficial do VisDrone a eficácia do S-oblique-six cai (16,7 para 16,4), não sobe.
+  - Sintético e real juntos a 10% contra pré-treino sintético a 10% inverte a IoU 0,75: ressalva no texto.
+  - Ausência a 150 m descrita como argumentada, não medida, em todas as ocorrências; 35 m é a altitude mais alta em que um teste passou a condição de validade.
+  - Nota do d': a replicação usa correção log-linear (0,77 e 0,89 no val contra objetos confundíveis).
+  - Revisão de literatura: a afirmação de que sintético mais real fecha a lacuna vem agora com o resultado contrário da 9.4.
+  - Quadros do piloto passaram da 9.3 para a 10.3, com legenda que identifica o corpus; título da seção 9 passa a "Results: Transfer to Real Imagery and the Armed and Unarmed Distinction".
+- Os dois `[X]` viraram "specified and has not been run"; o PDF sai sem marcador. O montador imprimia o título duas vezes na capa (o H1 herdado do docx); corrigido.
+- Origem de cada número conferido na revisão registrada em `06-resultados/RESULTADOS.md` (vão entre lotes, variação de altitude oblíqua, h/w 1,58, 2.659 e 3.225 caixas, receita de R com semente 21, receita do piloto).
+- PDF Elsevier: 31 páginas, 27.606 palavras, 8 figuras, 0 `[X]`; enviado ao autor por e-mail.
+- Não aplicado, fica para o autor: harmonizar -ize/-ise, % e datas no texto do orientador e do coautor; numeração e remissão de figuras e tabelas; o que a 9.4 implica para a proposta da seção 6; "more than 1,200 military police officers" contra as fontes (cerca de 1.200 policiais civis e militares, pendente da fonte B7); abstract acima de 510 palavras; menções a "drafts" e a correção do 2,49 que aparece duas vezes; travessão no título de uma referência (08-references.md, linha 52); topografia do Jacarezinho (neutralizada na conclusão).
+- Busca bibliográfica com 8 agentes concluída; relatório a seguir em `04-bibliografia/`, sem mexer no artigo antes do OK do autor.
+
 ## 2026-09-30 [DESKTOP] Título: "Self-Built Settlements" vira "Favelas"
 
 - Pedido do autor. Novo título: "Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas" (manuscrito e montador do PDF). O corpo ainda diz "dense self-built settlement" no abstract, na pergunta de pesquisa e na conclusão.

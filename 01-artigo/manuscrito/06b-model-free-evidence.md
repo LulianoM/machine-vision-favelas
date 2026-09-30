@@ -1,11 +1,11 @@
 ## 8. Model-Free Evidence
 
 Before reporting detector performance we characterise the problem the detector is asked to solve.
-The ordering follows the convention of this venue, in which model-free evidence precedes estimation.
-It is also substantive here: aerial person detection in dense informal settlement is usually
-discussed in terms of scene realism, and the implicit assumption is that a corpus which looks more
-like a favela will transfer better. The measurements below identify two variables that plausibly
-govern difficulty and that no appearance metric captures.
+The ordering follows a convention in which model-free evidence precedes estimation. It is also
+substantive here: aerial person detection in dense informal settlement is usually discussed in terms
+of scene realism, and the implicit assumption is that a corpus which looks more like a favela will
+transfer better. The measurements below identify two variables that plausibly govern difficulty and
+that no appearance metric captures.
 
 Three corpora are used throughout, two generated and one real, and Section 8.2 adds two oblique
 generated corpora; their acquisition geometry differs in ways that matter, so the parameters are
@@ -38,10 +38,10 @@ shoulder.
 | Corpus of record | 3840 by 2160 | 4.88 cm/px | 20.6 px | 0.8 per cent |
 | VisDrone-DET val | not applicable | not applicable | 25.0 px | 30.5 per cent |
 
-*Measured over the label files named in the table above (the pilot corpus on its training split, the
-corpus of record on both splits, the benchmark on its validation split). The smallest stride of the
-detector is 8 pixels, so an instance below that size occupies less than one cell of the finest
-feature map.*
+*Measured over the annotations of the corpora in the table above (the pilot corpus on its training
+split, the corpus of record on both splits, the benchmark on its validation split). The smallest
+stride of the detector is 8 pixels, so an instance below that size occupies less than one cell of
+the finest feature map.*
 
 Two consequences follow, pointing in opposite directions.
 
@@ -63,11 +63,12 @@ at the network input differs somewhat from the column above.
 
 The second was initially mistaken for a problem. At 4K the median synthetic instance covers 301
 square pixels and the median instance of the real benchmark, its training and validation splits
-pooled, covers 300, a ratio of 1.00. The long side does not match as closely, 20.6 against 25.0
-pixels, because the two differ in shape rather than in size, which is the subject of Section 8.2. An
-earlier version of this analysis reported a 2.49-fold scale gap between corpus and benchmark and
-attributed it to an altitude domain shift. That gap was an artefact of rendering our own corpus at
-1920 by 1080, not a property of either corpus, and the claim is withdrawn.
+pooled, covers 300, a ratio of 1.00. The long side does not match as closely, 20.6 against 24.0
+pixels over the same pooled splits and 25.0 on the validation split alone, because the two differ in
+shape rather than in size, which is the subject of Section 8.2. An earlier version of this analysis
+reported a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain
+shift. That gap was an artefact of rendering our own corpus at 1920 by 1080, not a property of
+either corpus, and the claim is withdrawn.
 
 We report medians rather than claiming distributional equivalence. Two medians agreeing does not
 establish that two distributions agree, and the comparison below is where the distributions in fact
@@ -113,20 +114,20 @@ angle. It gives the dose-response that a contrast of two geometries cannot:
 
 *Measured from the full-frame labels.*
 
-The ratio rises with pitch, from 0.98 at the vertical to 1.70 at the steepest angle in the corpus,
-and for figures carrying nothing it reaches the value of the benchmark's training split, 1.95, only
-between 50 and 52 degrees, where it measures 1.97 on 49 figures. Two consequences follow for Section
-9.3. The oblique corpus as rendered, with pitch drawn uniformly between 26 and 52 degrees, realised
-a median of 1.46 rather than the 1.95 it was calibrated for, because most of its images sit below
-the angle at which the benchmark's shape is reached. And the annotated box of an armed figure
-includes the weapon, which widens it: 1.38 against 1.58 for figures carrying nothing in the same
-images. The benchmark contains no carried firearms, so for transfer to it the weapon is a source of
-shape mismatch rather than of signal. The combined model of Section 9.3 is built from these two
-measurements, and its corpus realises a median of 1.85.
+The ratio rises with pitch, though not strictly between 40 and 50 degrees, from 0.98 at the vertical
+to 1.70 at the most oblique angle in the corpus, and for figures carrying nothing it reaches the
+value of the benchmark's training split, 1.95, only between 50 and 52 degrees, where it measures
+1.97 on 49 figures. Two consequences follow for Section 9.3. The oblique corpus as rendered, with
+pitch drawn uniformly between 26 and 52 degrees, realised a median of 1.46 rather than the 1.95 it
+was calibrated for, because most of its images sit below the angle at which the benchmark's shape is
+reached. And the annotated box of an armed figure includes the weapon, which widens it: 1.38 against
+1.58 for figures carrying nothing in the same images. The benchmark contains no carried firearms, so
+for transfer to it the weapon is a source of shape mismatch rather than of signal. The combined
+model of Section 9.3 is built from these two measurements, and its corpus realises a median of 1.85.
 
-A ratio near 1.0 is the plan of a head and shoulders recorded from above. A ratio near 2.0 is a
-standing figure recorded obliquely. At comparable pixel area, these are different objects as far as
-the detector is concerned.
+A ratio near 1.0 is the plan of a figure recorded from above, about as wide as it is long. A ratio
+near 2.0 is a standing figure recorded obliquely. At comparable pixel area, these are different
+objects as far as the detector is concerned.
 
 This is a domain shift that matters here, and no appearance-based measure of realism detects it. A
 generator could be made arbitrarily more photorealistic without moving this quantity. Unlike

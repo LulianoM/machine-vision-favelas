@@ -317,6 +317,8 @@ def main():
             faltando.append(nome)
             continue
         txt = open(p, encoding="utf-8").read()
+        # o titulo ja vem na capa; o H1 que a introducao herdou do docx saia duas vezes no PDF
+        txt = re.sub(r"\A\s*# [^\n]*\n+", "", txt)
         # a legenda "aparece como [X]" das notas de proveniencia (blocos de citacao) nao e marcador
         n_ph += sum(ln.count("[X]") for ln in txt.splitlines() if not ln.lstrip().startswith(">"))
         if args.sem_notas:

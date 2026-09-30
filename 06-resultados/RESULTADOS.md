@@ -536,3 +536,20 @@ Mesma receita com `--seed 1` e `--seed 2` (`train_yolo_win.py`); corpus fixo. O 
 Leitura: a vantagem do COCO no ajuste fino sobrevive a variacao entre treinos. O 16,7% do S-oblique-six foi o melhor de tres treinos; a media, 9,7 pontos de mAP50, fica logo dentro da faixa sintetica de Kiefer et al. (1,2 a 10,2) e vale 9,5 vezes o nadir (0,0967 / 0,0102). A diferenca de altitude nos armados se separa entre treinos nos 80 quadros novos (292 e 288 objetos), mas nao no val original (121 e 91), onde o gemeo de semente 2 chega a 0,242.
 
 Rodada 4 encerrada em 30/09 10:25. Ficam `[X]` a curva de aprendizado da 10.1 e a ablacao so com sol duro da 10.3, que nao estavam na rodada.
+
+## 2026-09-30 [DESKTOP] Revisao geral do manuscrito: origem dos numeros conferidos
+
+A revisao geral de 30/09 (tres revisores: numeros, logica, forma) conferiu contra a fonte cada numero abaixo, que o texto usa sem citar arquivo (regra de 30/09: o artigo sai so como texto). Fica aqui a origem.
+
+| No texto | Valor | Origem |
+|---|---|---|
+| 7.2, vao entre lotes | 0 com p 0,82; 0,5 a 1,2 m com p 0,12; 1,3 a 2,0 m com p 0,052; 2,3 a 3,1 m com p 0,008 | `07-blender/scripts/gen_morro.py`, funcao `folga()` (limiares 0,82, 0,94 e 0,992 sobre `rng.random()`) |
+| 10.4, camera obliqua | 120 m com variacao de ate 36 m para cada lado | `gen_morro.py`, bloco `if args.obliqua`: `alt = 60 x res/1920` e `alt_jitter = 18 x res/1920`; em 4K (3840) da 120 e 36 |
+| 8.2 e figura do nadir contra obliquo | h/w mediana 1,58 dos sem arma no corpus obliquo (1,46 em todas), tabela por pitch, 0,98 no nadir | `forma_corpora.json` (`ds_morro_obl/por_classe`, `ds_morro_obl/por_pitch`), `python mede_forma.py` |
+| 9.1, pessoas nas imagens | 2.659 caixas nos 149 quadros de treino do corpus de referencia (3.225 nos 180); 18.858 pessoas nas 1.106 imagens de R | `alvo_por_split.json` (`ds_morro_4k/train`, `ds_morro_4k/todos`, `visdrone_sub/train`), `python mede_alvo_split.py` |
+| 9.1 e tabela de protocolo, modelo R | 1.106 imagens sorteadas com semente 21; 60 epocas, batch 6, imgsz 1280, patience 15, semente de treino 0, as 60 epocas completas | sorteio: `monta_subamostra()` em `07-blender/scripts/fila_noite.py` (`random.Random(21).sample`, N = ladrilhos de treino do corpus de referencia); treino: `runs/detect/r_pareado/args.yaml` e `results.csv` (60 linhas) |
+| 9.0, receita do piloto | ladrilho e entrada de 640 px, orcamento de 120 epocas, patience 15, batch 8, duas classes; parada antecipada na epoca 24 | `runs/detect/morro_clima_s/args.yaml` (`imgsz: 640`, `epochs: 120`, `patience: 15`, `batch: 8`, `data: ds_morro_clima_tiles`) e `results.csv` (24 linhas) |
+| 7.6, validacao | 24 a 35 quadros por corpus | entrada de 26/09 acima (vals de 24 a 35 imagens) e `alvo_por_split.json` (31 no corpus de referencia) |
+| 9.5, pessoas por quadro | 14 a 30 | entrada do teste de arma inedita acima (comando do `ds_armado_75`) |
+
+Figura 5 refeita com rotulos em Arial (a fonte bitmap padrao do PIL comia os espacos): `python ../07-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2 --larg 900 --zoom 5 --seed 1 --en --out figuras/fig5_anotacao.jpg`.
