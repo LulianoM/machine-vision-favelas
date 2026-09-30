@@ -2,6 +2,11 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Título: "Self-Built Settlements" vira "Favelas"
+
+- Pedido do autor. Novo título: "Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas" (manuscrito e montador do PDF). O corpo ainda diz "dense self-built settlement" no abstract, na pergunta de pesquisa e na conclusão.
+- PDFs Elsevier regerados na Área de Trabalho.
+
 ## 2026-09-30 [DESKTOP] Manuscrito atualizado com a rodada 4
 
 - Consequências de cada veredito aplicadas (commit 35b09ca): abstract, 7.6, 7.7, 8.3, 9.3 a 9.5, 10.2, 10.3, 10.6, 10.7, 11.2, 11.3, 11.5, 11.6 e conclusão. Correção da 10.2 sobre o piloto incluída. Caixas de estado do PDF e PENDENCIAS (D4) atualizadas.

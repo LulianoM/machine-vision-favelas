@@ -1,4 +1,4 @@
-# Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Self-Built Settlements
+# Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas
 
 ## Abstract
 
