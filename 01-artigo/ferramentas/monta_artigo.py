@@ -70,7 +70,7 @@ AUTORIA = {
         "Prof. Hélio Arthur Reis Irigaray",
         "v2 de 2026-09-10 com edições do mestrando (22 a 26/09)",
         "O abstract e as palavras-chave foram acrescentados em 20/09 pelo mestrando e atualizados "
-        "até 26/09. O abstract tem hoje cerca de 450 palavras e os quatro premiados de 2026 têm de "
+        "até 30/09. O abstract tem hoje cerca de 510 palavras e os quatro premiados de 2026 têm de "
         "127 a 152, sem nenhuma citação: precisa encurtar para perto de 150. Na introdução, o "
         "mestrando reescreveu a pergunta de pesquisa e o objetivo, acrescentou o parágrafo de "
         "abertura, o das duas tarefas e o do Global South, e condensou o bloco de planejamento de "
@@ -117,8 +117,9 @@ AUTORIA = {
         "É a proposta que a seção 7 implementa. Continua a propor a classificação de altura de "
         "edificação, e o que foi construído e medido detecta pessoa; o último parágrafo e a seção "
         "11.4 já declaram essa diferença. O terceiro componente cita o resultado da 9.4, em que o "
-        "início genérico supera o sintético com 5 e 10% do dado real: falta o autor decidir se "
-        "esse resultado muda a proposta."),
+        "início genérico supera o sintético com 5 e 10% do dado real; a rodada 4 acrescentou que "
+        "misturar sintético e real no mesmo treino também fica abaixo do só real. Falta o autor "
+        "decidir se esses resultados mudam a proposta."),
     "03b-methodology-synthetic-pipeline.md": (
         "Luciano Martins Figueira (mestrando)",
         "método executado, com versão e comando de origem",
@@ -132,24 +133,29 @@ AUTORIA = {
         "Luciano Martins Figueira (mestrando)",
         "resultados medidos, cada número com arquivo de origem",
         "Cada modelo foi especificado antes de rodar, mas o protocolo cresceu em etapas, e o texto "
-        "diz quais modelos entraram depois de resultados anteriores."),
+        "diz quais modelos entraram depois de resultados anteriores. A rodada 4 (27 a 30/09) "
+        "acrescentou sementes, treino misto, objeto no porte de arma, quadros novos a 35 e 75 m e "
+        "o gêmeo de 150 m, com critérios fixados antes em 07-blender/PLANO-RODADA4.md."),
     "08b-robustness.md": (
         "Luciano Martins Figueira (mestrando)",
         "ameaças e testes definidos antes dos resultados",
         "Cada ameaça traz o teste que a resolveria e o que aconteceria com a conclusão se o teste "
-        "falhar; os testes ainda não rodados estão marcados como tal."),
+        "falhar. Na rodada 4 rodaram a 10.2 (escala casada), a 10.3 (por regime) e as duas da "
+        "10.6 (limiar de IoU e sementes); ficam sem rodar a curva da 10.1 e a ablação só com sol "
+        "duro da 10.3, marcadas como tal."),
     "09b-technical-limitations.md": (
         "Luciano Martins Figueira (mestrando)",
         "fechada",
-        "Contém, em 11.5, a decisão de não reportar acurácia entre armado e desarmado a 150 m e o "
+        "Contém, em 11.5, a decisão de não reportar acurácia entre armado e desarmado a 150 m (o "
+        "gêmeo treinado lá na rodada 4 ficou abaixo da condição de validade fixada antes) e o "
         "relato a 75 m e 35 m, com o teste de arma inédita e a condição de retirada fixada antes; "
         "é decisão de conteúdo e precisa do aval dos três autores."),
     "07-conclusion.md": (
         "Prof. Hélio Arthur Reis Irigaray",
         "v2 com edições do mestrando e o fecho acrescentado em 20/09",
         "O fecho (Closing) foi escrito pelo mestrando porque a v2 não concluía, só trazia "
-        "Limitations, Delimitations e Future Research, e foi atualizado até 26/09 com os "
-        "resultados das rodadas 2 e 3. O mestrando também reescreveu o primeiro parágrafo de "
+        "Limitations, Delimitations e Future Research, e foi atualizado até 30/09 com os "
+        "resultados das rodadas 2 a 4. O mestrando também reescreveu o primeiro parágrafo de "
         "Limitations, a delimitação da pergunta técnica e o parágrafo técnico de Future Research. "
         "Tudo isso precisa do aval do orientador."),
     "08-references.md": (

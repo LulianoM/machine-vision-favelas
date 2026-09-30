@@ -255,7 +255,8 @@ Synthetic training therefore operates on tiles cut at native scale with 20 per c
 on downscaled frames, although the scale augmentation of the recipe rescales them at random; the
 real-data models, R and the fine-tuning models of Section 9.4, train on whole VisDrone images
 resized so that the long side is 1280 px, which downscales the most common training size, 1400 by
-1050 (`06-resultados/alvo_por_split.json`).
+1050 (`06-resultados/alvo_por_split.json`), and the joint models of that section train on both kinds
+of input.
 
 | Parameter | Value |
 |---|---|
@@ -268,10 +269,10 @@ resized so that the long side is 1280 px, which downscales the most common train
 | Optimiser, learning rate | Ultralytics default (`optimizer=auto`), which ignores lr0 0.01 and at these training lengths selects AdamW, momentum 0.9, with an initial learning rate of 0.002 for the single-class models and 0.001429 for the three-class models (training logs), decaying linearly to 0.01 of that value after 3 warm-up epochs |
 | Input size, batch | 1280 px, batch 6 |
 | Augmentation | mosaic 1.0, switched off for the last 10 epochs; horizontal flip 0.5; rotation up to 10 degrees; scale gain 0.4; translation 0.1; HSV gains 0.015, 0.6 and 0.4 (`07-blender/scripts/train_yolo_win.py`; rotation, scale and saturation differ from the Ultralytics defaults of 0, 0.5 and 0.7) |
-| Epochs | 60, stopping early after 15 epochs without improvement in validation mAP50-95, the Ultralytics fitness that also selects the reported checkpoint; 30 for the fine-tuning models of Section 9.4, selected the same way on their selection slice |
+| Epochs | 60, stopping early after 15 epochs without improvement in validation mAP50-95, the Ultralytics fitness that also selects the reported checkpoint; 30 for the fine-tuning and joint models of Section 9.4, selected the same way on their selection slice |
 | Validation split | each rendered frame assigned to validation with probability 0.15 (`--val`, default of `07-blender/scripts/gen_morro.py`), realised as 24 to 35 frames per corpus; split by frame and not by tile, and within a corpus the validation frames show the same settlement as the training frames, from other camera positions, with other figures and light |
-| Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95; on VisDrone every model receives each image resized to 1280 px on its long side, as R is trained, so the 408 validation images of 1360 by 765 are slightly reduced and images of other sizes are enlarged or reduced accordingly |
-| Seeds | training seed 0 with deterministic operations (Ultralytics defaults); the 1,106 images of R drawn with seed 21 (step 9 of `07-blender/scripts/fila_noite.py`); the fine-tuning and selection slices of Section 9.4 drawn with seed 2609 (`07-blender/scripts/prepara_ft.py`) |
+| Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95, and at 0.60 and 0.75 for the check of Section 10.6; on VisDrone every model receives each image resized to 1280 px on its long side, as R is trained, so the 408 validation images of 1360 by 765 are slightly reduced and images of other sizes are enlarged or reduced accordingly |
+| Seeds | training seed 0 with deterministic operations (Ultralytics defaults); the 1,106 images of R drawn with seed 21 (step 9 of `07-blender/scripts/fila_noite.py`); the fine-tuning and selection slices of Section 9.4 drawn with seed 2609 (`07-blender/scripts/prepara_ft.py`); training seeds 1 and 2 for the five models repeated in Section 10.6 |
 
 Splitting the validation set by frame rather than by tile is necessary because overlapping tiles of
 one frame are not independent; splitting by tile would place near-duplicates on both sides.
@@ -289,15 +290,20 @@ instances: the benchmark's pedestrian and people categories merged into one clas
 categories and its annotated ignored regions dropped by `03-arma3/scripts/visdrone_to_yolo.py`).
 Every model is scored by the Ultralytics validator rather than the official VisDrone toolkit, so a
 detection inside an ignored region, which that toolkit disregards, counts here as a false positive,
-for R as for the synthetic models, though not necessarily to the same degree. Because no public
-benchmark annotates a carried firearm, the three-class models are scored instead on the validation
-split of their own corpus, whose tiles also served for early stopping and for selecting the
-checkpoint, so that split is held out from training but not from model selection; Section 9.5
-reports them separately: scored on the world in which they were trained, their figures are ceilings
-rather than evidence of transfer, so the two groups cannot be read on one scale. Every synthetic
-corpus holds the same number of images, 180 for the single-class models and 200 for the three-class
-ones, so that no comparison below is a comparison of the number of frames, although instance counts
-still differ (Section 8.2).
+for R as for the synthetic models, though not necessarily to the same degree. Every VisDrone figure
+was therefore also recomputed under the toolkit's rule, which removes from the evaluation any box,
+annotated or detected, with half or more of its area inside an ignored region (`dropObjectsInIgr.m`
+of the VisDrone2018-DET-toolkit), applied inside the same validator so that without ignored regions
+it reproduces the standard figure (`06-resultados/avalia_visdrone_oficial.py`); the figures rise
+slightly and no comparison changes order (Section 9.3). Because no public benchmark annotates a
+carried firearm, the three-class models are scored instead on the validation split of their own
+corpus, whose tiles also served for early stopping and for selecting the checkpoint, so that split
+is held out from training but not from model selection; Section 9.5 reports them separately: scored
+on the world in which they were trained, their figures are ceilings rather than evidence of
+transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds the same
+number of images, 180 for the single-class models and 200 for the three-class ones, so that no
+comparison below is a comparison of the number of frames, although instance counts still differ
+(Section 8.2).
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
@@ -309,6 +315,8 @@ still differ (Section 8.2).
 | **S-nadir-75** | The same generator at 75 m, three classes with hard negatives | Whether the armed and unarmed distinction is resolvable |
 | **S-nadir-35**, and its twin at 75 m | At 35 m with realistic carrying poses; the same corpus rendered at 75 m | Whether resolution or carrying pose drives the confusion |
 | **F-synthetic, F-generic** | 5 or 10 per cent of VisDrone-DET train (324 or 647 images), starting from S-oblique-six or from COCO | What the synthetic pretraining is worth once some real data exists |
+| **F-joint** | The 890 training tiles of S-oblique-six together with the same 324 or 647 real images, starting from COCO | What the synthetic corpus is worth mixed with real data |
+| Twin of S-nadir-35 at 150 m | The 35 m corpus rendered at 150 m, three classes | Whether the distinction can be measured at the reference altitude |
 
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 ceiling reached without a single real training image. R is matched to the 1,106 training tiles of

@@ -533,6 +533,6 @@ Mesma receita com `--seed 1` e `--seed 2` (`train_yolo_win.py`); corpus fixo. O 
 | objeto chamado de arma, 35 m, quadros novos | 0,253 | 0,202 | 0,209 | contra gemeo: resolvivel |
 | idem, gemeo 75 m, quadros novos | 0,125 | 0,097 | 0,181 | |
 
-Leitura: a vantagem do COCO no ajuste fino sobrevive a variacao entre treinos. O 16,7% do S-oblique-six foi o melhor de tres treinos. A diferenca de altitude nos armados se separa entre treinos nos 80 quadros novos (292 e 288 objetos), mas nao no val original (121 e 91), onde o gemeo de semente 2 chega a 0,242.
+Leitura: a vantagem do COCO no ajuste fino sobrevive a variacao entre treinos. O 16,7% do S-oblique-six foi o melhor de tres treinos; a media, 9,7 pontos de mAP50, fica logo dentro da faixa sintetica de Kiefer et al. (1,2 a 10,2) e vale 9,5 vezes o nadir (0,0967 / 0,0102). A diferenca de altitude nos armados se separa entre treinos nos 80 quadros novos (292 e 288 objetos), mas nao no val original (121 e 91), onde o gemeo de semente 2 chega a 0,242.
 
 Rodada 4 encerrada em 30/09 10:25. Ficam `[X]` a curva de aprendizado da 10.1 e a ablacao so com sol duro da 10.3, que nao estavam na rodada.

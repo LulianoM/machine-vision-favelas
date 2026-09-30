@@ -189,8 +189,8 @@ between-image dispersion of 0.12 to 0.38, only the gap between the extremes (rai
 0.63 and 0.64, against overcast at 0.88) approaches one standard deviation, and the ordering of the
 four intermediate regimes is not resolvable at this sample size. The measurement is therefore a
 hypothesis about detector difficulty, not a finding about it: a contrast statistic is not a
-detection statistic. Section 10.3 states the test and the condition under which the hypothesis is
-withdrawn, and Section 11.3 the implication that is withdrawn with it.
+detection statistic. Section 10.3 states the test and the condition under which the hypothesis would
+be withdrawn; the test was run and the condition is not met, and Section 11.3 draws the implication.
 
 ### 8.4 What these measurements imply for the proposal
 
@@ -201,7 +201,7 @@ these corpora tracks camera pitch rather than scene content; and hard sun, the i
 conventionally preferred for flying, is the regime with the second largest raw contrast and the
 second lowest point estimate once local clutter is accounted for. Section 8.3 attributes this, as a
 proposed mechanism, to cast shadow in the background; whether that makes detection harder is the
-test of Section 10.3, which has not been run.
+test of Section 10.3, which finds hard sun the weakest of the six regimes for a detector as well.
 
 Whether these constraints can be overcome by synthesis alone, and what fraction of the
 matched-volume ceiling is reached, is the subject of Section 9.

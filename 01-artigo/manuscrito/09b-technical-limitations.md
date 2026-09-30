@@ -42,26 +42,29 @@ clearest statement of this limit: the same settlement rendered from a tilted cam
 the nadir figure on VisDrone (0.0614 against 0.0102), not because it is a better model of a
 settlement seen from a drone at 150 m, but most plausibly because it resembles the benchmark's
 acquisition; Section 10.4 lists what else differs between the two corpora. The best oblique
-configuration scores 10 times (0.1055), but it is not an ablation: besides the camera it adds six
-settlements and keeps only figures carrying nothing, chosen because their shape is closer to the
-benchmark's, so that factor is not attributable to acquisition alone (Section 9.3). The nadir figure
-is the one that bears on the case study, and it is the lower one.
+configuration scores 10 times in its first training run (0.1055) and 9.5 times over the mean of
+three (0.0967), but it is not an ablation: besides the camera it adds six settlements and keeps only
+figures carrying nothing, chosen because their shape is closer to the benchmark's, so that factor is
+not attributable to acquisition alone (Section 9.3). The nadir figure is the one that bears on the
+case study, and it is the lower one.
 
 ### 11.3 The acquisition implication, and the condition under which it is withdrawn
 
 Section 8.3 measures contrast against local clutter lower under hard sun and rain than under
 overcast, and proposes as the mechanism that the background under a hard sun is itself filled with
-cast shadow from rooftop objects. If that mechanism holds when a detector is evaluated per regime,
-the practical implication is direct and runs against the conventional preference for flying in clear
-weather.
+cast shadow from rooftop objects. A detector evaluated per regime behaves as that mechanism predicts
+(Section 10.3), and the practical implication is direct and runs against the conventional preference
+for flying in clear weather.
 
-The implication is stated conditionally because the evidence is conditional. Eight images per
-regime, with between-image dispersion of 0.12 to 0.38, resolves only the gap between the extremes at
-roughly one standard deviation and does not resolve the ordering of the four intermediate regimes at
-all. Section 10.3 specifies the test, which has not been run. If per-regime detector performance is
-not higher under overcast than under both hard sun and rain, or if hard sun is not among the two
-weakest regimes, this implication is withdrawn and the contrast measurement stands only as a
-description of the imagery.
+The implication was stated conditionally because the evidence was conditional. Eight images per
+regime, with between-image dispersion of 0.12 to 0.38, resolved only the gap between the extremes at
+roughly one standard deviation and did not resolve the ordering of the four intermediate regimes at
+all. Section 10.3 specified a detection test and the condition under which the implication would be
+withdrawn: per-regime performance not higher under overcast than under both hard sun and rain, or
+hard sun not among the two weakest regimes. The test was run and the condition is not met: on 120
+new frames hard sun is the weakest regime and overcast the strongest (Section 10.3). The implication
+therefore stands, on synthetic imagery and for one detector; its robust part is that hard sun is the
+weakest, since the margin of overcast over rain lies within the uncertainty of the measurement.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
 
@@ -84,14 +87,16 @@ resolution rather than measured, and this section states the conditions that pro
 At 150 m with the camera pointing straight down, rendered at the 4.88 cm per pixel of the corpus of
 record, the median annotated instance measures 17.6 by 17.5 pixels. A firearm subtends a fraction of
 that and is not resolvable within the region. A detector trained on such a corpus might still
-separate the two classes, although none was trained to do so here (S-nadir-150 detects a single
+separate the two classes, although none was trained to do so on it (S-nadir-150 detects a single
 person class, and the two-class pilot of Section 9 did not learn its own domain), and that
 possibility is precisely the problem: in a corpus where a weapon, drawn from three rifle patterns
 and a pistol in four carrying poses, is the only elongated object any figure carries, separability
 could not be told apart from the regularity of the asset library. An accuracy figure obtained there
 would be the inferential move this article criticises, a number produced under controlled synthetic
 conditions and presented as evidence of a capability that would be exercised on real people in a
-real territory.
+real territory. The one three-class model trained at 150 m, on a twin of the 35 m corpus that does
+carry confusable objects, did not pass the validity condition fixed before it was run (Section 9.5),
+so it does not change this.
 
 Two changes make the question empirical rather than foreclosed, and both are reported in Section 9.
 Halving the altitude to 75 m raises the median instance to 47.6 by 41.7 pixels, a 6.4-fold increase
@@ -100,25 +105,30 @@ region the network can in principle resolve. And the corpus at that altitude is 
 artefact, by the construction specified in Section 7.4: the weapons are set against elongated
 objects carried in the same territory, drawn from the same colour and roughness palette and carried
 through the same distribution of body poses, although objects longer than any weapon are held at
-other angles. A detector that separates the classes on that corpus cannot be doing so by colour
+other angles, a difference that Section 9.5 shows does not lower the rate at which objects are
+called armed. A detector that separates the classes on that corpus cannot be doing so by colour
 alone, and the rate at which it calls a broom a rifle is reported in Section 9.5.
 
 The distinction between altitudes is the contribution, and it is stated as a condition rather than a
-recommendation. At 150 m the capability is argued from resolution, not measured, to be absent: no
-corpus with confusable objects was rendered at that altitude. At 75 m it exists in the sense that
-the classes are separated above chance on the synthetic validation split, with the error profile of
+recommendation. At 150 m the capability is argued from resolution, not measured, to be absent: a
+corpus with confusable objects was rendered at that altitude, a twin of the 35 m corpus, but the
+model trained on it found only 148 of 297 figures, below the validity condition fixed before it was
+run, so its rates are not interpretable (Section 9.5). At 75 m it exists in the sense that the
+classes are separated above chance on the synthetic validation split, with the error profile of
 Section 9.5, which calls 24 per cent of confusable objects armed; no threshold for calling the
 capability present was fixed in advance. The measurements do not show it improving as resolution
 increases further: at 35 m the same rate is 27 per cent. Whether that reflects a limit of what these
 figures and carrying poses allow a detector to learn, or the change of pose distribution between the
-two corpora, is what the matched corpus of Section 9.5 addresses, and in one training run per model
-it points away from the pose. Rendered at 75 m with every setting of the 35 m corpus, the rate is 16
-per cent against 27 at 35 m: with the pose held, the finer ground sampling distance did not reduce
-the confusion, and the 35 m model calls every class armed more often rather than separating them
-better, a difference that is suggestive rather than established at these sample sizes (Section 9.5).
-Either way, a claim that a system distinguishes an armed from an unarmed person from the air is, at
-the altitudes and sensors described here, a claim that can be checked before it is believed. Nothing
-in this article recommends acquisition over the case study territory.
+two corpora, is what the matched corpus of Section 9.5 addresses, and it points away from the pose.
+Rendered at 75 m with every setting of the 35 m corpus, the rate is 16 per cent against 27 at 35 m,
+and on 80 new frames 12.5 against 25 (p = 0.0001), a difference that holds across three training
+runs on those frames: with the pose held, the finer ground sampling distance did not reduce the
+confusion, and the 35 m model calls every class armed more often rather than separating them better.
+The difference is established at the overlap threshold of the protocol and shrinks under a stricter
+one, vanishing at 0.75 on the validation split (Section 9.5). Either way, a claim that a system
+distinguishes an armed from an unarmed person from the air is, at the altitudes and sensors
+described here, a claim that can be checked before it is believed. Nothing in this article
+recommends acquisition over the case study territory.
 
 The 75 m figure itself would be withdrawn under a condition this article states rather than
 delegates, and fixes before running: if the detector's recall on firearm models it has never seen
@@ -164,7 +174,8 @@ the fix. Camera pitch is recorded per image only in corpora generated after that
 the two nadir corpora of Section 8.2 predate it, which is why their rows carry the generator setting
 rather than a per-image value, and the table says so. The hyperparameter and inference table of
 Section 7.6 is in the body of the article, rather than in an appendix, so that every parameter
-needed to reproduce a run is in the article itself.
+needed to reproduce a run is in the article itself. Training is deterministic under a fixed seed,
+and five models were repeated with two further training seeds (Section 10.6).
 
 What a reader cannot check from this article is the corpus itself, although the reason is logistical
 rather than legal: every corpus generated for this article is redistributable by construction, since

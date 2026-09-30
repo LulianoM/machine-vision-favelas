@@ -19,21 +19,24 @@ objects carried in the same territory (brooms, rebar, pipe, umbrellas), drawn fr
 and roughness palette, so that colour alone cannot separate the classes. On synthetic validation
 imagery only, since no public benchmark annotates a carried firearm, the detector trained at that
 altitude calls 24 per cent of those objects armed; at 35 m the rate is 27 per cent, against 16 per
-cent for a twin of the 35 m corpus rendered at 75 m, so finer resolution did not reduce the
-confusion, a difference suggestive rather than established.
+cent for a twin of the 35 m corpus rendered at 75 m. On 80 new frames the gap replicates, 25 against
+12.5 per cent, and holds across three training runs, so finer resolution did not reduce the
+confusion; how large the gap is depends on how tightly a detection must overlap its annotation.
 
 Transfer of person detection, as a single class, to real aerial imagery, a public urban benchmark
 that is not a favela, is reported as a ratio to what the same detector achieves on the same test set
 when trained on a matched number of real images: 1.6 per cent for the nadir acquisition taken as
-reference, 9.7 per cent when the same settlement is rendered from an oblique camera, and 16.7 per
-cent for the best oblique configuration tried, six settlements at a pitch recalibrated to the
-benchmark. Given 5 or 10 per cent of the benchmark's real training images, a generic initialisation
-outperformed the synthetic one. Each model was trained once, so no difference between models carries
-a measured run-to-run dispersion. No armed and unarmed accuracy is reported at 150 m: at that ground
-sampling distance a carried object reaches the image as a thin line whose form cannot be resolved,
-an absence argued from resolution rather than measured, and a figure obtained there could not be
-told apart from the regularity of our asset library. Stating the conditions under which a capability
-is absent is a contribution of the same kind as demonstrating one that is present.
+reference, 9.7 per cent when the same settlement is rendered from an oblique camera, and 15.3 per
+cent on average over three training runs (14.1 to 16.7) for the best oblique configuration tried,
+six settlements at a pitch recalibrated to the benchmark. Given 5 or 10 per cent of the benchmark's
+real training images, a generic initialisation outperformed the synthetic one, at 5 per cent by more
+than the spread between three training runs, and adding the synthetic corpus to the same real images
+lowered accuracy too. No armed and unarmed accuracy is reported at 150 m: at that ground sampling
+distance a carried object reaches the image as a thin line whose form cannot be resolved, an absence
+argued from resolution rather than measured, since a detector trained on a 150 m twin of the 35 m
+corpus found fewer than half of the figures, below the validity threshold fixed before it was run.
+Stating the conditions under which a capability is absent is a contribution of the same kind as
+demonstrating one that is present.
 
 **Keywords:** synthetic data, aerial object detection, ground sampling distance, dual use, informal
 settlements

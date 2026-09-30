@@ -6,8 +6,9 @@
 Each threat below is named, given a check, and given an explicit condition that would overturn the
 result it protects; where the check has not been run, the text says so. Stating that condition in
 advance is what distinguishes a check from a defence written after seeing the number. Each
-overturning condition below was fixed before the corresponding measurement was run; the two made
-more precise afterwards, in Sections 10.1 and 10.3, were changed before their tests and say so.
+overturning condition below was fixed before the corresponding measurement was run; the three made
+more precise afterwards, in Sections 10.1, 10.2 and 10.3, were changed before their tests and say
+so.
 
 ### 10.1 The corpus is small, and small corpora flatter themselves
 
@@ -40,27 +41,33 @@ does not extend to the long side, which is 20.6 against 25.0 pixels. Where it is
 the long side, a transfer failure attributable to scale could be mistaken for a failure attributable
 to synthesis.
 
-**Check.** The real test set is additionally evaluated after rescaling so that its target size
-distribution matches the training corpus by construction. The label format is normalised, so
-rescaling the image leaves the annotation unchanged and the control is clean.
+**Check.** The real test set is additionally evaluated at an input size chosen so that the median
+long side of its person boxes, as they reach the network, matches that of the training corpus. The
+scale has to be set through the input size, because the validator resizes every image so that its
+long side equals the input size, enlarging as well as reducing (`ultralytics/data/base.py`), so
+rescaling the image files and evaluating them at the same input size changes nothing the network
+sees. The input size is chosen from the labels and image sizes alone, before any evaluation.
 
-This check has already been run once, on the pilot reported in Section 9, and its outcome is given
-here rather than withheld: mAP50 of 0.0055 at native scale against 0.0061 at matched scale, a
-difference of 0.0006 (`06-resultados/sim2real_morro_v1.json`). On that pilot, matching the scale did
-not recover performance. Because the pilot did not learn its own domain (Section 9), that outcome is
-uninformative about scale as a confound: it neither supports nor rules out the explanation most
-favourable to us. On the corrected corpus only the native-scale half has been run: 0.0102 (Section
-9.2). The pilot matched the benchmark to the corpus on the median long side of the box. On the
-corrected corpus the two targets match closely in median area but not on the long side, as the
-threat above records, and because they differ in shape no uniform rescaling matches both. The
-matched-scale half was dropped before the native-scale figure was known, on the argument that
-rescaling by area would leave the benchmark essentially where it is; that argument is not a
-measurement, and a rescaling on the long side, as in the pilot, has not been run. What still differs
-at matched area is shape, which Section 10.4 tests.
+An earlier version of this check was run on the pilot reported in Section 9 and gave 0.0055 against
+0.0061 (`06-resultados/sim2real_morro_v1.json`). It rescaled the benchmark's image files by 1/2.49
+and evaluated both versions at the same input size, 640 pixels, so, for the reason just given, both
+presented the network with the same scale, and the difference between them is one of resampling, not
+of scale. Earlier drafts reported it as a matched-scale result; that reading is withdrawn. On the
+corrected corpus the check was run as specified above. At the protocol's input size of 1,280 pixels
+the median long side of the benchmark's person boxes reaches the network at 25.33 pixels; at 1,024
+it reaches it at 20.27, the closest a multiple of 32 comes to the 20.55 of the corpus of record,
+while the median area falls from 283 to 181 square pixels, since no uniform rescaling matches shape
+(`06-resultados/escala_casada.json`, produced by `06-resultados/escala_casada.py`). At 1,024 pixels
+S-nadir-150 reaches 0.0128 against 0.0102 at the protocol's size, and R 0.5849 against 0.6311, which
+would put the efficacy of Section 9.2 at 2.2 rather than 1.6 per cent
+(`sim2real_s_nadir_4k_casada.json` and `sim2real_r_pareado_casada.json`). What still differs at a
+matched long side is shape, which Section 10.4 tests.
 
 **What would overturn the claim.** If the two figures diverge substantially on the corrected corpus,
 scale is a live confound after all and the efficacy ratio in Section 9.2 must be reported at matched
-scale only. On the corrected corpus this condition has not been evaluated.
+scale only. "Substantially" was fixed before the matched run as a difference of more than half of
+the protocol figure (`07-blender/PLANO-RODADA4.md`). The difference is a quarter of it, 0.0026 on
+0.0102, so the condition is not met and the ratio of Section 9.2 stands at the protocol's scale.
 
 This subsection also records a correction. An earlier version of this analysis reported a 2.49-fold
 scale gap between corpus and benchmark and treated it as an inherent altitude domain shift. It was
@@ -76,7 +83,15 @@ performs better under overcast than under hard sun. A contrast statistic is not 
 statistic, the sample is eight images per regime, and between-image dispersion is of the same order
 as several of the gaps.
 
-**Check.** Per-regime performance on a held-out synthetic split, six regimes, balanced: `[X]`.
+**Check.** Per-regime performance on a held-out synthetic split, six regimes, balanced. It was run
+on 120 new frames continuing the seed of the corpus of record, 20 per regime, none used in training,
+and scored with S-nadir-150 as mAP50 on the tiles of each regime, the protocol of the synthetic
+ceiling of Section 9.2, and, as a secondary measure fixed with it, as recall at confidence 0.25 on
+whole frames with 95 per cent intervals by resampling frames
+(`06-resultados/por_regime_s_nadir_4k.json`, produced by `06-resultados/por_regime.py`). mAP50 is
+0.675 under hard sun, 0.755 under heavy overcast, 0.759 under rain, 0.780 under haze, 0.790 under
+low sun and 0.791 under overcast; recall under hard sun is 0.657 (0.591 to 0.720), below every other
+regime, and under overcast 0.796 (0.760 to 0.827), against 0.789 (0.748 to 0.827) under rain.
 Ablation against a corpus generated under hard sun only, evaluated on the full six-regime split and
 on the real test set: `[X]`.
 
@@ -88,7 +103,10 @@ describing something other than detector difficulty. The ablation in the check a
 overturning condition and is reported descriptively. An earlier wording of this condition referred
 to raw contrast, from a superseded measurement in which hard sun had the largest raw difference, and
 a later one asked that performance order with contrast against local clutter without saying over
-which regimes; both are corrected here, before the per-regime test has been run.
+which regimes; both were corrected before the per-regime test was run. Both parts of the condition
+hold: overcast scores above hard sun and above rain, and hard sun is the weakest of the six regimes.
+The margin over rain is small and lies within the recall intervals, so the robust part of the result
+is that hard sun is the weakest.
 
 ### 10.4 Capture geometry against scene content
 
@@ -143,17 +161,45 @@ protocol is inadequate to the benchmark and no conclusion about synthetic effica
 it. In that case the appropriate report is the failure of the evaluation design, not a finding about
 synthesis.
 
-### 10.6 Two checks specified and not run
+### 10.6 Two checks specified in advance
 
-Two further threats have a check specified in advance and no result in this version, and they are stated so that their absence is visible rather than silent.
+Two further threats had a check specified in advance; both were run in the last round of
+experiments, under criteria fixed before it (`07-blender/PLANO-RODADA4.md`).
 
-**Annotation convention.** Synthetic boxes are amodal and projected from vertices; benchmark boxes are human-drawn. A systematic difference in tightness would move overlap scores without any difference in detection. The check is sensitivity of every reported figure to the intersection-over-union threshold at 0.50, 0.60 and 0.75; if the ordering of the models changes with the threshold, the comparison is an artefact of annotation and must be reported at several thresholds.
+**Annotation convention.** Synthetic boxes are amodal and projected from vertices; benchmark boxes
+are human-drawn. A systematic difference in tightness would move overlap scores without any
+difference in detection. The check is sensitivity of every reported figure to the
+intersection-over-union threshold at 0.50, 0.60 and 0.75; if the ordering of the models changes with
+the threshold, the comparison is an artefact of annotation and must be reported at several
+thresholds. Under both the Ultralytics validator and the official rule of Section 7.7, no pair of
+models compared in Section 9 changes order between 0.50, 0.60 and 0.75 on the benchmark
+(`06-resultados/visdrone_oficial_iou.json`). Among the three-class models of Section 9.5, scored on
+their own synthetic splits, the order does change: the rate at which a confusable object is called
+armed places the 35 m model above the original 75 m model at 0.50 and below it at 0.60 and 0.75, and
+level with its twin at 0.75 (0.132 each), so those rates are reported at the three thresholds
+(Section 9.5).
 
-**Seed dependence.** A single settlement seed, and a single training run per model, may be favourable by chance. The check is repetition of the protocol across independent seeds with the between-seed dispersion reported alongside the mean; if that dispersion is of the same order as the differences reported in Section 9, those differences are not resolvable at this corpus size. Every image carries its seed in a manifest entry and the generator reproduces the settlement exactly from it (Section 11.6 names the three corpora whose figures it did not reproduce), so the check is a matter of compute rather than of design.
+**Seed dependence.** A single settlement seed, and a single training run per model, may be
+favourable by chance. The check is repetition of the protocol across independent seeds with the
+between-seed dispersion reported alongside the mean; if that dispersion is of the same order as the
+differences reported in Section 9, those differences are not resolvable at this corpus size. Every
+image carries its seed in a manifest entry and the generator reproduces the settlement exactly from
+it (Section 11.6 names the three corpora whose figures it did not reproduce), so the check is a
+matter of compute rather than of design. It was run on the five models behind the comparisons that
+carry the argument, retrained with training seeds 1 and 2 on a fixed corpus, and a difference was
+fixed in advance as resolvable when the ranges of the two models over their three runs do not
+overlap. S-oblique-six reaches 0.1055, 0.0958 and 0.0887 on the benchmark, an efficacy of 15.3 per
+cent on average, between 14.1 and 16.7 (Section 9.3). The advantage of the generic start in
+fine-tuning at 5 per cent is resolvable (Section 9.4). The difference between the 35 m model and its
+twin at 75 m is resolvable on the 80 new frames of Section 9.5 but not on the smaller validation
+splits (`06-resultados/rodada4_criterios.json`). The settlement seed was not varied: each repetition
+retrains on the same corpus, so the dispersion measured is that of training, not of the realisation
+of the scene.
 
 ### 10.7 What this design cannot rule out
 
-Two boundaries of this design are structural rather than testable, and are stated in Section 11
-rather than argued here: the benchmark is not a favela (Section 11.2), and the armed and unarmed
-distinction is reported at 75 m and 35 m and deliberately withheld at 150 m (Section 11.5). Neither
-is a threat this section can check, which is why neither carries a test above.
+Two boundaries of this design are stated in Section 11 rather than argued here: the benchmark is not
+a favela (Section 11.2), and the armed and unarmed distinction is reported at 75 m and 35 m but not
+at 150 m, where the one model trained for it did not pass the validity condition fixed before it was
+run (Section 11.5). The first is structural; the second is a measurement that did not succeed, which
+leaves the absence argued rather than shown.
