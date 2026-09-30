@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-30, 14h, [DESKTOP]
+Última atualização: 2026-09-30, 15h, [DESKTOP]
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
@@ -48,7 +48,8 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
 | Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Atualizado com a rodada 4 em 30/09 e revisado de novo no mesmo dia (três lentes: números, lógica, forma; 128 trocas, cada uma conferida na fonte; origem dos números conferidos em `06-resultados/RESULTADOS.md`, entrada de 30/09). Nenhum `[X]`: as duas checagens não rodadas estão descritas como especificadas e não executadas. Decidido em 30/09: sai só o texto, sem corpus nem código, e o manuscrito não cita arquivos do repositório. Decisões ainda do autor: lista na entrada do DIARIO de 30/09 (revisão geral) |
 | Figuras | 8, todas do braço procedural, rótulos em inglês desde 30/09: nadir, beco, anotação, seis regimes de luz, seis assentamentos, nadir contra oblíquo, armados por altitude, quadros do piloto. Geradas por `06-resultados/figuras_artigo.py` e `07-blender/scripts/previa_dataset.py` |
-| PDF | `monta_artigo.py`, formato Elsevier: 31 páginas, 27.606 palavras, 8 figuras, 0 `[X]`. Na Área de Trabalho e enviado por e-mail ao autor em 30/09 |
+| PDF | `monta_artigo.py`, formato Elsevier: 31 páginas, 27.606 palavras, 8 figuras, 0 `[X]`. Na Área de Trabalho do desktop. Não foi por e-mail: a ferramenta do Gmail só aceita anexo inline e o arquivo tem 5 MB; publicar o PDF num artifact privado foi barrado pelo classificador de permissões e espera autorização do autor |
+| Busca bibliográfica de 30/09 | Concluída (8 agentes, cinco frentes). Relatório em `04-bibliografia/busca-2026-09-30-pontos-abertos.md`, com os textos propostos em inglês; nada aplicado ao manuscrito antes do OK do autor |
 
 ## Experimento (desktop)
 
@@ -89,13 +90,14 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 ## Próximos passos, em ordem
 
-0. [AUTOR] Ler o PDF revisado de 30/09 (e-mail) e decidir os itens que a revisão geral deixou para o autor (lista no DIARIO de 30/09).
+0. [AUTOR] Ler o PDF revisado de 30/09 (Área de Trabalho do desktop) e decidir os itens que a revisão geral deixou para o autor (lista no DIARIO de 30/09).
+0. [AUTOR] Aprovar, por frente, as mudanças propostas pela busca bibliográfica (`04-bibliografia/busca-2026-09-30-pontos-abertos.md`): arma portada em benchmark público, convenção de céu limpo, sintético que atrapalha, correções das referências B1 e das fontes jornalísticas.
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.
 2. [AUTOR] Ler no PDF as passagens mudadas pela rodada 4 (abstract, 9.3 a 9.5, 10.2, 10.3, 10.6, 10.7, 11.3, 11.5 e conclusão) e encurtar o abstract, que foi a ~510 palavras. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
 3. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 4. [DESKTOP] Pôr no inventário `06-resultados/ONDE-ESTAO-OS-DADOS.md` os corpora e pesos das rodadas 2 e 3, e atualizar o painel.
 5. [DESKTOP] Tirar os caminhos absolutos dos scripts (item 13 de `docs/DIVERGENCIAS.md`).
-6. [MAC ou DESKTOP] Resolver as 20 pendências abertas de `01-artigo/PENDENCIAS.md`, começando pelas referências ausentes (conferir cada DOI no Crossref).
+6. [MAC ou DESKTOP] Resolver as 20 pendências abertas de `01-artigo/PENDENCIAS.md`. As referências B1 e as fontes jornalísticas (B3, B6, B7, B9, B10) foram conferidas em 30/09 e só falta aplicar, com o OK do autor.
 7. [AUTOR] Devolver ao orientador a lista de pendências e combinar como ele quer receber as edições.
 8. [AUTOR, quando quiser] Seguir `docs/SETUP-DESKTOP.md` para Tailscale e OpenSSH.
 9. [AUTOR] E-mail para AIM@marshall.usc.edu confirmando o formato exigido na submissão de 19/11/2026 (pendências em `08-conferencia/README.md`).

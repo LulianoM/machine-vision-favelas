@@ -2,6 +2,19 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Busca bibliográfica dos pontos abertos: relatório para o OK do autor
+
+- Pedido do autor: busca bibliográfica com multiagentes, sem rodar o teste de 1%. Oito agentes em cinco frentes, com verificação cética das fontes. Relatório em `04-bibliografia/busca-2026-09-30-pontos-abertos.md` (resultado bruto no `.json` ao lado). Nada no manuscrito foi alterado.
+- Pedem mudança no texto, se o autor aprovar:
+  - "no public benchmark annotates a carried firearm" é amplo demais: há benchmarks de vigilância com arma portada e material aéreo público a 2 a 8 m (entre eles o Dual-UAV, do CEFET-RJ, com réplica de fuzil contra guarda-chuva). Proposta: "we found no public aerial benchmark that annotates a carried firearm at these altitudes", nas quatro ocorrências.
+  - "clear weather" como convenção de voo junta três práticas; só o aerolevantamento tem convenção escrita de céu limpo, e o hard sun do gerador cabe nela. Proposta de reescrita da 8.4, da 11.3 e do fecho.
+  - A 9.4 tem precedentes: pré-treino com corpus sintético pequeno também perde no Kiefer et al. (fig. 2) e no SynPlay. Proposta de parágrafo novo na 9.4 e de citações na seção 2.
+  - Referências B1: as 13 conferidas; cinco entradas já inseridas têm erro de metadado e duas frases copiam oito a nove palavras do resumo sem aspas.
+  - Fontes jornalísticas: "CNN Brasil (2026a)" é da Defesa em Foco; "maior alta do país" é falso em termos relativos; o pico da série do ISP é 1994; o ISP também dá 703 em 2024.
+- Resolvido: "more than 1,200 military police officers" está na fonte B7 (InSight Crime, 27/01/2022).
+- Nota de processo: dois agentes mandaram o e-mail do autor no campo de contato das primeiras consultas ao Crossref; as seguintes saíram sem ele.
+- Correção à entrada anterior: o PDF não seguiu anexado. A ferramenta do Gmail só aceita anexo passado inline e o arquivo tem 5 MB; a publicação do PDF num artifact privado, para mandar o link, foi barrada pelo classificador de permissões e espera autorização do autor. O PDF está na Área de Trabalho do desktop.
+
 ## 2026-09-30 [DESKTOP] Revisão geral do manuscrito, figuras em inglês, PDF enviado
 
 - Pedido do autor: trocar os rótulos em português das figuras 2, 4 e 5, revisar o texto inteiro atrás de inconsistências, corrigir e mandar o PDF Elsevier por e-mail.
