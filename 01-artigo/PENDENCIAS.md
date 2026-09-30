@@ -10,6 +10,8 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 - [x] A4. Trecho repetido quase literalmente: o parágrafo das "two bodies of literature that rarely intersect" aparecia na introdução e de novo em "Positioning this study" na revisão, e a descrição de Gevaert et al. (2016) em Kigali também aparecia duas vezes. **Fechado em 2026-09-22** (commit 7ee8927): a revisão remete à introdução, e a introdução cita Gevaert, Sithole e da Silva em uma linha, remetendo à seção 2.
 - [x] A5. Não há abstract nem palavras-chave.
 
+- [x] A6. (30/09) Refino geral a pedido do autor: abstract de 510 para 330 palavras; 11.1 e 10.7 removidas; histórico de rascunho fora do texto; tabelas numeradas com legenda e figuras citadas; duas figuras e três tabelas novas; quadros de autoria fora do PDF. Diagnóstico e o que fica para os autores em `01-artigo/ANALISE-2026-09-30.md`.
+
 ## B. Referências
 
 > **Busca bibliográfica de 2026-09-30 [DESKTOP], aplicada com o OK do autor.** B1, B3, B6, B7, B9 e

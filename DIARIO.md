@@ -2,6 +2,18 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Refino geral do artigo, análise, resumo para leigo
+
+- Pedido do autor: análise do artigo com o contexto todo, checar se os pontos se ligam, cortar ou resumir, criticar, acrescentar imagens e tabelas, tirar os quadros de autoria deixando um aviso de versão prévia, entregar a versão refinada por e-mail e um resumo "for dummies" de 1 a 2 páginas para o orientador.
+- Diagnóstico e lista do que foi aplicado em `01-artigo/ANALISE-2026-09-30.md`. Resumo: a espinha do argumento se sustenta; o problema era repetição (cada resultado em 9, 10, 11 e conclusão; quatro frases-guardiãs de 4 a 9 vezes cada) e histórico de rascunho dentro do artigo.
+- Aplicado no manuscrito: abstract de 510 para 330 palavras; 7.2, 7.3, 7.7, 8.1, 9 (piloto), 9.2, 9.3, 9.5, 10.1, 10.2, 10.3, 11.1, 11.2, 11.4 e Limitations encurtadas; 11.1 (escala) absorvida pela 7.6 e 10.7 removida; seção 11 renumerada (11.1 a 11.5, 24 remissões trocadas); seção 6 deixa de antecipar o resultado da 9.4. Corpo de 28,0 mil para 26,5 mil palavras.
+- Acréscimos: Figura 5 (diagrama do desenho experimental) e Figura 8 (mAP50 contra imagens reais, três usos do sintético, três sementes, teto R), ambas por `06-resultados/figuras_mpl.py`; Tabela 8 (resultados de relance), Tabela 16 (35 m contra gêmeo, dois conjuntos, três sementes, três IoU) e Tabela 17 (por regime). As 17 tabelas ganharam número e legenda e as 10 figuras são citadas no texto: o montador numera na ordem de leitura e resolve `@fig{}` e `@tab{}`.
+- Montador: quadros de autoria fora por padrão (`--com-autoria` devolve), aviso único "Preliminary version, not final" no início (`--sem-previa` tira); figura larga atravessa as colunas a partir de 1,8 de razão de aspecto.
+- Origem de cada número das peças novas em `06-resultados/RESULTADOS.md` (entrada de 30/09, refino); as duas eficácias do treino conjunto (73,0 e 86,0%) são razões calculadas de números já reportados.
+- Dez críticas que ficam para os autores (ANALISE, seção 4): extensão e periódico-alvo; título da seção 6; proposta contra o resultado da 9.4; o fator 6,0 sem sementes; d′ fraco em toda altitude; coautor sem nome; liberação do gerador; Closing repete o abstract; harmonização de estilo; peso das seções 3 e 4.
+- Resumo para leigo em português: `01-artigo/resumo-leigo-2026-09-30.md`, 2 páginas, PDF por `monta_resumo_leigo.py` (Edge headless com perfil próprio, porque a primeira tentativa colidiu com a instância do montador do artigo).
+- PDF Elsevier: 17 páginas, 28.621 palavras com referências, 10 figuras, 17 tabelas, 0 `[X]`, na Área de Trabalho. Envio por e-mail: ver a entrada seguinte do dia.
+
 ## 2026-09-30 [DESKTOP] Figura 7 refeita: objeto na mão e visível
 
 - Pedido do autor: na figura 7 a pistola e o guarda-chuva não batiam com o objeto, e em alguns recortes a arma estava solta do corpo.

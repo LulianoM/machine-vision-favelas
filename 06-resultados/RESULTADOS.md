@@ -554,3 +554,19 @@ A revisao geral de 30/09 (tres revisores: numeros, logica, forma) conferiu contr
 | 9.5, pessoas por quadro | 14 a 30 | entrada do teste de arma inedita acima (comando do `ds_armado_75`) |
 
 Figura 5 refeita com rotulos em Arial (a fonte bitmap padrao do PIL comia os espacos): `python ../07-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2 --larg 900 --zoom 5 --seed 1 --en --out figuras/fig5_anotacao.jpg`.
+
+## 2026-09-30 [DESKTOP] Refino do artigo: origem das tabelas e figuras novas
+
+Pedido do autor (analise geral, cortes, tabelas e figuras; diagnostico em `01-artigo/ANALISE-2026-09-30.md`). Nenhum numero novo foi medido; o que segue e a origem de cada numero que passou a aparecer em forma de tabela ou figura.
+
+| Peca | Conteudo | Origem |
+|---|---|---|
+| Figura 5 (`figuras/fig9_desenho_experimental.png`) | diagrama do desenho experimental | so contagens de quadros ja no texto (180 e 200 por corpus, 80 quadros novos, 548 imagens do val, 1.106 de R); `C:/arma3-favela/venv/Scripts/python.exe figuras_mpl.py` |
+| Figura 8 (`figuras/fig10_ajuste_fino.png`) | mAP50 no VisDrone val contra imagens reais de treino, tres usos do corpus sintetico, tres sementes e o teto R | lido dos JSON `sim2real_ft05_sint`, `_sd1`, `_sd2`, `sim2real_ft05_coco`, `_sd1`, `_sd2`, `sim2real_ft10_sint`, `sim2real_ft10_coco`, `sim2real_misto05`, `sim2real_misto10`, `sim2real_s_oblvar`, `_sd1`, `_sd2`, `sim2real_r_pareado` (mesmo comando) |
+| Tabela 8 (resultados de relance) | doze modelos com dado de treino, teste, mAP50 e eficacia | numeros das secoes 9.1 a 9.5; as duas eficacias do treino conjunto sao razoes calculadas aqui: 0,4607 / 0,6311 = 0,7300 (73,0%) e 0,5428 / 0,6311 = 0,8601 (86,0%) |
+| Tabela 16 (35 m contra gemeo a 75 m) | taxas nos vals e nos 80 quadros novos, faixas das tres sementes, IoU 0,60 e 0,75 | `gemeo_75_35.json`, `extra_armado_35.json`, `extra_armado_75g.json`, `confusao_armado_35_sd1/sd2.json`, `confusao_armado_75g_sd1/sd2.json`, `extra_armado_*_sd1/sd2.json`, `confusao_armado_35_iou60/75.json`, `confusao_armado_75g_iou60/75.json`, `rodada4_criterios.json` (numeros ja na entrada de 30/09 da rodada 4) |
+| Tabela 17 (por regime) | mAP50, recall a 0,25 e intervalo de 95% dos seis regimes | `por_regime_s_nadir_4k.json` (`python por_regime.py`, entrada J da rodada 4); os tres recalls que nao estavam no texto: sol baixo 0,814 (0,768 a 0,854), neblina 0,726 (0,697 a 0,757), encoberto 0,768 (0,714 a 0,816) |
+
+Saiu do artigo, e fica registrado aqui: a linha do piloto com o VisDrone reescalado por 1/2,49 (0,0061 contra 0,0055, `sim2real_morro_v1.json`), porque a 10.2 ja concluira que as duas avaliacoes viam a mesma escala de entrada; as correcoes historicas (1,62 para 0,94 na estatistica de orientacao; o 2,49 de escala; as redacoes anteriores das condicoes da 10.1 a 10.3) continuam nas entradas anteriores deste arquivo.
+
+Paleta da figura 8 validada em 30/09 com o validador do skill dataviz (tres slots, todos os pares, modo claro): ΔE CVD minimo 9,2, visao normal 24,0; o verde-agua fica abaixo de 3:1 de contraste, por isso os valores vao escritos ao lado dos pontos.

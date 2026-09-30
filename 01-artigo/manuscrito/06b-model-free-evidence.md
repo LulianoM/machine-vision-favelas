@@ -11,6 +11,8 @@ Three corpora are used throughout, two generated and one real, and Section 8.2 a
 generated corpora; their acquisition geometry differs in ways that matter, so the parameters are
 stated rather than implied.
 
+<!--TAB:corpora|The corpora characterised in this section and their acquisition geometry.-->
+
 | Corpus | Geometry | Render | Instances |
 |---|---|---|---|
 | Pilot corpus | camera within 3.5 degrees of straight down (generator setting, not recorded per image), 28.8 mm equivalent, altitude 150 m | 1920 by 1080 | 565 (train split) |
@@ -31,6 +33,8 @@ A person viewed from directly above does not present their height. The vertical 
 makes a person conspicuous in a ground level or oblique image, is exactly the dimension that does
 not project in nadir. What the camera records is the plan of the figure, roughly 0.48 m shoulder to
 shoulder.
+
+<!--TAB:gsd|Target size by ground sampling distance: median long side of the annotated box and the share of instances whose shorter side falls below one stride of the detector.-->
 
 | Corpus | Render | GSD | Median long side | Shorter side below 8 px |
 |---|---|---|---|---|
@@ -65,10 +69,7 @@ The second was initially mistaken for a problem. At 4K the median synthetic inst
 square pixels and the median instance of the real benchmark, its training and validation splits
 pooled, covers 300, a ratio of 1.00. The long side does not match as closely, 20.6 against 24.0
 pixels over the same pooled splits and 25.0 on the validation split alone, because the two differ in
-shape rather than in size, which is the subject of Section 8.2. An earlier version of this analysis
-reported a 2.49-fold scale gap between corpus and benchmark and attributed it to an altitude domain
-shift. That gap was an artefact of rendering our own corpus at 1920 by 1080, not a property of
-either corpus, and the claim is withdrawn.
+shape rather than in size, which is the subject of Section 8.2.
 
 We report medians rather than claiming distributional equivalence. Two medians agreeing does not
 establish that two distributions agree, and the comparison below is where the distributions in fact
@@ -78,7 +79,9 @@ separate.
 
 Size is the wrong statistic. A detector learns a silhouette, not an area. Measuring the aspect ratio
 of the same annotation sets, and separating the synthetic corpus by the camera pitch recorded at
-generation, gives:
+generation, gives Table @tab{forma}:
+
+<!--TAB:forma|Apparent shape of the target: median box dimensions and height-to-width ratio by corpus and camera geometry.-->
 
 | Corpus and geometry | Median width | Median height | Median h/w | Instances |
 |---|---|---|---|---|
@@ -103,6 +106,8 @@ stable under a change of resolution that moves apparent size by the same factor.
 The oblique corpus records the pitch of every image, so the same measurement can be split by camera
 angle. It gives the dose-response that a contrast of two geometries cannot:
 
+<!--TAB:pitch|Height-to-width ratio of the annotated box by camera pitch in the S-oblique corpus.-->
+
 | Pitch recorded per image | Instances | Median h/w, all figures | Median h/w, figures carrying nothing |
 |---|---|---|---|
 | 26 to 30 degrees | 482 | 1.28 | 1.35 |
@@ -125,9 +130,9 @@ reached. And the annotated box of an armed figure includes the weapon, which wid
 transfer to it the weapon is a source of shape mismatch rather than of signal. The combined model of
 Section 9.3 is built from these two measurements, and its corpus realises a median of 1.85.
 
-A ratio near 1.0 is the plan of a figure recorded from above, about as wide as it is long. A ratio
-near 2.0 is a standing figure recorded obliquely. At comparable pixel area, these are different
-objects as far as the detector is concerned.
+A ratio near 1.0 is the plan of a figure recorded from above, about as wide as it is long; a ratio
+near 2.0 is a standing figure recorded obliquely (Figure @fig{fig8_nadir_obliquo}). At comparable
+pixel area, these are different objects as far as the detector is concerned.
 
 This is a domain shift that matters here, and no appearance-based measure of realism detects it. A
 generator could be made arbitrarily more photorealistic without moving this quantity. Unlike
@@ -151,6 +156,8 @@ difference divided by the ring deviation is contrast against local clutter.
 
 Instances within one image are not independent, so the statistic is aggregated per image and the
 dispersion reported is between images.
+
+<!--TAB:contraste|Figure-to-background contrast by illumination regime in the pilot corpus: raw luminance difference and contrast against local clutter.-->
 
 | Regime | Mean frame luminance | Raw difference (DN) | Contrast over clutter, median per image | SD between images | Instances |
 |---|---|---|---|---|---|
@@ -184,7 +191,7 @@ between-image dispersion of 0.12 to 0.38, only the gap between the extremes (rai
 four intermediate regimes is not resolvable at this sample size. The measurement is therefore a
 hypothesis about detector difficulty, not a finding about it: a contrast statistic is not a
 detection statistic. Section 10.3 states the test and the condition under which the hypothesis would
-be withdrawn; the test was run and the condition is not met, and Section 11.3 draws the implication.
+be withdrawn; the test was run and the condition is not met, and Section 11.2 draws the implication.
 
 ### 8.4 What these measurements imply for the proposal
 

@@ -14,7 +14,7 @@ with a public benchmark against which transfer can be established. The conceptua
 Section 6 classifies built form instead: building height, rooftop addition, material transition. The
 same generator already records the footprint, the storey count and the roof height of every
 structure it builds, so the morphological task is a second experiment over the same infrastructure
-rather than a different pipeline; what it lacks is an evaluation set, and Section 11.4 records that
+rather than a different pipeline; what it lacks is an evaluation set, and Section 11.3 records that
 absence as a finding rather than as an omission. Nothing below should be read as a validated
 capability over Jacarezinho, and Section 11 restates the boundary.
 
@@ -37,27 +37,24 @@ detector, and Sections 9 and 10 report what transfers and what does not.
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed, so
 that the authors can regenerate the settlement, the camera and the illumination of any reported
 image exactly from the seed recorded for it, and the figures as well in every corpus but the three
-that Section 11.6 names. No commercial asset packs are used: surface materials and the four tree
+that Section 11.5 names. No commercial asset packs are used: surface materials and the four tree
 models of the vegetation come from a public-domain library (Poly Haven, CC0), the human figures are
 built from the CC0 assets of MakeHuman through MPFB (Section 7.4), and all other geometry is
 authored by the generator. That choice keeps the corpus free of any imagery or geometry of the
 territory and of any licensed asset, and it is paid for.
 
-Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
-target site with generic assets costs 27.0 mAP50 points on YOLOv11 (their name for YOLO11, the
-family of the detector used here), and 22 to 23 points on average across the architectures they
-test. In their taxonomy the corpora of this article sit on the generic side, not the photogrammetric
-one: they are procedural geometry with public-domain materials, and they are on the losing side of
-that ablation by construction. Two qualifications bound how far the figure travels. Their object
-class is vehicles rather than people, and their evaluation is on the same site they reconstructed,
-so the result establishes that a digital twin of a place helps detection at that place, not at
-another. This article reports the trade rather than claiming to have avoided it. Measuring its size
-for this morphology would require a photogrammetric reconstruction of the target site, which the
-ethical protocol of Section 5 excludes from everything this article reports, so the cost is
-quantified here from their result and not from ours.
+Liao et al. (2026) measure the cost: replacing a photogrammetric reconstruction of the target site
+with generic assets costs 27.0 mAP50 points on YOLOv11 (their name for YOLO11, the family of the
+detector used here) and 22 to 23 on average across the architectures they test. The corpora of this
+article sit on the generic side of that ablation by construction, so they pay that cost; two
+qualifications bound the figure, since their object class is vehicles and their evaluation is on the
+site they reconstructed. Measuring the cost for this morphology would require a reconstruction of
+the target site, which the protocol of Section 5 excludes, so it is quoted from their result rather
+than measured here.
 
-Layout is produced in three stages, each addressing a specific way in which naive procedural
-generation betrays itself when viewed from above.
+Layout is produced in three stages (Figure @fig{fig1_nadir}; Figure @fig{fig3_beco} shows the same
+scene at street level), each addressing a specific way in which naive procedural generation betrays
+itself when viewed from above.
 
 **Parcelling.** The built core is subdivided by recursive binary partition. At each split the
 boundary receives a gap drawn from a distribution whose modal value is zero, so that most dwellings
@@ -79,16 +76,8 @@ radians and every corner passes through a smooth domain warp, so the statistic b
 three mechanisms together. The statistic is the fraction of edge energy falling within 7.5 degrees
 of a cardinal axis, divided by the isotropic expectation. The measurement window covers 30 degrees
 of 180, so the isotropic expectation is one sixth and unity means no preferred direction. In the
-configuration of the corpus of record, rendered at 4K, the value is 0.94. The version of the
-generator that used a single partition was never measured after the correction described in the next
-paragraph, so no value is reported for it.
-
-An earlier draft of this article reported 1.62 for the configuration then in use, an earlier
-iteration of the generator. That figure came from a measurement whose normaliser used 15 degrees of
-180 rather than 30, inflating every value it produced by a factor of two. The error mattered beyond
-the digit: it placed that configuration above the isotropic expectation when it is in fact below it
-(0.81). The measurement and every value it had produced were corrected, and the correction is noted
-here because the uncorrected figure appeared in circulated drafts.
+configuration of the corpus of record, rendered at 4K, the value is 0.94. The single-partition
+version of the generator was not measured with this statistic, so no value is reported for it.
 
 **Vertical accretion.** The dwelling is not a single prism. In the majority of cases with two or
 more storeys the upper floor is smaller than the one below and offset towards one boundary, leaving
@@ -128,18 +117,14 @@ pixel. Section 8.1 reports what this does to the target and states the limitatio
 imagery rendered at 4K is easier than a single real frame from the sensor it reproduces.
 
 A second acquisition geometry is evaluated alongside the first, and the reason is arithmetic rather
-than aesthetic. At 150 m a carried object is too thin for its form to be resolved, which this
-article takes to foreclose the question rather than to answer it; the one corpus of confusable
-objects rendered at that altitude, a twin of the 35 m corpus of Section 9.5, gave a model that did
-not pass the validity condition fixed before it was run, so there the question remains argued rather
-than measured. The generator is therefore also run with the same sensor at 75 m, where the frame
-covers approximately 94 by 53 m and the ground sampling distance halves to 2.44 cm per pixel at 3840
-by 2160. Halving the distance doubles each linear dimension of the target and quadruples its area
-before occlusion, and measured on the generated corpora the median instance grows from 17.6 by 17.5
-pixels to 47.6 by 41.7, a factor of 6.4 in area. That exceeds the four the geometry alone gives, and
-part of the excess is composition: the corpus at 75 m adds a class carrying elongated objects, whose
-boxes are the largest, and taken class by class the factor is 5.2 for armed and 5.7 for unarmed
-figures.
+than aesthetic. At 150 m a carried object is too thin for its form to be resolved (Section 9.5), so
+the generator is also run with the same sensor at 75 m, where the frame covers approximately 94 by
+53 m and the ground sampling distance halves to 2.44 cm per pixel at 3840 by 2160. Halving the
+distance doubles each linear dimension of the target and quadruples its area before occlusion, and
+measured on the generated corpora the median instance grows from 17.6 by 17.5 pixels to 47.6 by
+41.7, a factor of 6.4 in area. That exceeds the four the geometry alone gives, and part of the
+excess is composition: the corpus at 75 m adds a class carrying elongated objects, whose boxes are
+the largest, and taken class by class the factor is 5.2 for armed and 5.7 for unarmed figures.
 
 The nadir altitudes are reported separately throughout, as S-nadir-150, S-nadir-75 and, in Section
 9.5, S-nadir-35, because they answer different questions: the first is the altitude of the reference
@@ -154,20 +139,20 @@ rescaled and posed per instance, and placed both on rooftops and in the alley ne
 uses an occupancy map computed from the generated footprints, so that ground placement is known to
 fall in open space rather than inferred by ray casting against arbitrary geometry.
 
-Bounding boxes are neither drawn by hand nor inferred from a segmentation pass. For each figure the
-generator projects a subsample of the body and clothing vertices (every k-th vertex, about 500 per
-figure) and every vertex of any carried object into image space, takes the axis-aligned extent, and
-clips it to the frame. The convention is therefore amodal within the frame: the box covers the whole
-figure, including parts hidden by intervening geometry, which is the convention used by the real
-benchmark against which transfer is later measured. Occlusion is evaluated separately, by casting
-fourteen rays from the camera to sample points on the figure, and instances whose visible fraction
-falls below 0.35 are discarded from the annotation rather than retained as degenerate boxes. In a
-settlement this dense the discard rate is substantial and expected. Over the 180 frames of the
-corpus of record, 4,582 figures were placed and 3,225 retained; the per-frame retained fraction has
-a median of 0.71 (10th percentile 0.57, 90th percentile 0.83), so roughly three in ten figures
-placed yield no label; the count does not separate the visibility threshold from the two other
-reasons a placed figure is dropped, a box that falls outside the frame or a clipped box with a side
-below 0.002 of the frame.
+Bounding boxes are neither drawn by hand nor inferred from a segmentation pass (Figure
+@fig{fig5_anotacao}). For each figure the generator projects a subsample of the body and clothing
+vertices (every k-th vertex, about 500 per figure) and every vertex of any carried object into image
+space, takes the axis-aligned extent, and clips it to the frame. The convention is therefore amodal
+within the frame: the box covers the whole figure, including parts hidden by intervening geometry,
+which is the convention used by the real benchmark against which transfer is later measured.
+Occlusion is evaluated separately, by casting fourteen rays from the camera to sample points on the
+figure, and instances whose visible fraction falls below 0.35 are discarded from the annotation
+rather than retained as degenerate boxes. In a settlement this dense the discard rate is substantial
+and expected. Over the 180 frames of the corpus of record, 4,582 figures were placed and 3,225
+retained; the per-frame retained fraction has a median of 0.71 (10th percentile 0.57, 90th
+percentile 0.83), so roughly three in ten figures placed yield no label; the count does not separate
+the visibility threshold from the two other reasons a placed figure is dropped, a box that falls
+outside the frame or a clipped box with a side below 0.002 of the frame.
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation on four frames of the pilot corpus, rendered at 1920 by 1080 (9.76 cm per pixel at 150 m). Green marks the armed class, blue the unarmed class; boxes are drawn with a four-pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance, twice as coarse as that of the corpus of record, the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 
@@ -218,15 +203,16 @@ costly of the two ablations in that study (30.4 points against 27.0), though not
 architectures (17.5 against 22 to 23).
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent lighting
-budgets, each governing solar irradiance and colour, the angular diameter of the solar disc, a band
-of solar elevation (46 to 74 degrees under hard sun, 9 to 25 under low sun), sky fill and colour,
-atmospheric scattering density, aerosol content and a camera exposure offset together: hard sun, low
-sun, overcast, haze, heavy overcast, and rain (the mean frame luminances below include each regime's
-exposure offset). The angular diameter of the sun is what separates these physically. At 0.6 degrees
-the shadow edge is hard; above roughly 20 degrees the cast shadow effectively disappears, which is
-what a covered sky does. Mean frame luminance over the 48 images of the pilot corpus, the 1080p
-predecessor of the corpus of record (Section 8.3), runs 87.0 (hard sun), 56.0 (low sun), 84.6
-(overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255.
+budgets (Figure @fig{fig2_climas}), each governing solar irradiance and colour, the angular diameter
+of the solar disc, a band of solar elevation (46 to 74 degrees under hard sun, 9 to 25 under low
+sun), sky fill and colour, atmospheric scattering density, aerosol content and a camera exposure
+offset together: hard sun, low sun, overcast, haze, heavy overcast, and rain (the mean frame
+luminances below include each regime's exposure offset). The angular diameter of the sun is what
+separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees the
+cast shadow effectively disappears, which is what a covered sky does. Mean frame luminance over the
+48 images of the pilot corpus, the 1080p predecessor of the corpus of record (Section 8.3), runs
+87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain)
+of 255.
 
 <!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the pilot corpus, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) on a scale of 0 to 255. Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, solar elevation, sky fill, scattering density, aerosol content and camera exposure, not a single brightness adjustment.-->
 
@@ -251,13 +237,17 @@ runs differ in five further respects: detector size (YOLO11n against YOLO11s), i
 against 1280), epoch count (40 against 60), initialisation (COCO weights against the checkpoint of a
 previous interrupted run) and the validation set on which each score is computed (whole frames
 downscaled to 1536 px against native-scale tiles). No controlled measurement of training scale alone
-exists in this project, and Section 11.1 states what would be required to obtain one.
+exists in this project. Obtaining one requires the same detector, initialisation, epoch budget and
+corpus, trained once on downscaled frames and once on native-scale tiles; until it exists, no figure
+in this article should be cited as an isolated effect of training scale.
 
 Synthetic training therefore operates on tiles cut at native scale with 20 per cent overlap, never
 on downscaled frames, although the scale augmentation of the recipe rescales them at random; the
 real-data models, R and the fine-tuning models of Section 9.4, train on whole VisDrone images
 resized so that the long side is 1280 px, which downscales the most common training size, 1400 by
 1050, and the joint models of that section train on both kinds of input.
+
+<!--TAB:params|Training and inference settings, shared by every model unless stated.-->
 
 | Parameter | Value |
 |---|---|
@@ -289,31 +279,30 @@ against which to read it. The protocol therefore trains the models below. The si
 are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
 instances: the benchmark's pedestrian and people categories merged into one class, with its other
 categories and its annotated ignored regions dropped). Every model is scored by the Ultralytics
-validator rather than the official VisDrone toolkit, so a detection inside an ignored region, which
-that toolkit disregards, counts here as a false positive, for R as for the synthetic models, though
-not necessarily to the same degree. The VisDrone scores of every single-class model of Section 9, at
-the protocol's input size, were therefore also recomputed under the toolkit's rule, which removes
-from the evaluation any box, annotated or detected, with half or more of its area inside an ignored
-region (the rule of the official VisDrone2018-DET toolkit). The rule was applied inside the same
-validator, which reproduces the standard score when no ignored region is present; the mAP scores
-rise slightly, the efficacy ratios fall slightly and no comparison changes order (Section 9.3).
-Public benchmarks that annotate a carried firearm do exist, but they are recorded from surveillance
-viewpoints, not from the air (Salazar González et al., 2020; Lim et al., 2021; Ruiz-Santaquiteria et
-al., 2024; Z. Li et al., 2025). The documented public aerial datasets we found that label a person
-as armed were captured between 2 and 8 m above the ground, and they attach that label to an action
-class or to a whole recording rather than to an annotated box (T. Li et al., 2021; Torkst et al.,
-2026). The drone datasets we found with annotated firearms are either restricted to law-enforcement
-agencies (Faheem et al., 2025) or were not released with the article that describes them (AlJundi et
-al., 2025). Because we found no public aerial benchmark that annotates a carried firearm at the
-altitudes studied here, the three-class models are scored instead on the validation split of their
-own corpus, whose tiles also served for early stopping and for selecting the checkpoint, so that
-split is held out from training but not from model selection; the replication of Section 9.5 and the
-test of Section 11.5 score them in addition on new frames rendered after training and used for
-neither training nor selection. Section 9.5 reports them separately: scored on the world in which
-they were trained, their figures are ceilings rather than evidence of transfer, so the two groups
-cannot be read on one scale. Every synthetic corpus holds the same number of images, 180 for the
-single-class models and 200 for the three-class ones, so that no comparison below is a comparison of
-the number of frames, although instance counts still differ (Section 8.2).
+validator, under which a detection inside one of the benchmark's ignored regions counts as a false
+positive; every single-class score was also recomputed under the rule of the official VisDrone
+toolkit, which drops any box with half or more of its area inside such a region, and no comparison
+changes order (Section 9.3). Public benchmarks that annotate a carried firearm do exist, but they
+are recorded from surveillance viewpoints, not from the air (Salazar González et al., 2020; Lim et
+al., 2021; Ruiz-Santaquiteria et al., 2024; Z. Li et al., 2025). The documented public aerial
+datasets we found that label a person as armed were captured between 2 and 8 m above the ground, and
+they attach that label to an action class or to a whole recording rather than to an annotated box
+(T. Li et al., 2021; Torkst et al., 2026). The drone datasets we found with annotated firearms are
+either restricted to law-enforcement agencies (Faheem et al., 2025) or were not released with the
+article that describes them (AlJundi et al., 2025). Because we found no public aerial benchmark that
+annotates a carried firearm at the altitudes studied here, the three-class models are scored instead
+on the validation split of their own corpus, whose tiles also served for early stopping and for
+selecting the checkpoint, so that split is held out from training but not from model selection; the
+replication of Section 9.5 and the test of Section 11.4 score them in addition on new frames
+rendered after training and used for neither training nor selection. Section 9.5 reports them
+separately: scored on the world in which they were trained, their figures are ceilings rather than
+evidence of transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds
+the same number of images, 180 for the single-class models and 200 for the three-class ones, so that
+no comparison below is a comparison of the number of frames, although instance counts still differ
+(Section 8.2). Table @tab{modelos} lists the models, and Figure @fig{fig9_desenho_experimental}
+shows how the corpora, the models and the two kinds of test set connect.
+
+<!--TAB:modelos|The models of the protocol, their training data and what each one establishes.-->
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
@@ -335,3 +324,5 @@ tiles, 968 for S-oblique and 890 for S-oblique-six, so for them the match is by 
 than by training volume. The difference mAP50(S-oblique) minus mAP50(S-nadir-150) estimates, from
 one training run per model, the contribution of capture geometry, one effect of which Section 8.2
 measures as a factor-of-two difference in target shape between this corpus and the benchmark.
+
+<!--FIG:06-resultados/figuras/fig9_desenho_experimental.png|The design of the experiment. One procedural generator produces every synthetic corpus; the corpora differ in camera, altitude and the classes annotated. Single-class models are scored on the real benchmark, against the ceiling R trained on a matched number of real images; three-class models are scored on the validation split of their own corpus and on new frames rendered after training. The fine-tuning and joint models use slices of the benchmark's training split and are scored on the same real test set.-->

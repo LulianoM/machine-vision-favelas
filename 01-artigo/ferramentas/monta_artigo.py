@@ -191,6 +191,17 @@ RE_H2 = re.compile(r"^## (?:\d+\.\s*)?(.+)$", re.M)
 
 # Figura declarada por marcador no texto: <!--FIG:arquivo|legenda-->
 RE_FIG = re.compile(r"<!--\s*FIG:([^|]+)\|(.+?)\s*-->")
+# Tabela com legenda numerada: <!--TAB:chave|legenda--> na linha anterior a tabela; @tab{chave}
+# no texto vira o numero. @fig{nome-do-arquivo-sem-extensao} faz o mesmo para figuras.
+RE_TAB = re.compile(r"<!--\s*TAB:([^|]+)\|(.+?)\s*-->")
+
+
+def resolve_tabelas(txt, num_tab):
+    """troca <!--TAB:chave|legenda--> pela legenda numerada, em HTML cru acima da tabela"""
+    def sub(m):
+        chave, leg = m.group(1).strip(), m.group(2).strip()
+        return f'<p class="tabcap"><b>Table {num_tab.get(chave, "?")}.</b> {leg}</p>'
+    return RE_TAB.sub(sub, txt)
 
 CSS_AIM = """
 .autoria { border: 0.6pt solid #b58900; border-left: 3pt solid #b58900; background: #fffceb;
@@ -217,6 +228,7 @@ code { font-family: Consolas, monospace; font-size: 10pt; background: #f2f2f2; p
 figure { margin: 14pt 0 16pt 0; page-break-inside: avoid; text-align: center; }
 figure img { max-width: 100%; border: 0.5pt solid #bbb; }
 figcaption { font-size: 10pt; line-height: 1.4; text-align: left; margin-top: 5pt; color: #222; }
+.tabcap { font-size: 10pt; line-height: 1.4; margin: 10pt 0 2pt 0; page-break-after: avoid; }
 .capa { text-align: center; margin-bottom: 26pt; }
 .aviso { border: 1pt solid #c0392b; background: #fdf3f2; padding: 10pt 12pt;
          font-size: 10pt; line-height: 1.5; margin: 16pt 0; }
@@ -258,6 +270,7 @@ code { font-family: "Courier New", monospace; font-size: 8pt; }
 figure { margin: 8pt 0 10pt 0; break-inside: avoid; text-align: center; }
 figure img { max-width: 100%; }
 figcaption { font-size: 8pt; line-height: 1.25; text-align: justify; margin-top: 3pt; }
+.tabcap { font-size: 8pt; line-height: 1.25; margin: 6pt 0 1pt 0; text-align: left; break-after: avoid; text-indent: 0; }
 .capa { margin-bottom: 12pt; border-bottom: 1.2pt solid #000; padding-bottom: 8pt; }
 .capa .autores { font-size: 10pt; margin-top: 6pt; }
 .capa .afil { font-size: 8.5pt; font-style: italic; color: #333; }
@@ -289,7 +302,7 @@ def resolve_figuras(txt, n_fig):
         # peca larga atravessa as duas colunas, como faz o periodico
         try:
             from PIL import Image as _I
-            larga = _I.open(p).width / max(_I.open(p).height, 1) > 1.9
+            larga = _I.open(p).width / max(_I.open(p).height, 1) > 1.8
         except Exception:
             larga = False
         cls = ' class="full"' if larga else ''
@@ -306,13 +319,30 @@ def main():
                 help="aim = uma coluna, Times 12, espaco duplo, que e o que os premiados de "
                      "2026 usam; elsevier = duas colunas de periodico")
     ap.add_argument("--sem-notas", action="store_true")
-    ap.add_argument("--sem-autoria", action="store_true",
-                help="tira os quadros de autoria. E o que se usa quando o artigo for "
-                     "submetido: eles existem so enquanto os tres autores escrevem juntos")
+    ap.add_argument("--com-autoria", action="store_true",
+                help="poe os quadros de autoria por secao. Desde 30/09 ficam fora por padrao "
+                     "(pedido do autor); so o aviso unico de versao previa entra")
+    ap.add_argument("--sem-previa", action="store_true",
+                help="tira o aviso unico de versao previa do inicio. E o que se usa na submissao")
     ap.add_argument("--html", default=None, help="grava tambem o HTML intermediario")
     args = ap.parse_args()
 
     import markdown
+
+    # Passo 1: numerar figuras e tabelas na ordem de leitura, para que @fig{nome} e @tab{chave}
+    # no texto virem "Figure 3" e "Table 5" sem ninguem contar a mao (pedido de 30/09: figuras
+    # e tabelas citadas no texto, tabelas com legenda numerada).
+    num_fig, num_tab = {}, {}
+    for nome in ORDEM:
+        p = os.path.join(MAN, nome)
+        if not os.path.exists(p):
+            continue
+        t0 = open(p, encoding="utf-8").read()
+        for m in RE_FIG.finditer(t0):
+            chave = os.path.splitext(os.path.basename(m.group(1).strip()))[0]
+            num_fig.setdefault(chave, len(num_fig) + 1)
+        for m in RE_TAB.finditer(t0):
+            num_tab.setdefault(m.group(1).strip(), len(num_tab) + 1)
 
     partes, faltando, n_fig, n_ph, n_sec = [], [], 0, 0, 0
     for nome in ORDEM:
@@ -328,6 +358,9 @@ def main():
         if args.sem_notas:
             txt = re.sub(r"^> \*\*(Status note|Provenance note|Nota de estado).*?(?=\n\n)", "", txt,
                          flags=re.S | re.M)
+        txt = re.sub(r"@fig\{([^}]+)\}", lambda m: str(num_fig.get(m.group(1).strip(), "?")), txt)
+        txt = re.sub(r"@tab\{([^}]+)\}", lambda m: str(num_tab.get(m.group(1).strip(), "?")), txt)
+        txt = resolve_tabelas(txt, num_tab)
         txt, n_fig = resolve_figuras(txt, n_fig)
         n_sec += 1
 
@@ -342,7 +375,7 @@ def main():
         if alvos:
             m = alvos[0]
             txt = txt[:m.start()] + _numera(m) + txt[m.end():]
-        if not args.sem_autoria:
+        if args.com_autoria:
             # o quadro entra ANTES do titulo, e em HTML cru para nao depender do markdown
             q = quadro_autoria(nome)
             if q:
@@ -363,6 +396,11 @@ def main():
 </div>"""
 
     aviso = ""
+    if not args.sem_previa:
+        aviso += ('<div class="aviso full"><b>Preliminary version, not final.</b> Working draft of '
+                  '30 September 2026, shared among the authors for revision; numbers, figures and '
+                  'references are still under review and the text has not been approved by all '
+                  'authors. <i>Versão prévia, ainda não finalizada.</i></div>')
     if n_ph:
         aviso = (f'<div class="aviso full"><b>PRÉVIA, NÃO SUBMISSÃO.</b> Este documento contém '
                  f'<b>{n_ph} marcadores <code>[X]</code></b> de números ainda não medidos. '

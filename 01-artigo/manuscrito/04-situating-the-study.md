@@ -21,6 +21,6 @@ followed them, is whether the person engaged was armed. That is a visual judgeme
 and it is increasingly proposed as one an aerial system could assist. Sections 8 to 11 report what
 that judgement actually demands of the acquisition: at the reference altitude of this study, 150 m,
 the form of a firearm is argued not to be resolvable within the figure, an absence argued rather
-than measured (Section 11.5), and at half that altitude, the highest at which a test of the
+than measured (Section 11.4), and at half that altitude, the highest at which a test of the
 distinction passed its validity condition, it becomes measurable on synthetic imagery, with the
 error profile of Section 9.5.

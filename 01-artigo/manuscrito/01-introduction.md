@@ -4,40 +4,29 @@
 
 Claims that aerial machine vision can tell an armed person from an unarmed one are acted on without
 stating the acquisition conditions under which the distinction is visible at all. This article
-treats that as the measurable question it is, using procedurally generated synthetic corpora of a
-dense favela.
+treats that as a measurable question, using procedurally generated synthetic corpora of a dense
+favela.
 
-Ground sampling distance, the width of ground a single pixel spans, not scene realism, fixes the
-target. At 4.88 cm per pixel, the ground sampling distance of the main nadir corpus, with the camera
-pointing straight down at 150 m, a person occupies 17.6 by 17.5 pixels, within which the form of a
-firearm is argued not to be resolvable. Halving the altitude enlarges the median box of a figure
-more than five-fold, and the question becomes empirical rather than foreclosed.
+Ground sampling distance, the width of ground one pixel spans, fixes the target. At 4.88 cm per
+pixel, with the camera pointing straight down at 150 m, a person occupies 17.6 by 17.5 pixels,
+within which the form of a firearm is argued not to be resolvable; the one detector trained to
+separate the classes at that altitude found fewer than half of the figures and did not pass the
+validity condition fixed before it was run, so the absence there remains argued rather than
+measured. At 75 and 35 m the question becomes empirical. A corpus built to defeat the objection that
+separability in synthetic imagery is an artefact of an invariant asset, five firearm models set
+against nine elongated objects carried in the same territory, gives a detector that calls 24 per
+cent of those objects armed at 75 m and 27 per cent at 35 m, against 16 per cent for a twin of the
+35 m corpus rendered at 75 m; on 80 new frames the gap replicates, 25 against 12.5 per cent, and
+holds across three training runs. Finer resolution did not reduce the confusion.
 
-The corpus at half the altitude is built to defeat the objection that separability in synthetic
-imagery is an artefact of an invariant asset: five firearm models are set against nine elongated
-objects carried in the same territory (brooms, rebar, pipe, umbrellas), drawn largely from the same
-colour and roughness palette, so that colour alone cannot separate the classes. On synthetic
-validation imagery only, since we found no public aerial benchmark that annotates a carried firearm
-at such altitudes, the detector trained at that altitude calls 24 per cent of those objects armed;
-at 35 m the rate is 27 per cent, against 16 per cent for a twin of the 35 m corpus rendered at 75 m.
-On 80 new frames the gap replicates, 25 against 12.5 per cent, and holds across three training runs,
-so finer resolution did not reduce the confusion, although on the validation frames the gap vanishes
-at the strictest overlap threshold tested.
-
-Transfer of person detection, as a single class, to real aerial imagery, a public urban benchmark
-that is not a favela, is reported as a ratio to what the same detector achieves on the same test set
-when trained on a matched number of real images: 1.6 per cent for the nadir acquisition taken as
-reference, 9.7 per cent when the same settlement is rendered from an oblique camera, and 15.3 per
-cent on average over three training runs (14.1 to 16.7) for the best oblique configuration tried,
-six settlements at a pitch recalibrated to the benchmark. Given 5 or 10 per cent of the benchmark's
-real training images, a generic initialisation outperformed the synthetic one, at 5 per cent by more
-than the spread between three training runs, and adding the synthetic corpus to the same real images
-lowered accuracy too. No armed and unarmed accuracy is reported at 150 m. At that ground sampling
-distance a carried object reaches the image as a thin line whose form cannot be resolved; the one
-detector trained at that altitude, on a twin of the 35 m corpus, found fewer than half of the
-figures, below the validity threshold fixed before it was run, so the absence remains argued rather
-than measured. Stating the conditions under which a capability has not been shown, and what showing
-it would require, is a contribution of the same kind as demonstrating one that is present.
+Transfer of person detection to a public real benchmark that is not a favela reaches 1.6 per cent of
+a ceiling trained on a matched number of real images for the nadir acquisition taken as reference,
+9.7 per cent when the same settlement is rendered from an oblique camera, and 15.3 per cent on
+average over three training runs for the best oblique configuration. Given 5 or 10 per cent of the
+benchmark's real training images, a generic initialisation outperformed the synthetic one, and
+adding the synthetic corpus to the same real images lowered accuracy as well. Stating the conditions
+under which a capability has not been shown, and what showing it would require, is a contribution of
+the same kind as demonstrating one that is present.
 
 **Keywords:** synthetic data, aerial object detection, ground sampling distance, dual use, informal settlements, favelas
 
@@ -61,4 +50,4 @@ Two tasks are in play, and they should be separated at the outset. The vertical 
 
 This research is relevant to society and to urban studies because favelas remain systematically underrepresented in official geospatial datasets, which constrains equitable resource allocation for sanitation, risk mapping, and disaster response. It is also relevant to police institutions, because operations in vertically dense, informally built territories are widely documented as high-risk for all parties (officers, criminal actors, and, overwhelmingly, uninvolved residents), partly due to poor advance knowledge of the built environment. Finally, it is relevant to communities themselves, because the same technology that could, in principle, support safer emergency response or infrastructure planning also carries a serious risk of being repurposed for surveillance, profiling, or the operational targeting of residents who have not consented to being mapped. This dual-use tension is treated as a central, rather than peripheral, concern of this research.
 
-The vantage point named in the title is not decorative. Three of the conditions this study works under would not arise in a study of the same problem in a mapped, consented and well-benchmarked city: there is no public benchmark for the morphological task at this scale (Section 11.4), the benchmark that does exist is an urban scene that is not a favela (Section 11.2), and no consented aerial imagery of the territory exists or can readily be obtained (Section 7.1). Working from the Global South here means working under those three absences, and much of what follows is an account of what they cost.
+The vantage point named in the title is not decorative. Three of the conditions this study works under would not arise in a study of the same problem in a mapped, consented and well-benchmarked city: there is no public benchmark for the morphological task at this scale (Section 11.3), the benchmark that does exist is an urban scene that is not a favela (Section 11.1), and no consented aerial imagery of the territory exists or can readily be obtained (Section 7.1). Working from the Global South here means working under those three absences, and much of what follows is an account of what they cost.
