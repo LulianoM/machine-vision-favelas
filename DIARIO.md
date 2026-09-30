@@ -12,7 +12,7 @@ Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o qu
 - Origem de cada número das peças novas em `06-resultados/RESULTADOS.md` (entrada de 30/09, refino); as duas eficácias do treino conjunto (73,0 e 86,0%) são razões calculadas de números já reportados.
 - Dez críticas que ficam para os autores (ANALISE, seção 4): extensão e periódico-alvo; título da seção 6; proposta contra o resultado da 9.4; o fator 6,0 sem sementes; d′ fraco em toda altitude; coautor sem nome; liberação do gerador; Closing repete o abstract; harmonização de estilo; peso das seções 3 e 4.
 - Resumo para leigo em português: `01-artigo/resumo-leigo-2026-09-30.md`, 2 páginas, PDF por `monta_resumo_leigo.py` (Edge headless com perfil próprio, porque a primeira tentativa colidiu com a instância do montador do artigo).
-- PDF Elsevier: 17 páginas, 28.621 palavras com referências, 10 figuras, 17 tabelas, 0 `[X]`, na Área de Trabalho. Envio por e-mail: ver a entrada seguinte do dia.
+- PDF Elsevier: 17 páginas, 28.621 palavras com referências, 10 figuras, 17 tabelas, 0 `[X]`, na Área de Trabalho. Como o anexo de 5 MB não cabe na ferramenta de e-mail, o artigo e o resumo foram publicados numa página privada da conta claude.ai do autor (https://claude.ai/artifact/WPd1bZtKCVSo6XN56qMeuf, com botões de download) e o e-mail levou o link, o resumo do refino e o resumo para leigo no corpo.
 
 ## 2026-09-30 [DESKTOP] Figura 7 refeita: objeto na mão e visível
 

@@ -14,7 +14,7 @@ import tempfile
 
 CSS = """
 @page { size: A4; margin: 1.4cm 1.9cm; }
-body { font-family: Georgia, "Times New Roman", serif; font-size: 10.2pt; line-height: 1.33; color: #111; }
+body { font-family: "Times New Roman", Times, serif; font-size: 10.8pt; line-height: 1.33; color: #111; }
 h1 { font-size: 16pt; line-height: 1.2; margin: 0 0 3pt 0; }
 h2 { font-size: 11.5pt; margin: 8pt 0 2pt 0; page-break-after: avoid; }
 p { margin: 0 0 5pt 0; text-align: justify; }
