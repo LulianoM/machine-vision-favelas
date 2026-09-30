@@ -1,8 +1,5 @@
 ## 9. Results: Transfer to Real Imagery
 
-> **Provenance note.** Every quantity below traces to a file under `06-resultados/` together with
-> the command that produced it.
-
 Each model of the protocol in Section 7.7 was specified before that model was run, but the protocol
 grew in stages: S-nadir-150-six, S-oblique-six, S-nadir-35 and its twin, and the fine-tuning models
 of Section 9.4 were added after earlier results in this section were known. Section 10 declares in
@@ -24,8 +21,6 @@ evidence.
 | S-nadir-150, 40 training scenes at 1080p | synthetic validation | 0.109 | 0.148 | 0.077 | 0.019 |
 | same model | VisDrone-DET val, zero-shot | 0.038 | 0.031 | 0.0055 | 0.0020 |
 | same model | VisDrone-DET val, files rescaled by 1/2.49 (same input scale, Section 10.2) | 0.041 | 0.037 | 0.0061 | 0.0009 |
-
-*Source: `06-resultados/sim2real_morro_v1.json`.*
 
 These are not results about transfer. The model failed on its own domain, reaching 0.077 where the
 corpus of record, with 180 images at 4K, reaches 0.79 (Section 9.2), and transfer cannot be measured
@@ -60,12 +55,6 @@ denominator whose role is to be matched, not maximised.
 |---|---|---|---|---|
 | R (1,106 real training images) | 0.7312 | 0.5729 | 0.6311 | 0.2538 |
 
-*Source: `06-resultados/sim2real_r_pareado.json`, written by
-`07-blender/scripts/avalia_sim2real.py`. Images and person instances of the training set of R:
-`06-resultados/alvo_por_split.json`, produced by `06-resultados/mede_alvo_split.py`
-(`visdrone_sub`). The images were drawn by step 9 of `07-blender/scripts/fila_noite.py`, which sets
-their number equal to the training tiles of the corpus of record, and R was trained by its step 10.*
-
 This figure is the denominator for everything that follows. It is not a claim about our method; it
 establishes what the test set permits at this volume of data.
 
@@ -79,31 +68,27 @@ Section 7.3, evaluated on the same real test set with no real training image of 
 | Synthetic validation (ceiling of the corpus) | 0.8707 | 0.7413 | 0.7915 | 0.3656 |
 | VisDrone-DET val (zero-shot) | 0.0856 | 0.0421 | 0.0102 | 0.0025 |
 
-*Source: `06-resultados/sim2real_s_nadir_4k.json`.*
-
 **Efficacy of the synthetic method** = mAP50(S-nadir-150) / mAP50(R) = 0.0102 / 0.6311 = 1.6 per cent.
 
 **Variety of settlement at fixed volume.** The corpus of record renders one settlement. Model
-S-nadir-150-six keeps every command-line setting of the generator and the number of images fixed and
+S-nadir-150-six keeps every run-time setting of the generator and the number of images fixed and
 spreads the 180 images over six settlements, 30 each, differing in relief, forest cover, a corridor
 through the core (an avenue, a narrow street or a river) and the palette of roofs and facades, and
 also in the extent of the built core, the number of sub-districts, the distribution of storey counts
-and the share of vacant lots (`07-blender/scripts/sitios.py`, settlements -1 to 4). It was rendered
-with the later generator, so its armed figures carry the five weapon models of Section 7.4, which
-the corpus of record predates.
+and the share of vacant lots. It was rendered with the later generator, so its armed figures carry
+the five weapon models of Section 7.4, which the corpus of record predates.
 
 | Model | Synthetic validation mAP50 | VisDrone-DET val mAP50 | mAP50-95 | Efficacy |
 |---|---|---|---|---|
 | S-nadir-150, one settlement | 0.7915 | 0.0102 | 0.0025 | 1.6 per cent |
 | S-nadir-150-six, six settlements | 0.6786 | 0.0190 | 0.0071 | 3.0 per cent |
 
-*Source: `06-resultados/sim2real_s_nadir_4k.json` and `sim2real_s_variedade.json`, written by
-`07-blender/scripts/avalia_sim2real.py`.*
-
 Variety nearly doubles the transfer figure and lowers the score on the model's own validation split,
 which is consistent with a model that has stopped memorising one scene, although the two validation
 splits are different sets. From one training run per model it is a candidate term in the gap, and in
 Section 9.3 it moves the transfer figure less than capture geometry does.
+
+<!--FIG:06-resultados/figuras/fig6_assentamentos.jpg|The six settlements over which S-nadir-150-six and S-oblique-six spread their 180 images, one frame of each from the oblique corpus, all under the hard-sun regime. They differ in relief, forest cover, a corridor through the core (an avenue, a narrow street or a river) and the palette of roofs and facades. Settlement 1 is the one rendered in the corpus of record.-->
 
 Kiefer, Ott and Zell (2022) report mAP50 on VisDrone, in points, for three architectures trained
 purely on synthetic data: 1.2 for EfficientDet-D0, 2.4 for Faster R-CNN and 10.2 for YOLO, against
@@ -145,11 +130,10 @@ scene, is load-bearing on this benchmark.
 | S-oblique | 0.0614 | 9.7 per cent |
 | S-oblique-six | 0.1055 (mean of three runs 0.0967) | 16.7 per cent (15.3) |
 
-*Source: `06-resultados/sim2real_s_nadir_4k.json`, `sim2real_s_obliquo.json` and
-`sim2real_s_oblvar.json`, written by `07-blender/scripts/avalia_sim2real.py`.*
-
 **Difference attributable to acquisition geometry, on this benchmark** = mAP50(S-oblique) -
 mAP50(S-nadir-150) = 0.0512, a factor of 6.0.
+
+<!--FIG:06-resultados/figuras/fig8_nadir_obliquo.jpg|The same settlement under the two camera geometries compared in this section: straight down from 150 m, the reference acquisition of this study, and oblique from about 120 m, closer to the benchmark's. Below each frame, four figures carrying nothing, enlarged to the same size without smoothing. Seen from above, a person is the plan of a head and shoulders, with a median height-to-width ratio of 0.98 in the nadir corpus; seen obliquely, a standing figure with its limbs, with a median of 1.46 in the oblique corpus against 1.95 in the benchmark's training split (Section 8.2). Trained on each, the detector reaches 1.6 and 9.7 per cent of the real-data ceiling on the benchmark.-->
 
 Two outcomes are possible and both are reportable. If the oblique arm substantially outperforms the
 nadir arm, acquisition geometry is load-bearing relative to scene content on this benchmark. That is
@@ -182,17 +166,15 @@ model the rest of this article calls the synthetic model. Result: mAP50 0.1055 o
 nadir model and 1.7 times the single-settlement oblique model, against 0.7047 on its own synthetic
 validation. Trained twice more on the same corpus with other training seeds, it reaches 0.0958 and
 0.0887, so its efficacy averages 15.3 per cent over three runs, between 14.1 and 16.7; the first
-run, reported above and in the table, was the best of the three
-(`06-resultados/sim2real_s_oblvar_sd1.json` and `sim2real_s_oblvar_sd2.json`). Under the official
-VisDrone rule for ignored regions (Section 7.7) every figure in this section rises slightly, R to
-0.6548 and the first run of S-oblique-six to 0.1074, an efficacy of 16.4 per cent, and no comparison
-changes order, at an intersection-over-union of 0.50, 0.60 or 0.75
-(`06-resultados/visdrone_oficial_iou.json`). The rendered figure approaches the calibration target
-without reaching it: a median height-to-width ratio of 1.85 at 13.3 by 25.2 pixels, against 1.95 at
-13.0 by 24.0 in the benchmark's training split (Section 8.2). In absolute terms, the 10.5 points of
-mAP50 of the first run sit just above the upper end of that synthetic-only range and the 9.7 of the
-mean of three runs just inside it, under the same difference in classes, while the ratio to our own
-ceiling stays below theirs (Section 9.2).
+run, reported above and in the table, was the best of the three. Under the official VisDrone rule
+for ignored regions (Section 7.7) every figure in this section rises slightly, R to 0.6548 and the
+first run of S-oblique-six to 0.1074, an efficacy of 16.4 per cent, and no comparison changes order,
+at an intersection-over-union of 0.50, 0.60 or 0.75. The rendered figure approaches the calibration
+target without reaching it: a median height-to-width ratio of 1.85 at 13.3 by 25.2 pixels, against
+1.95 at 13.0 by 24.0 in the benchmark's training split (Section 8.2). In absolute terms, the 10.5
+points of mAP50 of the first run sit just above the upper end of that synthetic-only range and the
+9.7 of the mean of three runs just inside it, under the same difference in classes, while the ratio
+to our own ceiling stays below theirs (Section 9.2).
 
 The acquisition geometry this article reproduces points straight down. An oblique corpus that
 transfers better to VisDrone is informative about the benchmark, not about the acquisition that
@@ -212,29 +194,24 @@ The protocol was fixed before the run. Two slices of the VisDrone-DET training s
 initialised from the synthetic model of Section 9.3 and one from the same generic initialisation as
 every other model in this article. The synthetic start carries over every weight, including a
 detection head already trained for one person class, whereas the generic start re-initialises the
-last classification layer of the COCO head, which has eighty classes (training logs); the synthetic
-start therefore begins as a working person detector, consistent with its lead in the first epochs,
-and the result below holds despite that head start. The checkpoint is selected on a further 5 per
-cent of the training split, disjoint from both, so that the validation split on which every figure
-here is scored is not used for selection, which removes for this comparison the asymmetry declared
-in Section 10.5. Thirty epochs, the same detector, input size and augmentation
-(`07-blender/scripts/prepara_ft.py`). Both starts receive the same untuned schedule of Section 7.6,
-AdamW at 0.002 with three warm-up epochs, although one of them is already a person detector, and no
-lower learning rate, frozen layers or longer budget was tried for either. On the selection slice all
-four models reach their best mAP50 and mAP50-95 between epochs 27 and 30 of 30
-(`06-resultados/ft_curvas_selecao.json`), so the comparison is at a fixed budget rather than at
-convergence, although the generic start's lead on that slice does not narrow between epoch 20 and
-epoch 30.
+last classification layer of the COCO head, which has eighty classes; the synthetic start therefore
+begins as a working person detector, consistent with its lead in the first epochs, and the result
+below holds despite that head start. The checkpoint is selected on a further 5 per cent of the
+training split, disjoint from both, so that the validation split on which every figure here is
+scored is not used for selection, which removes for this comparison the asymmetry declared in
+Section 10.5. Thirty epochs, the same detector, input size and augmentation. Both starts receive the
+same untuned schedule of Section 7.6, AdamW at 0.002 with three warm-up epochs, although one of them
+is already a person detector, and no lower learning rate, frozen layers or longer budget was tried
+for either. On the selection slice all four models reach their best mAP50 and mAP50-95 between
+epochs 27 and 30 of 30, so the comparison is at a fixed budget rather than at convergence, although
+the generic start's lead on that slice does not narrow between epoch 20 and epoch 30.
 
 | Real training data | F-synthetic (from S-oblique-six) | F-generic (from COCO) | Difference |
 |---|---|---|---|
 | 5 per cent (324 images) | 0.4424 | 0.5220 | -0.0796 |
 | 10 per cent (647 images) | 0.5095 | 0.5709 | -0.0614 |
 
-*mAP50 on VisDrone-DET val under the protocol of Section 9.1. Source:
-`06-resultados/ft_visdrone.json`; precision, recall and mAP50-95 of each model in
-`sim2real_ft05_sint.json`, `sim2real_ft05_coco.json`, `sim2real_ft10_sint.json` and
-`sim2real_ft10_coco.json`.*
+*mAP50 on VisDrone-DET val under the protocol of Section 9.1.*
 
 The quantity of interest is the difference at each volume: what the synthetic pretraining is worth
 when real data is scarce. The expectation, stated before the run, was that it would be largest at
@@ -244,12 +221,11 @@ It is negative at both. Initialised from the synthetic model, the detector finis
 mAP50 below the generic initialisation with 5 per cent of the real data and 6.1 points below with 10
 per cent, and the synthetic start given 647 real images (0.5095) does not reach the generic start
 given 324 (0.5220). The sign is the same in mAP50-95, the metric on which every checkpoint was
-selected: -0.0368 at 5 per cent and -0.0232 at 10 per cent (`sim2real_ft05_sint.json` to
-`sim2real_ft10_coco.json`). The expectation stated before the run therefore fails: the difference is
-not largest at the smaller volume but most negative there. Its magnitude narrows as real data grows,
-but what narrows is a cost, not a benefit. On the selection slice the generic start overtakes the
-synthetic one by the fourth epoch at 5 per cent and in the first epoch at 10 per cent, after which
-the synthetic start leads only intermittently (`06-resultados/ft_curvas_selecao.json`). Fine-tuning
+selected: -0.0368 at 5 per cent and -0.0232 at 10 per cent. The expectation stated before the run
+therefore fails: the difference is not largest at the smaller volume but most negative there. Its
+magnitude narrows as real data grows, but what narrows is a cost, not a benefit. On the selection
+slice the generic start overtakes the synthetic one by the fourth epoch at 5 per cent and in the
+first epoch at 10 per cent, after which the synthetic start leads only intermittently. Fine-tuning
 does transform the synthetic model itself, from 0.1055 to 0.4424 with 324 real images, which is the
 effect the sim-to-real literature reports; what it does not do here is outperform a generic start
 given the same real images. Relative to the ceiling of Section 9.1, trained on 1,106 real images for
@@ -257,25 +233,22 @@ twice as many epochs, the generic start recovers 82.7 and 90.5 per cent and the 
 and 80.7 per cent. Repeated at 5 per cent with training seeds 1 and 2, each synthetic start from the
 S-oblique-six model of the same seed, the synthetic start reaches 0.4608 and 0.4554 and the generic
 start 0.5228 and 0.5285: the lowest of the three generic runs lies above the highest synthetic one,
-so the difference exceeds the spread between runs by the criterion fixed in advance (Section 10.6;
-`06-resultados/sim2real_ft05_sint_sd1.json` to `sim2real_ft05_coco_sd2.json`). On this benchmark and
-at these volumes the synthetic corpus does not substitute for real data; it costs some. One
-candidate explanation, not tested here, is that training on 890 tiles of generated figures
-overwrites part of what the generic initialisation encodes about real people; the joint models
-below, which keep that initialisation and see the real images throughout, bear on it.
+so the difference exceeds the spread between runs by the criterion fixed in advance (Section 10.6).
+On this benchmark and at these volumes the synthetic corpus does not substitute for real data; it
+costs some. One candidate explanation, not tested here, is that training on 890 tiles of generated
+figures overwrites part of what the generic initialisation encodes about real people; the joint
+models below, which keep that initialisation and see the real images throughout, bear on it.
 
 **Joint training.** Pretraining is one way to use the synthetic corpus; training on synthetic and
-real imagery together is the other, and it was specified with its criterion before it was run
-(`07-blender/PLANO-RODADA4.md`). Two models start from COCO and train for 30 epochs on the 890
-synthetic tiles of S-oblique-six together with the same 324 or 647 real images, selected on the same
-slice. Each real image is seen as often as in the generic start, but every epoch also carries the
-synthetic tiles, so these models take more gradient steps. They reach 0.4607 at 5 per cent and
-0.5428 at 10 per cent, 0.0613 and 0.0281 below the generic start given only the real images, beyond
-the margin fixed in advance, twice the spread between the three generic runs at 5 per cent (0.0035),
-which at 10 per cent is borrowed from the 5 per cent runs (`06-resultados/sim2real_misto05.json`,
-`sim2real_misto10.json` and `rodada4_criterios.json`). Mixed in, the synthetic corpus costs less
-than as pretraining, but it still costs: on this benchmark neither way of adding it to real data
-helped.
+real imagery together is the other, and it was specified with its criterion before it was run. Two
+models start from COCO and train for 30 epochs on the 890 synthetic tiles of S-oblique-six together
+with the same 324 or 647 real images, selected on the same slice. Each real image is seen as often
+as in the generic start, but every epoch also carries the synthetic tiles, so these models take more
+gradient steps. They reach 0.4607 at 5 per cent and 0.5428 at 10 per cent, 0.0613 and 0.0281 below
+the generic start given only the real images, beyond the margin fixed in advance, twice the spread
+between the three generic runs at 5 per cent (0.0035), which at 10 per cent is borrowed from the 5
+per cent runs. Mixed in, the synthetic corpus costs less than as pretraining, but it still costs: on
+this benchmark neither way of adding it to real data helped.
 
 ### 9.5 The armed and unarmed distinction, by altitude
 
@@ -292,8 +265,8 @@ and its jitter, and so with the confusable objects the corpus of record lacks. A
 was fixed before it was run: the model had to find at least half of the annotated figures, in any
 class. It found 148 of 297 (0.498), so under that condition its rates are not interpretable and are
 not reported as a result; descriptively, it calls 0.34 of armed figures and 0.14 of confusable
-objects armed, and misses 0.41 and 0.44 of them (`06-resultados/confusao_armado_150g.json`). The
-absence at 150 m therefore remains argued, not measured.
+objects armed, and misses 0.41 and 0.44 of them. The absence at 150 m therefore remains argued, not
+measured.
 
 At 75 m the median instance measures 47.6 by 41.7 pixels, 6.4 times the area over all classes (5.2
 times for armed figures alone, Section 7.3), and the corpus is built so that the artefact cannot
@@ -302,7 +275,9 @@ territory, sharing the weapons' colour and roughness palette and the same distri
 poses, though objects longer than any weapon are held at other angles (Section 7.4). The corpus
 holds 2,887 instances in 200 images, 933 of them armed, 973 unarmed and 981 carrying a confusable
 object. A second corpus at 35 m, 1.1 cm per pixel, holds 2,223 instances with a median of 121.8 by
-103.1 pixels (`06-resultados/forma_corpora.json`, produced by `06-resultados/mede_forma.py`).
+103.1 pixels.
+
+<!--FIG:06-resultados/figuras/fig7_armados.jpg|Figures carrying a rifle, a pistol, nothing, a broom, a length of pipe or a closed umbrella at the three altitudes of this section, each cropped from a validation frame and enlarged to the same size without smoothing, so that every crop shows the pixels the detector receives. At 35 m the weapons and the objects are distinct shapes; at 75 m they survive as lines of different length and tone; at 150 m, the reference altitude, the whole figure is a few tens of pixels and what it carries is a short line or nothing. The crops at 35 m and 75 m come from the new frames described below; those at 150 m from the twin corpus whose model did not pass its validity condition.-->
 
 | Quantity | S-nadir-75 (75 m) | S-nadir-35 (35 m) | Twin of S-nadir-35 at 75 m |
 |---|---|---|---|
@@ -319,15 +294,11 @@ the same person counts only against precision; the validation split of each corp
 images). The threshold of 0.25 is the Ultralytics default for prediction and was not tuned; every
 rate depends on it and varies with the realisation of the settlement: in the new realisation of
 Section 11.5 the S-nadir-75 model calls 0.15 of confusable objects and 0.43 of armed persons armed,
-against 0.237 and 0.547 here. `06-resultados/gemeo_75_35.json` also gives d′, the difference between
-the normal quantiles of the armed recall and of the rate at which the other class is called armed,
-which under the usual equal-variance assumption separates how well a model distinguishes two classes
-from how readily it calls a figure armed: against confusable objects 0.83, 0.78 and 0.90 in the
-three columns, against unarmed persons 1.24, 1.14 and 1.16. Source:
-`06-resultados/confusao_armado_75.json`, `confusao_armado_35.json` and `confusao_armado_75g.json`,
-produced by `06-resultados/confusao_armado.py`; precision from `06-resultados/gemeo_75_35.json`,
-produced by `06-resultados/compara_gemeo.py`. The third column is the matched corpus described
-below.*
+against 0.237 and 0.547 here. The rates also give d′, the difference between the normal quantiles of
+the armed recall and of the rate at which the other class is called armed, which under the usual
+equal-variance assumption separates how well a model distinguishes two classes from how readily it
+calls a figure armed: against confusable objects 0.83, 0.78 and 0.90 in the three columns, against
+unarmed persons 1.24, 1.14 and 1.16. The third column is the matched corpus described below.*
 
 The fourth row is the quantity of interest. It is the synthetic estimate, unmeasured on real
 imagery, of the rate at which the system would mark a resident carrying a broom, a length of pipe or
@@ -340,51 +311,46 @@ separating them. It is not an artefact of how the generator carries objects, alt
 live possibility: every object whose recorded length exceeds 1.15 m is re-angled in every pose
 (Section 7.4), and in the unseen-weapon test of Section 11.5 the closed umbrella, short enough to be
 carried as a weapon is, is the object most often called armed (0.38, on 29 instances), against 0.10
-for brooms (41) and 0.11 for lengths of pipe (28) (`06-resultados/holdout_armas_armado_75.json`).
-The frames of that test were rendered again with every confusable object carried exactly as a weapon
-is, in the weapons' distribution of poses and at their angles, with every random draw unchanged, so
-that the two versions match box for box in 49 of 50 frames. Paired object by object over 227
-objects, the S-nadir-75 model calls 0.154 of them armed as normally carried and 0.137 when carried
-as a weapon (exact McNemar test, p = 0.56), and the umbrella, whose carriage did not change, stays
-at 0.38 (`06-resultados/porte_arma_armado_75.json`, `holdout_armas_armado_75_inst.json` and
-`porte_arma_gemeo.json`). By the criterion fixed before the test the rate does not rise, and the
-caveat that objects carried as weapons would be called armed more often is withdrawn. It does not
-fall when the ground sampling distance is halved again: at 35 m, where a rifle spans some 80 pixels,
-about one confusable object in four is still called armed, and so is about one unarmed person in
-six.
+for brooms (41) and 0.11 for lengths of pipe (28). The frames of that test were rendered again with
+every confusable object carried exactly as a weapon is, in the weapons' distribution of poses and at
+their angles, with every random draw unchanged, so that the two versions match box for box in 49 of
+50 frames. Paired object by object over 227 objects, the S-nadir-75 model calls 0.154 of them armed
+as normally carried and 0.137 when carried as a weapon (exact McNemar test, p = 0.56), and the
+umbrella, whose carriage did not change, stays at 0.38. By the criterion fixed before the test the
+rate does not rise, and the caveat that objects carried as weapons would be called armed more often
+is withdrawn. It does not fall when the ground sampling distance is halved again: at 35 m, where a
+rifle spans some 80 pixels, about one confusable object in four is still called armed, and so is
+about one unarmed person in six.
 
 The two corpora differ in more than altitude. The 35 m corpus also changed how confusable objects
 are carried: at 75 m the object was drawn in the firing pose with probability 0.42, as the weapon
-is, while at 35 m it is drawn that way with probability 0.08 (`07-blender/scripts/people_mpfb.py`)
-and otherwise over the shoulder, at the side or in one hand. That removes a cue the 75 m model may
-have used, and it is the more realistic distribution, but it confounds resolution with pose and with
-every other setting that changed between the two corpora: render sampling (64 against 96 samples per
-pixel), the share of figures placed on rooftops (0.75 against 0.45), figures per frame (12 to 24
-against 14 to 30), wire and clothesline radius scaled to the ground sampling distance, candidate
-positions drawn only inside the frame, and the settlement seed. A third corpus separates them:
-identical to the 35 m corpus in every setting except altitude and its jitter (up to 6 m either way
-against 3 m), rendered at 75 m. Confusable objects called armed: 0.165; unarmed persons called
-armed: 0.109 (third column above). Against 0.273 and 0.168 at 35 m with every other setting held,
-halving the ground sampling distance did not reduce the confusion: the 35 m model calls every class
-armed more often in point estimate, armed persons included (p = 0.15 and 0.22 for the armed and
-unarmed rates in the two-proportion test of the next sentence), at the same mAP50 and with a d′ no
-larger than the twin's, so the 35 m result does not appear to be an artefact of the change of pose.
-On the validation splits the difference in the object rate is 10.8 points, p = 0.06 in a
-two-proportion test that does not correct for clustering by frame (`06-resultados/gemeo_75_35.json`,
-produced by `compara_gemeo.py`). A replication was fixed before it was run: 80 new frames continuing
-the seed of the 35 m corpus, and their twins at 75 m, none used in training. On them the rates are
-0.253 at 35 m (74 of 292 objects) and 0.125 for the twin (36 of 288), 12.8 points, p = 0.0001, so by
-that criterion the difference is established on synthetic imagery
-(`06-resultados/extra_armado_35.json`, `extra_armado_75g.json` and `rodada4_criterios.json`); armed
-persons are called armed at 0.543 and 0.432, and d′ against confusable objects is 0.77 (95 per cent
-interval by resampling frames, 0.57 to 0.99) at 35 m against 0.97 (0.77 to 1.20) for the twin. Two
-qualifications bound it. Across three training runs of each model the ranges separate on the new
-frames (0.202 to 0.253 against 0.097 to 0.181) but not on the smaller validation splits (0.231 to
-0.273 against 0.132 to 0.242). And the rate depends on the overlap required to score a detection: at
-an intersection-over-union of 0.60 and 0.75 instead of 0.50, the 35 m rate on the validation split
+is, while at 35 m it is drawn that way with probability 0.08 and otherwise over the shoulder, at the
+side or in one hand. That removes a cue the 75 m model may have used, and it is the more realistic
+distribution, but it confounds resolution with pose and with every other setting that changed
+between the two corpora: render sampling (64 against 96 samples per pixel), the share of figures
+placed on rooftops (0.75 against 0.45), figures per frame (12 to 24 against 14 to 30), wire and
+clothesline radius scaled to the ground sampling distance, candidate positions drawn only inside the
+frame, and the settlement seed. A third corpus separates them: identical to the 35 m corpus in every
+setting except altitude and its jitter (up to 6 m either way against 3 m), rendered at 75 m.
+Confusable objects called armed: 0.165; unarmed persons called armed: 0.109 (third column above).
+Against 0.273 and 0.168 at 35 m with every other setting held, halving the ground sampling distance
+did not reduce the confusion: the 35 m model calls every class armed more often in point estimate,
+armed persons included (p = 0.15 and 0.22 for the armed and unarmed rates in the two-proportion test
+of the next sentence), at the same mAP50 and with a d′ no larger than the twin's, so the 35 m result
+does not appear to be an artefact of the change of pose. On the validation splits the difference in
+the object rate is 10.8 points, p = 0.06 in a two-proportion test that does not correct for
+clustering by frame. A replication was fixed before it was run: 80 new frames continuing the seed of
+the 35 m corpus, and their twins at 75 m, none used in training. On them the rates are 0.253 at 35 m
+(74 of 292 objects) and 0.125 for the twin (36 of 288), 12.8 points, p = 0.0001, so by that
+criterion the difference is established on synthetic imagery; armed persons are called armed at
+0.543 and 0.432, and d′ against confusable objects is 0.77 (95 per cent interval by resampling
+frames, 0.57 to 0.99) at 35 m against 0.97 (0.77 to 1.20) for the twin. Two qualifications bound it.
+Across three training runs of each model the ranges separate on the new frames (0.202 to 0.253
+against 0.097 to 0.181) but not on the smaller validation splits (0.231 to 0.273 against 0.132 to
+0.242). And the rate depends on the overlap required to score a detection: at an
+intersection-over-union of 0.60 and 0.75 instead of 0.50, the 35 m rate on the validation split
 falls to 0.223 and 0.132 and the twin's to 0.165 and 0.132, so at the strictest threshold the two
-coincide, and the order of the 35 m and original 75 m models reverses
-(`06-resultados/confusao_armado_35_iou60.json` and the files beside it); by the criterion of Section
+coincide, and the order of the 35 m and original 75 m models reverses; by the criterion of Section
 10.6 these rates are reported at the three thresholds. At 75 m, moving from the original 75 m corpus
 to the generator settings of the 35 m corpus, realistic carrying poses among them, is followed by an
 object rate of 0.165 against 0.237, a difference the two-proportion test above does not support (p =

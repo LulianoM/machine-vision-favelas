@@ -1,8 +1,5 @@
 ## 7. The Synthetic Data Generation Pipeline
 
-> **Provenance note.** Every quantity in this section traces to a file under `06-resultados/`
-> together with the command that produced it.
-
 The design-science component declared in Section 5 and specified in Section 6 proposes a model of
 vertical morphology and a synthetic-training strategy. This section specifies the generative
 procedure that implements the second of those, and reports what happens when it is executed.
@@ -38,12 +35,11 @@ detector, and Sections 9 and 10 report what transfers and what does not.
 
 Scenes are generated procedurally in Blender 5.2, executed headless with a deterministic seed, so
 that the settlement, the camera and the illumination of any reported image can be regenerated
-exactly from the seed recorded in its manifest entry, and the figures as well in every corpus but
-the three that Section 11.6 names. No commercial asset packs are used: surface materials and the
-four tree models of the vegetation come from a public-domain library (Poly Haven, CC0), the human
-figures are built from the CC0 assets of MakeHuman through MPFB (Section 7.4), and all other
-geometry is authored by the generator. That choice makes the corpus redistributable in full, and it
-is paid for.
+exactly from the seed recorded for that image, and the figures as well in every corpus but the three
+that Section 11.6 names. No commercial asset packs are used: surface materials and the four tree
+models of the vegetation come from a public-domain library (Poly Haven, CC0), the human figures are
+built from the CC0 assets of MakeHuman through MPFB (Section 7.4), and all other geometry is
+authored by the generator. That choice makes the corpus redistributable in full, and it is paid for.
 
 Liao et al. (2026) measure the cost directly. Replacing a photogrammetric reconstruction of the
 target site with generic assets costs 27.0 mAP50 points on YOLOv11 (their name for YOLO11, the
@@ -80,17 +76,16 @@ radians and every corner passes through a smooth domain warp, so the statistic b
 three mechanisms together. The statistic is the fraction of edge energy falling within 7.5 degrees
 of a cardinal axis, divided by the isotropic expectation. The measurement window covers 30 degrees
 of 180, so the isotropic expectation is one sixth and unity means no preferred direction. In the
-configuration of the corpus of record, rendered at 4K, the value is 0.94
-(`06-resultados/teste_fidelidade.csv`, row v12, written by
-`07-blender/scripts/teste_fidelidade.py`). The version of the generator that used a single partition
-was never measured with the corrected script, so no value is reported for it.
+configuration of the corpus of record, rendered at 4K, the value is 0.94. The version of the
+generator that used a single partition was never measured with the corrected script, so no value is
+reported for it.
 
 An earlier draft of this article reported 1.62 for the configuration then in use, an earlier
 iteration of the generator. That figure came from a measurement script whose normaliser used 15
 degrees of 180 rather than 30, inflating the whole column by a factor of two. The error mattered
 beyond the digit: it placed that configuration above the isotropic expectation when it is in fact
-below it (0.81, row v10 of the same file). The script and the recorded values were corrected, and
-the correction is noted here because the uncorrected figure appeared in circulated drafts.
+below it (0.81). The script and the recorded values were corrected, and the correction is noted here
+because the uncorrected figure appeared in circulated drafts.
 
 **Vertical accretion.** The dwelling is not a single prism. In the majority of cases with two or
 more storeys the upper floor is smaller than the one below and offset towards one boundary, leaving
@@ -107,8 +102,8 @@ clotheslines, stair housings, satellite dishes, stacked roofing sheets, rubble, 
 reinforcement bar awaiting a further storey. Aerial cabling spans between rooftop anchor points.
 These are not decoration. At the ground sampling distance of the target sensor they are intended as
 a main source of local clutter, although no measurement here isolates their share, and Section 8.3
-measures the contrast a person presents against that immediate background, which Section 10.3 treats
-as a hypothesis about detector difficulty, with a test not yet run.
+measures the contrast a person presents against that immediate background, which Section 10.3 tests
+as a hypothesis about detector difficulty.
 
 <!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training, which is conducted entirely from the aerial camera, and is shown because it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
@@ -139,7 +134,7 @@ and quadruples its area before occlusion, and measured on the generated corpora 
 grows from 17.6 by 17.5 pixels to 47.6 by 41.7, a factor of 6.4 in area. That exceeds the four the
 geometry alone gives, and part of the excess is composition: the corpus at 75 m adds a class
 carrying elongated objects, whose boxes are the largest, and taken class by class the factor is 5.2
-for armed and 5.7 for unarmed figures (`06-resultados/forma_corpora.json`).
+for armed and 5.7 for unarmed figures.
 
 The nadir altitudes are reported separately throughout, as S-nadir-150, S-nadir-75 and, in Section
 9.5, S-nadir-35, because they answer different questions: the first is the altitude of the reference
@@ -149,11 +144,11 @@ article is named after was measured.
 ### 7.4 Annotation
 
 Human figures are copies of a small pool of rigged, clothed meshes built for each rendering run
-(MPFB, a MakeHuman derivative; `--pool`, six in the corpora rendered by the chains of Sections 9.2
-to 9.5), each copy recoloured, rescaled and posed per instance, and placed both on rooftops and in
-the alley network. Placement uses an occupancy map computed from the generated footprints, so that
-ground placement is known to fall in open space rather than inferred by ray casting against
-arbitrary geometry.
+(MPFB, a MakeHuman derivative; six in the corpora rendered by the chains of Sections 9.2 to 9.5),
+each copy recoloured, rescaled and posed per instance, and placed both on rooftops and in the alley
+network. Placement uses an occupancy map computed from the generated footprints, so that ground
+placement is known to fall in open space rather than inferred by ray casting against arbitrary
+geometry.
 
 Bounding boxes are neither drawn by hand nor inferred from a segmentation pass. For each figure the
 generator projects a subsample of the body and clothing vertices (every k-th vertex, about 500 per
@@ -166,10 +161,9 @@ falls below 0.35 are discarded from the label file rather than retained as degen
 settlement this dense the discard rate is substantial and expected. Over the 180 frames of the
 corpus of record, 4,582 figures were placed and 3,225 retained; the per-frame retained fraction has
 a median of 0.71 (10th percentile 0.57, 90th percentile 0.83), so roughly three in ten figures
-placed yield no label (`06-resultados/oclusao_ds_morro_4k.json`, produced by
-`06-resultados/mede_oclusao.py`); the count does not separate the visibility threshold from the two
-other reasons a placed figure is dropped, a box that falls outside the frame or a clipped box with a
-side below 0.002 of the frame (`--min-lado`).
+placed yield no label; the count does not separate the visibility threshold from the two other
+reasons a placed figure is dropped, a box that falls outside the frame or a clipped box with a side
+below 0.002 of the frame.
 
 <!--FIG:06-resultados/figuras/fig5_anotacao.jpg|Automatically generated annotation. Green marks the armed class, blue the unarmed class; boxes are drawn with a four pixel outward offset so that they do not cover the target. The strip along the bottom shows individual targets magnified five times, with their true size in pixels printed beneath each one. At this ground sampling distance the target is a few pixels of low-contrast texture, which is the central difficulty characterised in Section 8.-->
 
@@ -181,25 +175,23 @@ the asset library rather than on anything visible in the world.
 
 The corpus is built to remove that possibility. Five firearm models are generated procedurally, two
 rifles, a carbine, a shotgun and a pistol, with recorded lengths of 0.20 to 1.05 m; the meshes of
-the two rifles and of the shotgun are longer than the lengths recorded for them
-(`07-blender/scripts/objetos_alongados.py`). Against them stand nine elongated objects that a person
-carries in this territory, spanning 0.88 to 2.5 m: brooms, floor squeegees, plastic pipe,
-reinforcement bar, planks, umbrellas, hoes, rolled mats and hose. Weapons and objects are drawn from
-one palette of base colours and surface roughness, so that dark and metallic surfaces occur on both
-and colour alone cannot separate the two, although light PVC and coloured plastic occur only on
-objects. Both are carried through the same distribution of body poses, held forward, at the side,
-slung on the back, or carried while walking, in the same proportions. However, an object whose
-recorded length exceeds 1.15 m, which no weapon's recorded length does, is then re-angled in every
-pose to rest on the shoulder or to point towards the ground (`07-blender/scripts/people_mpfb.py`,
-`make_person`), so most confusable objects are carried at angles no weapon takes. A detector that
-separates the classes on this corpus may therefore be using the length and silhouette of what is
-carried, the light and coloured materials that only objects have, and the angle at which it is
-carried, which is a rule of this generator rather than an observation of how residents carry things;
-the rate at which it calls a broom a rifle is reported directly in Section 9.5. Two later corpora,
-at 35 m and its twin at 75 m, depart from this in one respect, stated where they are reported: the
-object is drawn in the firing pose with probability 0.08 rather than 0.42, the probability used for
-the weapon (`07-blender/scripts/people_mpfb.py`, `make_person`), which is closer to how such objects
-are carried.
+the two rifles and of the shotgun are longer than the lengths recorded for them. Against them stand
+nine elongated objects that a person carries in this territory, spanning 0.88 to 2.5 m: brooms,
+floor squeegees, plastic pipe, reinforcement bar, planks, umbrellas, hoes, rolled mats and hose.
+Weapons and objects are drawn from one palette of base colours and surface roughness, so that dark
+and metallic surfaces occur on both and colour alone cannot separate the two, although light PVC and
+coloured plastic occur only on objects. Both are carried through the same distribution of body
+poses, held forward, at the side, slung on the back, or carried while walking, in the same
+proportions. However, an object whose recorded length exceeds 1.15 m, which no weapon's recorded
+length does, is then re-angled in every pose to rest on the shoulder or to point towards the ground,
+so most confusable objects are carried at angles no weapon takes. A detector that separates the
+classes on this corpus may therefore be using the length and silhouette of what is carried, the
+light and coloured materials that only objects have, and the angle at which it is carried, which is
+a rule of this generator rather than an observation of how residents carry things; the rate at which
+it calls a broom a rifle is reported directly in Section 9.5. Two later corpora, at 35 m and its
+twin at 75 m, depart from this in one respect, stated where they are reported: the object is drawn
+in the firing pose with probability 0.08 rather than 0.42, the probability used for the weapon,
+which is closer to how such objects are carried.
 
 ### 7.5 Domain randomisation over illumination
 
@@ -219,16 +211,14 @@ camera exposure offset together: hard sun, low sun, overcast, haze, heavy overca
 mean frame luminances below include each regime's exposure offset). The angular diameter of the sun
 is what separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees
 the cast shadow effectively disappears, which is what a covered sky does. Mean frame luminance over
-the 48 images of the pilot corpus `ds_morro_clima` (Section 8.3) runs 87.0 (hard sun), 56.0 (low
-sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255
-(`06-resultados/contraste_clima.csv`, produced by `06-resultados/mede_contraste_clima.py`).
+the 48 images of the pilot corpus (Section 8.3) runs 87.0 (hard sun), 56.0 (low sun), 84.6
+(overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255.
 
-<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the corpus <code>ds_morro_clima</code>, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) (<code>06-resultados/contraste_clima.csv</code>). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
+<!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the pilot corpus, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain). Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, sky fill, scattering density and aerosol content, not a brightness adjustment.-->
 
 The dataset sweeps the regimes in order rather than sampling them, so that a small corpus remains
-balanced, and the regime of each image is written to its manifest entry. This permits the per-regime
-analysis reported in Section 8.3 and the per-regime test that Section 10.3 specifies, which has not
-been run.
+balanced, and the regime of each image is recorded. This permits the per-regime analysis reported in
+Section 8.3 and the per-regime test of Section 10.3.
 
 ### 7.6 Training protocol
 
@@ -240,23 +230,19 @@ instance occupies less than one cell of the finest feature map and is close to i
 network by construction.
 
 An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561 between a run trained on
-downscaled frames and a run trained on tiles at native scale
-(`06-resultados/blender_v3/val_final.json` and `06-resultados/blender_v3_tiles2/val_final.json`,
-written by `07-blender/scripts/train_yolo_win.py`, with the settings in the `args.yaml` beside each
-run). That pair is reported here as consistent with the arithmetic and **not** as an isolated effect
-of training scale, because the two runs differ in five further respects: detector size (YOLO11n
-against YOLO11s), input size (1536 against 1280), epoch count (40 against 60), initialisation (COCO
-weights against the checkpoint of a previous interrupted run) and the validation set on which each
-score is computed (whole frames downscaled to 1536 px against native-scale tiles). No controlled
-measurement of training scale alone exists in this project, and Section 11.1 states what would be
-required to obtain one.
+downscaled frames and a run trained on tiles at native scale. That pair is reported here as
+consistent with the arithmetic and **not** as an isolated effect of training scale, because the two
+runs differ in five further respects: detector size (YOLO11n against YOLO11s), input size (1536
+against 1280), epoch count (40 against 60), initialisation (COCO weights against the checkpoint of a
+previous interrupted run) and the validation set on which each score is computed (whole frames
+downscaled to 1536 px against native-scale tiles). No controlled measurement of training scale alone
+exists in this project, and Section 11.1 states what would be required to obtain one.
 
 Synthetic training therefore operates on tiles cut at native scale with 20 per cent overlap, never
 on downscaled frames, although the scale augmentation of the recipe rescales them at random; the
 real-data models, R and the fine-tuning models of Section 9.4, train on whole VisDrone images
 resized so that the long side is 1280 px, which downscales the most common training size, 1400 by
-1050 (`06-resultados/alvo_por_split.json`), and the joint models of that section train on both kinds
-of input.
+1050, and the joint models of that section train on both kinds of input.
 
 | Parameter | Value |
 |---|---|
@@ -264,15 +250,15 @@ of input.
 | Hardware | Single NVIDIA RTX 2060, 6 GB |
 | Initialisation | COCO pretrained weights for every model except the synthetic-start fine-tuning models of Section 9.4, which start from S-oblique-six |
 | Tile size, synthetic corpus at 4K | 1280 px at a stride of 1024 px (20 per cent overlap), with the last column and row aligned to the frame edge, so each 3840 by 2160 frame yields eight tiles and the edge tiles overlap their neighbours by more |
-| Empty tiles retained as negatives | each tile without a box kept with probability 0.05 (`--keep-empty`, default of `07-blender/scripts/tile_dataset.py`); the realised share is printed in each tiling log and is not recorded under `06-resultados/` |
+| Empty tiles retained as negatives | each tile without a box kept with probability 0.05; the realised share is not reported |
 | Minimum retained fraction of a clipped box | 0.40 |
-| Optimiser, learning rate | Ultralytics default (`optimizer=auto`), which ignores lr0 0.01 and at these training lengths selects AdamW, momentum 0.9, with an initial learning rate of 0.002 for the single-class models and 0.001429 for the three-class models (training logs), decaying linearly to 0.01 of that value after 3 warm-up epochs |
+| Optimiser, learning rate | Ultralytics default (`optimizer=auto`), which ignores lr0 0.01 and at these training lengths selects AdamW, momentum 0.9, with an initial learning rate of 0.002 for the single-class models and 0.001429 for the three-class models, decaying linearly to 0.01 of that value after 3 warm-up epochs |
 | Input size, batch | 1280 px, batch 6 |
-| Augmentation | mosaic 1.0, switched off for the last 10 epochs; horizontal flip 0.5; rotation up to 10 degrees; scale gain 0.4; translation 0.1; HSV gains 0.015, 0.6 and 0.4 (`07-blender/scripts/train_yolo_win.py`; rotation, scale and saturation differ from the Ultralytics defaults of 0, 0.5 and 0.7) |
+| Augmentation | mosaic 1.0, switched off for the last 10 epochs; horizontal flip 0.5; rotation up to 10 degrees; scale gain 0.4; translation 0.1; HSV gains 0.015, 0.6 and 0.4 (rotation, scale and saturation differ from the Ultralytics defaults of 0, 0.5 and 0.7) |
 | Epochs | 60, stopping early after 15 epochs without improvement in validation mAP50-95, the Ultralytics fitness that also selects the reported checkpoint; 30 for the fine-tuning and joint models of Section 9.4, selected the same way on their selection slice |
-| Validation split | each rendered frame assigned to validation with probability 0.15 (`--val`, default of `07-blender/scripts/gen_morro.py`), realised as 24 to 35 frames per corpus; split by frame and not by tile, and within a corpus the validation frames show the same settlement as the training frames, from other camera positions, with other figures and light |
+| Validation split | each rendered frame assigned to validation with probability 0.15, realised as 24 to 35 frames per corpus; split by frame and not by tile, and within a corpus the validation frames show the same settlement as the training frames, from other camera positions, with other figures and light |
 | Inference | conf 0.001, NMS IoU 0.7 (Ultralytics default, not tuned), reported at IoU 0.50 and 0.50 to 0.95, and at 0.60 and 0.75 for the check of Section 10.6; on VisDrone every model receives each image resized to 1280 px on its long side, as R is trained, so the 408 validation images of 1360 by 765 are slightly reduced and images of other sizes are enlarged or reduced accordingly |
-| Seeds | training seed 0 with deterministic operations (Ultralytics defaults); the 1,106 images of R drawn with seed 21 (step 9 of `07-blender/scripts/fila_noite.py`); the fine-tuning and selection slices of Section 9.4 drawn with seed 2609 (`07-blender/scripts/prepara_ft.py`); training seeds 1 and 2 for the five models repeated in Section 10.6 |
+| Seeds | training seed 0 with deterministic operations (Ultralytics defaults); the 1,106 images of R drawn with seed 21; the fine-tuning and selection slices of Section 9.4 drawn with seed 2609; training seeds 1 and 2 for the five models repeated in Section 10.6 |
 
 Splitting the validation set by frame rather than by tile is necessary because overlapping tiles of
 one frame are not independent; splitting by tile would place near-duplicates on both sides.
@@ -287,22 +273,21 @@ transfer score reported alone is equally uninterpretable, because nothing establ
 against which to read it. The protocol therefore trains the models below. The single-class models
 are evaluated on the same real test set, VisDrone-DET validation (548 images, 13,969 person
 instances: the benchmark's pedestrian and people categories merged into one class, with its other
-categories and its annotated ignored regions dropped by `03-arma3/scripts/visdrone_to_yolo.py`).
-Every model is scored by the Ultralytics validator rather than the official VisDrone toolkit, so a
-detection inside an ignored region, which that toolkit disregards, counts here as a false positive,
-for R as for the synthetic models, though not necessarily to the same degree. Every VisDrone figure
-was therefore also recomputed under the toolkit's rule, which removes from the evaluation any box,
-annotated or detected, with half or more of its area inside an ignored region (`dropObjectsInIgr.m`
-of the VisDrone2018-DET-toolkit), applied inside the same validator so that without ignored regions
-it reproduces the standard figure (`06-resultados/avalia_visdrone_oficial.py`); the figures rise
-slightly and no comparison changes order (Section 9.3). Because no public benchmark annotates a
-carried firearm, the three-class models are scored instead on the validation split of their own
-corpus, whose tiles also served for early stopping and for selecting the checkpoint, so that split
-is held out from training but not from model selection; Section 9.5 reports them separately: scored
-on the world in which they were trained, their figures are ceilings rather than evidence of
-transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds the same
-number of images, 180 for the single-class models and 200 for the three-class ones, so that no
-comparison below is a comparison of the number of frames, although instance counts still differ
+categories and its annotated ignored regions dropped). Every model is scored by the Ultralytics
+validator rather than the official VisDrone toolkit, so a detection inside an ignored region, which
+that toolkit disregards, counts here as a false positive, for R as for the synthetic models, though
+not necessarily to the same degree. Every VisDrone figure was therefore also recomputed under the
+toolkit's rule, which removes from the evaluation any box, annotated or detected, with half or more
+of its area inside an ignored region (`dropObjectsInIgr.m` of the VisDrone2018-DET-toolkit), applied
+inside the same validator so that without ignored regions it reproduces the standard figure; the
+figures rise slightly and no comparison changes order (Section 9.3). Because no public benchmark
+annotates a carried firearm, the three-class models are scored instead on the validation split of
+their own corpus, whose tiles also served for early stopping and for selecting the checkpoint, so
+that split is held out from training but not from model selection; Section 9.5 reports them
+separately: scored on the world in which they were trained, their figures are ceilings rather than
+evidence of transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds
+the same number of images, 180 for the single-class models and 200 for the three-class ones, so that
+no comparison below is a comparison of the number of frames, although instance counts still differ
 (Section 8.2).
 
 | Model | Training corpus | What it establishes |
@@ -321,8 +306,7 @@ comparison below is a comparison of the number of frames, although instance coun
 The reported efficacy of the synthetic method is mAP50(S) divided by mAP50(R): the fraction of the
 ceiling reached without a single real training image. R is matched to the 1,106 training tiles of
 the corpus of record; because tiling discards most empty tiles, the oblique models train on fewer
-tiles, 968 for S-oblique and 890 for S-oblique-six (`06-resultados/RESULTADOS.md`), so for them the
-match is by frame count rather than by training volume. The difference mAP50(S-oblique) minus
-mAP50(S-nadir-150) estimates, from one training run per model, the contribution of capture geometry,
-one effect of which Section 8.2 measures as a factor-of-two difference in target shape between this
-corpus and the benchmark.
+tiles, 968 for S-oblique and 890 for S-oblique-six, so for them the match is by frame count rather
+than by training volume. The difference mAP50(S-oblique) minus mAP50(S-nadir-150) estimates, from
+one training run per model, the contribution of capture geometry, one effect of which Section 8.2
+measures as a factor-of-two difference in target shape between this corpus and the benchmark.

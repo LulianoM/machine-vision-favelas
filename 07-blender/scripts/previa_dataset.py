@@ -33,6 +33,8 @@ ap.add_argument("--crops", type=int, default=24, help="quantos recortes ampliado
 ap.add_argument("--zoom", type=int, default=5)
 ap.add_argument("--seed", type=int, default=1)
 ap.add_argument("--out", default="previa.jpg")
+ap.add_argument("--en", action="store_true",
+                help="rotulos em ingles e sem nome de arquivo (figura do artigo, pedido do autor em 30/09)")
 args = ap.parse_args()
 
 rng = random.Random(args.seed)
@@ -87,7 +89,7 @@ for p in esc:
         d.rectangle([x1 - 4, y1 - 4, x2 + 4, y2 + 4], outline=CORES[c], width=3)
     esc_f = args.larg / W
     celulas.append((im.resize((args.larg, int(H * esc_f)), Image.LANCZOS),
-                    f"{os.path.basename(p)}  {len(rots)} caixas"))
+                    (f"{len(rots)} boxes" if args.en else f"{os.path.basename(p)}  {len(rots)} caixas")))
 
 cols = min(args.cols, len(celulas))
 linhas = (len(celulas) + cols - 1) // cols
@@ -110,15 +112,17 @@ for k, (im, cap) in enumerate(celulas):
 
 if recortes:
     y0 = alt_grade + 8
-    dd.text((6, y0), f"recortes ampliados {args.zoom}x: verde = armada, azul = desarmada "
-                     f"(largura x altura em pixel na imagem original)", fill=(210, 210, 215))
+    dd.text((6, y0), (f"crops enlarged {args.zoom} times: green, armed; blue, unarmed "
+                      f"(width by height in pixels of the original frame)") if args.en else
+                     (f"recortes ampliados {args.zoom}x: verde = armada, azul = desarmada "
+                      f"(largura x altura em pixel na imagem original)"), fill=(210, 210, 215))
     x = 6
     y0 += 20
     for cz, w, h, c in recortes:
         if x + cz.width > larg_total - 6:
             break
         folha.paste(cz, (x, y0))
-        dd.text((x, y0 + cz.height + 2), f"{w}x{h}", fill=CORES[c])
+        dd.text((x, y0 + cz.height + 2), f"{w} by {h}" if args.en else f"{w}x{h}", fill=CORES[c])
         x += cz.width + 10
 
 folha.save(args.out, quality=92)

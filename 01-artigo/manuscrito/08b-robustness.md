@@ -1,8 +1,5 @@
 ## 10. Robustness and Alternative Explanations
 
-> **Provenance note.** Quantities appear as `[X]` until measured, and each check is reported whether
-> or not its outcome is favourable.
-
 Each threat below is named, given a check, and given an explicit condition that would overturn the
 result it protects; where the check has not been run, the text says so. Stating that condition in
 advance is what distinguishes a check from a defence written after seeing the number. Each
@@ -24,7 +21,7 @@ isolated.
 regimes balanced and the tiling protocol fixed. A related comparison has been run at a fixed 180
 images, one settlement against six (Section 9.2): 0.0102 against 0.0190 on the real test set. It
 varies the variety of settlement at a fixed number of scenes, so it is not a point on this curve,
-which remains `[X]`.
+which was specified and has not been run.
 
 **What would overturn the claim.** If performance on the real test set does not rise from the
 smallest corpus to the largest by more than the between-seed dispersion of Section 10.6, scene count
@@ -44,30 +41,28 @@ to synthesis.
 **Check.** The real test set is additionally evaluated at an input size chosen so that the median
 long side of its person boxes, as they reach the network, matches that of the training corpus. The
 scale has to be set through the input size, because the validator resizes every image so that its
-long side equals the input size, enlarging as well as reducing (`ultralytics/data/base.py`), so
-rescaling the image files and evaluating them at the same input size changes nothing the network
-sees. The input size is chosen from the labels and image sizes alone, before any evaluation.
+long side equals the input size, enlarging as well as reducing, so rescaling the image files and
+evaluating them at the same input size changes nothing the network sees. The input size is chosen
+from the labels and image sizes alone, before any evaluation.
 
 An earlier version of this check was run on the pilot reported in Section 9 and gave 0.0055 against
-0.0061 (`06-resultados/sim2real_morro_v1.json`). It rescaled the benchmark's image files by 1/2.49
-and evaluated both versions at the same input size, 640 pixels, so, for the reason just given, both
-presented the network with the same scale, and the difference between them is one of resampling, not
-of scale. Earlier drafts reported it as a matched-scale result; that reading is withdrawn. On the
-corrected corpus the check was run as specified above. At the protocol's input size of 1,280 pixels
-the median long side of the benchmark's person boxes reaches the network at 25.33 pixels; at 1,024
-it reaches it at 20.27, the closest a multiple of 32 comes to the 20.55 of the corpus of record,
-while the median area falls from 283 to 181 square pixels, since no uniform rescaling matches shape
-(`06-resultados/escala_casada.json`, produced by `06-resultados/escala_casada.py`). At 1,024 pixels
-S-nadir-150 reaches 0.0128 against 0.0102 at the protocol's size, and R 0.5849 against 0.6311, which
-would put the efficacy of Section 9.2 at 2.2 rather than 1.6 per cent
-(`sim2real_s_nadir_4k_casada.json` and `sim2real_r_pareado_casada.json`). What still differs at a
-matched long side is shape, which Section 10.4 tests.
+0.0061. It rescaled the benchmark's image files by 1/2.49 and evaluated both versions at the same
+input size, 640 pixels, so, for the reason just given, both presented the network with the same
+scale, and the difference between them is one of resampling, not of scale. Earlier drafts reported
+it as a matched-scale result; that reading is withdrawn. On the corrected corpus the check was run
+as specified above. At the protocol's input size of 1,280 pixels the median long side of the
+benchmark's person boxes reaches the network at 25.33 pixels; at 1,024 it reaches it at 20.27, the
+closest a multiple of 32 comes to the 20.55 of the corpus of record, while the median area falls
+from 283 to 181 square pixels, since no uniform rescaling matches shape. At 1,024 pixels S-nadir-150
+reaches 0.0128 against 0.0102 at the protocol's size, and R 0.5849 against 0.6311, which would put
+the efficacy of Section 9.2 at 2.2 rather than 1.6 per cent. What still differs at a matched long
+side is shape, which Section 10.4 tests.
 
 **What would overturn the claim.** If the two figures diverge substantially on the corrected corpus,
 scale is a live confound after all and the efficacy ratio in Section 9.2 must be reported at matched
 scale only. "Substantially" was fixed before the matched run as a difference of more than half of
-the protocol figure (`07-blender/PLANO-RODADA4.md`). The difference is a quarter of it, 0.0026 on
-0.0102, so the condition is not met and the ratio of Section 9.2 stands at the protocol's scale.
+the protocol figure. The difference is a quarter of it, 0.0026 on 0.0102, so the condition is not
+met and the ratio of Section 9.2 stands at the protocol's scale.
 
 This subsection also records a correction. An earlier version of this analysis reported a 2.49-fold
 scale gap between corpus and benchmark and treated it as an inherent altitude domain shift. It was
@@ -87,26 +82,25 @@ as several of the gaps.
 on 120 new frames continuing the seed of the corpus of record, 20 per regime, none used in training,
 and scored with S-nadir-150 as mAP50 on the tiles of each regime, the protocol of the synthetic
 ceiling of Section 9.2, and, as a secondary measure fixed with it, as recall at confidence 0.25 on
-whole frames with 95 per cent intervals by resampling frames
-(`06-resultados/por_regime_s_nadir_4k.json`, produced by `06-resultados/por_regime.py`). mAP50 is
-0.675 under hard sun, 0.755 under heavy overcast, 0.759 under rain, 0.780 under haze, 0.790 under
-low sun and 0.791 under overcast; recall under hard sun is 0.657 (0.591 to 0.720), below every other
-regime, and under overcast 0.796 (0.760 to 0.827), against 0.789 (0.748 to 0.827) under rain.
-Ablation against a corpus generated under hard sun only, evaluated on the full six-regime split and
-on the real test set: `[X]`.
+whole frames with 95 per cent intervals by resampling frames. mAP50 is 0.675 under hard sun, 0.755
+under heavy overcast, 0.759 under rain, 0.780 under haze, 0.790 under low sun and 0.791 under
+overcast; recall under hard sun is 0.657 (0.591 to 0.720), below every other regime, and under
+overcast 0.796 (0.760 to 0.827), against 0.789 (0.748 to 0.827) under rain. An ablation against a
+corpus generated under hard sun only, evaluated on the full six-regime split and on the real test
+set, was specified and has not been run.
 
 **What would overturn the claim.** If per-regime performance is not higher under overcast than under
 both hard sun and rain, the only gap that Section 8.3 approaches resolving, or if hard sun is not
 among the two weakest regimes, the mechanism proposed in Section 8.3 is wrong and the operational
 implication in Section 11 is withdrawn. The image statistics would still stand, but they would be
 describing something other than detector difficulty. The ablation in the check above carries no
-overturning condition and is reported descriptively. An earlier wording of this condition referred
-to raw contrast, from a superseded measurement in which hard sun had the largest raw difference, and
-a later one asked that performance order with contrast against local clutter without saying over
-which regimes; both were corrected before the per-regime test was run. Both parts of the condition
-hold: overcast scores above hard sun and above rain, and hard sun is the weakest of the six regimes.
-The margin over rain is small and lies within the recall intervals, so the robust part of the result
-is that hard sun is the weakest.
+overturning condition and would be reported descriptively. An earlier wording of this condition
+referred to raw contrast, from a superseded measurement in which hard sun had the largest raw
+difference, and a later one asked that performance order with contrast against local clutter without
+saying over which regimes; both were corrected before the per-regime test was run. Both parts of the
+condition hold: overcast scores above hard sun and above rain, and hard sun is the weakest of the
+six regimes. The margin over rain is small and lies within the recall intervals, so the robust part
+of the result is that hard sun is the weakest.
 
 ### 10.4 Capture geometry against scene content
 
@@ -122,19 +116,18 @@ regimes, the same share of armed and unarmed figures and the same annotation pro
 same training recipe and the same number of images, both at 4K. What differs is the camera: pitch,
 drawn between 26 and 52 degrees and recorded per image, altitude (120 m for the oblique camera) and
 its jitter. One further setting differs because the camera does: the nadir corpus keeps figures
-within a square around the camera axis whose side is 0.52 of the nadir frame width (`--enquadro
-quadrado` in `07-blender/scripts/gen_morro.py`), the filter that produced it, while the oblique
-corpus places them anywhere the projected frame covers, since an oblique frame is not a square on
-the ground. At the centre of the frame and at the nominal 120 m, the oblique camera puts the ground
-sampling distance between about 4.3 and 6.3 cm per pixel across the pitch range, a span the altitude
-jitter widens, against 4.88 for the nadir corpus, so the change of camera moves the shape of the
-target (h/w 1.46 against 0.98) and leaves its size in the same range, somewhat larger in area (456
-against 301 square pixels). Pitch is set from the VisDrone training split rather than from the
-validation split on which both models are scored, so that the calibration does not consume the test
-set. Result: 0.0614 for the oblique model against 0.0102 for the nadir model on the real test set.
-The figure of 0.1055 for S-oblique-six (Section 9.3) is not a result of this check: that corpus also
-changes the settlements, the pitch range, the figures, which carry nothing, and the placement of the
-camera.
+within a square around the camera axis whose side is 0.52 of the nadir frame width, the filter that
+produced it, while the oblique corpus places them anywhere the projected frame covers, since an
+oblique frame is not a square on the ground. At the centre of the frame and at the nominal 120 m,
+the oblique camera puts the ground sampling distance between about 4.3 and 6.3 cm per pixel across
+the pitch range, a span the altitude jitter widens, against 4.88 for the nadir corpus, so the change
+of camera moves the shape of the target (h/w 1.46 against 0.98) and leaves its size in the same
+range, somewhat larger in area (456 against 301 square pixels). Pitch is set from the VisDrone
+training split rather than from the validation split on which both models are scored, so that the
+calibration does not consume the test set. Result: 0.0614 for the oblique model against 0.0102 for
+the nadir model on the real test set. The figure of 0.1055 for S-oblique-six (Section 9.3) is not a
+result of this check: that corpus also changes the settlements, the pitch range, the figures, which
+carry nothing, and the placement of the camera.
 
 **What would overturn the claim.** If the oblique arm does not outperform the nadir arm, capture
 geometry is not the dominant term, and Section 9.3 must conclude that the limitation lies in
@@ -164,7 +157,7 @@ synthesis.
 ### 10.6 Two checks specified in advance
 
 Two further threats had a check specified in advance; both were run in the last round of
-experiments, under criteria fixed before it (`07-blender/PLANO-RODADA4.md`).
+experiments, under criteria fixed before it.
 
 **Annotation convention.** Synthetic boxes are amodal and projected from vertices; benchmark boxes
 are human-drawn. A systematic difference in tightness would move overlap scores without any
@@ -172,29 +165,27 @@ difference in detection. The check is sensitivity of every reported figure to th
 intersection-over-union threshold at 0.50, 0.60 and 0.75; if the ordering of the models changes with
 the threshold, the comparison is an artefact of annotation and must be reported at several
 thresholds. Under both the Ultralytics validator and the official rule of Section 7.7, no pair of
-models compared in Section 9 changes order between 0.50, 0.60 and 0.75 on the benchmark
-(`06-resultados/visdrone_oficial_iou.json`). Among the three-class models of Section 9.5, scored on
-their own synthetic splits, the order does change: the rate at which a confusable object is called
-armed places the 35 m model above the original 75 m model at 0.50 and below it at 0.60 and 0.75, and
-level with its twin at 0.75 (0.132 each), so those rates are reported at the three thresholds
-(Section 9.5).
+models compared in Section 9 changes order between 0.50, 0.60 and 0.75 on the benchmark. Among the
+three-class models of Section 9.5, scored on their own synthetic splits, the order does change: the
+rate at which a confusable object is called armed places the 35 m model above the original 75 m
+model at 0.50 and below it at 0.60 and 0.75, and level with its twin at 0.75 (0.132 each), so those
+rates are reported at the three thresholds (Section 9.5).
 
 **Seed dependence.** A single settlement seed, and a single training run per model, may be
 favourable by chance. The check is repetition of the protocol across independent seeds with the
 between-seed dispersion reported alongside the mean; if that dispersion is of the same order as the
 differences reported in Section 9, those differences are not resolvable at this corpus size. Every
-image carries its seed in a manifest entry and the generator reproduces the settlement exactly from
-it (Section 11.6 names the three corpora whose figures it did not reproduce), so the check is a
-matter of compute rather than of design. It was run on the five models behind the comparisons that
-carry the argument, retrained with training seeds 1 and 2 on a fixed corpus, and a difference was
-fixed in advance as resolvable when the ranges of the two models over their three runs do not
-overlap. S-oblique-six reaches 0.1055, 0.0958 and 0.0887 on the benchmark, an efficacy of 15.3 per
-cent on average, between 14.1 and 16.7 (Section 9.3). The advantage of the generic start in
-fine-tuning at 5 per cent is resolvable (Section 9.4). The difference between the 35 m model and its
-twin at 75 m is resolvable on the 80 new frames of Section 9.5 but not on the smaller validation
-splits (`06-resultados/rodada4_criterios.json`). The settlement seed was not varied: each repetition
-retrains on the same corpus, so the dispersion measured is that of training, not of the realisation
-of the scene.
+image records its seed and the generator reproduces the settlement exactly from it (Section 11.6
+names the three corpora whose figures it did not reproduce), so the check is a matter of compute
+rather than of design. It was run on the five models behind the comparisons that carry the argument,
+retrained with training seeds 1 and 2 on a fixed corpus, and a difference was fixed in advance as
+resolvable when the ranges of the two models over their three runs do not overlap. S-oblique-six
+reaches 0.1055, 0.0958 and 0.0887 on the benchmark, an efficacy of 15.3 per cent on average, between
+14.1 and 16.7 (Section 9.3). The advantage of the generic start in fine-tuning at 5 per cent is
+resolvable (Section 9.4). The difference between the 35 m model and its twin at 75 m is resolvable
+on the 80 new frames of Section 9.5 but not on the smaller validation splits. The settlement seed
+was not varied: each repetition retrains on the same corpus, so the dispersion measured is that of
+training, not of the realisation of the scene.
 
 ### 10.7 What this design cannot rule out
 
