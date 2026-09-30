@@ -89,6 +89,18 @@ overcast 0.796 (0.760 to 0.827), against 0.789 (0.748 to 0.827) under rain. An a
 corpus generated under hard sun only, evaluated on the full six-regime split and on the real test
 set, was specified and has not been run.
 
+No public aerial benchmark isolates this contrast on real imagery. VisDrone covers various weather
+and lighting conditions, but for detection it records occlusion and truncation for each box and no
+illumination label (Zhu et al., 2022). DroneCrowd labels its sequences as cloudy, sunny or night
+and, for its proposed method and its three strongest baselines, reports larger counting errors on
+sunny than on cloudy sequences, but across different scenes and crowd sizes, and for counting rather
+than detection (Wen et al., 2021). Okutama-Action was captured at a single site under sunny and
+cloudy conditions without results reported by condition (Barekatain et al., 2017), which makes it
+the nearest candidate for a real test that holds the scene constant. In agricultural detection from
+drones, a recent review reports that sunny, overcast and variable conditions did not significantly
+affect model performance (Maes, 2025). The per-regime result therefore has no counterpart on real
+imagery yet, and it may be specific to small targets over cluttered backgrounds.
+
 <!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame of the pilot corpus (nadir, 150 m, 1920 by 1080) from each of the six illumination regimes, with the generated boxes drawn. Green marks the armed class and blue the unarmed class. No accuracy figure for that distinction is reported at this altitude, for the reason given in Section 11.5; the 75 m and 35 m results are reported in Section 9.5. Boxes are computed from the scene geometry, not from the rendered pixels (Section 7.4), so the labelling does not depend on the regime, and the per-regime differences found by the test of this section, run on new frames of the corpus of record, cannot come from it.-->
 
 **What would overturn the claim.** If per-regime performance is not higher under overcast than under

@@ -12,6 +12,11 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 
 ## B. Referências
 
+> **Busca bibliográfica de 2026-09-30 [DESKTOP], aplicada com o OK do autor.** B1, B3, B6, B7, B9 e
+> B10 resolvidos; B8 em parte. Relatório, fontes e textos propostos em
+> `04-bibliografia/busca-2026-09-30-pontos-abertos.md`. Cada DOI novo foi conferido de novo no
+> Crossref antes de entrar (o do Zenodo, no DataCite).
+
 > **Rodada de 2026-09-20 [DESKTOP].** B1 fechado PELA METADE, e a metade que ficou aberta é
 > deliberada. A busca no Crossref por sobrenome e ano devolveu correspondência para as 13, mas
 > comparando o TÍTULO devolvido com a frase que cita a obra, só 8 correspondem de fato. Um
@@ -22,16 +27,16 @@ Tudo abaixo foi verificado no texto em 2026-09-17, com busca automática nos arq
 > e Elliott 2025) dependem de quem escreveu a frase dizer qual obra é. Ferramenta em
 > `01-artigo/ferramentas/busca_crossref.py`.
 
-- [ ] B1. Treze obras citadas no texto sem entrada na lista: Chen, Liu, Hu, Zhang e Pan (2025); Rasoulie e Pashazadeh (2026); Xu (2025); Agrawal, Ratnoo e Ghose (2017); Jiang et al. (2026); Wang e Qian (2026); Yan, Hsieh e Lai (2025); Gevaert, Persello, Sliuzas e Vosselman (2016); Du, Xing, Wang, Wei e Zhang (2024); Barisic, Petric e Bogdan (2022); Horváth et al. (2023); Watson e Elliott (2025); da Silva, Kormann da Silva e Westerholt (2024). Localizar cada uma e conferir o DOI no Crossref antes de incluir. Nunca inventar DOI.
+- [x] B1. (30/09: as 13 com entrada conferida no Crossref; cinco metadados corrigidos e quatro frases ajustadas ao que as obras dizem.) Treze obras citadas no texto sem entrada na lista: Chen, Liu, Hu, Zhang e Pan (2025); Rasoulie e Pashazadeh (2026); Xu (2025); Agrawal, Ratnoo e Ghose (2017); Jiang et al. (2026); Wang e Qian (2026); Yan, Hsieh e Lai (2025); Gevaert, Persello, Sliuzas e Vosselman (2016); Du, Xing, Wang, Wei e Zhang (2024); Barisic, Petric e Bogdan (2022); Horváth et al. (2023); Watson e Elliott (2025); da Silva, Kormann da Silva e Westerholt (2024). Localizar cada uma e conferir o DOI no Crossref antes de incluir. Nunca inventar DOI.
 - [x] B2. Entrada "[Slovo Park study] (2025)" está sem autores. No texto a obra é citada como Sithole e Mhangara (2025). Completar.
-- [ ] B3. Wikipedia citada três vezes como fonte ("Wikipedia, 2026" duas vezes e "Wikipedia, 2025a", em `04-situating-the-study.md`) e sem entrada na lista. Substituir por fonte primária.
+- [x] B3. (30/09: trocada por CNN Brasil, Justiça Global, Lessing 2008, Misse 2011 e InSight Crime.) Wikipedia citada três vezes como fonte ("Wikipedia, 2026" duas vezes e "Wikipedia, 2025a", em `04-situating-the-study.md`) e sem entrada na lista. Substituir por fonte primária.
 - [ ] B4. Amnesty International é mencionada no texto sem referência. A entrada da Inter-American Commission on Human Rights (2021) está na lista e não é citada no texto.
 - [ ] B5. Há duas entradas de Human Rights Watch de 2021 e o texto cita só "Human Rights Watch, 2021". Diferenciar como 2021a e 2021b.
-- [ ] B6. A entrada "CNN Brasil (2026a)" aponta para uma URL do site Defesa em Foco, a mesma da entrada "Defesa em Foco (2026)". Conferir qual é a fonte real.
-- [ ] B7. "Ad Infinitum (2023)" provavelmente não é autor. O slug da URL (`brazil-tries-reclaim-rio-favelas-ad-infinitum`) indica que "Ad Infinitum" é o fim da manchete do InSight Crime. Abrir a página, identificar o autor e corrigir a entrada e as quatro citações no texto.
-- [ ] B8. A lista mistura dois formatos: seis entradas em lista com marcadores, sem padrão APA completo, seguidas de entradas APA em ordem alfabética, e as entradas acrescentadas em 20/09 ficam num bloco à parte, depois de Vanguard Attaché, fora da ordem alfabética. Unificar.
-- [ ] B9. O título da nota do Small Wars Journal de 2025 fala em 132 mortos e o texto usa 121 a 122 (número oficial). Deixar explícito no texto de onde vem cada número.
-- [ ] B10. Fontes jornalísticas frágeis para dado estatístico: a taxa de homicídios do ISP-RJ é citada via Vanguard Attaché (site de turismo) e a série histórica via Crime Brasil. Citar o ISP-RJ e o Anuário do Fórum diretamente.
+- [x] B6. (30/09: é matéria da Defesa em Foco, de Marcelo Barros; os números vão ao 20º Anuário, tabelas 6 e 8, e sai "the sharpest increase recorded nationally", que é falso em termos relativos.) A entrada "CNN Brasil (2026a)" aponta para uma URL do site Defesa em Foco, a mesma da entrada "Defesa em Foco (2026)". Conferir qual é a fonte real.
+- [x] B7. (30/09: autor Scott Mistler-Ferguson, 27/01/2022; as frases sobre ambiente construído passaram a Grillo 2014 e às notas do Small Wars Journal, e a falta de mapas das rotas virou premissa do estudo.) "Ad Infinitum (2023)" provavelmente não é autor. O slug da URL (`brazil-tries-reclaim-rio-favelas-ad-infinitum`) indica que "Ad Infinitum" é o fim da manchete do InSight Crime. Abrir a página, identificar o autor e corrigir a entrada e as quatro citações no texto.
+- [ ] B8. (30/09, em parte: os dois blocos APA viraram uma ordem alfabética só; falta o bloco de marcadores herdado da v2.) A lista mistura dois formatos: seis entradas em lista com marcadores, sem padrão APA completo, seguidas de entradas APA em ordem alfabética, e as entradas acrescentadas em 20/09 ficam num bloco à parte, depois de Vanguard Attaché, fora da ordem alfabética. Unificar.
+- [x] B9. (30/09: o texto dá 121 oficial, 122 com o quinto policial e 132 da Defensoria, cada um com a fonte.) O título da nota do Small Wars Journal de 2025 fala em 132 mortos e o texto usa 121 a 122 (número oficial). Deixar explícito no texto de onde vem cada número.
+- [x] B10. (30/09: ISP-RJ e 19º e 20º Anuários citados direto; o pico da série estadual é 1994, não o início dos anos 2000.) Fontes jornalísticas frágeis para dado estatístico: a taxa de homicídios do ISP-RJ é citada via Vanguard Attaché (site de turismo) e a série histórica via Crime Brasil. Citar o ISP-RJ e o Anuário do Fórum diretamente.
 
 ## C. Texto
 

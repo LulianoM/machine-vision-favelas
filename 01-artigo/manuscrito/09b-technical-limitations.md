@@ -55,8 +55,47 @@ overcast, and proposes as the mechanism that the background under a hard sun is 
 cast shadow from rooftop objects. A detector evaluated per regime finds hard sun the hardest regime,
 as that mechanism predicts, but scores low sun, which also casts sharp shadows, level with overcast,
 which the mechanism does not predict (Section 10.3). The practical implication is therefore narrower
-than the mechanism: it concerns flying under a high sun, and it runs against the conventional
-preference for flying in clear weather only to that extent.
+than the mechanism: for detecting people over a roofscape of this kind, a covered sky is preferable
+to a high sun, provided that the cloud base leaves the flight in visual meteorological conditions.
+
+Which practice this runs against should be stated, because three are easily conflated. It runs
+against the specifications of aerial survey photography, which ask for imagery free of cloud and
+cloud shadow and set a minimum elevation for the sun. One of them admits a high, thin overcast only
+if it reduces neither the light nor the shadows of ground objects, and requires the sun never to be
+lower than 30 degrees and ideally between 40 and 60 degrees, because of the intermediate-size
+shadows produced (National Geodetic Survey, 2002); another asks for at least 15 degrees and warns
+that lower sun angles may produce deep shadows in urban areas (RICS, 2021). Both control shadow
+through the elevation of the sun, not by avoiding direct sunlight. Hard sun, drawn here between 46
+and 74 degrees (Section 7.5), falls within what they ask for, and over this roofscape the shadow
+they tolerate, and in one case seek, is the clutter measured in Section 8.3. Low sun, drawn between
+9 and 25 degrees, lies below the minimum of the first specification and partly below that of the
+second, so the survey convention selects the weakest of the six regimes and excludes one of the
+strongest.
+
+Guidance for mapping with drones is divided, and the division follows the product. For
+three-dimensional reconstruction, a recent review of mapping practice finds overcast conditions
+preferable because dark shadows are absent, while noting that sunny conditions still give good
+results in most studies (Maes, 2025); a photogrammetry software vendor recommends an overcast day
+for its diffuse light and advises against direct sunlight because of the harsh shadows it creates
+(Pix4D, 2022; Pix4D, n.d.); and a drone survey of an urban area judged overcast preferable for its
+elevation models, although only one of its flights was overcast and the effect was much weaker than
+that of altitude (Leitão et al., 2016). For orthomosaics, by contrast, the same review recommends
+uninterrupted sun, which permits fast shutter speeds and so avoids motion blur (Maes, 2025), and at
+least one vendor of drone mapping sensors recommends a solar elevation above 30 degrees (GeoCue,
+2025). The empirical record on reconstruction is itself mixed (Dandois et al., 2015; Slade et al.,
+2025). The measurement therefore extends to the detection of people a preference that part of this
+guidance already states for reconstruction, rather than overturning a settled practice; and it
+carries the cost that the other part names, since under a covered sky less light reaches the sensor
+and a slower shutter or a higher gain is needed, a trade-off that the per-regime test was not
+designed to measure.
+
+Nor is the question one of flight rules. These set minima for visibility and for distance from cloud
+(14 C.F.R. § 107.51), define operation within visual line of sight as operation in visual
+meteorological conditions (Agência Nacional de Aviação Civil [ANAC], 2026), ask that the weather be
+verified as compatible with the manufacturer's manual (European Union Aviation Safety Agency [EASA],
+2019), or prohibit operation under precipitation, wind or fog (Departamento de Controle do Espaço
+Aéreo [DECEA], 2026). None of them asks for sunshine, and an overcast sky whose base lies well above
+the flight is compatible with all of them.
 
 The implication was stated conditionally because the evidence was conditional. Eight images per
 regime, with between-image dispersion of 0.12 to 0.38, brought only the gap between the extremes
@@ -68,6 +107,12 @@ new frames hard sun is the weakest regime, and overcast scores above both hard s
 on mAP50 with low sun, which has the higher recall (Section 10.3). The implication therefore stands,
 on synthetic imagery and for one detector, in the narrower form given above; its robust part is that
 hard sun is the weakest.
+
+Two qualifications follow. The favourable regime is overcast, not rain, and in Brazil operation
+under precipitation is excluded in any case (DECEA, 2026). And operations that answer to events
+rather than to a schedule, such as search and rescue, which can occur anywhere and at any time
+(Broyles et al., 2022), cannot choose their light; for them the finding bears on the robustness a
+detector needs, not on when to fly.
 
 ### 11.4 Two tasks share a pipeline and must not be conflated
 

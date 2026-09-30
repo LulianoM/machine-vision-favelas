@@ -81,9 +81,10 @@ AUTORIA = {
         "O mestrando acrescentou o bloco sobre detecção aérea de pessoa e limite de resolução "
         "(Kiefer, Liao, VisDrone) e o parágrafo de fecho, e trocou por uma remissão à introdução "
         "a lista que a repetia (item A4 de PENDENCIAS.md); isso precisa do aval do orientador. "
-        "Duas obras citadas neste texto, Horváth et al. (2023) e Watson e Elliott (2025), ainda "
-        "não têm entrada na lista de referências (item B1); as outras cinco do B1 são citadas na "
-        "introdução. Dependem de quem escreveu a frase dizer qual obra é."),
+        "Em 30/09, com a busca bibliográfica, todas as obras citadas ganharam entrada conferida "
+        "no Crossref; as frases sobre Barisic, Horváth, Gevaert e Watson e Elliott foram "
+        "ajustadas ao que as obras dizem, e o parágrafo do sintético ganhou a ressalva de que o "
+        "ganho do pré-treino sintético é condicional, com as citações."),
     "04-situating-the-study.md": (
         "Coautor delegado de polícia",
         "esboço de trabalho, não é a versão final",
@@ -92,9 +93,12 @@ AUTORIA = {
         "da dinâmica territorial e das restrições operacionais reais. As seções técnicas dependem "
         "desta seção em um ponto e apenas nele: o veto ético à coleta de imagem real, que é a "
         "premissa de 7.1. Os resultados numéricos não derivam dela. O parágrafo final, que liga a "
-        "seção à pergunta do artigo e às seções 8 a 11, e a frase que declara como séries "
-        "diferentes os números de 2024 do Fórum e do JOTA foram acrescentados pelo mestrando "
-        "(22 a 26/09) e precisam do aval do coautor."),
+        "seção à pergunta do artigo e às seções 8 a 11, e a frase sobre a diferença entre os "
+        "números de 2024 do Fórum e do JOTA foram acrescentados pelo mestrando (22 a 26/09). Em "
+        "30/09 a busca bibliográfica trocou a Wikipédia, a Vanguard Attaché e o Crime Brasil por "
+        "fontes primárias, corrigiu autoria e datas e reescreveu as frases que as fontes não "
+        "sustentavam; a falta de mapas das rotas passou a premissa do estudo. Tudo precisa do "
+        "aval do coautor."),
     "05-case-jacarezinho.md": (
         "Coautor delegado de polícia",
         "esboço de trabalho, não é a versão final",
@@ -161,11 +165,11 @@ AUTORIA = {
     "08-references.md": (
         "os três autores",
         "parcial",
-        "Oito entradas conferidas no Crossref em 20/09. Sete citações acadêmicas do texto "
-        "continuam sem entrada, de propósito: sobrenome e ano coincidindo não é evidência, e "
-        "inserir DOI de obra errada é pior do que deixar a referência faltando. As citações da "
-        "Wikipedia na seção 3 também não têm entrada e devem ser trocadas por fonte primária "
-        "(item B3 de PENDENCIAS.md)."),
+        "Refeita em 30/09 com a busca bibliográfica: as sete citações que faltavam entraram, "
+        "cinco metadados foram corrigidos, as fontes jornalísticas frágeis deram lugar a fontes "
+        "primárias e todos os DOIs foram conferidos no Crossref. Os dois blocos APA viraram uma "
+        "ordem alfabética só. Ficam o bloco de marcadores herdado da v2 (item B8 de "
+        "PENDENCIAS.md) e um travessão no título da entrada da Movisafe."),
 }
 
 

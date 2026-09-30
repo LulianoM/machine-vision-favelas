@@ -121,9 +121,9 @@ value of the benchmark's training split, 1.95, only between 50 and 52 degrees, w
 pitch drawn uniformly between 26 and 52 degrees, realised a median of 1.46 rather than the 1.95 it
 was calibrated for, because most of its images sit below the angle at which the benchmark's shape is
 reached. And the annotated box of an armed figure includes the weapon, which widens it: 1.38 against
-1.58 for figures carrying nothing in the same images. The benchmark contains no carried firearms, so
-for transfer to it the weapon is a source of shape mismatch rather than of signal. The combined
-model of Section 9.3 is built from these two measurements, and its corpus realises a median of 1.85.
+1.58 for figures carrying nothing in the same images. The benchmark has no firearm category, so for
+transfer to it the weapon is a source of shape mismatch rather than of signal. The combined model of
+Section 9.3 is built from these two measurements, and its corpus realises a median of 1.85.
 
 A ratio near 1.0 is the plan of a figure recorded from above, about as wide as it is long. A ratio
 near 2.0 is a standing figure recorded obliquely. At comparable pixel area, these are different
@@ -169,7 +169,14 @@ measure, and hard sun achieves that while sitting second on raw contrast. The pr
 follows from the scene description in Section 7.2: under a hard sun the background is itself filled
 with sharp cast shadow from water tanks, parapets, clotheslines and cabling, the local deviation of
 the background rises, and the figure stops standing out from the disorder. Under a covered sky the
-background is smoother, so a comparable difference is easier to find.
+background is smoother, so a comparable difference is easier to find. The mechanism agrees with what
+remote sensing reports for dense urban scenes, where shadow cast by buildings obscures much of the
+information in the image and can corrupt classification (Dare, 2005), and with a drone benchmark
+whose vehicle detectors performed worse in daylight than at night, which its authors attribute to
+more objects and a more cluttered background, having noted that daylight brings interference from
+shadows; its trackers, by contrast, performed better in daylight (Du et al., 2018). It has a
+counterpart that this statistic does not capture: under a direct sun a person also casts a shadow of
+their own, which detectors for aerial imagery have used as a cue (Reilly et al., 2010).
 
 What the sample supports and what it does not should be separated. With eight images per regime and
 between-image dispersion of 0.12 to 0.38, only the gap between the extremes (rain and hard sun at
@@ -184,11 +191,13 @@ be withdrawn; the test was run and the condition is not met, and Section 11.3 dr
 Taken together the measurements reframe the design problem stated in Section 6. The binding
 constraint is not only that a synthetic favela fails to look like a favela. At the scale at which
 this task operates, the target is a few tens of pixels of low-contrast texture; its silhouette in
-these corpora tracks camera pitch rather than scene content; and hard sun, the illumination
-conventionally preferred for flying, is the regime with the second largest raw contrast and the
-second lowest point estimate once local clutter is accounted for. Section 8.3 attributes this, as a
-proposed mechanism, to cast shadow in the background; whether that makes detection harder is the
-test of Section 10.3, which finds hard sun the weakest of the six regimes for a detector as well.
+these corpora tracks camera pitch rather than scene content; and hard sun, which matches the
+cloud-free sky and minimum solar elevation that aerial survey specifications have conventionally
+required (National Geodetic Survey, 2002; Royal Institution of Chartered Surveyors [RICS], 2021), is
+the regime with the second largest raw contrast and the second lowest point estimate once local
+clutter is accounted for. Section 8.3 attributes this, as a proposed mechanism, to cast shadow in
+the background; whether that makes detection harder is the test of Section 10.3, which finds hard
+sun the weakest of the six regimes for a detector as well.
 
 Whether these constraints can be overcome by synthesis alone, and what fraction of the
 matched-volume ceiling is reached, is the subject of Section 9.

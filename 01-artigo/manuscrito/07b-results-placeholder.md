@@ -255,6 +255,28 @@ but it still costs: on this benchmark neither way of adding it to real data help
 generic initialisation and showing the real images from the first epoch reduces the cost without
 removing it suggests that the explanation offered above is at most part of the account.
 
+This result departs from the closest precedent only in part. Kiefer, Ott and Zell (2022) pretrained
+a COCO-initialised YOLO on up to 40,000 game-engine images generated to match VisDrone's traffic
+scenes and found the gain on VisDrone largest with the smallest real set. Their figure 2 also shows,
+however, that pretraining on only 10,000 synthetic images scored below no synthetic pretraining at
+every real-data size on their maritime benchmark, and gave no consistent gain on VisDrone beyond the
+smallest real set. Our corpus holds 890 tiles of six generated settlements. Negative transfer (Wang
+et al., 2019) recurs in aerial person detection. On the full VisDrone training split, pretraining on
+either of two public synthetic corpora scored below training from scratch at most detector sizes. A
+corpus designed for diverse human motion scored above it and, combined with COCO in pretraining,
+above COCO alone on the one detector size tested (Yim et al., 2026). Mixing synthetic with real
+images fell below the real-only baseline in low-shot VisDrone training (Shen et al., 2023b). It
+harmed the larger COCO-pretrained detectors most when real images were fewest, and much less once
+the two shares were balanced (Shen et al., 2023a). With unbalanced batches, it biased a drone
+detector of people at sea towards the more numerous synthetic images (Martinez-Esteso et al., 2025).
+These findings are consistent with our joint-training cost, which narrows as the real share grows.
+The candidate mechanism has only indirect support, from training on renders alone: retraining a
+feature extractor pretrained on real images degraded detection, whereas freezing it came close to
+training on real images (Hinterstoisser et al., 2019), although freezing hurt with highly randomised
+scenes (Tremblay et al., 2018). At these volumes the starting weights weigh most (He et al., 2019),
+and this design cannot tell which property of the corpus decides the sign: its size, its variety or
+its image domain, the factor that most determines positive transfer (Mensink et al., 2022).
+
 ### 9.5 The armed and unarmed distinction, by altitude
 
 No accuracy for the armed and unarmed distinction is reported at 150 m. At that altitude the median

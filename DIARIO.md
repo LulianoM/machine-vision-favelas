@@ -2,6 +2,24 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Busca bibliográfica aplicada ao manuscrito
+
+- OK do autor às cinco frentes do relatório de 30/09.
+- Texto: 33 trocas em 10 arquivos.
+  - Arma portada: "we found no public aerial benchmark that annotates a carried firearm at these altitudes" no abstract, na abertura da 7, na 7.7 e na conclusão. A 7.7 ganhou o parágrafo sobre os benchmarks de vigilância e o material aéreo a 2 a 8 m. A 7.4 cita os precedentes do objeto confundível (Sohas; Dual-UAV, do CEFET-RJ) e a 7.6 o do ladrilhamento (ACF). A 8.2 diz que o VisDrone não tem categoria de arma.
+  - Céu limpo: a 8.4 e o fecho atribuem a convenção ao aerolevantamento. A 11.3 separa as três práticas (especificação de aerolevantamento, mapeamento com drone, regras de voo) e ganhou duas ressalvas (chuva vedada no Brasil; busca e salvamento não escolhe a luz). A 8.3 ganhou Dare, Du et al. e Reilly et al. e a 10.3 o parágrafo de que nenhum benchmark real isola o contraste. A 7.5 passa a declarar as faixas de elevação do sol (46 a 74 graus no hard sun, 9 a 25 no low sun; origem em RESULTADOS).
+  - Sintético que atrapalha: parágrafo novo no fim da 9.4 (Kiefer et al., fig. 2; SynPlay; Archangel; PTL; Martinez-Esteso et al.). A seção 2 ganhou a ressalva de que o ganho é condicional, com as citações, e a citação do VisDrone (Zhu et al., 2022), que faltava.
+  - B1: Barisic, Horváth, Gevaert e Watson e Elliott ajustados ao que as obras dizem, sem as oito a nove palavras copiadas dos resumos.
+  - Seções 3 e 4: saem Wikipédia, Vanguard Attaché, Crime Brasil e "Ad Infinitum". Entram ISP-RJ, os 19º e 20º Anuários, Justiça Global, CNN Brasil com autoria, Lessing, Misse, InSight Crime, Grillo e as notas do Small Wars Journal com autores. Pico da série em 1994; 121, 122 e 132 mortos, cada um com a fonte. Sai "the sharpest increase recorded nationally". A diferença 699 contra 703 deixa de ser atribuída a séries diferentes.
+- Referências: 65 novas; os 45 DOIs foram reconferidos no Crossref nesta sessão, e o do Zenodo no DataCite. Dez entradas saíram ou foram substituídas e cinco foram corrigidas. Os dois blocos APA viraram uma ordem alfabética só. Checagem cruzada: toda entrada é citada e toda citação tem entrada.
+- Escolhas feitas no lugar do autor, para revisão:
+  - 51 e 100 mandados ficaram ambos, cada um com a origem.
+  - A construção que bloqueia a visada e a falta de mapas atualizados das rotas ficaram como premissa declarada do estudo, porque nenhuma fonte lida as sustenta.
+  - O sobrenome "Américo da Silva" do registro do editor não foi adotado; só o volume e a inicial foram corrigidos.
+  - O traço da manchete do InSight Crime virou dois-pontos na entrada.
+- PENDENCIAS: B1, B3, B6, B7, B9 e B10 fechados; B8 em parte. Quadros de autoria do PDF atualizados.
+- PDF Elsevier refeito na Área de Trabalho: 28 páginas, 31.171 palavras, 8 figuras, 0 `[X]`. Continua sem ir por e-mail, porque publicar num artifact espera autorização explícita.
+
 ## 2026-09-30 [DESKTOP] Busca bibliográfica dos pontos abertos: relatório para o OK do autor
 
 - Pedido do autor: busca bibliográfica com multiagentes, sem rodar o teste de 1%. Oito agentes em cinco frentes, com verificação cética das fontes. Relatório em `04-bibliografia/busca-2026-09-30-pontos-abertos.md` (resultado bruto no `.json` ao lado). Nada no manuscrito foi alterado.

@@ -6,17 +6,17 @@ procedure that implements the second of those, and reports what happens when it 
 
 A distinction has to be drawn at the outset, because the two are easy to conflate. What is
 implemented and evaluated below detects people: as a single class wherever transfer to the public
-benchmark is measured, and in three classes, armed, unarmed, and unarmed carrying a confusable
-elongated object, which no public benchmark annotates, at 75 m and 35 m, with one further model at
-150 m that did not pass its validity condition (Section 9.5). Person detection is the task this
-article measures, and it was chosen because it is the only one of the two with a public benchmark
-against which transfer can be established. The conceptual model proposed in Section 6 classifies
-built form instead: building height, rooftop addition, material transition. The same generator
-already records the footprint, the storey count and the roof height of every structure it builds, so
-the morphological task is a second experiment over the same infrastructure rather than a different
-pipeline; what it lacks is an evaluation set, and Section 11.4 records that absence as a finding
-rather than as an omission. Nothing below should be read as a validated capability over Jacarezinho,
-and Section 11 restates the boundary.
+benchmark is measured, and in three classes at 75 m and 35 m, armed, unarmed, and unarmed carrying a
+confusable elongated object, a distinction for which we found no public aerial benchmark at these
+altitudes; one further model at 150 m did not pass its validity condition (Section 9.5). Person
+detection is the task this article measures, and it was chosen because it is the only one of the two
+with a public benchmark against which transfer can be established. The conceptual model proposed in
+Section 6 classifies built form instead: building height, rooftop addition, material transition. The
+same generator already records the footprint, the storey count and the roof height of every
+structure it builds, so the morphological task is a second experiment over the same infrastructure
+rather than a different pipeline; what it lacks is an evaluation set, and Section 11.4 records that
+absence as a finding rather than as an omission. Nothing below should be read as a validated
+capability over Jacarezinho, and Section 11 restates the boundary.
 
 ### 7.1 Why synthesis, and what it does not solve
 
@@ -175,7 +175,11 @@ below 0.002 of the frame.
 armed, unarmed, and unarmed carrying an elongated object. The third exists because of an objection
 that would otherwise be fatal to any figure reported for the first. If the weapon is always the same
 asset, in the same pose, at the same contrast, a detector can separate the classes on properties of
-the asset library rather than on anything visible in the world.
+the asset library rather than on anything visible in the world. Setting weapons against objects
+handled in the same way has precedents: in surveillance imagery, a pistol and a knife are set
+against a smartphone, a banknote, a purse and a card (Pérez-Hernández et al., 2020), and from drones
+hovering at 2 and 5 m, a rifle replica is set against a visually similar umbrella (Torkst et al.,
+2026).
 
 The corpus is built to remove that possibility. Five firearm models are generated procedurally, two
 rifles, a carbine, a shotgun and a pistol, with recorded lengths of 0.20 to 1.05 m; the meshes of
@@ -212,14 +216,14 @@ architectures (17.5 against 22 to 23).
 
 Rather than jittering a single sun parameter, the generator defines six internally coherent lighting
 budgets, each governing solar irradiance and colour, the angular diameter of the solar disc, a band
-of solar elevation, sky fill and colour, atmospheric scattering density, aerosol content and a
-camera exposure offset together: hard sun, low sun, overcast, haze, heavy overcast, and rain (the
-mean frame luminances below include each regime's exposure offset). The angular diameter of the sun
-is what separates these physically. At 0.6 degrees the shadow edge is hard; above roughly 20 degrees
-the cast shadow effectively disappears, which is what a covered sky does. Mean frame luminance over
-the 48 images of the pilot corpus, the 1080p predecessor of the corpus of record (Section 8.3), runs
-87.0 (hard sun), 56.0 (low sun), 84.6 (overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain)
-of 255.
+of solar elevation (46 to 74 degrees under hard sun, 9 to 25 under low sun), sky fill and colour,
+atmospheric scattering density, aerosol content and a camera exposure offset together: hard sun, low
+sun, overcast, haze, heavy overcast, and rain (the mean frame luminances below include each regime's
+exposure offset). The angular diameter of the sun is what separates these physically. At 0.6 degrees
+the shadow edge is hard; above roughly 20 degrees the cast shadow effectively disappears, which is
+what a covered sky does. Mean frame luminance over the 48 images of the pilot corpus, the 1080p
+predecessor of the corpus of record (Section 8.3), runs 87.0 (hard sun), 56.0 (low sun), 84.6
+(overcast), 94.4 (haze), 55.6 (heavy overcast) and 35.1 (rain) of 255.
 
 <!--FIG:06-resultados/figuras/fig2_climas.jpg|The six illumination regimes over an identical scene and identical framing. Top row: hard sun, low sun, overcast. Bottom row: haze, heavy overcast, rain. Over the 48 images of the pilot corpus, not the six panels shown, mean frame luminance runs from 94.4 (haze) to 35.1 (rain) on a scale of 0 to 255. Each regime is a coherent budget over solar irradiance, angular diameter of the solar disc, solar elevation, sky fill, scattering density, aerosol content and camera exposure, not a single brightness adjustment.-->
 
@@ -234,7 +238,8 @@ reason is arithmetic before it is empirical. Downscaling a 4K frame to a 1536 pi
 divides every linear dimension by 2.5, so the median instance of the corpus of record, 17.6 by 17.5
 pixels (Section 8.2), falls to about 7 by 7. The smallest stride of the detector is 8, so such an
 instance occupies less than one cell of the finest feature map and is close to invisible to the
-network by construction.
+network by construction. Tiling has been adopted for the same reason in surveillance footage of
+armed pedestrians, where downsampling erases small weapons (Hnoohom et al., 2022).
 
 An earlier arm of this project recorded mAP50 moving from 0.116 to 0.561 between a run trained on
 downscaled frames and a run trained on tiles at native scale. That pair is reported here as
@@ -289,16 +294,23 @@ from the evaluation any box, annotated or detected, with half or more of its are
 region (the rule of the official VisDrone2018-DET toolkit). The rule was applied inside the same
 validator, which reproduces the standard score when no ignored region is present; the mAP scores
 rise slightly, the efficacy ratios fall slightly and no comparison changes order (Section 9.3).
-Because no public benchmark annotates a carried firearm, the three-class models are scored instead
-on the validation split of their own corpus, whose tiles also served for early stopping and for
-selecting the checkpoint, so that split is held out from training but not from model selection; the
-replication of Section 9.5 and the test of Section 11.5 score them in addition on new frames
-rendered after training and used for neither training nor selection. Section 9.5 reports them
-separately: scored on the world in which they were trained, their figures are ceilings rather than
-evidence of transfer, so the two groups cannot be read on one scale. Every synthetic corpus holds
-the same number of images, 180 for the single-class models and 200 for the three-class ones, so that
-no comparison below is a comparison of the number of frames, although instance counts still differ
-(Section 8.2).
+Public benchmarks that annotate a carried firearm do exist, but they are recorded from surveillance
+viewpoints, not from the air (Salazar González et al., 2020; Lim et al., 2021; Ruiz-Santaquiteria et
+al., 2024; Z. Li et al., 2025). The documented public aerial datasets we found that label a person
+as armed were captured between 2 and 8 m above the ground, and they attach that label to an action
+class or to a whole recording rather than to an annotated box (T. Li et al., 2021; Torkst et al.,
+2026). The drone datasets we found with annotated firearms are either restricted to law-enforcement
+agencies (Faheem et al., 2025) or were not released with the article that describes them (AlJundi et
+al., 2025). Because we found no public aerial benchmark that annotates a carried firearm at the
+altitudes studied here, the three-class models are scored instead on the validation split of their
+own corpus, whose tiles also served for early stopping and for selecting the checkpoint, so that
+split is held out from training but not from model selection; the replication of Section 9.5 and the
+test of Section 11.5 score them in addition on new frames rendered after training and used for
+neither training nor selection. Section 9.5 reports them separately: scored on the world in which
+they were trained, their figures are ceilings rather than evidence of transfer, so the two groups
+cannot be read on one scale. Every synthetic corpus holds the same number of images, 180 for the
+single-class models and 200 for the three-class ones, so that no comparison below is a comparison of
+the number of frames, although instance counts still differ (Section 8.2).
 
 | Model | Training corpus | What it establishes |
 |---|---|---|
