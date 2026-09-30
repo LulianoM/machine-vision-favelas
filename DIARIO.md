@@ -2,6 +2,12 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Manuscrito atualizado com a rodada 4
+
+- Consequências de cada veredito aplicadas (commit 35b09ca): abstract, 7.6, 7.7, 8.3, 9.3 a 9.5, 10.2, 10.3, 10.6, 10.7, 11.2, 11.3, 11.5, 11.6 e conclusão. Correção da 10.2 sobre o piloto incluída. Caixas de estado do PDF e PENDENCIAS (D4) atualizadas.
+- PDFs Elsevier regerados na Área de Trabalho: 26.626 palavras, 5 figuras, 2 `[X]`.
+- Para o autor: o abstract foi a ~510 palavras; a seção 6 (proposta) não foi mexida, mas a 9.4 agora mostra que o sintético não ajuda nem como pré-treino nem misturado.
+
 ## 2026-09-30 [DESKTOP] Rodada 4 encerrada: vereditos dos critérios fixados antes
 
 - Encerrada às 10:25, sem grupo com falha, depois de quatro pausas do autor. Números e comandos em `06-resultados/RESULTADOS.md` (entrada de 30/09); vereditos em `rodada4_criterios.json`.

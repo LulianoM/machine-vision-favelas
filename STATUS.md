@@ -21,7 +21,7 @@ Disparada em 27/09 11:31, com quatro pausas do autor. Plano e critérios fixados
 | 10.3, regime de luz | hard sun 0,675 (o pior), overcast 0,791 (o melhor) | cumprido: a 11.3 fica |
 | 10.6, sementes | S-oblique-six 15,3% (14,1 a 16,7%); ajuste fino COCO acima do sintético nas três; armados separam nos quadros novos, não no val original | ajuste fino resolvível; armados em parte |
 
-Em curso: aplicar as consequências ao manuscrito e regerar os PDFs.
+Aplicado ao manuscrito em 30/09 (commit 35b09ca): abstract, 7.6, 7.7, 8.3, 9.3 a 9.5, 10.2, 10.3, 10.6, 10.7, 11.2, 11.3, 11.5, 11.6 e conclusão. PDFs Elsevier regerados na Área de Trabalho; ficam 2 `[X]` (curva da 10.1 e ablação só com sol duro da 10.3).
 
 ## Rodada 3 (encerrada 26/09 17:54, sem grupo com falha)
 
@@ -46,7 +46,7 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 | Versão vigente do orientador | v2 de 2026-09-10 (`01-artigo/rascunhos-professor/2026-09-10_v2_Irigaray.docx`). O arquivo baixado em 17/09 é idêntico a ela: não há v3 |
 | Manuscrito por seção | `01-artigo/manuscrito/`, texto do orientador mais as seções técnicas "b"; PDF de leitura por `01-artigo/ferramentas/monta_artigo.py` |
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
-| Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Ficam 3 `[X]` (robustez 10.1 e 10.3, não rodadas). Decisões do autor na lista final do arquivo de validação (abstract com ~450 palavras contra meta de ~150, liberação do corpus, periódico, figuras com rótulos em português) |
+| Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Atualizado com a rodada 4 em 30/09; ficam 2 `[X]` (curva da 10.1 e ablação só com sol duro da 10.3). Decisões do autor na lista final do arquivo de validação (abstract com ~510 palavras contra meta de ~150, liberação do corpus, periódico, figuras com rótulos em português) |
 
 ## Experimento (desktop)
 
@@ -58,8 +58,8 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Código | `07-blender/scripts/` (gerador `gen_morro.py`, sítios, pessoas MPFB, objetos, cadeias) e `06-resultados/` (avaliação e análise). Caminhos absolutos ainda embutidos (`docs/DIVERGENCIAS.md`, item 13) |
 | Classes | Pessoa única nos braços de transferência; `pessoa_armada`, `pessoa_desarmada` e `pessoa_objeto` nos braços armados. Anotação amodal recortada no quadro, visibilidade mínima 0,35 |
 | Receita de treino | YOLO11s, imgsz 1280, 60 épocas, batch 6, início COCO, ladrilhos de 1280 px com sobreposição 0,2; ajuste fino com 30 épocas. RTX 2060 6 GB |
-| Sim-to-real | **Os três números medidos.** Teto real pareado (1.106 imagens): 0,6311. Zero-shot: nadir 0,0102 (1,6%), oblíquo 0,0614 (9,7%), S-oblique-six 0,1055 (16,7%). Ajuste fino, teste no val inteiro: 0,4424 e 0,5095 partindo do sintético, 0,5220 e 0,5709 partindo do COCO. Não medido: sintético e real misturados no mesmo treino |
-| Armado x desarmado | 75 m: objeto chamado de arma 23,7%, recall de armada 0,547; 35 m: 27,3% e 0,569; gêmeo a 75 m: 16,5% e 0,471. Arma inédita reconhecida como as vistas (razão 1,16). O guarda-chuva é o objeto mais chamado de arma (38 a 40%) |
+| Sim-to-real | **Os três números medidos.** Teto real pareado (1.106 imagens): 0,6311. Zero-shot: nadir 0,0102 (1,6%), oblíquo 0,0614 (9,7%), S-oblique-six 0,1055 (16,7%). Ajuste fino, teste no val inteiro: 0,4424 e 0,5095 partindo do sintético, 0,5220 e 0,5709 partindo do COCO. Sintético e real no mesmo treino (rodada 4): 0,4607 (5%) e 0,5428 (10%), abaixo do só real. Três sementes: S-oblique-six 15,3% em média (14,1 a 16,7%); a vantagem do COCO a 5% é resolvível |
+| Armado x desarmado | 75 m: objeto chamado de arma 23,7%, recall de armada 0,547; 35 m: 27,3% e 0,569; gêmeo a 75 m: 16,5% e 0,471. Arma inédita reconhecida como as vistas (razão 1,16). O guarda-chuva é o objeto mais chamado de arma (38 a 40%). Rodada 4: 80 quadros novos replicam 35 m contra gêmeo (25,3% contra 12,5%, p 0,0001); objeto no porte de arma não sobe a taxa; ordem muda com a IoU; gêmeo a 150 m não interpretável (148 de 297 pessoas) |
 | Tamanho do alvo | Nadir 4K: 17,6 × 17,5 px, h/w 0,98. VisDrone treino: 13,0 × 24,0, h/w 1,95. `ds_oblvar`: 13,3 × 25,2, h/w 1,85. Ferramentas: `06-resultados/mede_forma.py` (corpora sintéticos) e `06-resultados/mede_alvo_split.py` (VisDrone e piloto, por split) |
 | Comparação com a literatura | Kiefer et al. (YOLO): 10,2 sintético contra 43,9 real, razão 23,2%. O S-oblique-six faz 10,5 absoluto (logo acima da faixa deles) e razão 16,7%. Não é comparação direta: o real deles é o treino inteiro do VisDrone com 10 classes, o nosso são 1.106 imagens com uma classe, e o sintético deles tem 40.000 imagens |
 | Achado de método | Ladrilhar em escala nativa levou o mAP50 de 0,116 para 0,561 nas mesmas 120 imagens (12/09); a escala de treino pesa mais que o volume |
@@ -88,7 +88,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 ## Próximos passos, em ordem
 
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.
-2. [DESKTOP] Aplicar ao manuscrito as consequências dos vereditos da rodada 4 e regerar os PDFs. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
+2. [AUTOR] Ler no PDF as passagens mudadas pela rodada 4 (abstract, 9.3 a 9.5, 10.2, 10.3, 10.6, 10.7, 11.3, 11.5 e conclusão) e encurtar o abstract, que foi a ~510 palavras. Ficaram fora da rodada, como opcionais: curva de aprendizado da 10.1, corpus só com sol duro, ajuste fino até convergir ou congelado, armado com câmera oblíqua.
 3. [AUTOR] Decidir as três divergências ainda abertas em `docs/DIVERGENCIAS.md`: o que fazer com os braços que usam dado PCERJ; como reportar armado x desarmado; blender-mcp. (O item 1, ARMA 3 ou Blender, foi decidido em 20/09: Blender.)
 4. [DESKTOP] Pôr no inventário `06-resultados/ONDE-ESTAO-OS-DADOS.md` os corpora e pesos das rodadas 2 e 3, e atualizar o painel.
 5. [DESKTOP] Tirar os caminhos absolutos dos scripts (item 13 de `docs/DIVERGENCIAS.md`).
