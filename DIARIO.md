@@ -2,6 +2,15 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-09-30 [DESKTOP] Figura 7 refeita: objeto na mão e visível
+
+- Pedido do autor: na figura 7 a pistola e o guarda-chuva não batiam com o objeto, e em alguns recortes a arma estava solta do corpo.
+- Primeiro conferi se era erro de rótulo, e não é. Nos corpora com `caixas`, a ordem de classe bate com o arquivo de rótulo em todos os quadros e os tipos batem com as caixas armada e objeto. No `ds_armado_35`, que só tem `tipos`, o número de tipos bate com o de caixas nos 200 quadros. As taxas por objeto da 9.5 não mudam.
+- A causa está no gerador (`people_mpfb.py`): o objeto é preso no punho direito (ou nas costas) com orientação fixada por pose no espaço do corpo, sem ser resolvida contra as mãos. Na pose "ao lado" ele aponta quase na vertical, e de cima o guarda-chuva de 0,88 m encolhe a um toco escuro com cara de pistola. A pistola, de 0,20 m, quase não aparece; no recorte antigo de 35 m, o objeto comprido que se via era um varal da cena.
+- A figura foi refeita com escolha a olho sobre folhas de candidatos: os de maior caixa por tipo e altitude, com visibilidade de pelo menos 0,85, sozinhos no recorte e sob luz clara. O critério foi objeto na mão e perto da horizontal. As escolhas e o critério ficaram fixados em `06-resultados/figuras_artigo.py` (fig7).
+- A legenda da figura 7 diz o critério e a origem dos recortes. A 7.4 ganhou uma frase sobre como o gerador prende o objeto.
+- PDF refeito na Área de Trabalho: 28 páginas, 31.267 palavras.
+
 ## 2026-09-30 [DESKTOP] Busca bibliográfica aplicada ao manuscrito
 
 - OK do autor às cinco frentes do relatório de 30/09.

@@ -190,18 +190,21 @@ Weapons and objects are drawn from one palette of base colours and surface rough
 and metallic surfaces occur on both and colour alone cannot separate the two, although light PVC and
 coloured plastic occur only on objects. Both are carried through the same distribution of body
 poses, held forward, at the side, slung on the back, or carried while walking, in the same
-proportions. However, an object whose recorded length exceeds 1.15 m, which no weapon's recorded
-length does, is then re-angled in every pose to rest on the shoulder or to point towards the ground,
-so most confusable objects are carried at angles no weapon takes. A detector that separates the
-classes on this corpus may therefore be using the length and silhouette of what is carried, the
-light and coloured materials that only objects have, and the angle at which it is carried, which is
-a rule of this generator rather than an observation of how residents carry things. Section 9.5 tests
-the last of these, carrying every object exactly as a weapon is carried, and the rate at which
-objects are called armed does not rise; the rate at which the detector calls a broom a rifle is
-reported directly in that section. Later corpora, at 35 m and its twins at 75 m and 150 m, including
-the new frames rendered with their settings, depart from this in one respect, stated where they are
-reported: the object is drawn in the firing pose with probability 0.08 rather than 0.42, the
-probability used for the weapon, which is closer to how such objects are carried.
+proportions. The item is placed at the right wrist, or on the back when slung, with an orientation
+set per pose in the frame of the body rather than solved against the hands, so in some figures it
+does not sit in the grip; the same rule places weapons and objects. However, an object whose
+recorded length exceeds 1.15 m, which no weapon's recorded length does, is then re-angled in every
+pose to rest on the shoulder or to point towards the ground, so most confusable objects are carried
+at angles no weapon takes. A detector that separates the classes on this corpus may therefore be
+using the length and silhouette of what is carried, the light and coloured materials that only
+objects have, and the angle at which it is carried, which is a rule of this generator rather than an
+observation of how residents carry things. Section 9.5 tests the last of these, carrying every
+object exactly as a weapon is carried, and the rate at which objects are called armed does not rise;
+the rate at which the detector calls a broom a rifle is reported directly in that section. Later
+corpora, at 35 m and its twins at 75 m and 150 m, including the new frames rendered with their
+settings, depart from this in one respect, stated where they are reported: the object is drawn in
+the firing pose with probability 0.08 rather than 0.42, the probability used for the weapon, which
+is closer to how such objects are carried.
 
 ### 7.5 Domain randomisation over illumination
 

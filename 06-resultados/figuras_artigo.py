@@ -6,9 +6,9 @@ da PCERJ), a pedido do autor em 30/09.
   fig6_assentamentos.jpg  um quadro de cada um dos seis assentamentos do S-oblique-six (sitios -1 a
                           4 de sitios.py; o -1 e o assentamento do corpus de referencia)
   fig7_armados.jpg        pessoa com fuzil, com pistola, sem nada, com vassoura, com cano e com
-                          guarda-chuva a 35, 75 e 150 m (quadros novos da rodada 4 e gemeo de 150 m), cada recorte ampliado
-                          ao mesmo tamanho (vizinho mais proximo), para mostrar quanto da arma chega
-                          ao sensor em cada altitude
+                          guarda-chuva a 35, 75 e 150 m (corpus de 35 m, gemeos de 75 e 150 m e quadros
+                          novos da rodada 4), cada recorte ampliado ao mesmo tamanho (vizinho mais
+                          proximo), para mostrar quanto da arma chega ao sensor em cada altitude
   fig8_nadir_obliquo.jpg  o mesmo assentamento visto em nadir a 150 m (corpus de referencia) e com a
                           camera obliqua (S-oblique), com recortes de pessoas sem arma de cada um
 
@@ -18,7 +18,8 @@ Figuras 2 e 4 refeitas com rotulos em ingles a partir das mesmas imagens de 20/0
 quadros da versao de 20/09).
 
 Escolha deterministica: para cada painel, o primeiro quadro (em ordem de nome) que atende ao filtro
-declarado em cada funcao. Nenhum numero sai daqui; as legendas usam os do texto.
+declarado em cada funcao. Nenhum numero sai daqui; as legendas usam os do texto. Excecao: na figura 7
+as pessoas com arma ou objeto foram escolhidas a olho (ver fig7).
 
   python figuras_artigo.py
 """
@@ -96,35 +97,67 @@ def isolada(cxs, k, fator):
 
 
 def fig7():
-    # quadros novos a 35 m e seus gemeos a 75 m (gerador atual, com laje por caixa) e o gemeo a 150 m
+    """Escolha a olho, 30/09, depois de o autor apontar na versao anterior (maior caixa que passava nos
+    filtros) um guarda-chuva que parecia pistola e armas soltas do corpo. Motivo, no gerador
+    (people_mpfb.py): o objeto e preso no punho direito com orientacao fixada por pose no espaco do
+    corpo, nao resolvida contra as maos, e na pose "ao lado" aponta quase na vertical, de modo que de
+    cima o guarda-chuva encolhe a um toco escuro. Criterio da escolha, entre os recortes visiveis
+    (visibilidade >= 0,85), sozinhos no recorte e em regime claro (folhas de candidatos com os 14 de
+    maior caixa por tipo e altitude): o objeto dentro da mao e perto da horizontal, de modo que o
+    comprimento inteiro aparece, e sem varal ou cabo da cena que se confunda com ele. A coluna sem
+    arma segue o criterio automatico antigo. Os tipos conferem com as caixas: nos corpora com
+    `caixas` a ordem de classe bate com o rotulo em todos os quadros, e no ds_armado_35, que so tem
+    `tipos`, o numero de tipos bate com o de caixas armada e objeto nos 200 quadros."""
     linhas = [("35 m", "ds_armado_35_extra"), ("75 m", "ds_armado_75g_extra"), ("150 m", "ds_armado_150g")]
     colunas = [("Rifle", 0, ("fuzil_ak", "fuzil_ar", "carabina")), ("Pistol", 0, ("pistola",)),
                ("Unarmed", 1, ("",)), ("Broom", 2, ("vassoura",)), ("Pipe", 2, ("cano_pvc",)),
                ("Umbrella", 2, ("guarda_chuva",))]
+    escolha = {  # (linha, coluna): (corpus, quadro, indice da caixa no rotulo)
+        ("35 m", "Rifle"): ("ds_armado_35", "mr_000139.png", 7),
+        ("35 m", "Pistol"): ("ds_armado_35", "mr_000042.png", 2),
+        ("35 m", "Broom"): ("ds_armado_35", "mr_000156.png", 3),
+        ("35 m", "Pipe"): ("ds_armado_35_extra", "mr_000277.png", 12),
+        ("35 m", "Umbrella"): ("ds_armado_35", "mr_000090.png", 7),
+        ("75 m", "Rifle"): ("ds_armado_75g", "mr_000186.png", 9),
+        ("75 m", "Pistol"): ("ds_armado_75g_extra", "mr_000253.png", 3),
+        ("75 m", "Broom"): ("ds_armado_75g_extra", "mr_000222.png", 6),
+        ("75 m", "Pipe"): ("ds_armado_75g_extra", "mr_000234.png", 9),
+        ("75 m", "Umbrella"): ("ds_armado_75g", "mr_000162.png", 4),
+        ("150 m", "Rifle"): ("ds_armado_150g", "mr_000043.png", 2),
+        ("150 m", "Pistol"): ("ds_armado_150g", "mr_000146.png", 7),
+        ("150 m", "Broom"): ("ds_armado_150g", "mr_000098.png", 0),
+        ("150 m", "Pipe"): ("ds_armado_150g", "mr_000038.png", 17),
+        ("150 m", "Umbrella"): ("ds_armado_150g", "mr_000068.png", 11),
+    }
     tam, ml, mt, g, fator = 300, 150, 70, 10, 1.7
     fig = Image.new("RGB", (ml + len(colunas) * (tam + g), mt + len(linhas) * (tam + g)), "white")
     d = ImageDraw.Draw(fig)
     for j, (nome, _, _) in enumerate(colunas):
         d.text((ml + j * (tam + g) + tam // 2, mt // 2), nome, font=FONTE_P, fill="black", anchor="mm")
-    for i, (alt, ds) in enumerate(linhas):
+    for i, (alt, ds_auto) in enumerate(linhas):
         d.text((ml // 2, mt + i * (tam + g) + tam // 2), alt, font=FONTE_P, fill="black", anchor="mm")
-        rs = sorted(manifest(ds), key=lambda r: r["img"])
-        for j, (_, cls, tipos) in enumerate(colunas):
-            # criterio: pessoa em laje (fundo iluminado), visivel, longe da borda, sozinha no recorte, em
-            # regime claro; entre as que passam, a de maior caixa (objeto estendido para fora do corpo)
-            cands = []
-            for r in rs:
-                if r["clima"] not in CLARO:
+        for j, (nome, cls, tipos) in enumerate(colunas):
+            if (alt, nome) in escolha:
+                ds, img, k = escolha[(alt, nome)]
+                r = next(x for x in manifest(ds) if x["img"] == img)
+                c, tp, v, cx, cy, w, h = caixas(ds, r)[k]
+                assert c == cls and tp in tipos, (alt, nome, c, tp)
+            else:
+                # sem arma: pessoa em laje, visivel, longe da borda, sozinha no recorte, em regime
+                # claro; entre as que passam, a de maior caixa
+                ds, cands = ds_auto, []
+                for r in sorted(manifest(ds), key=lambda r: r["img"]):
+                    if r["clima"] not in CLARO:
+                        continue
+                    cxs = caixas(ds, r)
+                    lajes = [c[2] for c in r["caixas"]] if "caixas" in r else [1] * len(cxs)
+                    for k, (c, tp, v, cx, cy, w, h) in enumerate(cxs):
+                        if (c == cls and tp in tipos and v >= 0.95 and lajes[k] == 1 and 0.1 < cx < 0.9
+                                and 0.1 < cy < 0.9 and isolada(cxs, k, fator)):
+                            cands.append((w * h, r["img"], r, cx, cy, w, h))
+                if not cands:
                     continue
-                cxs = caixas(ds, r)
-                lajes = [c[2] for c in r["caixas"]] if "caixas" in r else [1] * len(cxs)
-                for k, (c, tp, v, cx, cy, w, h) in enumerate(cxs):
-                    if (c == cls and tp in tipos and v >= 0.95 and lajes[k] == 1 and 0.1 < cx < 0.9
-                            and 0.1 < cy < 0.9 and isolada(cxs, k, fator)):
-                        cands.append((w * h, r["img"], r, cx, cy, w, h))
-            if not cands:
-                continue
-            _, _, r, cx, cy, w, h = max(cands, key=lambda c: (c[0], c[1]))
+                _, _, r, cx, cy, w, h = max(cands, key=lambda c: (c[0], c[1]))
             fig.paste(recorte(imagem(ds, r), cx, cy, w, h, fator, 24, tam), (ml + j * (tam + g), mt + i * (tam + g)))
     fig.save(os.path.join(OUT, "fig7_armados.jpg"), quality=88)
 

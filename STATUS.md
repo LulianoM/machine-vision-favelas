@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-30, 16h, [DESKTOP]
+Última atualização: 2026-09-30, 17h, [DESKTOP]
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
@@ -48,7 +48,7 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
 | Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Atualizado com a rodada 4 em 30/09 e revisado de novo no mesmo dia (três lentes: números, lógica, forma; 128 trocas, cada uma conferida na fonte; origem dos números conferidos em `06-resultados/RESULTADOS.md`, entrada de 30/09). Nenhum `[X]`: as duas checagens não rodadas estão descritas como especificadas e não executadas. Decidido em 30/09: sai só o texto, sem corpus nem código, e o manuscrito não cita arquivos do repositório. Decisões ainda do autor: lista na entrada do DIARIO de 30/09 (revisão geral) |
 | Figuras | 8, todas do braço procedural, rótulos em inglês desde 30/09: nadir, beco, anotação, seis regimes de luz, seis assentamentos, nadir contra oblíquo, armados por altitude, quadros do piloto. Geradas por `06-resultados/figuras_artigo.py` e `07-blender/scripts/previa_dataset.py` |
-| PDF | `monta_artigo.py`, formato Elsevier: 28 páginas, 31.171 palavras, 8 figuras, 0 `[X]`. Na Área de Trabalho do desktop. Não foi por e-mail: a ferramenta do Gmail só aceita anexo inline e o arquivo tem 5 MB; publicar o PDF num artifact privado foi barrado pelo classificador de permissões e espera autorização do autor |
+| PDF | `monta_artigo.py`, formato Elsevier: 28 páginas, 31.267 palavras, 8 figuras, 0 `[X]`. Na Área de Trabalho do desktop. Não foi por e-mail: a ferramenta do Gmail só aceita anexo inline e o arquivo tem 5 MB; publicar o PDF num artifact privado foi barrado pelo classificador de permissões e espera autorização do autor |
 | Busca bibliográfica de 30/09 | Concluída (8 agentes, cinco frentes; relatório em `04-bibliografia/busca-2026-09-30-pontos-abertos.md`) e aplicada no mesmo dia com o OK do autor: 33 trocas no texto, 65 referências novas com DOI reconferido no Crossref, 10 entradas substituídas ou retiradas, 5 corrigidas, lista numa ordem alfabética só |
 
 ## Experimento (desktop)
