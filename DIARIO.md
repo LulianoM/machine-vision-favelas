@@ -2,6 +2,13 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-10-18 [DESKTOP] Decisões do autor sobre o artigo reestruturado
+
+- O autor decidiu não liberar o gerador de código (A3). A 4.8 e o Data availability dizem que o gerador, o código, os corpora e os pesos não são liberados.
+- Declaração de uso de IA incluída nas Declarations (A4): Claude (Anthropic) usado para revisar o texto, conferir e corrigir informações e grafia, e auxiliar no monitoramento dos treinos.
+- OK do autor às mudanças sugeridas: A1 (sem design science), A2 (morfologia em trabalho futuro) e A7 (sete seções) ficam como aplicados. Aplicados também os pontos que o validador deixou: convenção do d′ da similaridade e intervalo aproximado da arma inédita passados para a seção 4; frase interpretativa do piloto movida para a limitação 7; intervalos repetidos da 6.1 retirados (ficam na seção 5, menos o do fator 6,0); sinais de diferença corrigidos na 6.1.
+- PDF refeito (32 páginas, 13 figuras, 23 tabelas, 0 `[X]`) e página privada atualizada. Seguem abertos: coautor delegado (A5), financiamento e rodada 5 (A6).
+
 ## 2026-10-18 [DESKTOP] Artigo reestruturado pelo feedback de 14/10
 
 - Material recebido em 17/10 na pasta `FEEDBACKS ARTIGOS` do autor: `feedback.txt` (estrutura-alvo de sete seções, parecer em três blocos, esqueleto de seis seções, mensagens de WhatsApp), quatro áudios de 14/10 (transcritos localmente com faster-whisper large-v3-turbo em CPU), o PDF de 30/09 e o livro de Zobel. Tudo copiado e resumido em `01-artigo/feedback-2026-10-14/` (`FEEDBACK-RECEBIDO.md`; regras de Zobel em `zobel-checklist.md`).

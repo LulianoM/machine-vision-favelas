@@ -49,7 +49,7 @@ Feedback de Felipe I. Toledo (texto, quatro áudios transcritos, esqueleto de se
 | Análises novas, só inferência | Em `06-resultados/revisao-2026-10-17/` com entradas em `RESULTADOS.md`: fatos dos corpora, GSD e zoom da Z30, seleção de checkpoint (D1); intervalos de 95% por reamostragem, curvas PR, varredura de limiar, leituras de resolubilidade (D2); similaridade de recortes por altitude (D3). Bases reais nadir em `04-bibliografia/benchmarks-nadir-2026-10-17.md` (D4) |
 | Achados que mudaram o texto | R selecionou o checkpoint no próprio VisDrone val (teto otimista por seleção, declarado); fator nadir/oblíquo 6,0 com intervalo 4,6 a 7,0 (ainda uma corrida por lado); diferenças do ajuste fino estáveis mas de 5 a 16% relativos; 35 m contra gêmeo resolvível só nos quadros novos; nenhum limiar leva o objeto chamado de arma abaixo de 0,09 com recall acima de 0,42; similaridade não separa arma de objeto em nenhuma altitude (AUC 0,53 a 0,65); renders sem ruído, borrão nem compressão |
 | PDF | `C:/Users/marti/Desktop/machine-vision-favelas-elsevier-2026-10-17.pdf`: 32 páginas, cerca de 18,9 mil palavras de corpo, 13 figuras, 23 tabelas, 0 `[X]` |
-| Decisões pendentes | `PLANO-CORRECAO.md`, seção 6 (A1 a A7) e seção 5 (rodada 5, custo em `06-resultados/revisao-2026-10-17/custo-rodada5.md`) |
+| Decisões | 18/10: gerador não será liberado (A3); declaração de uso de IA incluída (A4); A1, A2 e A7 aplicados. Pendentes: nome e afiliação do coautor delegado (A5), financiamento, rodada 5 (A6, custo em `06-resultados/revisao-2026-10-17/custo-rodada5.md`) |
 
 ## Artigo
 
@@ -104,7 +104,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 ## Próximos passos, em ordem
 
-0. [AUTOR] Ler o PDF de 17/10 e reenviar ao revisor (Felipe I. Toledo), que pediu para revisar de novo depois da correção de forma e estrutura. Decidir A1 a A7 de `01-artigo/feedback-2026-10-14/PLANO-CORRECAO.md` (design science, proposta de morfologia, liberação do gerador, declaração de uso de IA, coautor delegado, rodada 5, fundir resultados e discussão). Aguardar o retorno escrito do revisor sobre bibliografia.
+0. [AUTOR] Ler o PDF de 17/10 e reenviar ao revisor (Felipe I. Toledo), que pediu para revisar de novo depois da correção de forma e estrutura. Ainda abertos em `01-artigo/feedback-2026-10-14/PLANO-CORRECAO.md`: nome e afiliação do coautor delegado (A5), declaração de financiamento e a rodada 5 (A6). Aguardar o retorno escrito do revisor sobre bibliografia.
 0. [AUTOR] Ler o PDF revisado de 30/09 (Área de Trabalho do desktop) e decidir os itens que a revisão geral deixou para o autor (lista no DIARIO de 30/09).
 0. [AUTOR] Ler `01-artigo/ANALISE-2026-09-30.md`, seção 4: dez decisões que o refino deixou para os autores (extensão e periódico-alvo, título da seção 6, proposta contra o resultado da 9.4, sementes do fator 6,0, nome do coautor delegado, liberação do gerador). Depois revisar as quatro escolhas da busca bibliográfica (DIARIO de 30/09): 51 e 100 mandados, mapas das rotas como premissa, sobrenome "Américo da Silva", dois-pontos na manchete do InSight Crime.
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.

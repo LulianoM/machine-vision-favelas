@@ -92,10 +92,10 @@ Custo estimado por D1 a partir de `07-blender/PLANO-EXPERIMENTAL.md` e dos tempo
 
 | # | Decisão | Recomendação |
 |---|---|---|
-| A1 | Retirar "design science" (texto do orientador) | Retirar; o estudo é experimental |
-| A2 | Mover a proposta de morfologia vertical para trabalho futuro (seção do orientador) | Mover; a estrutura-alvo já faz isso |
-| A3 | Liberar gerador, configurações e corpora procedurais (sem dado PCERJ) | Liberar num repositório público no momento da submissão; é o ponto mais cobrado |
-| A4 | Declaração de uso de IA generativa na escrita (política Elsevier) | Incluir no bloco Declarations na submissão; redigir com o orientador |
+| A1 | Retirar "design science" (texto do orientador) | Aplicado em 18/10 com o OK do autor às mudanças sugeridas |
+| A2 | Mover a proposta de morfologia vertical para trabalho futuro (seção do orientador) | Aplicado em 18/10 (6.6) com o OK do autor |
+| A3 | Liberar gerador, configurações e corpora procedurais (sem dado PCERJ) | **Decidido pelo autor em 18/10: não liberar.** Declarado em 4.8 e em Data availability |
+| A4 | Declaração de uso de IA generativa na escrita (política Elsevier) | **Decidido pelo autor em 18/10 e incluído nas Declarations:** Claude (Anthropic) usado para revisar o texto, conferir e corrigir informações e grafia, e auxiliar no monitoramento dos treinos |
 | A5 | Nome, afiliação e conflito de interesse do coautor delegado | Obrigatório antes da submissão |
 | A6 | Rodada 5: quais dos R5-1 a R5-7 rodar | R5-1, R5-5 e R5-6 primeiro (baratos e ligados à validade) |
-| A7 | Fundir Resultados e Discussão (esqueleto de seis seções do revisor) ou manter sete | Manter sete até o revisor opinar |
+| A7 | Fundir Resultados e Discussão (esqueleto de seis seções do revisor) ou manter sete | Mantidas sete (OK do autor em 18/10) até o revisor opinar |

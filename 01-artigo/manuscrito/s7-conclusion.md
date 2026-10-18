@@ -14,4 +14,6 @@ A claim that a system can tell an armed person from an unarmed one from the air 
 
 **Conflict of interest.** One author is a serving delegado (police chief) of the Civil Police of the State of Rio de Janeiro with operational familiarity with public-security activity in Jacarezinho; Section 4.1 states how that position was treated. The other authors declare no conflict of interest.
 
-**Data availability.** The synthetic corpora, the trained weights and the code are not released with this article; the benchmark is public and is distributed by its authors. Section 4.8 states what the authors can regenerate from what each image records, what a reader can check, and why the photogrammetric reconstruction used in earlier exploratory work cannot be released.
+**Data availability.** The scene generator and its code, the synthetic corpora and the trained weights are not released; the benchmark is public and is distributed by its authors. Section 4.8 states what the authors can regenerate from what each image records, what a reader can check, and why the photogrammetric reconstruction used in earlier exploratory work cannot be released.
+
+**Declaration of generative AI and AI-assisted technologies.** During the preparation of this work the authors used Claude (Anthropic) to revise the text, to check and correct factual information and spelling, and to assist in monitoring the training runs. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
