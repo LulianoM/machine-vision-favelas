@@ -1,0 +1,1699 @@
+{
+ "gerado_em": "2026-10-17",
+ "script": "C:\\projetos\\machine-vision-favelas\\06-resultados\\revisao-2026-10-17\\contagens.py",
+ "comando": "C:/arma3-favela/venv/Scripts/python.exe 06-resultados/revisao-2026-10-17/contagens.py",
+ "camera": {
+  "sensor_mm": 36.0,
+  "lente_mm": 28.83,
+  "nota": "gen_morro.py: c.sensor_width = 36, sensor_fit HORIZONTAL, c.lens = Z30_LENS = 4.3 * 36 / 5.37"
+ },
+ "corpora": [
+  {
+   "nome_interno": "ds_morro_clima",
+   "nome_artigo": "Pilot corpus (1080p)",
+   "papel": "piloto; treino morro_clima_s (ladrilhos de 640 px)",
+   "pasta": "C:\\arma3-favela\\blender\\ds_morro_clima",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 40,
+    "val": 8,
+    "total": 48
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 292,
+     "pessoa_desarmada": 273,
+     "total": 565,
+     "rotulos": 40
+    },
+    "val": {
+     "pessoa_armada": 55,
+     "pessoa_desarmada": 64,
+     "total": 119,
+     "rotulos": 8
+    },
+    "total": {
+     "pessoa_armada": 347,
+     "pessoa_desarmada": 337,
+     "total": 684
+    }
+   },
+   "manifest_origem": [
+    "ds_morro_clima"
+   ],
+   "manifest": {
+    "linhas": 48,
+    "resolucao": [
+     "1920x1080"
+    ],
+    "sementes": [
+     11
+    ],
+    "alt_m": {
+     "min": 144.2,
+     "max": 155.7,
+     "media": 149.4
+    },
+    "pitch_graus": "nao gravado (corpus anterior ao campo pitch; faixa nominal --pitch 0 3.5)",
+    "elev_sol_graus": {
+     "min": 9.1,
+     "max": 73.7,
+     "media": 41.7
+    },
+    "regimes": {
+     "sol_duro": 8,
+     "sol_baixo": 8,
+     "nublado": 8,
+     "encoberto": 8,
+     "neblina": 8,
+     "chuva": 8
+    },
+    "split_manifest": {
+     "train": 40,
+     "val": 8
+    },
+    "pessoas_colocadas": 1088,
+    "caixas_retidas": 684,
+    "fracao_retida": 0.629,
+    "render_s_total": 2302.3,
+    "render_s_mediana": 47.8,
+    "render_h_total": 0.64,
+    "pegada_nominal_m": [
+     186.6,
+     104.9
+    ],
+    "gsd_cm_px": 9.72
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_morro_clima_tiles",
+   "ladrilhos": {
+    "train": 274,
+    "val": 61
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 494,
+     "pessoa_desarmada": 486,
+     "total": 980,
+     "ladrilhos_vazios": 6
+    },
+    "val": {
+     "pessoa_armada": 95,
+     "pessoa_desarmada": 123,
+     "total": 218,
+     "ladrilhos_vazios": 0
+    }
+   },
+   "ladrilho_px": [
+    640,
+    640
+   ]
+  },
+  {
+   "nome_interno": "ds_morro_4k",
+   "nome_artigo": "S-nadir-150 (corpus of record)",
+   "papel": "treino s_nadir_4k; define N = 1.106 ladrilhos para R",
+   "pasta": "C:\\arma3-favela\\blender\\ds_morro_4k",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 149,
+    "val": 31,
+    "total": 180
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 1331,
+     "pessoa_desarmada": 1328,
+     "total": 2659,
+     "rotulos": 149
+    },
+    "val": {
+     "pessoa_armada": 278,
+     "pessoa_desarmada": 288,
+     "total": 566,
+     "rotulos": 31
+    },
+    "total": {
+     "pessoa_armada": 1609,
+     "pessoa_desarmada": 1616,
+     "total": 3225
+    }
+   },
+   "manifest_origem": [
+    "ds_morro_4k"
+   ],
+   "manifest": {
+    "linhas": 180,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     21
+    ],
+    "alt_m": {
+     "min": 144.0,
+     "max": 156.0,
+     "media": 150.1
+    },
+    "pitch_graus": "nao gravado (corpus anterior ao campo pitch; faixa nominal --pitch 0 3.5)",
+    "elev_sol_graus": {
+     "min": 9.1,
+     "max": 74.0,
+     "media": 42.6
+    },
+    "regimes": {
+     "sol_duro": 30,
+     "sol_baixo": 30,
+     "nublado": 30,
+     "encoberto": 30,
+     "neblina": 30,
+     "chuva": 30
+    },
+    "split_manifest": {
+     "train": 149,
+     "val": 31
+    },
+    "pessoas_colocadas": 4582,
+    "caixas_retidas": 3225,
+    "fracao_retida": 0.704,
+    "render_s_total": 39911.6,
+    "render_s_mediana": 182.9,
+    "render_h_total": 11.09,
+    "pegada_nominal_m": [
+     187.5,
+     105.4
+    ],
+    "gsd_cm_px": 4.88
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_morro_4k_tiles",
+   "ladrilhos": {
+    "train": 1106,
+    "val": 225
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 2359,
+     "pessoa_desarmada": 2319,
+     "total": 4678,
+     "ladrilhos_vazios": 10
+    },
+    "val": {
+     "pessoa_armada": 471,
+     "pessoa_desarmada": 528,
+     "total": 999,
+     "ladrilhos_vazios": 1
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_variedade",
+   "nome_artigo": "S-nadir-150-six",
+   "papel": "treino s_variedade; 6 sitios x 30 quadros, manifests por sitio em _dose_s*",
+   "pasta": "C:\\arma3-favela\\blender\\ds_variedade",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 156,
+    "val": 24,
+    "total": 180
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 1424,
+     "pessoa_desarmada": 1368,
+     "total": 2792,
+     "rotulos": 156
+    },
+    "val": {
+     "pessoa_armada": 203,
+     "pessoa_desarmada": 233,
+     "total": 436,
+     "rotulos": 24
+    },
+    "total": {
+     "pessoa_armada": 1627,
+     "pessoa_desarmada": 1601,
+     "total": 3228
+    }
+   },
+   "manifest_origem": [
+    "_dose_s-1",
+    "_dose_s0",
+    "_dose_s1",
+    "_dose_s2",
+    "_dose_s3",
+    "_dose_s4"
+   ],
+   "quadros_por_sitio_prefixo": {
+    "s0": 30,
+    "s1": 30,
+    "s2": 30,
+    "s3": 30,
+    "s4": 30,
+    "sm1": 30
+   },
+   "manifest": {
+    "linhas": 180,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     21
+    ],
+    "alt_m": {
+     "min": 144.2,
+     "max": 155.7,
+     "media": 149.9
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.4,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 9.6,
+     "max": 69.6,
+     "media": 40.7
+    },
+    "regimes": {
+     "sol_duro": 30,
+     "sol_baixo": 30,
+     "nublado": 30,
+     "encoberto": 30,
+     "neblina": 30,
+     "chuva": 30
+    },
+    "split_manifest": {
+     "train": 156,
+     "val": 24
+    },
+    "pessoas_colocadas": 4622,
+    "caixas_retidas": 3228,
+    "fracao_retida": 0.698,
+    "render_s_total": 31371.5,
+    "render_s_mediana": 172.6,
+    "render_h_total": 8.71,
+    "tipos_carregados": {
+     "carabina": 323,
+     "espingarda": 305,
+     "fuzil_ak": 417,
+     "fuzil_ar": 389,
+     "pistola": 193
+    },
+    "pegada_nominal_m": [
+     187.2,
+     105.3
+    ],
+    "gsd_cm_px": 4.88
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_variedade_tiles",
+   "ladrilhos": {
+    "train": 1135,
+    "val": 174
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 2498,
+     "pessoa_desarmada": 2391,
+     "total": 4889,
+     "ladrilhos_vazios": 13
+    },
+    "val": {
+     "pessoa_armada": 363,
+     "pessoa_desarmada": 413,
+     "total": 776,
+     "ladrilhos_vazios": 1
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_morro_obl",
+   "nome_artigo": "S-oblique",
+   "papel": "treino s_obliquo; preset --obliqua (120 m, pitch 26 a 52)",
+   "pasta": "C:\\arma3-favela\\blender\\ds_morro_obl",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 155,
+    "val": 25,
+    "total": 180
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 839,
+     "pessoa_desarmada": 841,
+     "total": 1680,
+     "rotulos": 155
+    },
+    "val": {
+     "pessoa_armada": 113,
+     "pessoa_desarmada": 119,
+     "total": 232,
+     "rotulos": 25
+    },
+    "total": {
+     "pessoa_armada": 952,
+     "pessoa_desarmada": 960,
+     "total": 1912
+    }
+   },
+   "manifest_origem": [
+    "ds_morro_obl"
+   ],
+   "manifest": {
+    "linhas": 180,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     21
+    ],
+    "alt_m": {
+     "min": 84.7,
+     "max": 155.9,
+     "media": 120.4
+    },
+    "pitch_graus": {
+     "min": 26.4,
+     "max": 51.9,
+     "media": 38.4
+    },
+    "elev_sol_graus": {
+     "min": 9.1,
+     "max": 73.5,
+     "media": 41.9
+    },
+    "regimes": {
+     "sol_duro": 30,
+     "sol_baixo": 30,
+     "nublado": 30,
+     "encoberto": 30,
+     "neblina": 30,
+     "chuva": 30
+    },
+    "split_manifest": {
+     "val": 25,
+     "train": 155
+    },
+    "pessoas_colocadas": 4648,
+    "caixas_retidas": 1912,
+    "fracao_retida": 0.411,
+    "render_s_total": 32847.9,
+    "render_s_mediana": 176.0,
+    "render_h_total": 9.12,
+    "tipos_carregados": {
+     "carabina": 173,
+     "espingarda": 171,
+     "fuzil_ak": 236,
+     "fuzil_ar": 250,
+     "pistola": 122
+    },
+    "pegada_nominal_m": [
+     150.4,
+     84.6
+    ],
+    "gsd_cm_px": 3.92
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_morro_obl_tiles",
+   "ladrilhos": {
+    "train": 968,
+    "val": 136
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 1430,
+     "pessoa_desarmada": 1422,
+     "total": 2852,
+     "ladrilhos_vazios": 24
+    },
+    "val": {
+     "pessoa_armada": 194,
+     "pessoa_desarmada": 218,
+     "total": 412,
+     "ladrilhos_vazios": 2
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_oblvar",
+   "nome_artigo": "S-oblique-six",
+   "papel": "treino s_oblvar (+ sd1, sd2); 6 sitios, --pitch-obl 45 56 --camera-livre, so desarmadas",
+   "pasta": "C:\\arma3-favela\\blender\\ds_oblvar",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 152,
+    "val": 28,
+    "total": 180
+   },
+   "caixas": {
+    "train": {
+     "pessoa_desarmada": 1325,
+     "total": 1325,
+     "rotulos": 152
+    },
+    "val": {
+     "pessoa_desarmada": 196,
+     "total": 196,
+     "rotulos": 28
+    },
+    "total": {
+     "pessoa_desarmada": 1521,
+     "total": 1521
+    }
+   },
+   "manifest_origem": [
+    "ds_oblvar"
+   ],
+   "manifest": {
+    "linhas": 180,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     21
+    ],
+    "alt_m": {
+     "min": 86.1,
+     "max": 155.6,
+     "media": 121.3
+    },
+    "pitch_graus": {
+     "min": 45.0,
+     "max": 56.0,
+     "media": 50.2
+    },
+    "elev_sol_graus": {
+     "min": 9.4,
+     "max": 73.4,
+     "media": 42.2
+    },
+    "regimes": {
+     "sol_duro": 30,
+     "sol_baixo": 30,
+     "nublado": 30,
+     "encoberto": 30,
+     "neblina": 30,
+     "chuva": 30
+    },
+    "split_manifest": {
+     "train": 152,
+     "val": 28
+    },
+    "quadros_por_sitio": {
+     "-1": 30,
+     "0": 30,
+     "1": 30,
+     "2": 30,
+     "3": 30,
+     "4": 30
+    },
+    "pessoas_colocadas": 4472,
+    "caixas_retidas": 1521,
+    "fracao_retida": 0.34,
+    "render_s_total": 36038.8,
+    "render_s_mediana": 181.1,
+    "render_h_total": 10.01,
+    "pegada_nominal_m": [
+     151.5,
+     85.2
+    ],
+    "gsd_cm_px": 3.94
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_oblvar_tiles",
+   "ladrilhos": {
+    "train": 890,
+    "val": 144
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_desarmada": 2405,
+     "total": 2405,
+     "ladrilhos_vazios": 26
+    },
+    "val": {
+     "pessoa_desarmada": 341,
+     "total": 341,
+     "ladrilhos_vazios": 4
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_armado_75",
+   "nome_artigo": "S-nadir-75 (original)",
+   "papel": "treino armado_75; 3 classes, antes de --porte-realista",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_75",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 173,
+    "val": 27,
+    "total": 200
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 816,
+     "pessoa_desarmada": 820,
+     "pessoa_objeto": 846,
+     "total": 2482,
+     "rotulos": 173
+    },
+    "val": {
+     "pessoa_armada": 117,
+     "pessoa_desarmada": 153,
+     "pessoa_objeto": 135,
+     "total": 405,
+     "rotulos": 27
+    },
+    "total": {
+     "pessoa_armada": 933,
+     "pessoa_desarmada": 973,
+     "pessoa_objeto": 981,
+     "total": 2887
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_75"
+   ],
+   "manifest": {
+    "linhas": 200,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     41
+    ],
+    "alt_m": {
+     "min": 69.1,
+     "max": 81.0,
+     "media": 75.2
+    },
+    "pitch_graus": {
+     "min": 0.1,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 9.8,
+     "max": 72.7,
+     "media": 41.8
+    },
+    "regimes": {
+     "sol_duro": 34,
+     "sol_baixo": 34,
+     "nublado": 33,
+     "encoberto": 33,
+     "neblina": 33,
+     "chuva": 33
+    },
+    "split_manifest": {
+     "train": 173,
+     "val": 27
+    },
+    "pessoas_colocadas": 4361,
+    "caixas_retidas": 2887,
+    "fracao_retida": 0.662,
+    "render_s_total": 34197.5,
+    "render_s_mediana": 169.3,
+    "render_h_total": 9.5,
+    "tipos_carregados": {
+     "cano_pvc": 111,
+     "carabina": 185,
+     "enxada": 72,
+     "espingarda": 164,
+     "fuzil_ak": 260,
+     "fuzil_ar": 219,
+     "guarda_chuva": 103,
+     "mangueira": 45,
+     "pistola": 105,
+     "rodo": 120,
+     "tabua": 97,
+     "tapete": 78,
+     "vassoura": 194,
+     "vergalhao": 161
+    },
+    "pegada_nominal_m": [
+     93.9,
+     52.8
+    ],
+    "gsd_cm_px": 2.45
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_armado_75_tiles",
+   "ladrilhos": {
+    "train": 1316,
+    "val": 202
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 1276,
+     "pessoa_desarmada": 1303,
+     "pessoa_objeto": 1382,
+     "total": 3961,
+     "ladrilhos_vazios": 9
+    },
+    "val": {
+     "pessoa_armada": 193,
+     "pessoa_desarmada": 260,
+     "pessoa_objeto": 215,
+     "total": 668,
+     "ladrilhos_vazios": 1
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_armado_35",
+   "nome_artigo": "S-nadir-35",
+   "papel": "treino armado_35 (+ sd1, sd2); 3 classes, --porte-realista",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_35",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 165,
+    "val": 35,
+    "total": 200
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 640,
+     "pessoa_desarmada": 587,
+     "pessoa_objeto": 619,
+     "total": 1846,
+     "rotulos": 165
+    },
+    "val": {
+     "pessoa_armada": 137,
+     "pessoa_desarmada": 119,
+     "pessoa_objeto": 121,
+     "total": 377,
+     "rotulos": 35
+    },
+    "total": {
+     "pessoa_armada": 777,
+     "pessoa_desarmada": 706,
+     "pessoa_objeto": 740,
+     "total": 2223
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_35"
+   ],
+   "manifest": {
+    "linhas": 200,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     43
+    ],
+    "alt_m": {
+     "min": 32.0,
+     "max": 38.0,
+     "media": 35.1
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 10.3,
+     "max": 74.0,
+     "media": 41.0
+    },
+    "regimes": {
+     "sol_duro": 34,
+     "sol_baixo": 34,
+     "nublado": 33,
+     "encoberto": 33,
+     "neblina": 33,
+     "chuva": 33
+    },
+    "split_manifest": {
+     "train": 165,
+     "val": 35
+    },
+    "pessoas_colocadas": 3477,
+    "caixas_retidas": 2223,
+    "fracao_retida": 0.639,
+    "render_s_total": 24297.2,
+    "render_s_mediana": 118.2,
+    "render_h_total": 6.75,
+    "tipos_carregados": {
+     "cano_pvc": 83,
+     "carabina": 157,
+     "enxada": 70,
+     "espingarda": 135,
+     "fuzil_ak": 208,
+     "fuzil_ar": 184,
+     "guarda_chuva": 92,
+     "mangueira": 39,
+     "pistola": 93,
+     "rodo": 78,
+     "tabua": 89,
+     "tapete": 57,
+     "vassoura": 134,
+     "vergalhao": 98
+    },
+    "pegada_nominal_m": [
+     43.8,
+     24.7
+    ],
+    "gsd_cm_px": 1.14
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_armado_35_tiles",
+   "ladrilhos": {
+    "train": 1166,
+    "val": 242
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 1039,
+     "pessoa_desarmada": 957,
+     "pessoa_objeto": 977,
+     "total": 2973,
+     "ladrilhos_vazios": 16
+    },
+    "val": {
+     "pessoa_armada": 219,
+     "pessoa_desarmada": 193,
+     "pessoa_objeto": 186,
+     "total": 598,
+     "ladrilhos_vazios": 3
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_armado_75g",
+   "nome_artigo": "Twin of S-nadir-35 at 75 m",
+   "papel": "treino armado_75g (+ sd1, sd2); comando do 35 m com --alt 75 --alt-jitter 6",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_75g",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 176,
+    "val": 24,
+    "total": 200
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 650,
+     "pessoa_desarmada": 638,
+     "pessoa_objeto": 701,
+     "total": 1989,
+     "rotulos": 176
+    },
+    "val": {
+     "pessoa_armada": 85,
+     "pessoa_desarmada": 92,
+     "pessoa_objeto": 91,
+     "total": 268,
+     "rotulos": 24
+    },
+    "total": {
+     "pessoa_armada": 735,
+     "pessoa_desarmada": 730,
+     "pessoa_objeto": 792,
+     "total": 2257
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_75g"
+   ],
+   "manifest": {
+    "linhas": 200,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     43
+    ],
+    "alt_m": {
+     "min": 69.1,
+     "max": 81.0,
+     "media": 75.3
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 9.6,
+     "max": 73.2,
+     "media": 41.8
+    },
+    "regimes": {
+     "sol_duro": 34,
+     "sol_baixo": 34,
+     "nublado": 33,
+     "encoberto": 33,
+     "neblina": 33,
+     "chuva": 33
+    },
+    "split_manifest": {
+     "train": 176,
+     "val": 24
+    },
+    "pessoas_colocadas": 3635,
+    "caixas_retidas": 2257,
+    "fracao_retida": 0.621,
+    "render_s_total": 24718.8,
+    "render_s_mediana": 121.1,
+    "render_h_total": 6.87,
+    "tipos_carregados": {
+     "cano_pvc": 98,
+     "carabina": 139,
+     "enxada": 51,
+     "espingarda": 141,
+     "fuzil_ak": 199,
+     "fuzil_ar": 174,
+     "guarda_chuva": 78,
+     "mangueira": 44,
+     "pistola": 82,
+     "rodo": 88,
+     "tabua": 83,
+     "tapete": 67,
+     "vassoura": 159,
+     "vergalhao": 124
+    },
+    "pegada_nominal_m": [
+     94.0,
+     52.9
+    ],
+    "gsd_cm_px": 2.45
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_armado_75g_tiles",
+   "ladrilhos": {
+    "train": 1287,
+    "val": 176
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 1058,
+     "pessoa_desarmada": 993,
+     "pessoa_objeto": 1131,
+     "total": 3182,
+     "ladrilhos_vazios": 13
+    },
+    "val": {
+     "pessoa_armada": 135,
+     "pessoa_desarmada": 152,
+     "pessoa_objeto": 158,
+     "total": 445,
+     "ladrilhos_vazios": 3
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_armado_150g",
+   "nome_artigo": "Twin of S-nadir-35 at 150 m",
+   "papel": "treino armado_150g; comando do 35 m com --alt 150 --alt-jitter 13",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_150g",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 173,
+    "val": 27,
+    "total": 200
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 692,
+     "pessoa_desarmada": 619,
+     "pessoa_objeto": 640,
+     "total": 1951,
+     "rotulos": 173
+    },
+    "val": {
+     "pessoa_armada": 92,
+     "pessoa_desarmada": 104,
+     "pessoa_objeto": 101,
+     "total": 297,
+     "rotulos": 27
+    },
+    "total": {
+     "pessoa_armada": 784,
+     "pessoa_desarmada": 723,
+     "pessoa_objeto": 741,
+     "total": 2248
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_150g"
+   ],
+   "manifest": {
+    "linhas": 200,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     43
+    ],
+    "alt_m": {
+     "min": 137.1,
+     "max": 162.8,
+     "media": 150.3
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 9.3,
+     "max": 73.9,
+     "media": 42.5
+    },
+    "regimes": {
+     "sol_duro": 34,
+     "sol_baixo": 34,
+     "nublado": 33,
+     "encoberto": 33,
+     "neblina": 33,
+     "chuva": 33
+    },
+    "split_manifest": {
+     "train": 173,
+     "val": 27
+    },
+    "pessoas_colocadas": 3618,
+    "caixas_retidas": 2248,
+    "fracao_retida": 0.621,
+    "render_s_total": 25787.1,
+    "render_s_mediana": 128.4,
+    "render_h_total": 7.16,
+    "tipos_carregados": {
+     "cano_pvc": 92,
+     "carabina": 159,
+     "enxada": 57,
+     "espingarda": 120,
+     "fuzil_ak": 218,
+     "fuzil_ar": 195,
+     "guarda_chuva": 71,
+     "mangueira": 40,
+     "pistola": 92,
+     "rodo": 78,
+     "tabua": 91,
+     "tapete": 63,
+     "vassoura": 129,
+     "vergalhao": 120
+    },
+    "pegada_nominal_m": [
+     187.7,
+     105.6
+    ],
+    "gsd_cm_px": 4.89
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_armado_150g_tiles",
+   "ladrilhos": {
+    "train": 1215,
+    "val": 180
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "pessoa_armada": 1194,
+     "pessoa_desarmada": 1031,
+     "pessoa_objeto": 1068,
+     "total": 3293,
+     "ladrilhos_vazios": 18
+    },
+    "val": {
+     "pessoa_armada": 169,
+     "pessoa_desarmada": 157,
+     "pessoa_objeto": 170,
+     "total": 496,
+     "ladrilhos_vazios": 1
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  },
+  {
+   "nome_interno": "ds_armado_35_extra",
+   "nome_artigo": "New frames, 35 m (80)",
+   "papel": "indices 200 a 279 da semente 43, so validacao; teste de armado_35 e sementes",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_35_extra",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 0,
+    "val": 80,
+    "total": 80
+   },
+   "caixas": {
+    "train": {
+     "total": 0,
+     "rotulos": 0
+    },
+    "val": {
+     "pessoa_armada": 346,
+     "pessoa_desarmada": 315,
+     "pessoa_objeto": 292,
+     "total": 953,
+     "rotulos": 80
+    },
+    "total": {
+     "pessoa_armada": 346,
+     "pessoa_desarmada": 315,
+     "pessoa_objeto": 292,
+     "total": 953
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_35_extra"
+   ],
+   "manifest": {
+    "linhas": 80,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     43
+    ],
+    "alt_m": {
+     "min": 32.1,
+     "max": 38.0,
+     "media": 34.9
+    },
+    "pitch_graus": {
+     "min": 0.1,
+     "max": 3.4,
+     "media": 1.6
+    },
+    "elev_sol_graus": {
+     "min": 10.4,
+     "max": 73.6,
+     "media": 42.3
+    },
+    "regimes": {
+     "nublado": 14,
+     "encoberto": 14,
+     "neblina": 13,
+     "chuva": 13,
+     "sol_duro": 13,
+     "sol_baixo": 13
+    },
+    "split_manifest": {
+     "val": 80
+    },
+    "pessoas_colocadas": 1448,
+    "caixas_retidas": 953,
+    "fracao_retida": 0.658,
+    "render_s_total": 9522.1,
+    "render_s_mediana": 116.2,
+    "render_h_total": 2.65,
+    "tipos_carregados": {
+     "cano_pvc": 46,
+     "carabina": 78,
+     "enxada": 10,
+     "espingarda": 68,
+     "fuzil_ak": 94,
+     "fuzil_ar": 70,
+     "guarda_chuva": 36,
+     "mangueira": 17,
+     "pistola": 36,
+     "rodo": 37,
+     "tabua": 34,
+     "tapete": 30,
+     "vassoura": 42,
+     "vergalhao": 40
+    },
+    "pegada_nominal_m": [
+     43.6,
+     24.5
+    ],
+    "gsd_cm_px": 1.14
+   }
+  },
+  {
+   "nome_interno": "ds_armado_75g_extra",
+   "nome_artigo": "New frames, twin at 75 m (80)",
+   "papel": "indices 200 a 279, gemeo a 75 m, so validacao; teste de armado_75g e sementes",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_75g_extra",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 0,
+    "val": 80,
+    "total": 80
+   },
+   "caixas": {
+    "train": {
+     "total": 0,
+     "rotulos": 0
+    },
+    "val": {
+     "pessoa_armada": 257,
+     "pessoa_desarmada": 292,
+     "pessoa_objeto": 288,
+     "total": 837,
+     "rotulos": 80
+    },
+    "total": {
+     "pessoa_armada": 257,
+     "pessoa_desarmada": 292,
+     "pessoa_objeto": 288,
+     "total": 837
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_75g_extra"
+   ],
+   "manifest": {
+    "linhas": 80,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     43
+    ],
+    "alt_m": {
+     "min": 69.1,
+     "max": 80.7,
+     "media": 74.5
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.5,
+     "media": 1.6
+    },
+    "elev_sol_graus": {
+     "min": 9.8,
+     "max": 74.0,
+     "media": 42.9
+    },
+    "regimes": {
+     "nublado": 14,
+     "encoberto": 14,
+     "neblina": 13,
+     "chuva": 13,
+     "sol_duro": 13,
+     "sol_baixo": 13
+    },
+    "split_manifest": {
+     "val": 80
+    },
+    "pessoas_colocadas": 1392,
+    "caixas_retidas": 837,
+    "fracao_retida": 0.601,
+    "render_s_total": 9994.6,
+    "render_s_mediana": 122.2,
+    "render_h_total": 2.78,
+    "tipos_carregados": {
+     "cano_pvc": 37,
+     "carabina": 55,
+     "enxada": 27,
+     "espingarda": 45,
+     "fuzil_ak": 67,
+     "fuzil_ar": 58,
+     "guarda_chuva": 31,
+     "mangueira": 13,
+     "pistola": 32,
+     "rodo": 46,
+     "tabua": 30,
+     "tapete": 18,
+     "vassoura": 41,
+     "vergalhao": 45
+    },
+    "pegada_nominal_m": [
+     93.0,
+     52.3
+    ],
+    "gsd_cm_px": 2.42
+   }
+  },
+  {
+   "nome_interno": "ds_armado_75_inedita",
+   "nome_artigo": "Unseen-weapon test frames (50)",
+   "papel": "comando do ds_armado_75 com semente 47 e --armas mista_inedita; teste de armado_75 e 75g",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_75_inedita",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 47,
+    "val": 3,
+    "total": 50
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 243,
+     "pessoa_desarmada": 212,
+     "pessoa_objeto": 216,
+     "total": 671,
+     "rotulos": 47
+    },
+    "val": {
+     "pessoa_armada": 13,
+     "pessoa_desarmada": 10,
+     "pessoa_objeto": 14,
+     "total": 37,
+     "rotulos": 3
+    },
+    "total": {
+     "pessoa_armada": 256,
+     "pessoa_desarmada": 222,
+     "pessoa_objeto": 230,
+     "total": 708
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_75_inedita"
+   ],
+   "manifest": {
+    "linhas": 50,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     47
+    ],
+    "alt_m": {
+     "min": 69.2,
+     "max": 80.8,
+     "media": 75.2
+    },
+    "pitch_graus": {
+     "min": 0.1,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 12.6,
+     "max": 72.1,
+     "media": 40.7
+    },
+    "regimes": {
+     "sol_duro": 9,
+     "sol_baixo": 9,
+     "nublado": 8,
+     "encoberto": 8,
+     "neblina": 8,
+     "chuva": 8
+    },
+    "split_manifest": {
+     "train": 47,
+     "val": 3
+    },
+    "pessoas_colocadas": 1092,
+    "caixas_retidas": 708,
+    "fracao_retida": 0.648,
+    "render_s_total": 8186.4,
+    "render_s_mediana": 160.9,
+    "render_h_total": 2.27,
+    "tipos_carregados": {
+     "cano_pvc": 28,
+     "carabina": 28,
+     "enxada": 19,
+     "espingarda": 15,
+     "fuzil_ak": 27,
+     "fuzil_ar": 35,
+     "fuzil_fal": 62,
+     "guarda_chuva": 29,
+     "mangueira": 12,
+     "pistola": 20,
+     "rodo": 20,
+     "submetralhadora": 69,
+     "tabua": 30,
+     "tapete": 15,
+     "vassoura": 41,
+     "vergalhao": 36
+    },
+    "pegada_nominal_m": [
+     93.9,
+     52.8
+    ],
+    "gsd_cm_px": 2.45
+   }
+  },
+  {
+   "nome_interno": "ds_armado_75_porte",
+   "nome_artigo": "Carried-as-weapon re-render (50)",
+   "papel": "mesmo comando do inedita com --objeto-porte-arma; gemeo caixa a caixa",
+   "pasta": "C:\\arma3-favela\\blender\\ds_armado_75_porte",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada",
+    "2: pessoa_objeto"
+   ],
+   "quadros": {
+    "train": 47,
+    "val": 3,
+    "total": 50
+   },
+   "caixas": {
+    "train": {
+     "pessoa_armada": 243,
+     "pessoa_desarmada": 212,
+     "pessoa_objeto": 217,
+     "total": 672,
+     "rotulos": 47
+    },
+    "val": {
+     "pessoa_armada": 13,
+     "pessoa_desarmada": 10,
+     "pessoa_objeto": 14,
+     "total": 37,
+     "rotulos": 3
+    },
+    "total": {
+     "pessoa_armada": 256,
+     "pessoa_desarmada": 222,
+     "pessoa_objeto": 231,
+     "total": 709
+    }
+   },
+   "manifest_origem": [
+    "ds_armado_75_porte"
+   ],
+   "manifest": {
+    "linhas": 50,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     47
+    ],
+    "alt_m": {
+     "min": 69.2,
+     "max": 80.8,
+     "media": 75.2
+    },
+    "pitch_graus": {
+     "min": 0.1,
+     "max": 3.5,
+     "media": 1.7
+    },
+    "elev_sol_graus": {
+     "min": 12.6,
+     "max": 72.1,
+     "media": 40.7
+    },
+    "regimes": {
+     "sol_duro": 9,
+     "sol_baixo": 9,
+     "nublado": 8,
+     "encoberto": 8,
+     "neblina": 8,
+     "chuva": 8
+    },
+    "split_manifest": {
+     "train": 47,
+     "val": 3
+    },
+    "pessoas_colocadas": 1092,
+    "caixas_retidas": 709,
+    "fracao_retida": 0.649,
+    "render_s_total": 8061.2,
+    "render_s_mediana": 157.2,
+    "render_h_total": 2.24,
+    "tipos_carregados": {
+     "cano_pvc": 28,
+     "carabina": 28,
+     "enxada": 19,
+     "espingarda": 15,
+     "fuzil_ak": 27,
+     "fuzil_ar": 35,
+     "fuzil_fal": 62,
+     "guarda_chuva": 29,
+     "mangueira": 12,
+     "pistola": 20,
+     "rodo": 20,
+     "submetralhadora": 69,
+     "tabua": 30,
+     "tapete": 15,
+     "vassoura": 42,
+     "vergalhao": 36
+    },
+    "pegada_nominal_m": [
+     93.9,
+     52.8
+    ],
+    "gsd_cm_px": 2.45
+   }
+  },
+  {
+   "nome_interno": "ds_regime_4k",
+   "nome_artigo": "Per-regime test frames (120)",
+   "papel": "indices 180 a 299 da semente 21 com o comando do ds_morro_4k, so validacao; teste de s_nadir_4k",
+   "pasta": "C:\\arma3-favela\\blender\\ds_regime_4k",
+   "classes_data_yaml": [
+    "0: pessoa_armada",
+    "1: pessoa_desarmada"
+   ],
+   "quadros": {
+    "train": 0,
+    "val": 120,
+    "total": 120
+   },
+   "caixas": {
+    "train": {
+     "total": 0,
+     "rotulos": 0
+    },
+    "val": {
+     "pessoa_armada": 1085,
+     "pessoa_desarmada": 1119,
+     "total": 2204,
+     "rotulos": 120
+    },
+    "total": {
+     "pessoa_armada": 1085,
+     "pessoa_desarmada": 1119,
+     "total": 2204
+    }
+   },
+   "manifest_origem": [
+    "ds_regime_4k"
+   ],
+   "manifest": {
+    "linhas": 120,
+    "resolucao": [
+     "3840x2160"
+    ],
+    "sementes": [
+     21
+    ],
+    "alt_m": {
+     "min": 144.1,
+     "max": 156.0,
+     "media": 150.1
+    },
+    "pitch_graus": {
+     "min": 0.0,
+     "max": 3.5,
+     "media": 1.8
+    },
+    "elev_sol_graus": {
+     "min": 10.8,
+     "max": 71.5,
+     "media": 41.9
+    },
+    "regimes": {
+     "sol_duro": 20,
+     "sol_baixo": 20,
+     "nublado": 20,
+     "encoberto": 20,
+     "neblina": 20,
+     "chuva": 20
+    },
+    "split_manifest": {
+     "val": 120
+    },
+    "pessoas_colocadas": 3044,
+    "caixas_retidas": 2204,
+    "fracao_retida": 0.724,
+    "render_s_total": 21205.9,
+    "render_s_mediana": 175.4,
+    "render_h_total": 5.89,
+    "tipos_carregados": {
+     "carabina": 206,
+     "espingarda": 220,
+     "fuzil_ak": 289,
+     "fuzil_ar": 264,
+     "pistola": 106
+    },
+    "pegada_nominal_m": [
+     187.5,
+     105.4
+    ],
+    "gsd_cm_px": 4.88
+   },
+   "ladrilhos_pasta": "C:\\arma3-favela\\blender\\ds_regime_4k_tiles",
+   "ladrilhos": {
+    "train": 0,
+    "val": 885
+   },
+   "caixas_ladrilhos": {
+    "train": {
+     "total": 0,
+     "ladrilhos_vazios": 0
+    },
+    "val": {
+     "pessoa_armada": 1890,
+     "pessoa_desarmada": 1959,
+     "total": 3849,
+     "ladrilhos_vazios": 9
+    }
+   },
+   "ladrilho_px": [
+    1280,
+    1280
+   ]
+  }
+ ],
+ "visdrone": [
+  {
+   "nome_interno": "visdrone_yolo/train",
+   "nome_artigo": "VisDrone-DET train (full, 6,471)",
+   "pasta": "C:\\arma3-favela\\visdrone\\visdrone_yolo\\train",
+   "imagens": 6471,
+   "rotulos": 6471,
+   "instancias_pessoa": 106396,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 787
+  },
+  {
+   "nome_interno": "visdrone_yolo/val",
+   "nome_artigo": "VisDrone-DET val (test set, 548)",
+   "pasta": "C:\\arma3-favela\\visdrone\\visdrone_yolo\\val",
+   "imagens": 548,
+   "rotulos": 548,
+   "instancias_pessoa": 13969,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 17
+  },
+  {
+   "nome_interno": "visdrone_sub/train",
+   "nome_artigo": "R (1,106 images, seed 21)",
+   "pasta": "C:\\arma3-favela\\visdrone\\visdrone_sub\\train",
+   "imagens": 1106,
+   "rotulos": 1106,
+   "instancias_pessoa": 18858,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 125
+  },
+  {
+   "nome_interno": "ft/ft05",
+   "nome_artigo": "5 per cent slice (324)",
+   "pasta": "C:\\arma3-favela\\visdrone\\ft\\ft05",
+   "imagens": 324,
+   "rotulos": 324,
+   "instancias_pessoa": 5883,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 38
+  },
+  {
+   "nome_interno": "ft/ft10",
+   "nome_artigo": "10 per cent slice (647)",
+   "pasta": "C:\\arma3-favela\\visdrone\\ft\\ft10",
+   "imagens": 647,
+   "rotulos": 647,
+   "instancias_pessoa": 11091,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 71
+  },
+  {
+   "nome_interno": "ft/sel",
+   "nome_artigo": "5 per cent selection slice (324)",
+   "pasta": "C:\\arma3-favela\\visdrone\\ft\\sel",
+   "imagens": 324,
+   "rotulos": 324,
+   "instancias_pessoa": 5886,
+   "classes_presentes": [
+    0
+   ],
+   "imagens_sem_caixa": 29
+  }
+ ],
+ "visdrone_val_formato_original": {
+  "imagens": 548,
+  "pedestrian": 8844,
+  "people": 5125,
+  "pessoa_total": 13969,
+  "regioes_ignoradas_cat0": 1378,
+  "imagens_com_regiao_ignorada": 340,
+  "linhas_score0_outras_categorias": 32,
+  "regra": "categoria 1 ou 2 e score != 0 (visdrone_to_yolo.py descarta score 0 = regiao ignorada)"
+ },
+ "fatias_json": {
+  "sel": 324,
+  "ft05": 324,
+  "ft10": 647,
+  "treino_total": 6471,
+  "semente": 2609,
+  "ft05_contido_em_ft10": true,
+  "sel_disjunto": true
+ }
+}

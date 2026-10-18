@@ -1,0 +1,65 @@
+{
+ "gerado_em": "2026-10-17",
+ "agente": "D1",
+ "camera_do_gerador": {
+  "origem": "07-blender/scripts/gen_morro.py, linhas 1503 a 1508 (Z30_LENS = 4.3 * 36 / 5.37; c.sensor_width = 36; c.sensor_fit = HORIZONTAL; c.lens = lente) e linha 1603 (CAMS['nadir'] = camera(..., Z30_LENS, ...)); todo corpus usa cam_ds = CAMS['nadir'] (linha 1690)",
+  "sensor_mm": 36.0,
+  "lente_equivalente_mm": 28.8268,
+  "premissa": "Z30 com lente de 4,3 mm sobre sensor de 5,37 mm de largura; 4,3 x 36 / 5,37 = 28,83 mm equivalente",
+  "fov_horizontal_graus": 63.96,
+  "fov_vertical_graus_16_9": 38.71,
+  "largura_no_solo_formula": "largura_m = altitude_m x 36 / 28,8268 = altitude_m x 1,2488; altura_m = largura_m x 1080/1920; GSD_cm = largura_m / largura_px x 100",
+  "manuscrito_7_3": "'a Zenmuse Z30 at 1920 by 1080, corresponding to a 4.3 mm lens on a 5.37 mm sensor, or approximately 28.8 mm on a 36 mm equivalent ... At that altitude the frame covers approximately 187 by 105 m ... 9.76 cm per pixel ... 4.88 cm per pixel ... at 75 m ... 94 by 53 m and ... 2.44 cm per pixel at 3840 by 2160'",
+  "concordancia": "o codigo e a secao 7.3 do manuscrito de 30/09 dizem a mesma coisa; o 35 m aparece na 7.3 so pelo nome (S-nadir-35), sem GSD; a tabela 8.1 traz 9,76 e 4,88, e a 9.5 diz 1,1 cm/px para 35 m (abaixo: 1,14)"
+ },
+ "tabela_gerador": {
+  "nota": "altitude nominal (--alt); as altitudes realizadas variam com --alt-jitter (6 m a 150 e 75 m originais; 3 m a 35 m; 6 m no gemeo 75; 13 m no gemeo 150) e a GSD realizada media de cada corpus esta em corpora.json",
+  "linhas": [
+   {"altitude_m": 35, "largura_m": 43.71, "altura_m": 24.59, "render_px": "1920x1080", "gsd_cm_px": 2.277, "pessoa_0_48m_px": 21.1, "fuzil_0_92m_px": 40.4},
+   {"altitude_m": 35, "largura_m": 43.71, "altura_m": 24.59, "render_px": "3840x2160", "gsd_cm_px": 1.138, "pessoa_0_48m_px": 42.2, "fuzil_0_92m_px": 80.8},
+   {"altitude_m": 75, "largura_m": 93.66, "altura_m": 52.69, "render_px": "1920x1080", "gsd_cm_px": 4.878, "pessoa_0_48m_px": 9.8, "fuzil_0_92m_px": 18.9},
+   {"altitude_m": 75, "largura_m": 93.66, "altura_m": 52.69, "render_px": "3840x2160", "gsd_cm_px": 2.439, "pessoa_0_48m_px": 19.7, "fuzil_0_92m_px": 37.7},
+   {"altitude_m": 120, "largura_m": 149.86, "altura_m": 84.30, "render_px": "3840x2160", "gsd_cm_px": 3.903, "pessoa_0_48m_px": 12.3, "fuzil_0_92m_px": 23.6, "nota": "altitude do preset --obliqua em 4K; GSD nominal de nadir, nao a GSD no solo da camera inclinada"},
+   {"altitude_m": 150, "largura_m": 187.33, "altura_m": 105.37, "render_px": "1920x1080", "gsd_cm_px": 9.757, "pessoa_0_48m_px": 4.9, "fuzil_0_92m_px": 9.4},
+   {"altitude_m": 150, "largura_m": 187.33, "altura_m": 105.37, "render_px": "3840x2160", "gsd_cm_px": 4.878, "pessoa_0_48m_px": 9.8, "fuzil_0_92m_px": 18.9}
+  ]
+ },
+ "z30_real": {
+  "fonte_primaria": {
+   "documento": "DJI, Zenmuse Z30 User Manual, v1.2 (PDF datado de 2019-09-06, '© 2018 DJI'), secao Specifications, paginas 13 e 14",
+   "url_pdf": "https://dl.djicdn.com/downloads/Z30/20190906/Z30_User_Manual_EN.pdf",
+   "url_pagina_de_downloads": "https://www.dji.com/downloads/products/zenmuse-z30",
+   "citado_verbatim": {
+    "Sensor": "CMOS, 1/2.8\" Effective Pixels: 2.13 M",
+    "Lens": "30× Optical Zoom F = 4.3 mm to 129 mm (29 mm to 872 mm equivalent) F1.6 to F4.7",
+    "FOV": "63.7° to 2.3°",
+    "Digital Zoom": "6×",
+    "Video Resolution": "FHD: 1920×1080 25/30p",
+    "Photo Resolution": "16:9, 1920×1080",
+    "Gimbal Angular Vibration Range": "±0.01°",
+    "Weight": "556 g"
+   },
+   "nao_publicado_pela_dji": "largura fisica do sensor em mm; tamanho do pixel; se o FOV e horizontal ou diagonal"
+  },
+  "largura_de_sensor_implicita": {
+   "pelo_fov_horizontal_63_7_a_4_3mm": "2 x 4,3 x tan(31,85 graus) = 5,34 mm",
+   "pelo_equivalente_29mm": "fator de corte 29/4,3 = 6,74; diagonal 43,27/6,74 = 6,42 mm; largura 16:9 = 5,59 mm",
+   "gerador": "5,37 mm (fica entre os dois; FOV horizontal resultante 63,96 graus contra 63,7 do manual, diferenca de 0,3 grau)"
+  },
+  "computado_a_150m_nadir_1920px": {
+   "metodo": "largura_m = 2 x H x tan(FOV/2) com o FOV horizontal do manual; GSD = largura / 1920; altura = largura x 9/16",
+   "grande_angular_4_3mm": {"fov_graus": 63.7, "largura_m": 186.37, "altura_m": 104.83, "gsd_cm_px": 9.707, "gerador_equivalente": "187,33 m e 9,757 cm/px (0,5 por cento maior)"},
+   "tele_129mm_30x": {"fov_graus": 2.3, "largura_m": 6.02, "altura_m": 3.39, "gsd_cm_px": 0.314, "nota": "escalar a largura grande-angular por 30 da 6,21 m e FOV 2,37 graus; o manual arredonda para 2,3"}
+  },
+  "zoom_para_casar_a_gsd_dos_corpora_sinteticos_de_150m": {
+   "metodo": "largura necessaria = GSD_alvo x 1920 px; fator de zoom = 186,37 / largura necessaria; distancia focal = 4,3 mm x fator; equivalente 35 mm = focal x 29/4,3; FOV = 2 x atan(largura / (2 x 150))",
+   "linhas": [
+    {"alvo": "render 4K a 150 m (corpus de referencia)", "gsd_cm_px": 4.878, "largura_m": 93.66, "altura_m": 52.69, "zoom": 1.99, "focal_mm": 8.6, "equivalente_mm": 58, "fov_h_graus": 34.7},
+    {"alvo": "S-nadir-75 em 4K", "gsd_cm_px": 2.439, "largura_m": 46.83, "altura_m": 26.34, "zoom": 3.98, "focal_mm": 17.1, "equivalente_mm": 115, "fov_h_graus": 17.7},
+    {"alvo": "S-nadir-35 em 4K", "gsd_cm_px": 1.138, "largura_m": 21.85, "altura_m": 12.29, "zoom": 8.53, "focal_mm": 36.7, "equivalente_mm": 247, "fov_h_graus": 8.3}
+   ],
+   "leitura": "a GSD de 1,14 cm/px do corpus de 35 m e alcancavel a 150 m com 8,5x dos 30x opticos, ao custo de a pegada cair de 186 x 105 m para 22 x 12 m (73 vezes menos area por quadro); a de 2,44 cm/px exige 4x e pegada de 47 x 26 m; o proprio render 4K a 150 m equivale a 2x de zoom na camera real"
+  },
+  "o_que_nao_foi_computado": "estabilidade da imagem com zoom (a especificacao do gimbal, ±0,01 grau, e a unica cifra publicada; a 8,5x, 0,01 grau a 150 m desloca o quadro 2,6 cm, menos de 3 pixels da GSD alvo); borrao de movimento por deslocamento do drone; resolucao optica real da lente nas focais longas (nao publicada)"
+ }
+}

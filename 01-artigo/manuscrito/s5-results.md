@@ -1,0 +1,317 @@
+## Results
+
+Section 5.1 reports the model-free characterisation of the target, Sections 5.2 to 5.5 report Experiments A to D in the order of the research questions, and Section 5.6 applies the criteria of Sections 4.6 and 4.7 to every pre-specified check. Table @tab{visao} collects every model with its test set and headline figure; what the observations mean for RQ1 to RQ3 is left to Section 6.
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:visao|Results at a glance: mAP50 on VisDrone-DET val with 95 per cent intervals by resampling the 548 test images, and efficacy against R on the same resamples. Three-class models carry their three-class mAP50 and the object rate at confidence 0.25 on their selection split and on held-out frames rendered after training.-->
+
+| Model | Training data (real images) | Test set | mAP50 (95% interval) | Efficacy (95% interval) |
+|---|---|---|---|---|
+| R | 1,106 images of VisDrone-DET train (1,106) | VisDrone-DET val | 0.6311 (0.6149 to 0.6471) | ceiling |
+| S-nadir-150 | 180 frames, 1 settlement, nadir, 4.88 cm/px (0) | VisDrone-DET val | 0.0102 (0.0087 to 0.0133) | 1.6% (1.4 to 2.1) |
+| S-nadir-150-six | 180 frames, 6 settlements, nadir, 4.88 cm/px (0) | VisDrone-DET val | 0.0190 (0.0142 to 0.0211) | 3.0% (2.3 to 3.3) |
+| S-oblique | 180 frames, 1 settlement, oblique, 3.90 cm/px nominal (0) | VisDrone-DET val | 0.0614 (0.0554 to 0.0673) | 9.7% (8.9 to 10.6) |
+| S-oblique-six, seed 0 (mean of 3 seeds) | 180 frames, 6 settlements, pitch 45 to 56 degrees (0) | VisDrone-DET val | 0.1055 (0.0980 to 0.1148); mean 0.0967 | 16.7% (15.7 to 18.1); mean 15.3% |
+| F-synthetic, 5 and 10% | from S-oblique-six (324 and 647) | VisDrone-DET val | 0.4424 (0.4260 to 0.4587); 0.5095 (0.4935 to 0.5264) | 70.1% (68.4 to 71.8); 80.7% (79.3 to 82.1) |
+| F-generic, 5 and 10% | from COCO weights (324 and 647) | VisDrone-DET val | 0.5220 (0.5045 to 0.5403); 0.5709 (0.5535 to 0.5883) | 82.7% (81.4 to 84.1); 90.5% (89.2 to 91.6) |
+| F-joint, 5 and 10% | COCO weights, 890 synthetic tiles and the real images (324 and 647) | VisDrone-DET val | 0.4607 (0.4444 to 0.4789); 0.5428 (0.5259 to 0.5610) | 73.0% (71.6 to 74.6); 86.0% (84.8 to 87.4) |
+| S-nadir-75 | 200 frames, 3 classes, 2.44 cm/px (0) | selection split, 27 frames; held-out, 50 | 0.579; object rate 0.237; held-out 0.152 | not applicable |
+| S-nadir-35 | 200 frames, 3 classes, 1.14 cm/px (0) | selection split, 35; held-out, 80 | 0.514; object rate 0.273; held-out 0.253 | not applicable |
+| Twin of S-nadir-35 at 75 m | the 35 m corpus at 2.44 cm/px (0) | selection split, 24; held-out, 80 | 0.508; object rate 0.165; held-out 0.125 | not applicable |
+| Twin of S-nadir-35 at 150 m | the 35 m corpus at 4.88 cm/px (0) | selection split, 27 | validity condition failed: 148 of 297 figures found | not applicable |
+
+</div>
+
+### 5.1 Characterisation of the target: size, shape and contrast
+
+Measured on the annotations and the rendered pixels alone, GSD set the size of the target, camera pitch set its shape, the illumination regime moved its contrast against local clutter, and the crops of the three classes did not separate under a frozen generic extractor at any of the three GSDs.
+
+**Size.** Table @tab{gsd} gives the size of the annotated box by GSD.
+
+<!--TAB:gsd|Target size by GSD: median long side of the annotated box and the share of instances whose shorter side falls below one stride of the detector (8 pixels), at native resolution, on the training split of the pilot corpus, both splits of the corpus of record and the validation split of the benchmark.-->
+
+| Corpus | Altitude, GSD (cm/px) | Render | Median long side | Shorter side below 8 px |
+|---|---|---|---|---|
+| Pilot corpus | nadir 150 m, 9.76 | 1920 by 1080 | 10.1 px | 66.9% |
+| Corpus of record | nadir 150 m, 4.88 | 3840 by 2160 | 20.6 px | 0.8% |
+| VisDrone-DET val | not recorded | mixed, 408 of 548 at 1360 by 765 | 25.0 px | 30.5% |
+
+Halving the GSD from 9.76 to 4.88 cm per pixel took the median long side from 10.1 to 20.6 pixels and the share of instances below one stride on the shorter side from 66.9 to 0.8 per cent, against 30.5 per cent in the benchmark. In area the median synthetic instance at 4.88 cm per pixel covered 301 square pixels and the median benchmark instance, training and validation splits pooled, 300, a ratio of 1.00; on the long side the two differed, 20.6 against 24.0 pixels over the pooled splits and 25.0 on the validation split. At 2.44 cm per pixel (75 m) the median instance measured 47.6 by 41.7 pixels, 6.4 times the area at 4.88 over all classes and 5.2 times for armed figures; at 1.14 (35 m) it measured 121.8 by 103.1 pixels. These sizes are at native resolution, before the resizing of Section 4.5.
+
+**Shape.** Table @tab{forma} gives the height-to-width ratio of the same annotation sets, and Table @tab{pitch} splits the S-oblique corpus by the pitch recorded per image.
+
+<!--TAB:forma|Apparent shape of the target: median box dimensions and height-to-width ratio by corpus and camera geometry, from the full-frame labels. The nadir rows carry the generator setting (within 3.5 degrees of vertical); the oblique rows record pitch per image; the benchmark records no acquisition geometry.-->
+
+| Corpus and geometry | Altitude, GSD (cm/px) | Median width | Median height | Median h/w | Instances |
+|---|---|---|---|---|---|
+| Pilot corpus, nadir | 150 m, 9.76 | 8.3 px | 8.2 px | **0.98** | 565 |
+| Corpus of record, nadir | 150 m, 4.88 | 17.6 px | 17.5 px | **0.98** | 3,225 |
+| S-oblique, pitch 26 to 52 degrees, one settlement | 120 m, 3.90 nominal | 17.9 px | 26.4 px | **1.46** | 1,912 |
+| S-oblique-six, pitch 45 to 56 degrees, six settlements, figures carrying nothing | 120 m, 3.90 nominal | 13.3 px | 25.2 px | **1.85** | 1,521 |
+| VisDrone-DET train, real acquisition | not recorded | 13.0 px | 24.0 px | **1.95** | 106,396 |
+| VisDrone-DET val, real acquisition | not recorded | 12.0 px | 25.0 px | **2.20** | 13,969 |
+
+<!--TAB:pitch|Height-to-width ratio of the annotated box by camera pitch in the S-oblique corpus (120 m, 3.90 cm per pixel nominal), from the full-frame labels.-->
+
+| Pitch recorded per image | Instances | Median h/w, all figures | Median h/w, figures carrying nothing |
+|---|---|---|---|
+| 26 to 30 degrees | 482 | 1.28 | 1.35 |
+| 30 to 35 degrees | 512 | 1.41 | 1.50 |
+| 35 to 40 degrees | 231 | 1.49 | 1.58 |
+| 40 to 45 degrees | 359 | 1.64 | 1.82 |
+| 45 to 50 degrees | 222 | 1.64 | 1.78 |
+| 50 to 52 degrees | 106 | 1.70 | 1.97 |
+
+The two nadir corpora, which differ by a factor of 2 in render resolution and of 6 in instance count, agreed on the ratio to the second decimal, against 1.95 and 2.20 on the two benchmark splits. In the oblique corpus the ratio rose with pitch from 1.28 to 1.70, not strictly between 40 and 50 degrees, and for figures carrying nothing it reached the 1.95 of the benchmark's training split only between 50 and 52 degrees, where it measured 1.97 on 49 figures. S-oblique as rendered realised 1.46 rather than the 1.95 it was calibrated for, its armed figures measuring 1.38 against 1.58 for figures carrying nothing, since the box includes the weapon; S-oblique-six realised 1.85 at 13.3 by 25.2 pixels.
+
+**Contrast.** Table @tab{contraste} gives figure-to-background contrast by illumination regime.
+
+<!--TAB:contraste|Figure-to-background contrast by illumination regime in the pilot corpus (nadir, 150 m, 9.76 cm per pixel): mean frame luminance, raw luminance difference in digital numbers, contrast against local clutter aggregated per frame, and its dispersion between frames; 684 instances over 48 frames, 8 per regime.-->
+
+| Regime | Mean frame luminance | Raw difference (DN) | Contrast over clutter, median per frame | SD between frames | Instances |
+|---|---|---|---|---|---|
+| Hard sun | 87.0 | 15.2 | **0.64** | 0.14 | 113 |
+| Low sun | 56.0 | 9.0 | 0.70 | 0.20 | 117 |
+| Overcast | 84.6 | **16.4** | **0.88** | 0.26 | 122 |
+| Haze | 94.4 | 9.6 | 0.79 | 0.25 | 113 |
+| Heavy overcast | 55.6 | 11.2 | 0.72 | 0.38 | 91 |
+| Rain | 35.1 | 6.6 | **0.63** | 0.12 | 128 |
+
+Overcast gave both the largest raw difference and the largest contrast over clutter; hard sun and rain were the two lowest on the latter, and hard sun reached that while sitting second on raw contrast. With 8 frames per regime and a between-frame dispersion of 0.12 to 0.38, only the gap between the extremes, rain and hard sun at 0.63 and 0.64 against overcast at 0.88, approached one standard deviation; the ordering of the four intermediate regimes was not resolvable at this sample size. Figure @fig{fig7_armados} shows what the detector receives at the three GSDs of Experiment C.
+
+<!--FIG:06-resultados/figuras/fig7_armados.jpg|Figures carrying a rifle, a pistol, nothing, a broom, a length of pipe or a closed umbrella at 1.14, 2.44 and 4.88 cm per pixel (35, 75 and 150 m). Each is cropped from a rendered frame of the 35 m corpus, its twins or their held-out frames and scaled to the same size without smoothing, so that every crop shows the pixels the detector receives. The carrying figures were chosen by eye, under clear light, as ones whose item sits in the hand close to the horizontal; in many frames the item points steeply downward or does not sit in the grip (Section 4.2.2).-->
+
+**Crop similarity.** Under the protocol of Section 4.4, the co-similarity matrices of the three classes were flat at every GSD (Figure @fig{fig13_similaridade}, Table @tab{similaridade}). After centring, every entry lay between -0.03 and +0.03 (between 0.71 and 0.79 before centring); the largest entry was 0.025, 0.026, 0.032 and 0.020 at 35 m, the twin at 75 m, the twin at 150 m and the original 75 m corpus, and the silhouette of the three classes was 0.002, 0.007, 0.002 and 0.006. The one structure present opposed the unarmed class to the two carrying classes. The largest negative entries sat on the unarmed-against-object pair at every GSD (-0.017 to -0.030), and the centroid cosines were -0.75, -0.85, -0.86 and -0.69 for that pair against +0.15, -0.03, -0.55 and +0.13 for armed against object. The silhouette of the armed class was negative at all four GSDs.
+
+<!--FIG:06-resultados/figuras/fig13_similaridade.png|Crop similarity without a detector at 1.14, 2.44 and 4.88 cm per pixel (35 m, the twin at 75 m, the twin at 150 m). Top: the evaluation pool of each corpus on its first two principal components (18 to 20 per cent of the variance), class centroids as large markers, silhouette of the three classes printed. Bottom: mean pairwise cosine similarity of the centred features between and within classes, common scale from -0.04 to +0.04.-->
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:similaridade|Separation of the three classes in the frozen generic feature space by GSD (Section 4.4). Columns: median annotated box in the evaluation pool; nearest-centroid classification under 5-fold cross-validation, with the detector's d′ on the corpus's selection split in parentheses and 95 per cent intervals by resampling frames; AUC of armed against object; accuracy after PCA to 2 and 10 dimensions and after LDA to 2 dimensions. Both d′ are without the log-linear correction. Chance: 0.33 for accuracy, 0.50 for AUC.-->
+
+| Corpus (GSD, cm/px) | Crops: armed / unarmed / object | Median box (px) | Accuracy, 3 classes | Object called armed (95% interval) | Armed recall | d′ (detector) | AUC armed vs object (95% interval) | Accuracy, PCA 2 / PCA 10 / LDA 2 |
+|---|---|---|---|---|---|---|---|---|
+| S-nadir-35 (1.14) | 483 / 434 / 413 | 124 by 105 | 0.507 | 0.332 (0.285 to 0.375) | 0.420 | 0.23 (0.78) | 0.525 (0.483 to 0.561) | 0.384 / 0.495 / 0.547 |
+| Twin at 75 m (2.44) | 342 / 384 / 379 | 48 by 41 | 0.531 | 0.253 (0.207 to 0.297) | 0.377 | 0.35 (0.90) | 0.576 (0.531 to 0.622) | 0.399 / 0.525 / 0.586 |
+| Twin at 150 m (4.88) | 92 / 104 / 101 | 21 by 20 | 0.492 | 0.208 (0.131 to 0.287) | 0.359 | 0.45 (0.67) | 0.654 (0.574 to 0.730) | 0.428 / 0.471 / 0.502 |
+| S-nadir-75, original (2.44) | 117 / 153 / 135 | 45 by 41 | 0.558 | 0.267 (0.187 to 0.360) | 0.436 | 0.46 (0.83) | 0.534 (0.459 to 0.615) | 0.348 / 0.526 / 0.514 |
+
+</div>
+
+The AUC of armed against object rose as resolution coarsened, the highest value, at 4.88 cm per pixel, resting on 92 against 101 crops with the widest interval. A nearest-centroid rule called 0.208 to 0.332 of objects armed and recognised 0.359 to 0.436 of armed figures, a d′ of 0.23 to 0.46 against 0.67 to 0.90 for the detector on the selection splits, both without the log-linear correction. The 5-nearest-neighbour rule, the two shallower feature maps (AUC 0.485 to 0.572 under the nearest-centroid rule) and folds drawn by frame gave the same picture. Fitted on the training split and applied to the detector's own pools, the rule called 0.331 (0.254 to 0.408) of objects armed on the 35 m selection split against the detector's 0.273, and 0.288 (0.237 to 0.343) on the 35 m held-out frames against 0.253. On the twin it called 0.231 (0.151 to 0.316) on the selection split against 0.165 and 0.292 (0.234 to 0.351) on the held-out frames against 0.125, with armed recall of 0.39 to 0.50 across the four pools against the detector's 0.43 to 0.57. Two principal components kept 0.18 to 0.20 of the variance and lowered accuracy to 0.348 to 0.428; 10 components kept 0.50 to 0.55 and matched the full space; the Fisher projection gave the highest accuracy without a detector, 0.502 to 0.586, with a d′ of 0.18 to 0.53. The supplement with the backbone of each trained detector, which is not model-free, gave AUC of 0.547, 0.502, 0.574 and 0.494.
+
+### 5.2 Experiment A: zero-shot transfer to real imagery
+
+Trained on synthetic imagery alone, the detector recovered 1.6 per cent of the ceiling at the nadir geometry of the reference acquisition, 9.7 per cent when the same settlement was rendered obliquely, and between 14.1 and 16.7 per cent over three runs of the best oblique configuration.
+
+**Pilot.** The pilot of the protocol, an exploratory run on 40 training frames at 9.76 cm per pixel with the earlier recipe of Section 4.5, failed on its own domain (Table @tab{piloto}): 0.077 on its own validation split, a two-class mean not on the single-class scale of the rows that follow, against 0.7915 for the corpus of record. Two candidate causes were legible before training, 40 frames and two thirds of instances below one stride; neither was isolated.
+
+<!--TAB:piloto|The pilot of the protocol: a two-class model trained on 40 frames rendered at 1920 by 1080 (9.76 cm per pixel), scored on its own validation split and zero-shot on the benchmark.-->
+
+| Pilot run | Evaluation set | Precision | Recall | mAP50 | mAP50-95 |
+|---|---|---|---|---|---|
+| Pilot model (nadir, 150 m), 40 training frames at 1080p | synthetic validation split | 0.109 | 0.148 | 0.077 | 0.019 |
+| same model | VisDrone-DET val, zero-shot | 0.038 | 0.031 | 0.0055 | 0.0020 |
+
+**Ceiling.** R reached mAP50 0.6311 on the test set (Table @tab{teto}); its checkpoint was selected on that same split (Section 4.5). A run on the full training split was started and stopped before completion.
+
+<!--TAB:teto|The ceiling: R, trained on 1,106 real images of VisDrone-DET train, on VisDrone-DET val, with the 95 per cent interval by resampling images. Precision and recall at the F1-maximising confidence.-->
+
+| Model | Precision | Recall | mAP50 (95% interval) | mAP50-95 |
+|---|---|---|---|---|
+| R (1,106 real training images; checkpoint selected on the test split) | 0.7312 | 0.5729 | 0.6311 (0.6149 to 0.6471) | 0.2538 |
+
+**Nadir.** S-nadir-150 scored 0.7915 on its own validation split and 0.0102 on the benchmark (Table @tab{nadir}), an efficacy of 1.6 per cent (1.4 to 2.1).
+
+<!--TAB:nadir|S-nadir-150 (nadir, 150 m, 4.88 cm per pixel) on its own validation split and zero-shot on the real test set, with the 95 per cent interval by resampling images.-->
+
+| Evaluation set | Precision | Recall | mAP50 (95% interval) | mAP50-95 |
+|---|---|---|---|---|
+| Synthetic validation split (ceiling of the corpus) | 0.8707 | 0.7413 | 0.7915 | 0.3656 |
+| VisDrone-DET val, zero-shot | 0.0856 | 0.0421 | 0.0102 (0.0087 to 0.0133) | 0.0025 |
+
+In the scale-matched check, the median long side of the benchmark's person boxes reached the network at 25.33 pixels at the protocol's input size of 1,280 and at 20.27 pixels at 1,024, the closest a multiple of 32 comes to the 20.55 of the corpus of record, while the median area fell from 283 to 181 square pixels. At 1,024 pixels S-nadir-150 scored 0.0128 and R 0.5849, an efficacy of 2.2 rather than 1.6 per cent; the difference, 0.0026 on 0.0102, is a quarter of the protocol figure, against the half fixed in advance.
+
+**Settlement variety.** Spreading the same 180 frames over six settlements raised the benchmark score from 0.0102 to 0.0190 and lowered the score on the model's own validation split (Table @tab{variedade}). The paired difference was +0.0088 (+0.0038 to +0.0102), a ratio of 1.866 (1.308 to 2.071) and a relative difference of 86.6 per cent of the smaller value, from one training run per model.
+
+<!--TAB:variedade|One settlement against six at a fixed 180 frames, nadir at 150 m (4.88 cm per pixel), on the synthetic validation split and on the real test set.-->
+
+| Model | Synthetic validation mAP50 | VisDrone-DET val mAP50 (95% interval) | mAP50-95 | Efficacy (95% interval) |
+|---|---|---|---|---|
+| S-nadir-150, one settlement | 0.7915 | 0.0102 (0.0087 to 0.0133) | 0.0025 | 1.6% (1.4 to 2.1) |
+| S-nadir-150-six, six settlements | 0.6786 | 0.0190 (0.0142 to 0.0211) | 0.0071 | 3.0% (2.3 to 3.3) |
+
+**Oblique.** With every setting of the geometry check of Section 4.6 held and the camera moved to a pitch of 26 to 52 degrees, the benchmark score rose from 0.0102 to 0.0614 (Table @tab{obliquo}). The paired difference was +0.0511 (+0.0447 to +0.0567), positive in every one of the 1,000 resamples, with a ratio of 6.011 (4.571 to 7.011) and a relative difference of 501.1 per cent, from one training run per model. In the same comparison the median height-to-width ratio moved from 0.98 to 1.46 and the median area from 301 to 456 square pixels, with the oblique GSD at the centre of the frame between about 4.3 and 6.3 cm per pixel across the pitch range. S-oblique-six, which changed the settlements, the pitch band, the figures and the camera placement together, scored 0.1055 on its first run (precision 0.2631, recall 0.1716, mAP50-95 0.0329; 0.7047 on its own validation split), 0.0958 and 0.0887 on two further training seeds, a mean of 0.0967 and an efficacy of 15.3 per cent over the three runs. The first run stood at 10.3 times the nadir model and 1.7 times the single-settlement oblique model. Against S-oblique the paired difference was +0.0441 (+0.0383 to +0.0514) for the first run and +0.0353 (+0.0305 to +0.0411) for the mean of the three, a ratio of 1.575 (1.477 to 1.692) and 57.5 per cent; the S-oblique value lay outside the range of the three runs. Under the official toolkit rule for ignored regions (Section 4.7) every mAP50 of this experiment rose slightly, R to 0.6548 and the first run of S-oblique-six to 0.1074, every efficacy fell slightly, that of S-oblique-six from 16.7 to 16.4 per cent, and no comparison between these models changed order at IoU 0.50, 0.60 or 0.75.
+
+<!--TAB:obliquo|Nadir against oblique acquisition on the real test set, S-oblique-six given for each of its three training seeds.-->
+
+| Model | mAP50 on VisDrone-DET val (95% interval) | Efficacy (95% interval) |
+|---|---|---|
+| S-nadir-150 (4.88 cm/px) | 0.0102 (0.0087 to 0.0133) | 1.6% (1.4 to 2.1) |
+| S-oblique (3.90 cm/px nominal) | 0.0614 (0.0554 to 0.0673) | 9.7% (8.9 to 10.6) |
+| S-oblique-six, seed 0 | 0.1055 (0.0980 to 0.1148) | 16.7% (15.7 to 18.1) |
+| S-oblique-six, seed 1 | 0.0958 (0.0884 to 0.1048) | 15.2% (14.1 to 16.5) |
+| S-oblique-six, seed 2 | 0.0887 (0.0813 to 0.0968) | 14.1% (13.1 to 15.2) |
+
+**Precision and recall.** Figure @fig{fig11_pr_visdrone} draws the precision-recall curves of R, the first run of S-oblique-six and the two fine-tuning models at 10 per cent (Section 5.3), and Table @tab{pr} gives their operating points. The three curves with real training data kept the same order over the whole range of recall; the zero-shot curve fell below a precision of 0.6 at 1 per cent recall and ended at a recall of 0.39.
+
+<!--FIG:06-resultados/figuras/fig11_pr_visdrone.png|Precision-recall curves at IoU 0.50 on VisDrone-DET val (548 images, pedestrian and people merged) for R, S-oblique-six (seed 0, zero-shot), F-generic and F-synthetic at 10 per cent, from the validator's precision envelope at 1,000 recall points. The marker on each curve is the confidence that maximises F1.-->
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:pr|Operating points on VisDrone-DET val for the four models of the precision-recall figure: confidence, precision, recall and F1 at the F1 maximum (smoothed as the validator does), and precision and recall at the default prediction confidence of 0.25.-->
+
+| Model | Confidence at max F1 | Precision | Recall | F1 | Precision at 0.25 | Recall at 0.25 |
+|---|---|---|---|---|---|---|
+| R | 0.2963 | 0.7312 | 0.5729 | 0.6424 | 0.6731 | 0.6036 |
+| F-generic 10% | 0.3193 | 0.6823 | 0.5160 | 0.5876 | 0.5698 | 0.5757 |
+| F-synthetic 10% | 0.2983 | 0.6372 | 0.4579 | 0.5328 | 0.5535 | 0.4986 |
+| S-oblique-six, seed 0 | 0.2152 | 0.2631 | 0.1716 | 0.2077 | 0.2804 | 0.1625 |
+
+</div>
+
+### 5.3 Experiment B: synthetic pretraining and joint training against a generic start
+
+Given the 5 or 10 per cent slice of real images, the model that started from the synthetic weights finished below the generic start at both volumes, and so did the model trained on synthetic and real images together (Table @tab{ajuste}, Figure @fig{fig10_ajuste_fino}).
+
+<!--TAB:ajuste|Fine-tuning on 5 and 10 per cent of the benchmark's training split from the synthetic model and from generic weights, and joint training from generic weights on the same real images with the 890 synthetic tiles: mAP50 on VisDrone-DET val with 95 per cent intervals by resampling images, by training seed where repeated.-->
+
+| Real training data, seed | F-synthetic (from S-oblique-six) | F-generic (from COCO) | F-joint |
+|---|---|---|---|
+| 5 per cent (324 images), seed 0 | 0.4424 (0.4260 to 0.4587) | 0.5220 (0.5045 to 0.5403) | 0.4607 (0.4444 to 0.4789) |
+| 5 per cent, seed 1 | 0.4608 (0.4441 to 0.4784) | 0.5228 (0.5056 to 0.5410) | trained once |
+| 5 per cent, seed 2 | 0.4554 (0.4400 to 0.4721) | 0.5285 (0.5114 to 0.5474) | trained once |
+| 10 per cent (647 images), seed 0 | 0.5095 (0.4935 to 0.5264) | 0.5709 (0.5535 to 0.5883) | 0.5428 (0.5259 to 0.5610) |
+
+<!--FIG:06-resultados/figuras/fig10_ajuste_fino.png|mAP50 on VisDrone-DET val against the number of real training images for the three ways of using the synthetic corpus once real images exist: as starting weights (synthetic start), mixed into the training set (joint) or not at all (generic start). Filled markers: the first training run; open markers: the two further runs where they exist. Dashed line: R, trained on 1,106 real images for twice as many epochs.-->
+
+At 5 per cent the generic start finished above the synthetic start by +0.0796 (+0.0721 to +0.0873), +0.0620 (+0.0548 to +0.0706) and +0.0731 (+0.0654 to +0.0810) on the three seeds, +0.0716 (+0.0658 to +0.0780) on the means, a ratio of 1.158 (1.144 to 1.173) and a relative difference of 15.8 per cent. The lowest generic run lay above the highest synthetic one. At 10 per cent the difference was +0.0614 (+0.0553 to +0.0679), a ratio of 1.121 (1.108 to 1.134) and 12.1 per cent. The sign was the same in mAP50-95, the metric on which every checkpoint was selected: -0.0368 for the synthetic start at 5 per cent and -0.0232 at 10. The synthetic start given 647 real images (0.5095) did not reach the generic start given 324 (0.5220), and the expectation fixed before the run, that the difference would be largest at the smaller volume, failed in sign: the difference was most negative there and narrowed as real data grew. Fine-tuning did move the synthetic model itself, from 0.1055 to 0.4424 with 324 real images.
+
+The joint models finished +0.0637 (+0.0562 to +0.0700) below the generic start on the mean of its three seeds at 5 per cent (ratio 1.138, 1.121 to 1.154; 13.8 per cent) and +0.0281 (+0.0214 to +0.0346) below at 10 per cent (ratio 1.052, 1.039 to 1.064; 5.2 per cent). Both margins exceeded twice the standard deviation of the three generic runs at 5 per cent (a standard deviation of 0.0035), the margin fixed in advance and borrowed at 10 per cent. Against the synthetic start the joint model scored +0.0078 (+0.0025 to +0.0147) higher on the mean of the synthetic seeds at 5 per cent (1.7 per cent), with the interval crossing zero against two of the three synthetic seeds and the joint value falling inside their range. At 10 per cent it scored +0.0333 (+0.0276 to +0.0399) higher (6.5 per cent), above the synthetic start at IoU 0.50 and 0.60 and below it at 0.75 (0.0983 against 0.1025). On the selection slice the synthetic start led in the first three epochs at 5 per cent and was overtaken by the fourth; at 10 per cent the generic start led from the first epoch; afterwards the synthetic start led only intermittently, and the generic start's lead did not narrow between epoch 20 and epoch 30.
+
+### 5.4 Experiment C: the armed and unarmed distinction by GSD
+
+At 2.44 and 1.14 cm per pixel the three-class detectors called between 0.165 and 0.273 of confusable objects armed on their selection splits, halving the GSD did not reduce that rate on matched corpora, and at 4.88 cm per pixel the one three-class model trained did not pass its validity condition.
+
+**4.88 cm per pixel.** The twin at 150 m, where the median annotated box of its selection split measures 21 by 20 pixels, found 148 of 297 annotated figures (0.498) on its selection split, below the half fixed before its run, so its rates are not interpretable; descriptively it called 0.34 of armed figures and 0.14 of confusable objects armed. No other model was trained to separate the classes at this GSD.
+
+**2.44 and 1.14 cm per pixel, selection split.** Table @tab{armado} gives the three models on their selection splits (instance counts in Table @tab{corpora}).
+
+<!--TAB:armado|The armed and unarmed distinction on the selection split of each three-class corpus (27, 35 and 24 frames), under the protocol of Section 4.7, at confidence 0.25, with 95 per cent intervals by resampling frames. d′ with the log-linear correction; without it the values against objects are 0.83, 0.78 and 0.90 and against unarmed persons 1.24, 1.14 and 1.16. The three-class mAP50 is on whole frames.-->
+
+| Quantity | S-nadir-75 (75 m, 2.44 cm/px) | S-nadir-35 (35 m, 1.14 cm/px) | Twin of S-nadir-35 at 75 m (2.44 cm/px) |
+|---|---|---|---|
+| mAP50, three classes | 0.579 | 0.514 | 0.508 |
+| Recall, armed | 0.547 (0.476 to 0.627) | 0.569 (0.492 to 0.646) | 0.471 (0.397 to 0.558) |
+| Precision, armed | 0.386 | 0.415 | 0.440 |
+| Confusable object called armed | 0.237 (0.183 to 0.289) | 0.273 (0.202 to 0.353) | 0.165 (0.100 to 0.230) |
+| Unarmed person carrying nothing called armed | 0.131 (0.073 to 0.188) | 0.168 (0.101 to 0.235) | 0.109 (0.044 to 0.174) |
+| d′ against confusable objects | 0.83 (0.54 to 1.13) | 0.77 (0.46 to 1.10) | 0.89 (0.58 to 1.32) |
+| d′ against unarmed persons | 1.23 | 1.12 | 1.14 |
+
+**Held-out frames at 2.44 cm per pixel.** On the 50 held-out frames of the unseen-weapon test, in a new realisation of the settlement, S-nadir-75 called 0.434 (0.381 to 0.496) of armed figures, 0.152 (0.113 to 0.196) of confusable objects and 0.068 (0.035 to 0.102) of unarmed persons armed. Its armed precision was 0.430 and its d′ against objects 0.85 (0.64 to 1.09). Every rate was lower than on the selection split. Recall was 0.400 on the five training firearms (50 of 125) and 0.466 on the two unseen ones (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54, ignoring the clustering of boxes within frames) against the threshold of 0.80. The seen group includes the pistol, 20 of its 125 instances, and with the pistol set aside the ratio stayed above the threshold. Per model, from 15 to 69 instances each and without intervals, the unseen 1.10 m rifle was called armed at 0.50, within the range of the seen long arms (0.34 to 0.52), the unseen 0.55 m submachine gun at 0.43 and the pistol at 0.20. Among objects, the closed umbrella, 0.88 m long, was called armed at 0.38 (29 instances), brooms at 0.10 (41) and lengths of pipe at 0.11 (28). In the carried-as-weapon re-render, matched box for box in 49 of 50 frames, S-nadir-75 called 0.154 of the 227 paired objects armed as normally carried and 0.137 when carried in the weapons' poses and at their angles (exact McNemar test, p = 0.56), and the umbrella, whose carriage did not change, stayed at 0.38.
+
+**35 m against its twin at 75 m.** Table @tab{gemeo} gives the two matched models on their selection splits and on the 80 held-out frames of each corpus, over three training seeds and at three IoU thresholds.
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:gemeo|S-nadir-35 against its twin at 75 m, every other setting held. Rates at which each class is called armed at confidence 0.25 on the selection splits (35 and 24 frames) and on the 80 held-out frames of each corpus, with differences, 95 per cent intervals by resampling frames independently on each side and p from a two-proportion test. Further rows give ranges and means over three training seeds, the object rate at stricter IoU thresholds and d′ with intervals by resampling frames.-->
+
+| Quantity | S-nadir-35 (1.14 cm/px) | Twin at 75 m (2.44 cm/px) | Difference (95% interval) |
+|---|---|---|---|
+| Confusable object called armed, selection split | 0.273 | 0.165 | +0.108 (+0.015 to +0.211), p = 0.06 |
+| Confusable object called armed, 80 held-out frames | 0.253 (74 of 292) | 0.125 (36 of 288) | +0.128 (+0.071 to +0.194), p = 0.0001 |
+| Armed person called armed, selection split | 0.569 | 0.471 | +0.099 (-0.022 to +0.217), p = 0.15 |
+| Armed person called armed, 80 held-out frames | 0.543 | 0.432 | +0.112 (+0.031 to +0.192) |
+| Unarmed person called armed, selection split | 0.168 | 0.109 | +0.059 (-0.038 to +0.154), p = 0.22 |
+| Unarmed person called armed, 80 held-out frames | 0.156 | 0.140 | +0.015 (-0.040 to +0.073) |
+| d′ against confusable objects, selection split | 0.77 (0.46 to 1.10) | 0.89 (0.58 to 1.32) | |
+| d′ against confusable objects, 80 held-out frames | 0.77 (0.57 to 0.99) | 0.97 (0.77 to 1.20) | |
+| Object rate over three training seeds, selection split (range; mean) | 0.231 to 0.273; 0.248 | 0.132 to 0.242; 0.179 | ranges overlap; +0.068 (+0.002 to +0.142), 38.1% |
+| Object rate over three training seeds, 80 held-out frames (range; mean) | 0.202 to 0.253; 0.222 | 0.097 to 0.181; 0.134 | ranges separate; +0.087 (+0.044 to +0.136), 64.9% |
+| Object rate, selection split, at IoU 0.60 and 0.75 | 0.223 and 0.132 | 0.165 and 0.132 | level at 0.75 |
+
+</div>
+
+Seed by seed, the object-rate difference excluded zero in seeds 0 and 1 and not in seed 2 on both sets; the armed recall of the 35 m model exceeded the twin's on the held-out frames in seeds 0 and 1 and fell below it in seed 2, and the unarmed rate differed in no seed. Against the original 75 m model, the 35 m model's object rate on the selection split differed by +0.036 (-0.059 to +0.124) at IoU 0.50 and fell below it at 0.60 and 0.75, where the original model called 0.230 and 0.141 of objects armed; the unarmed rate did the same at 0.75 (0.076 against 0.085). Between the original 75 m corpus and the twin, which changed the carrying poses and the other settings of Section 4.6 at the same GSD, the object rate moved from 0.237 to 0.165 (p = 0.19).
+
+**Threshold sweep.** Figure @fig{fig12_limiar_armado} sweeps the confidence threshold of the seven three-class models on both sets, and Table @tab{limiar} gives the three operating points of Section 4.7 for the first run of each model.
+
+<!--FIG:06-resultados/figuras/fig12_limiar_armado.png|Armed recall against the object rate as the confidence threshold runs from 0.95 (lower left) to 0.05 (upper right), for S-nadir-75, S-nadir-35 and the twin at 75 m. Left: selection split of each corpus. Right: held-out frames (80 at 35 m and at 75 m; the 50 unseen-weapon frames for S-nadir-75). Filled markers: confidence 0.25, seed 0; hollow markers: confidence 0.25, seeds 1 and 2 (dashed and dotted curves).-->
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:limiar|The three operating points of Section 4.7 (default confidence 0.25, maximum armed F1, object rate at or below 0.10) for each three-class model (seed 0) on its selection split and its held-out frames; d′ against confusable objects, log-linear correction.-->
+
+| Model | Set (frames) | Operating point | Threshold | Armed recall | Object called armed | Armed precision | d′ vs object |
+|---|---|---|---|---|---|---|---|
+| S-nadir-75 | selection (27) | default | 0.25 | 0.547 | 0.237 | 0.386 | 0.83 |
+| S-nadir-75 | selection (27) | max armed F1 | 0.40 | 0.564 | 0.200 | 0.516 | 0.99 |
+| S-nadir-75 | selection (27) | object rate 0.10 | 0.70 | 0.333 | 0.096 | 0.661 | 0.86 |
+| S-nadir-75 | held-out (50) | default | 0.25 | 0.434 | 0.152 | 0.430 | 0.85 |
+| S-nadir-75 | held-out (50) | max armed F1 | 0.45 | 0.391 | 0.126 | 0.578 | 0.86 |
+| S-nadir-75 | held-out (50) | object rate 0.10 | 0.55 | 0.340 | 0.100 | 0.669 | 0.86 |
+| S-nadir-35 | selection (35) | default | 0.25 | 0.569 | 0.273 | 0.415 | 0.77 |
+| S-nadir-35 | selection (35) | max armed F1 | 0.30 | 0.555 | 0.256 | 0.469 | 0.79 |
+| S-nadir-35 | selection (35) | object rate 0.10 | 0.60 | 0.285 | 0.099 | 0.722 | 0.70 |
+| S-nadir-35 | held-out (80) | default | 0.25 | 0.543 | 0.253 | 0.408 | 0.77 |
+| S-nadir-35 | held-out (80) | max armed F1 | 0.35 | 0.497 | 0.226 | 0.484 | 0.74 |
+| S-nadir-35 | held-out (80) | object rate 0.10 | 0.65 | 0.211 | 0.099 | 0.603 | 0.48 |
+| Twin at 75 m | selection (24) | default | 0.25 | 0.471 | 0.165 | 0.440 | 0.89 |
+| Twin at 75 m | selection (24) | max armed F1 | 0.40 | 0.423 | 0.154 | 0.522 | 0.81 |
+| Twin at 75 m | selection (24) | object rate 0.10 | 0.55 | 0.341 | 0.099 | 0.630 | 0.86 |
+| Twin at 75 m | held-out (80) | default | 0.25 | 0.432 | 0.125 | 0.370 | 0.97 |
+| Twin at 75 m | held-out (80) | max armed F1 | 0.40 | 0.381 | 0.090 | 0.480 | 1.03 |
+| Twin at 75 m | held-out (80) | object rate 0.10 | 0.40 | 0.381 | 0.090 | 0.480 | 1.03 |
+
+</div>
+
+Over the 14 combinations of model, seed and set, the threshold that maximised the F1 of the armed class lay between 0.30 and 0.50 (0.40 in 7 of them) and raised the armed precision from 0.37 to 0.46 at the default to 0.47 to 0.66, at a cost of 1 to 8 points of armed recall in 13 of them and a gain of 2 in S-nadir-75 on its selection split. Bringing the object rate to 0.10 required a threshold of 0.55 to 0.70 for S-nadir-35 and S-nadir-75, where armed recall then lay between 0.21 and 0.36; the twin reached 0.10 at thresholds between 0.25 and 0.65. At no threshold did any model exceed an armed recall of 0.65, and none brought the object rate below 0.09 while keeping armed recall above 0.42. On the held-out frames the curve of the 35 m model ran to the right of the twin's, at a higher object rate for the same armed recall.
+
+### 5.5 Experiment D: performance by illumination regime
+
+Measured on synthetic frames, hard sun was the weakest of the six regimes for S-nadir-150 on both measures, and overcast the strongest on mAP50, level with low sun (Table @tab{regimes}, Figure @fig{fig4_dataset}).
+
+<!--TAB:regimes|Per-regime performance of S-nadir-150 on the 120 held-out frames of the corpus of record (nadir, 150 m, 4.88 cm per pixel), 20 per regime: mAP50 on the tiles of each regime and recall at confidence 0.25 on whole frames, with 95 per cent intervals by resampling frames.-->
+
+| Regime | mAP50 | Recall at 0.25 | 95% interval |
+|---|---|---|---|
+| Hard sun | 0.675 | 0.657 | 0.591 to 0.720 |
+| Heavy overcast | 0.755 | 0.768 | 0.714 to 0.816 |
+| Rain | 0.759 | 0.789 | 0.748 to 0.827 |
+| Haze | 0.780 | 0.726 | 0.697 to 0.757 |
+| Low sun | 0.790 | 0.814 | 0.768 to 0.854 |
+| Overcast | 0.791 | 0.796 | 0.760 to 0.827 |
+
+<!--FIG:06-resultados/figuras/fig4_dataset.jpg|One annotated frame of the pilot corpus (nadir, 150 m, 1920 by 1080, 9.76 cm per pixel) from each of the six illumination regimes, with the generated boxes drawn: green for the armed class, blue for the unarmed class. The labelling does not depend on the regime (Section 4.2.5).-->
+
+Hard sun scored 8 points of mAP50 below the next regime, and its recall interval lay wholly below those of overcast, rain and low sun while overlapping those of haze and heavy overcast. Overcast scored above both hard sun and rain on both measures, and the margin of overcast over rain lay within the recall intervals. Low sun, which also casts sharp shadows, scored level with overcast on mAP50 (0.790 against 0.791) and highest on recall. The ordering by detection matched the ordering by contrast over clutter of Section 5.1 at the two extremes, overcast and hard sun, and not among the intermediate regimes. The ablation against a corpus generated under hard sun only was specified and not run.
+
+### 5.6 Robustness checks and summary of hypotheses
+
+Every check fixed in advance was run except the learning curve over corpus size and the hard-sun ablation; Table @tab{hipoteses} records each outcome against its criterion, with the three readings of resolvability of Section 4.7 for every headline comparison. Under both the validator and the official toolkit rule, no pair among those fixed for the IoU check changed order between 0.50, 0.60 and 0.75 on the benchmark; the two comparisons that did reverse are reported at all three thresholds in Sections 5.3 and 5.4.
+
+<div class="full" markdown="1" style="break-inside: avoid">
+
+<!--TAB:hipoteses|Each hypothesis and pre-specified check against its criterion, with its status (Section 4.6) and the readings of Section 4.7 that its headline difference passes: (a) seed ranges, (b) paired interval, (c) 30 per cent; n.a. where a side was trained once or no difference is at issue.-->
+
+| Hypothesis or check | Pre-specified criterion | Status | Data | Outcome | Resolvable (a / b / c) |
+|---|---|---|---|---|---|
+| Ceiling R valid | R not near chance | confirmatory | real; R selected on the test split | held: 0.6311 | n.a. |
+| Synthetic-only training recovers a fraction of the ceiling | ratio to R; scale a confound if the scale-matched figure differs by more than half | confirmatory | real | held: 1.6%; scale check differed by a quarter | n.a. |
+| Geometry load-bearing: S-oblique above S-nadir-150 | oblique arm outperforms nadir arm | confirmatory | real | held: +0.0511, ratio 6.011 | n.a. / yes / yes, 501.1% |
+| Six settlements against one, nadir | none | exploratory | real | observed: +0.0088 | n.a. / yes / yes, 86.6% |
+| Six settlements against one, oblique | none | exploratory | real | observed: +0.0353, mean of 3 seeds | S-oblique outside the 3-seed range / yes / yes, 57.5% |
+| Illumination: overcast above hard sun and rain; hard sun among the 2 weakest | as stated | confirmatory | synthetic held-out | held | n.a. |
+| Synthetic pretraining adds accuracy, most at 5% | expectation fixed before the run | exploratory, criterion fixed | real | failed: -0.0716 at 5%, -0.0614 at 10% | 5%: yes / yes / no, 15.8%; 10%: n.a. / yes / no, 12.1% |
+| Joint training adds accuracy | margin of twice the SD of the 3 generic runs (SD 0.0035) | exploratory, criterion fixed | real | failed: -0.0637 and -0.0281, beyond the margin | 5%: joint outside the generic range / yes / no, 13.8%; 10%: n.a. / yes / no, 5.2% |
+| Joint training against the synthetic start | none | exploratory | real | observed: +0.0078 at 5%, +0.0333 at 10% | 5%: joint inside the synthetic range / yes on the mean, no on 2 of 3 seeds / no, 1.7%; 10%: n.a. / yes / no, 6.5% |
+| 75 m distinction rests on what is carried, not on the asset library | unseen-firearm recall at least 0.80 of seen-firearm recall | confirmatory | synthetic held-out | held: ratio 1.16 | n.a. |
+| Objects carried as weapons are called armed more often | paired rate rises (exact McNemar test) | confirmatory | synthetic held-out | failed, caveat withdrawn: 0.154 against 0.137, p = 0.56 | n.a. |
+| Validity of the three-class model at 4.88 cm per pixel | at least half of annotated figures found | confirmatory | synthetic selection split | not interpretable: 0.498 | n.a. |
+| Object rate differs between 1.14 and 2.44 cm per pixel, all else held | 35 m rate above the twin's on held-out frames at p below 0.05; withdrawn if reversed | exploratory, criterion fixed | synthetic held-out; selection split | held: +0.128, p = 0.0001; +0.087 on seed means (selection split: +0.108; +0.068 on seed means) | held-out: yes / yes / yes, 64.9%; selection: no, ranges overlap / yes / yes, 38.1% |
+| Armed and unarmed rates differ between the 35 m model and its twin | none | exploratory | synthetic, both splits | not resolvable: seed-mean intervals cross zero on both sets; the held-out armed difference reverses in seed 2 | no / no / n.a. |
+| 35 m model against the original 75 m model | ordering holds at IoU 0.50, 0.60 and 0.75 | exploratory | synthetic selection split | not resolvable: +0.036 (-0.059 to +0.124); order reverses at 0.60 | n.a. / no / no, 15.1% |
+
+</div>

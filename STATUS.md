@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-09-30, 19h, [DESKTOP]
+Última atualização: 2026-10-18, [DESKTOP]
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
@@ -39,12 +39,24 @@ Tudo entrou no manuscrito (9.3, 9.4, 9.5, 11.5, tabela da 8.2, abstract e conclu
 
 Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; supervisor em janela própria aberto por atalho na pasta Inicializar (nunca pelo Agendador de Tarefas: o Blender sobe sem o MPFB); pausa e retomada com `pausa_rodada3.py`; retrato com `status_rodada3.py`. Os três servem de molde.
 
+## Revisão de 17 e 18/10 (feedback de 14/10)
+
+Feedback de Felipe I. Toledo (texto, quatro áudios transcritos, esqueleto de seções) em `01-artigo/feedback-2026-10-14/` (`FEEDBACK-RECEBIDO.md`, `PLANO-CORRECAO.md`, `zobel-checklist.md`). Pedido central: forma, leitura e estrutura primeiro; método só em Métodos, interpretação só na Discussão, menos repetição; depois reenviar.
+
+| Item | Estado |
+|---|---|
+| Estrutura | Sete seções: 1 Introduction (RQ1 a RQ3 com escopo), 2 Related Work, 3 Study Context, 4 Materials and Methods, 5 Results, 6 Discussion (limitações todas em 6.5), 7 Conclusion e Declarations. Arquivos `01-artigo/manuscrito/s1` a `s8`; a versão de 30/09 congelada em `01-artigo/manuscrito-2026-09-30/` (com `ARTIGO-COMPLETO-2026-09-30.md`) |
+| Análises novas, só inferência | Em `06-resultados/revisao-2026-10-17/` com entradas em `RESULTADOS.md`: fatos dos corpora, GSD e zoom da Z30, seleção de checkpoint (D1); intervalos de 95% por reamostragem, curvas PR, varredura de limiar, leituras de resolubilidade (D2); similaridade de recortes por altitude (D3). Bases reais nadir em `04-bibliografia/benchmarks-nadir-2026-10-17.md` (D4) |
+| Achados que mudaram o texto | R selecionou o checkpoint no próprio VisDrone val (teto otimista por seleção, declarado); fator nadir/oblíquo 6,0 com intervalo 4,6 a 7,0 (ainda uma corrida por lado); diferenças do ajuste fino estáveis mas de 5 a 16% relativos; 35 m contra gêmeo resolvível só nos quadros novos; nenhum limiar leva o objeto chamado de arma abaixo de 0,09 com recall acima de 0,42; similaridade não separa arma de objeto em nenhuma altitude (AUC 0,53 a 0,65); renders sem ruído, borrão nem compressão |
+| PDF | `C:/Users/marti/Desktop/machine-vision-favelas-elsevier-2026-10-17.pdf`: 32 páginas, cerca de 18,9 mil palavras de corpo, 13 figuras, 23 tabelas, 0 `[X]` |
+| Decisões pendentes | `PLANO-CORRECAO.md`, seção 6 (A1 a A7) e seção 5 (rodada 5, custo em `06-resultados/revisao-2026-10-17/custo-rodada5.md`) |
+
 ## Artigo
 
 | Item | Estado |
 |---|---|
 | Versão vigente do orientador | v2 de 2026-09-10 (`01-artigo/rascunhos-professor/2026-09-10_v2_Irigaray.docx`). O arquivo baixado em 17/09 é idêntico a ela: não há v3 |
-| Manuscrito por seção | `01-artigo/manuscrito/`, texto do orientador mais as seções técnicas "b"; PDF de leitura por `01-artigo/ferramentas/monta_artigo.py` |
+| Manuscrito por seção | `01-artigo/manuscrito/s1` a `s8` desde 18/10 (estrutura de sete seções); a versão de 30/09 congelada em `01-artigo/manuscrito-2026-09-30/`; PDF por `01-artigo/ferramentas/monta_artigo.py` |
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
 | Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Atualizado com a rodada 4 em 30/09 e revisado de novo no mesmo dia (três lentes: números, lógica, forma; 128 trocas, cada uma conferida na fonte; origem dos números conferidos em `06-resultados/RESULTADOS.md`, entrada de 30/09). Nenhum `[X]`: as duas checagens não rodadas estão descritas como especificadas e não executadas. Decidido em 30/09: sai só o texto, sem corpus nem código, e o manuscrito não cita arquivos do repositório. Decisões ainda do autor: lista na entrada do DIARIO de 30/09 (revisão geral) |
 | Figuras | 8, todas do braço procedural, rótulos em inglês desde 30/09: nadir, beco, anotação, seis regimes de luz, seis assentamentos, nadir contra oblíquo, armados por altitude, quadros do piloto. Geradas por `06-resultados/figuras_artigo.py` e `07-blender/scripts/previa_dataset.py` |
@@ -92,6 +104,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 ## Próximos passos, em ordem
 
+0. [AUTOR] Ler o PDF de 17/10 e reenviar ao revisor (Felipe I. Toledo), que pediu para revisar de novo depois da correção de forma e estrutura. Decidir A1 a A7 de `01-artigo/feedback-2026-10-14/PLANO-CORRECAO.md` (design science, proposta de morfologia, liberação do gerador, declaração de uso de IA, coautor delegado, rodada 5, fundir resultados e discussão). Aguardar o retorno escrito do revisor sobre bibliografia.
 0. [AUTOR] Ler o PDF revisado de 30/09 (Área de Trabalho do desktop) e decidir os itens que a revisão geral deixou para o autor (lista no DIARIO de 30/09).
 0. [AUTOR] Ler `01-artigo/ANALISE-2026-09-30.md`, seção 4: dez decisões que o refino deixou para os autores (extensão e periódico-alvo, título da seção 6, proposta contra o resultado da 9.4, sementes do fator 6,0, nome do coautor delegado, liberação do gerador). Depois revisar as quatro escolhas da busca bibliográfica (DIARIO de 30/09): 51 e 100 mandados, mapas das rotas como premissa, sobrenome "Américo da Silva", dois-pontos na manchete do InSight Crime.
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.

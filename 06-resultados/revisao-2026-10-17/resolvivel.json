@@ -1,0 +1,814 @@
+{
+ "leituras": {
+  "a": "faixas min-max das sementes de treino nao se cruzam (exige sementes dos dois lados)",
+  "b": "IC 95% por reamostragem da diferenca pareada exclui zero",
+  "c": "diferenca relativa >= 30% do menor valor"
+ },
+ "fontes": [
+  "bootstrap_visdrone.json",
+  "limiar_armado.json"
+ ],
+ "comparacoes": [
+  {
+   "comparacao": "Nadir vs oblique (S-oblique vs S-nadir-150)",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique",
+   "b": "S-nadir-150",
+   "a_valor": 0.0614,
+   "b_valor": 0.0102,
+   "dif_absoluta": 0.0511,
+   "dif_relativa_pct_do_menor": 501.1,
+   "razao_a_sobre_b": 6.011,
+   "razao_ic95": [
+    4.571,
+    7.011
+   ],
+   "sementes_a": {
+    "valores": [
+     0.0614
+    ],
+    "min": 0.0614,
+    "max": 0.0614,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.0102
+    ],
+    "min": 0.0102,
+    "max": 0.0102,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0447,
+    0.0567
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "S-oblique - S-nadir-150",
+     "dif": 0.0511,
+     "ic95": [
+      0.0447,
+      0.0567
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 2 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Six settlements vs one, nadir (S-nadir-150-six vs S-nadir-150)",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-nadir-150-six",
+   "b": "S-nadir-150",
+   "a_valor": 0.019,
+   "b_valor": 0.0102,
+   "dif_absoluta": 0.0088,
+   "dif_relativa_pct_do_menor": 86.6,
+   "razao_a_sobre_b": 1.866,
+   "razao_ic95": [
+    1.308,
+    2.071
+   ],
+   "sementes_a": {
+    "valores": [
+     0.019
+    ],
+    "min": 0.019,
+    "max": 0.019,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.0102
+    ],
+    "min": 0.0102,
+    "max": 0.0102,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0038,
+    0.0102
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "S-nadir-150-six - S-nadir-150",
+     "dif": 0.0088,
+     "ic95": [
+      0.0038,
+      0.0102
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 2 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Six settlements vs one, oblique (S-oblique-six vs S-oblique)",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique-six",
+   "b": "S-oblique",
+   "a_valor": 0.0966,
+   "b_valor": 0.0614,
+   "dif_absoluta": 0.0353,
+   "dif_relativa_pct_do_menor": 57.5,
+   "razao_a_sobre_b": 1.575,
+   "razao_ic95": [
+    1.477,
+    1.692
+   ],
+   "sementes_a": {
+    "valores": [
+     0.1055,
+     0.0958,
+     0.0887
+    ],
+    "min": 0.0887,
+    "max": 0.1055,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.0614
+    ],
+    "min": 0.0614,
+    "max": 0.0614,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0305,
+    0.0411
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "S-oblique-six s0 - S-oblique",
+     "dif": 0.0441,
+     "ic95": [
+      0.0383,
+      0.0514
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-oblique-six s1 - S-oblique",
+     "dif": 0.0344,
+     "ic95": [
+      0.0288,
+      0.0412
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-oblique-six s2 - S-oblique",
+     "dif": 0.0273,
+     "ic95": [
+      0.0221,
+      0.033
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 2 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Generic vs synthetic start, 5%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5%",
+   "b": "F-synthetic 5%",
+   "a_valor": 0.5245,
+   "b_valor": 0.4529,
+   "dif_absoluta": 0.0716,
+   "dif_relativa_pct_do_menor": 15.8,
+   "razao_a_sobre_b": 1.158,
+   "razao_ic95": [
+    1.144,
+    1.173
+   ],
+   "sementes_a": {
+    "valores": [
+     0.522,
+     0.5228,
+     0.5285
+    ],
+    "min": 0.522,
+    "max": 0.5285,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "min": 0.4424,
+    "max": 0.4608,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.0658,
+    0.078
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-generic 5% s0 - F-synthetic 5% s0",
+     "dif": 0.0796,
+     "ic95": [
+      0.0721,
+      0.0873
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "F-generic 5% s1 - F-synthetic 5% s1",
+     "dif": 0.062,
+     "ic95": [
+      0.0548,
+      0.0706
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "F-generic 5% s2 - F-synthetic 5% s2",
+     "dif": 0.0731,
+     "ic95": [
+      0.0654,
+      0.081
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 3,
+    "resumo": "resolvivel nas 2 de 3 leituras"
+   }
+  },
+  {
+   "comparacao": "Generic vs synthetic start, 10%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10%",
+   "b": "F-synthetic 10%",
+   "a_valor": 0.5709,
+   "b_valor": 0.5095,
+   "dif_absoluta": 0.0614,
+   "dif_relativa_pct_do_menor": 12.1,
+   "razao_a_sobre_b": 1.121,
+   "razao_ic95": [
+    1.108,
+    1.134
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5709
+    ],
+    "min": 0.5709,
+    "max": 0.5709,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.5095
+    ],
+    "min": 0.5095,
+    "max": 0.5095,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0553,
+    0.0679
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-generic 10% - F-synthetic 10%",
+     "dif": 0.0614,
+     "ic95": [
+      0.0553,
+      0.0679
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 1 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Generic vs joint, 5%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5%",
+   "b": "F-joint 5%",
+   "a_valor": 0.5245,
+   "b_valor": 0.4607,
+   "dif_absoluta": 0.0637,
+   "dif_relativa_pct_do_menor": 13.8,
+   "razao_a_sobre_b": 1.138,
+   "razao_ic95": [
+    1.121,
+    1.154
+   ],
+   "sementes_a": {
+    "valores": [
+     0.522,
+     0.5228,
+     0.5285
+    ],
+    "min": 0.522,
+    "max": 0.5285,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.4607
+    ],
+    "min": 0.4607,
+    "max": 0.4607,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0562,
+    0.07
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-generic 5% s0 - F-joint 5%",
+     "dif": 0.0613,
+     "ic95": [
+      0.0537,
+      0.0681
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "F-generic 5% s1 - F-joint 5%",
+     "dif": 0.0621,
+     "ic95": [
+      0.0534,
+      0.0697
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "F-generic 5% s2 - F-joint 5%",
+     "dif": 0.0678,
+     "ic95": [
+      0.0596,
+      0.0752
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 1 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Generic vs joint, 10%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10%",
+   "b": "F-joint 10%",
+   "a_valor": 0.5709,
+   "b_valor": 0.5428,
+   "dif_absoluta": 0.0281,
+   "dif_relativa_pct_do_menor": 5.2,
+   "razao_a_sobre_b": 1.052,
+   "razao_ic95": [
+    1.039,
+    1.064
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5709
+    ],
+    "min": 0.5709,
+    "max": 0.5709,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.5428
+    ],
+    "min": 0.5428,
+    "max": 0.5428,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0214,
+    0.0346
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-generic 10% - F-joint 10%",
+     "dif": 0.0281,
+     "ic95": [
+      0.0214,
+      0.0346
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 1 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Joint vs synthetic start, 5%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-joint 5%",
+   "b": "F-synthetic 5%",
+   "a_valor": 0.4607,
+   "b_valor": 0.4529,
+   "dif_absoluta": 0.0078,
+   "dif_relativa_pct_do_menor": 1.7,
+   "razao_a_sobre_b": 1.017,
+   "razao_ic95": [
+    1.006,
+    1.032
+   ],
+   "sementes_a": {
+    "valores": [
+     0.4607
+    ],
+    "min": 0.4607,
+    "max": 0.4607,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "min": 0.4424,
+    "max": 0.4608,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "treino unico em a; o valor de a fica dentro da faixa de b",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0025,
+    0.0147
+   ],
+   "b_fracao_positiva": 0.995,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-joint 5% - F-synthetic 5% s0",
+     "dif": 0.0183,
+     "ic95": [
+      0.0116,
+      0.0273
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "F-joint 5% - F-synthetic 5% s1",
+     "dif": -0.0001,
+     "ic95": [
+      -0.0062,
+      0.0078
+     ],
+     "exclui_zero": false
+    },
+    {
+     "rotulo": "F-joint 5% - F-synthetic 5% s2",
+     "dif": 0.0053,
+     "ic95": [
+      -0.0011,
+      0.012
+     ],
+     "exclui_zero": false
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 1 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "Joint vs synthetic start, 10%",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-joint 10%",
+   "b": "F-synthetic 10%",
+   "a_valor": 0.5428,
+   "b_valor": 0.5095,
+   "dif_absoluta": 0.0333,
+   "dif_relativa_pct_do_menor": 6.5,
+   "razao_a_sobre_b": 1.065,
+   "razao_ic95": [
+    1.054,
+    1.079
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5428
+    ],
+    "min": 0.5428,
+    "max": 0.5428,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.5095
+    ],
+    "min": 0.5095,
+    "max": 0.5095,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0276,
+    0.0399
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "bootstrap": "imagens do VisDrone val (pareado)",
+   "semente_a_semente": [
+    {
+     "rotulo": "F-joint 10% - F-synthetic 10%",
+     "dif": 0.0333,
+     "ic95": [
+      0.0276,
+      0.0399
+     ],
+     "exclui_zero": true
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "resumo": "resolvivel nas 1 de 2 leituras"
+   }
+  },
+  {
+   "comparacao": "35 m vs twin at 75 m, object called armed, validation split",
+   "medida": "objeto chamado de armada a conf 0,25",
+   "a": "S-nadir-35 (media das sementes)",
+   "b": "Twin-75 (media das sementes)",
+   "a_valor": 0.2479,
+   "b_valor": 0.1795,
+   "dif_absoluta": 0.0684,
+   "dif_relativa_pct_do_menor": 38.1,
+   "razao_a_sobre_b": 1.381,
+   "razao_ic95": null,
+   "sementes_a": {
+    "valores": [
+     0.2727,
+     0.2314,
+     0.2397
+    ],
+    "min": 0.2314,
+    "max": 0.2727,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.1648,
+     0.1319,
+     0.2418
+    ],
+    "min": 0.1319,
+    "max": 0.2418,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "nao resolvivel: faixas se cruzam",
+   "a_ok": false,
+   "b_ic95_dif": [
+    0.0021,
+    0.1424
+   ],
+   "b_fracao_positiva": 0.979,
+   "b_ok": true,
+   "c_ok": true,
+   "bootstrap": "quadros, independente em cada lado (conjuntos nao pareados)",
+   "semente_a_semente": [
+    {
+     "rotulo": "S-nadir-35 s0 - Twin-75 s0",
+     "dif": 0.1079,
+     "ic95": [
+      0.0151,
+      0.2107
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-nadir-35 s1 - Twin-75 s1",
+     "dif": 0.0995,
+     "ic95": [
+      0.0044,
+      0.2021
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-nadir-35 s2 - Twin-75 s2",
+     "dif": -0.0021,
+     "ic95": [
+      -0.0951,
+      0.0927
+     ],
+     "exclui_zero": false
+    },
+    {
+     "rotulo": "S-nadir-35 s0 - S-nadir-75 (original)",
+     "dif": 0.0357,
+     "ic95": [
+      -0.0587,
+      0.1244
+     ],
+     "exclui_zero": false
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 3,
+    "resumo": "resolvivel nas 2 de 3 leituras"
+   }
+  },
+  {
+   "comparacao": "35 m vs twin at 75 m, object called armed, new frames, 80 each",
+   "medida": "objeto chamado de armada a conf 0,25",
+   "a": "S-nadir-35 (media das sementes)",
+   "b": "Twin-75 (media das sementes)",
+   "a_valor": 0.2215,
+   "b_valor": 0.1343,
+   "dif_absoluta": 0.0872,
+   "dif_relativa_pct_do_menor": 64.9,
+   "razao_a_sobre_b": 1.649,
+   "razao_ic95": null,
+   "sementes_a": {
+    "valores": [
+     0.2534,
+     0.2021,
+     0.2089
+    ],
+    "min": 0.2021,
+    "max": 0.2534,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.125,
+     0.0972,
+     0.1806
+    ],
+    "min": 0.0972,
+    "max": 0.1806,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.0445,
+    0.1359
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "bootstrap": "quadros, independente em cada lado (conjuntos nao pareados)",
+   "semente_a_semente": [
+    {
+     "rotulo": "S-nadir-35 s0 - Twin-75 s0",
+     "dif": 0.1284,
+     "ic95": [
+      0.0709,
+      0.1936
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-nadir-35 s1 - Twin-75 s1",
+     "dif": 0.1049,
+     "ic95": [
+      0.0463,
+      0.1656
+     ],
+     "exclui_zero": true
+    },
+    {
+     "rotulo": "S-nadir-35 s2 - Twin-75 s2",
+     "dif": 0.0283,
+     "ic95": [
+      -0.0317,
+      0.0859
+     ],
+     "exclui_zero": false
+    }
+   ],
+   "veredito": {
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
+    "resumo": "resolvivel nas tres leituras"
+   }
+  },
+  {
+   "comparacao": "35 m vs original 75 m, object called armed, validation split",
+   "medida": "objeto chamado de armada a conf 0,25",
+   "a": "S-nadir-35 s0",
+   "b": "S-nadir-75",
+   "a_valor": 0.2727,
+   "b_valor": 0.237,
+   "dif_absoluta": 0.0357,
+   "dif_relativa_pct_do_menor": 15.1,
+   "razao_a_sobre_b": 1.151,
+   "razao_ic95": null,
+   "sementes_a": {
+    "valores": [
+     0.2727
+    ],
+    "min": 0.2727,
+    "max": 0.2727,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.237
+    ],
+    "min": 0.237,
+    "max": 0.237,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    -0.0587,
+    0.1244
+   ],
+   "b_fracao_positiva": 0.747,
+   "b_ok": false,
+   "c_ok": false,
+   "bootstrap": "quadros, independente em cada lado (vals de corpora diferentes)",
+   "semente_a_semente": [],
+   "veredito": {
+    "leituras_passadas": 0,
+    "leituras_avaliaveis": 2,
+    "resumo": "nao resolvivel em nenhuma leitura"
+   }
+  }
+ ],
+ "quando": "2026-10-17T21:14:19"
+}

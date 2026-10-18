@@ -1,0 +1,25 @@
+{
+ "ft10_coco": {
+  "reportado": 0.5709,
+  "lote4_fp16": {
+   "mAP50": 0.56641,
+   "dif_reportado": -0.00449,
+   "quando": "2026-10-17T18:26:33"
+  },
+  "lote4_fp32": {
+   "mAP50": 0.57086,
+   "dif_reportado": -4e-05,
+   "quando": "2026-10-17T18:27:37"
+  },
+  "lote16_fp32": {
+   "mAP50": 0.57086,
+   "dif_reportado": -4e-05,
+   "quando": "2026-10-17T18:28:42"
+  },
+  "lote16_fp16": {
+   "mAP50": 0.56726,
+   "dif_reportado": -0.00364,
+   "quando": "2026-10-17T18:29:58"
+  }
+ }
+}

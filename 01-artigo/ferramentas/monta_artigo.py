@@ -33,28 +33,19 @@ MAN = os.path.join(RAIZ, "01-artigo", "manuscrito")
 # Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, escrita pelo mestrando; desde a
 # reordenacao de 22/09 entram em bloco depois da secao 6.
 ORDEM = [
-    # Ordem revista em 2026-09-22. A anterior punha o pipeline tecnico entre a metodologia e o
-    # contexto de campo, e o leitor saltava de "como geramos a cena" para "historia do
-    # policiamento no Rio" e de volta. Pior: a propria metodologia declara que os componentes sao
-    # "built one on the other", com o contexto de campo dando o chao que o modelo precisa para ser
-    # plausivel, e a ordem antiga contradizia isso.
-    #
-    # A nova ordem segue problema -> territorio -> como estudamos -> o que propomos -> como
-    # construimos -> o que medimos. As secoes 8 a 13 mantem o numero, entao nenhuma remissao
-    # tecnica a 8, 9, 10 ou 11 precisou mudar.
-    "01-introduction.md",                        # 1  professor
-    "02-literature-review.md",                   # 2  professor
-    "04-situating-the-study.md",                 # 3  delegado
-    "05-case-jacarezinho.md",                    # 4  delegado
-    "03-methodology.md",                         # 5  professor
-    "06-results-proposed-model.md",              # 6  mestrando
-    "03b-methodology-synthetic-pipeline.md",     # 7  tecnico
-    "06b-model-free-evidence.md",                # 8  tecnico
-    "07b-results-placeholder.md",                # 9  tecnico
-    "08b-robustness.md",                         # 10 tecnico
-    "09b-technical-limitations.md",              # 11 tecnico
-    "07-conclusion.md",                          # 12 professor
-    "08-references.md",                          # 13 professor
+    # Ordem revista em 2026-10-17, a partir do feedback de 14/10 (01-artigo/feedback-2026-10-14/):
+    # estrutura de sete secoes (introducao, trabalhos relacionados, contexto, materiais e metodos,
+    # resultados, discussao, conclusao). O montador numera o H2 de cada arquivo na ordem desta
+    # lista; H3 e H4 levam numero explicito no texto. A ordem de 30/09 (treze arquivos, com as
+    # secoes do orientador e as tecnicas "b") esta congelada em 01-artigo/manuscrito-2026-09-30/.
+    "s1-introduction.md",         # 1 abstract e introducao
+    "s2-related-work.md",         # 2
+    "s3-study-context.md",        # 3
+    "s4-materials-methods.md",    # 4
+    "s5-results.md",              # 5
+    "s6-discussion.md",           # 6
+    "s7-conclusion.md",           # 7, seguida do bloco Declarations (H2 sem numero)
+    "s8-references.md",           # referencias, sem numero
 ]
 
 # QUADRO DE AUTORIA, so para esta fase de escrita. Sai do PDF final com --sem-autoria.
@@ -216,6 +207,8 @@ h1 { font-size: 16pt; line-height: 1.3; margin: 0 0 6pt 0; }
 h2 { font-size: 13pt; line-height: 1.4; margin: 20pt 0 6pt 0; page-break-after: avoid; }
 h3 { font-size: 12pt; line-height: 1.4; margin: 14pt 0 4pt 0; font-style: italic;
      page-break-after: avoid; }
+h4 { font-size: 12pt; line-height: 1.4; margin: 10pt 0 3pt 0; font-weight: normal;
+     font-style: italic; page-break-after: avoid; }
 p { margin: 0 0 8pt 0; text-align: justify; }
 table { border-collapse: collapse; width: 100%; font-size: 10pt; line-height: 1.35;
         margin: 10pt 0 14pt 0; page-break-inside: avoid; }
@@ -254,6 +247,9 @@ h2 { font-size: 10.5pt; line-height: 1.3; margin: 11pt 0 4pt 0; font-weight: bol
      page-break-after: avoid; text-align: left; }
 h3 { font-size: 9.5pt; line-height: 1.3; margin: 8pt 0 3pt 0; font-weight: bold;
      font-style: italic; page-break-after: avoid; text-align: left; }
+h4 { font-size: 9.5pt; line-height: 1.3; margin: 6pt 0 2pt 0; font-weight: normal;
+     font-style: italic; page-break-after: avoid; text-align: left; }
+h4 + p { text-indent: 0; }
 p { margin: 0 0 5pt 0; }
 p + p { text-indent: 1.2em; margin-top: -3pt; }
 table { border-collapse: collapse; width: 100%; font-size: 7.8pt; line-height: 1.18;
@@ -371,7 +367,7 @@ def main():
             return f"## {n_sec}. {m.group(1)}"
 
         alvos = [m for m in RE_H2.finditer(txt)
-                 if not m.group(1).strip().lower().startswith(("abstract", "keywords"))]
+                 if not m.group(1).strip().lower().startswith(("abstract", "keywords", "references"))]
         if alvos:
             m = alvos[0]
             txt = txt[:m.start()] + _numera(m) + txt[m.end():]
@@ -398,7 +394,7 @@ def main():
     aviso = ""
     if not args.sem_previa:
         aviso += ('<div class="aviso full"><b>Preliminary version, not final.</b> Working draft of '
-                  '30 September 2026, shared among the authors for revision; numbers, figures and '
+                  '17 October 2026, shared among the authors for revision; numbers, figures and '
                   'references are still under review and the text has not been approved by all '
                   'authors. <i>Versão prévia, ainda não finalizada.</i></div>')
     if n_ph:

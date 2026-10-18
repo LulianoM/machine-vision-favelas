@@ -1,0 +1,5 @@
+[   0.0 ->    6.5] Também antes de falar como tu estava fazendo, ou tu apontava melhor que fazer um processo de
+[   6.5 ->   15.6] classificação, né? De reconhecimento. Acho que para você seria muito bom antes de aplicar essa tarefa,
+[  15.6 ->   25.7] acho que é propor algum método de redução do ordem, tipo uma matriz de co-similaridade ou algum meio que
+[  25.7 ->   35.3] artilúgio matemático, né? Que a gente permita melhorar um pouco, fazer uma refinação treina no critério da
+[  35.3 ->   40.7] da classificação, cara. Ou senão vai ser muito sensível.

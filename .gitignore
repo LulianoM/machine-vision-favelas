@@ -42,3 +42,6 @@ wandb/
 
 # Exceção: CFP e modelos de formato da AIM 2027 ficam versionados
 !08-conferencia/modelos_2026/*.pdf
+
+# Armazens de predicoes da revisao de 17/10 (regeraveis pelos scripts da pasta; ~10 MB)
+06-resultados/revisao-2026-10-17/preds_*

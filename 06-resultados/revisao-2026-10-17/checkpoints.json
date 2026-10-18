@@ -1,0 +1,1615 @@
+{
+ "gerado_em": "2026-10-17",
+ "script": "C:\\projetos\\machine-vision-favelas\\06-resultados\\revisao-2026-10-17\\checkpoints.py",
+ "comando": "C:/arma3-favela/venv/Scripts/python.exe 06-resultados/revisao-2026-10-17/checkpoints.py",
+ "regra": "fitness = mAP50-95 (DetMetrics.fitness, w = [0, 0, 0, 1], Ultralytics 8.4.148); best.pt = epoca de maior fitness na validacao do data.yaml (ultima em empate exato); patience = epocas sem subir antes de parar",
+ "runs": [
+  {
+   "run": "morro_clima_s",
+   "nome_artigo": "Pilot model (1080p corpus, 640 px tiles)",
+   "grupo": "piloto",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\morro_clima_s",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "ds_morro_clima_tiles/data.yaml",
+    "epochs": 120,
+    "patience": 15,
+    "imgsz": 640,
+    "batch": 8,
+    "seed": 0,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_morro_clima_tiles/images/val",
+   "epocas_feitas": 24,
+   "epoca_primeira": 1,
+   "epoca_ultima": 24,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 378.123,
+   "tempo_treino_s_somado_trechos": 378.1,
+   "tempo_treino_h": 0.11,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 9,
+    "mAP50_95": 0.01894,
+    "mAP50": 0.07533,
+    "P": 0.10215,
+    "R": 0.14424
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-20T10:50:02.624211-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.10215,
+     "metrics/recall(B)": 0.14424,
+     "metrics/mAP50(B)": 0.07533,
+     "metrics/mAP50-95(B)": 0.01894,
+     "val/box_loss": 3.34,
+     "val/cls_loss": 3.11117,
+     "val/dfl_loss": 0.85505,
+     "fitness": 0.01894
+    }
+   },
+   "epoca_best_pt_casada": 9,
+   "epocas_casadas": [
+    9
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": false
+  },
+  {
+   "run": "r_pareado",
+   "nome_artigo": "R",
+   "grupo": "classe unica, real",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\r_pareado",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\visdrone\\visdrone_sub\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/visdrone_sub/val/images",
+   "epocas_feitas": 60,
+   "epoca_primeira": 1,
+   "epoca_ultima": 60,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 21148.4,
+   "tempo_treino_s_somado_trechos": 21148.4,
+   "tempo_treino_h": 5.87,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 58,
+    "mAP50_95": 0.25147,
+    "mAP50": 0.62983,
+    "P": 0.729,
+    "R": 0.57091
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-21T08:40:26.292884-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.729,
+     "metrics/recall(B)": 0.57091,
+     "metrics/mAP50(B)": 0.62983,
+     "metrics/mAP50-95(B)": 0.25147,
+     "val/box_loss": 2.09033,
+     "val/cls_loss": 1.10535,
+     "val/dfl_loss": 1.03921,
+     "fitness": 0.25147
+    }
+   },
+   "epoca_best_pt_casada": 58,
+   "epocas_casadas": [
+    58
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": false
+  },
+  {
+   "run": "s_nadir_4k",
+   "nome_artigo": "S-nadir-150",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_morro_4k_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_morro_4k_tiles/images/val",
+   "epocas_feitas": 60,
+   "epoca_primeira": 1,
+   "epoca_ultima": 60,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 14367.5,
+   "tempo_treino_s_somado_trechos": 14367.5,
+   "tempo_treino_h": 3.99,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 51,
+    "mAP50_95": 0.35684,
+    "mAP50": 0.78519,
+    "P": 0.8691,
+    "R": 0.72673
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-21T02:25:05.061889-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.8691,
+     "metrics/recall(B)": 0.72673,
+     "metrics/mAP50(B)": 0.78519,
+     "metrics/mAP50-95(B)": 0.35684,
+     "val/box_loss": 1.96166,
+     "val/cls_loss": 0.99739,
+     "val/dfl_loss": 0.97912,
+     "fitness": 0.35684
+    }
+   },
+   "epoca_best_pt_casada": 51,
+   "epocas_casadas": [
+    51
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": false
+  },
+  {
+   "run": "s_variedade",
+   "nome_artigo": "S-nadir-150-six",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_variedade",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_variedade_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_variedade_tiles/images/val",
+   "epocas_feitas": 54,
+   "epoca_primeira": 1,
+   "epoca_ultima": 54,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 13359.1,
+   "tempo_treino_s_somado_trechos": 13359.1,
+   "tempo_treino_h": 3.71,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 39,
+    "mAP50_95": 0.26844,
+    "mAP50": 0.67259,
+    "P": 0.77565,
+    "R": 0.62242
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-23T10:27:52.278459-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.77565,
+     "metrics/recall(B)": 0.62242,
+     "metrics/mAP50(B)": 0.67259,
+     "metrics/mAP50-95(B)": 0.26844,
+     "val/box_loss": 2.19791,
+     "val/cls_loss": 1.16906,
+     "val/dfl_loss": 1.0557,
+     "fitness": 0.26844
+    }
+   },
+   "epoca_best_pt_casada": 39,
+   "epocas_casadas": [
+    39
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": false
+  },
+  {
+   "run": "s_obliquo",
+   "nome_artigo": "S-oblique",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_obliquo",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_morro_obl_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_morro_obl_tiles/images/val",
+   "epocas_feitas": 49,
+   "epoca_primeira": 1,
+   "epoca_ultima": 49,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 10077.2,
+   "tempo_treino_s_somado_trechos": 10077.2,
+   "tempo_treino_h": 2.8,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 34,
+    "mAP50_95": 0.3475,
+    "mAP50": 0.74666,
+    "P": 0.88155,
+    "R": 0.67961
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-24T16:06:34.277393-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.88155,
+     "metrics/recall(B)": 0.67961,
+     "metrics/mAP50(B)": 0.74666,
+     "metrics/mAP50-95(B)": 0.3475,
+     "val/box_loss": 1.95273,
+     "val/cls_loss": 1.25776,
+     "val/dfl_loss": 1.08007,
+     "fitness": 0.3475
+    }
+   },
+   "epoca_best_pt_casada": 34,
+   "epocas_casadas": [
+    34
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": false
+  },
+  {
+   "run": "s_oblvar",
+   "nome_artigo": "S-oblique-six (seed 0)",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_oblvar_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_oblvar_tiles/images/val",
+   "epocas_feitas": 46,
+   "epoca_primeira": 1,
+   "epoca_ultima": 46,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 9122.07,
+   "tempo_treino_s_somado_trechos": 9122.1,
+   "tempo_treino_h": 2.53,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 31,
+    "mAP50_95": 0.34548,
+    "mAP50": 0.70488,
+    "P": 0.77854,
+    "R": 0.64516
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-25T17:15:45.040389-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.77854,
+     "metrics/recall(B)": 0.64516,
+     "metrics/mAP50(B)": 0.70488,
+     "metrics/mAP50-95(B)": 0.34548,
+     "val/box_loss": 1.88691,
+     "val/cls_loss": 1.42358,
+     "val/dfl_loss": 0.98655,
+     "fitness": 0.34548
+    }
+   },
+   "epoca_best_pt_casada": 31,
+   "epocas_casadas": [
+    31
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "s_oblvar_sd1",
+   "nome_artigo": "S-oblique-six (seed 1)",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_sd1",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_oblvar_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 1,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_oblvar_tiles/images/val",
+   "epocas_feitas": 56,
+   "epoca_primeira": 1,
+   "epoca_ultima": 56,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 10581.8,
+   "tempo_treino_s_somado_trechos": 10581.8,
+   "tempo_treino_h": 2.94,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 41,
+    "mAP50_95": 0.34734,
+    "mAP50": 0.72887,
+    "P": 0.8261,
+    "R": 0.64082
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T03:03:58.903672-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.8261,
+     "metrics/recall(B)": 0.64082,
+     "metrics/mAP50(B)": 0.72887,
+     "metrics/mAP50-95(B)": 0.34734,
+     "val/box_loss": 1.9557,
+     "val/cls_loss": 1.2703,
+     "val/dfl_loss": 0.98738,
+     "fitness": 0.34734
+    }
+   },
+   "epoca_best_pt_casada": 41,
+   "epocas_casadas": [
+    41
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "s_oblvar_sd2",
+   "nome_artigo": "S-oblique-six (seed 2)",
+   "grupo": "classe unica, sintetico",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_sd2",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_oblvar_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 2,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_oblvar_tiles/images/val",
+   "epocas_feitas": 51,
+   "epoca_primeira": 1,
+   "epoca_ultima": 51,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 9517.71,
+   "tempo_treino_s_somado_trechos": 9517.7,
+   "tempo_treino_h": 2.64,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 36,
+    "mAP50_95": 0.32994,
+    "mAP50": 0.71405,
+    "P": 0.81319,
+    "R": 0.66569
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T05:40:56.194581-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.81319,
+     "metrics/recall(B)": 0.66569,
+     "metrics/mAP50(B)": 0.71405,
+     "metrics/mAP50-95(B)": 0.32994,
+     "val/box_loss": 1.97734,
+     "val/cls_loss": 1.24722,
+     "val/dfl_loss": 1.01212,
+     "fitness": 0.32994
+    }
+   },
+   "epoca_best_pt_casada": 36,
+   "epocas_casadas": [
+    36
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_sint",
+   "nome_artigo": "F-synthetic 5% (seed 0)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar\\weights\\best.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 2959.76,
+   "tempo_treino_s_somado_trechos": 2959.8,
+   "tempo_treino_h": 0.82,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "best.pt",
+   "melhor_por_csv": {
+    "epoca": 30,
+    "mAP50_95": 0.14803,
+    "mAP50": 0.39641,
+    "P": 0.56607,
+    "R": 0.37071
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-26T13:54:39.695818-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.56607,
+     "metrics/recall(B)": 0.37071,
+     "metrics/mAP50(B)": 0.39641,
+     "metrics/mAP50-95(B)": 0.14803,
+     "val/box_loss": 2.45506,
+     "val/cls_loss": 1.67757,
+     "val/dfl_loss": 1.12283,
+     "fitness": 0.14803
+    }
+   },
+   "epoca_best_pt_casada": 30,
+   "epocas_casadas": [
+    30
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_sint_sd1",
+   "nome_artigo": "F-synthetic 5% (seed 1)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint_sd1",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_sd1\\weights\\best.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 1,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 3100.05,
+   "tempo_treino_s_somado_trechos": 3100.1,
+   "tempo_treino_h": 0.86,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "best.pt",
+   "melhor_por_csv": {
+    "epoca": 29,
+    "mAP50_95": 0.15275,
+    "mAP50": 0.40222,
+    "P": 0.56449,
+    "R": 0.37683
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T07:19:02.063434-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.56449,
+     "metrics/recall(B)": 0.37683,
+     "metrics/mAP50(B)": 0.40222,
+     "metrics/mAP50-95(B)": 0.15275,
+     "val/box_loss": 2.42328,
+     "val/cls_loss": 1.63604,
+     "val/dfl_loss": 1.11062,
+     "fitness": 0.15275
+    }
+   },
+   "epoca_best_pt_casada": 29,
+   "epocas_casadas": [
+    29
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_sint_sd2",
+   "nome_artigo": "F-synthetic 5% (seed 2)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint_sd2",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_sd2\\weights\\best.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 2,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 3027.45,
+   "tempo_treino_s_somado_trechos": 3027.4,
+   "tempo_treino_h": 0.84,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "best.pt",
+   "melhor_por_csv": {
+    "epoca": 27,
+    "mAP50_95": 0.15251,
+    "mAP50": 0.40407,
+    "P": 0.56985,
+    "R": 0.37853
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T08:07:27.222376-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.56985,
+     "metrics/recall(B)": 0.37853,
+     "metrics/mAP50(B)": 0.40407,
+     "metrics/mAP50-95(B)": 0.15251,
+     "val/box_loss": 2.42442,
+     "val/cls_loss": 1.6469,
+     "val/dfl_loss": 1.10981,
+     "fitness": 0.15251
+    }
+   },
+   "epoca_best_pt_casada": 27,
+   "epocas_casadas": [
+    27
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_coco",
+   "nome_artigo": "F-generic 5% (seed 0)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 2924.74,
+   "tempo_treino_s_somado_trechos": 2924.7,
+   "tempo_treino_h": 0.81,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 29,
+    "mAP50_95": 0.18016,
+    "mAP50": 0.46477,
+    "P": 0.64029,
+    "R": 0.42185
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-26T14:43:05.889834-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.64029,
+     "metrics/recall(B)": 0.42185,
+     "metrics/mAP50(B)": 0.46477,
+     "metrics/mAP50-95(B)": 0.18016,
+     "val/box_loss": 2.32256,
+     "val/cls_loss": 1.51425,
+     "val/dfl_loss": 1.07194,
+     "fitness": 0.18016
+    }
+   },
+   "epoca_best_pt_casada": 29,
+   "epocas_casadas": [
+    29
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_coco_sd1",
+   "nome_artigo": "F-generic 5% (seed 1)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_sd1",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 1,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 2999.02,
+   "tempo_treino_s_somado_trechos": 2999.0,
+   "tempo_treino_h": 0.83,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 27,
+    "mAP50_95": 0.18122,
+    "mAP50": 0.46214,
+    "P": 0.60938,
+    "R": 0.43442
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T08:58:38.257762-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.60938,
+     "metrics/recall(B)": 0.43442,
+     "metrics/mAP50(B)": 0.46214,
+     "metrics/mAP50-95(B)": 0.18122,
+     "val/box_loss": 2.30607,
+     "val/cls_loss": 1.51102,
+     "val/dfl_loss": 1.07365,
+     "fitness": 0.18122
+    }
+   },
+   "epoca_best_pt_casada": 27,
+   "epocas_casadas": [
+    27
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft05_coco_sd2",
+   "nome_artigo": "F-generic 5% (seed 2)",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_sd2",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft05.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 2,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 3108.62,
+   "tempo_treino_s_somado_trechos": 3108.6,
+   "tempo_treino_h": 0.86,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 30,
+    "mAP50_95": 0.18293,
+    "mAP50": 0.47066,
+    "P": 0.64087,
+    "R": 0.42658
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T09:56:36.554078-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.64087,
+     "metrics/recall(B)": 0.42658,
+     "metrics/mAP50(B)": 0.47066,
+     "metrics/mAP50-95(B)": 0.18293,
+     "val/box_loss": 2.33393,
+     "val/cls_loss": 1.45997,
+     "val/dfl_loss": 1.06966,
+     "fitness": 0.18293
+    }
+   },
+   "epoca_best_pt_casada": 30,
+   "epocas_casadas": [
+    30
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft10_sint",
+   "nome_artigo": "F-synthetic 10%",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_sint",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar\\weights\\best.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft10.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 5523.94,
+   "tempo_treino_s_somado_trechos": 5523.9,
+   "tempo_treino_h": 1.53,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "best.pt",
+   "melhor_por_csv": {
+    "epoca": 29,
+    "mAP50_95": 0.1743,
+    "mAP50": 0.44913,
+    "P": 0.62109,
+    "R": 0.40622
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-26T16:14:47.391199-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.62109,
+     "metrics/recall(B)": 0.40622,
+     "metrics/mAP50(B)": 0.44913,
+     "metrics/mAP50-95(B)": 0.1743,
+     "val/box_loss": 2.3491,
+     "val/cls_loss": 1.56227,
+     "val/dfl_loss": 1.09295,
+     "fitness": 0.1743
+    }
+   },
+   "epoca_best_pt_casada": 29,
+   "epocas_casadas": [
+    29
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "ft10_coco",
+   "nome_artigo": "F-generic 10%",
+   "grupo": "ajuste fino",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_coco",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\visdrone\\ft\\ft10.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 5571.17,
+   "tempo_treino_s_somado_trechos": 5571.2,
+   "tempo_treino_h": 1.55,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 29,
+    "mAP50_95": 0.19509,
+    "mAP50": 0.50305,
+    "P": 0.64929,
+    "R": 0.4599
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-26T17:48:49.842456-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.64929,
+     "metrics/recall(B)": 0.4599,
+     "metrics/mAP50(B)": 0.50305,
+     "metrics/mAP50-95(B)": 0.19509,
+     "val/box_loss": 2.30375,
+     "val/cls_loss": 1.42956,
+     "val/dfl_loss": 1.07254,
+     "fitness": 0.19509
+    }
+   },
+   "epoca_best_pt_casada": 29,
+   "epocas_casadas": [
+    29
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "misto05",
+   "nome_artigo": "F-joint 5%",
+   "grupo": "treino conjunto",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\misto05",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_misto05\\data.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 10558.3,
+   "tempo_treino_s_somado_trechos": 10558.3,
+   "tempo_treino_h": 2.93,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 28,
+    "mAP50_95": 0.1568,
+    "mAP50": 0.41542,
+    "P": 0.57418,
+    "R": 0.39416
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-27T16:59:41.086826-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.57418,
+     "metrics/recall(B)": 0.39416,
+     "metrics/mAP50(B)": 0.41542,
+     "metrics/mAP50-95(B)": 0.1568,
+     "val/box_loss": 2.415,
+     "val/cls_loss": 1.59578,
+     "val/dfl_loss": 1.11895,
+     "fitness": 0.1568
+    }
+   },
+   "epoca_best_pt_casada": 28,
+   "epocas_casadas": [
+    28
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "misto10",
+   "nome_artigo": "F-joint 10%",
+   "grupo": "treino conjunto",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\misto10",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\misto10\\weights\\last.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_misto10\\data.yaml",
+    "epochs": 30,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": true,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": "C:\\arma3-favela\\blender\\runs\\detect\\misto10\\weights\\last.pt",
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/visdrone/ft/sel/images",
+   "epocas_feitas": 30,
+   "epoca_primeira": 1,
+   "epoca_ultima": 30,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 5521.98,
+   "tempo_treino_s_somado_trechos": 13223.5,
+   "tempo_treino_h": 3.67,
+   "retomadas_apos_epoca": [
+    18
+   ],
+   "pesos_iniciais": "yolo11s.pt (retomado de last.pt apos pausa)",
+   "melhor_por_csv": {
+    "epoca": 30,
+    "mAP50_95": 0.18684,
+    "mAP50": 0.48063,
+    "P": 0.63395,
+    "R": 0.43561
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-27T23:10:08.308972-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.63395,
+     "metrics/recall(B)": 0.43561,
+     "metrics/mAP50(B)": 0.48063,
+     "metrics/mAP50-95(B)": 0.18684,
+     "val/box_loss": 2.32143,
+     "val/cls_loss": 1.44937,
+     "val/dfl_loss": 1.07977,
+     "fitness": 0.18684
+    }
+   },
+   "epoca_best_pt_casada": 30,
+   "epocas_casadas": [
+    30
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_75",
+   "nome_artigo": "S-nadir-75 (three classes)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_75_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_75_tiles/images/val",
+   "epocas_feitas": 59,
+   "epoca_primeira": 1,
+   "epoca_ultima": 59,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 18417.7,
+   "tempo_treino_s_somado_trechos": 18417.7,
+   "tempo_treino_h": 5.12,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 44,
+    "mAP50_95": 0.29219,
+    "mAP50": 0.5421,
+    "P": 0.56423,
+    "R": 0.5671
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-22T08:50:39.987026-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.56423,
+     "metrics/recall(B)": 0.5671,
+     "metrics/mAP50(B)": 0.5421,
+     "metrics/mAP50-95(B)": 0.29219,
+     "val/box_loss": 1.62135,
+     "val/cls_loss": 1.49777,
+     "val/dfl_loss": 1.40659,
+     "fitness": 0.29219
+    }
+   },
+   "epoca_best_pt_casada": 44,
+   "epocas_casadas": [
+    44
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": false
+  },
+  {
+   "run": "armado_35",
+   "nome_artigo": "S-nadir-35 (seed 0)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_35_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_35_tiles/images/val",
+   "epocas_feitas": 58,
+   "epoca_primeira": 1,
+   "epoca_ultima": 58,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 12948.6,
+   "tempo_treino_s_somado_trechos": 12948.6,
+   "tempo_treino_h": 3.6,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 43,
+    "mAP50_95": 0.28199,
+    "mAP50": 0.48997,
+    "P": 0.48416,
+    "R": 0.50672
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-24T03:14:30.689949-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.48416,
+     "metrics/recall(B)": 0.50672,
+     "metrics/mAP50(B)": 0.48997,
+     "metrics/mAP50-95(B)": 0.28199,
+     "val/box_loss": 1.54071,
+     "val/cls_loss": 1.72098,
+     "val/dfl_loss": 1.66843,
+     "fitness": 0.28199
+    }
+   },
+   "epoca_best_pt_casada": 43,
+   "epocas_casadas": [
+    43
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": false
+  },
+  {
+   "run": "armado_35_sd1",
+   "nome_artigo": "S-nadir-35 (seed 1)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35_sd1",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35_sd1\\weights\\last.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_35_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 1,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35_sd1\\weights\\last.pt",
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_35_tiles/images/val",
+   "epocas_feitas": 60,
+   "epoca_primeira": 1,
+   "epoca_ultima": 60,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 2817.26,
+   "tempo_treino_s_somado_trechos": 19508.1,
+   "tempo_treino_h": 5.42,
+   "retomadas_apos_epoca": [
+    12,
+    21,
+    51
+   ],
+   "pesos_iniciais": "yolo11s.pt (retomado de last.pt apos pausa)",
+   "melhor_por_csv": {
+    "epoca": 59,
+    "mAP50_95": 0.26438,
+    "mAP50": 0.48532,
+    "P": 0.45344,
+    "R": 0.54619
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-29T21:02:30.574767-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.45344,
+     "metrics/recall(B)": 0.54619,
+     "metrics/mAP50(B)": 0.48532,
+     "metrics/mAP50-95(B)": 0.26438,
+     "val/box_loss": 1.63723,
+     "val/cls_loss": 1.69235,
+     "val/dfl_loss": 1.72036,
+     "fitness": 0.26438
+    }
+   },
+   "epoca_best_pt_casada": 59,
+   "epocas_casadas": [
+    59
+   ],
+   "confere": true,
+   "parada_antecipada": false,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_35_sd2",
+   "nome_artigo": "S-nadir-35 (seed 2)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_35_sd2",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_35_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 2,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_35_tiles/images/val",
+   "epocas_feitas": 52,
+   "epoca_primeira": 1,
+   "epoca_ultima": 52,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 14990.7,
+   "tempo_treino_s_somado_trechos": 14990.7,
+   "tempo_treino_h": 4.16,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 37,
+    "mAP50_95": 0.27604,
+    "mAP50": 0.49405,
+    "P": 0.50152,
+    "R": 0.50828
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-30T00:07:57.215522-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.50152,
+     "metrics/recall(B)": 0.50828,
+     "metrics/mAP50(B)": 0.49405,
+     "metrics/mAP50-95(B)": 0.27604,
+     "val/box_loss": 1.61052,
+     "val/cls_loss": 1.68425,
+     "val/dfl_loss": 1.71556,
+     "fitness": 0.27604
+    }
+   },
+   "epoca_best_pt_casada": 37,
+   "epocas_casadas": [
+    37
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_75g",
+   "nome_artigo": "Twin at 75 m (seed 0)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g",
+   "args": {
+    "model": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g\\weights\\last.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_75g_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g\\weights\\last.pt",
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_75g_tiles/images/val",
+   "epocas_feitas": 59,
+   "epoca_primeira": 1,
+   "epoca_ultima": 59,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 8049.07,
+   "tempo_treino_s_somado_trechos": 14800.6,
+   "tempo_treino_h": 4.11,
+   "retomadas_apos_epoca": [
+    28
+   ],
+   "pesos_iniciais": "yolo11s.pt (retomado de last.pt apos pausa)",
+   "melhor_por_csv": {
+    "epoca": 44,
+    "mAP50_95": 0.25793,
+    "mAP50": 0.4733,
+    "P": 0.46429,
+    "R": 0.55005
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-26T11:59:20.777101-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.46429,
+     "metrics/recall(B)": 0.55005,
+     "metrics/mAP50(B)": 0.4733,
+     "metrics/mAP50-95(B)": 0.25793,
+     "val/box_loss": 1.61996,
+     "val/cls_loss": 1.70054,
+     "val/dfl_loss": 1.4032,
+     "fitness": 0.25793
+    }
+   },
+   "epoca_best_pt_casada": 44,
+   "epocas_casadas": [
+    44
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_75g_sd1",
+   "nome_artigo": "Twin at 75 m (seed 1)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g_sd1",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_75g_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 1,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_75g_tiles/images/val",
+   "epocas_feitas": 51,
+   "epoca_primeira": 1,
+   "epoca_ultima": 51,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 15495.6,
+   "tempo_treino_s_somado_trechos": 15495.6,
+   "tempo_treino_h": 4.3,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 36,
+    "mAP50_95": 0.26292,
+    "mAP50": 0.48465,
+    "P": 0.47907,
+    "R": 0.54578
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-30T04:22:10.377949-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.47907,
+     "metrics/recall(B)": 0.54578,
+     "metrics/mAP50(B)": 0.48465,
+     "metrics/mAP50-95(B)": 0.26292,
+     "val/box_loss": 1.73301,
+     "val/cls_loss": 1.68143,
+     "val/dfl_loss": 1.50554,
+     "fitness": 0.26292
+    }
+   },
+   "epoca_best_pt_casada": 36,
+   "epocas_casadas": [
+    36
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_75g_sd2",
+   "nome_artigo": "Twin at 75 m (seed 2)",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_75g_sd2",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_75g_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 2,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_75g_tiles/images/val",
+   "epocas_feitas": 52,
+   "epoca_primeira": 1,
+   "epoca_ultima": 52,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 16077.4,
+   "tempo_treino_s_somado_trechos": 16077.4,
+   "tempo_treino_h": 4.47,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 37,
+    "mAP50_95": 0.28075,
+    "mAP50": 0.49779,
+    "P": 0.52804,
+    "R": 0.52611
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-30T08:48:00.916540-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.52804,
+     "metrics/recall(B)": 0.52611,
+     "metrics/mAP50(B)": 0.49779,
+     "metrics/mAP50-95(B)": 0.28075,
+     "val/box_loss": 1.6299,
+     "val/cls_loss": 1.66461,
+     "val/dfl_loss": 1.42895,
+     "fitness": 0.28075
+    }
+   },
+   "epoca_best_pt_casada": 37,
+   "epocas_casadas": [
+    37
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  },
+  {
+   "run": "armado_150g",
+   "nome_artigo": "Twin at 150 m",
+   "grupo": "tres classes",
+   "pasta": "C:\\arma3-favela\\blender\\runs\\detect\\armado_150g",
+   "args": {
+    "model": "yolo11s.pt",
+    "data": "C:\\arma3-favela\\blender\\ds_armado_150g_tiles\\data.yaml",
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 1280,
+    "batch": 6,
+    "seed": 0,
+    "single_cls": false,
+    "optimizer": "auto",
+    "lr0": 0.01,
+    "close_mosaic": 10,
+    "resume": false,
+    "deterministic": true
+   },
+   "selecao_val": "C:/arma3-favela/blender/ds_armado_150g_tiles/images/val",
+   "epocas_feitas": 36,
+   "epoca_primeira": 1,
+   "epoca_ultima": 36,
+   "epocas_repetidas_no_csv": [],
+   "tempo_treino_s": 9410.91,
+   "tempo_treino_s_somado_trechos": 9410.9,
+   "tempo_treino_h": 2.61,
+   "retomadas_apos_epoca": [],
+   "pesos_iniciais": "yolo11s.pt",
+   "melhor_por_csv": {
+    "epoca": 21,
+    "mAP50_95": 0.13487,
+    "mAP50": 0.34257,
+    "P": 0.38812,
+    "R": 0.45616
+   },
+   "best_pt": {
+    "epoch_gravado": -1,
+    "best_fitness_gravado": null,
+    "versao": "8.4.148",
+    "data": "2026-09-28T08:57:40.325583-03:00",
+    "train_metrics": {
+     "metrics/precision(B)": 0.38812,
+     "metrics/recall(B)": 0.45616,
+     "metrics/mAP50(B)": 0.34257,
+     "metrics/mAP50-95(B)": 0.13487,
+     "val/box_loss": 2.14196,
+     "val/cls_loss": 1.96777,
+     "val/dfl_loss": 1.12199,
+     "fitness": 0.13487
+    }
+   },
+   "epoca_best_pt_casada": 21,
+   "epocas_casadas": [
+    21
+   ],
+   "confere": true,
+   "parada_antecipada": true,
+   "epocas_sem_melhora_no_fim": 15,
+   "treino_ok": true
+  }
+ ]
+}

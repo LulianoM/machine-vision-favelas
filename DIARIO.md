@@ -2,6 +2,17 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-10-18 [DESKTOP] Artigo reestruturado pelo feedback de 14/10
+
+- Material recebido em 17/10 na pasta `FEEDBACKS ARTIGOS` do autor: `feedback.txt` (estrutura-alvo de sete seções, parecer em três blocos, esqueleto de seis seções, mensagens de WhatsApp), quatro áudios de 14/10 (transcritos localmente com faster-whisper large-v3-turbo em CPU), o PDF de 30/09 e o livro de Zobel. Tudo copiado e resumido em `01-artigo/feedback-2026-10-14/` (`FEEDBACK-RECEBIDO.md`; regras de Zobel em `zobel-checklist.md`).
+- Plano em `PLANO-CORRECAO.md`: cada ponto do revisor com ação, seção e agente; decisões tomadas (estrutura de sete seções, sem "design science", proposta de morfologia em trabalho futuro, contexto policial condensado, sem treino novo) e decisões abertas A1 a A7.
+- Fase 1, só inferência e levantamento (nenhum treino, nenhum render): D1 fatos dos corpora, GSD e zoom da Z30 (manual da DJI), seleção de checkpoint, fatos do gerador, custo da rodada 5; D2 intervalos por reamostragem (as 17 reproduções batem com o publicado a 0,00005; FP16 descartado por desviar até 0,0045), curvas PR, varredura de limiar, resolubilidade; D3 similaridade de recortes com o tronco congelado do YOLO11s COCO; D4 bases reais nadir (HERIDAL, SeaDronesSee, Stanford Drone).
+- Fase 2: seis escritores, uma seção cada, a partir de `ARTIGO-COMPLETO-2026-09-30.md`. Fase 3: integrador (consistência de GSD, d′ e siglas, inserções das análises, cortes para 18,9 mil palavras de corpo, referências com 99 entradas cruzadas, PDF) e validador independente.
+- Achados que mudam a leitura: o teto R selecionou o checkpoint no próprio conjunto de teste; o fator 6,0 sobrevive à reamostragem (4,6 a 7,0) mas segue com uma corrida por lado; as diferenças do ajuste fino são estáveis e pequenas em termos relativos (nenhuma chega a 30%); 35 m contra gêmeo só é resolvível nos quadros novos; a similaridade não separa arma de objeto (resposta à sugestão do áudio); o 75 m original também teve corpos não semeados (corrigido no arquivo do D1).
+- Abstract corrigido à mão: "25 contra 12,5% em 80 quadros novos" é da semente 0, e o que vale para as três corridas é a direção.
+- Os 13 arquivos antigos saíram de `01-artigo/manuscrito/` (cópias idênticas em `01-artigo/manuscrito-2026-09-30/`); o montador lê `s1` a `s8`.
+- Fica para o autor: ler o PDF, reenviar ao revisor, decidir A1 a A7 e a rodada 5.
+
 ## 2026-09-30 [DESKTOP] Refino geral do artigo, análise, resumo para leigo
 
 - Pedido do autor: análise do artigo com o contexto todo, checar se os pontos se ligam, cortar ou resumir, criticar, acrescentar imagens e tabelas, tirar os quadros de autoria deixando um aviso de versão prévia, entregar a versão refinada por e-mail e um resumo "for dummies" de 1 a 2 páginas para o orientador.

@@ -1,0 +1,95 @@
+Final structure
+1. Introduction
+1.1 Problem statement: claims that an armed person can be detected from the air are made without stating the acquisition conditions. [§1]
+1.2 Research gap: UAV/policing research treats space as flat (2D), and machine vision work on favelas is oriented to planning. [§1]
+1.3 Objective and research questions:
+RQ1: How much does synthetic training transfer to real imagery for person detection, and what determines it?
+RQ2: Does synthetic data add value once a small amount of real data exists?
+RQ3: At what GSD do armed and unarmed persons become separable, and with what false-alarm rate?
+1.4 Contributions and paper organization.
+2. Related Work
+2.1 Machine vision in informal settlements and the vertical dimension. [§2]
+2.2 Synthetic data and the sim-to-real gap in aerial detection. [§2]
+2.3 Small-object aerial detection, GSD, and person/weapon detection. [§2, §7.7]
+2.4 Synthesis: what the literature establishes and what remains open. [§2]
+3. Study Context
+3.1 Policing, lethality, and territorial control in Rio de Janeiro: the key figures, ADPF 635, and the 2021 and 2025 operations. [§3, condensed]
+3.2 Jacarezinho as a morphological reference case. [§4]
+3.3 Why the armed/unarmed judgement is the ethical core: the use of lethal force turns on a visual judgement. [end of §3]
+4. Materials and Methods
+4.1 Research design, ethics, and positionality. [§5, §7.1, Fig. 5]
+4.2 Synthetic scene generator:
+4.2.1 Settlement layout [§7.2]
+4.2.2 Human figures, weapons, and confusable objects [§7.4]
+4.2.3 Illumination regimes [§7.5]
+4.2.4 Camera model and acquisition geometries (GSD) [§7.3]
+4.2.5 Automatic annotation [§7.4]
+4.3 Synthetic corpora and real data: one table listing every corpus and the VisDrone subsets. [Tables 2, 3 and 8, §9.1]
+4.4 Model-free target characterization: definitions of the indicators. [§8]
+4.5 Detector and training protocol. [§7.6, Table 1]
+4.6 Experimental design:
+Experiment A: Zero-shot transfer [§9.1–9.3]
+Experiment B: Fine-tuning and joint training [§9.4]
+Experiment C: Armed/unarmed distinction by altitude [§9.5, §11.4]
+Experiment D: Illumination regimes [§10.3]
+4.7 Metrics, statistical analysis, and pre-specified criteria. [§7.7, §10]
+4.8 Reproducibility. [§11.5]
+5. Results
+5.1 Target characterization: size, shape by camera pitch, and contrast. [§8.1–8.3]
+5.2 Experiment A, zero-shot transfer: the ceiling R, nadir versus oblique, settlement variety, and the scale and geometry controls. [§9.1–9.3, §10.2, §10.4]
+5.3 Experiment B: synthetic pretraining versus generic initialization, and joint training. [§9.4]
+5.4 Experiment C: 150, 75 and 35 m, the test with objects carried as weapons, and the unseen-weapon test. [§9.5, §11.4]
+5.5 Experiment D: performance by illumination regime. [§10.3]
+5.6 Robustness checks and hypothesis summary: one table of what held and what did not. [§10.1, §10.5, §10.6]
+6. Discussion
+6.1 Answering RQ1–RQ3 in light of the literature. [§9.2, §9.4]
+6.2 GSD and viewpoint versus photorealism. [§8.4]
+6.3 Implications for acquisition practice, mainly illumination. [§11.2, shortened]
+6.4 Dual use: the false-alarm rate as an estimate of harm. [§9.5, §11.4]
+6.5 Limitations, all in one place. [§8.2, §11.1, §11.3, §12]
+6.6 Future work, including the vertical-morphology model. [§6, §12]
+7. Conclusion
+Direct answers to RQ1–RQ3. [closing of §12]
+Final message: this is a capability that can be checked before it is believed, and the decision belongs to the residents. [§12]
+
+I reviewed the paper and organized a few methodological observations that I believe could strengthen its scientific rigor, the validity of its conclusions, and its reproducibility. I divided them into three areas: critical issues related to methodology and the validity of the results, statistical rigor and experimental design, and matters of context, ethics, and transparency.
+
+*1. Methodology and validity of the conclusions*
+- Align the research objective and questions with the variables actually evaluated, explicitly stating that the distinction between armed and unarmed individuals was studied exclusively using synthetic data.
+- Distinguish validation results used for model selection from results obtained on new, independent images.
+- Report results in terms of ground sampling distance (GSD), in addition to altitude, and justify the selected camera configuration, considering its zoom capabilities.
+- Evaluate the limitations of synthetic image realism, including sensor resolution, noise, motion blur, and compression.
+- Reassess whether the real-world benchmark adequately supports the evaluation of transfer across viewing geometries and, if possible, incorporate data with a more comparable perspective.
+
+*2. Statistical rigor and experimental design*
+- Increase the number of repetitions for the main experiments, incorporate different training and scene-generation seeds, and report appropriate confidence intervals.
+- Clearly distinguish confirmatory hypotheses from exploratory analyses, particularly when some configurations were introduced after observing preliminary results.
+- Reassess the comparability of reference models, considering both the number of images and the number of annotated instances, as well as the checkpoint selection procedure.
+- Investigate whether differences between datasets could be explained by visual cues unrelated to weapons, such as materials, object lengths, object models, or changes in the generator configuration.
+- Evaluate whether the conclusions regarding joint training and fine-tuning depend on the specific training configuration used.
+- Supplement false-positive rates with precision-recall curves or metrics evaluated at justified operating thresholds.
+- Consider the limited diversity of human figures and run the planned learning-curve experiment, if feasible.
+- Limit conclusions about illumination to the scope of the experiments actually conducted.
+
+*3. Context, ethics, and transparency*
+- Clarify what is meant by field-informed contextualization, how it was obtained, and whether it constitutes empirical evidence or contextual background only.
+- Include explicit statements regarding research ethics, dual-use risks, and conflicts of interest.
+- Reconsider the use of the term design science and either justify it through an appropriate methodological framework or remove that classification.
+- Improve reproducibility by publishing the code, configurations, and data that can be shared responsibly, while documenting the limitations of datasets that cannot be regenerated.
+
+In my view, not all these points necessarily require new experiments before publication. Some could be addressed by better defining the scope, conducting additional analyses, or refining the wording; others may require supplementary experiments to support the central conclusions.
+
+My recommendation would be to prioritize the issues that directly affect the validity of the results and clearly distinguish between what has been demonstrated, what remains a hypothesis, and what still requires validation. I believe this would considerably strengthen the paper and make its scientific contribution more robust.
+
+I also think it would be helpful to reorganize the paper conceptually, ensuring that the research problem, objectives, methodology, results, and conclusions follow a clear and consistent logical progression. The goal would be to make the central argument easier to follow, reduce repetition, and ensure that each section contributes directly to answering the research questions. I would start by clarifying the main contribution and scope of the study, then align the research questions with the experimental design, organize the results around those questions, and structure the discussion around what the findings actually demonstrate, their limitations, and their implications. This would help make the paper more coherent and strengthen its overall scientific narrative.
+
+1. Introdução — Contextualização, problema, lacuna científica, objetivos e contribuições.
+2. Trabalhos Relacionados — Estudos anteriores e limitações das abordagens existentes.
+3. Metodologia — Dados sintéticos, modelos, condições de aquisição e delineamento experimental.
+4. Resultados Experimentais e Discussão — Resultados, comparação entre cenários e interpretação.
+5. Limitações e Considerações Éticas — Limitações do estudo e riscos associados.
+6. Conclusões e Trabalhos Futuros — Principais resultados, contribuições e perspectivas para pesquisas futuras.
+
+[23:50, 14/10/2026] Felipe I. Toledo: ajeita tudo baixo isso
+[23:50, 14/10/2026] Felipe I. Toledo: pq sinto quevc explica os metodos nos resultados y tira conlusaoes
+[23:50, 14/10/2026] Felipe I. Toledo: entao vamos por parte, vai corregindo isso que mandei para vc em relçaçao a forma , leitura e esttrutura de sua idea e despois manda denovo parae revisar melhor
