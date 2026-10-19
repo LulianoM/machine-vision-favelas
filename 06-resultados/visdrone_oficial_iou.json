@@ -357,6 +357,90 @@
    },
    "confere_padrao": true,
    "quando": "2026-09-30T10:25:18"
+  },
+  "s_nadir_4k_sd1": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k_sd1\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0198,
+    "AP60": 0.0078,
+    "AP75": 0.0006,
+    "mAP50-95": 0.0047,
+    "P": 0.1067,
+    "R": 0.0768
+   },
+   "regra_oficial": {
+    "mAP50": 0.0203,
+    "AP60": 0.0081,
+    "AP75": 0.0006,
+    "mAP50-95": 0.0048,
+    "P": 0.1082,
+    "R": 0.0773
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-19T13:31:39"
+  },
+  "s_obliquo_sd1": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_obliquo_sd1\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0552,
+    "AP60": 0.0283,
+    "AP75": 0.008,
+    "mAP50-95": 0.0179,
+    "P": 0.2231,
+    "R": 0.0947
+   },
+   "regra_oficial": {
+    "mAP50": 0.056,
+    "AP60": 0.0287,
+    "AP75": 0.0081,
+    "mAP50-95": 0.0181,
+    "P": 0.2282,
+    "R": 0.0951
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-19T13:33:18"
+  },
+  "s_nadir_4k_sd2": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k_sd2\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0108,
+    "AP60": 0.0037,
+    "AP75": 0.0005,
+    "mAP50-95": 0.0026,
+    "P": 0.0769,
+    "R": 0.0523
+   },
+   "regra_oficial": {
+    "mAP50": 0.0111,
+    "AP60": 0.0038,
+    "AP75": 0.0005,
+    "mAP50-95": 0.0027,
+    "P": 0.0786,
+    "R": 0.0528
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-19T13:34:54"
+  },
+  "s_obliquo_sd2": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_obliquo_sd2\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0501,
+    "AP60": 0.0227,
+    "AP75": 0.0038,
+    "mAP50-95": 0.0135,
+    "P": 0.1738,
+    "R": 0.1069
+   },
+   "regra_oficial": {
+    "mAP50": 0.0508,
+    "AP60": 0.023,
+    "AP75": 0.0039,
+    "mAP50-95": 0.0137,
+    "P": 0.1752,
+    "R": 0.108
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-19T13:36:31"
   }
  },
  "regioes_ignoradas": {

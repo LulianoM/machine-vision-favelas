@@ -304,6 +304,23 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-19 [DESKTOP] Rodada 5, grupo S (R5-1): sementes 1 e 2 de S-nadir-150 e S-oblique
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas S1 a S7 (plano `07-blender/PLANO-RODADA5.md`, 3.1, critério fixado antes). Treinos com a receita da 7.6, corpus fixo, só a semente de treino muda: `train_yolo_win.py` com `--seed 1` e `--seed 2`. Zero-shot no VisDrone val por `07-blender/scripts/avalia_sim2real.py --weights <run>/weights/best.pt --real <visdrone val> --imgsz 1280 --out 06-resultados/sim2real_<run>.json`; regra oficial em `06-resultados/visdrone_oficial_iou.json`; predições por imagem em `06-resultados/revisao-2026-10-17/preds_visdrone_<run>.npz` (não versionadas).
+
+| Modelo | Semente 0 (já reportada) | Semente 1 | Semente 2 | Média | Faixa | Eficácia da média (R = 0,6311) |
+|---|---|---|---|---|---|---|
+| S-nadir-150 | 0,0102 | 0,0198 | 0,0108 | 0,0136 | 0,0102 a 0,0198 | 2,2% |
+| S-oblique | 0,0614 | 0,0552 | 0,0501 | 0,0556 | 0,0501 a 0,0614 | 8,8% |
+
+Regra oficial do VisDrone: 0,0203 e 0,0111 (nadir sd1, sd2), 0,0560 e 0,0508 (oblíquo sd1, sd2).
+
+Leituras do critério (as de intervalo pareado saem no grupo Y1):
+- S-oblique contra S-nadir-150: faixas não se cruzam, passa em (a); diferença das médias +0,0420, 309% relativos, passa em (c). Razão das médias 4,09; por semente 6,02, 2,79 e 4,64. O fator 6,0 do artigo é o da semente 0; com três sementes de cada lado o fator é cerca de 4.
+- S-oblique-six (0,0887 a 0,1055) contra S-oblique (0,0501 a 0,0614): faixas não se cruzam, passa em (a).
+- S-nadir-150-six (0,0190, um treino) contra S-nadir-150: o valor único cai dentro da faixa das três sementes (0,0102 a 0,0198), então a vantagem de seis sítios em nadir deixa de passar em (a).
+- Validação sintética: nadir 0,794 e 0,810; oblíquo 0,764 e 0,736 (épocas 56, 60, 60 e 45).
+
 ## 2026-10-17 [DESKTOP] Revisão: intervalos por reamostragem, curvas PR e varredura de limiar (agente D2)
 
 Fase 1 do `01-artigo/feedback-2026-10-14/PLANO-CORRECAO.md`, pontos S1 (intervalos de confiança), S6 (curvas precisão-recall e limiares justificados) e A3 (diferenças pequenas tratadas como resultado). Só inferência, nenhum treino nem render; nada de corpora `odm`, `cid150` ou derivados da PCERJ. Tudo em `06-resultados/revisao-2026-10-17/` (scripts, JSON, tabelas `.md`); figuras em `06-resultados/figuras/`. Todos os comandos rodaram de dentro dessa pasta com `PY` = `C:/arma3-favela/venv/Scripts/python.exe` (Ultralytics 8.4.148, PyTorch 2.14, RTX 2060).
