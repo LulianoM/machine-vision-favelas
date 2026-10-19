@@ -123,38 +123,38 @@
       <p class="sub">Artigo "Machine Vision from the Global South" e o experimento de dados sintéticos (Blender para YOLO; o ARMA 3 foi tentado e abandonado). Estado compartilhado entre o MacBook e o desktop.</p>
     </div>
     <!-- ESTADO: carimbo -->
-    <p class="stamp">atualizado em <b>2026-09-18</b><br>por <b>[DESKTOP]</b></p>
+    <p class="stamp">atualizado em <b>2026-10-18</b><br>por <b>[DESKTOP]</b></p>
   </header>
 
   <!-- ESTADO: blocos -->
   <div class="tiles">
     <div class="bbox pend">
-      <span class="tag">artigo · em revisão</span>
-      <h3>v2 do orientador, 6.304 palavras</h3>
+      <span class="tag">artigo · reestruturado</span>
+      <h3>Versão de 18/10, sete seções, 32 páginas</h3>
       <ul>
-        <li>Dividido em <b>8 seções</b> editáveis</li>
-        <li><b>28 pendências</b> verificadas, 0 resolvidas</li>
-        <li>O download de 17/09 é idêntico à v2: <b>não há v3</b></li>
+        <li>Refeito pelo feedback de 14/10: <b>RQ1 a RQ3</b>, método só na seção 4, limitações em 6.5</li>
+        <li>13 figuras, 23 tabelas, intervalos de 95% em todo número do VisDrone</li>
+        <li>Gerador <b>não será liberado</b>; uso de IA e ausência de financiamento declarados</li>
+        <li>Aguarda o retorno escrito do revisor sobre bibliografia</li>
+      </ul>
+    </div>
+    <div class="bbox ok">
+      <span class="tag">experimento · sim-to-real medido</span>
+      <h3>Rodadas 2 a 4 encerradas; rodada 5 planejada</h3>
+      <ul>
+        <li>Zero-shot no VisDrone: <b>1,6%</b> do teto em nadir, <b>15,3%</b> no melhor oblíquo (três corridas)</li>
+        <li>Com 5 ou 10% de dado real, o sintético <b>não ajuda</b>, como pré-treino ou misturado</li>
+        <li>Armado contra objeto a 75 e 35 m: entre <b>1 objeto em 6 e 1 em 4</b> chamado de arma, só no sintético</li>
+        <li>Rodada 5 (sementes, ajuste fino congelado, base real nadir) a partir da madrugada de 19/10</li>
       </ul>
     </div>
     <div class="bbox pend">
-      <span class="tag">experimento · só sintético</span>
-      <h3>5 treinos em Blender, nenhum teste em imagem real</h3>
+      <span class="tag">infra · pendente</span>
+      <h3>Desktop central, Mac como cliente</h3>
       <ul>
-        <li>Motor: <b>Blender 5.2 headless</b>. O ARMA 3 não gerou nenhuma imagem</li>
-        <li>Melhor no sintético: <b>mAP50 0,676</b> (run cid150_s, 560 imagens 4K a 150 m)</li>
-        <li>Ladrilhar em escala nativa: mAP50 de <b>0,116 para 0,561</b> nas mesmas 120 imagens</li>
-        <li>Sim-to-real: <b>não medido</b>. VisDrone ainda não foi baixado</li>
-        <li>4 divergências esperam decisão do autor (<code>docs/DIVERGENCIAS.md</code>)</li>
-      </ul>
-    </div>
-    <div class="bbox pend">
-      <span class="tag">infra · em montagem</span>
-      <h3>Desktop reconciliado com o repositório</h3>
-      <ul>
-        <li>Clone em <code>C:\projetos</code>, código e resultados <b>publicados</b> em 18/09</li>
-        <li>Dados, pesos e venv continuam em <code>C:\arma3-favela</code></li>
-        <li>Tailscale e SSH: <b>pendentes</b> (menos urgentes: Blender roda sem tela)</li>
+        <li>Dados, pesos e venv em <code>C:rma3-favela</code>; inventário em atualização</li>
+        <li>Caminhos absolutos nos scripts: <b>pendente</b></li>
+        <li>Tailscale e SSH: <b>pendentes</b></li>
       </ul>
     </div>
   </div>
@@ -164,12 +164,11 @@
       <h2>Próximos passos</h2>
       <!-- ESTADO: passos -->
       <ol class="steps">
-        <li><div><span class="who you">AUTOR</span>Decidir as 4 divergências abertas em <code>docs/DIVERGENCIAS.md</code>: ARMA 3 ou Blender no texto, o papel dos braços com dado sensível, como reportar armado e desarmado, blender-mcp.</div></li>
-        <li><div><span class="who">DESKTOP</span>Sim-to-real no VisDrone: baixar, converter para classe única de pessoa, zero-shot, ajuste fino com 5 a 10% de real, sintético mais real. São os três números do artigo.</div></li>
-        <li><div><span class="who you">AUTOR</span>Pedir ao IPP (cartografia.ipp@prefeitura.rio) a nuvem LiDAR e o MDS de 2024 do Jacarezinho.</div></li>
-        <li><div><span class="who">DESKTOP</span>Refazer a "cidade de sólidos" sobre a ortofoto aberta do IPP, para ter um braço de geometria real sem dado sensível. Tirar os caminhos absolutos dos scripts.</div></li>
-        <li><div><span class="who">MAC / DESKTOP</span>Resolver as pendências do rascunho, começando pelas 13 referências ausentes. Cada DOI conferido no Crossref.</div></li>
-        <li><div><span class="who you">AUTOR</span>Devolver a lista de pendências ao orientador e combinar o formato das edições.</div></li>
+        <li><div><span class="who you">AUTOR</span>Ler o PDF de 18/10 e reenviar ao revisor; esperar o retorno sobre bibliografia.</div></li>
+        <li><div><span class="who">DESKTOP</span>Rodada 5 com critérios fixados antes (sementes de nadir e oblíquo, ajuste fino congelado, base real nadir).</div></li>
+        <li><div><span class="who you">AUTOR</span>Escolher o destino: AIM 2027 (prazo 19/11/2026; formato a confirmar com a organização) ou periódico.</div></li>
+        <li><div><span class="who you">AUTOR</span>Decidir as divergências abertas em <code>docs/DIVERGENCIAS.md</code>: braços com dado PCERJ, como reportar armado e desarmado, blender-mcp.</div></li>
+        <li><div><span class="who">DESKTOP</span>Tirar os caminhos absolutos dos scripts depois da rodada 5.</div></li>
       </ol>
     </section>
 
@@ -209,39 +208,29 @@
       <table>
         <thead><tr><th>Arquivo em 01-artigo/manuscrito</th><th class="n">Palavras</th><th></th><th>Observação</th></tr></thead>
         <tbody>
-          <tr><td class="mono">01-introduction.md</td><td class="n">1.287</td><td><div class="bar"><i style="width:100%"></i></div></td><td>Sem título de seção. Cita 9 das 13 referências ausentes</td></tr>
-          <tr><td class="mono">02-literature-review.md</td><td class="n">1.005</td><td><div class="bar"><i style="width:78%"></i></div></td><td>Cita 6 das 13 ausentes. Repete trecho da introdução</td></tr>
-          <tr><td class="mono">03-methodology.md</td><td class="n">416</td><td><div class="bar"><i style="width:32%"></i></div></td><td>Remete a uma "Section 6" que não existe</td></tr>
-          <tr><td class="mono">04-situating-the-study.md</td><td class="n">1.145</td><td><div class="bar"><i style="width:89%"></i></div></td><td>Wikipedia citada três vezes</td></tr>
-          <tr><td class="mono">05-case-jacarezinho.md</td><td class="n">387</td><td><div class="bar"><i style="width:30%"></i></div></td><td>"Ad Infinitum" citado como autor, a conferir</td></tr>
-          <tr><td class="mono">06-results-proposed-model.md</td><td class="n">289</td><td><div class="bar"><i style="width:22%"></i></div></td><td>Conceitual. "No model has been trained" já é falso: ver pendências C5 e D4 a D8</td></tr>
-          <tr><td class="mono">07-conclusion.md</td><td class="n">1.115</td><td><div class="bar"><i style="width:87%"></i></div></td><td>Falta o fecho. Resíduo de XML em Delimitations</td></tr>
-          <tr><td class="mono">08-references.md</td><td class="n">660</td><td><div class="bar"><i style="width:51%"></i></div></td><td>Título "eferences". Dois formatos misturados</td></tr>
+          <tr><td class="mono">s1-introduction.md</td><td class="n">1.440</td><td><div class="bar"><i style="width:19%"></i></div></td><td>Abstract. RQ1 a RQ3. contribuições</td></tr>
+          <tr><td class="mono">s2-related-work.md</td><td class="n">1.764</td><td><div class="bar"><i style="width:23%"></i></div></td><td>Literatura toda num lugar</td></tr>
+          <tr><td class="mono">s3-study-context.md</td><td class="n">1.379</td><td><div class="bar"><i style="width:18%"></i></div></td><td>Contexto policial condensado; só fontes públicas</td></tr>
+          <tr><td class="mono">s4-materials-methods.md</td><td class="n">7.537</td><td><div class="bar"><i style="width:100%"></i></div></td><td>Gerador. corpora. GSD e zoom. critérios fixados antes</td></tr>
+          <tr><td class="mono">s5-results.md</td><td class="n">7.355</td><td><div class="bar"><i style="width:98%"></i></div></td><td>Só observação. com intervalos de 95%</td></tr>
+          <tr><td class="mono">s6-discussion.md</td><td class="n">3.707</td><td><div class="bar"><i style="width:49%"></i></div></td><td>Respostas às RQ; limitações em 6.5</td></tr>
+          <tr><td class="mono">s7-conclusion.md</td><td class="n">801</td><td><div class="bar"><i style="width:11%"></i></div></td><td>Conclusão e declarações</td></tr>
+          <tr><td class="mono">s8-references.md</td><td class="n">2.791</td><td><div class="bar"><i style="width:37%"></i></div></td><td>99 entradas. todas citadas</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>Pendências (01-artigo/PENDENCIAS.md)</th><th class="n">Abertas</th><th class="n">Resolvidas</th></tr></thead>
-        <tbody>
-          <tr><td>A. Estrutura</td><td class="n">5</td><td class="n">0</td></tr>
-          <tr><td>B. Referências</td><td class="n">10</td><td class="n">0</td></tr>
-          <tr><td>C. Texto</td><td class="n">5</td><td class="n">0</td></tr>
-          <tr><td>D. Conteúdo novo a incorporar</td><td class="n">8</td><td class="n">0</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="note">Estrutura de sete seções desde 18/10, a partir do feedback de 14/10. A versão de 30/09 está congelada em <code>01-artigo/manuscrito-2026-09-30/</code>.</p>
   </section>
 
   <section>
     <h2>Números que o artigo espera do experimento</h2>
     <!-- ESTADO: numeros -->
     <div class="slots">
-      <div class="slot"><span class="v">sem número</span><span class="k">mAP no VisDrone, zero-shot (só sintético)</span></div>
-      <div class="slot"><span class="v">sem número</span><span class="k">mAP com 5 a 10% de dado real</span></div>
-      <div class="slot"><span class="v">sem número</span><span class="k">mAP com sintético mais real</span></div>
+      <div class="slot"><span class="v">1,6% a 15,3%</span><span class="k">do teto no VisDrone, zero-shot (nadir; melhor oblíquo, três corridas)</span></div>
+      <div class="slot"><span class="v">0,4424 e 0,5095</span><span class="k">mAP50 com 5 e 10% de dado real partindo do sintético (do COCO: 0,5220 e 0,5709)</span></div>
+      <div class="slot"><span class="v">0,4607 e 0,5428</span><span class="k">mAP50 com sintético e real juntos, abaixo do só real</span></div>
     </div>
-    <p class="note">Conferido pelo desktop em 18/09: os três continuam sem número porque nenhum teste em imagem real foi rodado. O que existe é validação no próprio sintético (mAP50 de 0,561, 0,646 e 0,676 em três conjuntos diferentes), com origem em <code>06-resultados/RESULTADOS.md</code>. Regra do projeto: número só aparece aqui e no artigo se estiver em <code>06-resultados/</code> com o comando que o gerou.</p>
+    <p class="note">Origem e comando de cada número em <code>06-resultados/RESULTADOS.md</code>; intervalos de 95% em <code>06-resultados/revisao-2026-10-17/</code>. O teto R (0,6311) escolheu o checkpoint no próprio conjunto de teste.</p>
   </section>
 
   <section>
@@ -370,6 +359,14 @@ Me diga o que é preciso para passar a trabalhar só em `C:\projetos\machine-vis
   <section>
     <h2>Diário</h2>
     <!-- ESTADO: diario (entrada mais recente primeiro, no máximo 5) -->
+    <div class="log">
+      <span class="when">2026-10-18 · [DESKTOP]</span>
+      <p>Artigo reestruturado pelo feedback de 14/10: sete seções, análises novas só por inferência (intervalos, curvas PR, varredura de limiar, similaridade de recortes), 32 páginas. Decisões do autor: gerador não liberado, uso de IA e ausência de financiamento declarados, coautor delegado retirado por ora.</p>
+    </div>
+    <div class="log">
+      <span class="when">2026-09-30 · [DESKTOP]</span>
+      <p>Rodada 4 encerrada; busca bibliográfica aplicada; refino geral do artigo e resumo para leigo.</p>
+    </div>
     <div class="log">
       <span class="when">2026-09-18 · [DESKTOP]</span>
       <p>Reconciliação com o repositório. Inventário da pasta real do desktop (44 GB). Descoberto: o experimento rodou em Blender e não no ARMA 3; três dos quatro braços usam fotogrametria de dado sensível, que não saiu do desktop; as classes são pessoa armada e desarmada; nenhum teste em imagem real existe; a pesquisa a partir do e-mail de 12/09 não foi feita lá. Publicados: <code>07-blender/</code>, <code>06-resultados/</code> com ficha do experimento e 5 runs, <code>docs/DIVERGENCIAS.md</code> com 14 itens (4 abertos para o autor), ambiente e contexto. Três citações conferidas no Crossref e no arXiv.</p>

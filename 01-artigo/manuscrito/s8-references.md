@@ -18,6 +18,8 @@ Barisic, A., Petric, F., & Bogdan, S. (2022). Sim2Air: Synthetic aerial dataset 
 
 Barros, M. (2026, July 30). Anuário aponta avanço da violência contra policiais no Rio de Janeiro. Defesa em Foco. https://www.defesaemfoco.com.br/<wbr>anuario-aponta-avanco-da-violencia-contra-policiais-no-rio-de-janeiro/<wbr>
 
+Berwaldt, N. L. P., Bettker, R. V., & Pozzer, C. T. (2020). Procedural generation of favela layouts on arbitrary terrains. In *2020 19th Brazilian Symposium on Computer Games and Digital Entertainment (SBGames)* (pp. 136-144). IEEE. https://doi.org/10.1109/SBGames51465.2020.00027
+
 Božić-Štulić, D., Marušić, Ž., & Gotovac, S. (2019). Deep learning approach in aerial imagery for supporting land search and rescue missions. *International Journal of Computer Vision, 127*(9), 1256-1278. https://doi.org/10.1007/s11263-019-01177-1
 
 Broyles, D., Hayner, C. R., & Leung, K. (2022). WiSARD: A labeled visual and thermal image dataset for wilderness search and rescue. In *2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)* (pp. 9467-9474). https://doi.org/10.1109/IROS47612.2022.9981298
@@ -84,6 +86,10 @@ Human Rights Watch. (2021, May 31). Brazil: Investigate Rio police command for d
 
 InSight Crime. (2026, September 11). Red Command (Comando Vermelho). https://insightcrime.org/<wbr>brazil-organized-crime-news/<wbr>red-command-profile/<wbr>
 
+Instituto Brasileiro de Geografia e Estatística. (n.d.). *Censo Demográfico 2022: Tabela 9923, população residente, por situação do domicílio* [Data set]. SIDRA. Retrieved October 18, 2026, from https://sidra.ibge.gov.br/<wbr>tabela/<wbr>9923
+
+Instituto Brasileiro de Geografia e Estatística. (2024). *Censo Demográfico 2022: Favelas e comunidades urbanas: Resultados do universo*. IBGE. https://censo2022.ibge.gov.br/<wbr>apps/<wbr>pgi/<wbr>pdf/<wbr>Censo%20Demogr%C3%A1fico%202022%20-%20Favelas%20e%20Comunidades%20Urbanas%20-%20Resultados%20do%20universo%20-%202024%2011%2006.pdf
+
 Instituto de Segurança Pública do Rio de Janeiro. (n.d.-a). *Estatísticas de segurança: Série histórica anual no estado desde 1991 (taxas por 100 mil habitantes)* [Data set]. Retrieved September 30, 2026, from https://www.ispdados.rj.gov.br/<wbr>Arquivos/<wbr>BaseEstadoTaxaAno.csv
 
 Instituto de Segurança Pública do Rio de Janeiro. (n.d.-b). *Estatísticas de segurança: Série histórica mensal por área de delegacia desde 01/2003* [Data set]. Retrieved September 30, 2026, from https://www.ispdados.rj.gov.br/<wbr>Arquivos/<wbr>BaseDPEvolucaoMensalCisp.csv
@@ -95,6 +101,8 @@ JOTA. (2025, April 13). O julgamento da ADPF das Favelas: avanços, alertas e in
 Kiefer, B., Messmer, M., & Zell, A. (2021). Diminishing domain bias by leveraging domain labels in object detection on UAVs. In *2021 20th International Conference on Advanced Robotics (ICAR)* (pp. 523-530). IEEE. https://doi.org/10.1109/ICAR53236.2021.9659357
 
 Kiefer, B., Ott, D., & Zell, A. (2022). Leveraging synthetic data in object detection on unmanned aerial vehicles. *2022 26th International Conference on Pattern Recognition (ICPR)*, 3564-3571. https://doi.org/10.1109/ICPR56361.2022.9956710
+
+Kim, Y., Park, J., Yoon, D., Jung, N., & Jeon, M. (2026). G-MAD: A game-based data generation framework for multi-view RGB-T aerial object detection. arXiv. https://arxiv.org/abs/2607.19942
 
 Leitão, J. P., Moy de Vitry, M., Scheidegger, A., & Rieckermann, J. (2016). Assessing the quality of digital elevation models obtained from mini unmanned aerial vehicles for overland flow modelling in urban areas. *Hydrology and Earth System Sciences, 20*(4), 1637-1653. https://doi.org/10.5194/hess-20-1637-2016
 

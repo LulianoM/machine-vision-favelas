@@ -12,8 +12,12 @@ A claim that a system can tell an armed person from an unarmed one from the air 
 
 **Ethics.** The study involved no human participants. No imagery of residents or of the territory of Jacarezinho was collected or used, and no address-level coordinates are published. The only real data are a public benchmark, VisDrone, distributed by its authors (Zhu et al., 2022); the synthetic corpora are rendered from procedurally generated scenes and public-domain assets, and the human figures in them are rendered meshes, so the synthetic data contain no person. The study does not deliver an operational tool. Any future field data would be conditional on an independent ethics review and on community engagement external to the police institution (Section 4.1).
 
-**Conflict of interest.** One author is a serving delegado (police chief) of the Civil Police of the State of Rio de Janeiro with operational familiarity with public-security activity in Jacarezinho; Section 4.1 states how that position was treated. The other authors declare no conflict of interest.
+**Conflict of interest.** The authors declare no conflict of interest.
+
+**Funding.** This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors, and no scholarship. It was carried out by the first author with the support of the second, without financial support of any kind.
 
 **Data availability.** The scene generator and its code, the synthetic corpora and the trained weights are not released; the benchmark is public and is distributed by its authors. Section 4.8 states what the authors can regenerate from what each image records, what a reader can check, and why the photogrammetric reconstruction used in earlier exploratory work cannot be released.
 
 **Declaration of generative AI and AI-assisted technologies.** During the preparation of this work the authors used Claude (Anthropic) to revise the text, to check and correct factual information and spelling, and to assist in monitoring the training runs. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
+
+**Acknowledgements.** The authors thank Fábio H. P. Guimarães, forensic expert of the Civil Police of the State of Rio de Janeiro, who in 2022 proposed detecting armed people in aerial RGB-T drone imagery with a convolutional neural network trained on synthetic game-engine data, the proposal from which this work originates, and Prof. Claudio Miceli de Farias, of the Federal University of Rio de Janeiro, who supervised the 2022 research and extension project in which that proposal was developed.

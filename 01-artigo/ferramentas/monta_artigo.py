@@ -387,7 +387,7 @@ def main():
 
     capa = """<div class="capa full">
 <h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas</h1>
-<div class="autores">Luciano Martins Figueira<sup>a</sup>, Helio Arthur Reis Irigaray<sup>a</sup>, <span style="color:#b58900">[coautor delegado, a incluir]</span></div>
+<div class="autores">Luciano Martins Figueira<sup>a</sup>, H&eacute;lio Arthur Reis Irigaray<sup>a</sup></div>
 <div class="afil"><sup>a</sup> Funda&ccedil;&atilde;o Get&uacute;lio Vargas, EBAPE, Rio de Janeiro, Brazil</div>
 </div>"""
 

@@ -2,6 +2,14 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-10-18 [DESKTOP] Coautor retirado, financiamento, citações e manutenção
+
+- Autor: não houve financiamento nem bolsa (declarado no bloco Funding); o coautor delegado sai por ora. Sem ele, a 4.1, a 3.2, a limitação 8 da 6.5 e o conflito de interesse foram reescritos: nenhuma frase diz mais que um autor é policial, o contexto passa a vir só de fontes públicas, e os autores declaram não ter conflito. A versão anterior está no commit 682a96e, para quando o coautor voltar.
+- Citados G-MAD (Kim et al., 2026; DOI da ACM ainda não registrado, citado pelo arXiv) e Berwaldt, Bettker e Pozzer (2020, DOI conferido). A 2.2 diz que o trabalho nasce do projeto UFRJ de 2022 e por que o ARMA 3 foi trocado; Acknowledgements para Fábio H. P. Guimarães e o prof. Claudio Miceli de Farias.
+- Censo: o 35.458 é do subdistrito (SIDRA, tabela 9923); a publicação de favelas do IBGE dá 29.766 para a favela (tabela 5). O texto traz os dois, com fonte.
+- Sobre a AIM: o edital (`08-conferencia/modelos_2026/AIM2027_CFP.pdf`) dá o prazo de 19/11/2026, mas não o formato; o "8 a 12 páginas" do dossiê é inferido dos premiados de 2026 e foi apresentado ao autor como exigência por engano.
+- Resumo para leigo refeito (`01-artigo/resumo-leigo-2026-10-18.md`, 2 páginas; montador mais robusto ao Edge headless). Inventário dos dados com 16 corpora e 26 runs e SHA256 (`06-resultados/inventario.py`). CONTEXTO corrigido (E3). PENDENCIAS sem item aberto. Painel republicado.
+
 ## 2026-10-18 [DESKTOP] Decisões do autor sobre o artigo reestruturado
 
 - O autor decidiu não liberar o gerador de código (A3). A 4.8 e o Data availability dizem que o gerador, o código, os corpora e os pesos não são liberados.

@@ -58,7 +58,7 @@ The position this leaves is specific. Measured at 2.44 and 1.14 cm per pixel on 
 
 **7. Controls not run.** The learning curve over corpus size was specified and not run, so whether 180 frames sit on the flat or the rising part of that curve is unknown, and the pilot on 40 scenes, which failed on its own domain, does not isolate between its two candidate causes, the small number of frames and two thirds of instances falling below one stride.
 
-**8. Positionality.** One author's familiarity with Jacarezinho comes through a policing role (Section 4.1); triangulation against independent sources mitigates that bias without removing it, and no resident testimony was collected.
+**8. Positionality.** The study is written from outside the territory and from a security framing (Section 4.1); no resident testimony was collected, so the perspective of the people such a system would observe is absent.
 
 **9. One site, one city.** The study concerns one favela in one city, and nothing in it licenses an inference from Jacarezinho to informal urban verticality in general; the acquisition limits rest on GSD and on generic synthetic settlements rather than on properties of Jacarezinho, which is the sense in which the title speaks of dense favelas.
 
