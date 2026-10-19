@@ -45,3 +45,5 @@ wandb/
 
 # Armazens de predicoes da revisao de 17/10 (regeraveis pelos scripts da pasta; ~10 MB)
 06-resultados/revisao-2026-10-17/preds_*
+# o script preds_nadir.py (rodada 5) casa com o padrao acima, mas e codigo e e versionado
+!06-resultados/revisao-2026-10-17/preds_nadir.py

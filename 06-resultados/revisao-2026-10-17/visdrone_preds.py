@@ -15,6 +15,11 @@ guardados e o valor reportado em 06-resultados (sim2real_<run>.json), com a dife
 
   C:/arma3-favela/venv/Scripts/python.exe visdrone_preds.py --modelos r_pareado --batch 4 --fp16
   C:/arma3-favela/venv/Scripts/python.exe visdrone_preds.py --todos --batch 4 --fp16
+
+Rodada 5 (18/10/2026): os runs novos entram em MODELOS_R5, so por acrescimo. MODELOS_1710 guarda os 17
+de 17/10, que o bootstrap sem --sufixo continua usando (as saidas de 17/10, citadas no artigo, saem
+iguais). Os .npz que ja existem sao pulados. Com --todos, um run novo ainda sem pesos e ignorado em
+silencio (nao entra como "faltando" no visdrone_reproducao.json).
 """
 import argparse
 import json
@@ -31,7 +36,7 @@ DETECT = os.path.join(RAIZ, "blender", "runs", "detect")
 VIS_YAML = os.path.join(RAIZ, "visdrone", "visdrone_yolo", "data.yaml")
 
 # nome no artigo -> run (um so lugar; os outros scripts importam daqui)
-MODELOS = {
+MODELOS_1710 = {
     "R": "r_pareado",
     "S-nadir-150": "s_nadir_4k",
     "S-nadir-150-six": "s_variedade",
@@ -50,6 +55,35 @@ MODELOS = {
     "F-joint 5%": "misto05",
     "F-joint 10%": "misto10",
 }
+
+# rodada 5 (07-blender/PLANO-RODADA5.md): R5-1 sementes, R5-5 cronogramas, R5-3 curva, R5-4 sol duro, R5-2 cena
+MODELOS_R5 = {
+    "S-nadir-150 s1": "s_nadir_4k_sd1",
+    "S-nadir-150 s2": "s_nadir_4k_sd2",
+    "S-oblique s1": "s_obliquo_sd1",
+    "S-oblique s2": "s_obliquo_sd2",
+    "F-generic 5% rep": "ft05_coco_rep",
+    "F-synthetic 5% rep": "ft05_sint_rep",
+    "F-generic 10% rep": "ft10_coco_rep",
+    "F-synthetic 10% rep": "ft10_sint_rep",
+}
+for _f in ("05", "10"):
+    for _cel in ("fz", "lr", "fzlr"):
+        for _ini, _art in (("sint", "F-synthetic"), ("coco", "F-generic")):
+            MODELOS_R5[f"{_art} {int(_f)}% {_cel}"] = f"ft{_f}_{_ini}_{_cel}"
+            if _f == "05":
+                for _s in (1, 2):
+                    MODELOS_R5[f"{_art} 5% {_cel} s{_s}"] = f"ft05_{_ini}_{_cel}_sd{_s}"
+for _n in ("030", "060", "090", "120"):
+    MODELOS_R5[f"S-oblique-six c{_n} s0"] = f"s_oblvar_c{_n}"
+    if _n in ("030", "120"):
+        for _s in (1, 2):
+            MODELOS_R5[f"S-oblique-six c{_n} s{_s}"] = f"s_oblvar_c{_n}_sd{_s}"
+MODELOS_R5["S-nadir-150 hard-sun"] = "s_soldur_4k"
+MODELOS_R5["S-oblique-six scene 22"] = "s_oblvar_e22"
+MODELOS_R5["S-oblique-six scene 23"] = "s_oblvar_e23"
+
+MODELOS = {**MODELOS_1710, **MODELOS_R5}
 
 
 def reportado(run):
@@ -158,7 +192,9 @@ def main():
     ap.add_argument("--imgsz", type=int, default=1280)
     ap.add_argument("--refaz", action="store_true")
     a = ap.parse_args()
-    runs = list(MODELOS.values()) if a.todos else a.modelos
+    runs = ([r for r in MODELOS.values()
+             if r in MODELOS_1710.values() or os.path.exists(os.path.join(DETECT, r, "weights", "best.pt"))]
+            if a.todos else a.modelos)
     chk = os.path.join(AQUI, "visdrone_reproducao.json")
     saida = json.load(open(chk, encoding="utf-8")) if os.path.exists(chk) else {}
     saida.setdefault("protocolo", "VisDrone-DET val, 548 imagens, classe unica (pedestrian + people), imgsz 1280 "

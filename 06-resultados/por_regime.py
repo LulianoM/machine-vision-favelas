@@ -17,6 +17,10 @@ Criterio da secao 10.3, aplicado a medida 1: a implicacao da secao 11.3 fica se 
 estiver entre os dois regimes mais fracos; senao e retirada.
 
   python por_regime.py --pesos .../s_nadir_4k/weights/best.pt --ds .../ds_regime_4k --tiles .../ds_regime_4k_tiles
+
+Rodada 5 (18/10/2026): --por-quadro acrescenta a saida, por regime, os acertos e as caixas de cada
+quadro (recall a conf 0,25 em imagem inteira), para o bootstrap pareado da ablacao so com sol duro
+(R5-4). Sem a flag a saida e a de antes.
 """
 import argparse
 import glob
@@ -43,6 +47,7 @@ def main():
     ap.add_argument("--ds", required=True)
     ap.add_argument("--tiles", required=True)
     ap.add_argument("--out", default=os.path.join(AQUI, "por_regime_s_nadir_4k.json"))
+    ap.add_argument("--por-quadro", action="store_true", help="grava acertos e caixas por quadro e regime")
     a = ap.parse_args()
 
     from ultralytics import YOLO
@@ -80,6 +85,7 @@ def main():
     # 2. recall a conf 0,25 em imagem inteira, com bootstrap de quadros
     m = YOLO(a.pesos)
     acertos = defaultdict(list)            # regime -> [(acertos, n) por quadro]
+    quadros_reg = defaultdict(list)        # regime -> [quadro], na mesma ordem de acertos
     for img in sorted(glob.glob(os.path.join(a.ds, "images", "val", "*.png"))):
         base = os.path.splitext(os.path.basename(img))[0]
         lab = os.path.join(a.ds, "labels", "val", base + ".txt")
@@ -103,6 +109,7 @@ def main():
             up.add(pi)
             k += 1
         acertos[clima[base]].append((k, len(gts)))
+        quadros_reg[clima[base]].append(base)
     rnd = random.Random(0)
     for reg in regimes:
         q = acertos[reg]
@@ -114,6 +121,9 @@ def main():
         bs.sort()
         res[reg]["recall_conf025"] = {"acertos": k, "n": n, "recall": round(k / max(1, n), 4),
                                       "ic95_bootstrap_quadros": [round(bs[49], 4), round(bs[1949], 4)]}
+        if a.por_quadro:
+            res[reg]["por_quadro"] = [{"quadro": b, "acertos": x, "caixas": y}
+                                      for b, (x, y) in zip(quadros_reg[reg], q)]
 
     ordem = sorted(regimes, key=lambda g: res[g]["mAP50"])
     criterio = {

@@ -18,6 +18,16 @@ dois valores no conjunto inteiro.
 
   C:/arma3-favela/venv/Scripts/python.exe bootstrap_visdrone.py
 Saidas: bootstrap_visdrone.json, bootstrap_visdrone.md
+
+Rodada 5 (18/10/2026): com --sufixo r5 o script grava bootstrap_visdrone_r5.json e .md e NAO toca nos
+de 17/10, que o artigo cita (sem --sufixo o calculo e o de antes, sobre os 17 modelos de 17/10). No
+modo r5 as comparacoes sao entre GRUPOS de runs (as sementes de cada lado, PLANO-RODADA5.md, secao
+2.3): a diferenca e calculada na media das sementes de cada lado, em cada reamostra; as mesmas 1.000
+reamostras, semente 0. Os pares sao os das secoes 3.1, 3.2, 3.5 e 3.8 do plano; a celula de controle
+do ajuste fino e os cronogramas escolhidos vem de ../rodada5_ft_reproducao.json e
+../rodada5_ft_selecao.json (gravados pela cadeia). Par sem preds de um dos lados sai em "faltando".
+
+  C:/arma3-favela/venv/Scripts/python.exe bootstrap_visdrone.py --sufixo r5
 """
 import json
 import os
@@ -28,11 +38,12 @@ import numpy as np
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
-from visdrone_preds import MODELOS, reportado  # noqa: E402
+from visdrone_preds import MODELOS, MODELOS_1710, reportado  # noqa: E402
 
 N_BOOT = 1000
 SEMENTE = 0
 NOME = {v: k for k, v in MODELOS.items()}          # run -> nome no artigo
+RES = os.path.dirname(AQUI)
 
 # pares pedidos (a menos b), por nome no artigo; "seeds" expande s0/s1/s2 casados e a media das sementes
 PARES = [
@@ -75,6 +86,8 @@ def ap50(m, w):
     if n_l == 0:
         return float("nan")
     fica = wp > 0                                     # predicao de imagem fora da reamostra nao existe
+    if not fica.any():                                # sem predicao: AP 0, como no ap_per_class (rodada 5)
+        return 0.0
     tp, wp = m["tp"][fica], wp[fica]
     tpc = np.cumsum(tp * wp)
     fpc = np.cumsum((1.0 - tp) * wp)
@@ -100,9 +113,11 @@ def ic(v):
 
 
 def main():
+    if "--sufixo" in sys.argv:
+        return main_r5(sys.argv[sys.argv.index("--sufixo") + 1])
     modelos = {}
     faltando = []
-    for nome, run in MODELOS.items():
+    for nome, run in MODELOS_1710.items():
         m = carrega(run)
         if m is None:
             faltando.append(run)
@@ -215,6 +230,139 @@ def main():
     if faltando:
         L += ["", "Pesos faltando: " + ", ".join(faltando)]
     with open(os.path.join(AQUI, "bootstrap_visdrone.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(L) + "\n")
+    print("\n".join(L))
+
+
+# ------------------------------------------------------------------ rodada 5 (--sufixo)
+def le_res(nome):
+    p = os.path.join(RES, nome)
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+
+
+def existe(run):
+    return os.path.exists(os.path.join(AQUI, f"preds_visdrone_{run}.npz"))
+
+
+def grupos_r5():
+    """rotulo -> lista de runs (as sementes de um lado). So entra o que tem preds."""
+    g = {"R": ["r_pareado"],
+         "S-nadir-150": ["s_nadir_4k", "s_nadir_4k_sd1", "s_nadir_4k_sd2"],
+         "S-oblique": ["s_obliquo", "s_obliquo_sd1", "s_obliquo_sd2"],
+         "S-oblique-six": ["s_oblvar", "s_oblvar_sd1", "s_oblvar_sd2"],
+         "S-nadir-150-six": ["s_variedade"],
+         "S-oblique-six c030": ["s_oblvar_c030", "s_oblvar_c030_sd1", "s_oblvar_c030_sd2"],
+         "S-oblique-six c060": ["s_oblvar_c060"],
+         "S-oblique-six c090": ["s_oblvar_c090"],
+         "S-oblique-six c120": ["s_oblvar_c120", "s_oblvar_c120_sd1", "s_oblvar_c120_sd2"],
+         "S-oblique-six scenes": ["s_oblvar", "s_oblvar_e22", "s_oblvar_e23"],
+         "S-nadir-150 hard-sun": ["s_soldur_4k"]}
+    rep = le_res("rodada5_ft_reproducao.json") or {}
+    reproduz = rep.get("reproduz", True)
+    for f in ("05", "10"):
+        for ini, art in (("sint", "F-synthetic"), ("coco", "F-generic")):
+            if reproduz:
+                orig = [f"ft{f}_{ini}"] + ([f"ft05_{ini}_sd1", f"ft05_{ini}_sd2"] if f == "05" else [])
+            else:
+                orig = [f"ft{f}_{ini}_rep"]
+            g[f"{art} {int(f)}% orig"] = orig
+            for cel in ("fz", "lr", "fzlr"):
+                g[f"{art} {int(f)}% {cel}"] = [f"ft{f}_{ini}_{cel}"] + (
+                    [f"ft05_{ini}_{cel}_sd1", f"ft05_{ini}_{cel}_sd2"] if f == "05" else [])
+    sel = le_res("rodada5_ft_selecao.json")
+    if sel:
+        for f in ("05", "10"):
+            for ini, art in (("sint", "F-synthetic"), ("coco", "F-generic")):
+                cel = sel["escolha"][f][ini]
+                g[f"{art} {int(f)}% chosen"] = g[f"{art} {int(f)}% {cel}"]
+    return {k: [r for r in v if existe(r)] for k, v in g.items()}
+
+
+PARES_R5 = [("S-oblique", "S-nadir-150", "R5-1 nadir vs oblique (principal)"),
+            ("S-oblique-six", "S-oblique", "R5-1 six settlements vs one, oblique"),
+            ("S-nadir-150-six", "S-nadir-150", "R5-1 six settlements vs one, nadir")]
+for _f in ("5", "10"):
+    for _cel in ("orig", "fz", "lr", "fzlr"):
+        PARES_R5.append((f"F-generic {_f}% {_cel}", f"F-synthetic {_f}% {_cel}",
+                         f"R5-5 generic vs synthetic start, {_f}%, cell {_cel}"))
+    PARES_R5.append((f"F-generic {_f}% chosen", f"F-synthetic {_f}% chosen",
+                     f"R5-5 generic vs synthetic start, {_f}%, chosen schedules"))
+PARES_R5 += [("S-oblique-six", "S-oblique-six c030", "R5-3 152 vs 30 frames"),
+             ("S-oblique-six", "S-oblique-six c120", "R5-3 152 vs 120 frames"),
+             ("S-oblique-six scenes", "S-oblique", "R5-2 C-ii scene seeds vs S-oblique training seeds")]
+
+
+def main_r5(sufixo):
+    g = grupos_r5()
+    runs = sorted({r for v in g.values() for r in v})
+    if "r_pareado" not in runs:
+        raise SystemExit("sem R (r_pareado): rode visdrone_preds.py antes")
+    m = {r: carrega(r) for r in runs}
+    n_img = m["r_pareado"]["n_img"]
+    rng = np.random.default_rng(SEMENTE)
+    idx = rng.integers(0, n_img, size=(N_BOOT, n_img))
+    W = np.stack([np.bincount(i, minlength=n_img) for i in idx]).astype(np.float64)
+    cheio = {r: ap50(m[r], np.ones(n_img)) for r in runs}
+    boot = {r: np.array([ap50(m[r], W[b]) for b in range(N_BOOT)]) for r in runs}
+    por_run = {r: {"nome": NOME.get(r), "mAP50_reportado": reportado(r), "mAP50_conjunto_inteiro": round(cheio[r], 4),
+                   "mAP50_ic95": ic(boot[r]), "eficacia_conjunto_inteiro": round(cheio[r] / cheio["r_pareado"], 4),
+                   "eficacia_ic95": ic(boot[r] / boot["r_pareado"])} for r in runs}
+    por_grupo = {}
+    for k, v in g.items():
+        if not v:
+            continue
+        mb = np.mean([boot[r] for r in v], 0)
+        vals = [round(cheio[r], 4) for r in v]
+        med = float(np.mean([cheio[r] for r in v]))
+        por_grupo[k] = {"runs": v, "valores": vals, "media": round(med, 4), "min": min(vals), "max": max(vals),
+                        "n": len(v), "media_ic95": ic(mb), "eficacia_media": round(med / cheio["r_pareado"], 4),
+                        "eficacia_ic95": ic(mb / boot["r_pareado"])}
+    difs, faltando = [], []
+    for a, b, comp in PARES_R5:
+        ra, rb = g.get(a, []), g.get(b, [])
+        if not ra or not rb:
+            faltando.append(comp)
+            continue
+        A = np.mean([boot[x] for x in ra], 0)
+        B = np.mean([boot[x] for x in rb], 0)
+        a0 = float(np.mean([cheio[x] for x in ra]))
+        b0 = float(np.mean([cheio[x] for x in rb]))
+        d = A - B
+        menor = min(a0, b0)
+        razao = A / B
+        difs.append({"comparacao": comp, "a": a, "b": b, "a_runs": ra, "b_runs": rb,
+                     "a_valores": [round(cheio[x], 4) for x in ra], "b_valores": [round(cheio[x], 4) for x in rb],
+                     "a_mAP50": round(a0, 4), "b_mAP50": round(b0, 4), "dif_conjunto_inteiro": round(a0 - b0, 4),
+                     "dif_boot_media": round(float(d.mean()), 4), "dif_ic95": ic(d),
+                     "fracao_reamostras_positiva": round(float((d > 0).mean()), 3),
+                     "dif_relativa_pct_do_menor": round(100 * (a0 - b0) / menor, 1) if menor > 0 else None,
+                     "razao_a_sobre_b": round(a0 / b0, 3) if b0 > 0 else None,
+                     "razao_ic95": [round(float(np.percentile(razao, 2.5)), 3), round(float(np.percentile(razao, 97.5)), 3)],
+                     "ic_exclui_zero": bool(ic(d)[0] > 0 or ic(d)[1] < 0)})
+    out = {"plano": "07-blender/PLANO-RODADA5.md, secao 2.3 (b)",
+           "protocolo": "VisDrone-DET val, 548 imagens, classe unica, imgsz 1280, conf 0,001, NMS IoU 0,7, max_det 300; "
+                        "predicoes de visdrone_preds.py (FP32, lote 4)",
+           "bootstrap": {"reamostras": N_BOOT, "semente": SEMENTE, "unidade": "imagem, com reposicao",
+                         "pareado": "as mesmas reamostras para todos os modelos; diferenca na media das sementes de cada lado"},
+           "runs": por_run, "grupos": por_grupo, "diferencas": difs, "faltando": faltando,
+           "quando": datetime.now().isoformat(timespec="seconds")}
+    with open(os.path.join(AQUI, f"bootstrap_visdrone_{sufixo}.json"), "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=1, ensure_ascii=False)
+    L = [f"# Reamostragem no VisDrone-DET val, rodada 5 ({datetime.now():%d/%m/%Y})", "",
+         f"{N_BOOT} reamostras das {n_img} imagens, semente {SEMENTE}, pareadas; diferenca na media das sementes de cada lado.", "",
+         "| Grupo | runs | media mAP50 | faixa | IC 95% da media | eficacia |", "|---|---|---|---|---|---|"]
+    for k, v in por_grupo.items():
+        L.append(f"| {k} | {', '.join(v['runs'])} | {v['media']:.4f} | {v['min']:.4f} a {v['max']:.4f} | "
+                 f"{v['media_ic95'][0]:.4f} a {v['media_ic95'][1]:.4f} | {100 * v['eficacia_media']:.1f}% |")
+    L += ["", "| Comparacao | a | b | dif. | IC 95% | dif. relativa | razao a/b (IC 95%) |", "|---|---|---|---|---|---|---|"]
+    for d in difs:
+        rel = "n/a" if d["dif_relativa_pct_do_menor"] is None else f"{d['dif_relativa_pct_do_menor']:+.1f}%"
+        L.append(f"| {d['comparacao']} | {d['a_mAP50']:.4f} | {d['b_mAP50']:.4f} | {d['dif_conjunto_inteiro']:+.4f} | "
+                 f"{d['dif_ic95'][0]:+.4f} a {d['dif_ic95'][1]:+.4f} | {rel} | {d['razao_a_sobre_b']} "
+                 f"({d['razao_ic95'][0]} a {d['razao_ic95'][1]}) |")
+    if faltando:
+        L += ["", "Faltando: " + "; ".join(faltando)]
+    with open(os.path.join(AQUI, f"bootstrap_visdrone_{sufixo}.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     print("\n".join(L))
 

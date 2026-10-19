@@ -12,9 +12,16 @@ Onde ha sementes, a diferenca e a das medias das sementes (as diferencas semente
 
   C:/arma3-favela/venv/Scripts/python.exe resolvivel.py
 Saidas: resolvivel.json, resolvivel.md
+
+Rodada 5 (18/10/2026): com --sufixo r5 le bootstrap_visdrone_r5.json (pares da rodada 5, entre grupos de
+sementes) e grava resolvivel_r5.json e .md, sem tocar nos de 17/10. Cada diferenca do bootstrap r5
+recebe as tres leituras, com as mesmas funcoes de faixa e de leitura (a) daqui.
+
+  C:/arma3-favela/venv/Scripts/python.exe resolvivel.py --sufixo r5
 """
 import json
 import os
+import sys
 from datetime import datetime
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +56,8 @@ def leitura_a(fa, fb):
 
 
 def main():
+    if "--sufixo" in sys.argv:
+        return main_sufixo(sys.argv[sys.argv.index("--sufixo") + 1])
     bv = le("bootstrap_visdrone.json")
     la = le("limiar_armado.json")
     if bv is None or la is None:
@@ -180,6 +189,52 @@ def main():
         for s in l.get("semente_a_semente", []):
             L.append(f"- {l['comparacao']}: {s['rotulo']}: {s['dif']:+.4f}, IC 95% {s['ic95'][0]:+.4f} a {s['ic95'][1]:+.4f}, exclui zero: {'sim' if s['exclui_zero'] else 'nao'}")
     with open(os.path.join(AQUI, "resolvivel.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(L) + "\n")
+    print("\n".join(L))
+
+
+def main_sufixo(sufixo):
+    bv = le(f"bootstrap_visdrone_{sufixo}.json")
+    if bv is None:
+        raise SystemExit(f"rode bootstrap_visdrone.py --sufixo {sufixo} antes")
+    linhas = []
+    for d in bv["diferencas"]:
+        fa, fb = faixa(d["a_valores"]), faixa(d["b_valores"])
+        ra, oka = leitura_a(fa, fb)
+        rel = d["dif_relativa_pct_do_menor"]
+        okc = rel is not None and abs(rel) >= LIMIAR_REL
+        okb = d["ic_exclui_zero"]
+        passa = [oka, okb, okc]
+        n_ok = sum(1 for x in passa if x is True)
+        n_av = sum(1 for x in passa if x is not None)
+        linhas.append({"comparacao": d["comparacao"], "medida": "mAP50 no VisDrone-DET val", "a": d["a"], "b": d["b"],
+                       "a_runs": d["a_runs"], "b_runs": d["b_runs"], "a_valor": d["a_mAP50"], "b_valor": d["b_mAP50"],
+                       "dif_absoluta": d["dif_conjunto_inteiro"], "dif_relativa_pct_do_menor": rel,
+                       "razao_a_sobre_b": d["razao_a_sobre_b"], "razao_ic95": d["razao_ic95"],
+                       "sementes_a": fa, "sementes_b": fb, "a_faixas_de_sementes": ra, "a_ok": oka,
+                       "b_ic95_dif": d["dif_ic95"], "b_fracao_positiva": d["fracao_reamostras_positiva"], "b_ok": okb, "c_ok": okc,
+                       "resolvivel": bool(oka is True or okb is True),
+                       "veredito": {"leituras_passadas": n_ok, "leituras_avaliaveis": n_av,
+                                    "passou_em": [k for k, x in zip("abc", passa) if x is True],
+                                    "resumo": (f"resolvivel ({', '.join(k for k, x in zip('abc', passa) if x is True)})"
+                                               if (oka is True or okb is True) else "nao resolvivel em (a) nem em (b)")}})
+    out = {"leituras": {"a": "faixas min-max das sementes de treino nao se cruzam (exige sementes dos dois lados)",
+                        "b": "IC 95% por reamostragem pareada de imagens da diferenca das medias exclui zero",
+                        "c": f"diferenca relativa >= {LIMIAR_REL:.0f}% do menor valor (descritiva)",
+                        "resolvivel": "passa em (a) ou em (b) (PLANO-RODADA5.md, secao 2.3)"},
+           "fontes": [f"bootstrap_visdrone_{sufixo}.json"], "comparacoes": linhas, "faltando": bv.get("faltando", []),
+           "quando": datetime.now().isoformat(timespec="seconds")}
+    with open(os.path.join(AQUI, f"resolvivel_{sufixo}.json"), "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=1, ensure_ascii=False)
+    L = [f"# Resolubilidade, rodada 5 ({datetime.now():%d/%m/%Y})", "",
+         "| Comparacao | a | b | dif. | dif. relativa | (a) faixas | (b) IC 95% | (c) | veredito |",
+         "|---|---|---|---|---|---|---|---|---|"]
+    for l in linhas:
+        rel = "n/a" if l["dif_relativa_pct_do_menor"] is None else f"{l['dif_relativa_pct_do_menor']:+.1f}%"
+        L.append(f"| {l['comparacao']} | {l['a_valor']:.4f} | {l['b_valor']:.4f} | {l['dif_absoluta']:+.4f} | {rel} | "
+                 f"{l['a_faixas_de_sementes']} | {l['b_ic95_dif'][0]:+.4f} a {l['b_ic95_dif'][1]:+.4f} | "
+                 f"{'sim' if l['c_ok'] else 'nao'} | {l['veredito']['resumo']} |")
+    with open(os.path.join(AQUI, f"resolvivel_{sufixo}.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     print("\n".join(L))
 
