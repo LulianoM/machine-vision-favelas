@@ -2,6 +2,12 @@
 
 Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-10-18 [DESKTOP] Rodada 5 lançada
+
+- Autor liberou a GPU e autorizou a HERIDAL. Fonte oficial (FESB) fora do ar; usada a cópia no Zenodo (registro 5662351, Pyrrö, CC BY 3.0, 8,31 GB, md5 conferido no fim do download), a mesma versão do AIR, já citado no artigo. Divisão pré-registrada: todas as imagens anotadas.
+- Cadeia da rodada 5 escrita e testada (grupo P real em 18/10 23:28), commit 3a2e121. Primeiro lançamento pelo Explorer falhou no P2 (Blender sem MPFB); relançada pela sessão com `cmd /c`, P2 ok às 23:43 (6 humanos) e S1 começou.
+- Acompanhamento: e-mail inicial com ordem e previsão (thread "Rodada 5: iniciada em 18/10 às 23:43"), checagem de hora em hora (aos 17 min) que relança a cadeia se morrer, converte a HERIDAL quando o download terminar e manda e-mail a cada grupo concluído.
+
 ## 2026-10-18 [DESKTOP] Coautor retirado, financiamento, citações e manutenção
 
 - Autor: não houve financiamento nem bolsa (declarado no bloco Funding); o coautor delegado sai por ora. Sem ele, a 4.1, a 3.2, a limitação 8 da 6.5 e o conflito de interesse foram reescritos: nenhuma frase diz mais que um autor é policial, o contexto passa a vir só de fontes públicas, e os autores declaram não ter conflito. A versão anterior está no commit 682a96e, para quando o coautor voltar.

@@ -39,6 +39,10 @@ Tudo entrou no manuscrito (9.3, 9.4, 9.5, 11.5, tabela da 8.2, abstract e conclu
 
 Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; supervisor em janela própria aberto por atalho na pasta Inicializar (nunca pelo Agendador de Tarefas: o Blender sobe sem o MPFB); pausa e retomada com `pausa_rodada3.py`; retrato com `status_rodada3.py`. Os três servem de molde.
 
+## Rodada 5 (em curso desde 18/10 23:43)
+
+Plano e critérios em `07-blender/PLANO-RODADA5.md`; cadeia `07-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favelaeal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar sempre pela sessão com `cmd /c retoma_rodada5.cmd` ou por duplo clique; pelo Explorer a partir da sessão, o Blender sobe sem MPFB (visto em 18/10).
+
 ## Revisão de 17 e 18/10 (feedback de 14/10)
 
 Feedback de Felipe I. Toledo (texto, quatro áudios transcritos, esqueleto de seções) em `01-artigo/feedback-2026-10-14/` (`FEEDBACK-RECEBIDO.md`, `PLANO-CORRECAO.md`, `zobel-checklist.md`). Pedido central: forma, leitura e estrutura primeiro; método só em Métodos, interpretação só na Discussão, menos repetição; depois reenviar.
