@@ -1,0 +1,27 @@
+{
+ "weights": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c120_sd2\\weights\\best.pt",
+ "imgsz": 1280,
+ "conf": 0.001,
+ "resultados": [
+  {
+   "metrics/precision(B)": 0.7581,
+   "metrics/recall(B)": 0.6481,
+   "metrics/mAP50(B)": 0.679,
+   "metrics/mAP50-95(B)": 0.3118,
+   "fitness": 0.3118,
+   "conjunto": "sintetico",
+   "data": "C:\\arma3-favela\\blender\\ds_oblvar_tiles\\data.yaml",
+   "single_cls": true
+  },
+  {
+   "metrics/precision(B)": 0.2276,
+   "metrics/recall(B)": 0.1573,
+   "metrics/mAP50(B)": 0.0918,
+   "metrics/mAP50-95(B)": 0.0262,
+   "fitness": 0.0262,
+   "conjunto": "real",
+   "data": "C:\\arma3-favela\\visdrone\\visdrone_yolo\\data.yaml",
+   "single_cls": true
+  }
+ ]
+}

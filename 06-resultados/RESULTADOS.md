@@ -304,6 +304,24 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-20 [DESKTOP] Rodada 5, grupo A (R5-3): curva de aprendizado sobre o número de quadros
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas A1 a A10 (plano 3.5). Subconjuntos encaixados dos 152 quadros de treino de S-oblique-six, estratificados por sítio (`06-resultados/curva_subconjuntos.json`: 182, 341, 503 e 696 ladrilhos); mesma validação; 60 épocas; zero-shot em `06-resultados/sim2real_s_oblvar_c*.json`.
+
+| Quadros de treino | mAP50 no VisDrone (sementes) | Média | Faixa |
+|---|---|---|---|
+| 30 | 0,0499, 0,0674, 0,0679 | 0,0617 | 0,0499 a 0,0679 |
+| 60 | 0,0806 | 0,0806 | um treino |
+| 90 | 0,0810 | 0,0810 | um treino |
+| 120 | 0,0915, 0,0878, 0,0918 | 0,0904 | 0,0878 a 0,0918 |
+| 152 (S-oblique-six) | 0,1055, 0,0958, 0,0887 | 0,0967 | 0,0887 a 0,1055 |
+
+Leituras disponíveis agora (a de intervalo pareado sai no fechamento, Y3):
+- Regra da antiga 10.1, 152 contra 30 quadros: faixas não se cruzam, passa em (a); +0,0349, 57% relativos. O número de quadros é operante, pendente de (b).
+- Fim da curva, 152 contra 120: faixas se cruzam, não passa em (a); +0,0063, 7%. Pelo critério, "plano" ou "subindo dentro da dispersão de treino", conforme (b).
+- Descritivo: mAP50 = 0,0202 ln(N) - 0,0060 nas médias; ganho previsto por duplicação 0,0140.
+- Observação: s_oblvar_c120_sd1 parou por paciência na época 45, e a última época caiu a mAP50 de validação 0,163 (precisão 0,690, recall 0,163 no results.csv). O best.pt, que é o avaliado, vem de uma época anterior, e o zero-shot dele (0,0878) fica na faixa dos outros dois; o retrato do status mostra a última época, não a escolhida.
+
 ## 2026-10-19 [DESKTOP] Rodada 5, grupos F (R5-5), N (R5-6) e Y1: ajuste fino por cronograma, HERIDAL e critérios
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas F0 a F16, N1 a N3 e Y1 (plano `07-blender/PLANO-RODADA5.md`, 3.2 a 3.4). Vereditos em `06-resultados/rodada5_criterios.json` (`06-resultados/rodada5_criterios.py --parte prioridade`); escolha de cronograma em `06-resultados/rodada5_ft_selecao.json`; zero-shot em `06-resultados/sim2real_<run>.json`; reamostragem em `06-resultados/revisao-2026-10-17/bootstrap_visdrone_r5.md`, `resolvivel_r5.md`, `bootstrap_heridal.md` e `bootstrap_heridal_1280.md`.
