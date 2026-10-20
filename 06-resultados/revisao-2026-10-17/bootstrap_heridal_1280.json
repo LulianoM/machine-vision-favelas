@@ -1,0 +1,341 @@
+{
+ "tag": "heridal_1280",
+ "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+ "bootstrap": {
+  "reamostras": 1000,
+  "semente": 0,
+  "imagens": 1647,
+  "unidade": "imagem, com reposicao",
+  "pareado": "as mesmas reamostras para todos os modelos"
+ },
+ "validade": {
+  "R_mAP50": 0.3353,
+  "limiar": 0.05,
+  "interpretavel": true,
+  "regra": "R abaixo de 0,05 de mAP50 no imgsz casado: o protocolo falha, resultado nao interpretavel"
+ },
+ "runs": {
+  "armado_150g": {
+   "mAP50": 0.1272,
+   "mAP50_ic95": [
+    0.1029,
+    0.1566
+   ],
+   "eficacia": 0.3793,
+   "eficacia_ic95": [
+    0.32,
+    0.4489
+   ]
+  },
+  "r_pareado": {
+   "mAP50": 0.3353,
+   "mAP50_ic95": [
+    0.3027,
+    0.37
+   ],
+   "eficacia": 1.0,
+   "eficacia_ic95": [
+    1.0,
+    1.0
+   ]
+  },
+  "s_nadir_4k": {
+   "mAP50": 0.1956,
+   "mAP50_ic95": [
+    0.1682,
+    0.2245
+   ],
+   "eficacia": 0.5833,
+   "eficacia_ic95": [
+    0.5122,
+    0.6585
+   ]
+  },
+  "s_nadir_4k_sd1": {
+   "mAP50": 0.2418,
+   "mAP50_ic95": [
+    0.2059,
+    0.2782
+   ],
+   "eficacia": 0.721,
+   "eficacia_ic95": [
+    0.6367,
+    0.8067
+   ]
+  },
+  "s_nadir_4k_sd2": {
+   "mAP50": 0.0673,
+   "mAP50_ic95": [
+    0.052,
+    0.0853
+   ],
+   "eficacia": 0.2007,
+   "eficacia_ic95": [
+    0.1601,
+    0.2505
+   ]
+  },
+  "s_obliquo": {
+   "mAP50": 0.1053,
+   "mAP50_ic95": [
+    0.0872,
+    0.1273
+   ],
+   "eficacia": 0.3142,
+   "eficacia_ic95": [
+    0.2709,
+    0.3659
+   ]
+  },
+  "s_obliquo_sd1": {
+   "mAP50": 0.1497,
+   "mAP50_ic95": [
+    0.1277,
+    0.1739
+   ],
+   "eficacia": 0.4465,
+   "eficacia_ic95": [
+    0.3995,
+    0.5049
+   ]
+  },
+  "s_obliquo_sd2": {
+   "mAP50": 0.1716,
+   "mAP50_ic95": [
+    0.1463,
+    0.1995
+   ],
+   "eficacia": 0.5117,
+   "eficacia_ic95": [
+    0.4478,
+    0.5884
+   ]
+  },
+  "s_oblvar": {
+   "mAP50": 0.1052,
+   "mAP50_ic95": [
+    0.0875,
+    0.1274
+   ],
+   "eficacia": 0.3139,
+   "eficacia_ic95": [
+    0.2735,
+    0.3638
+   ]
+  },
+  "s_oblvar_sd1": {
+   "mAP50": 0.1267,
+   "mAP50_ic95": [
+    0.1078,
+    0.1498
+   ],
+   "eficacia": 0.3779,
+   "eficacia_ic95": [
+    0.3328,
+    0.4296
+   ]
+  },
+  "s_oblvar_sd2": {
+   "mAP50": 0.1936,
+   "mAP50_ic95": [
+    0.1675,
+    0.2227
+   ],
+   "eficacia": 0.5773,
+   "eficacia_ic95": [
+    0.5179,
+    0.649
+   ]
+  },
+  "s_variedade": {
+   "mAP50": 0.2208,
+   "mAP50_ic95": [
+    0.1842,
+    0.2584
+   ],
+   "eficacia": 0.6584,
+   "eficacia_ic95": [
+    0.5695,
+    0.7589
+   ]
+  }
+ },
+ "grupos": {
+  "R": {
+   "runs": [
+    "r_pareado"
+   ],
+   "valores": [
+    0.3353
+   ],
+   "media": 0.3353,
+   "media_ic95": [
+    0.3027,
+    0.37
+   ],
+   "eficacia_media": 1.0
+  },
+  "S-nadir-150": {
+   "runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "valores": [
+    0.1956,
+    0.2418,
+    0.0673
+   ],
+   "media": 0.1682,
+   "media_ic95": [
+    0.1431,
+    0.1947
+   ],
+   "eficacia_media": 0.5016
+  },
+  "S-nadir-150-six": {
+   "runs": [
+    "s_variedade"
+   ],
+   "valores": [
+    0.2208
+   ],
+   "media": 0.2208,
+   "media_ic95": [
+    0.1842,
+    0.2584
+   ],
+   "eficacia_media": 0.6584
+  },
+  "S-oblique": {
+   "runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "valores": [
+    0.1053,
+    0.1497,
+    0.1716
+   ],
+   "media": 0.1422,
+   "media_ic95": [
+    0.1214,
+    0.1651
+   ],
+   "eficacia_media": 0.4241
+  },
+  "S-oblique-six": {
+   "runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "valores": [
+    0.1052,
+    0.1267,
+    0.1936
+   ],
+   "media": 0.1418,
+   "media_ic95": [
+    0.1218,
+    0.1655
+   ],
+   "eficacia_media": 0.423
+  },
+  "Armado-150 (exploratorio)": {
+   "runs": [
+    "armado_150g"
+   ],
+   "valores": [
+    0.1272
+   ],
+   "media": 0.1272,
+   "media_ic95": [
+    0.1029,
+    0.1566
+   ],
+   "eficacia_media": 0.3793
+  }
+ },
+ "diferencas": [
+  {
+   "comparacao": "principal: oblique vs nadir",
+   "a": "S-oblique",
+   "b": "S-nadir-150",
+   "a_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "a_mAP50": 0.1422,
+   "b_mAP50": 0.1682,
+   "dif": -0.026,
+   "dif_ic95": [
+    -0.0414,
+    -0.0097
+   ],
+   "fracao_reamostras_positiva": 0.0,
+   "dif_relativa_pct_do_menor": -18.3,
+   "razao_a_sobre_b": 0.845,
+   "razao_ic95": [
+    0.77,
+    0.936
+   ],
+   "a_faixas_de_sementes": "nao resolvivel: faixas se cruzam",
+   "a_ok": false,
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "sinal": "b acima"
+  },
+  {
+   "comparacao": "secundaria: six settlements, oblique vs nadir",
+   "a": "S-oblique-six",
+   "b": "S-nadir-150-six",
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_variedade"
+   ],
+   "a_mAP50": 0.1418,
+   "b_mAP50": 0.2208,
+   "dif": -0.0789,
+   "dif_ic95": [
+    -0.102,
+    -0.0568
+   ],
+   "fracao_reamostras_positiva": 0.0,
+   "dif_relativa_pct_do_menor": -55.6,
+   "razao_a_sobre_b": 0.642,
+   "razao_ic95": [
+    0.591,
+    0.709
+   ],
+   "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+   "a_ok": null,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "sinal": "b acima"
+  }
+ ],
+ "razao_visdrone": {
+  "fonte": "bootstrap_visdrone.json",
+  "razao": 6.011,
+  "razao_ic95": [
+   4.571,
+   7.011
+  ]
+ },
+ "faltando": [],
+ "quando": "2026-10-19T23:19:46"
+}

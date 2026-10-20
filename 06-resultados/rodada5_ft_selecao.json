@@ -1,0 +1,75 @@
+{
+ "regra": "PLANO-RODADA5.md 3.2: celula cujo best.pt tem maior mAP50-95 em sel; empate a quatro casas fica a original; o teste nunca escolhe",
+ "reproduz": true,
+ "celulas": {
+  "05": {
+   "sint": {
+    "orig": 0.148,
+    "fz": 0.0901,
+    "lr": 0.1019,
+    "fzlr": 0.0585
+   },
+   "coco": {
+    "orig": 0.1802,
+    "fz": 0.1886,
+    "lr": 0.223,
+    "fzlr": 0.1915
+   }
+  },
+  "10": {
+   "sint": {
+    "orig": 0.1743,
+    "fz": 0.1053,
+    "lr": 0.1258,
+    "fzlr": 0.0681
+   },
+   "coco": {
+    "orig": 0.1951,
+    "fz": 0.203,
+    "lr": 0.2451,
+    "fzlr": 0.2001
+   }
+  }
+ },
+ "runs": {
+  "05": {
+   "sint": {
+    "orig": "ft05_sint",
+    "fz": "ft05_sint_fz",
+    "lr": "ft05_sint_lr",
+    "fzlr": "ft05_sint_fzlr"
+   },
+   "coco": {
+    "orig": "ft05_coco",
+    "fz": "ft05_coco_fz",
+    "lr": "ft05_coco_lr",
+    "fzlr": "ft05_coco_fzlr"
+   }
+  },
+  "10": {
+   "sint": {
+    "orig": "ft10_sint",
+    "fz": "ft10_sint_fz",
+    "lr": "ft10_sint_lr",
+    "fzlr": "ft10_sint_fzlr"
+   },
+   "coco": {
+    "orig": "ft10_coco",
+    "fz": "ft10_coco_fz",
+    "lr": "ft10_coco_lr",
+    "fzlr": "ft10_coco_fzlr"
+   }
+  }
+ },
+ "escolha": {
+  "05": {
+   "sint": "orig",
+   "coco": "lr"
+  },
+  "10": {
+   "sint": "orig",
+   "coco": "lr"
+  }
+ },
+ "quando": "2026-10-19T21:14:14"
+}

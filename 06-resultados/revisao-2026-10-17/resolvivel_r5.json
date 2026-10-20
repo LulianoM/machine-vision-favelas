@@ -1,0 +1,847 @@
+{
+ "leituras": {
+  "a": "faixas min-max das sementes de treino nao se cruzam (exige sementes dos dois lados)",
+  "b": "IC 95% por reamostragem pareada de imagens da diferenca das medias exclui zero",
+  "c": "diferenca relativa >= 30% do menor valor (descritiva)",
+  "resolvivel": "passa em (a) ou em (b) (PLANO-RODADA5.md, secao 2.3)"
+ },
+ "fontes": [
+  "bootstrap_visdrone_r5.json"
+ ],
+ "comparacoes": [
+  {
+   "comparacao": "R5-1 nadir vs oblique (principal)",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique",
+   "b": "S-nadir-150",
+   "a_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "a_valor": 0.0555,
+   "b_valor": 0.0136,
+   "dif_absoluta": 0.0419,
+   "dif_relativa_pct_do_menor": 307.9,
+   "razao_a_sobre_b": 4.079,
+   "razao_ic95": [
+    3.436,
+    4.642
+   ],
+   "sementes_a": {
+    "valores": [
+     0.0614,
+     0.0552,
+     0.0501
+    ],
+    "min": 0.0501,
+    "max": 0.0614,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.0102,
+     0.0198,
+     0.0108
+    ],
+    "min": 0.0102,
+    "max": 0.0198,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.0368,
+    0.047
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "a",
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (a, b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-1 six settlements vs one, oblique",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique-six",
+   "b": "S-oblique",
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "a_valor": 0.0966,
+   "b_valor": 0.0555,
+   "dif_absoluta": 0.0411,
+   "dif_relativa_pct_do_menor": 74.0,
+   "razao_a_sobre_b": 1.74,
+   "razao_ic95": [
+    1.641,
+    1.85
+   ],
+   "sementes_a": {
+    "valores": [
+     0.1055,
+     0.0958,
+     0.0887
+    ],
+    "min": 0.0887,
+    "max": 0.1055,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.0614,
+     0.0552,
+     0.0501
+    ],
+    "min": 0.0501,
+    "max": 0.0614,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.0367,
+    0.0462
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "a",
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (a, b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-1 six settlements vs one, nadir",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-nadir-150-six",
+   "b": "S-nadir-150",
+   "a_runs": [
+    "s_variedade"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "a_valor": 0.019,
+   "b_valor": 0.0136,
+   "dif_absoluta": 0.0054,
+   "dif_relativa_pct_do_menor": 39.9,
+   "razao_a_sobre_b": 1.399,
+   "razao_ic95": [
+    1.066,
+    1.504
+   ],
+   "sementes_a": {
+    "valores": [
+     0.019
+    ],
+    "min": 0.019,
+    "max": 0.019,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.0102,
+     0.0198,
+     0.0108
+    ],
+    "min": 0.0102,
+    "max": 0.0198,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "treino unico em a; o valor de a fica dentro da faixa de b",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0009,
+    0.0066
+   ],
+   "b_fracao_positiva": 0.999,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 5%, cell orig",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5% orig",
+   "b": "F-synthetic 5% orig",
+   "a_runs": [
+    "ft05_coco",
+    "ft05_coco_sd1",
+    "ft05_coco_sd2"
+   ],
+   "b_runs": [
+    "ft05_sint",
+    "ft05_sint_sd1",
+    "ft05_sint_sd2"
+   ],
+   "a_valor": 0.5245,
+   "b_valor": 0.4529,
+   "dif_absoluta": 0.0716,
+   "dif_relativa_pct_do_menor": 15.8,
+   "razao_a_sobre_b": 1.158,
+   "razao_ic95": [
+    1.144,
+    1.173
+   ],
+   "sementes_a": {
+    "valores": [
+     0.522,
+     0.5228,
+     0.5285
+    ],
+    "min": 0.522,
+    "max": 0.5285,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "min": 0.4424,
+    "max": 0.4608,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.0658,
+    0.078
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "a",
+     "b"
+    ],
+    "resumo": "resolvivel (a, b)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 5%, cell fz",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5% fz",
+   "b": "F-synthetic 5% fz",
+   "a_runs": [
+    "ft05_coco_fz"
+   ],
+   "b_runs": [
+    "ft05_sint_fz"
+   ],
+   "a_valor": 0.5467,
+   "b_valor": 0.2808,
+   "dif_absoluta": 0.2659,
+   "dif_relativa_pct_do_menor": 94.7,
+   "razao_a_sobre_b": 1.947,
+   "razao_ic95": [
+    1.88,
+    2.027
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5467
+    ],
+    "min": 0.5467,
+    "max": 0.5467,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.2808
+    ],
+    "min": 0.2808,
+    "max": 0.2808,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.2538,
+    0.2791
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 5%, cell lr",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5% lr",
+   "b": "F-synthetic 5% lr",
+   "a_runs": [
+    "ft05_coco_lr",
+    "ft05_coco_lr_sd1",
+    "ft05_coco_lr_sd2"
+   ],
+   "b_runs": [
+    "ft05_sint_lr"
+   ],
+   "a_valor": 0.5897,
+   "b_valor": 0.3103,
+   "dif_absoluta": 0.2794,
+   "dif_relativa_pct_do_menor": 90.1,
+   "razao_a_sobre_b": 1.901,
+   "razao_ic95": [
+    1.84,
+    1.97
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5746,
+     0.5963,
+     0.5982
+    ],
+    "min": 0.5746,
+    "max": 0.5982,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.3103
+    ],
+    "min": 0.3103,
+    "max": 0.3103,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.2676,
+    0.292
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 5%, cell fzlr",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5% fzlr",
+   "b": "F-synthetic 5% fzlr",
+   "a_runs": [
+    "ft05_coco_fzlr"
+   ],
+   "b_runs": [
+    "ft05_sint_fzlr"
+   ],
+   "a_valor": 0.541,
+   "b_valor": 0.2028,
+   "dif_absoluta": 0.3382,
+   "dif_relativa_pct_do_menor": 166.7,
+   "razao_a_sobre_b": 2.667,
+   "razao_ic95": [
+    2.539,
+    2.807
+   ],
+   "sementes_a": {
+    "valores": [
+     0.541
+    ],
+    "min": 0.541,
+    "max": 0.541,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.2028
+    ],
+    "min": 0.2028,
+    "max": 0.2028,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.3232,
+    0.3533
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 5%, chosen schedules",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 5% chosen",
+   "b": "F-synthetic 5% chosen",
+   "a_runs": [
+    "ft05_coco_lr",
+    "ft05_coco_lr_sd1",
+    "ft05_coco_lr_sd2"
+   ],
+   "b_runs": [
+    "ft05_sint",
+    "ft05_sint_sd1",
+    "ft05_sint_sd2"
+   ],
+   "a_valor": 0.5897,
+   "b_valor": 0.4529,
+   "dif_absoluta": 0.1369,
+   "dif_relativa_pct_do_menor": 30.2,
+   "razao_a_sobre_b": 1.302,
+   "razao_ic95": [
+    1.279,
+    1.331
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5746,
+     0.5963,
+     0.5982
+    ],
+    "min": 0.5746,
+    "max": 0.5982,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "min": 0.4424,
+    "max": 0.4608,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.129,
+    0.1465
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "a",
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (a, b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 10%, cell orig",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10% orig",
+   "b": "F-synthetic 10% orig",
+   "a_runs": [
+    "ft10_coco"
+   ],
+   "b_runs": [
+    "ft10_sint"
+   ],
+   "a_valor": 0.5709,
+   "b_valor": 0.5095,
+   "dif_absoluta": 0.0614,
+   "dif_relativa_pct_do_menor": 12.1,
+   "razao_a_sobre_b": 1.121,
+   "razao_ic95": [
+    1.108,
+    1.134
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5709
+    ],
+    "min": 0.5709,
+    "max": 0.5709,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.5095
+    ],
+    "min": 0.5095,
+    "max": 0.5095,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0553,
+    0.0679
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b"
+    ],
+    "resumo": "resolvivel (b)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 10%, cell fz",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10% fz",
+   "b": "F-synthetic 10% fz",
+   "a_runs": [
+    "ft10_coco_fz"
+   ],
+   "b_runs": [
+    "ft10_sint_fz"
+   ],
+   "a_valor": 0.5772,
+   "b_valor": 0.3209,
+   "dif_absoluta": 0.2562,
+   "dif_relativa_pct_do_menor": 79.8,
+   "razao_a_sobre_b": 1.798,
+   "razao_ic95": [
+    1.746,
+    1.859
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5772
+    ],
+    "min": 0.5772,
+    "max": 0.5772,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.3209
+    ],
+    "min": 0.3209,
+    "max": 0.3209,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.2451,
+    0.2678
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 10%, cell lr",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10% lr",
+   "b": "F-synthetic 10% lr",
+   "a_runs": [
+    "ft10_coco_lr"
+   ],
+   "b_runs": [
+    "ft10_sint_lr"
+   ],
+   "a_valor": 0.6224,
+   "b_valor": 0.3875,
+   "dif_absoluta": 0.2348,
+   "dif_relativa_pct_do_menor": 60.6,
+   "razao_a_sobre_b": 1.606,
+   "razao_ic95": [
+    1.562,
+    1.65
+   ],
+   "sementes_a": {
+    "valores": [
+     0.6224
+    ],
+    "min": 0.6224,
+    "max": 0.6224,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.3875
+    ],
+    "min": 0.3875,
+    "max": 0.3875,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.2238,
+    0.2458
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 10%, cell fzlr",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10% fzlr",
+   "b": "F-synthetic 10% fzlr",
+   "a_runs": [
+    "ft10_coco_fzlr"
+   ],
+   "b_runs": [
+    "ft10_sint_fzlr"
+   ],
+   "a_valor": 0.5644,
+   "b_valor": 0.2241,
+   "dif_absoluta": 0.3402,
+   "dif_relativa_pct_do_menor": 151.8,
+   "razao_a_sobre_b": 2.518,
+   "razao_ic95": [
+    2.4,
+    2.634
+   ],
+   "sementes_a": {
+    "valores": [
+     0.5644
+    ],
+    "min": 0.5644,
+    "max": 0.5644,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.2241
+    ],
+    "min": 0.2241,
+    "max": 0.2241,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.3258,
+    0.3539
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-5 generic vs synthetic start, 10%, chosen schedules",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "F-generic 10% chosen",
+   "b": "F-synthetic 10% chosen",
+   "a_runs": [
+    "ft10_coco_lr"
+   ],
+   "b_runs": [
+    "ft10_sint"
+   ],
+   "a_valor": 0.6224,
+   "b_valor": 0.5095,
+   "dif_absoluta": 0.1129,
+   "dif_relativa_pct_do_menor": 22.2,
+   "razao_a_sobre_b": 1.222,
+   "razao_ic95": [
+    1.202,
+    1.245
+   ],
+   "sementes_a": {
+    "valores": [
+     0.6224
+    ],
+    "min": 0.6224,
+    "max": 0.6224,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.5095
+    ],
+    "min": 0.5095,
+    "max": 0.5095,
+    "n": 1
+   },
+   "a_faixas_de_sementes": "treino unico dos dois lados: nao avaliavel",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.1044,
+    0.123
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b"
+    ],
+    "resumo": "resolvivel (b)"
+   }
+  },
+  {
+   "comparacao": "R5-2 C-ii scene seeds vs S-oblique training seeds",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique-six scenes",
+   "b": "S-oblique",
+   "a_runs": [
+    "s_oblvar"
+   ],
+   "b_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "a_valor": 0.1055,
+   "b_valor": 0.0555,
+   "dif_absoluta": 0.0499,
+   "dif_relativa_pct_do_menor": 89.9,
+   "razao_a_sobre_b": 1.899,
+   "razao_ic95": [
+    1.778,
+    2.046
+   ],
+   "sementes_a": {
+    "valores": [
+     0.1055
+    ],
+    "min": 0.1055,
+    "max": 0.1055,
+    "n": 1
+   },
+   "sementes_b": {
+    "valores": [
+     0.0614,
+     0.0552,
+     0.0501
+    ],
+    "min": 0.0501,
+    "max": 0.0614,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "treino unico em a; o valor de a fica fora da faixa de b",
+   "a_ok": null,
+   "b_ic95_dif": [
+    0.0444,
+    0.0563
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 2,
+    "leituras_avaliaveis": 2,
+    "passou_em": [
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (b, c)"
+   }
+  }
+ ],
+ "faltando": [
+  "R5-3 152 vs 30 frames",
+  "R5-3 152 vs 120 frames"
+ ],
+ "quando": "2026-10-19T23:21:16"
+}

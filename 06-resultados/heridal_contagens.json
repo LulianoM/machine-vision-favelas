@@ -1,0 +1,36 @@
+{
+ "fonte": "Zenodo 5662351, heridal_keras_retinanet_voc.zip (CC BY 3.0), versao do AIR",
+ "extraido_em": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido",
+ "annotations": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido\\heridal_keras_retinanet_voc\\Annotations",
+ "imagesets": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido\\heridal_keras_retinanet_voc\\ImageSets\\Main",
+ "listas_imagesets": {
+  "test": 101,
+  "train": 1391,
+  "trainval": 1546,
+  "val": 155
+ },
+ "xml_total": 1650,
+ "divisao": "todas",
+ "criterio": "todas as anotadas (--divisao todas)",
+ "imagens_escolhidas": 1650,
+ "imagens_convertidas": 1647,
+ "imagens_sem_arquivo": [
+  "test_GRO_0005",
+  "test_SB_0004",
+  "train_BRK_2034"
+ ],
+ "imagens_sem_pessoa": 561,
+ "caixas_pessoa": 3229,
+ "classes_encontradas": {
+  "person": 3235
+ },
+ "classes_aceitas_como_pessoa": [
+  "person"
+ ],
+ "tamanhos_de_imagem": {
+  "4000x3000": 1647
+ },
+ "lado_maior_caixa_px_mediana": 71.0,
+ "data_yaml": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+ "quando": "2026-10-19T02:28:35"
+}

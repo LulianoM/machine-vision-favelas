@@ -304,6 +304,36 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-19 [DESKTOP] Rodada 5, grupos F (R5-5), N (R5-6) e Y1: ajuste fino por cronograma, HERIDAL e critérios
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas F0 a F16, N1 a N3 e Y1 (plano `07-blender/PLANO-RODADA5.md`, 3.2 a 3.4). Vereditos em `06-resultados/rodada5_criterios.json` (`06-resultados/rodada5_criterios.py --parte prioridade`); escolha de cronograma em `06-resultados/rodada5_ft_selecao.json`; zero-shot em `06-resultados/sim2real_<run>.json`; reamostragem em `06-resultados/revisao-2026-10-17/bootstrap_visdrone_r5.md`, `resolvivel_r5.md`, `bootstrap_heridal.md` e `bootstrap_heridal_1280.md`.
+
+**Grupo S, leituras de intervalo (Y1).** S-oblique menos S-nadir-150 na média de três sementes: +0,0419 (IC 0,0368 a 0,0470), razão 4,08 (3,44 a 4,64); passa em (a), (b) e (c). S-oblique-six contra S-oblique, três contra três: razão 1,74 (1,64 a 1,85), passa nas três. S-nadir-150-six contra S-nadir-150: razão 1,40 (1,07 a 1,50), passa em (b) e (c), não em (a). Eficácia na média: S-nadir-150 2,2% (1,9 a 2,5), S-oblique 8,8% (8,1 a 9,6).
+
+**Grupo F (ajuste fino).** Reprodução de controle com otimizador explícito: ft05_coco_rep 0,5220 contra 0,5220 (tolerância 0,0035): reproduz. mAP50 no VisDrone val das doze células (original, extrator congelado, taxa 0,0002, os dois):
+
+| Fatia, início | orig | fz | lr | fzlr |
+|---|---|---|---|---|
+| 5%, sintético | 0,4424 | 0,2808 | 0,3103 | 0,2028 |
+| 5%, COCO | 0,5220 | 0,5467 | 0,5746 | 0,5410 |
+| 10%, sintético | 0,5095 | 0,3209 | 0,3875 | 0,2241 |
+| 10%, COCO | 0,5709 | 0,5772 | 0,6224 | 0,5644 |
+
+Seleção no `sel` (mAP50-95), nunca no teste: o início sintético prefere o cronograma original nas duas fatias; o COCO prefere a taxa 0,0002 nas duas. Sementes 1 e 2 do ft05_coco_lr: 0,5963 e 0,5982. Comparação de interesse, cada início no cronograma que preferiu: a 5%, COCO 0,5897 (três sementes) contra sintético 0,4529 (três), +0,1369 (IC 0,1290 a 0,1465), 30,2% relativos, passa em (a), (b) e (c); a 10%, 0,6224 contra 0,5095, +0,1129 (IC 0,1044 a 0,1230), 22,2%, passa em (b). Veredito do critério: custo robusto ao cronograma. Congelar o extrator ou baixar a taxa piorou o início sintético em todas as células; no COCO, a taxa menor melhorou.
+
+**Grupo N (HERIDAL, base real nadir, 40 a 65 m).** Zenodo 5662351 (CC BY 3.0), 1.647 imagens e 3.229 pessoas, todas as anotadas (`07-blender/scripts/prepara_heridal.py --divisao todas`, contagens em `06-resultados/heridal_contagens.json`); imgsz casado 1152 pela regra dos rótulos (`06-resultados/escala_nadir.py`, `06-resultados/escala_heridal.json`), 1280 como medida secundária. R (treinado no VisDrone) faz 0,3185: protocolo interpretável (limiar 0,05).
+
+| Grupo | mAP50, imgsz 1152 (IC 95%) | parcela de R | mAP50, imgsz 1280 |
+|---|---|---|---|
+| R | 0,3185 (0,2843 a 0,3543) | 100% | 0,3353 |
+| S-nadir-150, três sementes | 0,1997 (0,1713 a 0,2306) | 62,7% | 0,1682 |
+| S-nadir-150-six | 0,2488 (0,2116 a 0,2865) | 78,1% | 0,2208 |
+| S-oblique, três sementes | 0,1341 (0,1149 a 0,1555) | 42,1% | 0,1422 |
+| S-oblique-six, três sementes | 0,1477 (0,1265 a 0,1715) | 46,4% | 0,1418 |
+| Armado-150 (exploratório) | 0,1417 | 44,5% | 0,1272 |
+
+Principal (oblíquo menos nadir, três contra três): -0,0656 (IC -0,0840 a -0,0471), razão 0,671 (0,61 a 0,74), passa em (b) e (c), não em (a) (faixas se cruzam). A 1280: -0,0260 (IC -0,0414 a -0,0097), passa em (b). Secundária (seis sítios, oblíquo menos nadir): -0,1012 (IC -0,1216 a -0,0786), passa em (b) e (c). A ordem é a mesma nos dois tamanhos: num benchmark real nadir, o corpus nadir transfere melhor que o oblíquo, o inverso do VisDrone (razão oblíquo/nadir 0,67 contra 4,08). Ressalva fixada no plano: a HERIDAL é mato e não cidade, e a GSD dela foi estimada.
+
 ## 2026-10-19 [DESKTOP] Rodada 5, grupo S (R5-1): sementes 1 e 2 de S-nadir-150 e S-oblique
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas S1 a S7 (plano `07-blender/PLANO-RODADA5.md`, 3.1, critério fixado antes). Treinos com a receita da 7.6, corpus fixo, só a semente de treino muda: `train_yolo_win.py` com `--seed 1` e `--seed 2`. Zero-shot no VisDrone val por `07-blender/scripts/avalia_sim2real.py --weights <run>/weights/best.pt --real <visdrone val> --imgsz 1280 --out 06-resultados/sim2real_<run>.json`; regra oficial em `06-resultados/visdrone_oficial_iou.json`; predições por imagem em `06-resultados/revisao-2026-10-17/preds_visdrone_<run>.npz` (não versionadas).

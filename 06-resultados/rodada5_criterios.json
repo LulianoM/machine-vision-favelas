@@ -1,0 +1,1422 @@
+{
+ "plano": "07-blender/PLANO-RODADA5.md",
+ "parte": "prioridade",
+ "R5-1_sementes_S": {
+  "principal_S-oblique_menos_S-nadir-150": {
+   "a_valor": 0.0555,
+   "b_valor": 0.0136,
+   "dif": 0.0419,
+   "dif_relativa_pct_do_menor": 307.9,
+   "razao_a_sobre_b": 4.079,
+   "razao_ic95": [
+    3.436,
+    4.642
+   ],
+   "a_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "a": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95": [
+    0.0368,
+    0.047
+   ],
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "passou_em": [
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  "six_vs_one_oblique": {
+   "a_valor": 0.0966,
+   "b_valor": 0.0555,
+   "dif": 0.0411,
+   "dif_relativa_pct_do_menor": 74.0,
+   "razao_a_sobre_b": 1.74,
+   "razao_ic95": [
+    1.641,
+    1.85
+   ],
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "a": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95": [
+    0.0367,
+    0.0462
+   ],
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "passou_em": [
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  "six_vs_one_nadir": {
+   "a_valor": 0.019,
+   "b_valor": 0.0136,
+   "dif": 0.0054,
+   "dif_relativa_pct_do_menor": 39.9,
+   "razao_a_sobre_b": 1.399,
+   "razao_ic95": [
+    1.066,
+    1.504
+   ],
+   "a_runs": [
+    "s_variedade"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "a": "treino unico em a; o valor de a fica dentro da faixa de b",
+   "a_ok": null,
+   "b_ic95": [
+    0.0009,
+    0.0066
+   ],
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "passou_em": [
+    "b",
+    "c"
+   ]
+  },
+  "S-nadir-150": {
+   "runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ],
+   "valores": [
+    0.0102,
+    0.0198,
+    0.0108
+   ],
+   "media": 0.0136,
+   "min": 0.0102,
+   "max": 0.0198,
+   "n": 3,
+   "media_ic95": [
+    0.012,
+    0.016
+   ],
+   "eficacia_media": 0.0216,
+   "eficacia_ic95": [
+    0.019,
+    0.0253
+   ]
+  },
+  "S-oblique": {
+   "runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "valores": [
+    0.0614,
+    0.0552,
+    0.0501
+   ],
+   "media": 0.0555,
+   "min": 0.0501,
+   "max": 0.0614,
+   "n": 3,
+   "media_ic95": [
+    0.0502,
+    0.0614
+   ],
+   "eficacia_media": 0.088,
+   "eficacia_ic95": [
+    0.0805,
+    0.0963
+   ]
+  },
+  "regra": "PLANO 3.1: principal com 3 contra 3 sementes; passa em (a) e (b) -> 'passes all three readings' (ou as que passar) e fator como razao das medias com faixa; so (b) -> resolvivel pelo intervalo e nao pelas faixas; nenhuma -> sai 'Camera pitch moved the figure most'; seis contra um, obliquo, falhando (a) -> a 6.1 perde 'the single-settlement value lying outside the range of the three runs'",
+  "veredito": {
+   "principal": "principal resolvivel em (a) e (b) e (c)",
+   "six_vs_one_oblique": "passa (a); resolvivel: True, leituras ['a', 'b', 'c']",
+   "six_vs_one_nadir": "treino unico em a; o valor de a fica dentro da faixa de b; leituras ['b', 'c']"
+  }
+ },
+ "R5-5_ajuste_fino_F": {
+  "reproducao_F0": {
+   "ft05_coco": 0.522,
+   "ft05_coco_rep": 0.522,
+   "dif": 0.0,
+   "tolerancia": 0.0035,
+   "reproduz": true,
+   "regra": "PLANO-RODADA5.md 3.2: com o otimizador explicito igual ao do auto, ft05_coco_rep tem de ficar a ate 0,0035 do ft05_coco; senao a celula de controle passa a ser a _rep e entram controles novos a 10% e para o inicio sintetico",
+   "quando": "2026-10-19T14:32:53"
+  },
+  "selecao": {
+   "regra": "PLANO-RODADA5.md 3.2: celula cujo best.pt tem maior mAP50-95 em sel; empate a quatro casas fica a original; o teste nunca escolhe",
+   "reproduz": true,
+   "celulas": {
+    "05": {
+     "sint": {
+      "orig": 0.148,
+      "fz": 0.0901,
+      "lr": 0.1019,
+      "fzlr": 0.0585
+     },
+     "coco": {
+      "orig": 0.1802,
+      "fz": 0.1886,
+      "lr": 0.223,
+      "fzlr": 0.1915
+     }
+    },
+    "10": {
+     "sint": {
+      "orig": 0.1743,
+      "fz": 0.1053,
+      "lr": 0.1258,
+      "fzlr": 0.0681
+     },
+     "coco": {
+      "orig": 0.1951,
+      "fz": 0.203,
+      "lr": 0.2451,
+      "fzlr": 0.2001
+     }
+    }
+   },
+   "runs": {
+    "05": {
+     "sint": {
+      "orig": "ft05_sint",
+      "fz": "ft05_sint_fz",
+      "lr": "ft05_sint_lr",
+      "fzlr": "ft05_sint_fzlr"
+     },
+     "coco": {
+      "orig": "ft05_coco",
+      "fz": "ft05_coco_fz",
+      "lr": "ft05_coco_lr",
+      "fzlr": "ft05_coco_fzlr"
+     }
+    },
+    "10": {
+     "sint": {
+      "orig": "ft10_sint",
+      "fz": "ft10_sint_fz",
+      "lr": "ft10_sint_lr",
+      "fzlr": "ft10_sint_fzlr"
+     },
+     "coco": {
+      "orig": "ft10_coco",
+      "fz": "ft10_coco_fz",
+      "lr": "ft10_coco_lr",
+      "fzlr": "ft10_coco_fzlr"
+     }
+    }
+   },
+   "escolha": {
+    "05": {
+     "sint": "orig",
+     "coco": "lr"
+    },
+    "10": {
+     "sint": "orig",
+     "coco": "lr"
+    }
+   },
+   "quando": "2026-10-19T21:14:14"
+  },
+  "doze_celulas_descritivo": {
+   "5% orig": {
+    "a_valor": 0.5245,
+    "b_valor": 0.4529,
+    "dif": 0.0716,
+    "dif_relativa_pct_do_menor": 15.8,
+    "razao_a_sobre_b": 1.158,
+    "razao_ic95": [
+     1.144,
+     1.173
+    ],
+    "a_runs": [
+     "ft05_coco",
+     "ft05_coco_sd1",
+     "ft05_coco_sd2"
+    ],
+    "b_runs": [
+     "ft05_sint",
+     "ft05_sint_sd1",
+     "ft05_sint_sd2"
+    ],
+    "a": "resolvivel: faixas nao se cruzam",
+    "a_ok": true,
+    "b_ic95": [
+     0.0658,
+     0.078
+    ],
+    "b_ok": true,
+    "c_ok": false,
+    "resolvivel": true,
+    "passou_em": [
+     "a",
+     "b"
+    ]
+   },
+   "5% fz": {
+    "a_valor": 0.5467,
+    "b_valor": 0.2808,
+    "dif": 0.2659,
+    "dif_relativa_pct_do_menor": 94.7,
+    "razao_a_sobre_b": 1.947,
+    "razao_ic95": [
+     1.88,
+     2.027
+    ],
+    "a_runs": [
+     "ft05_coco_fz"
+    ],
+    "b_runs": [
+     "ft05_sint_fz"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.2538,
+     0.2791
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   },
+   "5% lr": {
+    "a_valor": 0.5897,
+    "b_valor": 0.3103,
+    "dif": 0.2794,
+    "dif_relativa_pct_do_menor": 90.1,
+    "razao_a_sobre_b": 1.901,
+    "razao_ic95": [
+     1.84,
+     1.97
+    ],
+    "a_runs": [
+     "ft05_coco_lr",
+     "ft05_coco_lr_sd1",
+     "ft05_coco_lr_sd2"
+    ],
+    "b_runs": [
+     "ft05_sint_lr"
+    ],
+    "a": "treino unico em b; o valor de b fica fora da faixa de a",
+    "a_ok": null,
+    "b_ic95": [
+     0.2676,
+     0.292
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   },
+   "5% fzlr": {
+    "a_valor": 0.541,
+    "b_valor": 0.2028,
+    "dif": 0.3382,
+    "dif_relativa_pct_do_menor": 166.7,
+    "razao_a_sobre_b": 2.667,
+    "razao_ic95": [
+     2.539,
+     2.807
+    ],
+    "a_runs": [
+     "ft05_coco_fzlr"
+    ],
+    "b_runs": [
+     "ft05_sint_fzlr"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.3232,
+     0.3533
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   },
+   "10% orig": {
+    "a_valor": 0.5709,
+    "b_valor": 0.5095,
+    "dif": 0.0614,
+    "dif_relativa_pct_do_menor": 12.1,
+    "razao_a_sobre_b": 1.121,
+    "razao_ic95": [
+     1.108,
+     1.134
+    ],
+    "a_runs": [
+     "ft10_coco"
+    ],
+    "b_runs": [
+     "ft10_sint"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.0553,
+     0.0679
+    ],
+    "b_ok": true,
+    "c_ok": false,
+    "resolvivel": true,
+    "passou_em": [
+     "b"
+    ]
+   },
+   "10% fz": {
+    "a_valor": 0.5772,
+    "b_valor": 0.3209,
+    "dif": 0.2562,
+    "dif_relativa_pct_do_menor": 79.8,
+    "razao_a_sobre_b": 1.798,
+    "razao_ic95": [
+     1.746,
+     1.859
+    ],
+    "a_runs": [
+     "ft10_coco_fz"
+    ],
+    "b_runs": [
+     "ft10_sint_fz"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.2451,
+     0.2678
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   },
+   "10% lr": {
+    "a_valor": 0.6224,
+    "b_valor": 0.3875,
+    "dif": 0.2348,
+    "dif_relativa_pct_do_menor": 60.6,
+    "razao_a_sobre_b": 1.606,
+    "razao_ic95": [
+     1.562,
+     1.65
+    ],
+    "a_runs": [
+     "ft10_coco_lr"
+    ],
+    "b_runs": [
+     "ft10_sint_lr"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.2238,
+     0.2458
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   },
+   "10% fzlr": {
+    "a_valor": 0.5644,
+    "b_valor": 0.2241,
+    "dif": 0.3402,
+    "dif_relativa_pct_do_menor": 151.8,
+    "razao_a_sobre_b": 2.518,
+    "razao_ic95": [
+     2.4,
+     2.634
+    ],
+    "a_runs": [
+     "ft10_coco_fzlr"
+    ],
+    "b_runs": [
+     "ft10_sint_fzlr"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.3258,
+     0.3539
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "b",
+     "c"
+    ]
+   }
+  },
+  "cronogramas_escolhidos": {
+   "5": {
+    "a_valor": 0.5897,
+    "b_valor": 0.4529,
+    "dif": 0.1369,
+    "dif_relativa_pct_do_menor": 30.2,
+    "razao_a_sobre_b": 1.302,
+    "razao_ic95": [
+     1.279,
+     1.331
+    ],
+    "a_runs": [
+     "ft05_coco_lr",
+     "ft05_coco_lr_sd1",
+     "ft05_coco_lr_sd2"
+    ],
+    "b_runs": [
+     "ft05_sint",
+     "ft05_sint_sd1",
+     "ft05_sint_sd2"
+    ],
+    "a": "resolvivel: faixas nao se cruzam",
+    "a_ok": true,
+    "b_ic95": [
+     0.129,
+     0.1465
+    ],
+    "b_ok": true,
+    "c_ok": true,
+    "resolvivel": true,
+    "passou_em": [
+     "a",
+     "b",
+     "c"
+    ]
+   },
+   "10": {
+    "a_valor": 0.6224,
+    "b_valor": 0.5095,
+    "dif": 0.1129,
+    "dif_relativa_pct_do_menor": 22.2,
+    "razao_a_sobre_b": 1.222,
+    "razao_ic95": [
+     1.202,
+     1.245
+    ],
+    "a_runs": [
+     "ft10_coco_lr"
+    ],
+    "b_runs": [
+     "ft10_sint"
+    ],
+    "a": "treino unico dos dois lados: nao avaliavel",
+    "a_ok": null,
+    "b_ic95": [
+     0.1044,
+     0.123
+    ],
+    "b_ok": true,
+    "c_ok": false,
+    "resolvivel": true,
+    "passou_em": [
+     "b"
+    ]
+   }
+  },
+  "regra": "PLANO 3.2: quantidade de interesse por fatia = F-generic menos F-synthetic, cada um no cronograma escolhido em sel; custo robusto ao cronograma se nas duas fatias F-generic fica acima e resolvivel; senao custo do cronograma (dizer fatia e cronograma); inversao resolvivel a favor do sintetico a 5% reabre a expectativa fixada antes da rodada 3",
+  "por_fatia": {
+   "5": "generic acima, resolvivel",
+   "10": "generic acima, resolvivel"
+  },
+  "veredito": "custo robusto ao cronograma: o sinal se manteve sob os quatro cronogramas, cada inicio com o que sel preferiu"
+ },
+ "R5-6_base_nadir_N": {
+  "escala": {
+   "data": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "alvo_lado_maior_treino_px": 20.55,
+   "imagens": 1647,
+   "imagens_sem_rotulo": 0,
+   "caixas": 3229,
+   "lado_maior_nativo_med_px": 71.0,
+   "imgsz_protocolo": 1280,
+   "no_protocolo_lado_maior_med": 22.72,
+   "imgsz_casado": 1152,
+   "no_casado_lado_maior_med": 20.45,
+   "tabela_lado_maior_med": {
+    "320": 5.68,
+    "352": 6.25,
+    "384": 6.82,
+    "416": 7.38,
+    "448": 7.95,
+    "480": 8.52,
+    "512": 9.09,
+    "544": 9.66,
+    "576": 10.22,
+    "608": 10.79,
+    "640": 11.36,
+    "672": 11.93,
+    "704": 12.5,
+    "736": 13.06,
+    "768": 13.63,
+    "800": 14.2,
+    "832": 14.77,
+    "864": 15.34,
+    "896": 15.9,
+    "928": 16.47,
+    "960": 17.04,
+    "992": 17.61,
+    "1024": 18.18,
+    "1056": 18.74,
+    "1088": 19.31,
+    "1120": 19.88,
+    "1152": 20.45,
+    "1184": 21.02,
+    "1216": 21.58,
+    "1248": 22.15,
+    "1280": 22.72,
+    "1312": 23.29,
+    "1344": 23.86,
+    "1376": 24.42,
+    "1408": 24.99,
+    "1440": 25.56,
+    "1472": 26.13,
+    "1504": 26.7,
+    "1536": 27.26,
+    "1568": 27.83,
+    "1600": 28.4,
+    "1632": 28.97,
+    "1664": 29.54,
+    "1696": 30.1,
+    "1728": 30.67,
+    "1760": 31.24,
+    "1792": 31.81,
+    "1824": 32.38,
+    "1856": 32.94,
+    "1888": 33.51,
+    "1920": 34.08,
+    "1952": 34.65,
+    "1984": 35.22,
+    "2016": 35.78,
+    "2048": 36.35,
+    "2080": 36.92,
+    "2112": 37.49,
+    "2144": 38.06,
+    "2176": 38.62,
+    "2208": 39.19,
+    "2240": 39.76,
+    "2272": 40.33,
+    "2304": 40.9,
+    "2336": 41.46,
+    "2368": 42.03,
+    "2400": 42.6,
+    "2432": 43.17,
+    "2464": 43.74,
+    "2496": 44.3,
+    "2528": 44.87,
+    "2560": 45.44,
+    "2592": 46.01,
+    "2624": 46.58,
+    "2656": 47.14,
+    "2688": 47.71,
+    "2720": 48.28,
+    "2752": 48.85,
+    "2784": 49.42,
+    "2816": 49.98,
+    "2848": 50.55,
+    "2880": 51.12,
+    "2912": 51.69,
+    "2944": 52.26,
+    "2976": 52.82,
+    "3008": 53.39,
+    "3040": 53.96,
+    "3072": 54.53,
+    "3104": 55.1,
+    "3136": 55.66,
+    "3168": 56.23,
+    "3200": 56.8,
+    "3232": 57.37,
+    "3264": 57.94,
+    "3296": 58.5,
+    "3328": 59.07,
+    "3360": 59.64,
+    "3392": 60.21,
+    "3424": 60.78,
+    "3456": 61.34,
+    "3488": 61.91,
+    "3520": 62.48,
+    "3552": 63.05,
+    "3584": 63.62,
+    "3616": 64.18,
+    "3648": 64.75,
+    "3680": 65.32,
+    "3712": 65.89,
+    "3744": 66.46,
+    "3776": 67.02,
+    "3808": 67.59,
+    "3840": 68.16,
+    "3872": 68.73,
+    "3904": 69.3,
+    "3936": 69.86,
+    "3968": 70.43,
+    "4000": 71.0
+   },
+   "regra": "imgsz multiplo de 32 cuja mediana do lado maior das caixas na entrada da rede fica mais perto do alvo; so rotulos e tamanhos de imagem, antes de qualquer avaliacao"
+  },
+  "contagens": {
+   "fonte": "Zenodo 5662351, heridal_keras_retinanet_voc.zip (CC BY 3.0), versao do AIR",
+   "extraido_em": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido",
+   "annotations": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido\\heridal_keras_retinanet_voc\\Annotations",
+   "imagesets": "C:\\arma3-favela\\real_nadir\\heridal\\_extraido\\heridal_keras_retinanet_voc\\ImageSets\\Main",
+   "listas_imagesets": {
+    "test": 101,
+    "train": 1391,
+    "trainval": 1546,
+    "val": 155
+   },
+   "xml_total": 1650,
+   "divisao": "todas",
+   "criterio": "todas as anotadas (--divisao todas)",
+   "imagens_escolhidas": 1650,
+   "imagens_convertidas": 1647,
+   "imagens_sem_arquivo": [
+    "test_GRO_0005",
+    "test_SB_0004",
+    "train_BRK_2034"
+   ],
+   "imagens_sem_pessoa": 561,
+   "caixas_pessoa": 3229,
+   "classes_encontradas": {
+    "person": 3235
+   },
+   "classes_aceitas_como_pessoa": [
+    "person"
+   ],
+   "tamanhos_de_imagem": {
+    "4000x3000": 1647
+   },
+   "lado_maior_caixa_px_mediana": 71.0,
+   "data_yaml": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "quando": "2026-10-19T02:28:35"
+  },
+  "imgsz_casado": {
+   "tag": "heridal",
+   "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+   "bootstrap": {
+    "reamostras": 1000,
+    "semente": 0,
+    "imagens": 1647,
+    "unidade": "imagem, com reposicao",
+    "pareado": "as mesmas reamostras para todos os modelos"
+   },
+   "validade": {
+    "R_mAP50": 0.3185,
+    "limiar": 0.05,
+    "interpretavel": true,
+    "regra": "R abaixo de 0,05 de mAP50 no imgsz casado: o protocolo falha, resultado nao interpretavel"
+   },
+   "runs": {
+    "armado_150g": {
+     "mAP50": 0.1417,
+     "mAP50_ic95": [
+      0.1145,
+      0.1711
+     ],
+     "eficacia": 0.445,
+     "eficacia_ic95": [
+      0.3771,
+      0.5169
+     ]
+    },
+    "r_pareado": {
+     "mAP50": 0.3185,
+     "mAP50_ic95": [
+      0.2843,
+      0.3543
+     ],
+     "eficacia": 1.0,
+     "eficacia_ic95": [
+      1.0,
+      1.0
+     ]
+    },
+    "s_nadir_4k": {
+     "mAP50": 0.2394,
+     "mAP50_ic95": [
+      0.2073,
+      0.2746
+     ],
+     "eficacia": 0.7516,
+     "eficacia_ic95": [
+      0.6671,
+      0.8479
+     ]
+    },
+    "s_nadir_4k_sd1": {
+     "mAP50": 0.2672,
+     "mAP50_ic95": [
+      0.2301,
+      0.3044
+     ],
+     "eficacia": 0.839,
+     "eficacia_ic95": [
+      0.7488,
+      0.9441
+     ]
+    },
+    "s_nadir_4k_sd2": {
+     "mAP50": 0.0926,
+     "mAP50_ic95": [
+      0.0726,
+      0.1165
+     ],
+     "eficacia": 0.2907,
+     "eficacia_ic95": [
+      0.2365,
+      0.3538
+     ]
+    },
+    "s_obliquo": {
+     "mAP50": 0.1092,
+     "mAP50_ic95": [
+      0.0911,
+      0.1293
+     ],
+     "eficacia": 0.3427,
+     "eficacia_ic95": [
+      0.3024,
+      0.3874
+     ]
+    },
+    "s_obliquo_sd1": {
+     "mAP50": 0.1455,
+     "mAP50_ic95": [
+      0.1246,
+      0.17
+     ],
+     "eficacia": 0.4568,
+     "eficacia_ic95": [
+      0.4087,
+      0.5182
+     ]
+    },
+    "s_obliquo_sd2": {
+     "mAP50": 0.1476,
+     "mAP50_ic95": [
+      0.1279,
+      0.1724
+     ],
+     "eficacia": 0.4635,
+     "eficacia_ic95": [
+      0.4112,
+      0.5333
+     ]
+    },
+    "s_oblvar": {
+     "mAP50": 0.1079,
+     "mAP50_ic95": [
+      0.0893,
+      0.1291
+     ],
+     "eficacia": 0.3389,
+     "eficacia_ic95": [
+      0.2955,
+      0.3848
+     ]
+    },
+    "s_oblvar_sd1": {
+     "mAP50": 0.1503,
+     "mAP50_ic95": [
+      0.1264,
+      0.1767
+     ],
+     "eficacia": 0.472,
+     "eficacia_ic95": [
+      0.4165,
+      0.533
+     ]
+    },
+    "s_oblvar_sd2": {
+     "mAP50": 0.1847,
+     "mAP50_ic95": [
+      0.1597,
+      0.2139
+     ],
+     "eficacia": 0.5801,
+     "eficacia_ic95": [
+      0.5155,
+      0.6553
+     ]
+    },
+    "s_variedade": {
+     "mAP50": 0.2488,
+     "mAP50_ic95": [
+      0.2116,
+      0.2865
+     ],
+     "eficacia": 0.7813,
+     "eficacia_ic95": [
+      0.6859,
+      0.8778
+     ]
+    }
+   },
+   "grupos": {
+    "R": {
+     "runs": [
+      "r_pareado"
+     ],
+     "valores": [
+      0.3185
+     ],
+     "media": 0.3185,
+     "media_ic95": [
+      0.2843,
+      0.3543
+     ],
+     "eficacia_media": 1.0
+    },
+    "S-nadir-150": {
+     "runs": [
+      "s_nadir_4k",
+      "s_nadir_4k_sd1",
+      "s_nadir_4k_sd2"
+     ],
+     "valores": [
+      0.2394,
+      0.2672,
+      0.0926
+     ],
+     "media": 0.1997,
+     "media_ic95": [
+      0.1713,
+      0.2306
+     ],
+     "eficacia_media": 0.6271
+    },
+    "S-nadir-150-six": {
+     "runs": [
+      "s_variedade"
+     ],
+     "valores": [
+      0.2488
+     ],
+     "media": 0.2488,
+     "media_ic95": [
+      0.2116,
+      0.2865
+     ],
+     "eficacia_media": 0.7813
+    },
+    "S-oblique": {
+     "runs": [
+      "s_obliquo",
+      "s_obliquo_sd1",
+      "s_obliquo_sd2"
+     ],
+     "valores": [
+      0.1092,
+      0.1455,
+      0.1476
+     ],
+     "media": 0.1341,
+     "media_ic95": [
+      0.1149,
+      0.1555
+     ],
+     "eficacia_media": 0.421
+    },
+    "S-oblique-six": {
+     "runs": [
+      "s_oblvar",
+      "s_oblvar_sd1",
+      "s_oblvar_sd2"
+     ],
+     "valores": [
+      0.1079,
+      0.1503,
+      0.1847
+     ],
+     "media": 0.1477,
+     "media_ic95": [
+      0.1265,
+      0.1715
+     ],
+     "eficacia_media": 0.4637
+    },
+    "Armado-150 (exploratorio)": {
+     "runs": [
+      "armado_150g"
+     ],
+     "valores": [
+      0.1417
+     ],
+     "media": 0.1417,
+     "media_ic95": [
+      0.1145,
+      0.1711
+     ],
+     "eficacia_media": 0.445
+    }
+   },
+   "diferencas": [
+    {
+     "comparacao": "principal: oblique vs nadir",
+     "a": "S-oblique",
+     "b": "S-nadir-150",
+     "a_runs": [
+      "s_obliquo",
+      "s_obliquo_sd1",
+      "s_obliquo_sd2"
+     ],
+     "b_runs": [
+      "s_nadir_4k",
+      "s_nadir_4k_sd1",
+      "s_nadir_4k_sd2"
+     ],
+     "a_mAP50": 0.1341,
+     "b_mAP50": 0.1997,
+     "dif": -0.0656,
+     "dif_ic95": [
+      -0.084,
+      -0.0471
+     ],
+     "fracao_reamostras_positiva": 0.0,
+     "dif_relativa_pct_do_menor": -48.9,
+     "razao_a_sobre_b": 0.671,
+     "razao_ic95": [
+      0.61,
+      0.744
+     ],
+     "a_faixas_de_sementes": "nao resolvivel: faixas se cruzam",
+     "a_ok": false,
+     "b_ok": true,
+     "c_ok": true,
+     "resolvivel": true,
+     "sinal": "b acima"
+    },
+    {
+     "comparacao": "secundaria: six settlements, oblique vs nadir",
+     "a": "S-oblique-six",
+     "b": "S-nadir-150-six",
+     "a_runs": [
+      "s_oblvar",
+      "s_oblvar_sd1",
+      "s_oblvar_sd2"
+     ],
+     "b_runs": [
+      "s_variedade"
+     ],
+     "a_mAP50": 0.1477,
+     "b_mAP50": 0.2488,
+     "dif": -0.1012,
+     "dif_ic95": [
+      -0.1216,
+      -0.0786
+     ],
+     "fracao_reamostras_positiva": 0.0,
+     "dif_relativa_pct_do_menor": -68.5,
+     "razao_a_sobre_b": 0.593,
+     "razao_ic95": [
+      0.55,
+      0.65
+     ],
+     "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "resolvivel": true,
+     "sinal": "b acima"
+    }
+   ],
+   "razao_visdrone": {
+    "fonte": "bootstrap_visdrone.json",
+    "razao": 6.011,
+    "razao_ic95": [
+     4.571,
+     7.011
+    ]
+   },
+   "faltando": [],
+   "quando": "2026-10-19T23:18:46"
+  },
+  "imgsz_1280": {
+   "tag": "heridal_1280",
+   "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+   "bootstrap": {
+    "reamostras": 1000,
+    "semente": 0,
+    "imagens": 1647,
+    "unidade": "imagem, com reposicao",
+    "pareado": "as mesmas reamostras para todos os modelos"
+   },
+   "validade": {
+    "R_mAP50": 0.3353,
+    "limiar": 0.05,
+    "interpretavel": true,
+    "regra": "R abaixo de 0,05 de mAP50 no imgsz casado: o protocolo falha, resultado nao interpretavel"
+   },
+   "runs": {
+    "armado_150g": {
+     "mAP50": 0.1272,
+     "mAP50_ic95": [
+      0.1029,
+      0.1566
+     ],
+     "eficacia": 0.3793,
+     "eficacia_ic95": [
+      0.32,
+      0.4489
+     ]
+    },
+    "r_pareado": {
+     "mAP50": 0.3353,
+     "mAP50_ic95": [
+      0.3027,
+      0.37
+     ],
+     "eficacia": 1.0,
+     "eficacia_ic95": [
+      1.0,
+      1.0
+     ]
+    },
+    "s_nadir_4k": {
+     "mAP50": 0.1956,
+     "mAP50_ic95": [
+      0.1682,
+      0.2245
+     ],
+     "eficacia": 0.5833,
+     "eficacia_ic95": [
+      0.5122,
+      0.6585
+     ]
+    },
+    "s_nadir_4k_sd1": {
+     "mAP50": 0.2418,
+     "mAP50_ic95": [
+      0.2059,
+      0.2782
+     ],
+     "eficacia": 0.721,
+     "eficacia_ic95": [
+      0.6367,
+      0.8067
+     ]
+    },
+    "s_nadir_4k_sd2": {
+     "mAP50": 0.0673,
+     "mAP50_ic95": [
+      0.052,
+      0.0853
+     ],
+     "eficacia": 0.2007,
+     "eficacia_ic95": [
+      0.1601,
+      0.2505
+     ]
+    },
+    "s_obliquo": {
+     "mAP50": 0.1053,
+     "mAP50_ic95": [
+      0.0872,
+      0.1273
+     ],
+     "eficacia": 0.3142,
+     "eficacia_ic95": [
+      0.2709,
+      0.3659
+     ]
+    },
+    "s_obliquo_sd1": {
+     "mAP50": 0.1497,
+     "mAP50_ic95": [
+      0.1277,
+      0.1739
+     ],
+     "eficacia": 0.4465,
+     "eficacia_ic95": [
+      0.3995,
+      0.5049
+     ]
+    },
+    "s_obliquo_sd2": {
+     "mAP50": 0.1716,
+     "mAP50_ic95": [
+      0.1463,
+      0.1995
+     ],
+     "eficacia": 0.5117,
+     "eficacia_ic95": [
+      0.4478,
+      0.5884
+     ]
+    },
+    "s_oblvar": {
+     "mAP50": 0.1052,
+     "mAP50_ic95": [
+      0.0875,
+      0.1274
+     ],
+     "eficacia": 0.3139,
+     "eficacia_ic95": [
+      0.2735,
+      0.3638
+     ]
+    },
+    "s_oblvar_sd1": {
+     "mAP50": 0.1267,
+     "mAP50_ic95": [
+      0.1078,
+      0.1498
+     ],
+     "eficacia": 0.3779,
+     "eficacia_ic95": [
+      0.3328,
+      0.4296
+     ]
+    },
+    "s_oblvar_sd2": {
+     "mAP50": 0.1936,
+     "mAP50_ic95": [
+      0.1675,
+      0.2227
+     ],
+     "eficacia": 0.5773,
+     "eficacia_ic95": [
+      0.5179,
+      0.649
+     ]
+    },
+    "s_variedade": {
+     "mAP50": 0.2208,
+     "mAP50_ic95": [
+      0.1842,
+      0.2584
+     ],
+     "eficacia": 0.6584,
+     "eficacia_ic95": [
+      0.5695,
+      0.7589
+     ]
+    }
+   },
+   "grupos": {
+    "R": {
+     "runs": [
+      "r_pareado"
+     ],
+     "valores": [
+      0.3353
+     ],
+     "media": 0.3353,
+     "media_ic95": [
+      0.3027,
+      0.37
+     ],
+     "eficacia_media": 1.0
+    },
+    "S-nadir-150": {
+     "runs": [
+      "s_nadir_4k",
+      "s_nadir_4k_sd1",
+      "s_nadir_4k_sd2"
+     ],
+     "valores": [
+      0.1956,
+      0.2418,
+      0.0673
+     ],
+     "media": 0.1682,
+     "media_ic95": [
+      0.1431,
+      0.1947
+     ],
+     "eficacia_media": 0.5016
+    },
+    "S-nadir-150-six": {
+     "runs": [
+      "s_variedade"
+     ],
+     "valores": [
+      0.2208
+     ],
+     "media": 0.2208,
+     "media_ic95": [
+      0.1842,
+      0.2584
+     ],
+     "eficacia_media": 0.6584
+    },
+    "S-oblique": {
+     "runs": [
+      "s_obliquo",
+      "s_obliquo_sd1",
+      "s_obliquo_sd2"
+     ],
+     "valores": [
+      0.1053,
+      0.1497,
+      0.1716
+     ],
+     "media": 0.1422,
+     "media_ic95": [
+      0.1214,
+      0.1651
+     ],
+     "eficacia_media": 0.4241
+    },
+    "S-oblique-six": {
+     "runs": [
+      "s_oblvar",
+      "s_oblvar_sd1",
+      "s_oblvar_sd2"
+     ],
+     "valores": [
+      0.1052,
+      0.1267,
+      0.1936
+     ],
+     "media": 0.1418,
+     "media_ic95": [
+      0.1218,
+      0.1655
+     ],
+     "eficacia_media": 0.423
+    },
+    "Armado-150 (exploratorio)": {
+     "runs": [
+      "armado_150g"
+     ],
+     "valores": [
+      0.1272
+     ],
+     "media": 0.1272,
+     "media_ic95": [
+      0.1029,
+      0.1566
+     ],
+     "eficacia_media": 0.3793
+    }
+   },
+   "diferencas": [
+    {
+     "comparacao": "principal: oblique vs nadir",
+     "a": "S-oblique",
+     "b": "S-nadir-150",
+     "a_runs": [
+      "s_obliquo",
+      "s_obliquo_sd1",
+      "s_obliquo_sd2"
+     ],
+     "b_runs": [
+      "s_nadir_4k",
+      "s_nadir_4k_sd1",
+      "s_nadir_4k_sd2"
+     ],
+     "a_mAP50": 0.1422,
+     "b_mAP50": 0.1682,
+     "dif": -0.026,
+     "dif_ic95": [
+      -0.0414,
+      -0.0097
+     ],
+     "fracao_reamostras_positiva": 0.0,
+     "dif_relativa_pct_do_menor": -18.3,
+     "razao_a_sobre_b": 0.845,
+     "razao_ic95": [
+      0.77,
+      0.936
+     ],
+     "a_faixas_de_sementes": "nao resolvivel: faixas se cruzam",
+     "a_ok": false,
+     "b_ok": true,
+     "c_ok": false,
+     "resolvivel": true,
+     "sinal": "b acima"
+    },
+    {
+     "comparacao": "secundaria: six settlements, oblique vs nadir",
+     "a": "S-oblique-six",
+     "b": "S-nadir-150-six",
+     "a_runs": [
+      "s_oblvar",
+      "s_oblvar_sd1",
+      "s_oblvar_sd2"
+     ],
+     "b_runs": [
+      "s_variedade"
+     ],
+     "a_mAP50": 0.1418,
+     "b_mAP50": 0.2208,
+     "dif": -0.0789,
+     "dif_ic95": [
+      -0.102,
+      -0.0568
+     ],
+     "fracao_reamostras_positiva": 0.0,
+     "dif_relativa_pct_do_menor": -55.6,
+     "razao_a_sobre_b": 0.642,
+     "razao_ic95": [
+      0.591,
+      0.709
+     ],
+     "a_faixas_de_sementes": "treino unico em b; o valor de b fica fora da faixa de a",
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "resolvivel": true,
+     "sinal": "b acima"
+    }
+   ],
+   "razao_visdrone": {
+    "fonte": "bootstrap_visdrone.json",
+    "razao": 6.011,
+    "razao_ic95": [
+     4.571,
+     7.011
+    ]
+   },
+   "faltando": [],
+   "quando": "2026-10-19T23:19:46"
+  },
+  "regra": "PLANO 3.3: R abaixo de 0,05 no imgsz casado -> nao interpretavel; principal S-oblique (3) menos S-nadir-150 (3) no casado, leituras (a), (b), (c); nadir resolvivelmente acima -> a ordem se inverte num benchmark nadir; obliquo resolvivelmente acima com razao compativel com a do VisDrone -> qualificar a ressalva da 6.1; obliquo acima com razao inteiramente abaixo da do VisDrone -> a geometria do benchmark explica parte do fator; nao resolvivel -> as duas geometrias nao se separaram; ordem diferente entre casado e 1280 -> dependente de escala",
+  "veredito": "nadir resolvivelmente acima do obliquo: num benchmark nadir a ordem se inverte [leituras: (a) False, (b) True, (c) True]"
+ }
+}
