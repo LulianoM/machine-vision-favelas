@@ -307,13 +307,247 @@ def resolve_figuras(txt, n_fig):
     return RE_FIG.sub(sub, txt), n_fig
 
 
+# --- formato JMIS (Journal of Management Information Systems), pedido de 2026-10-20 -------------
+# Regras de https://www.jmis-web.org/info-for-contributors: manuscrito anonimo, abstract de ate 150
+# palavras sem citacao, Times 12, espaco duplo, alinhado a esquerda, paginas numeradas, ate 50
+# paginas, figuras e tabelas no fim com a posicao indicada no texto, referencias em ordem
+# alfabetica e numeradas, citadas no texto como [9]. Autoria, financiamento e agradecimentos vao
+# para a carta de apresentacao, que sai num PDF a parte (--out com sufixo -title-page).
+
+# Abstract da v de 18/10 tem ~260 palavras; este e o corte para o limite de 150, com os mesmos numeros.
+ABSTRACT_JMIS = (
+    "Claims that aerial machine vision can tell armed from unarmed people are acted on without "
+    "stating the conditions under which the distinction is visible. On procedural corpora of a "
+    "dense favela we characterised the target by ground sampling distance, camera pitch and "
+    "illumination, and scored synthetic-only detectors on a real benchmark against a ceiling "
+    "trained on as many real images. Straight down from 150 m, a person occupies 17.6 by 17.5 "
+    "pixels. Synthetic-only training reached 1.6 per cent of the ceiling there and 15.3 per cent "
+    "(three-run mean) for the best oblique configuration; given 5 or 10 per cent of real images, "
+    "the synthetic corpus lowered accuracy. At 75 and 35 m, detectors called 24 and 27 per cent of "
+    "ordinary elongated objects armed, and finer resolution did not reduce the confusion. Stating "
+    "where a capability has not been shown is a checkable contribution relevant to dual use.")
+
+# sigla usada no texto -> inicio da entrada na lista de referencias
+SIGLAS = {"STF": "Supremo Tribunal Federal", "RICS": "Royal Institution of Chartered Surveyors",
+          "DECEA": "Departamento de Controle do Espaço Aéreo",
+          "ISP-RJ": "Instituto de Segurança Pública do Rio de Janeiro"}
+ANO = r"(?:\d{4}[a-z]?|n\.d\.(?:-[a-z])?)"
+
+
+def le_referencias(refs_md):
+    """[(autores, ano, linha)] na ordem do arquivo, que ja e alfabetica"""
+    out = []
+    for ln in refs_md.splitlines():
+        m = re.match(r"^(.+?)\.? \((" + ANO + r")[,)]", ln.strip())
+        if m and not ln.startswith("#"):
+            out.append((m.group(1), m.group(2), ln.strip()))
+    return out
+
+
+def acha_ref(texto, ano, refs, ultimo=True):
+    """indice da referencia cujo primeiro autor aparece em `texto` com o ano: o mais perto do fim
+    (citacao narrativa, o nome vem logo antes do ano) ou, com ultimo=False, o primeiro (item entre
+    parenteses, onde os coautores tambem aparecem: "Varga, Kiefer, ..." nao e Kiefer).
+    Devolve (indice, posicao do nome no texto) ou (None, None)."""
+    texto = re.sub(r"\s*\[[A-Z]+\]", "", texto)
+    for sigla, nome in SIGLAS.items():
+        texto = re.sub(rf"\b{sigla}\b", nome, texto)
+    melhor = None
+    for i, (aut, a, _) in enumerate(refs):
+        if a != ano:
+            continue
+        lead = aut.split(",")[0].strip()
+        ocorr = list(re.finditer(r"(?<!\w)" + re.escape(lead) + r"(?!\w)", texto))
+        if not ocorr:
+            continue
+        pos = ocorr[-1 if ultimo else 0].start()
+        # desempate: "Couto, 2025" e "Couto & Figueiredo, 2025"; cita com dois nomes pede o segundo
+        cauda = texto[pos + len(lead):]
+        n_cit = 3 if "et al" in cauda else 2 if re.search(r"&| and ", cauda) else 1
+        n_ref = len(re.findall(r"(?:^|, |& )[^,&]+?, (?:[A-Z][a-zà-ü]?\.[ -]?)+", aut)) or 1
+        custo = (-pos if ultimo else pos, abs(min(n_ref, 3) - n_cit))
+        if melhor is None or custo < melhor[0]:
+            melhor = (custo, i, pos)
+    return (melhor[1], melhor[2]) if melhor else (None, None)
+
+
+def citacoes_numericas(txt, refs, perdidas):
+    """(Autor, 2020; Outro et al., 2021) -> [3, 7]; Autor et al. (2020) -> Autor et al. [3]"""
+    def grupo(m):
+        itens, saida, achou = m.group(1).split("; "), [], False
+        for it in itens:
+            mi = re.match(r"^(?P<nomes>.+?), (?P<anos>" + ANO + r"(?:, " + ANO + r")*)(?P<pos>, .+)?$", it)
+            if not mi:
+                saida.append(("txt", it))
+                continue
+            nums = []
+            for ano in mi.group("anos").split(", "):
+                i, p = acha_ref(mi.group("nomes"), ano, refs, ultimo=False)
+                if i is None:
+                    nums = None
+                    break
+                nums.append(i + 1)
+            if not nums:
+                perdidas.append(it)
+                saida.append(("txt", it))
+                continue
+            achou = True
+            pre = mi.group("nomes")[:p].rstrip()
+            pos_ = mi.group("pos") or ""
+            # prefixo que nao e nome ("altitude range after Nguyen et al.") fica como texto
+            if re.fullmatch(r"(?:[A-Z]\.\s*)+", pre):
+                pre = ""  # inicial que desambigua o sobrenome (T. Li, Z. Li) cai com o nome
+            if pre and pre not in ("e.g.,", "see", "cf."):
+                saida.append(("txt", f"{mi.group('nomes')} [{', '.join(map(str, nums))}{pos_}]"))
+            else:
+                saida.append(("num", (pre, nums, pos_)))
+        if not achou:
+            return m.group(0)
+        if all(k == "num" for k, _ in saida):
+            pre = saida[0][1][0]
+            corpo = ", ".join(f"{n}{p}" for n, p in sorted((n, p) for _, (_, ns, p) in saida
+                                                        for n in ns))
+            return f"{pre + ' ' if pre else ''}[{corpo}]"
+        return "(" + "; ".join(v if k == "txt" else f"[{', '.join(map(str, v[1]))}{v[2]}]"
+                               for k, v in saida) + ")"
+
+    txt = re.sub(r"\(([^()]*?, " + ANO + r"(?:[,;)][^()]*)?)\)", grupo, txt)
+
+    def narrativa(m):
+        ano, resto = m.group(1), m.group(2) or ""
+        janela = txt_atual[max(0, m.start() - 160):m.start()]
+        i, _ = acha_ref(janela, ano, refs)
+        if i is None:
+            perdidas.append(janela[-50:] + m.group(0))
+            return m.group(0)
+        return f"[{i + 1}{resto}]"
+
+    txt_atual = txt
+    return re.sub(r"\((" + ANO + r")(, [^)]+)?\)", narrativa, txt)
+
+
+CSS_JMIS = """
+@page { size: letter; margin: 1in; @bottom-center { content: counter(page);
+        font-family: "Times New Roman", Times, serif; font-size: 12pt; } }
+body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 2.0;
+       color: #000; text-align: left; }
+h1 { font-size: 14pt; line-height: 2.0; margin: 0 0 12pt 0; text-align: center; }
+h2 { font-size: 12pt; line-height: 2.0; margin: 12pt 0 0 0; page-break-after: avoid; }
+h3 { font-size: 12pt; line-height: 2.0; margin: 12pt 0 0 0; font-style: italic;
+     page-break-after: avoid; }
+h4 { font-size: 12pt; line-height: 2.0; margin: 0; font-weight: normal; font-style: italic;
+     page-break-after: avoid; }
+p { margin: 0; text-indent: 0.5in; }
+h2 + p, h3 + p, h4 + p, .resumo p, .local + p { text-indent: 0; }
+ol.refs { padding-left: 0.5in; } ol.refs li { margin: 0; }
+.local { text-align: center; text-indent: 0; margin: 12pt 0; }
+.capa { page-break-after: always; }
+.resumo p { text-indent: 0; }
+.fim { page-break-before: always; line-height: 1.3; }
+.fim table { border-collapse: collapse; width: 100%; font-size: 10pt; line-height: 1.3;
+             margin: 6pt 0 0 0; }
+.fim th, .fim td { border: 0; border-bottom: 0.4pt solid #555; padding: 2pt 4pt;
+                   text-align: left; vertical-align: top; }
+.fim thead th { border-top: 0.8pt solid #000; border-bottom: 0.6pt solid #000; }
+.fim tr:last-child td { border-bottom: 0.8pt solid #000; }
+.fim figure { margin: 0; text-align: center; } .fim figure img { max-width: 100%; max-height: 7.2in; }
+.fim .tabcap, .fim figcaption { font-size: 12pt; line-height: 1.5; text-align: left; margin: 0 0 6pt 0; }
+code { font-family: "Courier New", monospace; font-size: 11pt; }
+"""
+
+
+def monta_jmis(partes, refs_md, args):
+    """recebe as secoes ja numeradas (markdown, com FIG/TAB ja resolvidos em HTML) e devolve o HTML"""
+    import markdown
+    refs = le_referencias(refs_md)
+    perdidas, tabelas, figuras = [], [], []
+    corpo = "\n\n".join(partes)
+
+    # abstract curto e palavras-chave; Funding e Acknowledgements identificam os autores
+    corpo = re.sub(r"## Abstract\n\n.+?\n\n", "", corpo, count=1, flags=re.S)
+    kw = re.search(r"\*\*Keywords:\*\*\s*(.+)", corpo)
+    corpo = corpo.replace(kw.group(0), "") if kw else corpo
+    extra = {}
+    for rot in ("Funding", "Acknowledgements"):
+        m = re.search(r"\*\*" + rot + r"\.\*\*.*?(?:\n\n|\Z)", corpo, re.S)
+        if m:
+            extra[rot] = m.group(0).strip()
+            corpo = corpo.replace(m.group(0), "")
+
+    corpo = citacoes_numericas(corpo, refs, perdidas)
+
+    # tabelas (legenda + bloco |...|) e figuras saem do texto para o fim, com o lugar marcado
+    def tira_tab(m):
+        n = re.search(r"Table (\d+)", m.group(1)).group(1)
+        tabelas.append(m.group(0))
+        return f'\n<p class="local">[Insert Table {n} about here]</p>\n\n'
+    corpo = re.sub(r'(<p class="tabcap">.*?</p>)\s*\n((?:\|.*\n?)+)', tira_tab, corpo)
+
+    def tira_fig(m):
+        n = re.search(r"Figure (\d+)", m.group(0)).group(1)
+        figuras.append(m.group(0).replace(' class="full"', ""))
+        return f'\n<p class="local">[Insert Figure {n} about here]</p>\n\n'
+    corpo = re.sub(r"<figure.*?</figure>", tira_fig, corpo, flags=re.S)
+
+    md = lambda s: markdown.markdown(s, extensions=["tables", "sane_lists", "md_in_html"])
+    lista = "".join(f"<li>{md(l)[3:-4]}</li>" for _, _, l in refs)
+    fim = "".join(f'<div class="fim">{md(t)}</div>' for t in tabelas + figuras)
+
+    capa = ('<div class="capa"><h1>Machine Vision from the Global South: Synthetic Data and the '
+            'Acquisition Limits of Armed-Person Detection in Dense Favelas</h1>'
+            f'<div class="resumo"><h2>Abstract</h2><p>{ABSTRACT_JMIS}</p>'
+            f'<p><b>Key words and phrases:</b> {kw.group(1).strip() if kw else ""}</p></div></div>')
+    html = (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS_JMIS}</style></head>"
+            f"<body>{capa}{md(corpo)}<h2 style='page-break-before:always'>References</h2>"
+            f"<ol class='refs'>{lista}</ol>{fim}</body></html>")
+    return html, perdidas, extra, len(tabelas), len(figuras)
+
+
+def folha_de_rosto(extra):
+    """pagina de titulo da carta de apresentacao: o que o manuscrito anonimo nao pode levar"""
+    return (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS_JMIS}</style></head><body>"
+            "<h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of "
+            "Armed-Person Detection in Dense Favelas</h1>"
+            "<p style='text-align:center;text-indent:0'>Luciano Martins Figueira (corresponding author)"
+            "<br>H&eacute;lio Arthur Reis Irigaray<br><i>Funda&ccedil;&atilde;o Get&uacute;lio Vargas, "
+            "Brazilian School of Public and Business Administration (FGV EBAPE), Rio de Janeiro, "
+            "Brazil</i></p>"
+            "<h2>Contact</h2><p style='text-indent:0'>[Full postal address, e-mail and telephone of "
+            "each author]</p><h2>Author biographies</h2><p style='text-indent:0'>[Brief bio of each "
+            "author]</p>"
+            + "".join(f"<p style='text-indent:0'>{re.sub(r'[*][*](.+?)[*][*]', r'<b>\1</b>', v)}</p>"
+                      for v in extra.values())
+            + "</body></html>")
+
+
+def navegador():
+    for p in (r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+              r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"):
+        if os.path.exists(p):
+            return p
+    sys.exit("nenhum Edge ou Chrome encontrado")
+
+
+def imprime(html_path, pdf_path):
+    os.makedirs(os.path.dirname(os.path.abspath(pdf_path)), exist_ok=True)
+    url = "file:///" + os.path.abspath(html_path).replace("\\", "/").lstrip("/")
+    r = subprocess.run([navegador(), "--headless", "--disable-gpu", "--no-pdf-header-footer",
+                        f"--print-to-pdf={os.path.abspath(pdf_path)}", url],
+                       capture_output=True, timeout=300)
+    if not os.path.exists(pdf_path):
+        print("falhou ao gerar PDF:", r.stderr.decode("utf-8", "ignore")[-500:], file=sys.stderr)
+        sys.exit(1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(os.path.expanduser("~"), "Desktop",
                                                   "machine-vision-favelas-previa.pdf"))
-    ap.add_argument("--formato", choices=["aim", "elsevier"], default="elsevier",
+    ap.add_argument("--formato", choices=["aim", "elsevier", "jmis"], default="elsevier",
                 help="aim = uma coluna, Times 12, espaco duplo, que e o que os premiados de "
-                     "2026 usam; elsevier = duas colunas de periodico")
+                     "2026 usam; elsevier = duas colunas de periodico; jmis = submissao ao JMIS, "
+                     "anonima, com a folha de rosto num PDF a parte")
     ap.add_argument("--sem-notas", action="store_true")
     ap.add_argument("--com-autoria", action="store_true",
                 help="poe os quadros de autoria por secao. Desde 30/09 ficam fora por padrao "
@@ -381,6 +615,26 @@ def main():
                 else:
                     txt = q + NL2 + txt
         partes.append(txt)
+
+    if args.formato == "jmis":
+        refs_md = partes.pop() if ORDEM[-1] not in faltando else ""
+        html, perdidas, extra, n_t, n_f = monta_jmis(partes, refs_md, args)
+        tmp = args.html or os.path.join(tempfile.gettempdir(), "artigo_jmis.html")
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(html)
+        imprime(tmp, args.out)
+        rosto_html = os.path.splitext(tmp)[0] + "-title-page.html"
+        with open(rosto_html, "w", encoding="utf-8") as f:
+            f.write(folha_de_rosto(extra))
+        rosto = os.path.splitext(args.out)[0] + "-title-page.pdf"
+        imprime(rosto_html, rosto)
+        print(f"tabelas: {n_t}  figuras: {n_f}  placeholders [X]: {n_ph}")
+        print(f"abstract: {len(ABSTRACT_JMIS.split())} palavras")
+        print(f"citacoes nao resolvidas: {len(perdidas)}")
+        for c in perdidas:
+            print("   ", c.replace(chr(10), " "))
+        print(f"gravado: {args.out}\n         {rosto}")
+        return
 
     corpo = markdown.markdown("\n\n".join(partes),
                               extensions=["tables", "sane_lists", "md_in_html"])

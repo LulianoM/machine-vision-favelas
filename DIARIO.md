@@ -1,6 +1,12 @@
-﻿# DIÁRIO DE BORDO
+# DIÁRIO DE BORDO
 
-Entradas novas no topo. Formato: `## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
+Entradas novas no topo. Formato: `## 2026-10-20 [MAC] Artigo no formato do JMIS
+
+- `monta_artigo.py --formato jmis`: manuscrito anônimo para o Journal of Management Information Systems (regras em jmis-web.org/info-for-contributors). Times 12, espaço duplo, alinhado à esquerda, Letter, página numerada; abstract cortado para 148 palavras (os mesmos números do de 18/10, constante `ABSTRACT_JMIS`); citações autor-ano convertidas em número entre colchetes, referências numeradas em ordem alfabética; 23 tabelas e 13 figuras no fim com "[Insert ... about here]" no texto; Funding e Acknowledgements saem do manuscrito e vão para um PDF de folha de rosto à parte. Roda no Mac (Chrome headless) e no Windows (Edge).
+- Resultado: 103 páginas (corpo até a p. 50, referências 51 a 64, tabelas e figuras 65 a 103). O JMIS limita o manuscrito completo a 50 páginas: precisa cortar cerca de metade, decisão do autor.
+- Folha de rosto com marcadores para endereço, telefone e bio de cada autor. PDFs na Área de Trabalho do Mac.
+
+## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
 ## 2026-10-18 [DESKTOP] Rodada 5 lançada
 
