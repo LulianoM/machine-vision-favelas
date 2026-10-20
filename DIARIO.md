@@ -1,5 +1,10 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-20 [MAC] Aderência a PAR e AMJ
+
+- Levantamento no Crossref (21 consultas por ISSN) e resumos no OpenAlex: 15 artigos de PAR e 5 de AMJ ligados a segurança pública, em `04-bibliografia/aderencia-PAR-AMJ-2026-10-20.md`. Nenhum sobre visão computacional, detecção aérea, dados sintéticos ou favelas.
+- Leitura: PAR tem linha ativa sobre IA, discricionariedade e polícia (exige reenquadrar o artigo como argumento de administração pública e cortar muito); AMJ com aderência muito baixa. Decisão do autor pendente.
+
 Entradas novas no topo. Formato: `## 2026-10-20 [MAC] Artigo no formato do JMIS
 
 - `monta_artigo.py --formato jmis`: manuscrito anônimo para o Journal of Management Information Systems (regras em jmis-web.org/info-for-contributors). Times 12, espaço duplo, alinhado à esquerda, Letter, página numerada; abstract cortado para 148 palavras (os mesmos números do de 18/10, constante `ABSTRACT_JMIS`); citações autor-ano convertidas em número entre colchetes, referências numeradas em ordem alfabética; 23 tabelas e 13 figuras no fim com "[Insert ... about here]" no texto; Funding e Acknowledgements saem do manuscrito e vão para um PDF de folha de rosto à parte. Roda no Mac (Chrome headless) e no Windows (Edge).
