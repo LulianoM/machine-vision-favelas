@@ -1,0 +1,10 @@
+{
+ "modelo": "armado_150g_e120",
+ "recall_qualquer_classe_val": 0.6061,
+ "pessoas_val": 297,
+ "recall_qualquer_classe_quadros_novos": 0.6627,
+ "pessoas_quadros_novos": 916,
+ "valido": true,
+ "regra": "PLANO-RODADA5.md 3.7: pelo menos metade das pessoas anotadas encontradas, em qualquer classe, no val e nos 80 quadros independentes; se passa, M5 a M8 ficam dispensadas",
+ "quando": "2026-10-21T08:18:13"
+}

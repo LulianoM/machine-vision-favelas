@@ -304,6 +304,17 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-21 [DESKTOP] Rodada 5, grupo M (R5-7): três classes a 150 m, agora válido
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas M1 a M4 (plano 3.7); M5 a M8 (corpus de 600 quadros) dispensadas pela regra, porque o modelo passou a validade. Gêmeo a 150 m do corpus de 35 m, 80 quadros novos (índices 200 a 279) renderizados com o mesmo gerador; treino `armado_150g_e120` (120 épocas, paciência 30; parou na 80). Confusão por `06-resultados/confusao_armado.py` no val (`confusao_armado_150g_e120.json`) e nos 80 quadros novos (`extra_armado_150g_e120.json`); critério por `rodada5_criterios.py` (item M, salvo em `06-resultados/rodada5_criterios_M.json`): conf 0,25, d′ com correção log-linear, 1.000 reamostras de quadros, semente 0.
+
+- Validade (pelo menos metade das pessoas encontradas em qualquer classe, no val e nos novos): 0,606 (297 pessoas) e 0,663 (916). Válido; a rodada 4 tinha 0,498.
+- 150 m, val (27 quadros): armada chamada de armada 0,435; objeto chamado de armada 0,178 (IC 0,107 a 0,247); d′ 0,75 (IC 0,33 a 1,26).
+- 150 m, 80 quadros novos: armada 0,457; objeto chamado de armada 0,245 (IC 0,204 a 0,289); d′ 0,58 (IC 0,38 a 0,78).
+- Curva nos 80 quadros novos (mesmos índices): 35 m d′ 0,77 (0,57 a 0,99), objeto 0,253; gêmeo a 75 m d′ 0,97 (0,77 a 1,19), objeto 0,125; gêmeo a 150 m d′ 0,58 (0,38 a 0,78), objeto 0,245.
+- 150 contra 75 m: d′ -0,394 (IC -0,681 a -0,098), objeto chamado de armada +0,120 (IC 0,058 a 0,181); as duas passam em (b) e (c).
+- Veredito pela regra fixada: o intervalo de d′ exclui zero, então há separação acima do acaso no sintético a 150 m; como a arma é argumentada irresolvível a essa distância (pessoa em planta de cerca de 10 px), a separação é tratada como atalho (comprimento, silhueta), não como capacidade. A 150 m a separação é a mais fraca das três distâncias e o falso alarme sobre objetos volta ao nível de 35 m.
+
 ## 2026-10-20 [DESKTOP] Rodada 5, grupo D (R5-4): ablação só com sol duro
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 180 quadros nadir a 150 m só com sol duro (mesma semente de cena e sítio do corpus de registro), treino `s_soldur_4k` com a receita da 7.6. Avaliação por regime nos 120 quadros de teste (20 por regime) por `06-resultados/por_regime.py --por-quadro`, para o especialista (`06-resultados/por_regime_s_soldur_4k.json`) e para o generalista S-nadir-150 reavaliado (`06-resultados/por_regime_s_nadir_4k_r5.json`). Comparações do critério por `06-resultados/rodada5_grupo_d.py` (recall a conf 0,25 em imagem inteira, 2.000 reamostras de quadros, semente 0).

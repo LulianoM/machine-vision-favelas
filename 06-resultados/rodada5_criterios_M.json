@@ -1,0 +1,124 @@
+{
+ "validade_e120": {
+  "modelo": "armado_150g_e120",
+  "recall_qualquer_classe_val": 0.6061,
+  "pessoas_val": 297,
+  "recall_qualquer_classe_quadros_novos": 0.6627,
+  "pessoas_quadros_novos": 916,
+  "valido": true,
+  "regra": "PLANO-RODADA5.md 3.7: pelo menos metade das pessoas anotadas encontradas, em qualquer classe, no val e nos 80 quadros independentes; se passa, M5 a M8 ficam dispensadas",
+  "quando": "2026-10-21T08:18:13"
+ },
+ "regra": "PLANO 3.7: validade = pelo menos metade das pessoas encontradas, em qualquer classe, no val e nos 80 quadros independentes; d' armada contra objeto com IC por 1.000 reamostras de quadros (semente 0); IC inclui 0 -> ausencia a 150 m medida; exclui -> separacao acima do acaso no sintetico, tratada como atalho; curva 35/75/150 m nos 80 quadros independentes, 150 contra 75 m pela leitura (b) (reamostragem independente) e (c)",
+ "modelo": "armado_150g_e120",
+ "val": {
+  "arquivo": "confusao_armado_150g_e120.json",
+  "quadros": 27,
+  "pessoas": 297,
+  "recall_qualquer_classe": 0.6061,
+  "objeto_chamado_armada": 0.1782,
+  "objeto_chamado_armada_ic95": [
+   0.1071,
+   0.2474
+  ],
+  "armada_chamada_armada": 0.4348,
+  "dlinha_armada_contra_objeto": 0.748,
+  "dlinha_ic95": [
+   0.3282,
+   1.2628
+  ]
+ },
+ "quadros_novos": {
+  "arquivo": "extra_armado_150g_e120.json",
+  "quadros": 80,
+  "pessoas": 916,
+  "recall_qualquer_classe": 0.6627,
+  "objeto_chamado_armada": 0.2452,
+  "objeto_chamado_armada_ic95": [
+   0.2042,
+   0.289
+  ],
+  "armada_chamada_armada": 0.4568,
+  "dlinha_armada_contra_objeto": 0.579,
+  "dlinha_ic95": [
+   0.376,
+   0.7795
+  ]
+ },
+ "valido": true,
+ "curva_quadros_novos": {
+  "35 m": {
+   "arquivo": "extra_armado_35.json",
+   "quadros": 80,
+   "pessoas": 953,
+   "recall_qualquer_classe": 0.6842,
+   "objeto_chamado_armada": 0.2534,
+   "objeto_chamado_armada_ic95": [
+    0.2013,
+    0.3039
+   ],
+   "armada_chamada_armada": 0.5434,
+   "dlinha_armada_contra_objeto": 0.77,
+   "dlinha_ic95": [
+    0.5727,
+    0.9922
+   ]
+  },
+  "75 m gemeo": {
+   "arquivo": "extra_armado_75g.json",
+   "quadros": 80,
+   "pessoas": 837,
+   "recall_qualquer_classe": 0.7658,
+   "objeto_chamado_armada": 0.125,
+   "objeto_chamado_armada_ic95": [
+    0.09,
+    0.1618
+   ],
+   "armada_chamada_armada": 0.4319,
+   "dlinha_armada_contra_objeto": 0.973,
+   "dlinha_ic95": [
+    0.7715,
+    1.1919
+   ]
+  },
+  "150 m gemeo": {
+   "arquivo": "extra_armado_150g_e120.json",
+   "quadros": 80,
+   "pessoas": 916,
+   "recall_qualquer_classe": 0.6627,
+   "objeto_chamado_armada": 0.2452,
+   "objeto_chamado_armada_ic95": [
+    0.2042,
+    0.289
+   ],
+   "armada_chamada_armada": 0.4568,
+   "dlinha_armada_contra_objeto": 0.579,
+   "dlinha_ic95": [
+    0.376,
+    0.7795
+   ]
+  }
+ },
+ "150_contra_75": {
+  "dlinha": {
+   "dif": -0.394,
+   "ic95": [
+    -0.6807,
+    -0.0982
+   ],
+   "b_ok": true,
+   "c_rel_pct": -68.0
+  },
+  "objeto_chamado_armada": {
+   "dif": 0.1202,
+   "ic95": [
+    0.0581,
+    0.1805
+   ],
+   "b_ok": true,
+   "c_rel_pct": 96.2
+  },
+  "nota": "reamostragem independente de quadros nos dois corpora (os mesmos indices de quadro, sorteios separados)"
+ },
+ "veredito": "armado_150g_e120: separacao acima do acaso no sintetico (IC de d' exclui 0): tratada como atalho, nao como capacidade (nos 80 quadros independentes)"
+}
