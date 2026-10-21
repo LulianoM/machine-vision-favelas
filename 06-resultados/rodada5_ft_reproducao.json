@@ -1,0 +1,9 @@
+{
+ "ft05_coco": 0.522,
+ "ft05_coco_rep": 0.522,
+ "dif": 0.0,
+ "tolerancia": 0.0035,
+ "reproduz": true,
+ "regra": "PLANO-RODADA5.md 3.2: com o otimizador explicito igual ao do auto, ft05_coco_rep tem de ficar a ate 0,0035 do ft05_coco; senao a celula de controle passa a ser a _rep e entram controles novos a 10% e para o inicio sintetico",
+ "quando": "2026-10-19T14:32:53"
+}
