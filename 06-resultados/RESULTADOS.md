@@ -304,6 +304,23 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-20 [DESKTOP] Rodada 5, grupo D (R5-4): ablação só com sol duro
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 180 quadros nadir a 150 m só com sol duro (mesma semente de cena e sítio do corpus de registro), treino `s_soldur_4k` com a receita da 7.6. Avaliação por regime nos 120 quadros de teste (20 por regime) por `06-resultados/por_regime.py --por-quadro`, para o especialista (`06-resultados/por_regime_s_soldur_4k.json`) e para o generalista S-nadir-150 reavaliado (`06-resultados/por_regime_s_nadir_4k_r5.json`). Comparações do critério por `06-resultados/rodada5_grupo_d.py` (recall a conf 0,25 em imagem inteira, 2.000 reamostras de quadros, semente 0).
+
+| Regime | mAP50 especialista (só sol duro) | mAP50 generalista (seis regimes) | recall especialista | recall generalista |
+|---|---|---|---|---|
+| sol duro | 0,7422 | 0,6750 | 0,739 | 0,657 |
+| sol baixo | 0,7944 | 0,7903 | 0,776 | 0,814 |
+| nublado | 0,7958 | 0,7906 | 0,759 | 0,796 |
+| neblina | 0,6519 | 0,7796 | 0,569 | 0,726 |
+| encoberto | 0,7536 | 0,7545 | 0,749 | 0,768 |
+| chuva | 0,7276 | 0,7589 | 0,747 | 0,789 |
+
+- D-i (pareada, os mesmos 20 quadros de sol duro): especialista menos generalista, recall +0,0818 (IC 0,0377 a 0,1243). Ver seis vezes mais sol duro no treino melhora a detecção sob sol duro.
+- D-ii (a que decide): especialista sob sol duro menos generalista sob nublado, recall -0,0572 (IC -0,1252 a +0,0067). O intervalo inclui zero; o mAP50 do especialista sob sol duro (0,7422) fica abaixo do generalista sob nublado (0,7906), 6,5% relativos. Pela regra fixada, a leitura é "queda de participação no treino": a desvantagem do sol duro não se mostra intrínseca quando o treino vê o regime o bastante. A implicação da 6.3 passa de quando voar para com que luz treinar.
+- Exploratório: zero-shot do especialista no VisDrone 0,0072 (o generalista faz 0,0102).
+
 ## 2026-10-20 [DESKTOP] Rodada 5, grupo A (R5-3): curva de aprendizado sobre o número de quadros
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas A1 a A10 (plano 3.5). Subconjuntos encaixados dos 152 quadros de treino de S-oblique-six, estratificados por sítio (`06-resultados/curva_subconjuntos.json`: 182, 341, 503 e 696 ladrilhos); mesma validação; 60 épocas; zero-shot em `06-resultados/sim2real_s_oblvar_c*.json`.

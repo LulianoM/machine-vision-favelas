@@ -1,0 +1,742 @@
+{
+ "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_soldur_4k\\weights\\best.pt",
+ "ds": "C:\\arma3-favela\\blender\\ds_regime_4k",
+ "tiles": "C:\\arma3-favela\\blender\\ds_regime_4k_tiles",
+ "por_regime": {
+  "sol_duro": {
+   "regime_no_artigo": "hard sun",
+   "ladrilhos": 149,
+   "quadros": 20,
+   "mAP50": 0.7422,
+   "mAP50-95": 0.2781,
+   "P": 0.8314,
+   "R": 0.7159,
+   "recall_conf025": {
+    "acertos": 280,
+    "n": 379,
+    "recall": 0.7388,
+    "ic95_bootstrap_quadros": [
+     0.6805,
+     0.7965
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000180",
+     "acertos": 13,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000186",
+     "acertos": 16,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000192",
+     "acertos": 13,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000198",
+     "acertos": 12,
+     "caixas": 17
+    },
+    {
+     "quadro": "mr_000204",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000210",
+     "acertos": 13,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000216",
+     "acertos": 23,
+     "caixas": 26
+    },
+    {
+     "quadro": "mr_000222",
+     "acertos": 9,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000228",
+     "acertos": 19,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000234",
+     "acertos": 15,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000240",
+     "acertos": 10,
+     "caixas": 14
+    },
+    {
+     "quadro": "mr_000246",
+     "acertos": 13,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000252",
+     "acertos": 6,
+     "caixas": 9
+    },
+    {
+     "quadro": "mr_000258",
+     "acertos": 16,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000264",
+     "acertos": 19,
+     "caixas": 27
+    },
+    {
+     "quadro": "mr_000270",
+     "acertos": 11,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000276",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000282",
+     "acertos": 9,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000288",
+     "acertos": 10,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000294",
+     "acertos": 25,
+     "caixas": 27
+    }
+   ]
+  },
+  "sol_baixo": {
+   "regime_no_artigo": "low sun",
+   "ladrilhos": 148,
+   "quadros": 20,
+   "mAP50": 0.7944,
+   "mAP50-95": 0.3383,
+   "P": 0.8504,
+   "R": 0.7606,
+   "recall_conf025": {
+    "acertos": 284,
+    "n": 366,
+    "recall": 0.776,
+    "ic95_bootstrap_quadros": [
+     0.7313,
+     0.8165
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000181",
+     "acertos": 22,
+     "caixas": 27
+    },
+    {
+     "quadro": "mr_000187",
+     "acertos": 9,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000193",
+     "acertos": 10,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000199",
+     "acertos": 6,
+     "caixas": 10
+    },
+    {
+     "quadro": "mr_000205",
+     "acertos": 13,
+     "caixas": 17
+    },
+    {
+     "quadro": "mr_000211",
+     "acertos": 20,
+     "caixas": 26
+    },
+    {
+     "quadro": "mr_000217",
+     "acertos": 11,
+     "caixas": 16
+    },
+    {
+     "quadro": "mr_000223",
+     "acertos": 10,
+     "caixas": 16
+    },
+    {
+     "quadro": "mr_000229",
+     "acertos": 24,
+     "caixas": 26
+    },
+    {
+     "quadro": "mr_000235",
+     "acertos": 17,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000241",
+     "acertos": 18,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000247",
+     "acertos": 11,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000253",
+     "acertos": 13,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000259",
+     "acertos": 17,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000265",
+     "acertos": 18,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000271",
+     "acertos": 17,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000277",
+     "acertos": 11,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000283",
+     "acertos": 14,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000289",
+     "acertos": 9,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000295",
+     "acertos": 14,
+     "caixas": 17
+    }
+   ]
+  },
+  "nublado": {
+   "regime_no_artigo": "overcast",
+   "ladrilhos": 142,
+   "quadros": 20,
+   "mAP50": 0.7958,
+   "mAP50-95": 0.3366,
+   "P": 0.8792,
+   "R": 0.7417,
+   "recall_conf025": {
+    "acertos": 264,
+    "n": 348,
+    "recall": 0.7586,
+    "ic95_bootstrap_quadros": [
+     0.7098,
+     0.8012
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000182",
+     "acertos": 6,
+     "caixas": 14
+    },
+    {
+     "quadro": "mr_000188",
+     "acertos": 16,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000194",
+     "acertos": 21,
+     "caixas": 23
+    },
+    {
+     "quadro": "mr_000200",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000206",
+     "acertos": 13,
+     "caixas": 16
+    },
+    {
+     "quadro": "mr_000212",
+     "acertos": 15,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000218",
+     "acertos": 9,
+     "caixas": 11
+    },
+    {
+     "quadro": "mr_000224",
+     "acertos": 10,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000230",
+     "acertos": 12,
+     "caixas": 17
+    },
+    {
+     "quadro": "mr_000236",
+     "acertos": 22,
+     "caixas": 28
+    },
+    {
+     "quadro": "mr_000242",
+     "acertos": 12,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000248",
+     "acertos": 8,
+     "caixas": 11
+    },
+    {
+     "quadro": "mr_000254",
+     "acertos": 9,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000260",
+     "acertos": 8,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000266",
+     "acertos": 22,
+     "caixas": 24
+    },
+    {
+     "quadro": "mr_000272",
+     "acertos": 18,
+     "caixas": 23
+    },
+    {
+     "quadro": "mr_000278",
+     "acertos": 13,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000284",
+     "acertos": 11,
+     "caixas": 14
+    },
+    {
+     "quadro": "mr_000290",
+     "acertos": 15,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000296",
+     "acertos": 10,
+     "caixas": 11
+    }
+   ]
+  },
+  "neblina": {
+   "regime_no_artigo": "haze",
+   "ladrilhos": 149,
+   "quadros": 20,
+   "mAP50": 0.6519,
+   "mAP50-95": 0.2702,
+   "P": 0.8248,
+   "R": 0.593,
+   "recall_conf025": {
+    "acertos": 235,
+    "n": 413,
+    "recall": 0.569,
+    "ic95_bootstrap_quadros": [
+     0.5294,
+     0.6095
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000184",
+     "acertos": 15,
+     "caixas": 24
+    },
+    {
+     "quadro": "mr_000190",
+     "acertos": 10,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000196",
+     "acertos": 14,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000202",
+     "acertos": 11,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000208",
+     "acertos": 14,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000214",
+     "acertos": 12,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000220",
+     "acertos": 11,
+     "caixas": 23
+    },
+    {
+     "quadro": "mr_000226",
+     "acertos": 15,
+     "caixas": 25
+    },
+    {
+     "quadro": "mr_000232",
+     "acertos": 8,
+     "caixas": 14
+    },
+    {
+     "quadro": "mr_000238",
+     "acertos": 16,
+     "caixas": 27
+    },
+    {
+     "quadro": "mr_000244",
+     "acertos": 6,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000250",
+     "acertos": 9,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000256",
+     "acertos": 8,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000262",
+     "acertos": 15,
+     "caixas": 24
+    },
+    {
+     "quadro": "mr_000268",
+     "acertos": 12,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000274",
+     "acertos": 9,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000280",
+     "acertos": 12,
+     "caixas": 25
+    },
+    {
+     "quadro": "mr_000286",
+     "acertos": 10,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000292",
+     "acertos": 19,
+     "caixas": 25
+    },
+    {
+     "quadro": "mr_000298",
+     "acertos": 9,
+     "caixas": 16
+    }
+   ]
+  },
+  "encoberto": {
+   "regime_no_artigo": "heavy overcast",
+   "ladrilhos": 145,
+   "quadros": 20,
+   "mAP50": 0.7536,
+   "mAP50-95": 0.3308,
+   "P": 0.862,
+   "R": 0.69,
+   "recall_conf025": {
+    "acertos": 274,
+    "n": 366,
+    "recall": 0.7486,
+    "ic95_bootstrap_quadros": [
+     0.6997,
+     0.7953
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000183",
+     "acertos": 6,
+     "caixas": 10
+    },
+    {
+     "quadro": "mr_000189",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000195",
+     "acertos": 8,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000201",
+     "acertos": 9,
+     "caixas": 14
+    },
+    {
+     "quadro": "mr_000207",
+     "acertos": 20,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000213",
+     "acertos": 16,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000219",
+     "acertos": 12,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000225",
+     "acertos": 8,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000231",
+     "acertos": 9,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000237",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000243",
+     "acertos": 8,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000249",
+     "acertos": 20,
+     "caixas": 23
+    },
+    {
+     "quadro": "mr_000255",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000261",
+     "acertos": 12,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000267",
+     "acertos": 18,
+     "caixas": 25
+    },
+    {
+     "quadro": "mr_000273",
+     "acertos": 16,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000279",
+     "acertos": 19,
+     "caixas": 27
+    },
+    {
+     "quadro": "mr_000285",
+     "acertos": 14,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000291",
+     "acertos": 16,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000297",
+     "acertos": 21,
+     "caixas": 26
+    }
+   ]
+  },
+  "chuva": {
+   "regime_no_artigo": "rain",
+   "ladrilhos": 152,
+   "quadros": 20,
+   "mAP50": 0.7276,
+   "mAP50-95": 0.3009,
+   "P": 0.8535,
+   "R": 0.671,
+   "recall_conf025": {
+    "acertos": 248,
+    "n": 332,
+    "recall": 0.747,
+    "ic95_bootstrap_quadros": [
+     0.7098,
+     0.7873
+    ]
+   },
+   "por_quadro": [
+    {
+     "quadro": "mr_000185",
+     "acertos": 6,
+     "caixas": 10
+    },
+    {
+     "quadro": "mr_000191",
+     "acertos": 15,
+     "caixas": 23
+    },
+    {
+     "quadro": "mr_000197",
+     "acertos": 14,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000203",
+     "acertos": 9,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000209",
+     "acertos": 11,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000215",
+     "acertos": 11,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000221",
+     "acertos": 16,
+     "caixas": 24
+    },
+    {
+     "quadro": "mr_000227",
+     "acertos": 10,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000233",
+     "acertos": 16,
+     "caixas": 20
+    },
+    {
+     "quadro": "mr_000239",
+     "acertos": 13,
+     "caixas": 16
+    },
+    {
+     "quadro": "mr_000245",
+     "acertos": 8,
+     "caixas": 12
+    },
+    {
+     "quadro": "mr_000251",
+     "acertos": 11,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000257",
+     "acertos": 12,
+     "caixas": 13
+    },
+    {
+     "quadro": "mr_000263",
+     "acertos": 12,
+     "caixas": 17
+    },
+    {
+     "quadro": "mr_000269",
+     "acertos": 17,
+     "caixas": 22
+    },
+    {
+     "quadro": "mr_000275",
+     "acertos": 11,
+     "caixas": 15
+    },
+    {
+     "quadro": "mr_000281",
+     "acertos": 14,
+     "caixas": 21
+    },
+    {
+     "quadro": "mr_000287",
+     "acertos": 15,
+     "caixas": 18
+    },
+    {
+     "quadro": "mr_000293",
+     "acertos": 13,
+     "caixas": 19
+    },
+    {
+     "quadro": "mr_000299",
+     "acertos": 14,
+     "caixas": 15
+    }
+   ]
+  }
+ },
+ "ordem_mAP50_crescente": [
+  "haze",
+  "rain",
+  "hard sun",
+  "heavy overcast",
+  "low sun",
+  "overcast"
+ ],
+ "criterio_10_3": {
+  "overcast_acima_de_hard_sun": true,
+  "overcast_acima_de_rain": true,
+  "hard_sun_entre_os_dois_mais_fracos": false,
+  "implicacao_11_3_fica": false
+ },
+ "protocolo": "mAP50: ladrilhos 1280, classe unica, conf 0,001; recall: imagem inteira imgsz 3840, conf 0,25, casamento 1:1 IoU >= 0,5, IC por bootstrap de quadros"
+}
