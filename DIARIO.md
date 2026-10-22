@@ -1,5 +1,17 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-22 [DESKTOP] Rodada 5 levada ao artigo
+
+- Fonte: `07-blender/PLANO-RODADA5.md` (blocos "O que muda no artigo"), `06-resultados/RESULTADOS.md` (19 a 22/10), `rodada5_criterios.json`, `rodada5_criterios_M.json`, `revisao-2026-10-17/*_r5.md`, `bootstrap_heridal*.md`, `rodada5_grupo_d.py` (rodado de novo, mesma saída).
+- Resumo (250 palavras): médias de três sementes (2,2% nadir, 15,3% S-oblique-six), inversão na HERIDAL (62,7% contra 42,1%), quatro cronogramas de ajuste fino, separação fraca a 150 m lida como atalho.
+- 1.1, 1.3, 1.4: duas bases reais; contribuições com a inversão nadir, os quatro cronogramas e o atalho a 150 m.
+- 4.1, 4.3, 4.5, 4.6, 4.7, 4.8: HERIDAL e o protocolo (imgsz casado 1152, 1280 secundário, todas as imagens anotadas); corpora derivados (sol duro, sementes de cena, subconjuntos); grade de cronogramas; gêmeo a 150 m com 120 épocas; etapa final como confirmatória com critério fixado antes; tabelas `params`, `modelos`, `corpora` e `rq` atualizadas; dez modelos com três sementes.
+- 5.2: fator 4,08 (3,44 a 4,64) nas médias, eficácias 2,2% e 8,8% com a melhor semente; semente de cena (1,4 vez a de treino, +68,7%); curva de aprendizado (tabela nova `curva`); base nadir (tabela nova `heridal`); tabela `obliquo` com todas as sementes. 5.3: grade de doze células (tabela nova `cronograma`), +30,2% a 5% e +22,2% a 10%. 5.4: 150 m válido, d′ 0,58 (tabela nova `gsd150`). 5.5: ablação de sol duro (colunas novas em `regimes`). 5.6 e tabela `hipoteses`: todas as checagens rodadas, linhas novas.
+- 6.1 a 6.6: RQ1 com fator 4,08, inversão na HERIDAL medida, curva e semente de cena; RQ2 robusto ao cronograma; RQ3 com atalho a 150 m; 6.3 passa de quando voar para com que luz treinar; 6.4, 6.5 (itens 1, 4, 5, 6, 7, 10) e 6.6 sem o que a rodada fechou. 7 e Declarations (duas bases). s8: entrada do Zenodo 5662351 (DOI conferido na DataCite) e grafia Pyrrö.
+- Montador: abstract do JMIS atualizado (149 palavras) e f-string que não compilava no Python 3.11 do venv trocada por concatenação (o formato JMIS do Mac voltou a rodar aqui; teste sem citação perdida).
+- PDF: `C:/Users/marti/Desktop/machine-vision-favelas-elsevier-2026-10-22.pdf`, 39 páginas, 27 tabelas, 13 figuras, 0 `[X]`, 0 "Table ?", 0 "Figure ?". Checagem: todo decimal de s1, s5, s6 e s7 achado no artigo anterior, nos arquivos D1 a D3 ou nos da rodada 5.
+- Conflitos de fonte registrados: IC do grupo D no `rodada5_criterios.json` (Random(0)) difere do `rodada5_grupo_d.py` (default_rng(0)); o texto usa o segundo, que é o do RESULTADOS. Médias de S-oblique (0,0555 contra 0,0556) e S-oblique-six (0,0966 contra 0,0967) diferem na quarta casa entre o bootstrap e as tabelas do RESULTADOS; o texto usa as do bootstrap, coerentes com diferenças e razões. Contagens dos corpora derivados não estão em arquivo e ficaram fora da tabela `corpora`.
+
 ## 2026-10-20 [MAC] Aderência a PAR e AMJ
 
 - Levantamento no Crossref (21 consultas por ISSN) e resumos no OpenAlex: 15 artigos de PAR e 5 de AMJ ligados a segurança pública, em `04-bibliografia/aderencia-PAR-AMJ-2026-10-20.md`. Nenhum sobre visão computacional, detecção aérea, dados sintéticos ou favelas.

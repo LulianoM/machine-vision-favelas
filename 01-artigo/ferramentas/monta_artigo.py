@@ -314,18 +314,20 @@ def resolve_figuras(txt, n_fig):
 # alfabetica e numeradas, citadas no texto como [9]. Autoria, financiamento e agradecimentos vao
 # para a carta de apresentacao, que sai num PDF a parte (--out com sufixo -title-page).
 
-# Abstract da v de 18/10 tem ~260 palavras; este e o corte para o limite de 150, com os mesmos numeros.
+# Abstract da v de 18/10 tem ~260 palavras; este e o corte para o limite de 150. Numeros atualizados
+# em 22/10 com a rodada 5 (media de tres sementes, base nadir, quatro cronogramas de ajuste fino).
 ABSTRACT_JMIS = (
     "Claims that aerial machine vision can tell armed from unarmed people are acted on without "
     "stating the conditions under which the distinction is visible. On procedural corpora of a "
     "dense favela we characterised the target by ground sampling distance, camera pitch and "
-    "illumination, and scored synthetic-only detectors on a real benchmark against a ceiling "
-    "trained on as many real images. Straight down from 150 m, a person occupies 17.6 by 17.5 "
-    "pixels. Synthetic-only training reached 1.6 per cent of the ceiling there and 15.3 per cent "
-    "(three-run mean) for the best oblique configuration; given 5 or 10 per cent of real images, "
-    "the synthetic corpus lowered accuracy. At 75 and 35 m, detectors called 24 and 27 per cent of "
-    "ordinary elongated objects armed, and finer resolution did not reduce the confusion. Stating "
-    "where a capability has not been shown is a checkable contribution relevant to dual use.")
+    "illumination, and scored synthetic-only detectors on real benchmarks against a matched "
+    "real-data ceiling. On an urban benchmark, synthetic-only training reached 2.2 per cent of the "
+    "ceiling for nadir imagery from 150 m and 15.3 per cent for the best oblique configuration "
+    "(three-run means); on a nadir benchmark the order reversed. Given 5 or 10 per cent of real "
+    "images, the synthetic corpus lowered accuracy under four fine-tuning schedules. At 75 and 35 m, "
+    "detectors called 24 and 27 per cent of ordinary elongated objects armed, finer resolution not "
+    "reducing the confusion. Stating where a capability has not been shown is a checkable "
+    "contribution relevant to dual use.")
 
 # sigla usada no texto -> inicio da entrada na lista de referencias
 SIGLAS = {"STF": "Supremo Tribunal Federal", "RICS": "Royal Institution of Chartered Surveyors",
@@ -515,8 +517,10 @@ def folha_de_rosto(extra):
             "<h2>Contact</h2><p style='text-indent:0'>[Full postal address, e-mail and telephone of "
             "each author]</p><h2>Author biographies</h2><p style='text-indent:0'>[Brief bio of each "
             "author]</p>"
-            + "".join(f"<p style='text-indent:0'>{re.sub(r'[*][*](.+?)[*][*]', r'<b>\1</b>', v)}</p>"
-                      for v in extra.values())
+            # concatenacao em vez de f-string: barra invertida dentro de {} so vale no Python 3.12+,
+            # e o venv do desktop e 3.11
+            + "".join("<p style='text-indent:0'>" + re.sub(r'[*][*](.+?)[*][*]', r'<b>\1</b>', v)
+                      + "</p>" for v in extra.values())
             + "</body></html>")
 
 

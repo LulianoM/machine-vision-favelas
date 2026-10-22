@@ -146,7 +146,9 @@ Pix4D. (2022, April 20). *5 key things we wish we knew before flying a drone*. P
 
 Prakash, A., Boochoon, S., Brophy, M., Acuna, D., Cameracci, E., State, G., Shapira, O., & Birchfield, S. (2019). Structured domain randomization: Bridging the reality gap by context-aware synthetic data. In *2019 International Conference on Robotics and Automation (ICRA)* (pp. 7249-7255). IEEE. https://doi.org/10.1109/ICRA.2019.8794443
 
-Pyrro, P., Naseri, H., & Jung, A. (2021). Rethinking drone-based search and rescue with aerial person detection. arXiv. https://arxiv.org/abs/2111.09406
+Pyrrö, P. (2021). *HERIDAL dataset in keras-retinanet PASCAL VOC format* (Version 0.0.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.5662351
+
+Pyrrö, P., Naseri, H., & Jung, A. (2021). Rethinking drone-based search and rescue with aerial person detection. arXiv. https://arxiv.org/abs/2111.09406
 
 Rasoulie, F., & Pashazadeh, S. (2026). 3D UAV path optimization using a task-allocation and archive-guided mutation particle swarm optimization algorithm. *Scientific Reports, 16*(1), Article 24356. https://doi.org/10.1038/s41598-026-42372-8
 
