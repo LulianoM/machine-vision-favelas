@@ -304,6 +304,20 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-22 [DESKTOP] Rodada 5, grupo C (R5-2): semente de cena para S-oblique-six
+
+Cadeia `07-blender/scripts/rodada5.py`, etapas C1 a C8 (plano 3.8). Duas réplicas do corpus oblíquo de seis sítios com sementes de cena 22 e 23 (a 21 é a do corpus original), 180 quadros cada, mesma receita e semente de treino 0; zero-shot em `06-resultados/sim2real_s_oblvar_e22.json` e `sim2real_s_oblvar_e23.json`. A réplica 23 foi pausada pelo autor em 21/10 às 23:38 e retomada em 22/10 às 01:41, do quadro 13 de 30 do sítio interrompido.
+
+| Semente de cena (treino 0) | mAP50 no VisDrone |
+|---|---|
+| 21 (S-oblique-six original) | 0,1055 |
+| 22 | 0,0935 |
+| 23 | 0,0821 |
+
+- Faixa sobre as três sementes de cena: 0,0821 a 0,1055 (amplitude 0,0234, média 0,0937); faixa sobre as três sementes de treino na cena 21: 0,0887 a 0,1055 (amplitude 0,0168). A dispersão de cena é 1,4 vez a de treino, abaixo do dobro fixado como "o cenário domina".
+- C-ii, seis sítios nas três cenas contra S-oblique nas três sementes de treino (0,0501 a 0,0614): faixas não se cruzam, passa em (a); a leitura (b) sai no fechamento (Y3).
+- A eficácia de S-oblique-six continua a da cena 21 (média de três treinos, 15,3%); com as três cenas, a média seria 14,8% (0,0937 / 0,6311), dada ao lado.
+
 ## 2026-10-21 [DESKTOP] Rodada 5, grupo M (R5-7): três classes a 150 m, agora válido
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas M1 a M4 (plano 3.7); M5 a M8 (corpus de 600 quadros) dispensadas pela regra, porque o modelo passou a validade. Gêmeo a 150 m do corpus de 35 m, 80 quadros novos (índices 200 a 279) renderizados com o mesmo gerador; treino `armado_150g_e120` (120 épocas, paciência 30; parou na 80). Confusão por `06-resultados/confusao_armado.py` no val (`confusao_armado_150g_e120.json`) e nos 80 quadros novos (`extra_armado_150g_e120.json`); critério por `rodada5_criterios.py` (item M, salvo em `06-resultados/rodada5_criterios_M.json`): conf 0,25, d′ com correção log-linear, 1.000 reamostras de quadros, semente 0.
