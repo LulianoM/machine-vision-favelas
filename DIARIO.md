@@ -13,6 +13,12 @@ Entradas novas no topo. Formato: `## 2026-10-20 [MAC] Artigo no formato do JMIS
 
 ## AAAA-MM-DD [MÁQUINA] título`, depois o que foi feito, o que foi decidido e o que ficou para o outro lado. Nunca apagar entrada antiga.
 
+## 2026-10-22 [DESKTOP] Rodada 5 encerrada
+
+- Cadeia terminou em 22/10 às 11:05, todos os grupos concluídos (S, F, N, Y1, A, D, M, C, Y2 a Y4); pausa do autor de 21/10 23:38 a 22/10 01:41, retomada sem perda. O supervisor apagou o atalho da pasta Inicializar.
+- Resultados que mudam o artigo: fator nadir/oblíquo cerca de 4 (não 6) com três sementes; na HERIDAL a ordem se inverte e o nadir chega a 63% de R (78% com seis sítios); o custo do pré-treino sintético não é do cronograma; a curva sobe pouco no fim; o sol duro deixa de ser pior quando o treino o vê bastante; a 150 m o modelo de três classes é válido e separa fraco, por atalho; a semente de cena varia 1,4 vez a de treino. Detalhe em `06-resultados/RESULTADOS.md`, entradas de 19 a 22/10.
+- E-mails por grupo na thread "Rodada 5: iniciada em 18/10 às 23:43". Próximo passo: levar tudo ao manuscrito.
+
 ## 2026-10-18 [DESKTOP] Rodada 5 lançada
 
 - Autor liberou a GPU e autorizou a HERIDAL. Fonte oficial (FESB) fora do ar; usada a cópia no Zenodo (registro 5662351, Pyrrö, CC BY 3.0, 8,31 GB, md5 conferido no fim do download), a mesma versão do AIR, já citado no artigo. Divisão pré-registrada: todas as imagens anotadas.

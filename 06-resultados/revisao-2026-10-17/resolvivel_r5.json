@@ -779,34 +779,166 @@
    }
   },
   {
+   "comparacao": "R5-3 152 vs 30 frames",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique-six",
+   "b": "S-oblique-six c030",
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_oblvar_c030",
+    "s_oblvar_c030_sd1",
+    "s_oblvar_c030_sd2"
+   ],
+   "a_valor": 0.0966,
+   "b_valor": 0.0618,
+   "dif_absoluta": 0.0349,
+   "dif_relativa_pct_do_menor": 56.5,
+   "razao_a_sobre_b": 1.565,
+   "razao_ic95": [
+    1.489,
+    1.646
+   ],
+   "sementes_a": {
+    "valores": [
+     0.1055,
+     0.0958,
+     0.0887
+    ],
+    "min": 0.0887,
+    "max": 0.1055,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.0499,
+     0.0674,
+     0.0679
+    ],
+    "min": 0.0499,
+    "max": 0.0679,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95_dif": [
+    0.031,
+    0.0392
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "a",
+     "b",
+     "c"
+    ],
+    "resumo": "resolvivel (a, b, c)"
+   }
+  },
+  {
+   "comparacao": "R5-3 152 vs 120 frames",
+   "medida": "mAP50 no VisDrone-DET val",
+   "a": "S-oblique-six",
+   "b": "S-oblique-six c120",
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_oblvar_c120",
+    "s_oblvar_c120_sd1",
+    "s_oblvar_c120_sd2"
+   ],
+   "a_valor": 0.0966,
+   "b_valor": 0.0904,
+   "dif_absoluta": 0.0062,
+   "dif_relativa_pct_do_menor": 6.9,
+   "razao_a_sobre_b": 1.069,
+   "razao_ic95": [
+    1.036,
+    1.099
+   ],
+   "sementes_a": {
+    "valores": [
+     0.1055,
+     0.0958,
+     0.0887
+    ],
+    "min": 0.0887,
+    "max": 0.1055,
+    "n": 3
+   },
+   "sementes_b": {
+    "valores": [
+     0.0915,
+     0.0878,
+     0.0918
+    ],
+    "min": 0.0878,
+    "max": 0.0918,
+    "n": 3
+   },
+   "a_faixas_de_sementes": "nao resolvivel: faixas se cruzam",
+   "a_ok": false,
+   "b_ic95_dif": [
+    0.0033,
+    0.0088
+   ],
+   "b_fracao_positiva": 1.0,
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "veredito": {
+    "leituras_passadas": 1,
+    "leituras_avaliaveis": 3,
+    "passou_em": [
+     "b"
+    ],
+    "resumo": "resolvivel (b)"
+   }
+  },
+  {
    "comparacao": "R5-2 C-ii scene seeds vs S-oblique training seeds",
    "medida": "mAP50 no VisDrone-DET val",
    "a": "S-oblique-six scenes",
    "b": "S-oblique",
    "a_runs": [
-    "s_oblvar"
+    "s_oblvar",
+    "s_oblvar_e22",
+    "s_oblvar_e23"
    ],
    "b_runs": [
     "s_obliquo",
     "s_obliquo_sd1",
     "s_obliquo_sd2"
    ],
-   "a_valor": 0.1055,
+   "a_valor": 0.0937,
    "b_valor": 0.0555,
-   "dif_absoluta": 0.0499,
-   "dif_relativa_pct_do_menor": 89.9,
-   "razao_a_sobre_b": 1.899,
+   "dif_absoluta": 0.0381,
+   "dif_relativa_pct_do_menor": 68.7,
+   "razao_a_sobre_b": 1.687,
    "razao_ic95": [
-    1.778,
-    2.046
+    1.582,
+    1.804
    ],
    "sementes_a": {
     "valores": [
-     0.1055
+     0.1055,
+     0.0935,
+     0.0821
     ],
-    "min": 0.1055,
+    "min": 0.0821,
     "max": 0.1055,
-    "n": 1
+    "n": 3
    },
    "sementes_b": {
     "valores": [
@@ -818,30 +950,28 @@
     "max": 0.0614,
     "n": 3
    },
-   "a_faixas_de_sementes": "treino unico em a; o valor de a fica fora da faixa de b",
-   "a_ok": null,
+   "a_faixas_de_sementes": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
    "b_ic95_dif": [
-    0.0444,
-    0.0563
+    0.0334,
+    0.0437
    ],
    "b_fracao_positiva": 1.0,
    "b_ok": true,
    "c_ok": true,
    "resolvivel": true,
    "veredito": {
-    "leituras_passadas": 2,
-    "leituras_avaliaveis": 2,
+    "leituras_passadas": 3,
+    "leituras_avaliaveis": 3,
     "passou_em": [
+     "a",
      "b",
      "c"
     ],
-    "resumo": "resolvivel (b, c)"
+    "resumo": "resolvivel (a, b, c)"
    }
   }
  ],
- "faltando": [
-  "R5-3 152 vs 30 frames",
-  "R5-3 152 vs 120 frames"
- ],
- "quando": "2026-10-19T23:21:16"
+ "faltando": [],
+ "quando": "2026-10-22T11:05:45"
 }

@@ -1,4 +1,4 @@
-# Resolubilidade, rodada 5 (19/10/2026)
+# Resolubilidade, rodada 5 (22/10/2026)
 
 | Comparacao | a | b | dif. | dif. relativa | (a) faixas | (b) IC 95% | (c) | veredito |
 |---|---|---|---|---|---|---|---|---|
@@ -15,4 +15,6 @@
 | R5-5 generic vs synthetic start, 10%, cell lr | 0.6224 | 0.3875 | +0.2348 | +60.6% | treino unico dos dois lados: nao avaliavel | +0.2238 a +0.2458 | sim | resolvivel (b, c) |
 | R5-5 generic vs synthetic start, 10%, cell fzlr | 0.5644 | 0.2241 | +0.3402 | +151.8% | treino unico dos dois lados: nao avaliavel | +0.3258 a +0.3539 | sim | resolvivel (b, c) |
 | R5-5 generic vs synthetic start, 10%, chosen schedules | 0.6224 | 0.5095 | +0.1129 | +22.2% | treino unico dos dois lados: nao avaliavel | +0.1044 a +0.1230 | nao | resolvivel (b) |
-| R5-2 C-ii scene seeds vs S-oblique training seeds | 0.1055 | 0.0555 | +0.0499 | +89.9% | treino unico em a; o valor de a fica fora da faixa de b | +0.0444 a +0.0563 | sim | resolvivel (b, c) |
+| R5-3 152 vs 30 frames | 0.0966 | 0.0618 | +0.0349 | +56.5% | resolvivel: faixas nao se cruzam | +0.0310 a +0.0392 | sim | resolvivel (a, b, c) |
+| R5-3 152 vs 120 frames | 0.0966 | 0.0904 | +0.0062 | +6.9% | nao resolvivel: faixas se cruzam | +0.0033 a +0.0088 | nao | resolvivel (b) |
+| R5-2 C-ii scene seeds vs S-oblique training seeds | 0.0937 | 0.0555 | +0.0381 | +68.7% | resolvivel: faixas nao se cruzam | +0.0334 a +0.0437 | sim | resolvivel (a, b, c) |

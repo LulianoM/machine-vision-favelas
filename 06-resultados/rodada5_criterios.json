@@ -1,6 +1,6 @@
 {
  "plano": "07-blender/PLANO-RODADA5.md",
- "parte": "prioridade",
+ "parte": "tudo",
  "R5-1_sementes_S": {
   "principal_S-oblique_menos_S-nadir-150": {
    "a_valor": 0.0555,
@@ -1418,5 +1418,548 @@
   },
   "regra": "PLANO 3.3: R abaixo de 0,05 no imgsz casado -> nao interpretavel; principal S-oblique (3) menos S-nadir-150 (3) no casado, leituras (a), (b), (c); nadir resolvivelmente acima -> a ordem se inverte num benchmark nadir; obliquo resolvivelmente acima com razao compativel com a do VisDrone -> qualificar a ressalva da 6.1; obliquo acima com razao inteiramente abaixo da do VisDrone -> a geometria do benchmark explica parte do fator; nao resolvivel -> as duas geometrias nao se separaram; ordem diferente entre casado e 1280 -> dependente de escala",
   "veredito": "nadir resolvivelmente acima do obliquo: num benchmark nadir a ordem se inverte [leituras: (a) False, (b) True, (c) True]"
+ },
+ "R5-3_curva_A": {
+  "pontos": {
+   "30": {
+    "runs": [
+     "s_oblvar_c030",
+     "s_oblvar_c030_sd1",
+     "s_oblvar_c030_sd2"
+    ],
+    "mAP50_media": 0.0618,
+    "faixa": [
+     0.0499,
+     0.0679
+    ],
+    "teto_sintetico_media": 0.5576
+   },
+   "60": {
+    "runs": [
+     "s_oblvar_c060"
+    ],
+    "mAP50_media": 0.0806,
+    "faixa": [
+     0.0806,
+     0.0806
+    ],
+    "teto_sintetico_media": 0.6796
+   },
+   "90": {
+    "runs": [
+     "s_oblvar_c090"
+    ],
+    "mAP50_media": 0.081,
+    "faixa": [
+     0.081,
+     0.081
+    ],
+    "teto_sintetico_media": 0.702
+   },
+   "120": {
+    "runs": [
+     "s_oblvar_c120",
+     "s_oblvar_c120_sd1",
+     "s_oblvar_c120_sd2"
+    ],
+    "mAP50_media": 0.0904,
+    "faixa": [
+     0.0878,
+     0.0918
+    ],
+    "teto_sintetico_media": 0.6999
+   },
+   "152": {
+    "runs": [
+     "s_oblvar",
+     "s_oblvar_sd1",
+     "s_oblvar_sd2"
+    ],
+    "mAP50_media": 0.0966,
+    "faixa": [
+     0.0887,
+     0.1055
+    ],
+    "teto_sintetico_media": 0.7047
+   }
+  },
+  "ajuste_log": {
+   "a": 0.02014,
+   "b": -0.00575,
+   "ganho_por_duplicacao_a_ln2": 0.01396,
+   "pontos_usados": [
+    30,
+    60,
+    90,
+    120,
+    152
+   ]
+  },
+  "152_vs_30": {
+   "a_valor": 0.0966,
+   "b_valor": 0.0618,
+   "dif": 0.0349,
+   "dif_relativa_pct_do_menor": 56.5,
+   "razao_a_sobre_b": 1.565,
+   "razao_ic95": [
+    1.489,
+    1.646
+   ],
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_oblvar_c030",
+    "s_oblvar_c030_sd1",
+    "s_oblvar_c030_sd2"
+   ],
+   "a": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95": [
+    0.031,
+    0.0392
+   ],
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "passou_em": [
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  "152_vs_120": {
+   "a_valor": 0.0966,
+   "b_valor": 0.0904,
+   "dif": 0.0062,
+   "dif_relativa_pct_do_menor": 6.9,
+   "razao_a_sobre_b": 1.069,
+   "razao_ic95": [
+    1.036,
+    1.099
+   ],
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "b_runs": [
+    "s_oblvar_c120",
+    "s_oblvar_c120_sd1",
+    "s_oblvar_c120_sd2"
+   ],
+   "a": "nao resolvivel: faixas se cruzam",
+   "a_ok": false,
+   "b_ic95": [
+    0.0033,
+    0.0088
+   ],
+   "b_ok": true,
+   "c_ok": false,
+   "resolvivel": true,
+   "passou_em": [
+    "b"
+   ]
+  },
+  "regra": "PLANO 3.5: regra da antiga 10.1: o numero de quadros e operante se 152 fica acima de 30 em (a) e em (b); senao a RQ1 vira propriedade do gerador. 152 contra 120: inclinado se (a) e (b); plano se nenhuma; 'subindo dentro da dispersao de treino' se so (b). Descritivo: mAP50 = a ln(N) + b nas medias, ganho a ln 2",
+  "veredito": {
+   "regra_10_1": "numero de quadros operante",
+   "fim_da_curva": "subindo dentro da dispersao de treino"
+  }
+ },
+ "R5-4_sol_duro_D": {
+  "mAP50_especialista_sol_duro": 0.7422,
+  "mAP50_generalista_sol_duro": 0.675,
+  "mAP50_generalista_nublado": 0.7906,
+  "c_mAP50_rel_pct": -6.5,
+  "recall_especialista_sol_duro": 0.7388,
+  "recall_generalista_sol_duro": 0.657,
+  "recall_generalista_nublado": 0.796,
+  "D_i_pareada_dif_recall": {
+   "quadros": 20,
+   "dif": 0.0818,
+   "ic95": [
+    0.0383,
+    0.1236
+   ]
+  },
+  "D_ii_independente_dif_recall": {
+   "dif": -0.0572,
+   "ic95": [
+    -0.1237,
+    0.0085
+   ]
+  },
+  "bootstrap": "quadros, 2.000 reamostras, random.Random(0)",
+  "regra": "PLANO 3.6: D-ii decide. Intervalo inteiro abaixo de zero e mAP50 do especialista sob sol duro abaixo do generalista sob nublado -> regime intrinsecamente mais dificil; intervalo que inclui zero ou fica acima -> queda de participacao no treino. (a) nao se aplica; (c) no mAP50",
+  "veredito": "queda de participacao no treino: a dificuldade sob sol duro some quando o treino ve sol duro bastante"
+ },
+ "R5-7_150m_M": {
+  "validade_e120": {
+   "modelo": "armado_150g_e120",
+   "recall_qualquer_classe_val": 0.6061,
+   "pessoas_val": 297,
+   "recall_qualquer_classe_quadros_novos": 0.6627,
+   "pessoas_quadros_novos": 916,
+   "valido": true,
+   "regra": "PLANO-RODADA5.md 3.7: pelo menos metade das pessoas anotadas encontradas, em qualquer classe, no val e nos 80 quadros independentes; se passa, M5 a M8 ficam dispensadas",
+   "quando": "2026-10-21T08:18:13"
+  },
+  "regra": "PLANO 3.7: validade = pelo menos metade das pessoas encontradas, em qualquer classe, no val e nos 80 quadros independentes; d' armada contra objeto com IC por 1.000 reamostras de quadros (semente 0); IC inclui 0 -> ausencia a 150 m medida; exclui -> separacao acima do acaso no sintetico, tratada como atalho; curva 35/75/150 m nos 80 quadros independentes, 150 contra 75 m pela leitura (b) (reamostragem independente) e (c)",
+  "modelo": "armado_150g_e120",
+  "val": {
+   "arquivo": "confusao_armado_150g_e120.json",
+   "quadros": 27,
+   "pessoas": 297,
+   "recall_qualquer_classe": 0.6061,
+   "objeto_chamado_armada": 0.1782,
+   "objeto_chamado_armada_ic95": [
+    0.1071,
+    0.2474
+   ],
+   "armada_chamada_armada": 0.4348,
+   "dlinha_armada_contra_objeto": 0.748,
+   "dlinha_ic95": [
+    0.3282,
+    1.2628
+   ]
+  },
+  "quadros_novos": {
+   "arquivo": "extra_armado_150g_e120.json",
+   "quadros": 80,
+   "pessoas": 916,
+   "recall_qualquer_classe": 0.6627,
+   "objeto_chamado_armada": 0.2452,
+   "objeto_chamado_armada_ic95": [
+    0.2042,
+    0.289
+   ],
+   "armada_chamada_armada": 0.4568,
+   "dlinha_armada_contra_objeto": 0.579,
+   "dlinha_ic95": [
+    0.376,
+    0.7795
+   ]
+  },
+  "valido": true,
+  "curva_quadros_novos": {
+   "35 m": {
+    "arquivo": "extra_armado_35.json",
+    "quadros": 80,
+    "pessoas": 953,
+    "recall_qualquer_classe": 0.6842,
+    "objeto_chamado_armada": 0.2534,
+    "objeto_chamado_armada_ic95": [
+     0.2013,
+     0.3039
+    ],
+    "armada_chamada_armada": 0.5434,
+    "dlinha_armada_contra_objeto": 0.77,
+    "dlinha_ic95": [
+     0.5727,
+     0.9922
+    ]
+   },
+   "75 m gemeo": {
+    "arquivo": "extra_armado_75g.json",
+    "quadros": 80,
+    "pessoas": 837,
+    "recall_qualquer_classe": 0.7658,
+    "objeto_chamado_armada": 0.125,
+    "objeto_chamado_armada_ic95": [
+     0.09,
+     0.1618
+    ],
+    "armada_chamada_armada": 0.4319,
+    "dlinha_armada_contra_objeto": 0.973,
+    "dlinha_ic95": [
+     0.7715,
+     1.1919
+    ]
+   },
+   "150 m gemeo": {
+    "arquivo": "extra_armado_150g_e120.json",
+    "quadros": 80,
+    "pessoas": 916,
+    "recall_qualquer_classe": 0.6627,
+    "objeto_chamado_armada": 0.2452,
+    "objeto_chamado_armada_ic95": [
+     0.2042,
+     0.289
+    ],
+    "armada_chamada_armada": 0.4568,
+    "dlinha_armada_contra_objeto": 0.579,
+    "dlinha_ic95": [
+     0.376,
+     0.7795
+    ]
+   }
+  },
+  "150_contra_75": {
+   "dlinha": {
+    "dif": -0.394,
+    "ic95": [
+     -0.6807,
+     -0.0982
+    ],
+    "b_ok": true,
+    "c_rel_pct": -68.0
+   },
+   "objeto_chamado_armada": {
+    "dif": 0.1202,
+    "ic95": [
+     0.0581,
+     0.1805
+    ],
+    "b_ok": true,
+    "c_rel_pct": 96.2
+   },
+   "nota": "reamostragem independente de quadros nos dois corpora (os mesmos indices de quadro, sorteios separados)"
+  },
+  "veredito": "armado_150g_e120: separacao acima do acaso no sintetico (IC de d' exclui 0): tratada como atalho, nao como capacidade (nos 80 quadros independentes)"
+ },
+ "R5-2_cena_C": {
+  "faixa_sementes_de_cena": {
+   "runs": [
+    "s_oblvar",
+    "s_oblvar_e22",
+    "s_oblvar_e23"
+   ],
+   "valores": [
+    0.1055,
+    0.0935,
+    0.0821
+   ],
+   "media": 0.0937,
+   "min": 0.0821,
+   "max": 0.1055,
+   "n": 3,
+   "media_ic95": [
+    0.0868,
+    0.1019
+   ],
+   "eficacia_media": 0.1484,
+   "eficacia_ic95": [
+    0.1391,
+    0.1599
+   ]
+  },
+  "faixa_sementes_de_treino": {
+   "runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ],
+   "valores": [
+    0.1055,
+    0.0958,
+    0.0887
+   ],
+   "media": 0.0966,
+   "min": 0.0887,
+   "max": 0.1055,
+   "n": 3,
+   "media_ic95": [
+    0.0896,
+    0.1048
+   ],
+   "eficacia_media": 0.1531,
+   "eficacia_ic95": [
+    0.1443,
+    0.1648
+   ]
+  },
+  "largura_cena": 0.0234,
+  "largura_treino": 0.0168,
+  "C_ii": {
+   "a_valor": 0.0937,
+   "b_valor": 0.0555,
+   "dif": 0.0381,
+   "dif_relativa_pct_do_menor": 68.7,
+   "razao_a_sobre_b": 1.687,
+   "razao_ic95": [
+    1.582,
+    1.804
+   ],
+   "a_runs": [
+    "s_oblvar",
+    "s_oblvar_e22",
+    "s_oblvar_e23"
+   ],
+   "b_runs": [
+    "s_obliquo",
+    "s_obliquo_sd1",
+    "s_obliquo_sd2"
+   ],
+   "a": "resolvivel: faixas nao se cruzam",
+   "a_ok": true,
+   "b_ic95": [
+    0.0334,
+    0.0437
+   ],
+   "b_ok": true,
+   "c_ok": true,
+   "resolvivel": true,
+   "passou_em": [
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  "regra": "PLANO 3.8: descritivo, faixa de cena (21, 22, 23) ao lado da de treino; C-ii: S-oblique-six nas tres sementes de cena contra S-oblique nas tres de treino, (a), (b) pareada nas medias, (c); C-ii falha em (a) -> a frase de seis sitios contra um diz que o valor de um sitio cai dentro da faixa de cena; faixa de cena mais que o dobro da de treino -> o cenario domina a dispersao",
+  "veredito": "C-ii leituras ['a', 'b', 'c']"
+ },
+ "iou_0.50_0.60_0.75": {
+  "pares": {
+   "padrao_ultralytics: S principal": {
+    "mAP50": 0.042,
+    "AP60": 0.0222,
+    "AP75": 0.0062,
+    "a": [
+     "s_obliquo",
+     "s_obliquo_sd1",
+     "s_obliquo_sd2"
+    ],
+    "b": [
+     "s_nadir_4k",
+     "s_nadir_4k_sd1",
+     "s_nadir_4k_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: A 152 vs 30": {
+    "mAP50": 0.0349,
+    "AP60": 0.0204,
+    "AP75": 0.006,
+    "a": [
+     "s_oblvar",
+     "s_oblvar_sd1",
+     "s_oblvar_sd2"
+    ],
+    "b": [
+     "s_oblvar_c030",
+     "s_oblvar_c030_sd1",
+     "s_oblvar_c030_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: C-ii": {
+    "mAP50": 0.0381,
+    "AP60": 0.0222,
+    "AP75": 0.0056,
+    "a": [
+     "s_oblvar",
+     "s_oblvar_e22",
+     "s_oblvar_e23"
+    ],
+    "b": [
+     "s_obliquo",
+     "s_obliquo_sd1",
+     "s_obliquo_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: F 05% escolhidos": {
+    "mAP50": 0.1322,
+    "AP60": 0.1333,
+    "AP75": 0.0969,
+    "a": [
+     "ft05_coco_lr"
+    ],
+    "b": [
+     "ft05_sint"
+    ],
+    "ordem_muda": false
+   },
+   "padrao_ultralytics: F 10% escolhidos": {
+    "mAP50": 0.1129,
+    "AP60": 0.1199,
+    "AP75": 0.0985,
+    "a": [
+     "ft10_coco_lr"
+    ],
+    "b": [
+     "ft10_sint"
+    ],
+    "ordem_muda": false
+   },
+   "regra_oficial: S principal": {
+    "mAP50": 0.0425,
+    "AP60": 0.0224,
+    "AP75": 0.0063,
+    "a": [
+     "s_obliquo",
+     "s_obliquo_sd1",
+     "s_obliquo_sd2"
+    ],
+    "b": [
+     "s_nadir_4k",
+     "s_nadir_4k_sd1",
+     "s_nadir_4k_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "regra_oficial: A 152 vs 30": {
+    "mAP50": 0.0352,
+    "AP60": 0.0206,
+    "AP75": 0.0061,
+    "a": [
+     "s_oblvar",
+     "s_oblvar_sd1",
+     "s_oblvar_sd2"
+    ],
+    "b": [
+     "s_oblvar_c030",
+     "s_oblvar_c030_sd1",
+     "s_oblvar_c030_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "regra_oficial: C-ii": {
+    "mAP50": 0.039,
+    "AP60": 0.0226,
+    "AP75": 0.0057,
+    "a": [
+     "s_oblvar",
+     "s_oblvar_e22",
+     "s_oblvar_e23"
+    ],
+    "b": [
+     "s_obliquo",
+     "s_obliquo_sd1",
+     "s_obliquo_sd2"
+    ],
+    "ordem_muda": false
+   },
+   "regra_oficial: F 05% escolhidos": {
+    "mAP50": 0.1388,
+    "AP60": 0.1386,
+    "AP75": 0.0991,
+    "a": [
+     "ft05_coco_lr"
+    ],
+    "b": [
+     "ft05_sint"
+    ],
+    "ordem_muda": false
+   },
+   "regra_oficial: F 10% escolhidos": {
+    "mAP50": 0.1208,
+    "AP60": 0.1262,
+    "AP75": 0.1012,
+    "a": [
+     "ft10_coco_lr"
+    ],
+    "b": [
+     "ft10_sint"
+    ],
+    "ordem_muda": false
+   }
+  },
+  "ordens_que_mudam": [],
+  "regra": "regra da rodada 4: par cuja ordem muda entre 0,50, 0,60 e 0,75 vai ao texto nos tres limiares",
+  "veredito": "ordem estavel nos tres limiares"
  }
 }

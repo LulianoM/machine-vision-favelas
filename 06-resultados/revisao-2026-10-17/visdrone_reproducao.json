@@ -880,6 +880,46 @@
    "P_validador": 0.2276,
    "R_validador": 0.1573,
    "quando": "2026-10-20T09:09:48"
+  },
+  "s_oblvar_e22": {
+   "run": "s_oblvar_e22",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_e22\\weights\\best.pt",
+   "imagens": 548,
+   "caixas_verdadeiras": 13969,
+   "predicoes": 113248,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.09348,
+   "mAP50_recalculado": 0.09348,
+   "mAP50_95_validador": 0.02926,
+   "mAP50_95_recalculado": 0.02926,
+   "mAP50_reportado": 0.0935,
+   "dif_recalculado_validador": 0.0,
+   "dif_validador_reportado": -2e-05,
+   "P_validador": 0.236,
+   "R_validador": 0.1444,
+   "quando": "2026-10-21T19:45:22"
+  },
+  "s_oblvar_e23": {
+   "run": "s_oblvar_e23",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_e23\\weights\\best.pt",
+   "imagens": 548,
+   "caixas_verdadeiras": 13969,
+   "predicoes": 48793,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.08209,
+   "mAP50_recalculado": 0.08209,
+   "mAP50_95_validador": 0.02607,
+   "mAP50_95_recalculado": 0.02607,
+   "mAP50_reportado": 0.0821,
+   "dif_recalculado_validador": 0.0,
+   "dif_validador_reportado": -1e-05,
+   "P_validador": 0.2985,
+   "R_validador": 0.1119,
+   "quando": "2026-10-22T10:21:10"
   }
  }
 }

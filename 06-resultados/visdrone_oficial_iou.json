@@ -441,6 +441,552 @@
    },
    "confere_padrao": true,
    "quando": "2026-10-19T13:36:31"
+  },
+  "ft05_coco_rep": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_rep\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.522,
+    "AP60": 0.3912,
+    "AP75": 0.1033,
+    "mAP50-95": 0.2025,
+    "P": 0.641,
+    "R": 0.4718
+   },
+   "regra_oficial": {
+    "mAP50": 0.5404,
+    "AP60": 0.4039,
+    "AP75": 0.106,
+    "mAP50-95": 0.2091,
+    "P": 0.6558,
+    "R": 0.4835
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:22:57"
+  },
+  "ft05_sint_fz": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint_fz\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.2808,
+    "AP60": 0.1897,
+    "AP75": 0.0435,
+    "mAP50-95": 0.1002,
+    "P": 0.4272,
+    "R": 0.2896
+   },
+   "regra_oficial": {
+    "mAP50": 0.2883,
+    "AP60": 0.1946,
+    "AP75": 0.0444,
+    "mAP50-95": 0.1027,
+    "P": 0.4318,
+    "R": 0.2965
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:24:36"
+  },
+  "ft05_sint_lr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint_lr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.3103,
+    "AP60": 0.2031,
+    "AP75": 0.0455,
+    "mAP50-95": 0.1069,
+    "P": 0.4604,
+    "R": 0.3122
+   },
+   "regra_oficial": {
+    "mAP50": 0.3172,
+    "AP60": 0.2074,
+    "AP75": 0.0463,
+    "mAP50-95": 0.1092,
+    "P": 0.4633,
+    "R": 0.3194
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:26:15"
+  },
+  "ft05_sint_fzlr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_sint_fzlr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.2028,
+    "AP60": 0.1212,
+    "AP75": 0.027,
+    "mAP50-95": 0.0665,
+    "P": 0.3487,
+    "R": 0.2356
+   },
+   "regra_oficial": {
+    "mAP50": 0.207,
+    "AP60": 0.1237,
+    "AP75": 0.0274,
+    "mAP50-95": 0.0678,
+    "P": 0.3513,
+    "R": 0.2392
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:27:53"
+  },
+  "ft05_coco_fz": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_fz\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5467,
+    "AP60": 0.417,
+    "AP75": 0.117,
+    "mAP50-95": 0.2165,
+    "P": 0.6762,
+    "R": 0.4926
+   },
+   "regra_oficial": {
+    "mAP50": 0.5664,
+    "AP60": 0.4308,
+    "AP75": 0.1196,
+    "mAP50-95": 0.2235,
+    "P": 0.6929,
+    "R": 0.5064
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:29:31"
+  },
+  "ft05_coco_lr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_lr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5746,
+    "AP60": 0.4558,
+    "AP75": 0.1748,
+    "mAP50-95": 0.2501,
+    "P": 0.6759,
+    "R": 0.514
+   },
+   "regra_oficial": {
+    "mAP50": 0.5943,
+    "AP60": 0.4699,
+    "AP75": 0.1788,
+    "mAP50-95": 0.2575,
+    "P": 0.6862,
+    "R": 0.5326
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:31:10"
+  },
+  "ft05_coco_fzlr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_fzlr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.541,
+    "AP60": 0.4087,
+    "AP75": 0.1153,
+    "mAP50-95": 0.2135,
+    "P": 0.6623,
+    "R": 0.4873
+   },
+   "regra_oficial": {
+    "mAP50": 0.5609,
+    "AP60": 0.4225,
+    "AP75": 0.118,
+    "mAP50-95": 0.2206,
+    "P": 0.6816,
+    "R": 0.5006
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:32:49"
+  },
+  "ft10_sint_fz": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_sint_fz\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.3209,
+    "AP60": 0.2248,
+    "AP75": 0.0517,
+    "mAP50-95": 0.1164,
+    "P": 0.4695,
+    "R": 0.3151
+   },
+   "regra_oficial": {
+    "mAP50": 0.3292,
+    "AP60": 0.2304,
+    "AP75": 0.0528,
+    "mAP50-95": 0.1192,
+    "P": 0.4732,
+    "R": 0.3221
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:34:29"
+  },
+  "ft10_sint_lr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_sint_lr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.3875,
+    "AP60": 0.2655,
+    "AP75": 0.0607,
+    "mAP50-95": 0.1384,
+    "P": 0.5301,
+    "R": 0.3703
+   },
+   "regra_oficial": {
+    "mAP50": 0.398,
+    "AP60": 0.2723,
+    "AP75": 0.0619,
+    "mAP50-95": 0.1419,
+    "P": 0.5423,
+    "R": 0.3747
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:36:07"
+  },
+  "ft10_sint_fzlr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_sint_fzlr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.2241,
+    "AP60": 0.1406,
+    "AP75": 0.0296,
+    "mAP50-95": 0.0759,
+    "P": 0.3646,
+    "R": 0.2505
+   },
+   "regra_oficial": {
+    "mAP50": 0.2303,
+    "AP60": 0.1439,
+    "AP75": 0.0302,
+    "mAP50-95": 0.0778,
+    "P": 0.3682,
+    "R": 0.2554
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:37:46"
+  },
+  "ft10_coco_fz": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_coco_fz\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5772,
+    "AP60": 0.4421,
+    "AP75": 0.1247,
+    "mAP50-95": 0.2304,
+    "P": 0.7104,
+    "R": 0.5091
+   },
+   "regra_oficial": {
+    "mAP50": 0.5952,
+    "AP60": 0.4546,
+    "AP75": 0.127,
+    "mAP50-95": 0.2368,
+    "P": 0.7126,
+    "R": 0.5269
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:39:24"
+  },
+  "ft10_coco_lr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_coco_lr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.6224,
+    "AP60": 0.5044,
+    "AP75": 0.201,
+    "mAP50-95": 0.2774,
+    "P": 0.7224,
+    "R": 0.5542
+   },
+   "regra_oficial": {
+    "mAP50": 0.6479,
+    "AP60": 0.5238,
+    "AP75": 0.2062,
+    "mAP50-95": 0.2874,
+    "P": 0.7414,
+    "R": 0.5741
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:41:03"
+  },
+  "ft10_coco_fzlr": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft10_coco_fzlr\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5644,
+    "AP60": 0.4241,
+    "AP75": 0.1183,
+    "mAP50-95": 0.2231,
+    "P": 0.6742,
+    "R": 0.5055
+   },
+   "regra_oficial": {
+    "mAP50": 0.586,
+    "AP60": 0.4391,
+    "AP75": 0.1211,
+    "mAP50-95": 0.2307,
+    "P": 0.6915,
+    "R": 0.5235
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:42:42"
+  },
+  "ft05_coco_lr_sd1": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_lr_sd1\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5963,
+    "AP60": 0.4717,
+    "AP75": 0.1744,
+    "mAP50-95": 0.2563,
+    "P": 0.7013,
+    "R": 0.5338
+   },
+   "regra_oficial": {
+    "mAP50": 0.6198,
+    "AP60": 0.4885,
+    "AP75": 0.1786,
+    "mAP50-95": 0.2651,
+    "P": 0.7212,
+    "R": 0.5529
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:44:21"
+  },
+  "ft05_coco_lr_sd2": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\ft05_coco_lr_sd2\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.5982,
+    "AP60": 0.4713,
+    "AP75": 0.173,
+    "mAP50-95": 0.2568,
+    "P": 0.7027,
+    "R": 0.5353
+   },
+   "regra_oficial": {
+    "mAP50": 0.6204,
+    "AP60": 0.4872,
+    "AP75": 0.1772,
+    "mAP50-95": 0.2652,
+    "P": 0.7181,
+    "R": 0.5532
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:45:59"
+  },
+  "s_oblvar_c030": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c030\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0499,
+    "AP60": 0.0245,
+    "AP75": 0.0037,
+    "mAP50-95": 0.0145,
+    "P": 0.1643,
+    "R": 0.109
+   },
+   "regra_oficial": {
+    "mAP50": 0.0513,
+    "AP60": 0.0251,
+    "AP75": 0.0037,
+    "mAP50-95": 0.0148,
+    "P": 0.1689,
+    "R": 0.1097
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:47:37"
+  },
+  "s_oblvar_c060": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c060\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0806,
+    "AP60": 0.0383,
+    "AP75": 0.0072,
+    "mAP50-95": 0.0226,
+    "P": 0.2193,
+    "R": 0.1471
+   },
+   "regra_oficial": {
+    "mAP50": 0.0827,
+    "AP60": 0.0393,
+    "AP75": 0.0074,
+    "mAP50-95": 0.0232,
+    "P": 0.2235,
+    "R": 0.1487
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:49:14"
+  },
+  "s_oblvar_c090": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c090\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.081,
+    "AP60": 0.0417,
+    "AP75": 0.0103,
+    "mAP50-95": 0.0255,
+    "P": 0.2378,
+    "R": 0.1359
+   },
+   "regra_oficial": {
+    "mAP50": 0.0826,
+    "AP60": 0.0425,
+    "AP75": 0.0104,
+    "mAP50-95": 0.0259,
+    "P": 0.2431,
+    "R": 0.1369
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:50:52"
+  },
+  "s_oblvar_c120": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c120\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0915,
+    "AP60": 0.0474,
+    "AP75": 0.0116,
+    "mAP50-95": 0.0282,
+    "P": 0.2514,
+    "R": 0.1509
+   },
+   "regra_oficial": {
+    "mAP50": 0.0934,
+    "AP60": 0.0483,
+    "AP75": 0.0118,
+    "mAP50-95": 0.0287,
+    "P": 0.2563,
+    "R": 0.1517
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:52:30"
+  },
+  "s_oblvar_c030_sd1": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c030_sd1\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0674,
+    "AP60": 0.0298,
+    "AP75": 0.0046,
+    "mAP50-95": 0.0178,
+    "P": 0.1824,
+    "R": 0.1442
+   },
+   "regra_oficial": {
+    "mAP50": 0.0693,
+    "AP60": 0.0306,
+    "AP75": 0.0047,
+    "mAP50-95": 0.0183,
+    "P": 0.1877,
+    "R": 0.1457
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:54:08"
+  },
+  "s_oblvar_c030_sd2": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c030_sd2\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0679,
+    "AP60": 0.0352,
+    "AP75": 0.0088,
+    "mAP50-95": 0.0205,
+    "P": 0.205,
+    "R": 0.1295
+   },
+   "regra_oficial": {
+    "mAP50": 0.0696,
+    "AP60": 0.036,
+    "AP75": 0.009,
+    "mAP50-95": 0.021,
+    "P": 0.2089,
+    "R": 0.1304
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:55:45"
+  },
+  "s_oblvar_c120_sd1": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c120_sd1\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0878,
+    "AP60": 0.0442,
+    "AP75": 0.0109,
+    "mAP50-95": 0.0264,
+    "P": 0.234,
+    "R": 0.1422
+   },
+   "regra_oficial": {
+    "mAP50": 0.0897,
+    "AP60": 0.0451,
+    "AP75": 0.011,
+    "mAP50-95": 0.0269,
+    "P": 0.2392,
+    "R": 0.143
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:57:23"
+  },
+  "s_oblvar_c120_sd2": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_c120_sd2\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0918,
+    "AP60": 0.0452,
+    "AP75": 0.0092,
+    "mAP50-95": 0.0262,
+    "P": 0.2276,
+    "R": 0.1573
+   },
+   "regra_oficial": {
+    "mAP50": 0.0935,
+    "AP60": 0.046,
+    "AP75": 0.0094,
+    "mAP50-95": 0.0267,
+    "P": 0.2318,
+    "R": 0.1588
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T10:59:01"
+  },
+  "s_soldur_4k": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_soldur_4k\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0072,
+    "AP60": 0.0037,
+    "AP75": 0.0003,
+    "mAP50-95": 0.0018,
+    "P": 0.0339,
+    "R": 0.0643
+   },
+   "regra_oficial": {
+    "mAP50": 0.0075,
+    "AP60": 0.0037,
+    "AP75": 0.0003,
+    "mAP50-95": 0.0019,
+    "P": 0.0357,
+    "R": 0.0644
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T11:00:37"
+  },
+  "s_oblvar_e22": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_e22\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0935,
+    "AP60": 0.0489,
+    "AP75": 0.0116,
+    "mAP50-95": 0.0293,
+    "P": 0.236,
+    "R": 0.1444
+   },
+   "regra_oficial": {
+    "mAP50": 0.0953,
+    "AP60": 0.0496,
+    "AP75": 0.0117,
+    "mAP50-95": 0.0297,
+    "P": 0.2371,
+    "R": 0.1462
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T11:02:15"
+  },
+  "s_oblvar_e23": {
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_e23\\weights\\best.pt",
+   "padrao_ultralytics": {
+    "mAP50": 0.0821,
+    "AP60": 0.0438,
+    "AP75": 0.0117,
+    "mAP50-95": 0.0261,
+    "P": 0.2985,
+    "R": 0.1119
+   },
+   "regra_oficial": {
+    "mAP50": 0.0835,
+    "AP60": 0.0445,
+    "AP75": 0.0119,
+    "mAP50-95": 0.0265,
+    "P": 0.3046,
+    "R": 0.1123
+   },
+   "confere_padrao": true,
+   "quando": "2026-10-22T11:03:53"
   }
  },
  "regioes_ignoradas": {

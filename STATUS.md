@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-10-18, [DESKTOP]
+Última atualização: 2026-10-22, [DESKTOP]
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
@@ -39,9 +39,10 @@ Tudo entrou no manuscrito (9.3, 9.4, 9.5, 11.5, tabela da 8.2, abstract e conclu
 
 Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; supervisor em janela própria aberto por atalho na pasta Inicializar (nunca pelo Agendador de Tarefas: o Blender sobe sem o MPFB); pausa e retomada com `pausa_rodada3.py`; retrato com `status_rodada3.py`. Os três servem de molde.
 
-## Rodada 5 (em curso desde 18/10 23:43)
+## Rodada 5 (encerrada 22/10 11:05, sem grupo com falha)
 
-Plano e critérios em `07-blender/PLANO-RODADA5.md`; cadeia `07-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favelaeal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar sempre pela sessão com `cmd /c retoma_rodada5.cmd` ou por duplo clique; pelo Explorer a partir da sessão, o Blender sobe sem MPFB (visto em 18/10).
+Plano e critérios em `07-blender/PLANO-RODADA5.md`; cadeia `07-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favela
+eal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar sempre pela sessão com `cmd /c retoma_rodada5.cmd` ou por duplo clique; pelo Explorer a partir da sessão, o Blender sobe sem MPFB (visto em 18/10).
 
 ## Revisão de 17 e 18/10 (feedback de 14/10)
 
@@ -109,7 +110,7 @@ Painel: https://claude.ai/artifact/3XtSXZvhkzovA1ixGZ4rFH
 
 ## Próximos passos, em ordem
 
-0. [AUTOR] Ler o PDF de 17/10 e reenviar ao revisor (Felipe I. Toledo), que pediu para revisar de novo depois da correção de forma e estrutura. Rodada 5 a partir da madrugada de 19/10 (`07-blender/PLANO-RODADA5.md`). O formato da AIM 2027 não está no edital (só o prazo, 19/11/2026): confirmar com AIM@marshall.usc.edu antes de decidir o destino. Aguardar o retorno escrito do revisor sobre bibliografia.
+0. [AUTOR] Ler o PDF de 17/10 e reenviar ao revisor (Felipe I. Toledo), que pediu para revisar de novo depois da correção de forma e estrutura. Rodada 5 encerrada em 22/10 (vereditos em `06-resultados/rodada5_criterios.json`, resumo em `06-resultados/RESULTADOS.md`, entrada de 22/10); falta levar os resultados ao artigo. O formato da AIM 2027 não está no edital (só o prazo, 19/11/2026): confirmar com AIM@marshall.usc.edu antes de decidir o destino. Aguardar o retorno escrito do revisor sobre bibliografia.
 0. [AUTOR] Ler o PDF revisado de 30/09 (Área de Trabalho do desktop) e decidir os itens que a revisão geral deixou para o autor (lista no DIARIO de 30/09).
 0. [AUTOR] Ler `01-artigo/ANALISE-2026-09-30.md`, seção 4: dez decisões que o refino deixou para os autores (extensão e periódico-alvo, título da seção 6, proposta contra o resultado da 9.4, sementes do fator 6,0, nome do coautor delegado, liberação do gerador). Depois revisar as quatro escolhas da busca bibliográfica (DIARIO de 30/09): 51 e 100 mandados, mapas das rotas como premissa, sobrenome "Américo da Silva", dois-pontos na manchete do InSight Crime.
 1. [AUTOR] Ler no PDF as passagens novas: abstract (16,7% e a frase do ajuste fino), 9.3, 9.4 (o pré-treino sintético perde para o COCO), 9.5 e 11.5 (gêmeo e arma inédita). Decidir se o resultado da 9.4 muda a proposta da seção 6, que conta com o pré-treino sintético.

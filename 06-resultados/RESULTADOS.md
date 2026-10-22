@@ -304,6 +304,19 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-10-22 [DESKTOP] Rodada 5 encerrada: fechamento (Y2 a Y4) e vereditos
+
+A cadeia terminou em 22/10 às 11:05, sem grupo com falha além do P2 da primeira partida (Blender lançado pelo Explorer, sem MPFB; relançado pela sessão em 18/10 às 23:43). Pausa do autor de 21/10 23:38 a 22/10 01:41. Vereditos em `06-resultados/rodada5_criterios.json` (`06-resultados/rodada5_criterios.py --parte tudo`); leituras de resolubilidade em `06-resultados/revisao-2026-10-17/resolvivel_r5.md`; regra oficial do VisDrone e IoU em `06-resultados/visdrone_oficial_iou.json`.
+
+- R5-1 (S): oblíquo acima de nadir nas três leituras, razão 4,08 (3,44 a 4,64); seis sítios contra um no oblíquo, três leituras; em nadir, (b) e (c).
+- R5-5 (F): custo do pré-treino sintético robusto ao cronograma; nos cronogramas escolhidos, +30,2% a 5% (três leituras) e +22,2% a 10% (b).
+- R5-6 (N): na HERIDAL, nadir acima do oblíquo, leituras (b) e (c); a ordem se inverte em relação ao VisDrone.
+- R5-3 (A): número de quadros operante (152 contra 30, três leituras); fim da curva subindo dentro da dispersão de treino (152 contra 120, só (b), +6,9%).
+- R5-4 (D): queda de participação no treino; a desvantagem do sol duro deixa de ser resolvível com sol duro bastante no treino.
+- R5-7 (M): três classes a 150 m válidas; separação acima do acaso no sintético, mais fraca que a 75 m, tratada como atalho.
+- R5-2 (C): seis sítios nas três cenas acima de S-oblique nas três sementes, três leituras (+68,7%).
+- IoU 0,50, 0,60 e 0,75: ordem dos modelos novos estável nos três limiares.
+
 ## 2026-10-22 [DESKTOP] Rodada 5, grupo C (R5-2): semente de cena para S-oblique-six
 
 Cadeia `07-blender/scripts/rodada5.py`, etapas C1 a C8 (plano 3.8). Duas réplicas do corpus oblíquo de seis sítios com sementes de cena 22 e 23 (a 21 é a do corpus original), 180 quadros cada, mesma receita e semente de treino 0; zero-shot em `06-resultados/sim2real_s_oblvar_e22.json` e `sim2real_s_oblvar_e23.json`. A réplica 23 foi pausada pelo autor em 21/10 às 23:38 e retomada em 22/10 às 01:41, do quadro 13 de 30 do sítio interrompido.

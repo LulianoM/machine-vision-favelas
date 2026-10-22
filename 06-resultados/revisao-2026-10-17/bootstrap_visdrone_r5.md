@@ -1,4 +1,4 @@
-# Reamostragem no VisDrone-DET val, rodada 5 (19/10/2026)
+# Reamostragem no VisDrone-DET val, rodada 5 (22/10/2026)
 
 1000 reamostras das 548 imagens, semente 0, pareadas; diferenca na media das sementes de cada lado.
 
@@ -9,7 +9,11 @@
 | S-oblique | s_obliquo, s_obliquo_sd1, s_obliquo_sd2 | 0.0555 | 0.0501 a 0.0614 | 0.0502 a 0.0614 | 8.8% |
 | S-oblique-six | s_oblvar, s_oblvar_sd1, s_oblvar_sd2 | 0.0966 | 0.0887 a 0.1055 | 0.0896 a 0.1048 | 15.3% |
 | S-nadir-150-six | s_variedade | 0.0190 | 0.0190 a 0.0190 | 0.0142 a 0.0211 | 3.0% |
-| S-oblique-six scenes | s_oblvar | 0.1055 | 0.1055 a 0.1055 | 0.0980 a 0.1148 | 16.7% |
+| S-oblique-six c030 | s_oblvar_c030, s_oblvar_c030_sd1, s_oblvar_c030_sd2 | 0.0618 | 0.0499 a 0.0679 | 0.0566 a 0.0679 | 9.8% |
+| S-oblique-six c060 | s_oblvar_c060 | 0.0806 | 0.0806 a 0.0806 | 0.0739 a 0.0885 | 12.8% |
+| S-oblique-six c090 | s_oblvar_c090 | 0.0810 | 0.0810 a 0.0810 | 0.0745 a 0.0886 | 12.8% |
+| S-oblique-six c120 | s_oblvar_c120, s_oblvar_c120_sd1, s_oblvar_c120_sd2 | 0.0904 | 0.0878 a 0.0918 | 0.0838 a 0.0986 | 14.3% |
+| S-oblique-six scenes | s_oblvar, s_oblvar_e22, s_oblvar_e23 | 0.0937 | 0.0821 a 0.1055 | 0.0868 a 0.1019 | 14.8% |
 | F-synthetic 5% orig | ft05_sint, ft05_sint_sd1, ft05_sint_sd2 | 0.4529 | 0.4424 a 0.4608 | 0.4373 a 0.4696 | 71.8% |
 | F-synthetic 5% fz | ft05_sint_fz | 0.2808 | 0.2808 a 0.2808 | 0.2664 a 0.2952 | 44.5% |
 | F-synthetic 5% lr | ft05_sint_lr | 0.3103 | 0.3103 a 0.3103 | 0.2961 a 0.3248 | 49.2% |
@@ -46,6 +50,6 @@
 | R5-5 generic vs synthetic start, 10%, cell lr | 0.6224 | 0.3875 | +0.2348 | +0.2238 a +0.2458 | +60.6% | 1.606 (1.562 a 1.65) |
 | R5-5 generic vs synthetic start, 10%, cell fzlr | 0.5644 | 0.2241 | +0.3402 | +0.3258 a +0.3539 | +151.8% | 2.518 (2.4 a 2.634) |
 | R5-5 generic vs synthetic start, 10%, chosen schedules | 0.6224 | 0.5095 | +0.1129 | +0.1044 a +0.1230 | +22.2% | 1.222 (1.202 a 1.245) |
-| R5-2 C-ii scene seeds vs S-oblique training seeds | 0.1055 | 0.0555 | +0.0499 | +0.0444 a +0.0563 | +89.9% | 1.899 (1.778 a 2.046) |
-
-Faltando: R5-3 152 vs 30 frames; R5-3 152 vs 120 frames
+| R5-3 152 vs 30 frames | 0.0966 | 0.0618 | +0.0349 | +0.0310 a +0.0392 | +56.5% | 1.565 (1.489 a 1.646) |
+| R5-3 152 vs 120 frames | 0.0966 | 0.0904 | +0.0062 | +0.0033 a +0.0088 | +6.9% | 1.069 (1.036 a 1.099) |
+| R5-2 C-ii scene seeds vs S-oblique training seeds | 0.0937 | 0.0555 | +0.0381 | +0.0334 a +0.0437 | +68.7% | 1.687 (1.582 a 1.804) |
