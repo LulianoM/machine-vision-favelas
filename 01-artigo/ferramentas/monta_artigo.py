@@ -29,6 +29,8 @@ import tempfile
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 MAN = os.path.join(RAIZ, "01-artigo", "manuscrito")
+# Rotulos por lingua (--lingua pt usa 01-artigo/manuscrito-pt, traducao de 2026-10-23)
+ROT = {"Table": "Table", "Figure": "Figure"}
 
 # Ordem de leitura do artigo. Os arquivos "b" sao a parte tecnica, escrita pelo mestrando; desde a
 # reordenacao de 22/09 entram em bloco depois da secao 6.
@@ -191,7 +193,7 @@ def resolve_tabelas(txt, num_tab):
     """troca <!--TAB:chave|legenda--> pela legenda numerada, em HTML cru acima da tabela"""
     def sub(m):
         chave, leg = m.group(1).strip(), m.group(2).strip()
-        return f'<p class="tabcap"><b>Table {num_tab.get(chave, "?")}.</b> {leg}</p>'
+        return f'<p class="tabcap"><b>{ROT["Table"]} {num_tab.get(chave, "?")}.</b> {leg}</p>'
     return RE_TAB.sub(sub, txt)
 
 CSS_AIM = """
@@ -303,7 +305,7 @@ def resolve_figuras(txt, n_fig):
             larga = False
         cls = ' class="full"' if larga else ''
         return (f'<figure{cls}><img src="{embute(p)}" alt="{leg}">'
-                f'<figcaption><b>Figure {n_fig}.</b> {leg}</figcaption></figure>')
+                f'<figcaption><b>{ROT["Figure"]} {n_fig}.</b> {leg}</figcaption></figure>')
     return RE_FIG.sub(sub, txt), n_fig
 
 
@@ -559,7 +561,13 @@ def main():
     ap.add_argument("--sem-previa", action="store_true",
                 help="tira o aviso unico de versao previa do inicio. E o que se usa na submissao")
     ap.add_argument("--html", default=None, help="grava tambem o HTML intermediario")
+    ap.add_argument("--lingua", choices=["en", "pt"], default="en",
+                    help="pt: le 01-artigo/manuscrito-pt (traducao) e usa rotulos em portugues")
     args = ap.parse_args()
+    global MAN
+    if args.lingua == "pt":
+        MAN = os.path.join(RAIZ, "01-artigo", "manuscrito-pt")
+        ROT.update({"Table": "Tabela", "Figure": "Figura"})
 
     import markdown
 
@@ -605,7 +613,7 @@ def main():
             return f"## {n_sec}. {m.group(1)}"
 
         alvos = [m for m in RE_H2.finditer(txt)
-                 if not m.group(1).strip().lower().startswith(("abstract", "keywords", "references"))]
+                 if not m.group(1).strip().lower().startswith(("abstract", "keywords", "references", "resumo", "palavras-chave", "referências"))]
         if alvos:
             m = alvos[0]
             txt = txt[:m.start()] + _numera(m) + txt[m.end():]
@@ -650,9 +658,14 @@ def main():
 </div>"""
 
     aviso = ""
-    if not args.sem_previa:
+    if not args.sem_previa and args.lingua == "pt":
+        aviso += ('<div class="aviso full"><b>Versão prévia, ainda não finalizada.</b> Rascunho de '
+                  'trabalho de 22 de outubro de 2026, tradução para o português da versão em inglês, '
+                  'compartilhada entre os autores para revisão; números, figuras e referências ainda '
+                  'estão em revisão. Os rótulos dentro das figuras permanecem em inglês.</div>')
+    elif not args.sem_previa:
         aviso += ('<div class="aviso full"><b>Preliminary version, not final.</b> Working draft of '
-                  '17 October 2026, shared among the authors for revision; numbers, figures and '
+                  '22 October 2026, shared among the authors for revision; numbers, figures and '
                   'references are still under review and the text has not been approved by all '
                   'authors. <i>Versão prévia, ainda não finalizada.</i></div>')
     if n_ph:
@@ -663,7 +676,10 @@ def main():
     if faltando:
         aviso += ('<div class="aviso full"><b>Seções ausentes:</b> ' + ", ".join(faltando) + "</div>")
 
-    html = (f"<!doctype html><html><head><meta charset='utf-8'>"
+    if args.lingua == "pt":
+        capa = capa.replace("Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas",
+                            "Visão computacional a partir do Sul Global: dados sintéticos e os limites de aquisição para a detecção de pessoas armadas em favelas densas").replace("Brazil", "Brasil")
+    html = (f"<!doctype html><html lang='{'pt-BR' if args.lingua == 'pt' else 'en'}'><head><meta charset='utf-8'>"
             f"<style>{CSS_ELSEVIER if args.formato == chr(101)+chr(108)+chr(115)+chr(101)+chr(118)+chr(105)+chr(101)+chr(114) else CSS_AIM}</style></head><body>{capa}{aviso}{corpo}</body></html>")
 
     tmp = args.html or os.path.join(tempfile.gettempdir(), "artigo_previa.html")
@@ -674,10 +690,25 @@ def main():
     if not os.path.exists(edge):
         edge = r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+    # perfil novo a cada chamada e espera pelo arquivo: o Edge headless as vezes sai antes de gravar
+    # o PDF, ou colide com outra instancia aberta (visto em 23/10 no montador do resumo e aqui)
+    import time
+    perfil = tempfile.mkdtemp(prefix="edge_perfil_")
+    if os.path.exists(args.out):
+        os.remove(args.out)
     cmd = [edge, "--headless", "--disable-gpu", "--no-pdf-header-footer",
+           f"--user-data-dir={perfil}",
            f"--print-to-pdf={os.path.abspath(args.out)}",
            "file:///" + tmp.replace("\\", "/")]
     r = subprocess.run(cmd, capture_output=True, timeout=300)
+    fim, tam = time.time() + 120, -1
+    while time.time() < fim:
+        if os.path.exists(args.out):
+            t = os.path.getsize(args.out)
+            if t > 0 and t == tam:
+                break
+            tam = t
+        time.sleep(2)
     if not os.path.exists(args.out):
         print("falhou ao gerar PDF:", r.stderr.decode("utf-8", "ignore")[-500:], file=sys.stderr)
         sys.exit(1)
