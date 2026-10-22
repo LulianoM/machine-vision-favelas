@@ -356,6 +356,7 @@ Cadeia `07-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 18
 | chuva | 0,7276 | 0,7589 | 0,747 | 0,789 |
 
 - D-i (pareada, os mesmos 20 quadros de sol duro): especialista menos generalista, recall +0,0818 (IC 0,0377 a 0,1243). Ver seis vezes mais sol duro no treino melhora a detecção sob sol duro.
+- Nota de 22/10: `rodada5_criterios.json` traz intervalos um pouco diferentes para D-i (0,0383 a 0,1236) e D-ii (-0,1237 a +0,0085), de outra implementação da mesma reamostragem; o veredito é o mesmo, e o artigo usa os de `rodada5_grupo_d.py`.
 - D-ii (a que decide): especialista sob sol duro menos generalista sob nublado, recall -0,0572 (IC -0,1252 a +0,0067). O intervalo inclui zero; o mAP50 do especialista sob sol duro (0,7422) fica abaixo do generalista sob nublado (0,7906), 6,5% relativos. Pela regra fixada, a leitura é "queda de participação no treino": a desvantagem do sol duro não se mostra intrínseca quando o treino vê o regime o bastante. A implicação da 6.3 passa de quando voar para com que luz treinar.
 - Exploratório: zero-shot do especialista no VisDrone 0,0072 (o generalista faz 0,0102).
 
@@ -375,7 +376,7 @@ Leituras disponíveis agora (a de intervalo pareado sai no fechamento, Y3):
 - Regra da antiga 10.1, 152 contra 30 quadros: faixas não se cruzam, passa em (a); +0,0349, 57% relativos. O número de quadros é operante, pendente de (b).
 - Fim da curva, 152 contra 120: faixas se cruzam, não passa em (a); +0,0063, 7%. Pelo critério, "plano" ou "subindo dentro da dispersão de treino", conforme (b).
 - Descritivo: mAP50 = 0,0202 ln(N) - 0,0060 nas médias; ganho previsto por duplicação 0,0140.
-- Observação: s_oblvar_c120_sd1 parou por paciência na época 45, e a última época caiu a mAP50 de validação 0,163 (precisão 0,690, recall 0,163 no results.csv). O best.pt, que é o avaliado, vem de uma época anterior, e o zero-shot dele (0,0878) fica na faixa dos outros dois; o retrato do status mostra a última época, não a escolhida.
+- Observação: s_oblvar_c120_sd1 parou por paciência na época 45, e a última época caiu a mAP50 de validação 0,163 (precisão 0,690, recall 0,163 no results.csv). O best.pt, que é o avaliado, vem de uma época anterior; o zero-shot dele (0,0878) fica um pouco abaixo das outras duas sementes (0,0915 e 0,0918), não dentro da faixa delas (correção de 22/10). O retrato do status mostra a última época, não a escolhida.
 
 ## 2026-10-19 [DESKTOP] Rodada 5, grupos F (R5-5), N (R5-6) e Y1: ajuste fino por cronograma, HERIDAL e critérios
 
