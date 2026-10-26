@@ -316,25 +316,30 @@ def resolve_figuras(txt, n_fig):
 # alfabetica e numeradas, citadas no texto como [9]. Autoria, financiamento e agradecimentos vao
 # para a carta de apresentacao, que sai num PDF a parte (--out com sufixo -title-page).
 
-# Abstract da v de 18/10 tem ~260 palavras; este e o corte para o limite de 150. Numeros atualizados
-# em 22/10 com a rodada 5 (media de tres sementes, base nadir, quatro cronogramas de ajuste fino).
+# Abstract da v de 18/10 tem ~260 palavras; este e o corte para o limite de 150. Reescrito em 26/10
+# (revisao): taxas de objeto dos corpora pareados em quadros novos (M2), distincao armado/desarmado
+# dita como so sintetica, R como modelo de referencia (pareado em imagens, nao em instancias).
 ABSTRACT_JMIS = (
-    "Claims that aerial machine vision can tell armed from unarmed people are acted on without "
-    "stating the conditions under which the distinction is visible. On procedural corpora of a "
-    "dense favela we characterised the target by ground sampling distance, camera pitch and "
-    "illumination, and scored synthetic-only detectors on real benchmarks against a matched "
-    "real-data ceiling. On an urban benchmark, synthetic-only training reached 2.2 per cent of the "
-    "ceiling for nadir imagery from 150 m and 15.3 per cent for the best oblique configuration "
-    "(three-run means); on a nadir benchmark the order reversed. Given 5 or 10 per cent of real "
-    "images, the synthetic corpus lowered accuracy under four fine-tuning schedules. At 75 and 35 m, "
-    "detectors called 24 and 27 per cent of ordinary elongated objects armed, finer resolution not "
-    "reducing the confusion. Stating where a capability has not been shown is a checkable "
-    "contribution relevant to dual use.")
+    "Claims that aerial machine vision can tell armed from unarmed people rarely state the "
+    "acquisition conditions that decide the distinction. On procedural imagery of a dense "
+    "informal settlement we characterised the target by ground sampling distance, camera pitch "
+    "and illumination, and compared synthetic-trained detectors with a reference model trained "
+    "on real images. On an urban benchmark, synthetic-only training reached 2.2 per cent of the "
+    "reference for nadir imagery at 4.88 cm per pixel and 15.3 per cent for the best oblique "
+    "configuration (three-run means); on a nadir benchmark the order reversed. Given 5 or 10 per "
+    "cent of real images, synthetic data lowered accuracy under four fine-tuning schedules. "
+    "On held-out synthetic frames, matched corpora called 24.5, 12.5 and 25 per cent of ordinary "
+    "elongated objects armed at 4.88, 2.44 and 1.14 cm per pixel, lowest at the middle "
+    "resolution. A capability claim is checkable only when it states these conditions.")
 
 # sigla usada no texto -> inicio da entrada na lista de referencias
 SIGLAS = {"STF": "Supremo Tribunal Federal", "RICS": "Royal Institution of Chartered Surveyors",
           "DECEA": "Departamento de Controle do Espaço Aéreo",
-          "ISP-RJ": "Instituto de Segurança Pública do Rio de Janeiro"}
+          "ISP-RJ": "Instituto de Segurança Pública do Rio de Janeiro",
+          # o regulamento da UE e citado pelo numero; a entrada comeca pelo titulo inteiro
+          r"Regulation \(EU\) 2024/1689": "Regulation (EU) 2024/1689 of the European Parliament and "
+          "of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence "
+          "and amending Regulations (EC) No 300/2008"}
 ANO = r"(?:\d{4}[a-z]?|n\.d\.(?:-[a-z])?)"
 
 
@@ -368,7 +373,9 @@ def acha_ref(texto, ano, refs, ultimo=True):
         # desempate: "Couto, 2025" e "Couto & Figueiredo, 2025"; cita com dois nomes pede o segundo
         cauda = texto[pos + len(lead):]
         n_cit = 3 if "et al" in cauda else 2 if re.search(r"&| and ", cauda) else 1
-        n_ref = len(re.findall(r"(?:^|, |& )[^,&]+?, (?:[A-Z][a-zà-ü]?\.[ -]?)+", aut)) or 1
+        # le_referencias corta o ponto final da ultima inicial ("Couto, C"); sem repor, "Couto, C."
+        # e "Couto, C., & Figueiredo, C" contavam um autor cada e o desempate falhava
+        n_ref = len(re.findall(r"(?:^|, |& )[^,&]+?, (?:[A-Z][a-zà-ü]?\.[ -]?)+", aut + ".")) or 1
         custo = (-pos if ultimo else pos, abs(min(n_ref, 3) - n_cit))
         if melhor is None or custo < melhor[0]:
             melhor = (custo, i, pos)
@@ -497,8 +504,7 @@ def monta_jmis(partes, refs_md, args):
     lista = "".join(f"<li>{md(l)[3:-4]}</li>" for _, _, l in refs)
     fim = "".join(f'<div class="fim">{md(t)}</div>' for t in tabelas + figuras)
 
-    capa = ('<div class="capa"><h1>Machine Vision from the Global South: Synthetic Data and the '
-            'Acquisition Limits of Armed-Person Detection in Dense Favelas</h1>'
+    capa = (f'<div class="capa"><h1>{titulo()}</h1>'
             f'<div class="resumo"><h2>Abstract</h2><p>{ABSTRACT_JMIS}</p>'
             f'<p><b>Key words and phrases:</b> {kw.group(1).strip() if kw else ""}</p></div></div>')
     html = (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS_JMIS}</style></head>"
@@ -507,11 +513,21 @@ def monta_jmis(partes, refs_md, args):
     return html, perdidas, extra, len(tabelas), len(figuras)
 
 
+def titulo():
+    """titulo do artigo: o H1 da introducao (o montador tira esse H1 do corpo). Antes de 26/10 o
+    titulo estava escrito a mao aqui em tres lugares e nao acompanhava a troca feita no s1."""
+    p = os.path.join(MAN, ORDEM[0])
+    if os.path.exists(p):
+        m = re.match(r"\A\s*# ([^\n]+)", open(p, encoding="utf-8").read())
+        if m:
+            return m.group(1).strip()
+    return "Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas"
+
+
 def folha_de_rosto(extra):
     """pagina de titulo da carta de apresentacao: o que o manuscrito anonimo nao pode levar"""
     return (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS_JMIS}</style></head><body>"
-            "<h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of "
-            "Armed-Person Detection in Dense Favelas</h1>"
+            f"<h1>{titulo()}</h1>"
             "<p style='text-align:center;text-indent:0'>Luciano Martins Figueira (corresponding author)"
             "<br>H&eacute;lio Arthur Reis Irigaray<br><i>Funda&ccedil;&atilde;o Get&uacute;lio Vargas, "
             "Brazilian School of Public and Business Administration (FGV EBAPE), Rio de Janeiro, "
@@ -651,8 +667,8 @@ def main():
     corpo = markdown.markdown("\n\n".join(partes),
                               extensions=["tables", "sane_lists", "md_in_html"])
 
-    capa = """<div class="capa full">
-<h1>Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas</h1>
+    capa = f"""<div class="capa full">
+<h1>{titulo()}</h1>
 <div class="autores">Luciano Martins Figueira<sup>a</sup>, H&eacute;lio Arthur Reis Irigaray<sup>a</sup></div>
 <div class="afil"><sup>a</sup> Funda&ccedil;&atilde;o Get&uacute;lio Vargas, EBAPE, Rio de Janeiro, Brazil</div>
 </div>"""
