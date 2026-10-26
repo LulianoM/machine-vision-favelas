@@ -1,5 +1,10 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-27 [DESKTOP] v7: resumo com a visão da administração e da segurança públicas
+
+- Pedido do autor: o artigo é administração, segurança pública e visão computacional, e o resumo não mostrava isso. Entrou um primeiro parágrafo (cerca de 130 palavras) com o problema visto pela administração pública e pela segurança pública: sistemas aéreos já voam sobre favelas policiadas, a força letal depende do julgamento "armado ou não", e treinar detectores para território denso, verticalizado e sem mapas é difícil por falta de consentimento para imagens, de benchmark e pelas condições de aquisição. O segundo parágrafo mantém os números. Palavras-chave ganharam public security e public administration. Resumo em inglês com 350 palavras (acima dos 250 usuais de periódico; cortar se a revista exigir), em português 381; abstract do JMIS com 150 ou menos.
+- v7 nas duas línguas e no JMIS, na pasta versionada da Área de Trabalho (commit 40b2e1c).
+
 ## 2026-10-27 [DESKTOP] v6: decisões do autor sobre as declarações
 
 - Decididos um a um com o autor: (1) ética: nenhum comitê precisava ser consultado, por não haver participantes humanos nem dados pessoais; a declaração diz isso; (2) conflito de interesse: nenhum autor tem ou teve vínculo com a Polícia Civil, outra polícia ou fornecedores de drones ou software; o projeto nasceu na graduação do autor e foi construído por ele; as imagens do levantamento de 2022 vieram pelo projeto de pesquisa da UFRJ, mas o autor preferiu remover a origem nesse projeto do artigo, já que nenhum resultado depende dela: saem o parágrafo de 2.2, os Acknowledgements e as menções à reconstrução fotogramétrica (4.1, 4.8, Ética, Disponibilidade de dados); (3) coautor delegado fica de fora; (4) declaração de IA fica como está; (5) gerador não liberado, sem justificativa no texto; (6) sem declaração CRediT.

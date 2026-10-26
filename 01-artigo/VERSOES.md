@@ -13,4 +13,6 @@ Cada versão entregue ao autor recebe um número. Os PDFs ficam na Área de Trab
 
 | v6 | 2026-10-27 | A v5 com as decisões do autor sobre as declarações: ética (sem comitê, por não haver participantes nem dados pessoais), conflito de interesse explícito (sem vínculo com polícia ou fornecedores), coautor delegado fora, declaração de IA e disponibilidade de dados como estavam; removidas a origem no projeto UFRJ de 2022, os agradecimentos e as menções às imagens do levantamento | 06b6387 | elsevier (40 p.), elsevier-PT, jmis (119 p.), jmis-folha-de-rosto |
 
-Próxima versão: v7.
+| v7 | 2026-10-27 | A v6 com o resumo ampliado: parágrafo inicial com a visão da administração pública e da segurança pública sobre a dificuldade de treinar detectores aéreos para zonas urbanas complexas; palavras-chave public security e public administration | 40b2e1c | elsevier (40 p.), elsevier-PT (42 p.), jmis (119 p.), jmis-folha-de-rosto |
+
+Próxima versão: v8.

@@ -321,17 +321,17 @@ def resolve_figuras(txt, n_fig):
 # (24,5, 12,5 e 25,3 por cento a 150, 75 e 35 m, menor na resolucao do meio), sem a frase
 # "finer resolution not reducing the confusion", que contradizia o resultado confirmatorio.
 ABSTRACT_JMIS = (
-    "Public security agencies in Brazil already fly aerial systems over policed favelas, "
-    "where the use of lethal force turns on whether a person is armed. In dense, informally "
-    "mapped territory no imagery of residents can be collected with consent and no public "
-    "benchmark annotates a carried firearm, so what a detector can be shown to see, and under "
-    "which acquisition conditions, is open. On procedural corpora of a dense favela we "
-    "characterised the target by ground sampling distance, camera pitch and illumination and "
-    "scored synthetic-only detectors against a matched real-data ceiling. On an urban "
-    "benchmark they reached 2.2 per cent of the ceiling for nadir imagery from 150 m and 15.3 "
-    "per cent for the best oblique configuration; on a nadir benchmark the order reversed. "
-    "With 5 or 10 per cent of real images the synthetic corpus lowered accuracy. Detectors "
-    "called 24.5, 12.5 and 25.3 per cent of ordinary objects armed at 150, 75 and 35 m.")
+    "Public security agencies in Brazil fly aerial systems over policed favelas, where lethal "
+    "force turns on whether a person is armed. In dense, informally mapped territory no "
+    "imagery of residents can be collected with consent and no public benchmark annotates a "
+    "carried firearm, so what a detector can be shown to see is open. On procedural corpora "
+    "of a dense favela we characterised the target by ground sampling distance, camera pitch "
+    "and illumination and scored synthetic-only detectors against a matched real-data "
+    "ceiling. On an urban benchmark they reached 2.2 per cent of the ceiling for nadir "
+    "imagery from 150 m and 15.3 per cent for the best oblique configuration; on a nadir "
+    "benchmark the order reversed. With 5 or 10 per cent of real images the synthetic corpus "
+    "lowered accuracy. Detectors called 24.5, 12.5 and 25.3 per cent of ordinary objects "
+    "armed at 150, 75 and 35 m.")
 
 # sigla usada no texto -> inicio da entrada na lista de referencias
 SIGLAS = {"STF": "Supremo Tribunal Federal", "RICS": "Royal Institution of Chartered Surveyors",
