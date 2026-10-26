@@ -1,16 +1,14 @@
 # Online Appendix
 
-This appendix holds the material that supports the main text but is not needed to follow its argument: contextual detail on the study setting (Section A), the full parameters of the generator, the corpora and the training protocol (Section B), and supplementary results (Section C). Nothing here is a new analysis. Every table and figure comes from the same corpora, models and evaluations as the main text, and every number is the one the main text reports or reported before it was shortened. Terms follow the main text: S-nadir-150 is the corpus at the reference acquisition (nadir, 150 m, 4.88 cm per pixel); the selection split is the set on which a checkpoint is chosen; held-out frames are frames rendered after training and used for neither training nor selection; the share of R is the mAP50 of a model divided by that of R on the same test set; Twin-75 and Twin-150 are the S-nadir-35 corpus rendered at 75 and 150 m; the three classes are armed, unarmed and object.
+This appendix holds the material that supports the main text but is not needed to follow its argument: contextual detail on the study setting (Section A), the full parameters of the generator, the corpora and the training protocol (Section B), and supplementary results (Section C). Nothing here is a new analysis. Every table and figure comes from the same corpora, models and evaluations as the main text, and every number it shares with the main text is the one reported there. Terms follow the main text: S-nadir-150 is the corpus at the reference acquisition (nadir, 150 m, 4.88 cm per pixel); the selection split is the set on which a checkpoint is chosen; held-out frames are frames rendered after training and used for neither training nor selection; the share of R is the mAP50 of a model divided by that of R on the same test set; Twin-75 and Twin-150 are the S-nadir-35 corpus rendered at 75 and 150 m; the three classes are armed, unarmed and object.
 
 ## A. Study context: detail
 
 ### A1. Further figures on lethal force, territorial control and Jacarezinho
 
-Section 3 of the main text draws on public sources only and is background, not data collected or analysed for the study. The figures below were part of that background in an earlier version and are kept here with their sources.
+Section 3 of the main text draws on public sources only and is background, not data collected or analysed for the study.
 
-Intentional homicide in the state of Rio de Janeiro peaked in 1994 at 63.13 per 100,000 inhabitants in the series of the Instituto de Segurança Pública do Rio de Janeiro (ISP-RJ, n.d.-a) and stood at 17.1 in both 2024 and 2025 (Fórum Brasileiro de Segurança Pública, 2025, Table 3; 2026, Table 3).
-
-The state homicide series of the Instituto de Segurança Pública do Rio de Janeiro begins in 1991 (ISP-RJ, n.d.-a), and the state rate of 17.1 per 100,000 inhabitants in 2024 was 10.8 per cent below that of 2023 (Fórum Brasileiro de Segurança Pública, 2025, Table 3). In the city of Rio de Janeiro, intentional homicides recorded by police district fell from 2,574 in 2003, the first year of that series, to 965 in 2025, a figure that from 2024 excludes femicides (ISP-RJ, n.d.-b). Over the two years of the police-intervention figures of Section 3.1 of the main text, police officers killed in the state rose from 28 to 51, an increase of 82.1 per cent, against a national fall from 144 to 139: the state accounted for 51 of the 139 police deaths in the country (Barros, 2026; Fórum Brasileiro de Segurança Pública, 2026, Table 6).
+Intentional homicide in the state of Rio de Janeiro peaked in 1994 at 63.13 per 100,000 inhabitants in the series of the Instituto de Segurança Pública do Rio de Janeiro, which begins in 1991 (ISP-RJ, n.d.-a), and stood at 17.1 in both 2024 and 2025, the rate of 2024 being 10.8 per cent below that of 2023 (Fórum Brasileiro de Segurança Pública, 2025, Table 3; 2026, Table 3). In the city of Rio de Janeiro, intentional homicides recorded by police district fell from 2,574 in 2003, the first year of that series, to 965 in 2025, a figure that from 2024 excludes femicides (ISP-RJ, n.d.-b). Over the two years of the police-intervention figures of Section 3.1 of the main text, police officers killed in the state rose from 28 to 51, an increase of 82.1 per cent, against a national fall from 144 to 139: the state accounted for 51 of the 139 police deaths in the country (Barros, 2026; Fórum Brasileiro de Segurança Pública, 2026, Table 6).
 
 Operação Exceptis, carried out by the Civil Police in Jacarezinho on 6 May 2021, involved roughly 200 to 250 officers, armoured vehicles, helicopters and a sniper (Human Rights Watch, 2021; Sullivan et al., 2021).
 
@@ -64,6 +62,16 @@ Precision and recall of the single-class models. Precision and recall are those 
 Models trained three times. Ten models were trained with seeds 0, 1 and 2 on a fixed corpus: S-nadir-150, S-oblique, S-oblique-six, its subsets of 30 and 120 frames, both fine-tuning models at 5 per cent on the original schedule, F-generic at 5 per cent on the lower learning rate, S-nadir-35 and Twin-75. The per-regime recall of Experiment D uses 2,000 resamples of frames, paired for D-i.
 
 Checks of Experiment A. The ceiling check asks whether R itself performs near chance, in which case the protocol, not synthesis, would be at fault. A scale-matched input size, fixed from labels before any evaluation, accompanies the protocol size of 1,280, so that the median person box reaches the network at about the size it has in S-nadir-150 (B5). HERIDAL is scored under the single-class protocol of VisDrone (H1 to H9, Table C0).
+
+Table B1a. GSD and footprint of the generator's camera, nadir, at the commanded altitude, and the zoom at which the reference camera reaches the same GSD from 150 m. The oblique row gives the nominal value at the frame centre. Bold: the GSDs the altitude labels denote.
+
+| Altitude (m), render (px) | Footprint (m × m) | GSD (cm/px) | Reference camera from 150 m: zoom | Its footprint (m × m) |
+|---|---|---|---|---|
+| 150, 1920 × 1080 (pilot) | 187.3 × 105.4 | 9.76 | 1.0× (9.71 cm/px) | 186.4 × 104.8 |
+| 150, 3840 × 2160 | 187.3 × 105.4 | **4.88** | 2.0× | 93.7 × 52.7 |
+| 75, 3840 × 2160 | 93.7 × 52.7 | **2.44** | 4.0× | 46.8 × 26.3 |
+| 35, 3840 × 2160 | 43.7 × 24.6 | **1.14** | 8.5× | 21.9 × 12.3 |
+| 120 oblique, 3840 × 2160 | 149.9 × 84.3 (nominal) | 3.90 (nominal) | n.a. | n.a. |
 
 ### B2. Corpora, held-out sets and real data
 
@@ -282,7 +290,7 @@ Table C1. Every model with its test set and headline figure. VisDrone val: mAP50
 
 Notes to Table C1. The 5 per cent cells of F-synthetic and F-generic are means over three training seeds; the share of R of a mean is given without an interval. The first training run alone scored 0.4424 for F-synthetic at 5 per cent, a share of R of 70.1% (68.4 to 71.8), and 0.5220 for F-generic, 82.7% (81.4 to 84.1). On HERIDAL R is a reference model trained on VisDrone, not a ceiling. Two robustness checks apply to every single-class score (Section 5.6 of the main text reports them). Each score is recomputed under the rule of the official VisDrone toolkit, which drops a detection with half or more of its area inside an ignored region (the validator counts it as a false positive), and at IoU 0.60 and 0.75; an ordering that reverses with the IoU threshold is treated as an artefact of annotation and reported at all three.
 
-These are the figures displaced from Section 5.6 of the main text. Under the official toolkit rule for ignored regions every single-class mAP50 rose slightly (R to 0.6548, the first run of S-oblique-six to 0.1074) and every share of R fell slightly (S-oblique-six from 16.7 to 16.4 per cent). No pair fixed for the IoU check changed order between 0.50, 0.60 and 0.75 under either rule. Two other comparisons reversed: at 10 per cent F-joint fell below F-synthetic at 0.75 (0.0983 against 0.1025), and S-nadir-35 fell below the original S-nadir-75 at 0.60 and 0.75 (object rates 0.223 and 0.132 against 0.230 and 0.141).
+Under the official toolkit rule for ignored regions every single-class mAP50 rose slightly (R to 0.6548, the first run of S-oblique-six to 0.1074) and every share of R fell slightly (S-oblique-six from 16.7 to 16.4 per cent). No pair fixed for the IoU check changed order between 0.50, 0.60 and 0.75 under either rule. Two other comparisons reversed: at 10 per cent F-joint fell below F-synthetic at 0.75 (0.0983 against 0.1025), and S-nadir-35 fell below the original S-nadir-75 at 0.60 and 0.75 (object rates 0.223 and 0.132 against 0.230 and 0.141).
 
 ### C2. Target size and apparent shape
 
@@ -472,6 +480,10 @@ Table C9a. Fine-tuning under four schedules: mAP50 on VisDrone val, first seed, 
 
 The control run reproduced the original generic model exactly (0.5220).
 
+Figure C2 draws the mAP50 of the three starts against the number of real training images.
+
+<!--FIG:06-resultados/figuras/fig10_ajuste_fino.png|mAP50 on VisDrone-DET val by number of real training images for the synthetic start, the joint model and the generic start. Filled markers: first training run; open markers: further runs. Dashed line: R.-->
+
 ### C10. The matched twins in detail
 
 Table C10, panel A. The three-class models at 1.14, 2.44 and 4.88 cm per pixel on the 80 held-out frames of each corpus, which share their frame indices: share of annotated figures found in any class, the rates at which each class is called armed at confidence 0.25, and d′ against objects (log-linear correction), first training run of each model, Twin-150 being the model trained for longer. Interval at 150 m by 1,000 resamples of frames; intervals at the two finer GSDs in panel B.
@@ -553,7 +565,9 @@ Table C11. The three operating points of Section 4.7 of the main text (default c
 | Twin-75, 2 | held-out (80) | max armed F1 | 0.50 | 0.479 | 0.118 | 0.127 | 0.583 | 0.526 | 1.12 | 1.08 |
 | Twin-75, 2 | held-out (80) | object rate 0.10 | 0.55 | 0.420 | 0.097 | 0.106 | 0.614 | 0.499 | 1.09 | 1.04 |
 
-Over the 14 combinations, the threshold that maximised the F1 of the armed class lay between 0.30 and 0.50 (0.40 in 7 of them) and raised the armed precision from 0.37 to 0.46 at the default to 0.47 to 0.66, at a cost of 1 to 8 points of armed recall in 13 of them and a gain of 2 in S-nadir-75 on its selection split. Bringing the object rate to 0.10 required a threshold of 0.55 to 0.70 for S-nadir-35 and S-nadir-75, where armed recall then lay between 0.21 and 0.36; Twin-75 reached 0.10 at thresholds between 0.25 and 0.65. At no threshold did any model exceed an armed recall of 0.65, and none brought the object rate below 0.09 while keeping armed recall above 0.42. On the held-out frames the curve of S-nadir-35 ran to the right of that of Twin-75, at a higher object rate for the same armed recall.
+Over the 14 combinations, the threshold that maximised the F1 of the armed class lay between 0.30 and 0.50 (0.40 in 7 of them) and raised the armed precision from 0.37 to 0.46 at the default to 0.47 to 0.66, at a cost of 1 to 8 points of armed recall in 13 of them and a gain of 2 in S-nadir-75 on its selection split. Bringing the object rate to 0.10 required a threshold of 0.55 to 0.70 for S-nadir-35 and S-nadir-75, where armed recall then lay between 0.21 and 0.36; Twin-75 reached 0.10 at thresholds between 0.25 and 0.65. At no threshold did any model exceed an armed recall of 0.65. At an object rate of 0.10 or below, the highest armed recall over the whole sweep was 0.420, for Twin-75 with seed 2 on the held-out frames (armed precision 0.614), and 0.381 or below in every other combination, so no combination met the standard of Section 4.7 of the main text. On the held-out frames the curve of S-nadir-35 ran to the right of that of Twin-75, at a higher object rate for the same armed recall (Figure C3).
+
+<!--FIG:06-resultados/figuras/fig12_limiar_armado.png|Armed recall by object rate as the confidence threshold runs from 0.95 (lower left) to 0.05 (upper right), for S-nadir-75, S-nadir-35 and Twin-75, on the selection splits (left) and held-out frames (right). Filled markers: confidence 0.25, first run; hollow: further runs.-->
 
 ### C12. Crop similarity in full
 
@@ -594,7 +608,7 @@ After centring, every entry of the co-similarity matrices lay between -0.030 and
 
 Note to Table C12. A two-stage alternative to the three-class head, detecting the person and then classifying the crop by its distance to class prototypes, would make the decision inspectable. It would need local features from the detector's own map, since the pooled vector of a crop, generic or from the trained backbone, separates armed figures from figures carrying an object less well than the detector at every GSD (Section 5.1 of the main text); it has not been tested.
 
-![Figure C2. Crop similarity without a trained detector at 1.14, 2.44 and 4.88 cm per pixel. Top: each evaluation pool on its first two principal components, class centroids marked. Bottom: mean pairwise cosine similarity of centred features between and within classes (Section B4).](06-resultados/figuras/fig13_similaridade.png)
+![Figure C4. Crop similarity without a trained detector at 1.14, 2.44 and 4.88 cm per pixel. Top: each evaluation pool on its first two principal components, class centroids marked. Bottom: mean pairwise cosine similarity of centred features between and within classes (Section B4).](06-resultados/figuras/fig13_similaridade.png)
 
 ### C13. Rates by firearm and by object in the unseen-weapon test
 
@@ -610,7 +624,7 @@ Table C13. Rate at which S-nadir-75 called figures armed on the 50 held-out fram
 | Brooms | n.a. (object) | 0.10 | 41 |
 | Lengths of pipe | n.a. (object) | 0.11 | 28 |
 
-Recall was 0.400 on the five training firearms (50 of 125) and 0.466 on the two unseen ones (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54, ignoring the clustering of boxes within frames); with the pistol set aside the ratio stayed above the pre-specified 0.80. In the carried-as-weapon re-render the 227 paired objects were matched box for box in 49 of 50 frames. In the carried-as-weapon re-render the umbrella, whose carriage did not change, stayed at 0.38.
+Recall was 0.400 on the five training firearms (50 of 125) and 0.466 on the two unseen ones (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54, ignoring the clustering of boxes within frames); with the pistol set aside the ratio stayed above the pre-specified 0.80. In the carried-as-weapon re-render the 227 paired objects were matched box for box in 49 of 50 frames, and the umbrella, whose carriage did not change, stayed at 0.38.
 
 ## References for the Online Appendix
 
@@ -656,6 +670,8 @@ OPEB. (2025, November 12). Crise, calamidade e exceção: os limites dos direito
 
 Robicquet, A., Sadeghian, A., Alahi, A., & Savarese, S. (2016). Learning social etiquette: Human trajectory understanding in crowded scenes. In *Computer Vision, ECCV 2016* (Lecture Notes in Computer Science, pp. 549-565). Springer. https://doi.org/10.1007/978-3-319-46484-8_33
 
+Sullivan, J. P., Bunker, R., & da Cruz, J. de A. (2021, May 26). Third generation gangs strategic note no. 36: High casualty civil police raid in Rio de Janeiro's Jacarezinho favela raises human rights concerns. Small Wars Journal. https://smallwarsjournal.com/<wbr>2021/<wbr>05/<wbr>26/<wbr>third-generation-gangs-strategic-note-no-36-high-casualty-civil-police-raid-rio-de/<wbr>
+
 Varga, L. A., Kiefer, B., Messmer, M., & Zell, A. (2022). SeaDronesSee: A maritime benchmark for detecting humans in open water. In *2022 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)* (pp. 3686-3696). IEEE. https://doi.org/10.1109/WACV51458.2022.00374
 
 ## Where the main text cites each item
@@ -663,7 +679,7 @@ Varga, L. A., Kiefer, B., Messmer, M., & Zell, A. (2022). SeaDronesSee: A mariti
 | Appendix item | Cited from |
 |---|---|
 | A1 | Sections 3.1 and 3.2 |
-| B1 and Table B1 | Sections 4.2.4, 4.5, 4.6 and 4.7 |
+| B1 and Tables B1 and B1a | Sections 4.2.4, 4.5, 4.6, 4.7 and 6.2 |
 | Table B2 and its notes | Sections 4.2.5, 4.3, 4.6 and 4.8 |
 | B3, Tables B3 and B3a | Sections 4.2.1, 4.2.2, 4.6 and 4.8 |
 | B4 | Section 4.4 |
@@ -672,15 +688,15 @@ Varga, L. A., Kiefer, B., Messmer, M., & Zell, A. (2022). SeaDronesSee: A mariti
 | Figures B1 and B2 | Section 4.2.1 |
 | Figures B3 and B4 | Section 4.2.5 |
 | Figure B6 | Section 4.6 |
-| Table C0 | Sections 4.6, 5.6 and 6.4 |
+| Table C0 | Sections 4.6 and 6.4 |
 | Table C0a | the opening of Section 5 and Sections 5.2, 5.4 and 5.6 |
 | Notes to Table C1 | Sections 4.7 and 5.6 |
-| Tables C2, C4, C12 and Figure C2 | Section 5.1 |
+| Tables C2, C4, C12 and Figure C4 | Section 5.1 |
 | Table C2a | Sections 5.1, 6.1 and 6.2 |
 | Tables C3 and C3a | Sections 4.6, 5.1 and 5.5 |
 | Table C7 and Figure C1 | Section 5.3 |
 | Table C8 | Section 5.2 |
-| Tables C9 and C9a | Sections 5.3 and 6.1 |
-| Tables C11, C13 | Section 5.4 |
+| Tables C9 and C9a, Figure C2 | Sections 5.3 and 6.1 |
+| Tables C11 and C13, Figure C3 | Section 5.4 |
 | Tables C6 and C10 | Sections 5.2 and 5.4 |
 | Tables C1 (body) and C5 | not cited in the main text |

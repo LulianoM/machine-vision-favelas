@@ -1,7 +1,5 @@
 ## Related Work
 
-Four literatures bear on the questions of Section 1.3: the mapping of informal settlements, which locates the setting (2.1); synthetic training for aerial detection (2.2, RQ1 and RQ2); scale, illumination and weapon detection from the air (2.3, RQ3); and discretion and accountability in policing, which supply the concepts of the administrative contribution (2.4).
-
 ### 2.1 Machine vision in informal settlements
 
 Machine vision of informal settlements serves planning, humanitarian and development ends (da Silva et al., 2024). It maps settlements from satellite imagery (Gram-Hansen et al., 2019; Du et al., 2024), with street-view images (Hu et al., 2025) and from drone imagery of Slovo Park, Johannesburg (Sithole & Mhangara, 2025), with the building footprint as the object classified. Height enters as a feature or a reconstruction target: 2.5D and 3D features from UAV imagery improved classification of a dense, steeply sloped settlement in Kigali (Gevaert et al., 2016), and elevation models with learned height prediction reconstructed Nairobi, Kathmandu and Quito (Watson & Elliott, 2025). Neither treats the vertical structure of a settlement as the space in which an aerial system observes people, where acquisition conditions, rather than footprints, decide what can be seen.

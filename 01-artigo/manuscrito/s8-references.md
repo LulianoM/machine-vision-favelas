@@ -12,8 +12,6 @@ AlJundi, Z., Alsubaie, S., Faheem, M. H., Almarashi, R. M., Qazi, E.-u.-H., & Ki
 
 Anastasopoulos, L. J. (2026). Artificial intelligence, bureaucratic discretion, and democratic administration. *Public Administration Review*. Advance online publication. https://doi.org/10.1111/puar.70201
 
-Barekatain, M., Marti, M., Shih, H.-F., Murray, S., Nakayama, K., Matsuo, Y., & Prendinger, H. (2017). Okutama-Action: An aerial view video dataset for concurrent human action detection. In *2017 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)* (pp. 2153-2160). https://doi.org/10.1109/CVPRW.2017.267
-
 Berwaldt, N. L. P., Bettker, R. V., & Pozzer, C. T. (2020). Procedural generation of favela layouts on arbitrary terrains. In *2020 19th Brazilian Symposium on Computer Games and Digital Entertainment (SBGames)* (pp. 136-144). IEEE. https://doi.org/10.1109/SBGames51465.2020.00027
 
 Božić-Štulić, D., Marušić, Ž., & Gotovac, S. (2019). Deep learning approach in aerial imagery for supporting land search and rescue missions. *International Journal of Computer Vision, 127*(9), 1256-1278. https://doi.org/10.1007/s11263-019-01177-1
@@ -78,8 +76,6 @@ Mensink, T., Uijlings, J., Kuznetsova, A., Gygli, M., & Ferrari, V. (2022). Fact
 
 Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., & Gebru, T. (2019). Model cards for model reporting. In *Proceedings of the Conference on Fairness, Accountability, and Transparency (FAT\* '19)* (pp. 220-229). ACM. https://doi.org/10.1145/3287560.3287596
 
-Movisafe América Latina. (2025, March). ADPF 635: A protection for Rio's communities, or a green light for the expansion of organized crime? https://movisafe-americalatina.com/<wbr>en/<wbr>adpf-635-a-protection-for-rios-communities-or-a-green-light-for-the-expansion-of-organized-crime/<wbr>
-
 Nguyen, K., Liu, F., Fookes, C., Sridharan, S., Liu, X., & Ross, A. (2026). Person recognition in aerial surveillance: A decade survey. *IEEE Transactions on Biometrics, Behavior, and Identity Science, 8*(1), 3-19. https://doi.org/10.1109/TBIOM.2025.3617011
 
 Pérez-Hernández, F., Tabik, S., Lamas, A., Olmos, R., Fujita, H., & Herrera, F. (2020). Object detection binary classifiers methodology based on deep learning to identify small objects handled similarly: Application in video surveillance. *Knowledge-Based Systems, 194*, Article 105590. https://doi.org/10.1016/j.knosys.2020.105590
@@ -111,8 +107,6 @@ Shen, Y.-T., Lee, Y., Kwon, H., Conover, D. M., Bhattacharyya, S. S., Vale, N., 
 Sithole, L., & Mhangara, P. (2025). Classification of informal settlements using novel object-based machine learning algorithms and drone imagery, Slovo Park, Johannesburg, South Africa. *International Journal of Remote Sensing*. https://doi.org/10.1080/01431161.2025.2518504
 
 Sousa, R. (2026). Mortes violentas intencionais no Brasil em 2025: Entre avanços históricos e desafios persistentes. Fórum Brasileiro de Segurança Pública. https://fontesegura.forumseguranca.org.br/<wbr>mortes-violentas-intencionais-no-brasil-em-2025-entre-avancos-historicos-e-desafios-persistentes/<wbr>
-
-Sullivan, J. P., Bunker, R., & da Cruz, J. de A. (2021, May 26). Third generation gangs strategic note no. 36: High casualty civil police raid in Rio de Janeiro's Jacarezinho favela raises human rights concerns. Small Wars Journal. https://smallwarsjournal.com/<wbr>2021/<wbr>05/<wbr>26/<wbr>third-generation-gangs-strategic-note-no-36-high-casualty-civil-police-raid-rio-de/<wbr>
 
 Sullivan, J. P., & da Cruz, J. de A. (2025, November 2). Third generation gangs strategic note no. 59: Police raid "Megaoperação Contenção" on Comando Vermelho leads to 132 killed. Small Wars Journal. https://smallwarsjournal.com/<wbr>2025/<wbr>11/<wbr>02/<wbr>third-generation-gangs-strategic-note-no-59-police-raid-megaoperacao-contencao-on-comando-vermelho-leads-to-132-killed/<wbr>
 

@@ -320,15 +320,15 @@ def resolve_figuras(txt, n_fig):
 # (revisao): taxas de objeto dos corpora pareados em quadros novos (M2), distincao armado/desarmado
 # dita como so sintetica, R como modelo de referencia (pareado em imagens, nao em instancias).
 ABSTRACT_JMIS = (
-    "Claims that aerial machine vision can tell armed from unarmed people rarely state the "
-    "acquisition conditions that decide the distinction. On procedural imagery of a dense "
+    "Whether aerial machine vision can tell armed from unarmed people depends on acquisition "
+    "conditions that a capability claim need not state. On procedural imagery of a dense "
     "informal settlement we characterised the target by ground sampling distance, camera pitch "
-    "and illumination, and compared synthetic-trained detectors with a reference model trained "
+    "and illumination, and compared synthetic-trained detectors with a reference trained "
     "on real images. On an urban benchmark, synthetic-only training reached 2.2 per cent of the "
     "reference for nadir imagery at 4.88 cm per pixel and 15.3 per cent for the best oblique "
     "configuration (three-run means); on a nadir benchmark the order reversed. Given 5 or 10 per "
     "cent of real images, synthetic data lowered accuracy under four fine-tuning schedules. "
-    "On held-out synthetic frames, matched corpora called 24.5, 12.5 and 25 per cent of ordinary "
+    "On held-out synthetic frames, matched corpora called 24.5, 12.5 and 25.3 per cent of ordinary "
     "elongated objects armed at 4.88, 2.44 and 1.14 cm per pixel, lowest at the middle "
     "resolution. A capability claim is checkable only when it states these conditions.")
 

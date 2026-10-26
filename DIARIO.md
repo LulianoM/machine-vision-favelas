@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-26 [DESKTOP] Revisão de alto impacto (administração) em três rodadas
+
+- Pedido do autor: revisar cada seção como revisor de revista de alto impacto em administração, cortar, simplificar, corrigir, agrupar e seguir o Revisor 1, com subagentes. Plano, pareceres e vereditos em `01-artigo/revisao-2026-10-26/` (PLANO-REVISAO.md, PARECERES.md, parecer-final-r2.json, parecer-final-r3.json).
+- Rodada 1: 11 pareceristas (7 por seção, 4 transversais: contribuição para administração, Revisor 1, extensão, afirmações contra evidência), editor responsável consolidou o plano, 7 editores e o apêndice online em paralelo, integração e parecer novo. Rodadas 2 e 3: correções dos graves (QP3 contradizia o próprio resultado; comparação com model cards e AI Act; proposições testáveis na 6.4; extensão; padrão de capacidade declarado como fixado depois dos resultados).
+- Resultado: corpo de cerca de 11,3 mil palavras (era 21 mil); JMIS 50 páginas (era 116), Elsevier 19, apêndice online 28 (`01-artigo/manuscrito/apendice-online.md`, PDF por `01-artigo/ferramentas/monta_apendice.py`). Enquadramento novo em administração pública (discricionariedade algorítmica, accountability, compras públicas), com fontes da PAR do levantamento de 20/10 e referências novas conferidas no registro.
+- Pendente do autor (bloqueia submissão): parecer ou dispensa de ética da FGV EBAPE; fatos de conflito de interesse e de acesso às imagens de 2022; coautor delegado. As declarações têm marcadores entre colchetes. A tradução em `01-artigo/manuscrito-pt/` ficou desatualizada.
+
 ## 2026-10-22 [DESKTOP] Rodada 5 levada ao artigo
 
 - Fonte: `07-blender/PLANO-RODADA5.md` (blocos "O que muda no artigo"), `06-resultados/RESULTADOS.md` (19 a 22/10), `rodada5_criterios.json`, `rodada5_criterios_M.json`, `revisao-2026-10-17/*_r5.md`, `bootstrap_heridal*.md`, `rodada5_grupo_d.py` (rodado de novo, mesma saída).

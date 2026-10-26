@@ -1,6 +1,6 @@
 ## Results
 
-Section 5.1 characterises the target without a trained detector, Sections 5.2 to 5.5 report Experiments A to D, and Section 5.6 gives the robustness checks and the six headline comparisons (Table @tab{hipoteses}); every check is recorded on its criterion in Online Appendix, Table C0a. What the observations mean for RQ1 to RQ3 is left to Section 6.
+Every check is recorded on its criterion in Online Appendix, Table C0a; interpretation is left to Section 6.
 
 ### 5.1 Characterisation of the target: size, shape, contrast and crop similarity
 
@@ -10,13 +10,13 @@ Section 5.1 characterises the target without a trained detector, Sections 5.2 to
 
 **Contrast.** Contrast with local clutter, measured on the pilot corpus, was highest under overcast (0.88) and lowest under rain and hard sun (0.63 and 0.64); with eight frames per regime and a between-frame dispersion of 0.12 to 0.38, only that gap approached one standard deviation (Online Appendix, Tables C3 and C3a).
 
-**Crop similarity.** Figure @fig{fig7_armados} shows the crops the detector receives at the three GSDs. Without a detector the three classes separated weakly, less than the detector did (Online Appendix, Table C12 and Figure C2), and the clearest structure opposed figures carrying nothing to figures carrying anything. The AUC separating armed figures from objects rose as resolution coarsened, from 0.525 to 0.654, its interval excluding 0.5 at 2.44 and 4.88 cm per pixel, and a nearest-centroid rule reached a d′ of 0.23 to 0.46, below that of the detector on the same selection splits.
+**Crop similarity.** Figure @fig{fig7_armados} shows the crops the detector receives at the three GSDs. Without a detector the three classes separated weakly, less than the detector did (Online Appendix, Table C12 and Figure C4), and the clearest structure opposed figures carrying nothing to figures carrying anything. The AUC separating armed figures from objects rose as resolution coarsened, from 0.525 to 0.654, its interval excluding 0.5 at 2.44 and 4.88 cm per pixel, and a nearest-centroid rule reached a d′ of 0.23 to 0.46, below that of the detector on the same selection splits, the detector at 4.88 cm per pixel being the first Twin-150 model, which failed its validity condition.
 
 <!--FIG:06-resultados/figuras/fig7_armados.jpg|Figures carrying a rifle, a pistol, nothing, a broom, a length of pipe or a closed umbrella at 1.14, 2.44 and 4.88 cm per pixel, scaled without smoothing to show the pixels the detector receives; carrying figures chosen by eye (Section 4.2.2).-->
 
 ### 5.2 Experiment A: zero-shot transfer to real imagery
 
-Trained on synthetic imagery alone, the detector recovered on VisDrone, as means of three training runs, 2.2 per cent of the ceiling at the nadir geometry of the reference acquisition, 8.8 per cent when the same settlement was rendered obliquely and 15.3 per cent for S-oblique-six; on HERIDAL the order of the two geometries reversed (Table @tab{obliquo}).
+On VisDrone, as means of three training runs, synthetic-only training recovered 2.2 per cent of the ceiling at the reference acquisition, 8.8 per cent with the same settlement rendered obliquely and 15.3 per cent for S-oblique-six; on HERIDAL the order of the two geometries reversed (Table @tab{obliquo}).
 
 **Ceiling and nadir.** R reached mAP50 0.6311 (0.6149 to 0.6471) on VisDrone, mAP50-95 0.2538. Over three runs S-nadir-150 scored 0.0102 to 0.0198, a mean of 0.0136 (0.0120 to 0.0160) and a share of R of 2.2 per cent (1.9 to 2.5). Spreading the same 180 frames over six settlements gave 0.0190, +0.0054 (+0.0009 to +0.0066) above the three-run mean, a ratio of 1.40 (1.07 to 1.50), inside the nadir range.
 
@@ -47,25 +47,19 @@ Trained on synthetic imagery alone, the detector recovered on VisDrone, as means
 
 ### 5.3 Experiment B: synthetic pretraining and joint training compared with a generic start
 
-Given the 5 or 10 per cent slice of real images, the model that started from the synthetic weights finished below the generic start at both volumes, under the original schedule and under each of three others, and so did the model trained on synthetic and real images together (Figure @fig{fig10_ajuste_fino}; values per seed and per schedule in Online Appendix, Tables C9 and C9a, and precision-recall curves in Figure C1).
-
-At 5 per cent the generic start finished above the synthetic start on every seed, by +0.0716 (+0.0658 to +0.0780) on the means, a ratio of 1.16 (1.14 to 1.17), and at 10 per cent by +0.0614 (+0.0553 to +0.0679). Contrary to the pre-specified expectation, the deficit was largest at the smaller volume. The joint models finished below the generic start by 0.0637 (0.0562 to 0.0700) at 5 per cent and 0.0281 (0.0214 to 0.0346) at 10, and above the synthetic start by 0.0078 (0.0025 to 0.0147), inside the synthetic seed range, and by 0.0333 (0.0276 to 0.0399).
+Given 5 or 10 per cent of real images (Online Appendix, Figure C2; values per seed and per schedule in Tables C9 and C9a, precision-recall curves in Figure C1), the generic start finished above the synthetic start on the original schedule, at 5 per cent on every seed, by +0.0716 (+0.0658 to +0.0780) on the means, a ratio of 1.16 (1.14 to 1.17), and at 10 per cent by +0.0614 (+0.0553 to +0.0679). Contrary to the pre-specified expectation, the deficit was largest at the smaller volume. The joint models finished below the generic start by 0.0637 (0.0562 to 0.0700) at 5 per cent and 0.0281 (0.0214 to 0.0346) at 10, and above the synthetic start by 0.0078 (0.0025 to 0.0147), inside the synthetic seed range, and by 0.0333 (0.0276 to 0.0399).
 
 Freezing the backbone, lowering the learning rate or both lowered the synthetic start in every cell (0.2028 to 0.3875), while the lower rate raised the generic start at both volumes. Each start on the schedule its selection slice preferred, the generic start finished above by +0.1369 (+0.1290 to +0.1465) at 5 per cent on three seeds each, and by +0.1129 (+0.1044 to +0.1230) at 10, one run per side; under every schedule and at both volumes the interval excluded zero.
 
-<!--FIG:06-resultados/figuras/fig10_ajuste_fino.png|mAP50 on VisDrone-DET val by number of real training images for the synthetic start, the joint model and the generic start. Filled markers: first training run; open markers: further runs. Dashed line: R.-->
-
 ### 5.4 Experiment C: the armed and unarmed distinction by GSD
-
-On the matched held-out frames the object rate was lowest at 2.44 cm per pixel and higher at both 4.88 and 1.14, and at 4.88 a separation above chance remained, weaker than at 2.44 (Table @tab{armado}).
 
 **2.44 cm per pixel.** On the 50 held-out frames of the unseen-weapon test, in a new realisation of the settlement, S-nadir-75 called 0.434 (0.381 to 0.496) of armed figures, 0.152 (0.113 to 0.196) of objects and 0.068 (0.035 to 0.102) of unarmed persons armed, with an armed precision of 0.430 and a d′ (armed versus object) of 0.85 (0.64 to 1.09); every rate was lower than on its selection split. Recall was 0.400 on the five training firearms (50 of 125) and 0.466 on the two unseen ones (61 of 131), a ratio of 1.16 (approximate 95 per cent interval 0.88 to 1.54; Online Appendix, Table C13). The closed umbrella, 0.88 m, was the object most often called armed (0.38, 29 instances). In the carried-as-weapon re-render S-nadir-75 called 0.154 of the 227 paired objects armed as normally carried and 0.137 when carried in the poses and at the angles of the weapons (exact McNemar test, p = 0.56, unadjusted for clustering by frame); the umbrella, whose carriage did not change, stayed at 0.38.
 
-**1.14 compared with 2.44 cm per pixel.** With every other setting held, S-nadir-35 called more objects armed than Twin-75: by +0.108 (+0.015 to +0.211) on the selection split, and on the 80 held-out frames 0.253 compared with 0.125, +0.128 (+0.071 to +0.194; p = 0.0001, unadjusted for clustering by frame). Over three training seeds the means differed by +0.068 (+0.002 to +0.142) on the selection split, with overlapping ranges, and by +0.087 (+0.044 to +0.136) on the held-out frames, with separate ranges (Online Appendix, Table C10). The armed and unarmed rates and the comparison with the original 75 m model were not resolvable (Online Appendix, Table C0a). On the held-out frames, where 31 to 36 per cent of annotated figures were armed by construction, between 0.37 and 0.43 of the detections that S-nadir-75, S-nadir-35 and Twin-75 labelled armed at the default threshold were armed figures.
+**1.14 compared with 2.44 cm per pixel.** With every other setting held, S-nadir-35 called more objects armed than Twin-75 (Table @tab{armado}): by +0.108 (+0.015 to +0.211) on the selection split, and on the 80 held-out frames 0.253 compared with 0.125, +0.128 (+0.071 to +0.194; p = 0.0001, unadjusted for clustering by frame). Over three training seeds the means differed by +0.068 (+0.002 to +0.142) on the selection split, with overlapping ranges, and by +0.087 (+0.044 to +0.136) on the held-out frames, with separate ranges (Online Appendix, Table C10). The armed and unarmed rates were not resolvable on the means of three training seeds, the armed difference reversing in seed 2, and nor was the comparison with the original 75 m model (Online Appendix, Tables C0a and C10). On the held-out frames, where 31 to 36 per cent of annotated figures were armed by construction, between 0.37 and 0.43 of the detections that S-nadir-75, S-nadir-35 and Twin-75 labelled armed at the default threshold were armed figures.
 
 **4.88 cm per pixel.** The first Twin-150 found 0.498 of the 297 annotated figures on its selection split, below the pre-specified half. Trained for longer as pre-specified (Section 4.6), it found 0.606 there and 0.663 of 916 on its 80 held-out frames. On the held-out frames its d′ (armed versus object) was 0.58 (0.38 to 0.78), an interval that excludes zero. On the same frame indices as Twin-75, d′ at 4.88 cm per pixel was lower by 0.394 (0.098 to 0.681) and the object rate higher by 0.120 (0.058 to 0.181). Figures carrying the 0.20 m pistol were called armed at 0.50 (17 of 34), within the range of the long arms (0.41 to 0.50).
 
-**Threshold sweep.** Over the 14 combinations of model, training seed and set (Online Appendix, Table C11), the F1-maximising threshold lay between 0.30 and 0.50, raising armed precision from 0.37 to 0.46 to 0.47 to 0.66 at a cost of 0.01 to 0.08 of armed recall in 13 of them; no model exceeded an armed recall of 0.65 at any threshold, and none brought the object rate below 0.09 while keeping armed recall above 0.42 (Figure @fig{fig12_limiar_armado}).
+**Threshold sweep.** Over the 14 combinations of model, training seed and set (Online Appendix, Table C11), the F1-maximising threshold lay between 0.30 and 0.50, raising armed precision from 0.37 to 0.46 to 0.47 to 0.66 at a cost of 0.01 to 0.08 of armed recall in 13 of them; no model exceeded an armed recall of 0.65 at any threshold, and at an object rate of 0.10 or below the highest armed recall was 0.420, for Twin-75 with training seed 2 on the held-out frames (armed precision 0.614), and 0.381 or below in every other combination (Online Appendix, Figure C3).
 
 <div class="full" markdown="1" style="break-inside: avoid">
 
@@ -88,15 +82,13 @@ On the matched held-out frames the object rate was lowest at 2.44 cm per pixel a
 
 </div>
 
-<!--FIG:06-resultados/figuras/fig12_limiar_armado.png|Armed recall by object rate as the confidence threshold runs from 0.95 (lower left) to 0.05 (upper right), for S-nadir-75, S-nadir-35 and Twin-75, on the selection splits (left) and held-out frames (right). Filled markers: confidence 0.25, first run; hollow: further runs.-->
-
 ### 5.5 Experiment D: performance by illumination regime
 
-Hard sun was the weakest regime for S-nadir-150 on synthetic frames, with an mAP50 of 0.675 and a recall of 0.657, compared with 0.791 and 0.796 under overcast. The specialist trained under hard sun alone gained recall there (D-i: +0.0818) and was no longer resolvably below the model of all regimes under overcast (D-ii: -0.0572, -0.1252 to +0.0067, an interval that includes zero), but fell below it under the other regimes, most under haze (0.569 compared with 0.726; Online Appendix, Tables C3 and C3a).
+Hard sun was the weakest regime for S-nadir-150 on synthetic frames, with an mAP50 of 0.675 and a recall of 0.657, compared with 0.791 and 0.796 under overcast. The specialist trained under hard sun alone gained recall there (D-i: +0.0818) and was no longer resolvably below the model of all regimes under overcast (D-ii: -0.0572, -0.1252 to +0.0067, an interval that includes zero), but fell below it in recall under the other five regimes, most under haze (0.569 compared with 0.726), while its mAP50 was level or higher under low sun, overcast and heavy overcast (Online Appendix, Tables C3 and C3a).
 
 ### 5.6 Robustness checks and headline comparisons
 
-Neither the official toolkit rule for ignored regions nor stricter IoU thresholds (0.60 and 0.75) changed the order of any pair fixed for these checks; two other comparisons reversed at stricter thresholds (Online Appendix, Table C1). Table @tab{hipoteses} gives the outcome of the six headline comparisons and the readings of Section 4.7 each passes; every check, H1 to H23, is in Online Appendix, Tables C0 and C0a.
+Neither the official toolkit rule for ignored regions nor stricter IoU thresholds (0.60 and 0.75) changed the order of any pair fixed for these checks; two other comparisons reversed at stricter thresholds (Online Appendix, Table C1). Table @tab{hipoteses} gives the outcome of the six headline comparisons and the readings of Section 4.7 each passes.
 
 <div class="full" markdown="1" style="break-inside: avoid">
 
