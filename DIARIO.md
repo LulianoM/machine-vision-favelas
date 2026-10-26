@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-27 [DESKTOP] v4 rejeitada; v5 = v3 só corrigida
+
+- O autor rejeitou a v4 (26/10): mudou o escopo (enquadramento em administração pública, apêndice, metade das figuras e tabelas fora do corpo). Pedido: voltar à versão anterior e aplicar apenas correções, sem grandes modificações, mantendo o apoio gráfico.
+- Manuscrito restaurado do commit 29523f5 (v3). Passada só de correções: 7 revisores por seção, integrador e parecerista novo (escopo intacto, 0 graves, 11 menores aplicados). Nada de figura, tabela, subseção ou enquadramento mudou; nenhuma citação nova; nenhum padrão post hoc de capacidade. Lista completa do que mudou e do que a v4 tinha e não voltou: `01-artigo/revisao-2026-10-26/COMPARACAO-v3-v4-v5.md`. Texto da v4 e seu apêndice guardados em `01-artigo/revisao-2026-10-26/v4-texto/` e `apendice-online-v4.md`.
+- Correções principais: manchete da QP3 (a confusão é menor a 2,44 cm/px, não "a resolução não reduz"); fator nadir/oblíquo 4,08 (3,44 a 4,64) pareado com as médias e 6,0 só com a semente 0; "camera pitch determines most" suavizado; R dito como teto do protocolo; nenhum limiar de capacidade fixado antes, dito como leitura; contradição ética/dados sobre as imagens de 2022 resolvida; termos e precisão unificados.
+- PDFs v5 (Elsevier 40 p., JMIS 119 p.) na pasta versionada da Área de Trabalho. A tradução em português continua a da v3.
+
 ## 2026-10-26 [DESKTOP] Revisão de alto impacto (administração) em três rodadas
 
 - Pedido do autor: revisar cada seção como revisor de revista de alto impacto em administração, cortar, simplificar, corrigir, agrupar e seguir o Revisor 1, com subagentes. Plano, pareceres e vereditos em `01-artigo/revisao-2026-10-26/` (PLANO-REVISAO.md, PARECERES.md, parecer-final-r2.json, parecer-final-r3.json).

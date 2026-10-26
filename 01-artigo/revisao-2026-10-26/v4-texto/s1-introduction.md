@@ -1,0 +1,41 @@
+# Machine Vision from the Global South: Acquisition Conditions and the Accountability of Aerial Armed-Person Detection over Synthetic Favelas
+
+## Abstract
+
+Drones already fly over policed territory in Rio de Janeiro, where whether a person is armed is, we assume, a central category in decisions to use lethal force. Whether an aerial camera can make that distinction depends on acquisition conditions that a capability claim need not state, and research on algorithmic discretion in policing takes such capability as given. We treat the claim as a checkable specification. On procedurally generated imagery of a dense informal settlement we characterised the target by ground sampling distance, camera pitch and illumination, and scored detectors trained only on synthetic images against a reference trained on 1,106 real images, as many as the synthetic training tiles, on an urban, mostly oblique benchmark and a nadir wilderness benchmark. Straight down at 4.88 cm per pixel, where a person spans 17.6 by 17.5 pixels, synthetic-only training reached 2.2 per cent of that reference, and the best oblique configuration 15.3 per cent (three-run means); on the nadir benchmark the order reversed, 62.7 against 42.1 per cent of the reference model, though the nadir runs spread widely. Once 5 or 10 per cent of real images existed, the synthetic corpus lowered accuracy. On held-out synthetic frames, matched corpora called ordinary elongated objects armed at 24.5, 12.5 and 25.3 per cent at 4.88, 2.44 and 1.14 cm per pixel: the confusion was lowest at the middle resolution and did not fall further at the finest. A claim is checkable only when it states its acquisition conditions, the geometry of its test imagery and its rate of calling ordinary objects armed.
+
+**Keywords:** algorithmic accountability; street-level discretion; police use of force; aerial object detection; synthetic data; ground sampling distance; dual use; favelas
+
+## Introduction
+
+### 1.1 Problem statement
+
+Aerial systems already fly over policed territory in Rio de Janeiro (CNN, 2026), where, on the premise stated in Section 3.3, whether a person was armed is a central category in decisions to use lethal force, and drone imagery with annotated firearms is being assembled, restricted to law-enforcement agencies (Faheem et al., 2025) or unreleased (AlJundi et al., 2025). What decides whether that distinction is visible from the air at all is the acquisition condition, and a claim that omits it cannot be checked. The condition reduces to three terms: the ground sampling distance (GSD), the width of ground one pixel spans, which the altitude of the unmanned aerial vehicle (UAV) and its sensor and lens jointly fix; the camera pitch, whether the camera points straight down (nadir) or obliquely; and the illumination. We treat the condition as a measurable question, on procedurally generated synthetic imagery of a dense informal settlement modelled on the general morphology of Jacarezinho (Section 3.2), aware that the same capability serves targeting as readily as protection, a dual-use tension that public administration has weighed for domestic drone surveillance (West & Bowman, 2016).
+
+Judging whether a person is armed is an exercise of street-level discretion. Public administration research has begun to ask what happens when such discretion is shared with algorithms: whether officers follow or resist algorithmic recommendations (Selten et al., 2023; Afzal & Panagiotopoulos, 2025) and how decisions that pass through algorithms can be held to account (Busuioc, 2021). That research takes the validity of the algorithm's output as given. For a perception system it cannot be taken so: whether a detector's call of armed means anything depends on an acquisition fixed before any officer sees an alert.
+
+The vantage point of the title matters: no consented aerial imagery of the territory exists or can readily be obtained under armed control, so every training image is synthetic (Section 4.1).
+
+### 1.2 Research gap
+
+Three literatures meet this problem without covering it. Machine vision of informal settlements maps footprints, and at most their height, for planning and development rather than security (Section 2.1); it does not treat a vertically built favela as a setting for observing people. Research on synthetic training shows that aerial detectors trained on rendered images recover only part of what real data achieve, on traffic, maritime and controlled scenes, and weapon benchmarks are recorded from surveillance viewpoints or a few metres above the ground (Sections 2.2 and 2.3). Research on algorithmic discretion and accountability in policing studies how officers and citizens respond to algorithmic outputs and takes the capability behind them as given (Section 2.4). The gap lies between the second and the third: no account states, in terms a public body could check, the acquisition conditions under which an aerial detector's judgement that a person is armed has, or has not, been shown.
+
+### 1.3 Objective and research questions
+
+Our objective is to characterise, on synthetic imagery and for one reference camera, the acquisition conditions (GSD, camera pitch and illumination) under which a person seen from the air could be distinguished as armed or unarmed, to measure how much of person detection, on which that distinction rests, a detector trained on synthetic imagery alone recovers on real imagery, and to state the result as a capability statement a public body could require before adopting such a system.
+
+**Framing question.** What must a claim that an aerial detector distinguishes armed from unarmed persons state for a public body to hold it to account, and what does such a statement contain when filled with evidence? RQ1 to RQ3 supply its empirical terms.
+
+**RQ1.** Trained on synthetic imagery of a dense informal settlement alone, how much of the person-detection accuracy that a reference model trained on as many real images reaches does a detector recover on real aerial benchmarks, and how much do camera geometry, settlement variety and the number of training frames move that fraction, with apparent target size at the reference acquisition matched to the urban benchmark? Experiment A answers it.
+
+**RQ2.** Once a small number of real training images is available (5 or 10 per cent of the benchmark's training split), does the synthetic corpus add accuracy, used as pretraining or mixed into the training set, and does the answer depend on the fine-tuning schedule? Experiment B answers it.
+
+**RQ3.** On synthetic imagery alone, how well does a detector separate a person carrying a firearm from one carrying an ordinary elongated object, and at what rate does it call the latter armed, at GSDs of 4.88, 2.44 and 1.14 cm per pixel? Experiment C answers it.
+
+A secondary question, how detection varies with illumination on synthetic frames, is answered by Experiment D.
+
+Transfer to real imagery is measured for person detection only, since no public aerial benchmark annotates a carried firearm at these GSDs. The capability statement itself is not tested here; Section 6.4 states propositions under which it could be.
+
+### 1.4 Contributions
+
+The article makes three contributions. For public administration, it proposes the acquisition-conditioned capability statement (Section 2.4) as the object to which an algorithmic contribution to a use-of-force decision can be held to account before a public body acquires it; unlike existing model documentation, it treats acquisition conditions as conditions of validity and fixes in advance the result that would withdraw the claim. Empirically, it measures on two real benchmarks how much of person detection a synthetic corpus transfers and what moves that fraction, whether such a corpus helps once some real images exist, and, on synthetic imagery, the rate at which ordinary carried objects are called armed at three GSDs. Methodologically, it characterises the aerial target by GSD, camera pitch and illumination before any detector is trained, so that an acquisition can be assessed before a model is built.

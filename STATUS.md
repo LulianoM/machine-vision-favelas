@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-10-22, [DESKTOP]
+Última atualização: 2026-10-27, [DESKTOP]
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
@@ -43,6 +43,10 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 
 Plano e critérios em `07-blender/PLANO-RODADA5.md`; cadeia `07-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favela
 eal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar sempre pela sessão com `cmd /c retoma_rodada5.cmd` ou por duplo clique; pelo Explorer a partir da sessão, o Blender sobe sem MPFB (visto em 18/10).
+
+## Versões do artigo
+
+Índice em `01-artigo/VERSOES.md`; PDFs em `Área de Trabalho/Artigo Machine Vision Favelas/vN_...`. Vigente: **v5 (27/10)**, a v3 corrigida sem mudança de escopo. A v4 (26/10, reenquadrada para administração pública e cortada à metade) foi rejeitada pelo autor e fica só para comparação em `01-artigo/revisao-2026-10-26/`.
 
 ## Revisão de 17 e 18/10 (feedback de 14/10)
 

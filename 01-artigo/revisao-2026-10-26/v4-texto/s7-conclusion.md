@@ -1,0 +1,25 @@
+## Conclusion
+
+This article asked what a claim that an aerial detector can tell an armed person from an unarmed one must state for a public body to hold it to account, and measured, on synthetic imagery of a dense informal settlement, the two capabilities that supply its empirical terms.
+
+**RQ1.** Trained on synthetic imagery alone, detectors recovered 2.2 per cent of the real-data reference on an urban, mostly oblique benchmark at the reference acquisition and 15.3 per cent in the best oblique configuration (means of three runs); camera geometry moved that share by the largest factor, and on a nadir benchmark the order of the two geometries reversed, though not run by run. **RQ2.** Once 324 or 647 real images existed, the synthetic corpus lowered accuracy, as pretraining under every schedule tried and, by smaller margins, mixed into training. **RQ3.** On synthetic held-out frames, ordinary elongated objects were called armed at 24.5, 12.5 and 25.3 per cent at 4.88, 2.44 and 1.14 cm per pixel, so the confusion fell from the coarsest to the middle resolution and rose again at the finest.
+
+These answers hold for synthetic corpora, one simulated sensor and two public benchmarks that are not the target territory, with many models trained once (Section 6.5). They fill the terms of the acquisition-conditioned capability statement (Sections 2.4 and 6.4), an untested conceptual proposal that gives a public body the information with which account-giving begins (Busuioc, 2021). No threshold for calling the armed and unarmed capability present was pre-specified; against the standard set afterwards (Section 4.7) it was not demonstrated at any acquisition studied: in the sweep at 2.44 and 1.14 cm per pixel an object rate of 0.10 or below came with an armed recall of at most 0.42, and at the default threshold 0.37 to 0.43 of armed calls on held-out frames fell on armed figures; this evidence supports no claim to detect armed persons from the air.
+
+A system that can tell an armed person from an unarmed one and a system that is safe to point at Jacarezinho are different objects, and nothing in the engineering reported here decides the second. That decision belongs to a process that includes the residents of the territory, and that process has not taken place.
+
+## Declarations
+
+**Ethics.** The study involved no human participants and no imagery of residents or of the territory of Jacarezinho. The only real data are two public benchmarks, VisDrone, distributed by its authors (Zhu et al., 2022), and HERIDAL (Božić-Štulić et al., 2019), in the version distributed by Pyrrö (2021) under a CC BY 3.0 licence; the human figures in the synthetic corpora are rendered meshes. [Keep only if true under the authors' institutional rules: No ethics committee approval was sought because the study involved no human participants and no personal data.] Ethical constraints and positionality are stated in Section 4.1.
+
+**Dual use.** The capability examined could serve targeting as readily as protection (Section 1.1). The generator, the corpora and the trained weights are not released (Section 4.8), no imagery or geometry of the territory entered the study (Section 4.1), and no result is offered as a basis for acquisition (Section 6.3).
+
+**Conflict of interest.** The research question originates in a 2022 university research and extension proposal by a forensic expert of the Civil Police of the State of Rio de Janeiro (Acknowledgements), and exploratory work that preceded this study used aerial survey imagery that the authors are not authorised to release (Section 4.1). [State whether any author is or has been employed by, has consulted for, or has received data, funding or equipment from the Civil Police or any vendor of aerial or detection systems.] The authors declare no financial conflict of interest.
+
+**Funding.** This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors, and no scholarship.
+
+**Data availability.** The scene generator, the synthetic corpora and the trained weights are not released; the two benchmarks are public and are distributed by their authors. Section 4.8 states what can be regenerated and checked.
+
+**Declaration of generative AI and AI-assisted technologies.** During the preparation of this work the authors used Claude (Anthropic) to revise the text, to check and correct factual information and spelling, and to assist in monitoring the training runs. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
+
+**Acknowledgements.** The authors thank Fábio H. P. Guimarães, forensic expert of the Civil Police of the State of Rio de Janeiro, who in 2022 proposed detecting armed people in aerial RGB-T drone imagery with a convolutional neural network trained on synthetic game-engine data, the proposal from which this work originates, and Prof. Claudio Miceli de Farias, of the Federal University of Rio de Janeiro, who supervised the 2022 research and extension project in which that proposal was developed.
