@@ -677,12 +677,12 @@ def main():
     aviso = ""
     if not args.sem_previa and args.lingua == "pt":
         aviso += ('<div class="aviso full"><b>Versão prévia, ainda não finalizada.</b> Rascunho de '
-                  'trabalho de 22 de outubro de 2026, tradução para o português da versão em inglês, '
+                  'trabalho de 27 de outubro de 2026, tradução para o português da versão em inglês, '
                   'compartilhada entre os autores para revisão; números, figuras e referências ainda '
                   'estão em revisão. Os rótulos dentro das figuras permanecem em inglês.</div>')
     elif not args.sem_previa:
         aviso += ('<div class="aviso full"><b>Preliminary version, not final.</b> Working draft of '
-                  '22 October 2026, shared among the authors for revision; numbers, figures and '
+                  '27 October 2026, shared among the authors for revision; numbers, figures and '
                   'references are still under review and the text has not been approved by all '
                   'authors. <i>Versão prévia, ainda não finalizada.</i></div>')
     if n_ph:
