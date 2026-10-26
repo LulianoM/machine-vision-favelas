@@ -11,6 +11,6 @@ Cada versão entregue ao autor recebe um número. Os PDFs ficam na Área de Trab
 
 | v5 | 2026-10-27 | A v3 restaurada e só corrigida (erros de fato, contradições, números fora da fonte, afirmações além da evidência, manchete da QP3), com as 13 figuras, 27 tabelas e o enquadramento originais; a v4 foi rejeitada pelo autor. Comparação em `01-artigo/revisao-2026-10-26/COMPARACAO-v3-v4-v5.md` | b02231e | elsevier (40 p.), jmis (119 p.), jmis-folha-de-rosto |
 
-| v6 | 2026-10-27 | A v5 com as decisões do autor sobre as declarações: ética (sem comitê, por não haver participantes nem dados pessoais), conflito de interesse explícito (sem vínculo com polícia ou fornecedores), coautor delegado fora, declaração de IA e disponibilidade de dados como estavam; removidas a origem no projeto UFRJ de 2022, os agradecimentos e as menções às imagens do levantamento | (commit abaixo) | elsevier (40 p.), elsevier-PT, jmis (119 p.), jmis-folha-de-rosto |
+| v6 | 2026-10-27 | A v5 com as decisões do autor sobre as declarações: ética (sem comitê, por não haver participantes nem dados pessoais), conflito de interesse explícito (sem vínculo com polícia ou fornecedores), coautor delegado fora, declaração de IA e disponibilidade de dados como estavam; removidas a origem no projeto UFRJ de 2022, os agradecimentos e as menções às imagens do levantamento | 06b6387 | elsevier (40 p.), elsevier-PT, jmis (119 p.), jmis-folha-de-rosto |
 
 Próxima versão: v7.
