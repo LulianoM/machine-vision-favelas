@@ -1,5 +1,11 @@
 # DIÁRIO DE BORDO
 
+## 2026-10-27 [DESKTOP] v6: decisões do autor sobre as declarações
+
+- Decididos um a um com o autor: (1) ética: nenhum comitê precisava ser consultado, por não haver participantes humanos nem dados pessoais; a declaração diz isso; (2) conflito de interesse: nenhum autor tem ou teve vínculo com a Polícia Civil, outra polícia ou fornecedores de drones ou software; o projeto nasceu na graduação do autor e foi construído por ele; as imagens do levantamento de 2022 vieram pelo projeto de pesquisa da UFRJ, mas o autor preferiu remover a origem nesse projeto do artigo, já que nenhum resultado depende dela: saem o parágrafo de 2.2, os Acknowledgements e as menções à reconstrução fotogramétrica (4.1, 4.8, Ética, Disponibilidade de dados); (3) coautor delegado fica de fora; (4) declaração de IA fica como está; (5) gerador não liberado, sem justificativa no texto; (6) sem declaração CRediT.
+- A câmera de referência (Zenmuse Z30) passa a ser descrita como carga flown a 150 m em nadir sobre territórios desse tipo, sem citar o voo de 2022.
+- v6 em inglês (Elsevier 40 p., JMIS 119 p.) e tradução refeita para o português. PDFs na pasta versionada. O crédito de 2022 continua em `docs/CONTEXTO.md` e no repositório; só saiu do artigo.
+
 ## 2026-10-27 [DESKTOP] v4 rejeitada; v5 = v3 só corrigida
 
 - O autor rejeitou a v4 (26/10): mudou o escopo (enquadramento em administração pública, apêndice, metade das figuras e tabelas fora do corpo). Pedido: voltar à versão anterior e aplicar apenas correções, sem grandes modificações, mantendo o apoio gráfico.

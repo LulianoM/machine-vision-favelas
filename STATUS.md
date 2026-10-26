@@ -46,7 +46,7 @@ eal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar
 
 ## Versões do artigo
 
-Índice em `01-artigo/VERSOES.md`; PDFs em `Área de Trabalho/Artigo Machine Vision Favelas/vN_...`. Vigente: **v5 (27/10)**, a v3 corrigida sem mudança de escopo. A v4 (26/10, reenquadrada para administração pública e cortada à metade) foi rejeitada pelo autor e fica só para comparação em `01-artigo/revisao-2026-10-26/`.
+Índice em `01-artigo/VERSOES.md`; PDFs em `Área de Trabalho/Artigo Machine Vision Favelas/vN_...`. Vigente: **v6 (27/10)**, a v5 com as decisões do autor sobre as declarações (ética sem comitê, conflito de interesse explícito, origem no projeto de 2022 removida). A v4 (26/10, reenquadrada para administração pública e cortada à metade) foi rejeitada pelo autor e fica só para comparação em `01-artigo/revisao-2026-10-26/`.
 
 ## Revisão de 17 e 18/10 (feedback de 14/10)
 
