@@ -36,7 +36,7 @@ Three caveats bound the conditional. Rain is a training regime here, not a flyin
 
 ### 6.4 Dual use: the false-alarm rate as an estimate of harm
 
-The object rate reported in Section 5.4 is the synthetic estimate, unmeasured on real imagery, of how often a system of this kind would mark a resident carrying a household object as armed, the error that Section 3.3 places at the ethical core. It is a lower bound under the matching protocol (Section 4.7), and an operator would also see as alerts the armed boxes it leaves out. The threshold, 0.25, was not tuned, and the rates vary with the realisation of the settlement.
+The object rate reported in Section 5.4 is the synthetic estimate, unmeasured on real imagery, of how often a system of this kind would mark a resident carrying a household object as armed, the error that Section 3.5 places at the ethical core. It is a lower bound under the matching protocol (Section 4.7), and an operator would also see as alerts the armed boxes it leaves out. The threshold, 0.25, was not tuned, and the rates vary with the realisation of the settlement.
 
 Two tests fixed in advance check whether the rate is an artefact of the generator (Section 5.4). Recall on firearm models the detector had never seen was 0.466 against 0.400 on the models it was trained on, a ratio of 1.16 against the withdrawal threshold of 0.80, with the pistol counted or set aside, so what it separated is not the asset library. Carrying every confusable object exactly as a weapon is carried left the object rate of the original 75 m model unchanged, 0.137 against 0.154 (exact McNemar test, p = 0.56). The generalisation that passes the first test, to length and silhouette rather than to the asset, is plausibly the one that produces the confusion.
 

@@ -8,6 +8,8 @@ Agrawal, P., Ratnoo, A., & Ghose, D. (2017). Inverse optical flow based guidance
 
 Al Jazeera. (2021, May 8). Death toll from police raid on Rio de Janeiro favela increases. https://www.aljazeera.com/<wbr>news/<wbr>2021/<wbr>5/<wbr>8/<wbr>death-toll-from-police-raid-on-rio-de-janeiro-favela-increases
 
+Alcadipani, R., Lotta, G., & Cohen, N. (2024). Natural born violence? Understanding street-level bureaucrats' use of violence: Police officers and protests. *Public Administration Review, 84*(1), 100-114. https://doi.org/10.1111/puar.13670
+
 AlJundi, Z., Alsubaie, S., Faheem, M. H., Almarashi, R. M., Qazi, E.-u.-H., & Kim, J. H. (2025). Dangerous objects detection using deep learning and first responder drone. *International Journal of Digital Crime and Forensics, 16*(1), 1-18. https://doi.org/10.4018/ijdcf.367034
 
 Bahmanyar, R., Vig, E., & Reinartz, P. (2019). MRCNet: Crowd counting and density map estimation in aerial and ground imagery. arXiv. https://arxiv.org/abs/1909.12743
@@ -62,6 +64,10 @@ Fórum Brasileiro de Segurança Pública. (2025). *19º Anuário Brasileiro de S
 
 Fórum Brasileiro de Segurança Pública. (2026). *Anuário Brasileiro de Segurança Pública 2026* (Ano 20). https://forumseguranca.org.br/<wbr>wp-content/<wbr>uploads/<wbr>2026/<wbr>07/<wbr>anuario-2026.pdf
 
+Frazier, A. (2016). Commentary: Unmanned aircraft systems: What constitutes a surveillance? *Public Administration Review, 76*(4), 660-661. https://doi.org/10.1111/puar.12549
+
+Gao, C., & Riccucci, N. M. (2026). Artificial intelligence in policing and perceived legitimacy: Does gender representation make a difference? *Public Administration Review*. Advance online publication. https://doi.org/10.1111/puar.70214
+
 Gazeta do Povo. (2025, April 10). "ADPF das Favelas": decisão final do STF vai melhorar ou piorar de vez a segurança do Rio? https://www.gazetadopovo.com.br/<wbr>vida-e-cidadania/<wbr>adpf-635-decisao-final-stf-vai-melhorar-ou-piorar-rio/<wbr>
 
 GeoCue. (2025, November 27). *Flight planning: Sun angle*. GeoCue Support Knowledge Base. https://support.geocue.com/<wbr>flight-planning-sun-angle/<wbr>
@@ -73,6 +79,8 @@ Gram-Hansen, B. J., Helber, P., Varatharajan, I., Azam, F., Coca-Castro, A., Kop
 Grillo, I. (2014, September 10). Brazil's Red Command and the police who fight them. InSight Crime. https://insightcrime.org/<wbr>news/<wbr>analysis/<wbr>brazils-red-command-rio-police-favelas-slums/<wbr>
 
 He, K., Girshick, R., & Dollár, P. (2019). Rethinking ImageNet pre-training. In *2019 IEEE/CVF International Conference on Computer Vision (ICCV)* (pp. 4917-4926). https://doi.org/10.1109/ICCV.2019.00502
+
+Headley, A. M., Baker, D. B., & Kang, I. (2025). Body-worn cameras, police arrests, and bureaucratic discretion: A large-scale causal analysis across the United States. *Public Administration Review, 85*(4), 989-1003. https://doi.org/10.1111/puar.13927
 
 Hinterstoisser, S., Lepetit, V., Wohlhart, P., & Konolige, K. (2019). On pre-trained image features and synthetic images for deep learning. In *Computer Vision, ECCV 2018 Workshops* (Lecture Notes in Computer Science, pp. 682-697). Springer. https://doi.org/10.1007/978-3-030-11009-3_42
 
@@ -124,6 +132,8 @@ Martinez-Esteso, J. P., Castellanos, F. J., Rosello, A., Calvo-Zaragoza, J., & G
 
 McCormac, J., Handa, A., Leutenegger, S., & Davison, A. J. (2017). SceneNet RGB-D: Can 5M synthetic images beat generic ImageNet pre-training on indoor segmentation? In *2017 IEEE International Conference on Computer Vision (ICCV)* (pp. 2697-2706). https://doi.org/10.1109/ICCV.2017.292
 
+Meijer, A., Lorenz, L., & Wessels, M. (2021). Algorithmization of bureaucratic organizations: Using a practice lens to study how context shapes predictive policing systems. *Public Administration Review, 81*(5), 837-846. https://doi.org/10.1111/puar.13391
+
 Mensink, T., Uijlings, J., Kuznetsova, A., Gygli, M., & Ferrari, V. (2022). Factors of influence for transfer learning across diverse appearance domains and task types. *IEEE Transactions on Pattern Analysis and Machine Intelligence, 44*(12), 9298-9314. https://doi.org/10.1109/TPAMI.2021.3129870
 
 Misse, M. (2011). Crime organizado e crime comum no Rio de Janeiro: Diferenças e afinidades. *Revista de Sociologia e Política, 19*(40), 13-25. https://doi.org/10.1590/S0104-44782011000300003
@@ -166,6 +176,10 @@ Ruiz-Santaquiteria, J., Muñoz, J. D., Maigler, F. J., Deniz, O., & Bueno, G. (2
 
 Salazar González, J. L., Zaccaro, C., Álvarez-García, J. A., Soria Morillo, L. M., & Sancho Caparrini, F. (2020). Real-time gun detection in CCTV: An open problem. *Neural Networks, 132*, 297-308. https://doi.org/10.1016/j.neunet.2020.09.013
 
+Selten, F., Robeer, M., & Grimmelikhuijsen, S. (2023). 'Just like I thought': Street-level bureaucrats trust AI recommendations if they confirm their professional judgment. *Public Administration Review, 83*(2), 263-278. https://doi.org/10.1111/puar.13602
+
+Selten, F., van Loo, D., & Klievink, B. (2026). Steering and setting free: Insights from a 20-year retrospective case study of a security and justice organization's digital transformation. *Public Administration Review*. Advance online publication. https://doi.org/10.1111/puar.70231
+
 Shen, Y.-T., Lee, H., Kwon, H., & Bhattacharyya, S. S. (2023a). Progressive transformation learning for leveraging virtual images in training. In *2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 835-844). https://doi.org/10.1109/CVPR52729.2023.00087
 
 Shen, Y.-T., Lee, Y., Kwon, H., Conover, D. M., Bhattacharyya, S. S., Vale, N., Gray, J. D., Leong, G. J., Evensen, K., & Skirlo, F. (2023b). Archangel: A hybrid UAV-based human detection benchmark with position and pose metadata. *IEEE Access, 11*, 80958-80972. https://doi.org/10.1109/ACCESS.2023.3299235
@@ -199,6 +213,10 @@ Wang, Z., Dai, Z., Póczos, B., & Carbonell, J. (2019). Characterizing and avoid
 Watson, C. S., & Elliott, J. R. (2025). Narrowing the gap for city building height predictions. *Scientific Reports, 15*(1), Article 29913. https://doi.org/10.1038/s41598-025-15929-2
 
 Wen, L., Du, D., Zhu, P., Hu, Q., Wang, Q., Bo, L., & Lyu, S. (2021). Detection, tracking, and counting meets drones in crowds: A benchmark. In *2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 7808-7817). https://doi.org/10.1109/CVPR46437.2021.00772
+
+West, J. P., & Bowman, J. S. (2016). The domestic use of drones: An ethical analysis of surveillance issues. *Public Administration Review, 76*(4), 649-659. https://doi.org/10.1111/puar.12506
+
+Wright, J. E., II, Gaozhao, D., & Houston, B. (2024). Body-worn cameras and representation: What matters when evaluating police use of force? *Public Administration Review, 84*(6), 1117-1133. https://doi.org/10.1111/puar.13746
 
 Xu, G. (2025). A comparative study of drones path planning and bezier curve optimization based on multi-strategy search algorithm. *PLOS One, 20*(7), Article e0326633. https://doi.org/10.1371/journal.pone.0326633
 

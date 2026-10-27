@@ -15,4 +15,6 @@ Cada versão entregue ao autor recebe um número. Os PDFs ficam na Área de Trab
 
 | v7 | 2026-10-27 | A v6 com o resumo ampliado: parágrafo inicial com a visão da administração pública e da segurança pública sobre a dificuldade de treinar detectores aéreos para zonas urbanas complexas; palavras-chave public security e public administration | 40b2e1c | elsevier (40 p.), elsevier-PT (42 p.), jmis (119 p.), jmis-folha-de-rosto |
 
-Próxima versão: v8.
+| v8 | 2026-10-27 | A v7 com duas subseções novas na seção 3 (3.3 a virada tecnológica na segurança pública; 3.4 a base ética do treino sintético; a antiga 3.3 vira 3.5), nove fontes da Public Administration Review conferidas no Crossref, citações em toda a seção 1 (de 10 para 40) e o resumo centrado na segurança pública | (commit abaixo) | elsevier (41 p.), elsevier-PT (44 p.), jmis (124 p.), jmis-folha-de-rosto |
+
+Próxima versão: v9.
