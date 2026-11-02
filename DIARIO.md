@@ -1,5 +1,13 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-02 [DESKTOP] Revisão simulada da v8 como revisor da AIM 2027
+
+- Pedido do autor: puxar o parecer do Revisor 1 (Felipe I. Toledo, 14/10), ver o que ainda sobra dele e analisar cada capítulo como revisor da AIM lendo um artigo de administração pública, só com feedback construtivo e sem corrigir nada. O autor quer submeter hoje.
+- Oito revisores em paralelo (um por capítulo e um transversal), só leitura. Parecer completo em `01-artigo/revisao-2026-11-02/PARECER-AIM.md`. Manuscrito intocado.
+- Resolvido do Revisor 1: estrutura, RQs, design science, travessão, vazamento, marcadores, conectores, siglas (três deslizes), seleção contra teste, GSD, intervalos, PR, citações (214 pares, zero faltas).
+- Não resolvido: extensão e repetição. Corpo com 22,8 mil palavras contra a meta de 16 mil; 106 páginas no formato AIM; seção 3 cresceu para 2,4 mil contra 1,2 mil.
+- Achados que valem para a submissão de hoje: no resumo, o par oblíquo muda de condição entre os dois benchmarks (15,3% é S-oblique-six no VisDrone, 42,1% é S-oblique no HERIDAL); "dual use" ausente na 4.1 e nas Declarations; nenhuma seção fecha a pergunta de administração pública aberta na 1.2 e na 3.3. Sugestões de compras públicas devem respeitar a decisão de 27/10 de tirar esse enquadramento do resumo.
+
 ## 2026-10-27 [DESKTOP] v8: evolução da segurança pública, ética do treino sintético e citações na seção 1
 
 - Pedidos do autor, lendo a v7 em português: (1) o resumo falava em compras e prestação de contas, que não se alinham ao artigo; reescrito com foco em segurança pública (letalidade das operações, terreno que a polícia conhece mal, drones já em uso, força letal dependendo do julgamento "armado ou não", dificuldade de treinar detectores nesse tipo de zona urbana); (2) a frase retórica sobre o título na 1.1 saiu; (3) a 1.1 não tinha citação: entraram as fontes já listadas; depois, citações em toda a seção 1 (de 10 para 40 em cada língua), só com fontes já na lista; (4) faltava falar da evolução da segurança pública e das questões éticas que sustentam o treino sintético: subseções novas 3.3 (câmeras corporais, policiamento preditivo, IA e drones na literatura de administração pública; o caso do Rio) e 3.4 (por que não se pode coletar imagem de morador, alternativas rejeitadas, o que o sintético resolve e o que não resolve); a antiga 3.3 virou 3.5 e as remissões foram atualizadas.
