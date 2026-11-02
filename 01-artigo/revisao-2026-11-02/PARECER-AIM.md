@@ -21,9 +21,7 @@ Resolvido do Revisor 1 em todo o texto: estrutura de sete seções, RQ1 a RQ3, "
 
 Não resolvido do Revisor 1: extensão e repetição (E2). Corpo com 22.767 palavras contra a meta de 16 mil. No formato da AIM (Times 12, espaço duplo) o manuscrito dá 106 páginas, 91 de corpo. O premiado mais longo de 2026 tem cerca de 10 mil palavras. A seção 3 cresceu em vez de encolher (2.391 contra a meta de 1.200). Resultados reaparecem em detalhe na Discussão e na Conclusão.
 
-Lacuna transversal de administração pública: a pergunta de gestão pública é aberta na 1.2 e na 3.3 (o instrumento vê o que dizem que vê) e não é fechada em nenhuma seção. Não há implicação explícita para compra pública, controle externo, protocolo de uso ou accountability.
-
-Atenção a uma decisão anterior do autor: em 27/10 (DIARIO, v8) o resumo foi reescrito justamente para tirar "compras e prestação de contas", por não se alinharem ao artigo. As sugestões abaixo que falam em compra pública devem ser lidas no enquadramento de segurança pública que o autor escolheu: o que um comando de polícia ou um órgão de controle (STF sob a ADPF 635, Ministério Público) pode exigir de uma alegação aérea antes que ela entre numa decisão de força.
+Lacuna transversal: a pergunta de segurança pública é aberta na 1.2 e na 3.3 (o instrumento vê o que dizem que vê) e não é fechada em nenhuma seção. Falta dizer, no fim, o que um comando policial, o STF sob a ADPF 635 ou o Ministério Público pode exigir de uma alegação aérea de "pessoa armada" antes que ela entre numa decisão de força, e o que isso significa para o morador. O enquadramento do artigo é segurança pública; compras públicas e prestação de contas administrativa estão fora, por decisão do autor (v4 rejeitada em 26/10; resumo reescrito em 27/10).
 
 ## Resumo e 1 Introdução: 6 pontos (3 altos)
 
@@ -36,7 +34,7 @@ Rastros do Revisor 1:
 Feedback AIM:
 1. Alta. Resumo, l.7: o par comparado muda de condição. No VisDrone, 15,3% é S-oblique-six; no HERIDAL, 42,1% é S-oblique de um assentamento (S-oblique-six dá 46,4%). Comparar a mesma condição nos dois benchmarks e dizer que as faixas de sementes se cruzam.
 2. Alta. Objetivo (l.33) maior que o medido. Restringir a GSD em nadir, sintético, e à transferência da detecção de pessoa.
-3. Alta. Nenhuma das cinco contribuições (l.47) fecha a lacuna de administração pública aberta na l.27. Uma frase: condição de aquisição e taxa de falso armado são o critério verificável que gestor e órgão de controle podem exigir antes que uma alegação aérea entre numa decisão de força.
+3. Alta. Nenhuma das cinco contribuições (l.47) fecha a lacuna de administração pública aberta na l.27. Uma frase: condição de aquisição e taxa de falso armado são o critério verificável que um comando policial e o órgão de controle podem exigir antes que uma alegação aérea entre numa decisão de força.
 4. Média. A 1.2 declara como objeto empírico só a escala do objeto carregado (l.29), mas RQ1 e RQ2 testam transferência de pessoa. Nomear as duas aberturas.
 5. Média. Afirmações além do medido na l.5 e l.15: o juízo visual sobre força letal tratado como fato (a 3.5 o chama de premissa); "no public benchmark annotates a carried firearm" contradiz a l.43; "claims that omit it are acted on" sem fonte.
 6. Média. Resumo com 381 palavras e cerca de 17 números (premiados da AIM: cerca de 245). Introdução com 1.665 contra 1.200. Frase de abertura da 1.1 com 98 palavras.
@@ -122,9 +120,9 @@ Rastros do Revisor 1: M4, M5, S5, S7, A2 resolvidos. Resíduos:
 Feedback AIM:
 1. Alta. A seção não retoma Selten, Meijer, Gao e Riccucci, West e Bowman. Fechar a premissa "the instrument sees what it is said to see" com o achado.
 2. Alta. A 6.4 não traduz o falso alarme em consequência de política: a precisão de 0,37 a 0,46 foi medida na proporção de armados do corpus; com a prevalência real, muito menor, a fração de alertas falsos sobe, e o custo recai sobre quem carrega ferramenta de trabalho.
-3. Alta. Faltam implicações para compra pública, controle externo e accountability. Os testes do artigo viram um padrão mínimo de declaração que comprador público ou órgão de controle pode exigir de fornecedor: GSD e ângulo, taxa de objeto chamado de arma em imagem não vista, teste de arma não vista, ponto de operação.
+3. Alta. Faltam implicações explícitas para a operação policial e para o controle externo (STF sob a ADPF 635, Ministério Público). Os testes do artigo viram o que se pode exigir de uma alegação aérea antes que ela entre numa decisão de força: GSD e ângulo declarados, taxa de objeto chamado de arma em imagem não vista, teste de arma não vista, ponto de operação.
 4. Média. Afirmações além do medido: l.43 "a system flown at the reference acquisition would mark" projeta sintético em sistema real; l.27 "no appearance-based measure of realism detects it" não foi medido.
-5. Média. Desequilíbrio: 2.130 palavras na 6.1, 335 na 6.4, onde está a contribuição de gestão.
+5. Média. Desequilíbrio: 2.130 palavras na 6.1, 335 na 6.4, onde está a contribuição para a segurança pública.
 6. Média. A 6.3 trata só de luz; o trade-off que importa ao gestor (1,14 cm por pixel exige zoom de 8,5 vezes e cobre 73 vezes menos área) está na 6.2 sem leitura prática.
 7. Média. Direitos dos moradores só como pergunta (l.75). Nomear instâncias candidatas e direitos em jogo como opções.
 8. Baixa. Remissão da l.35 para a 6.4 errada; l.15 "trained for longer until it passed" sugere ajuste até passar; l.43 frase solta.
@@ -138,7 +136,7 @@ Rastros do Revisor 1:
 - Respostas às RQ: só RQ1 é nomeada.
 
 Feedback AIM:
-1. Alta. Nenhuma frase diz ao gestor público o que fazer. Fechar com: um órgão de segurança pública não deveria adquirir nem autorizar classificação aérea de pessoa armada com base em alegação que não declare GSD, geometria de visada e taxa de desarmado chamado de armado em imagem real.
+1. Alta. Nenhuma frase diz ao comando policial ou ao órgão de controle o que exigir. Fechar com: nenhuma alegação aérea de "pessoa armada" deveria entrar numa decisão de força sem declarar GSD, geometria de visada e a taxa de desarmado chamado de armado em imagem real.
 2. Alta. Uma frase por RQ com o número principal; o resto remete a 5 e 6.1.
 3. Baixa. Nomear RQ2 e RQ3; "raise it at 152" sem unidade.
 4. Média. Declaração explícita de uso dual, sem atribuir motivo à não liberação.
@@ -162,6 +160,6 @@ Correspondência OK: 113 entradas, zero citado sem entrada, zero entrada sem cit
 
 O que tem maior efeito por hora de trabalho, se só der para fazer pouco:
 1. Corrigir o par trocado do resumo (Resumo, item 1).
-2. Uma frase de implicação para gestão pública na 1.4, na 6.4 e na Conclusão (Resumo item 3, Discussão itens 2 e 3, Conclusão item 1).
+2. Uma frase de implicação para a segurança pública (operação e controle externo) na 1.4, na 6.4 e na Conclusão (Resumo item 3, Discussão itens 2 e 3, Conclusão item 1).
 3. Declaração de uso dual nas Declarations.
 4. Submeter uma versão curta com o restante como material suplementar, se o formulário permitir, ou confirmar com AIM@marshall.usc.edu se há limite de páginas.

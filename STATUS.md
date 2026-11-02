@@ -2,11 +2,11 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-11-02, [DESKTOP]
+Última atualização: 2026-11-02 (v9), [DESKTOP]
 
-## Revisão simulada AIM da v8 (02/11)
+## v9 (02/11): correções da revisão simulada da AIM aplicadas
 
-Parecer por capítulo em `01-artigo/revisao-2026-11-02/PARECER-AIM.md`: 56 pontos ao todo, 16 altos. Do Revisor 1 sobra a extensão e a repetição (22,8 mil palavras de corpo, 106 páginas no formato AIM). Prioridades para a submissão, que o autor quer fazer hoje (prazo 19/11): par trocado no resumo, declaração de uso dual, uma frase de implicação para a gestão da segurança pública na 1.4, 6.4 e conclusão. Nada aplicado ao manuscrito.
+Parecer em `01-artigo/revisao-2026-11-02/PARECER-AIM.md` (56 pontos, 16 altos). Aplicado em inglês e espelhado em português, sem perda de conteúdo: resumo com a mesma condição nos dois benchmarks, objetivo restrito ao medido, lacuna de segurança pública fechada (1.4, 2.4, 3.3, 6.4, 7), declaração de uso dual, resultados fora dos Métodos, d′ unificado, 119 referências. Enquadramento fixo: segurança pública, nunca compras públicas. PDFs em `v9_2026-11-02_revisao-aim/` na Área de Trabalho, inclusive `aim-submissao` sem aviso de prévia (112 p.). Pendente para o autor: conferir as quatro citações acrescentadas por escopo na 3.1; decidir se corta extensão antes de submeter; confirmar com AIM@marshall.usc.edu limite de páginas e elegibilidade de mestrando.
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 

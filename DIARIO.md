@@ -1,5 +1,15 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-02 [DESKTOP] v9: correções da revisão simulada da AIM, inglês e português
+
+- Regra do autor, registrada em memória e no parecer: o enquadramento é SEGURANÇA PÚBLICA; nunca compras públicas, licitação ou prestação de contas administrativa. O parecer foi limpo dessas sugestões antes de aplicar.
+- Aplicado no inglês (oficial) sem perda de conteúdo: nenhuma tabela, figura, parágrafo ou número removido. Oito agentes em paralelo (seções 2, 3, 4, 5 e referências; eu mesmo em resumo, introdução, discussão, conclusão), depois quatro tradutores espelhando o diff no português.
+- Mudanças principais: resumo compara a mesma condição nos dois benchmarks (8,8 e 15,3 no urbano; 62,7 contra 42,1 e 46,4 no nadir, faixas que se cruzam); objetivo restrito ao medido; 1.4, 2.4, 3.3, 6.4 e conclusão fecham a premissa "o instrumento vê o que dizem que vê" com o que comando policial, STF sob a ADPF 635, Ministério Público e moradores podem exigir de uma alegação aérea; declaração de uso dual; parágrafo demonstrado, hipótese e a validar no fim da 6.1; seção 2 apresenta o HERIDAL e a geometria oblíqua do VisDrone; seção 3 sem "steep slopes", 798 como agregado estadual, ADPF com as datas da 3.1, STF e UAV como siglas; Métodos sem número de resultado (épocas 58 de 60 e 27 a 30 foram para a 5.2 e 5.3); d′ com e sem correção explicitados; tabela de hipóteses com desfecho de critério em vez de rótulo; frases de luz condicionadas ao sintético.
+- Referências: 113 para 119 entradas (Jocher & Qiu 2024; Lin et al. 2014 e Hautus 1995 com DOI conferido no Crossref; Blender Foundation 2026; MakeHuman Community 2026; Poly Haven n.d.), 23 títulos em português com tradução, JOTA e CBS com URL canônica, Kiefer 2022 e Sithole completados, "IEEE." uniformizado, travessão do Movisafe retirado. Kim 2026 fica como arXiv até o DOI existir. Citações contra entradas: zero faltas.
+- Citações acrescentadas por escopo, sem releitura do PDF, a conferir pelo autor: Lessing 2008 e Misse 2011 (tráfico), InSight Crime 2026 e Misse 2011 (milícias) na 3.1.
+- Não feito, por decisão de não perder conteúdo: cortes de extensão (corpo com cerca de 23 mil palavras; o AIM dá 112 páginas em espaço duplo), harmonização do "et al." em todo o texto, JMIS (abstract fixo no montador, desatualizado).
+- v9 na Área de Trabalho (`v9_2026-11-02_revisao-aim/`): elsevier (44 p.), elsevier-PT (47 p.), aim-submissao sem aviso de prévia (112 p.). Cópias soltas "(versao atual)" trocadas de v8 para v9.
+
 ## 2026-11-02 [DESKTOP] Revisão simulada da v8 como revisor da AIM 2027
 
 - Pedido do autor: puxar o parecer do Revisor 1 (Felipe I. Toledo, 14/10), ver o que ainda sobra dele e analisar cada capítulo como revisor da AIM lendo um artigo de administração pública, só com feedback construtivo e sem corrigir nada. O autor quer submeter hoje.
