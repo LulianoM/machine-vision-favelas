@@ -8,7 +8,8 @@
 - Referências: 113 para 119 entradas (Jocher & Qiu 2024; Lin et al. 2014 e Hautus 1995 com DOI conferido no Crossref; Blender Foundation 2026; MakeHuman Community 2026; Poly Haven n.d.), 23 títulos em português com tradução, JOTA e CBS com URL canônica, Kiefer 2022 e Sithole completados, "IEEE." uniformizado, travessão do Movisafe retirado. Kim 2026 fica como arXiv até o DOI existir. Citações contra entradas: zero faltas.
 - Citações acrescentadas por escopo, sem releitura do PDF, a conferir pelo autor: Lessing 2008 e Misse 2011 (tráfico), InSight Crime 2026 e Misse 2011 (milícias) na 3.1.
 - Não feito, por decisão de não perder conteúdo: cortes de extensão (corpo com cerca de 23 mil palavras; o AIM dá 112 páginas em espaço duplo), harmonização do "et al." em todo o texto, JMIS (abstract fixo no montador, desatualizado).
-- v9 na Área de Trabalho (`v9_2026-11-02_revisao-aim/`): elsevier (44 p.), elsevier-PT (47 p.), aim-submissao sem aviso de prévia (112 p.). Cópias soltas "(versao atual)" trocadas de v8 para v9.
+- Leitura final de ponta a ponta do PDF Elsevier em inglês (o de submissão, por decisão do autor; o formato "aim" foi descartado e não volta). Achados corrigidos: iniciais nos homônimos Wang (1.2 e 1.4) e "nesses dois benchmarks" na conclusão; no montador, a legenda de tabela passou a `<caption>` dentro da tabela e as tabelas largas podem quebrar entre páginas com linha inteira e cabeçalho repetido. Resultado: a página quase vazia antes da Tabela 27 (existia desde a v8) sumiu e dez páginas com 20 a 45 por cento de coluna em branco ficaram cheias; o PDF caiu de 44 para 41 páginas (PT: 44). Memória gravada: submissão sempre no Elsevier.
+- v9 na Área de Trabalho (`v9_2026-11-02_revisao-aim/`): elsevier sem aviso de prévia (41 p., o PDF de submissão), elsevier-PT (44 p.). Cópias soltas "(versao atual)" trocadas de v8 para v9.
 
 ## 2026-11-02 [DESKTOP] Revisão simulada da v8 como revisor da AIM 2027
 

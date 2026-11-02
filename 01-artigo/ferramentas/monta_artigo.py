@@ -224,6 +224,7 @@ figure { margin: 14pt 0 16pt 0; page-break-inside: avoid; text-align: center; }
 figure img { max-width: 100%; border: 0.5pt solid #bbb; }
 figcaption { font-size: 10pt; line-height: 1.4; text-align: left; margin-top: 5pt; color: #222; }
 .tabcap { font-size: 10pt; line-height: 1.4; margin: 10pt 0 2pt 0; page-break-after: avoid; }
+caption.tabcap { caption-side: top; text-align: left; padding: 0 0 2pt 0; }
 .capa { text-align: center; margin-bottom: 26pt; }
 .aviso { border: 1pt solid #c0392b; background: #fdf3f2; padding: 10pt 12pt;
          font-size: 10pt; line-height: 1.5; margin: 16pt 0; }
@@ -255,7 +256,12 @@ h4 + p { text-indent: 0; }
 p { margin: 0 0 5pt 0; }
 p + p { text-indent: 1.2em; margin-top: -3pt; }
 table { border-collapse: collapse; width: 100%; font-size: 7.8pt; line-height: 1.18;
-        margin: 6pt 0 9pt 0; break-inside: avoid; }
+        margin: 6pt 0 9pt 0; break-inside: auto; }
+/* tabela pode quebrar entre paginas (linha inteira, cabecalho repetido) em vez de pular
+   inteira e deixar as duas colunas vazias embaixo, visto em 10 paginas da v9 */
+tr { break-inside: avoid; }
+thead { display: table-header-group; }
+div.full { break-inside: auto !important; }
 th, td { border: 0; border-bottom: 0.4pt solid #555; padding: 2pt 4pt; text-align: left;
          vertical-align: top; }
 thead th { border-top: 0.8pt solid #000; border-bottom: 0.4pt solid #000; font-weight: bold;
@@ -269,6 +275,7 @@ figure { margin: 8pt 0 10pt 0; break-inside: avoid; text-align: center; }
 figure img { max-width: 100%; }
 figcaption { font-size: 8pt; line-height: 1.25; text-align: justify; margin-top: 3pt; }
 .tabcap { font-size: 8pt; line-height: 1.25; margin: 6pt 0 1pt 0; text-align: left; break-after: avoid; text-indent: 0; }
+caption.tabcap { caption-side: top; padding: 0 0 2pt 0; break-after: avoid; }
 .capa { margin-bottom: 12pt; border-bottom: 1.2pt solid #000; padding-bottom: 8pt; }
 .capa .autores { font-size: 10pt; margin-top: 6pt; }
 .capa .afil { font-size: 8.5pt; font-style: italic; color: #333; }
@@ -667,6 +674,10 @@ def main():
 
     corpo = markdown.markdown("\n\n".join(partes),
                               extensions=["tables", "sane_lists", "md_in_html"])
+    # a legenda entra na propria tabela (<caption>), para nunca ficar orfa numa pagina quando a
+    # tabela, mais alta que a pagina, e empurrada para a seguinte (visto na Tabela 27 da v8 e v9)
+    corpo = re.sub(r'<p class="tabcap">(.*?)</p>' + chr(92) + r's*<table>',
+                   r'<table><caption class="tabcap">' + chr(92) + r'1</caption>', corpo, flags=re.S)
 
     capa = f"""<div class="capa full">
 <h1>{titulo()}</h1>
