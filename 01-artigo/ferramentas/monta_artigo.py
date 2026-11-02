@@ -256,7 +256,8 @@ h4 + p { text-indent: 0; }
 p { margin: 0 0 5pt 0; }
 p + p { text-indent: 1.2em; margin-top: -3pt; }
 table { border-collapse: collapse; width: 100%; font-size: 7.8pt; line-height: 1.18;
-        margin: 6pt 0 9pt 0; break-inside: auto; }
+        margin: 6pt 0 9pt 0; break-inside: avoid; }
+div.full table, table.longa { break-inside: auto; }
 /* tabela pode quebrar entre paginas (linha inteira, cabecalho repetido) em vez de pular
    inteira e deixar as duas colunas vazias embaixo, visto em 10 paginas da v9 */
 tr { break-inside: avoid; }
@@ -678,6 +679,11 @@ def main():
     # tabela, mais alta que a pagina, e empurrada para a seguinte (visto na Tabela 27 da v8 e v9)
     corpo = re.sub(r'<p class="tabcap">(.*?)</p>' + chr(92) + r's*<table>',
                    r'<table><caption class="tabcap">' + chr(92) + r'1</caption>', corpo, flags=re.S)
+    # tabela comprida (mais de 10 linhas) pode quebrar entre colunas ou paginas; a curta fica
+    # inteira, porque o cabecalho nao se repete entre colunas
+    corpo = re.sub(r'<table>(.*?)</table>',
+                   lambda m: ('<table class="longa">' if m.group(1).count('<tr>') > 3 else '<table>') + m.group(1) + '</table>',
+                   corpo, flags=re.S)
 
     capa = f"""<div class="capa full">
 <h1>{titulo()}</h1>

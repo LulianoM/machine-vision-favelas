@@ -14,7 +14,7 @@ Scenes are generated procedurally in Blender 5.2 (Blender Foundation, 2026), hea
 
 #### 4.2.1 Settlement layout
 
-Layout is produced in 3 stages, each addressing a way in which naive procedural generation betrays itself from above (Figure @fig{fig1_nadir}; Figure @fig{fig3_beco} shows the same scene at street level).
+Layout is produced in 3 stages, each addressing a way in which naive procedural generation betrays itself from above (Figure @fig{fig1_nadir}).
 
 Parcelling. The built core is subdivided by recursive binary partition. Each split receives a gap whose modal value is zero, so that most dwellings abut: zero with probability 0.82, 0.5 to 1.2 m with probability 0.12, 1.3 to 2.0 m with probability 0.052, and 2.3 to 3.1 m with probability 0.008. The second band is the alley, or beco, that defines the morphology; each lot is shrunk by 0.15 m and rotated about its centroid, so a zero gap leaves a seam rather than a shared wall.
 
@@ -25,8 +25,6 @@ Vertical accretion. In most dwellings of 2 or more storeys the upper floor is sm
 Six settlements exist (Figure @fig{fig6_assentamentos}), differing in relief, forest cover, a corridor through the core, the palette of roofs and facades, the extent of the core, the storey distribution and the share of vacant lots; settlement 1 is the one of every single-settlement corpus.
 
 <!--FIG:06-resultados/figuras/fig1_nadir.jpg|A generated settlement seen from the virtual survey camera: nadir, 150 m above ground, rendered at 1920 by 1080 (9.76 cm per pixel); the training corpora are rendered at 3840 by 2160. The three construction stages are visible: dwellings abutting their neighbours with alleys mostly between 0.5 and 1.2 m, nine sub-districts meeting at an angle, and upper storeys offset from the floor below, which produce the L-shaped footprints.-->
-
-<!--FIG:06-resultados/figuras/fig3_beco.jpg|The same generated scene at street level, inside an alley. The view is not used for training; it is the check that the layout is three-dimensional built form rather than a texture painted to satisfy a top-down view.-->
 
 <!--FIG:06-resultados/figuras/fig6_assentamentos.jpg|The six settlements over which S-nadir-150-six and S-oblique-six (both defined in Table @tab{corpora}) spread their 180 frames, one frame of each from the S-oblique-six corpus, all under the hard-sun regime. Settlement 1 is the one rendered in the corpus of record.-->
 

@@ -14,7 +14,7 @@ As cenas são geradas proceduralmente no Blender 5.2 (Blender Foundation, 2026),
 
 #### 4.2.1 Traçado do assentamento
 
-O traçado é produzido em 3 estágios, cada um tratando de uma forma pela qual a geração procedural ingênua se trai vista de cima (Figura @fig{fig1_nadir}; a Figura @fig{fig3_beco} mostra a mesma cena ao nível da rua).
+O traçado é produzido em 3 estágios, cada um tratando de uma forma pela qual a geração procedural ingênua se trai vista de cima (Figura @fig{fig1_nadir}).
 
 Parcelamento. O núcleo construído é subdividido por partição binária recursiva. Cada divisão recebe um afastamento cujo valor modal é zero, de modo que a maioria das moradias se encosta: zero com probabilidade 0,82, 0,5 a 1,2 m com probabilidade 0,12, 1,3 a 2,0 m com probabilidade 0,052 e 2,3 a 3,1 m com probabilidade 0,008. A segunda faixa é a viela, ou beco, que define a morfologia; cada lote é reduzido em 0,15 m e rotacionado em torno do seu centroide, de modo que um afastamento zero deixa uma junta em vez de uma parede compartilhada.
 
@@ -25,8 +25,6 @@ Acreção vertical. Na maioria das moradias de 2 ou mais pavimentos, o pavimento
 Existem seis assentamentos (Figura @fig{fig6_assentamentos}), que diferem em relevo, cobertura florestal, um corredor através do núcleo, a paleta de telhados e fachadas, a extensão do núcleo, a distribuição de pavimentos e a parcela de lotes vagos; o assentamento 1 é o de todo corpus de assentamento único.
 
 <!--FIG:06-resultados/figuras/fig1_nadir.jpg|Um assentamento gerado visto da câmera virtual de levantamento: nadir, 150 m acima do solo, renderizado a 1920 por 1080 (9,76 cm por pixel); os corpora de treino são renderizados a 3840 por 2160. Os três estágios de construção são visíveis: moradias encostadas às vizinhas com becos majoritariamente entre 0,5 e 1,2 m, nove subdistritos que se encontram em ângulo e pavimentos superiores deslocados em relação ao pavimento inferior, que produzem as coberturas no solo em forma de L.-->
-
-<!--FIG:06-resultados/figuras/fig3_beco.jpg|A mesma cena gerada ao nível da rua, dentro de um beco. A vista não é usada para treino; é a verificação de que o traçado é forma construída tridimensional, e não uma textura pintada para satisfazer uma vista de cima.-->
 
 <!--FIG:06-resultados/figuras/fig6_assentamentos.jpg|Os seis assentamentos sobre os quais S-nadir-150-six e S-oblique-six (ambos definidos na Tabela @tab{corpora}) distribuem seus 180 quadros, um quadro de cada um do corpus S-oblique-six, todos sob o regime de sol duro. O assentamento 1 é o renderizado no corpus de referência.-->
 
