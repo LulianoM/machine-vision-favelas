@@ -258,6 +258,9 @@ p + p { text-indent: 1.2em; margin-top: -3pt; }
 table { border-collapse: collapse; width: 100%; font-size: 7.8pt; line-height: 1.18;
         margin: 6pt 0 9pt 0; break-inside: avoid; }
 div.full table, table.longa { break-inside: auto; }
+thead, caption { break-after: avoid; }
+tbody tr:first-child { break-before: avoid; }
+tbody tr:nth-child(2) { break-before: avoid; }
 /* tabela pode quebrar entre paginas (linha inteira, cabecalho repetido) em vez de pular
    inteira e deixar as duas colunas vazias embaixo, visto em 10 paginas da v9 */
 tr { break-inside: avoid; }
