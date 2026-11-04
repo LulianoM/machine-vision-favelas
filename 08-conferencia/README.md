@@ -45,7 +45,7 @@ modelos_2026/           AIM2027_CFP.pdf e quatro papers premiados de 2026 (conti
 
 ## Versão curta do artigo (04/11/2026)
 
-`versao-curta/`: `versao-curta-aim2027.html` (corpo de 8,7 mil palavras, 44 páginas em Carta, Times New Roman 12, espaço duplo, 12 tabelas e 5 figuras), `esqueleto-aim2027.html` (extended abstract de 3 mil palavras, 19 páginas), `pagina.py`, que fecha os buracos de paginação movendo figuras e tabelas, e `gera_pdf.sh`, que renderiza os dois com o Chrome headless e deixa cópias autocontidas em `~/Desktop/AIM 2027 - Versao Curta/`. A primeira página de cada PDF é uma nota de trabalho em português, a apagar antes de submeter. Os PDFs não entram no git.
+`versao-curta/`: `versao-curta-aim2027.html` (corpo de 8,7 mil palavras, 44 páginas em Carta, Times New Roman 12, espaço duplo, 12 tabelas e 5 figuras), `esqueleto-aim2027.html` (extended abstract de 3 mil palavras, 19 páginas), `versao-curta-elsevier.html` (a mesma versão curta no formato Elsevier do v9, A4 em duas colunas, 18 páginas, montada por `gera_elsevier.py`), `pagina.py`, que fecha os buracos de paginação movendo figuras e tabelas, `O-QUE-FALTA-NO-SERVIDOR.md` (o que ainda precisa ser modelado e treinado no desktop, com custos) e `gera_pdf.sh`, que renderiza os três com o Chrome headless e deixa cópias autocontidas em `~/Desktop/AIM 2027 - Versao Curta/`. A primeira página de cada PDF é uma nota de trabalho em português, a apagar antes de submeter. Os PDFs não entram no git.
 
 ## Regra de citação herdada
 
