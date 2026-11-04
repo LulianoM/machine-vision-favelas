@@ -9,7 +9,7 @@ Leituras de resolubilidade (secao 2.3 do PLANO-RODADA5, sem mudanca): (a) faixas
 cruzam, (b) intervalo de 95% por reamostragem que exclui zero, (c) diferenca relativa de pelo menos 30%
 do menor valor (descritiva); resolvivel = passa em (a) ou em (b).
 
-  python rodada6_criterios.py --parte R|Q|L|E|G|V|H|tudo
+  python rodada6_criterios.py --parte R|Q|L|E|G|V|H|C|tudo
 """
 import argparse
 import json
@@ -374,6 +374,76 @@ def item_h():
     return out
 
 
+# ------------------------------------------------------------------ C: transferencia de cor
+CORPORA_C = {"S-nadir-150": "s_nadir_4k", "S-oblique-six": "s_oblvar"}
+
+
+def sim2real_val(arq):
+    d = le(arq)
+    if not d:
+        return None
+    return next((r.get("metrics/mAP50(B)") for r in d["resultados"] if r.get("conjunto") == "real"), None)
+
+
+def item_c():
+    if not existe("s_nadir_4k_ct") and not existe("s_oblvar_ct"):
+        return {"veredito": "pendente"}
+    out = {"regra": "PLANO-RODADA6 3.10: transferido menos limpo, pareado por imagem, 1.000 reamostras, semente 0, no VisDrone val "
+                    "(1280) e na HERIDAL (imgsz casado); leituras (b) e (c), (a) quando houver sementes dos dois lados. "
+                    "Resolvivel para cima no VisDrone e nao na HERIDAL = a aparencia explica parte da lacuna, especifica do alvo; "
+                    "para cima nos dois = aparencia generica; nulo = a lacuna e geometria. Sementes 1 e 2 so onde (b) passou",
+           "sementes_indicadas": [], "corpora": {}}
+    for nome, base in CORPORA_C.items():
+        ct = [r for r in (f"{base}_ct", f"{base}_ct_sd1", f"{base}_ct_sd2") if existe(r)]
+        if not ct:
+            continue
+        limpo = [base] + ([f"{base}_sd1", f"{base}_sd2"] if len(ct) > 1 else [])
+        c = {"runs_transferido": ct, "runs_limpo": limpo}
+        sobe = {}
+        for tag in ("visdrone", "heridal"):
+            la = [r for r in ct if existe(r, tag)]
+            lb = [r for r in limpo if existe(r, tag)]
+            if not la or not lb:
+                continue
+            cheio, boot = boot_mapa(la + lb, tag)
+            lt = leitura([cheio[r] for r in la], [cheio[r] for r in lb],
+                         np.mean([boot[r] for r in la], 0), np.mean([boot[r] for r in lb], 0), True)
+            if len(la) < 2:
+                lt["a_ok"] = None
+            c[tag] = lt
+            sobe[tag] = "cima" if (lt["b_ok"] and lt["dif"] > 0) else ("baixo" if (lt["b_ok"] and lt["dif"] < 0) else "nulo")
+            if lt["b_ok"] and base not in out["sementes_indicadas"]:
+                out["sementes_indicadas"].append(base)
+        c["visdrone_1024"] = {"transferido": sim2real_val(f"sim2real_{base}_ct_1024.json"),
+                              "limpo": sim2real_val(f"sim2real_{base}_1024.json")}
+        comb = f"{base}_ctdeg"
+        if existe(comb):
+            cmb = {}
+            for tag in ("visdrone", "heridal"):
+                if existe(comb, tag) and existe(base, tag) and existe(f"{base}_ct", tag):
+                    cheio, boot = boot_mapa([comb, base, f"{base}_ct"], tag)
+                    cmb[tag] = {"contra_limpo": leitura([cheio[comb]], [cheio[base]], boot[comb], boot[base], True),
+                                "contra_transferido": leitura([cheio[comb]], [cheio[f"{base}_ct"]], boot[comb], boot[f"{base}_ct"], True)}
+            c["combinado_descritivo"] = cmb
+        v, h = sobe.get("visdrone"), sobe.get("heridal")
+        if v is None or h is None:
+            c["veredito"] = f"{nome}: pendente (falta um benchmark)"
+        elif v == "cima" and h != "cima":
+            c["veredito"] = f"{nome}: a aparencia explica parte da lacuna, especifica do alvo (VisDrone sobe, HERIDAL {h})"
+        elif v == "cima" and h == "cima":
+            c["veredito"] = f"{nome}: aparencia generica (sobe nos dois benchmarks)"
+        elif v == "nulo" and h == "nulo":
+            c["veredito"] = f"{nome}: nulo nos dois: a lacuna e geometria, nao aparencia"
+        else:
+            c["veredito"] = f"{nome}: caso nao previsto pela regra (VisDrone {v}, HERIDAL {h}): reportar os dois"
+        for tag in ("visdrone", "heridal"):
+            if tag in c:
+                c["veredito"] += f"; {tag} {c[tag]['dif']:+.4f} (IC {c[tag]['dif_ic95']}, passou em {c[tag]['passou_em']})"
+        out["corpora"][nome] = c
+    out["veredito"] = " | ".join(v["veredito"] for v in out["corpora"].values()) or "pendente"
+    return out
+
+
 # ------------------------------------------------------------------ V (item 9): teto com o treino completo
 def item_v():
     if not existe("r_cheio_sel"):
@@ -393,7 +463,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--parte", default="tudo")
     a = ap.parse_args()
-    partes = {"R": item_r, "Q": item_q, "L": item_l, "E": item_e, "G": item_g, "V": item_v, "H": item_h}
+    partes = {"R": item_r, "Q": item_q, "L": item_l, "E": item_e, "G": item_g, "V": item_v, "H": item_h, "C": item_c}
     out = le("rodada6_criterios.json") or {}
     for k, fn in partes.items():
         if a.parte in ("tudo", k):

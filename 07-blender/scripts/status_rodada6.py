@@ -36,10 +36,13 @@ EPOCA = {"Q1": ("armado_35_e120", 120, 250), "Q2": ("armado_75g_e120", 120, 250)
          "T8": ("s_nadir_4k_deg_sd2", 60, 240), "T9": ("s_oblvar_deg_sd2", 60, 198),
          "T11": ("s_semsol_4k_sd1", 60, 240), "T12": ("s_semsol_4k_sd2", 60, 240),
          "V2": ("r_cheio_sel", 60, 1970), "R1": ("r_pareado_sel", 60, 400),
-         "H3": ("armado_35m_e120", 120, 250), "H7": ("armado_75gm_e120", 120, 250), "H11": ("armado_150gm_e120", 120, 261)}
+         "H3": ("armado_35m_e120", 120, 250), "H7": ("armado_75gm_e120", 120, 250), "H11": ("armado_150gm_e120", 120, 261),
+         "C3": ("s_nadir_4k_ct", 60, 240), "C4": ("s_oblvar_ct", 60, 198),
+         "C10": ("s_nadir_4k_ctdeg", 60, 240), "C11": ("s_oblvar_ctdeg", 60, 198)}
 EST = {"P1": 60, "R2": 600, "Q3": 1200, "Q4": 60, "L2": 300, "L5": 300, "L8": 2400, "L9": 60, "E4": 300, "E6": 3000,
        "E7": 900, "E8": 60, "G1": 600, "G4": 3600, "G5": 300, "T5": 2400, "T10": 7200, "T13": 1200, "T14": 600,
-       "V1": 60, "V3": 900, "Y1": 600, "H2": 300, "H6": 300, "H10": 300, "H13": 3600, "H14": 60}
+       "V1": 60, "V3": 900, "Y1": 600, "H2": 300, "H6": 300, "H10": 300, "H13": 3600, "H14": 60,
+       "C1": 2400, "C2": 1800, "C5": 5400, "C6": 300, "C7": 4 * 60 * 220, "C8": 4 * 1500, "C9": 600, "C12": 3600, "C13": 600}
 
 
 def vivo(nome):
@@ -125,8 +128,8 @@ def resultado(eid):
             return f"{d['pessoas']} pessoas, {d['objetos']} objetos {d['comprimentos_objetos']}; {d['pool']}"
         if eid == "R1":
             return f"R-sel mAP50 {map50('r_pareado_sel')} (R 0,6311)"
-        if eid in ("R2", "Q4", "L9", "E8", "G5", "T14", "Y1", "H14"):
-            k = {"R2": "R", "Q4": "Q", "L9": "L", "E8": "E", "G5": "G", "H14": "H"}.get(eid)
+        if eid in ("R2", "Q4", "L9", "E8", "G5", "T14", "Y1", "H14", "C6", "C13"):
+            k = {"R2": "R", "Q4": "Q", "L9": "L", "E8": "E", "G5": "G", "H14": "H", "C6": "C", "C13": "C"}.get(eid)
             return c.get(k, {}).get("veredito") if k else json.dumps({x: c[x].get("veredito") for x in c if isinstance(c[x], dict)}, ensure_ascii=False)[:1500]
         if eid == "Q3":
             return " | ".join(f"{n} novos: {taxas(f'extra_{n}.json')}" for n in ("armado_35_e120", "armado_75g_e120"))
@@ -142,6 +145,10 @@ def resultado(eid):
         if eid in ("G4", "T10"):
             runs = ["s_nadir_4k_deg", "s_oblvar_deg"] if eid == "G4" else [f"{n}_sd{s}" for s in (1, 2) for n in ("s_nadir_4k_deg", "s_oblvar_deg")]
             return "; ".join(f"{n}: {map50(n)}" for n in runs)
+        if eid in ("C5", "C12", "C8"):
+            runs = {"C5": ["s_nadir_4k_ct", "s_oblvar_ct"], "C12": ["s_nadir_4k_ctdeg", "s_oblvar_ctdeg"],
+                    "C8": [f"{b}_ct_sd{s}" for b in ("s_nadir_4k", "s_oblvar") for s in (1, 2)]}[eid]
+            return "; ".join(f"{n}: {map50(n)}" for n in runs if map50(n) is not None)
         if eid == "V3":
             return f"R-full mAP50 {map50('r_cheio_sel')}"
         if eid in QUADRO:

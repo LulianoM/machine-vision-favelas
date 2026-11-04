@@ -22,6 +22,9 @@ Grupos, na ordem (secao 1 do plano):
   H   item 8: os tres gemeos (35, 75, 150 m) re-renderizados com a arma na mao (--arma-na-mao), 80 novos de cada,
       tres treinos e120, confusoes cruzadas com os e120 originais (acrescentado as 12:10 de 04/11, antes de
       qualquer resultado, depois da conferencia visual de testa_mao.py)
+  C   transferencia de cor de Monge-Kantorovich para a estatistica do VisDrone train (PLANO 3.10, acrescentado
+      em 04/11 a tarde, antes de qualquer resultado): ladrilhos transferidos, dois treinos, sementes condicionais
+      a (b), braco combinado com degradacao
   Y   criterios de tudo (06-resultados/rodada6_criterios.py)
 
 Uso:  python rodada6.py              (roda o que falta)
@@ -97,6 +100,11 @@ RUNS_NOVOS = ["armado_35_e120", "armado_75g_e120", "armado_75c", "armado_150c_e1
               "s_semsol_4k_sd1", "s_semsol_4k_sd2", "r_cheio_sel",
               "armado_35m_e120", "armado_75gm_e120", "armado_150gm_e120"]
 DEG = [("ds_morro_4k_tiles", "ds_morro_4k_deg_tiles"), ("ds_oblvar_tiles", "ds_oblvar_deg_tiles")]
+# grupo C (transferencia de cor, PLANO-RODADA6 3.10): estatistica de cor do VisDrone TRAIN, nunca do val
+COR_JSON = os.path.join(VIS, "cor_visdrone_train.json")
+CT = [("ds_morro_4k_tiles", "ds_morro_4k_ct_tiles", "s_nadir_4k"), ("ds_oblvar_tiles", "ds_oblvar_ct_tiles", "s_oblvar")]
+RUNS_NOVOS += ["s_nadir_4k_ct", "s_oblvar_ct", "s_nadir_4k_ct_sd1", "s_nadir_4k_ct_sd2", "s_oblvar_ct_sd1",
+               "s_oblvar_ct_sd2", "s_nadir_4k_ctdeg", "s_oblvar_ctdeg"]
 
 
 def j(*p):
@@ -282,6 +290,48 @@ def preds_heridal(runs, L):
             rc = roda([PY, j(REV, "preds_nadir.py"), "--data", HERIDAL_YAML, "--tag", tag, "--imgsz", sz,
                        "--modelos", *falta, "--batch", 4], L) or rc
     return rc
+
+
+def avalia_1024(nome, L):
+    """zero-shot no VisDrone val a imgsz 1024 (escala casada pelo lado maior, rodada 4), saida com sufixo _1024"""
+    saida = j(RES, f"sim2real_{nome}_1024.json")
+    if os.path.exists(saida):
+        return 0
+    return roda([PY, j(SCR, "avalia_sim2real.py"), "--weights", pesos(nome), "--real", VIS_YAML,
+                 "--imgsz", 1024, "--out", saida], L)
+
+
+def ct_sementes_alvo():
+    """corpora cujo braco transferido passou em (b) em algum benchmark (rodada6_criterios.json, item C)"""
+    d = le(j(RES, "rodada6_criterios.json")) or {}
+    return d.get("C", {}).get("sementes_indicadas")
+
+
+def ct_sementes(L):
+    """C7: sementes 1 e 2 do braco transferido, so nos corpora que passaram em (b) (PLANO 3.10)"""
+    if DRY:
+        nota("condicional: so os corpora em rodada6_criterios.json C.sementes_indicadas; senao 'dispensada'. Exemplo:")
+        return varios(*[(treina, f"{b}_ct_sd{s}", j(RAIZ, t, "data.yaml"), MODELO, EPOCAS, True, L, s)
+                        for _, t, b in CT for s in (1, 2)])
+    alvo = ct_sementes_alvo()
+    if alvo is None:
+        log("  C7: falta o item C em rodada6_criterios.json")
+        return 1
+    if not alvo:
+        return DISPENSADA
+    rc = varios(*[(treina, f"{b}_ct_sd{s}", j(RAIZ, t, "data.yaml"), MODELO, EPOCAS, True, L, s)
+                  for _, t, b in CT if b in alvo for s in (1, 2)])
+    return marca_ok("C7") if rc == 0 else rc
+
+
+def ct_sementes_aval(L):
+    if DRY:
+        return zs_preds([f"{b}_ct_sd{s}" for _, _, b in CT for s in (1, 2)], L, "C8", heridal=True)
+    alvo = ct_sementes_alvo() or []
+    runs = [f"{b}_ct_sd{s}" for _, _, b in CT if b in alvo for s in (1, 2)]
+    if not runs:
+        return DISPENSADA
+    return zs_preds(runs, L, "C8", heridal=True)
 
 
 def zs_preds(runs, L, eid, heridal=False):
@@ -615,6 +665,36 @@ def etapas():
                           *[(confusao, f"armado_{t}m_e120", j(RAIZ, f"ds_armado_{t}_extra"), "val", f"extra{t}_armado_{t}m_e120.json", L) for t in ("35", "75g", "150g")])
          or marca_ok("H13"), ok_arq("H13")),
         ("H14", "H", "criterios do item 8", lambda L: criterios("H", L) or marca_ok("H14"), ok_arq("H14")),
+        # C (PLANO 3.10): transferencia de cor de Monge-Kantorovich para a estatistica do VisDrone train
+        ("C1", "C", "estatistica de cor (media e covariancia RGB) de cada imagem do VisDrone train",
+         lambda L: roda([PY, j(SCR, "transfere_cor.py"), "estat", "--visdrone", j(VIS, "visdrone_yolo", "train", "images"),
+                         "--out", COR_JSON], L), COR_JSON),
+        ("C2", "C", "ladrilhos transferidos de S-nadir-150 e S-oblique-six",
+         lambda L: varios(*[(roda, [PY, j(SCR, "transfere_cor.py"), "aplica", "--src", j(RAIZ, a), "--out", j(RAIZ, b),
+                                    "--estat", COR_JSON], L) for a, b, _ in CT]),
+         j(RAIZ, CT[1][1], "data.yaml")),
+        ("C3", "C", "treino s_nadir_4k_ct",
+         lambda L: treina("s_nadir_4k_ct", j(RAIZ, "ds_morro_4k_ct_tiles", "data.yaml"), MODELO, EPOCAS, True, L), tr("s_nadir_4k_ct")),
+        ("C4", "C", "treino s_oblvar_ct",
+         lambda L: treina("s_oblvar_ct", j(RAIZ, "ds_oblvar_ct_tiles", "data.yaml"), MODELO, EPOCAS, True, L), tr("s_oblvar_ct")),
+        ("C5", "C", "ZS VisDrone 1280 e 1024, PREDS VisDrone e HERIDAL (1152 e 1280) dos dois; limpos a 1024",
+         lambda L: varios((zs_preds, ["s_nadir_4k_ct", "s_oblvar_ct"], L, "C5x", True),
+                          *[(avalia_1024, r, L) for r in ("s_nadir_4k_ct", "s_oblvar_ct", "s_nadir_4k", "s_oblvar")])
+         or marca_ok("C5"), ok_arq("C5")),
+        ("C6", "C", "criterios do grupo C (semente 0)", lambda L: criterios("C", L) or marca_ok("C6"), ok_arq("C6")),
+        ("C7", "C", "sementes 1 e 2 do braco transferido onde (b) passou (condicional)", ct_sementes, ok_arq("C7")),
+        ("C8", "C", "ZS e PREDS das sementes de C7 (condicional)", ct_sementes_aval, ok_arq("C8")),
+        ("C9", "C", "ladrilhos transferidos e depois degradados (braco combinado, opcional)",
+         lambda L: varios(*[(roda, [PY, j(SCR, "degrada_ladrilhos.py"), "--src", j(RAIZ, b), "--out", j(RAIZ, b.replace("_ct_", "_ctdeg_"))], L)
+                            for _, b, _ in CT]),
+         j(RAIZ, "ds_oblvar_ctdeg_tiles", "data.yaml")),
+        ("C10", "C", "treino s_nadir_4k_ctdeg",
+         lambda L: treina("s_nadir_4k_ctdeg", j(RAIZ, "ds_morro_4k_ctdeg_tiles", "data.yaml"), MODELO, EPOCAS, True, L), tr("s_nadir_4k_ctdeg")),
+        ("C11", "C", "treino s_oblvar_ctdeg",
+         lambda L: treina("s_oblvar_ctdeg", j(RAIZ, "ds_oblvar_ctdeg_tiles", "data.yaml"), MODELO, EPOCAS, True, L), tr("s_oblvar_ctdeg")),
+        ("C12", "C", "ZS e PREDS do braco combinado",
+         lambda L: zs_preds(["s_nadir_4k_ctdeg", "s_oblvar_ctdeg"], L, "C12", heridal=True), ok_arq("C12")),
+        ("C13", "C", "criterios do grupo C (com sementes e combinado)", lambda L: criterios("C", L) or marca_ok("C13"), ok_arq("C13")),
         ("Y1", "Y", "todos os criterios do PLANO-RODADA6", lambda L: criterios("tudo", L) or marca_ok("Y1"), ok_arq("Y1")),
     ]
     return E

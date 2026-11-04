@@ -27,9 +27,10 @@ resolubilidade da seção 2.3 do `PLANO-RODADA5.md`, sem mudança; caixas das ar
 | 7 | T | 5, 3, 7 | Sementes 1 e 2 de Q, G e do espelho | 5.4, 5.5, 6.5 | 48 a 60 |
 | 8 | V | 9 | Teto R com o treino completo do VisDrone (menos a fatia de seleção) | 4.6, 5.3 | 30 a 36 |
 | 9 | H | 8 | Arma na mão: os três gêmeos (35, 75 e 150 m) re-renderizados com a cinemática das mãos, 80 novos de cada, três treinos e120, confusões cruzadas (acrescentado às 12:10, ver 3.7) | 5.4, 6.2 | 50 a 60 |
-| 10 | Y | | Todos os critérios | | 0,5 |
+| 10 | C | | Transferência de cor de Monge-Kantorovich para a estatística do VisDrone train: dois treinos, sementes condicionais a (b), braço combinado com degradação (acrescentado em 04/11 à tarde, ver 3.10) | 6.1, 6.5 | 18 a 36 |
+| 11 | Y | | Todos os critérios | | 0,5 |
 
-**Total estimado: 208 a 258 h de máquina** (8,7 a 10,8 dias sem pausas; 158 a 198 h sem o grupo H).
+**Total estimado: 226 a 294 h de máquina** (9,4 a 12,3 dias sem pausas; 208 a 258 h sem o grupo C, 158 a 198 h sem C e H).
 Partindo às 12:00 de 04/11, termina entre 13/11 e 15/11, antes do prazo de 19/11 da AIM, com a ordem feita para que os resultados de
 uma semente (Q, L, E, G) existam até 08/11 e só as sementes e o teto completo fiquem para a segunda
 semana. Hora de GPU e hora de parede coincidem (uma etapa por vez). Pausas do autor somam-se.
@@ -223,6 +224,43 @@ T1 a T4: `armado_35_e120_sd1`, `armado_75g_e120_sd1`, `_sd2`, `_sd2` (intercalad
 80 novos); T6 a T9: `s_nadir_4k_deg_sd1`, `s_oblvar_deg_sd1`, `_sd2`, `_sd2`; T10 avaliações; T11, T12:
 `s_semsol_4k_sd1`, `_sd2`; T13 por regime; T14 critérios com sementes. **48 a 60 h**.
 
+### 3.10 Grupo C: transferência de cor (acrescentado em 04/11 à tarde, antes de qualquer resultado)
+
+**Hipótese.** Parte da lacuna sim-to-real pode ser aparência de cor (balanço de branco, brilho, saturação e
+correlação entre canais), e não geometria. Se levar a estatística de cor de segunda ordem dos ladrilhos à de
+imagens reais sobe o zero-shot, a aparência explica parte da lacuna; se não sobe, a lacuna é geometria, que é a
+tese do artigo.
+
+**Etapas.** `07-blender/scripts/transfere_cor.py`, fora de linha como `degrada_ladrilhos.py`. C1: média (3) e
+covariância (3x3) RGB em 0..1 de cada imagem de `visdrone_yolo/train/images` (6.471; nunca o val, que o script
+recusa), numa grade de passo 4 px, sem rótulo, em `C:\arma3-favela\visdrone\cor_visdrone_train.json`. C2: para
+cada ladrilho de treino de `ds_morro_4k_tiles` e `ds_oblvar_tiles`, com probabilidade 0,75 e semente 0, sorteia
+uma imagem real alvo (mu_t, S_t), calcula (mu_s, S_s) do próprio ladrilho e aplica o mapa linear de
+Monge-Kantorovich T = S_s^-1/2 (S_s^1/2 S_t S_s^1/2)^1/2 S_s^-1/2, x' = T (x - mu_s) + mu_t, recorte em 0..1
+(raízes por autodecomposição, autovalores no mínimo 1e-6); JPEG 92 4:4:4 como os limpos; os outros 25% saem
+limpos byte a byte; validação intacta por link físico; parâmetros por ladrilho em `_transferencia.json`.
+Conferido antes da partida numa amostra fora das pastas da rodada: T S_s T' = S_t com erro 2e-14, média
+transferida igual à do alvo, limpos e val idênticos byte a byte. C3, C4: `TREINO(s_nadir_4k_ct)` e
+`TREINO(s_oblvar_ct)`, receita da 7.6, semente 0. C5: zero-shot no VisDrone val a 1280 e a 1024 (os limpos
+também a 1024, `sim2real_<run>_1024.json`), predições por imagem no VisDrone (1280) e na HERIDAL (1152, casado,
+e 1280). C6: critério. C7, C8: sementes 1 e 2 do braço transferido, só nos corpora em que (b) passou em algum
+benchmark (`rodada6_criterios.json`, campo `C.sementes_indicadas`), com avaliação; dispensadas se nenhum
+passou. Desvio declarado do pedido: as sementes ficam no próprio grupo C, e não no T, porque o T roda antes do
+C na cadeia e a condição depende do resultado de C6. C9 a C12, braço combinado (opcional): `degrada_ladrilhos.py`
+sobre os ladrilhos já transferidos (as duas sorteadas com probabilidade 0,75, independentes), treinos
+`s_nadir_4k_ctdeg` e `s_oblvar_ctdeg`, avaliação. C13: critério com sementes e combinado.
+
+**Critério, fixado antes.** Transferido menos limpo, pareado por imagem, 1.000 reamostras, semente 0, no
+VisDrone val (1280) e na HERIDAL (imgsz casado); leituras (b) e (c); (a) só quando houver sementes dos dois
+lados (as limpas existem nos dois benchmarks). Por corpus: **resolvível para cima no VisDrone e não na
+HERIDAL** = a aparência explica parte da lacuna, específica do alvo; **para cima nos dois** = aparência
+genérica; **nulo nos dois** = a lacuna é geometria, que é a tese; qualquer outra combinação (para baixo, ou
+para cima só na HERIDAL) é reportada como caso não previsto, com os dois números. A 1024 e o braço combinado
+são descritivos.
+
+**Tempo.** Estatística 0,5 a 1 h de CPU; transferência 0,5 h; dois treinos 6,5 a 8 h; avaliações 1,5 h;
+sementes condicionais 0 a 16 h; combinado 9 h. **18 a 36 h**.
+
 ### 3.9 Grupo Y
 
 Y1: `rodada6_criterios.py --parte tudo`.
@@ -256,7 +294,8 @@ Molde da rodada 5: prova por etapa, render retomável pelo manifest, treino reto
 | T | 08/11 13:00 | 10/11 19:00 |
 | V | 10/11 19:00 | 12/11 05:00 |
 | H | 12/11 05:00 | 14/11 15:00 |
-| Y | 14/11 15:00 | 14/11 16:00 |
+| C | 14/11 15:00 | 16/11 03:00 |
+| Y | 16/11 03:00 | 16/11 04:00 |
 
 ## 6. Regras que continuam valendo
 
@@ -272,3 +311,11 @@ Y, sem nenhum resultado da rodada existir (a cadeia estava em R1, esperando o tr
 cadeia foi reiniciada para carregar as etapas novas; o supervisor a relança sozinho. Se o grupo H não
 couber antes do prazo da AIM, o autor pausa a rodada e o item fica para o periódico, com o gerador já
 pronto.
+
+## 8. Mudanças depois da partida
+
+- 04/11, 12:10: grupo H (item 8) acrescentado (seção 7).
+- 04/11, 14:38 a 16:11: pausa pedida pelo autor; cronograma deslocado em cerca de 1,5 h.
+- 04/11, cerca de 16:40: grupo C (seção 3.10) acrescentado depois do H, a pedido do autor, com critério fixado
+  antes de qualquer resultado da rodada (a cadeia estava em R1, no treino do item 4). Cronograma da seção 5
+  estendido até 16/11; prazo da AIM em 19/11.
