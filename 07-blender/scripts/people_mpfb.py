@@ -32,6 +32,14 @@ PORTE_REALISTA = False
 # o de mais de 1,15 m. Os sorteios sao os mesmos com e sem a flag, entao o mesmo comando com a
 # mesma semente gera os mesmos quadros e so o angulo desses objetos muda.
 OBJETO_PORTE_ARMA = False
+# gen_morro.py liga isto com --arma-na-mao (rodada 6, item 8). Hoje a arma e posta na ponta do punho
+# direito com orientacao fixa por pose e as maos ficam abertas. Com a flag: a origem da arma (a
+# empunhadura) vai ao centro da palma direita, os dedos da mao direita fecham sobre o cabo, e nas poses de
+# duas maos (empunhando, menos pistola) o braco esquerdo e levado por IK ate o guarda-mao e a mao
+# esquerda fecha tambem. Vale igual para arma e para objeto confundivel (mesma cinematica, para nao
+# criar um indicio novo). Nada mais muda: mesma semente, mesmos sorteios, mesmos quadros.
+ARMA_NA_MAO = False
+CURL_SINAL = 1.0                 # sentido de flexao dos dedos no rig do MPFB (conferido visualmente)
 
 POOL = []
 PEOPLE = []
@@ -131,7 +139,7 @@ def clear_pool():
 
 def clear_people():
     for p in PEOPLE:
-        for o in p["kids"] + [p["rig"]] + ([p["gun"]] if p["gun"] else []):
+        for o in p["kids"] + [p["rig"]] + (list(p["gun"].children) + [p["gun"]] if p["gun"] else []):
             try:
                 bpy.data.objects.remove(o, do_unlink=True)
             except Exception:
@@ -392,6 +400,50 @@ _GUN_LOCAL = {
 }
 
 
+def _fecha_mao(rng, rig, lado, fator=1.0):
+    """flexiona as tres falanges dos cinco dedos de uma mao (polegar menos). `rng` e um gerador proprio,
+    derivado do nome da arma, para nao consumir sorteios do rng do lote (a flag nao pode mudar os quadros)."""
+    for k in range(1, 6):
+        for seg in range(1, 4):
+            pb = rig.pose.bones.get(f"finger{k}-{seg}.{lado}")
+            if pb is None:
+                continue
+            pb.rotation_mode = 'XYZ'
+            ang = (28.0 if k == 1 else 55.0) * fator + rng.uniform(-6, 6)
+            pb.rotation_euler = Euler((math.radians(ang * CURL_SINAL), 0.0, 0.0), 'XYZ')
+
+
+def _arma_na_mao(rng, rig, gun, pose, tipo, comp):
+    """item 8: empunhadura no centro da palma direita, dedos fechados, braco esquerdo por IK ate o
+    guarda-mao nas poses de duas maos. Chamada depois de pose_rig e da colocacao da arma."""
+    import random as _random
+    import zlib
+    rng = _random.Random(zlib.crc32(gun.name.encode()))
+    bpy.context.view_layer.update()
+    w = rig.pose.bones.get('wrist.R')
+    f3 = rig.pose.bones.get('finger3-1.R')
+    if w is not None and f3 is not None:
+        # centro da palma: entre o fim do punho e a articulacao do dedo medio, um pouco para dentro
+        gun.location = (w.tail + f3.head) / 2 + Vector((0.0, 0.0, -0.01))
+    _fecha_mao(rng, rig, 'R')
+    duas_maos = pose == "empunhando" and tipo != "pistola" and comp >= 0.5
+    if duas_maos:
+        alvo = bpy.data.objects.new(f"{gun.name}_pega", None)
+        bpy.context.scene.collection.objects.link(alvo)
+        alvo.empty_display_size = 0.02
+        alvo.parent = gun
+        alvo.location = (min(0.30, comp * 0.45), 0.0, -0.02)      # guarda-mao, no eixo do cano
+        pb = rig.pose.bones.get('lowerarm02.L')
+        if pb is not None:
+            c = pb.constraints.new('IK')
+            c.target = alvo
+            c.chain_count = 4
+            c.iterations = 200
+            c.use_tail = True
+        _fecha_mao(rng, rig, 'L', 0.9)
+    bpy.context.view_layer.update()
+
+
 def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, classe=None):
     """classe: 0 armada, 1 desarmada, 2 desarmada COM OBJETO ALONGADO.
 
@@ -512,6 +564,8 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, c
         gun.location = base + Vector((0.0, 0.0, -0.03))
         gun.rotation_euler = Euler((0.0, ry, rz), 'XYZ')
         gun.scale = (1 / sc, 1 / sc, 1 / sc)
+        if ARMA_NA_MAO and pose != "costas":
+            _arma_na_mao(rng, rig, gun, pose, tipo_obj, comp_obj)
     p = dict(rig=rig, kids=[k for k in kids if not k.hide_render], gun=gun, cls=classe,
              x=x, y=y, z=z, on_roof=on_roof, pose=pose,
              tipo_obj=tipo_obj, comp_obj=round(comp_obj, 2))

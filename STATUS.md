@@ -6,7 +6,7 @@ Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md
 
 ## Rodada 6 (lançada 04/11 11:48): a lista do servidor inteira
 
-Decisão do autor em 04/11: "o que manda é o PDF", GPU incluída. Plano e critérios fixados antes em `07-blender/PLANO-RODADA6.md` (commit 7a459ea); cadeia `07-blender/scripts/rodada6.py`, supervisor `supervisiona_rodada6.py` (janela própria, lançado por `retoma_rodada6.cmd`), pausa `pausa_rodada6.py pausa|retoma`, retrato `status_rodada6.py`; estado e logs em `C:rma3-favelalenderila6\`. Ordem: R (item 4, espera o `r_sel.py` das 11:28), P2, Q (item 5), L (item 6), E (item 7), G (item 3), T (sementes), V (item 9), Y (critérios por `06-resultados/rodada6_criterios.py`). Previsão 158 a 198 h, fim entre 11/11 e 13/11; uma semente de cada item até 08/11. Item 8 (arma na mão) fora da cadeia até a modelagem ser validada visualmente (seção 7 do plano). Sem atalho na pasta Inicializar (só com OK do autor). E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48"; um e-mail por etapa concluída.
+Decisão do autor em 04/11: "o que manda é o PDF", GPU incluída. Plano e critérios fixados antes em `07-blender/PLANO-RODADA6.md` (commit 7a459ea); cadeia `07-blender/scripts/rodada6.py`, supervisor `supervisiona_rodada6.py` (janela própria, lançado por `retoma_rodada6.cmd`), pausa `pausa_rodada6.py pausa|retoma`, retrato `status_rodada6.py`; estado e logs em `C:rma3-favelalenderila6\`. Ordem: R (item 4, espera o `r_sel.py` das 11:28), P2, Q (item 5), L (item 6), E (item 7), G (item 3), T (sementes), V (item 9), Y (critérios por `06-resultados/rodada6_criterios.py`). Previsão 208 a 258 h com o grupo H (item 8, arma na mão, acrescentado às 12:10 depois da conferência visual de `testa_mao.py`), fim entre 13/11 e 15/11; uma semente de cada item até 08/11. Sem atalho na pasta Inicializar (só com OK do autor). E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48"; um e-mail por etapa concluída.
 
 ## O que faltava no servidor para a AIM 2027 (04/11, desktop)
 
@@ -18,7 +18,7 @@ Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e co
 | 2, fração sub-stride dos oblíquos | **Feito.** `mede_alvo_split.py` com `ds_morro_obl` e `ds_oblvar`: lado menor < 8 px em 0,94% (S-oblique, 1.912 caixas) e 3,88% (S-oblique-six, 1.521). Já nas duas células da Tabela 5 da versão curta (0,9% e 3,9%); o PDF não foi regerado (fluxo do Mac) |
 | 4, teto R com seleção fora do teste | **Rodando desde 11:28**, `07-blender/scripts/r_sel.py` via `lanca_r_sel.cmd`, run `r_pareado_sel`, log `C:rma3-favelalender
 _sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
-| 3, 5, 6, 7, 9 | Na rodada 6 (acima). 8 fora da cadeia, em preparação |
+| 3, 5, 6, 7, 8, 9 | Na rodada 6 (acima); o 8 é o grupo H, último |
 
 
 ## Versão curta para a AIM 2027 (04/11)

@@ -22,7 +22,10 @@ import rodada6 as R  # noqa: E402
 QUADRO = {"P2": (["_teste_comprimento"], 1, 128, 60), "L1": (["ds_armado_75c"], 200, 128, 0),
           "L4": (["ds_armado_150c"], 200, 128, 0),
           "L7": (["ds_armado_75c_extra", "ds_armado_150c_extra"], 160, 128, 3200),
-          "E3": (["ds_semsol_4k"], 180, 183, 0)}
+          "E3": (["ds_semsol_4k"], 180, 183, 0), "P3": (["_teste_mao_quadro"], 1, 128, 60),
+          "H1": (["ds_armado_35m"], 200, 128, 0), "H5": (["ds_armado_75gm"], 200, 128, 0), "H9": (["ds_armado_150gm"], 200, 128, 0),
+          "H4": (["ds_armado_35m_extra"], 80, 128, 1600), "H8": (["ds_armado_75gm_extra"], 80, 128, 1600),
+          "H12": (["ds_armado_150gm_extra"], 80, 128, 1600)}
 # treino: (nome, epocas, s por epoca)
 EPOCA = {"Q1": ("armado_35_e120", 120, 250), "Q2": ("armado_75g_e120", 120, 250), "L3": ("armado_75c", 60, 250),
          "L6": ("armado_150c_e120", 120, 261), "E1": ("s_soldur_4k_sd1", 60, 240), "E2": ("s_soldur_4k_sd2", 60, 240),
@@ -32,10 +35,11 @@ EPOCA = {"Q1": ("armado_35_e120", 120, 250), "Q2": ("armado_75g_e120", 120, 250)
          "T6": ("s_nadir_4k_deg_sd1", 60, 240), "T7": ("s_oblvar_deg_sd1", 60, 198),
          "T8": ("s_nadir_4k_deg_sd2", 60, 240), "T9": ("s_oblvar_deg_sd2", 60, 198),
          "T11": ("s_semsol_4k_sd1", 60, 240), "T12": ("s_semsol_4k_sd2", 60, 240),
-         "V2": ("r_cheio_sel", 60, 1970), "R1": ("r_pareado_sel", 60, 400)}
+         "V2": ("r_cheio_sel", 60, 1970), "R1": ("r_pareado_sel", 60, 400),
+         "H3": ("armado_35m_e120", 120, 250), "H7": ("armado_75gm_e120", 120, 250), "H11": ("armado_150gm_e120", 120, 261)}
 EST = {"P1": 60, "R2": 600, "Q3": 1200, "Q4": 60, "L2": 300, "L5": 300, "L8": 2400, "L9": 60, "E4": 300, "E6": 3000,
        "E7": 900, "E8": 60, "G1": 600, "G4": 3600, "G5": 300, "T5": 2400, "T10": 7200, "T13": 1200, "T14": 600,
-       "V1": 60, "V3": 900, "Y1": 600}
+       "V1": 60, "V3": 900, "Y1": 600, "H2": 300, "H6": 300, "H10": 300, "H13": 3600, "H14": 60}
 
 
 def vivo(nome):
@@ -121,11 +125,13 @@ def resultado(eid):
             return f"{d['pessoas']} pessoas, {d['objetos']} objetos {d['comprimentos_objetos']}; {d['pool']}"
         if eid == "R1":
             return f"R-sel mAP50 {map50('r_pareado_sel')} (R 0,6311)"
-        if eid in ("R2", "Q4", "L9", "E8", "G5", "T14", "Y1"):
-            k = {"R2": "R", "Q4": "Q", "L9": "L", "E8": "E", "G5": "G"}.get(eid)
+        if eid in ("R2", "Q4", "L9", "E8", "G5", "T14", "Y1", "H14"):
+            k = {"R2": "R", "Q4": "Q", "L9": "L", "E8": "E", "G5": "G", "H14": "H"}.get(eid)
             return c.get(k, {}).get("veredito") if k else json.dumps({x: c[x].get("veredito") for x in c if isinstance(c[x], dict)}, ensure_ascii=False)[:1500]
         if eid == "Q3":
             return " | ".join(f"{n} novos: {taxas(f'extra_{n}.json')}" for n in ("armado_35_e120", "armado_75g_e120"))
+        if eid == "H13":
+            return " | ".join(f"{n}: {taxas(f'extra_{n}.json')}" for n in ("armado_35m_e120", "armado_75gm_e120", "armado_150gm_e120"))
         if eid == "L8":
             return " | ".join(f"{n}: {taxas(f'extra_{n}.json')}" for n in ("armado_75c", "armado_150c_e120"))
         if eid == "E6":

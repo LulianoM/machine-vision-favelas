@@ -112,6 +112,9 @@ ap.add_argument("--objetos-comprimento-arma", action="store_true",
                 help="rodada 6, item 6: todo objeto confundivel e escalado no eixo do comprimento ate "
                      "medir entre 0,62 e 1,05 m, a faixa das cinco armas de treino; tira o comprimento "
                      "(e o reangulo dos objetos longos) como indicio. Ver objetos_alongados.COMPRIMENTO_ARMA")
+ap.add_argument("--arma-na-mao", action="store_true",
+                help="rodada 6, item 8: empunhadura na palma direita, dedos fechados e braco esquerdo por IK "
+                     "ate o guarda-mao nas poses de duas maos; igual para arma e objeto. Ver people_mpfb.ARMA_NA_MAO")
 ap.add_argument("--obliqua", action="store_true",
                 help="preset calibrado na geometria do VisDrone: camera obliqua e baixa, "
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
@@ -1689,6 +1692,7 @@ if args.dataset > 0:
     import people_mpfb as PM
     PM.PORTE_REALISTA = args.porte_realista
     PM.OBJETO_PORTE_ARMA = args.objeto_porte_arma
+    PM.ARMA_NA_MAO = args.arma_na_mao
     if getattr(PM, "OA", None) is not None:
         PM.OA.MODO_ARMAS = args.armas
         PM.OA.COMPRIMENTO_ARMA = (0.62, 1.05) if args.objetos_comprimento_arma else None

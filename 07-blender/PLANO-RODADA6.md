@@ -26,10 +26,11 @@ resolubilidade da seção 2.3 do `PLANO-RODADA5.md`, sem mudança; caixas das ar
 | 6 | G | 3 | Ruído, borrão e JPEG como aumento nos ladrilhos de S-nadir-150 e S-oblique-six | 6.5 | 8 a 10 |
 | 7 | T | 5, 3, 7 | Sementes 1 e 2 de Q, G e do espelho | 5.4, 5.5, 6.5 | 48 a 60 |
 | 8 | V | 9 | Teto R com o treino completo do VisDrone (menos a fatia de seleção) | 4.6, 5.3 | 30 a 36 |
-| 9 | Y | | Todos os critérios | | 0,5 |
+| 9 | H | 8 | Arma na mão: os três gêmeos (35, 75 e 150 m) re-renderizados com a cinemática das mãos, 80 novos de cada, três treinos e120, confusões cruzadas (acrescentado às 12:10, ver 3.7) | 5.4, 6.2 | 50 a 60 |
+| 10 | Y | | Todos os critérios | | 0,5 |
 
-**Total estimado: 158 a 198 h de máquina** (6,6 a 8,3 dias sem pausas). Partindo às 12:00 de 04/11,
-termina entre 11/11 e 13/11, antes do prazo de 19/11 da AIM, com a ordem feita para que os resultados de
+**Total estimado: 208 a 258 h de máquina** (8,7 a 10,8 dias sem pausas; 158 a 198 h sem o grupo H).
+Partindo às 12:00 de 04/11, termina entre 13/11 e 15/11, antes do prazo de 19/11 da AIM, com a ordem feita para que os resultados de
 uma semente (Q, L, E, G) existam até 08/11 e só as sementes e o teto completo fiquem para a segunda
 semana. Hora de GPU e hora de parede coincidem (uma etapa por vez). Pausas do autor somam-se.
 
@@ -183,13 +184,46 @@ teto completo como referência.
 
 **Tempo.** 5,9 h por 1.106 imagens: 6.147 imagens, cerca de 33 h nas 60 épocas. **30 a 36 h**.
 
-### 3.7 Grupo T: sementes
+### 3.7 Grupo H: item 8, arma na mão (acrescentado às 12:10 de 04/11, antes de qualquer resultado)
+
+**O que mudou no gerador.** `people_mpfb.ARMA_NA_MAO` e `gen_morro.py --arma-na-mao`: a origem da arma
+(a empunhadura) vai ao centro da palma direita (entre o fim do osso `wrist.R` e a articulação
+`finger3-1.R`), as três falanges dos cinco dedos da mão direita fecham sobre o cabo (polegar menos), e
+nas poses de duas mãos (`empunhando`, menos pistola) o braço esquerdo é levado por IK (`lowerarm02.L`,
+cadeia de 4 ossos) até um alvo no guarda-mão, e a mão esquerda fecha também. Vale igual para arma e para
+objeto confundível, para não criar um indício novo. O jitter dos dedos usa um gerador próprio
+(derivado do nome da arma): a flag não muda nenhum sorteio, e a mesma semente dá os mesmos quadros.
+Conferência visual por `testa_mao.py` (CPU, 3 m e zoom nas mãos): sentido de flexão +1 fecha a mão (o
+-1 a hiperestende); figura em `06-resultados/figuras/item8_mao_conferencia.jpg`.
+
+**Hipótese.** A 35 m (1,14 cm/px) a mão tem 4 px e a diferença entre arma pousada na ponta do punho e
+arma empunhada pode mudar a silhueta armada e a taxa de objeto chamado de armada; a 75 e 150 m a
+diferença é sub-pixel e o efeito esperado é nulo, o que é parte do que se mede.
+
+**Etapas.** P3 prova a flag num quadro. Para cada gêmeo (35, 75g, 150g): render de 200 quadros com o
+comando original mais `--arma-na-mao` (`ds_armado_<tag>m`), ladrilhos, `TREINO(armado_<tag>m_e120, 120,
+paciência 30)` (a receita e120 do grupo Q, para comparar com `armado_<tag>_e120`), 80 quadros novos
+(índices 200 a 279). H13: confusões de cada modelo novo no seu val e nos seus 80 novos; os e120
+originais nos 80 novos com mão (`extra<tag>m_armado_<tag>_e120.json`); os novos nos 80 originais
+(`extra<tag>_armado_<tag>m_e120.json`). H14 critérios. Fora do grupo, declarado: o corpus original de
+75 m (`ds_armado_75`, 96 amostras), a arma inédita e o porte não são re-renderizados.
+
+**Critério, fixado antes.** Por altitude, modelo com mão nos seus 80 novos contra o e120 original nos
+seus 80 (mesmos índices, reamostragem independente, 1.000, semente 0): d′ e objeto chamado de armada,
+(b) e (c); uma semente por lado, (a) não se aplica. Resolvível = a cinemática das mãos muda a medida
+nessa altitude e o texto da 5.4 diz qual; não resolvível = sub-pixel, e a 6.5 perde a limitação "a arma
+é pousada na ponta do punho" como fonte de viés.
+
+**Tempo.** Render 3 × 200 quadros a 128 s: 21 h; 3 × 80 novos: 8,5 h mais o sorteio sem render; três
+treinos e120: 15 a 27 h; confusões 1 h. **50 a 60 h**.
+
+### 3.8 Grupo T: sementes
 
 T1 a T4: `armado_35_e120_sd1`, `armado_75g_e120_sd1`, `_sd2`, `_sd2` (intercaladas); T5 confusões (val e
 80 novos); T6 a T9: `s_nadir_4k_deg_sd1`, `s_oblvar_deg_sd1`, `_sd2`, `_sd2`; T10 avaliações; T11, T12:
 `s_semsol_4k_sd1`, `_sd2`; T13 por regime; T14 critérios com sementes. **48 a 60 h**.
 
-### 3.8 Grupo Y
+### 3.9 Grupo Y
 
 Y1: `rodada6_criterios.py --parte tudo`.
 
@@ -221,7 +255,8 @@ Molde da rodada 5: prova por etapa, render retomável pelo manifest, treino reto
 | G | 08/11 03:00 | 08/11 13:00 |
 | T | 08/11 13:00 | 10/11 19:00 |
 | V | 10/11 19:00 | 12/11 05:00 |
-| Y | 12/11 05:00 | 12/11 06:00 |
+| H | 12/11 05:00 | 14/11 15:00 |
+| Y | 14/11 15:00 | 14/11 16:00 |
 
 ## 6. Regras que continuam valendo
 
@@ -229,13 +264,11 @@ Nenhum número entra no texto sem estar em `06-resultados/RESULTADOS.md` com o c
 cita caminho, arquivo, script nem corpus; renders derivados da PCERJ não saem do desktop (toda esta
 rodada é procedural, `gen_morro.py`, e pode ser ilustrada).
 
-## 7. Item 8, arma na mão (fora da cadeia)
+## 7. Item 8, arma na mão: como entrou
 
-Hoje a arma é posicionada na ponta do osso `wrist.R` depois da pose, com orientação fixada por pose no
-espaço do corpo (`people_mpfb.make_person`); a mão esquerda não alcança o guarda-mão e os dedos não
-envolvem o cabo. "Cinemática das mãos" = IK dos dois braços até os pontos de pega da arma e fechamento
-dos dedos, para cada uma das cinco armas e quatro poses, com conferência visual em recortes a 35 m (onde
-a mão tem 4 px de largura; a 75 e 150 m a diferença é sub-pixel e o efeito esperado é nulo, o que é parte
-do que se mede). Custo da lista: cerca de uma semana (re-render de cerca de 1.000 quadros e re-treino do
-Experimento C). Entra como grupo H desta cadeia só depois de a modelagem ser validada visualmente, com
-critério fixado na hora, e só se houver máquina antes do prazo; senão fica para o periódico.
+Às 11:48 a cadeia partiu sem o item 8. Entre 11:50 e 12:10 a cinemática das mãos foi implementada e
+conferida visualmente (seção 3.7) e o grupo H foi acrescentado no fim da cadeia, depois de V e antes de
+Y, sem nenhum resultado da rodada existir (a cadeia estava em R1, esperando o treino do item 4). A
+cadeia foi reiniciada para carregar as etapas novas; o supervisor a relança sozinho. Se o grupo H não
+couber antes do prazo da AIM, o autor pausa a rodada e o item fica para o periódico, com o gerador já
+pronto.

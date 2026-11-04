@@ -2,7 +2,7 @@
 """
 rodada6.py: a rodada 6 (partida em 04/11/2026), em uma cadeia so, idempotente e retomavel: tudo o que
 08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md pede para o desktop, menos o item 8 (arma na mao),
-que exige modelagem com verificacao visual e entra como grupo proprio quando estiver pronto.
+que entrou como grupo H depois da conferencia visual (ver abaixo).
 
 Desenho, criterios fixados antes e custo em 07-blender/PLANO-RODADA6.md. Molde da rodada 5: cada etapa
 tem um arquivo de prova e, se ele existe, a etapa e pulada; render retoma pelo manifest (--start); treino
@@ -19,6 +19,9 @@ Grupos, na ordem (secao 1 do plano):
   G   item 3: ruido, borrao e JPEG como aumento (ladrilhos degradados), S-nadir-150 e S-oblique-six
   T   sementes 1 e 2 de Q, G e do espelho de E
   V   item 9: teto R com a divisao de treino completa (menos a fatia de selecao)
+  H   item 8: os tres gemeos (35, 75, 150 m) re-renderizados com a arma na mao (--arma-na-mao), 80 novos de cada,
+      tres treinos e120, confusoes cruzadas com os e120 originais (acrescentado as 12:10 de 04/11, antes de
+      qualquer resultado, depois da conferencia visual de testa_mao.py)
   Y   criterios de tudo (06-resultados/rodada6_criterios.py)
 
 Uso:  python rodada6.py              (roda o que falta)
@@ -77,6 +80,7 @@ def gemeo(alt, jitter):
 GEMEO75 = gemeo(75, 6)
 GEMEO150 = gemeo(150, 13)
 COMPRIMENTO = ["--objetos-comprimento-arma"]
+MAO = ["--arma-na-mao"]                            # item 8: empunhadura na palma, dedos fechados, IK do braco esquerdo
 SEM_SOL_DURO = "sol_baixo,nublado,encoberto,neblina,chuva"
 
 
@@ -90,7 +94,8 @@ RUNS_NOVOS = ["armado_35_e120", "armado_75g_e120", "armado_75c", "armado_150c_e1
               "s_soldur_4k_sd1", "s_soldur_4k_sd2", "s_semsol_4k", "s_nadir_4k_deg", "s_oblvar_deg",
               "armado_35_e120_sd1", "armado_75g_e120_sd1", "armado_35_e120_sd2", "armado_75g_e120_sd2",
               "s_nadir_4k_deg_sd1", "s_oblvar_deg_sd1", "s_nadir_4k_deg_sd2", "s_oblvar_deg_sd2",
-              "s_semsol_4k_sd1", "s_semsol_4k_sd2", "r_cheio_sel"]
+              "s_semsol_4k_sd1", "s_semsol_4k_sd2", "r_cheio_sel",
+              "armado_35m_e120", "armado_75gm_e120", "armado_150gm_e120"]
 DEG = [("ds_morro_4k_tiles", "ds_morro_4k_deg_tiles"), ("ds_oblvar_tiles", "ds_oblvar_deg_tiles")]
 
 
@@ -395,6 +400,25 @@ def teste_flag(L):
 OBJETOS = {"vassoura", "rodo", "cano_pvc", "vergalhao", "tabua", "guarda_chuva", "enxada", "tapete", "mangueira"}
 
 
+def teste_mao(L):
+    """P3: um quadro a 35 m com --arma-na-mao; prova que o gerador aceita a flag e que o MPFB carregou"""
+    out = j(RAIZ, "_teste_mao_quadro")
+    if not DRY:
+        shutil.rmtree(out, ignore_errors=True)
+    rc = render(L, out, 1, ARMADO35 + MAO)
+    if DRY or rc != 0:
+        return rc
+    mf = [json.loads(x) for x in open(j(out, "manifest.jsonl"), encoding="utf-8") if x.strip()]
+    cauda = open(j(FILA, L), encoding="utf-8", errors="replace").read()[-200000:]
+    pool = [ln for ln in cauda.splitlines() if "pool MPFB:" in ln]
+    if not mf or mf[0].get("n_pessoas", 0) < 12 or not pool or " 0 humanos" in pool[-1]:
+        log("  P3: MPFB ausente ou quadro vazio")
+        return 1
+    grava_json(j(FILA, "P3.json"), {"pessoas": mf[0].get("n_pessoas"), "caixas": mf[0].get("n_caixas"),
+                                    "pool": pool[-1].strip(), "quando": datetime.now().isoformat(timespec="seconds")})
+    return marca_ok("P3")
+
+
 # ------------------------------------------------------------------ grupo R (item 4)
 def r_sel_vivo():
     try:
@@ -464,6 +488,7 @@ def etapas():
          j(REV, "preds_visdrone_r_pareado_sel.npz")),
         ("R2", "R", "criterios do item 4 (eficacias com R-sel)", lambda L: criterios("R", L) or marca_ok("R2"), ok_arq("R2")),
         ("P2", "P", "checagem: um quadro de teste com --objetos-comprimento-arma", teste_flag, ok_arq("P2")),
+        ("P3", "P", "checagem: um quadro de teste com --arma-na-mao", teste_mao, ok_arq("P3")),
         # Q (item 5)
         ("Q1", "Q", "treino armado_35_e120 (120 epocas, paciencia 30)",
          lambda L: treina_longo("armado_35_e120", "ds_armado_35_tiles", L), tr("armado_35_e120")),
@@ -564,6 +589,32 @@ def etapas():
         ("V2", "V", "treino r_cheio_sel (6.147 imagens, selecao em sel)",
          lambda L: treina("r_cheio_sel", j(VIS, "visdrone_yolo", "data_cheio_sel.yaml"), MODELO, EPOCAS, True, L), tr("r_cheio_sel")),
         ("V3", "V", "ZS e PREDS do r_cheio_sel", lambda L: zs_preds(["r_cheio_sel"], L, "V3"), ok_arq("V3")),
+    ]
+    # H (item 8): os tres gemeos com a arma na mao, 200 quadros e 80 novos cada, receita e120
+    k = 1
+    for tag, cmd in (("35", ARMADO35), ("75g", GEMEO75), ("150g", GEMEO150)):
+        ds = f"ds_armado_{tag}m"
+        run = f"armado_{tag}m_e120"
+        E += [
+            (f"H{k}", "H", f"render {ds}: 200 quadros com --arma-na-mao",
+             (lambda ds, cmd: lambda L: (1 if not DRY and not os.path.exists(ok_arq("P3")) else render(L, j(RAIZ, ds), 200, cmd + MAO)))(ds, cmd),
+             j(RAIZ, ds, "data.yaml")),
+            (f"H{k + 1}", "H", f"ladrilhos de {ds}", (lambda ds: lambda L: ladrilha(j(RAIZ, ds), j(RAIZ, ds + "_tiles"), L))(ds),
+             j(RAIZ, ds + "_tiles", "data.yaml")),
+            (f"H{k + 2}", "H", f"treino {run} (120 epocas, paciencia 30)",
+             (lambda run, ds: lambda L: treina_longo(run, ds + "_tiles", L))(run, ds), tr(run)),
+            (f"H{k + 3}", "H", f"render 80 quadros novos de {ds} (indices 200 a 279)",
+             (lambda ds, cmd: lambda L: render(L, j(RAIZ, ds + "_extra"), 80, cmd + MAO + ["--val", 1.0], 200))(ds, cmd),
+             j(RAIZ, ds + "_extra", "data.yaml")),
+        ]
+        k += 4
+    E += [
+        ("H13", "H", "confusoes: novos no proprio val e novos, cruzadas com os e120 originais",
+         lambda L: varios(*[(conf_par, f"armado_{t}m_e120", f"ds_armado_{t}m", L) for t in ("35", "75g", "150g")],
+                          *[(confusao, f"armado_{t}_e120", j(RAIZ, f"ds_armado_{t}m_extra"), "val", f"extra{t}m_armado_{t}_e120.json", L) for t in ("35", "75g", "150g")],
+                          *[(confusao, f"armado_{t}m_e120", j(RAIZ, f"ds_armado_{t}_extra"), "val", f"extra{t}_armado_{t}m_e120.json", L) for t in ("35", "75g", "150g")])
+         or marca_ok("H13"), ok_arq("H13")),
+        ("H14", "H", "criterios do item 8", lambda L: criterios("H", L) or marca_ok("H14"), ok_arq("H14")),
         ("Y1", "Y", "todos os criterios do PLANO-RODADA6", lambda L: criterios("tudo", L) or marca_ok("Y1"), ok_arq("Y1")),
     ]
     return E

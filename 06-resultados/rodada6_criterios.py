@@ -9,7 +9,7 @@ Leituras de resolubilidade (secao 2.3 do PLANO-RODADA5, sem mudanca): (a) faixas
 cruzam, (b) intervalo de 95% por reamostragem que exclui zero, (c) diferenca relativa de pelo menos 30%
 do menor valor (descritiva); resolvivel = passa em (a) ou em (b).
 
-  python rodada6_criterios.py --parte R|Q|L|E|G|V|tudo
+  python rodada6_criterios.py --parte R|Q|L|E|G|V|H|tudo
 """
 import argparse
 import json
@@ -344,6 +344,36 @@ def item_g():
     return out
 
 
+# ------------------------------------------------------------------ H (item 8): arma na mao
+def item_h():
+    out = {"regra": "PLANO-RODADA6 3.7: para cada altitude, modelo treinado com a arma na mao, nos seus 80 quadros novos (arma na "
+                    "mao), contra o e120 original nos seus 80 (mesmos indices, reamostragem independente): d' e objeto chamado de "
+                    "armada, (b) e (c). Resolvivel = a cinematica das maos muda a medida nessa altitude; nao resolvivel = "
+                    "sub-pixel, como esperado a 75 e 150 m. Cruzado, descritivo: cada modelo nos quadros do outro"}
+    pend = True
+    for alt, tag in (("35 m", "35"), ("75 m", "75g"), ("150 m", "150g")):
+        pn = perfil(f"extra_armado_{tag}m_e120.json")
+        if not pn:
+            continue
+        pend = False
+        po = perfil(f"extra_armado_{tag}_e120.json")
+        r = {"mao_nos_proprios_quadros_novos": limpa(pn), "original_nos_seus_quadros_novos": limpa(po) if po else None,
+             "original_nos_quadros_com_mao": limpa(perfil(f"extra{tag}m_armado_{tag}_e120.json")),
+             "mao_nos_quadros_originais": limpa(perfil(f"extra{tag}_armado_{tag}m_e120.json"))}
+        if po:
+            r["mao_contra_original"] = compara_perfis([pn], [po], False)
+            d, o = r["mao_contra_original"]["dlinha"], r["mao_contra_original"]["objeto_chamado_armada"]
+            r["veredito"] = (f"{alt}: d' {d['dif']:+.3f} (IC {d['dif_ic95']}), objeto chamado de armada {o['dif']:+.4f} "
+                             f"(IC {o['dif_ic95']}): " + ("resolvivel" if d["resolvivel"] or o["resolvivel"] else "nao resolvivel"))
+        else:
+            r["veredito"] = f"{alt}: sem o e120 original para comparar"
+        out[alt] = r
+    if pend:
+        return {"veredito": "pendente"}
+    out["veredito"] = " | ".join(out[a]["veredito"] for a in ("35 m", "75 m", "150 m") if a in out)
+    return out
+
+
 # ------------------------------------------------------------------ V (item 9): teto com o treino completo
 def item_v():
     if not existe("r_cheio_sel"):
@@ -363,7 +393,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--parte", default="tudo")
     a = ap.parse_args()
-    partes = {"R": item_r, "Q": item_q, "L": item_l, "E": item_e, "G": item_g, "V": item_v}
+    partes = {"R": item_r, "Q": item_q, "L": item_l, "E": item_e, "G": item_g, "V": item_v, "H": item_h}
     out = le("rodada6_criterios.json") or {}
     for k, fn in partes.items():
         if a.parte in ("tudo", k):
