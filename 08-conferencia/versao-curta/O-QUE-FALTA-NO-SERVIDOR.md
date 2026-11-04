@@ -2,6 +2,10 @@
 
 Machine Vision from the Global South. Lista feita em 2026-11-04, a partir dos cinco itens `[[NEW]]` da versão curta para a AIM 2027 e dos dois pareceres frios de 3/11. Custos tirados dos tempos medidos na rodada 5 (`06-resultados/revisao-2026-10-17/custo-rodada5.md`): render de 2 a 3 minutos por quadro 4K, treino de classe única de 2,5 a 4 h, treino de três classes de 2,6 a 5,4 h, treino de R de 5,9 h, tudo na RTX 2060 do desktop, que faz render e treino um de cada vez.
 
+## Estado em 04/11, fim da tarde
+
+Itens 1 e 2 feitos no desktop sem GPU (`06-resultados/armas_malhas.md` e `alvo_por_split.json`; números já no texto da versão curta: parágrafo da 5.1 e as duas células da Tabela 5). Item 4 rodando desde 11:28 (`r_pareado_sel`). Itens 3, 5, 6, 7, 8 e 9 entraram na rodada 6, lançada às 11:48 por decisão do autor ("o que manda é o PDF"), com previsão de término entre 13 e 15/11; plano em `07-blender/PLANO-RODADA6.md`, retrato em `STATUS.md`. As marcas `[[NEW]]` saíram do texto em 04/11: o que a rodada entregar entra como número conferido em `06-resultados/RESULTADOS.md`, e o que não chegar até 19/11 fica para o periódico.
+
 ## A lista
 
 | # | O quê | Modelar ou gerar | Custo | Entra onde |

@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """gera_elsevier.py: monta versao-curta-elsevier.html (A4, duas colunas, Times 9,5 pt, o CSS_ELSEVIER
-de 01-artigo/ferramentas/monta_artigo.py) a partir de versao-curta-aim2027.html, sem a nota de
-trabalho, e roda pagina.py nele (--fundo 779 --primeira 1) para fechar os buracos de paginação.
-Depois, gera_pdf.sh renderiza os três HTMLs e deixa as cópias no Desktop.
+de 01-artigo/ferramentas/monta_artigo.py) a partir de versao-curta-aim2027.html, com a nota de
+trabalho na página 1, e roda pagina.py nele (--colunas 2 --primeira 2 --limiar 50) para fechar os
+buracos de paginação. É o formato principal da submissão; gera_pdf.sh renderiza os três HTMLs e
+deixa as cópias no Desktop.
 
-Regras de diagramação: tabelas com cinco ou mais colunas e as figuras largas (nadir contra oblíquo,
-desenho experimental, três GSDs, varredura de limiar) atravessam as duas colunas em <div class="full">;
-o resto fica dentro da coluna. O texto é o mesmo da versão AIM, byte a byte: edite só lá."""
+Regras de diagramação: as quatro figuras largas (nadir contra oblíquo, desenho experimental, três
+GSDs, varredura de limiar) e as tabelas com sete ou mais colunas ou quinze ou mais linhas atravessam
+as duas colunas em <div class="full">; todo o resto flutua na coluna em <div class="flt"> (se não cabe
+no pé da coluna, vai para o topo da seguinte e o texto sobe). O texto é o mesmo da versão AIM, byte a
+byte: edite só lá."""
 import os, re, subprocess, sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +19,7 @@ montador = open(os.path.join(REPO, "01-artigo/ferramentas/monta_artigo.py"), enc
 css = re.search(r'CSS_ELSEVIER\s*=\s*"""(.*?)"""', montador, re.S).group(1)
 css += """
 .new { background: #fff1a8; } .dec { background: #cfe4ff; }
-.refs p, .refs p + p { text-indent: -1.2em; padding-left: 1.2em; margin: 0 0 3pt 0; font-size: 8.3pt; line-height: 1.22; overflow-wrap: anywhere; }
+.refs p, .refs p + p { text-indent: -1.2em; padding-left: 1.2em; margin: 0 0 2pt 0; font-size: 8pt; line-height: 1.2; overflow-wrap: anywhere; }
 .decl p, .decl p + p { text-indent: 0; margin: 0 0 4pt 0; font-size: 8.6pt; }
 table caption { caption-side: top; text-align: left; font-size: 8pt; line-height: 1.25; padding: 0 0 2pt 0; break-after: avoid; }
 p.tn, p + p.tn { font-size: 7.6pt; line-height: 1.2; text-indent: 0; margin: -6pt 0 9pt 0; text-align: left; }
@@ -24,8 +27,24 @@ table.t td.num, table.t th.num { text-align: right; }
 table.t .sub td { font-style: italic; }
 table.t thead { display: table-header-group; }
 .capa .autores, .capa .afil, .resumo p { text-indent: 0; }
+/* bloco flutuante na coluna: se não cabe no pé da coluna vai para o topo da seguinte e o texto
+   que o segue no fonte sobe para preencher a coluna (comportamento de figura de periódico) */
+.flt { float: left; width: 100%; break-inside: avoid; margin: 0; }
+.flt + p, .full + p { text-indent: 1.2em; margin-top: -3pt; }
+.flt table { margin-top: 2pt; }
+.flt figure img { max-width: 100%; }
+/* segunda parte de um parágrafo partido por pagina.py em volta de um bloco largo: continua sem recuo */
+p.cont, .full + p.cont, .flt + p.cont, p + p.cont { text-indent: 0; margin-top: 0; }
+/* nota de trabalho em português: uma coluna, página própria, apagar antes de submeter */
+.nota { column-span: all; font-size: 8.6pt; line-height: 1.3; border: 1pt solid #444; padding: 8pt 10pt; background: #f6f6f6; break-after: page; text-align: left; }
+.nota h1 { font-size: 10.5pt; line-height: 1.25; margin: 0 0 5pt 0; }
+.nota p, .nota p + p, .nota li { text-indent: 0; margin: 0 0 4pt 0; }
+.nota ol { margin: 2pt 0 4pt 16pt; padding: 0; }
+.nota code { font-size: 7.8pt; }
 """
-_, resto = src.split("<!-- MANUSCRITO", 1)
+antes, resto = src.split("<!-- MANUSCRITO", 1)
+m_nota = re.search(r'<div class="nota">.*?</div>', antes, re.S)
+nota = m_nota.group(0).replace('<div class="nota">', '<div class="nota full">', 1) if m_nota else ""
 marca = "<!-- MANUSCRITO" + resto[:resto.index("-->") + 3]
 corpo = resto[resto.index("-->") + 3:]
 cauda = corpo[corpo.index("</body>"):]
@@ -41,22 +60,33 @@ corpo = corpo[:i] + capa + corpo[j:]
 corpo = corpo.replace('<div class="abstract">', '<div class="resumo full">', 1)
 corpo = corpo.replace('<p class="kw">', '<p class="kw" style="text-indent:0">')
 
-LARGAS = ("fig7_", "fig8_", "fig9_", "fig12_")
+# figuras largas atravessam as duas colunas, com a largura que mantém o texto interno legível
+# (84% de 504 pt deixa o rótulo da figura 9 em cerca de 7,4 pt e o eixo da 12 em cerca de 7 pt);
+# as demais flutuam na coluna, na largura inteira da coluna
+LARGAS = {"fig8_": "92%", "fig9_": "84%", "fig7_": "100%", "fig12_": "84%"}
 def figura(m):
     blk = re.sub(r' style="max-width: \d+%;"', "", m.group(0))
-    return f'<div class="full">{blk}</div>' if any(k in blk for k in LARGAS) else blk
+    for chave, larg in LARGAS.items():
+        if chave in blk:
+            if larg != "100%": blk = blk.replace("<img ", f'<img style="max-width: {larg};" ', 1)
+            return f'<div class="full">{blk}</div>'
+    return f'<div class="flt">{blk}</div>'
 corpo = re.sub(r"<figure>.*?</figure>", figura, corpo, flags=re.S)
 
+# tabelas com sete ou mais colunas ou quinze ou mais linhas atravessam as duas colunas (e podem
+# quebrar entre páginas com o cabeçalho repetido); as demais flutuam na coluna, com a nota junto
 def tabela(m):
     blk = m.group(0)
     cabecalho = re.search(r"<tr>.*?</tr>", blk, re.S).group(0)
-    return f'<div class="full">{blk}</div>' if len(re.findall(r"<t[hd]", cabecalho)) >= 5 else blk
+    ncol = len(re.findall(r"<t[hd]", cabecalho)); nlin = len(re.findall(r"<tr", blk))
+    return f'<div class="{"full" if ncol >= 7 or nlin >= 15 else "flt"}">{blk}</div>'
 corpo = re.sub(r'<table class="t[^"]*"[^>]*>.*?</table>(\s*<p class="tn">.*?</p>)?', tabela, corpo, flags=re.S)
 
 html = ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
         "<title>Machine Vision from the Global South, short version, Elsevier preview</title>"
-        f"<style>{css}</style></head><body>\n{marca}\n{corpo}{cauda}")
+        f"<style>{css}</style></head><body>\n{nota}\n{marca}\n{corpo}{cauda}")
 out = os.path.join(AQUI, "versao-curta-elsevier.html")
 open(out, "w", encoding="utf-8").write(html)
 print("montado", out)
-subprocess.run([sys.executable, os.path.join(AQUI, "pagina.py"), out, "--fundo", "779", "--primeira", "1"], check=True)
+# a nota ocupa a página 1; a medição de buracos (por coluna, raster) começa na 2
+subprocess.run([sys.executable, os.path.join(AQUI, "pagina.py"), out, "--colunas", "2", "--primeira", "2", "--limiar", "50"], check=True)

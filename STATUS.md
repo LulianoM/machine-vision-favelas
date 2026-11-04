@@ -2,7 +2,7 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-11-04 (rodada 6 lançada), [DESKTOP]
+Última atualização: 2026-11-04 (versão curta sem marcas, formato Elsevier como principal), [MAC]; rodada 6 lançada no mesmo dia, [DESKTOP]
 
 ## Rodada 6 (lançada 04/11 11:48): a lista do servidor inteira
 
@@ -23,7 +23,7 @@ _sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia
 
 ## Versão curta para a AIM 2027 (04/11)
 
-Corpo de 8.736 palavras (alvo do autor: 8 a 9 mil; a professora indicou cerca de 10 mil), 44 páginas em Carta, Times New Roman 12, espaço duplo, com 12 tabelas e 5 figuras do v9. Fonte `08-conferencia/versao-curta/versao-curta-aim2027.html`, paginação por `pagina.py` e PDF por `gera_pdf.sh`; extended abstract de 3 mil palavras (19 páginas) na mesma pasta. Prévia no formato Elsevier do v9 (A4, duas colunas): 18 páginas, por `gera_elsevier.py`. Cópias em `~/Desktop/AIM 2027 - Versao Curta/`. O que falta no desktop para fechar o artigo (itens, custo e ordem): `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`. A página 1 do PDF é a nota de trabalho com as contagens, o que foi cortado do v9, os 5 `[[NEW]]` e as 4 decisões (título, figuras, trilha do CFP, GPU). Pendente para o autor: ler e marcar o PDF, decidir, escrever os `[[NEW]]` (os itens 1 e 2 precisam do desktop, sem GPU), revisão do orientador, submissão até 19/11.
+Corpo de 8.728 palavras (alvo do autor: 8 a 9 mil; a professora indicou cerca de 10 mil), 12 tabelas e 5 figuras do v9, sem nenhuma marca `[[NEW]]` (removidas em 04/11 à tarde a pedido do autor; os itens 1 e 2 do desktop entraram no texto: pegada das armas em pixels na 5.1 e sub-stride dos oblíquos na Tabela 5). **Formato principal: Elsevier** (A4, duas colunas, Times 9,5 pt), `08-conferencia/versao-curta/versao-curta-elsevier.html`, 17 páginas mais a nota de trabalho na página 1, montado por `gera_elsevier.py` a partir de `versao-curta-aim2027.html` (onde o texto se edita): figuras e tabelas estreitas flutuam na coluna, os quatro blocos de figura largos e as Tabelas 2, 4 e 5 atravessam as duas colunas, e `pagina.py --colunas 2` (medição por raster, corte de parágrafo) leva cada bloco largo ao topo ou ao pé de uma página; nenhum buraco acima de 50 pt, última página 166 pt antes do pé. Versão Carta/Times 12/espaço duplo: 43 páginas (41 + 2 de nota), 0 buracos. Extended abstract de 3 mil palavras: 19 páginas. `gera_pdf.sh` renderiza os três (Elsevier primeiro) em `~/Desktop/AIM 2027 - Versao Curta/`. Lista do que falta no desktop: `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md` (estado de 04/11 no topo). Pendente para o autor: ler e marcar o PDF Elsevier, decidir título (A/B/C), figuras e trilha do CFP, revisão do orientador, entrada dos resultados da rodada 6 que terminarem até 19/11, submissão até 19/11.
 
 ## v9 (02/11): correções da revisão simulada da AIM aplicadas
 
