@@ -1,5 +1,14 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-04 [MAC] Versão curta para a AIM 2027: corpo de 8,7 mil palavras
+
+- Pedido do autor: a professora indicou cerca de 10 mil palavras como ideal para a AIM; o autor fixou o alvo em 8 a 9 mil no corpo. A primeira tentativa (3/11) saiu com 18,7 mil e foi cortada em cinco rodadas, medidas por script a cada rodada, até 8.736 palavras (seções 1 a 7, sem resumo, tabelas, legendas, declarações e referências); com tabelas e legendas, 12.066; resumo com 363; declarações com 444; 80 referências, todas citadas; 12 tabelas e 5 figuras do v9, copiadas em bloco, sem redigitar número.
+- Fonte: `08-conferencia/versao-curta/versao-curta-aim2027.html` (HTML à mão, CSS @page em Carta, margens de 1 pol., Times New Roman 12, espaço duplo); PDF por `gera_pdf.sh` com o Chrome headless: 45 páginas, a primeira é uma nota de trabalho em português, a apagar antes de submeter. O extended abstract de 3 mil palavras (`esqueleto-aim2027.html`, 19 páginas) continua na pasta como alternativa. Cópias autocontidas em `~/Desktop/AIM 2027 - Versao Curta/`; as de 3/11 ficaram em `antigas-2026-11-03/`. PDFs fora do git.
+- Estrutura em relação ao v9: a 2.4 saiu; a antiga 3.4 (base ética da síntese) virou uma frase em 4.1 e a 3.5 passou a ser a 3.4; a 5.6 (robustez) virou uma frase na abertura da seção 5; a 6.1 perdeu o parágrafo de síntese. Remissões atualizadas; nenhum número alterado.
+- Marcas no texto: 6 `[[NEW]]` (e-mails e ORCID no cabeçalho; pegada da arma em pixels na 5.1, que exige ler a largura das malhas no gerador do desktop; fração sub-stride dos corpora oblíquos na Tabela 5; casos documentados de objeto tomado por arma em operação no Rio na 6.4, com fonte ou a frase sai; ablação opcional de ruído, borrão e JPEG na 6.5; contagem final). Decisões do autor: título (A, B ou C), quais figuras ficam, trilha do CFP, se roda GPU antes de 19/11.
+- Bug de renderização corrigido nos dois HTMLs: `white-space: nowrap` nas células numéricas deixava as Tabelas 4 e 9 a 12 mais largas que a mancha, e o Chrome encolhia o documento inteiro para cerca de 73% (os PDFs de 3/11 saíram com corpo de 9,7 pt). Verificação agora por `pdftotext -bbox-layout`: passo de linha de 24,0 pt e altura de palavra de 13,3 pt nas páginas de prosa.
+- Lição de processo: estimativa de contagem feita de cabeça erra 30 a 60% para baixo e ajuste de frase quase não move o total; só a remoção de frases ou subseções inteiras move, e a contagem tem de ser medida a cada rodada.
+
 ## 2026-11-02 [DESKTOP] v9: correções da revisão simulada da AIM, inglês e português
 
 - Regra do autor, registrada em memória e no parecer: o enquadramento é SEGURANÇA PÚBLICA; nunca compras públicas, licitação ou prestação de contas administrativa. O parecer foi limpo dessas sugestões antes de aplicar.

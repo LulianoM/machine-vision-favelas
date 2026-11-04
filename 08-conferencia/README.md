@@ -43,6 +43,10 @@ modelos_2026/           AIM2027_CFP.pdf e quatro papers premiados de 2026 (conti
                         ma, salas), usados como modelo de formato
 ```
 
+## Versão curta do artigo (04/11/2026)
+
+`versao-curta/`: `versao-curta-aim2027.html` (corpo de 8,7 mil palavras, 45 páginas em Carta, Times New Roman 12, espaço duplo, 12 tabelas e 5 figuras), `esqueleto-aim2027.html` (extended abstract de 3 mil palavras, 19 páginas) e `gera_pdf.sh`, que renderiza os dois com o Chrome headless e deixa cópias autocontidas em `~/Desktop/AIM 2027 - Versao Curta/`. A primeira página de cada PDF é uma nota de trabalho em português, a apagar antes de submeter. Os PDFs não entram no git.
+
 ## Regra de citação herdada
 
 Nenhuma citação entrou sem venue e ano verificados. Fonte que não pôde ser verificada está marcada `[NÃO VERIFICADO]` no texto, e missão impossível está marcada `BLOQUEADA` com o motivo. Manter a regra ao editar.
