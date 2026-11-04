@@ -55,24 +55,23 @@
 <p><b>O que é isto.</b> Versão curta (2026-11-04) do artigo para a 7th AI in Management Conference (AIM 2027, USC Marshall, 19 e 20 de março de 2027), feita a partir do manuscrito inglês v9 (seções s1 a s7 do repositório). Alvo combinado com Felipe em 2026-11-03: corpo entre 8 e 9 mil palavras (a professora indicou que o ideal fica em torno de 10 mil; os quatro papers premiados em 2026 na AIM têm mediana de 10,5 mil palavras e 37 páginas). Prazo de submissão: <b>19/11/2026</b>, pelo formulário do dossiê (<code>08-conferencia/README.md</code>). Formato: Carta, margens de 1 pol., Times New Roman 12, espaço duplo, uma coluna; tabelas, legendas, declarações e referências em espaço simples. Fonte editável: <code>versao-curta-aim2027.html</code> nesta pasta; PDF regenerado por <code>gera_pdf.sh</code>. A versão de 3 mil palavras (extended abstract) continua na mesma pasta como alternativa.</p>
 <p><b>Contagem.</b> Corpo (seções 1 a 7, sem resumo, tabelas, legendas, declarações e referências): <b>8.736 palavras</b>, dentro do alvo de 8 a 9 mil. Com tabelas e legendas: 12.066. Resumo: 363. Declarações: 444. Referências: 80, todas citadas no texto. PDF: 45 páginas, a primeira sendo esta nota. Contagem feita por script sobre o HTML; o Word pode diferir em algumas dezenas por tratar hifens e números de outra forma.</p>
 <p><b>O que foi cortado do v9 (24 mil palavras no corpo em inglês).</b> O corpo ficou em cerca de 36% do v9, com os números essenciais, 12 tabelas e 5 figuras; nenhum número foi alterado, e tudo o que está aqui está no v9. Mudanças de estrutura, para quem for comparar: a seção 2.4 saiu; a antiga 3.4 (base ética da síntese) virou uma frase em 4.1 e a antiga 3.5 passou a ser a 3.4; a 5.6 (robustez) virou uma frase na abertura da seção 5; a 6.1 perdeu o parágrafo de síntese das três questões. As referências cruzadas foram atualizadas. Cortes de conteúdo: as tabelas de hipóteses e de robustez viraram prosa; a análise de similaridade de recortes saiu; curva de aprendizado, semente de assentamento, piloto e verificação de escala ficaram em uma frase cada; saíram as tabelas de ângulo de inclinação, contraste, precisão e revocação e pontos de operação; os parâmetros de treino viraram nota da Tabela 3; 6.2, 6.3, limitações e trabalhos futuros ficaram em um parágrafo cada. Quando o texto condensado perdeu uma nuance que importa, o lugar de recuperá-la é o v9.</p>
-<p><b>Como ler as marcas.</b> <span class="new">[[NEW: ...]]</span> em amarelo: conteúdo que não existe no v9 e precisa ser escrito, medido ou verificado (6 itens, tabela abaixo). <span class="dec">[[DECIDE: ...]]</span> em azul: decisão dos autores, sem trabalho novo.</p>
+<p><b>Como ler as marcas.</b> <span class="new">[[NEW: ...]]</span> em amarelo: conteúdo que não existe no v9 e precisa ser escrito, medido ou verificado (5 itens, tabela abaixo). <span class="dec">[[DECIDE: ...]]</span> em azul: decisão dos autores, sem trabalho novo.</p>
 <table>
   <tr><th>#</th><th>Item novo</th><th>Onde</th><th>Custo</th></tr>
-  <tr><td>1</td><td>Afiliação completa, e-mails, ORCID, autor apresentador</td><td>cabeçalho</td><td>minutos</td></tr>
-  <tr><td>2</td><td>Pegada da arma em pixels: o comprimento está derivado (comprimento registrado dividido pelo GSD); a <u>largura</u> das malhas não está no v9 e precisa ser lida no gerador (desktop) antes de qualquer número ser impresso</td><td>5.1</td><td>1 h, sem GPU</td></tr>
-  <tr><td>3</td><td>Fração sub-stride (lado menor &lt; 8 px) dos dois corpora oblíquos, que o v9 não mede. Só rótulos, sem GPU</td><td>Tabela 5</td><td>1 h, sem GPU</td></tr>
-  <tr><td>4</td><td>Casos documentados de objeto cotidiano tomado por arma em operação no Rio, com fonte verificável; sem fonte, cortar a frase</td><td>6.4</td><td>2 h de busca</td></tr>
-  <tr><td>5</td><td>Opcional: ablação de ruído, blur e JPEG no teste zero-shot (uma frase em 6.5). Sem ela, o texto fica como está</td><td>6.5</td><td>1 dia de GPU</td></tr>
-  <tr><td>6</td><td>Contagem final de palavras e páginas depois da revisão dos autores</td><td>tudo</td><td>minutos</td></tr>
+  <tr><td>1</td><td>Pegada da arma em pixels: o comprimento está derivado (comprimento registrado dividido pelo GSD); a <u>largura</u> das malhas não está no v9 e precisa ser lida no gerador (desktop) antes de qualquer número ser impresso</td><td>5.1</td><td>1 h, sem GPU</td></tr>
+  <tr><td>2</td><td>Fração sub-stride (lado menor &lt; 8 px) dos dois corpora oblíquos, que o v9 não mede. Só rótulos, sem GPU</td><td>Tabela 5</td><td>1 h, sem GPU</td></tr>
+  <tr><td>3</td><td>Casos documentados de objeto cotidiano tomado por arma em operação no Rio, com fonte verificável; sem fonte, cortar a frase</td><td>6.4</td><td>2 h de busca</td></tr>
+  <tr><td>4</td><td>Opcional: ablação de ruído, blur e JPEG no teste zero-shot (uma frase em 6.5). Sem ela, o texto fica como está</td><td>6.5</td><td>1 dia de GPU</td></tr>
+  <tr><td>5</td><td>Contagem final de palavras e páginas depois da revisão dos autores</td><td>tudo</td><td>minutos</td></tr>
 </table>
 <p><b>Decisões pendentes.</b></p>
 <ol>
   <li><b>Título.</b> Usado aqui (A): "Machine Vision from the Global South: Synthetic Training, Acquisition Limits and What an Aerial Claim of an Armed Person Must Declare". Mantém a marca e tira "dense favelas" do título, porque nada foi medido numa favela. Alternativas: (B) o título do v9, "Machine Vision from the Global South: Synthetic Data and the Acquisition Limits of Armed-Person Detection in Dense Favelas"; (C) "Before the Alert Is Believed: Acquisition Limits of Synthetic-Trained Armed-Person Detection for Aerial Policing".</li>
   <li><b>Figuras.</b> Cinco incluídas: Fig. 1 = fig. 8 do v9 (nadir contra oblíquo), Fig. 2 = fig. 9 (desenho experimental), Fig. 3 = fig. 7 (o que o detector recebe nos três GSDs), Fig. 4 = fig. 10 (ajuste fino), Fig. 5 = fig. 12 (varredura de limiar). Se precisar de páginas, cortar a 2 e a 5.</li>
   <li><b>Trilha do CFP</b>: "AI Ethics, Bias, and Discrimination" ou "Applications of Natural Language Processing or Machine Vision". O texto pende para a primeira.</li>
-  <li><b>Rodar GPU antes de 19/11</b>: só o item 5 exige. Recomendação: fazer os itens 2 e 3 (sem GPU) e deixar o 5 para o periódico.</li>
+  <li><b>Rodar GPU antes de 19/11</b>: só o item 4 exige. Recomendação: fazer os itens 1 e 2 (sem GPU) e deixar o 4 para o periódico.</li>
 </ol>
-<p><b>Ordem sugerida até 19/11.</b> (1) Felipe lê e marca este PDF. (2) Decide título, figuras, trilha. (3) Itens 2 e 3 no desktop. (4) Escreve os [[NEW]]. (5) Orientador revisa. (6) Leitura final: nenhum travessão, nenhum caminho de arquivo, todos os números batendo com o v9. (7) Apaga esta página, gera o PDF e submete.</p>
+<p><b>Ordem sugerida até 19/11.</b> (1) Felipe lê e marca este PDF. (2) Decide título, figuras, trilha. (3) Itens 1 e 2 no desktop. (4) Escreve os [[NEW]]. (5) Orientador revisa. (6) Leitura final: nenhum travessão, nenhum caminho de arquivo, todos os números batendo com o v9. (7) Apaga esta página, gera o PDF e submete.</p>
 </div>
 
 <!-- ============================================================ -->
@@ -82,7 +81,6 @@
 <h1>Machine Vision from the Global South: Synthetic Training, Acquisition Limits and What an Aerial Claim of an Armed Person Must Declare</h1>
 <p>Luciano Martins Figueira (corresponding author) and Hélio Arthur Reis Irigaray</p>
 <p>Fundação Getulio Vargas, Brazilian School of Public and Business Administration (FGV EBAPE), Rio de Janeiro, Brazil</p>
-<p><span class="new">[[NEW: e-mail of each author; ORCID; the submission form asks for the presenting author]]</span></p>
 </div>
 
 <div class="abstract">
