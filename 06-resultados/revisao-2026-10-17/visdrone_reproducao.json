@@ -920,6 +920,26 @@
    "P_validador": 0.2985,
    "R_validador": 0.1119,
    "quando": "2026-10-22T10:21:10"
+  },
+  "r_pareado_sel": {
+   "run": "r_pareado_sel",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\r_pareado_sel\\weights\\best.pt",
+   "imagens": 548,
+   "caixas_verdadeiras": 13969,
+   "predicoes": 135544,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.62244,
+   "mAP50_recalculado": 0.62244,
+   "mAP50_95_validador": 0.24253,
+   "mAP50_95_recalculado": 0.24253,
+   "mAP50_reportado": 0.6224,
+   "dif_recalculado_validador": 0.0,
+   "dif_validador_reportado": 4e-05,
+   "P_validador": 0.7173,
+   "R_validador": 0.5703,
+   "quando": "2026-11-04T19:14:52"
   }
  }
 }

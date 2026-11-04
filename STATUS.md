@@ -16,7 +16,7 @@ Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e co
 |---|---|
 | 1, caixa das 5 malhas de arma | **Feito.** `06-resultados/mede_armas.py` (Blender headless), `armas_malhas.md`. Fuzil AK 1,071 × 0,050 × 0,227 m = 22,0 × 1,0 px a 150 m, 43,9 × 2,0 a 75, 94,0 × 4,4 a 35; pistola 0,195 × 0,030 m = 4,0 × 0,6 px a 150 m. Os dois fuzis medem 1,07 m, não 0,92 e 0,94 (nominal): os "19, 38, 81 px" do `[[NEW]]` da 5.1 são limite inferior. Largura de toda arma abaixo de 1 px a 150 m |
 | 2, fração sub-stride dos oblíquos | **Feito.** `mede_alvo_split.py` com `ds_morro_obl` e `ds_oblvar`: lado menor < 8 px em 0,94% (S-oblique, 1.912 caixas) e 3,88% (S-oblique-six, 1.521). Já nas duas células da Tabela 5 da versão curta (0,9% e 3,9%); o PDF não foi regerado (fluxo do Mac) |
-| 4, teto R com seleção fora do teste | **Rodando desde 11:28**, `07-blender/scripts/r_sel.py` via `lanca_r_sel.cmd`, run `r_pareado_sel`, log `C:rma3-favelalender
+| 4, teto R com seleção fora do teste | **Feito (19:30).** R-sel 0,6224 contra R 0,6311: viés de seleção +0,0087 (IC 0,0035 a 0,0136), real e pequeno. Eficácias sobem cerca de 1,4% relativos (S-oblique-six 15,3% para 15,5%), nenhuma ordem muda. `06-resultados/rodada6_eficacias.md`; entrada no RESULTADOS |
 _sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
 | 3, 5, 6, 7, 8, 9 | Na rodada 6 (acima); o 8 é o grupo H, último |
 

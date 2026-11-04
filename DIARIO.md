@@ -1,5 +1,11 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-04 [DESKTOP] Rodada 6: item 4 fechado
+
+- `r_pareado_sel` fez as 60 épocas (best.pt na 55) e o zero-shot deu 0,6224 contra 0,6311 de R. Viés de seleção +0,0087, IC pareado 0,0035 a 0,0136: real e pequeno. Pela regra do plano, R-sel vira o teto do artigo e as eficácias sobem cerca de 1,4% relativos; nenhuma ordem muda. Números e comandos no RESULTADOS; tabela em `06-resultados/rodada6_eficacias.md`. E-mail na thread da rodada.
+- P2 e P3 passaram (flags do comprimento e da mão num quadro cada). A cadeia seguiu para o grupo Q às 19:34.
+- O manuscrito não foi tocado: a troca de R por R-sel nas eficácias do texto é decisão do autor.
+
 ## 2026-11-04 [DESKTOP] Rodada 6: pausa, retomada e grupo C (transferência de cor)
 
 - Pausa pedida pelo autor de 14:38 a 16:11 (`pausa_rodada6.py`); o treino do item 4 retomou do `last.pt` na época 31, sem perda.
