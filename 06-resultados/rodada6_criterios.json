@@ -1,6 +1,657 @@
 {
  "R": {
-  "veredito": "pendente"
+  "R_mAP50": 0.6311,
+  "R_sel_mAP50": 0.6224,
+  "R_sel_mAP50_ic95": [
+   0.6069,
+   0.6397
+  ],
+  "vies_de_selecao": {
+   "dif": 0.0087,
+   "ic95_pareado": [
+    0.0035,
+    0.0136
+   ],
+   "relativa_pct": 1.4
+  },
+  "selecao": "r_pareado_sel: checkpoint escolhido em ft/sel_r.txt (265 imagens do VisDrone train fora da amostra de treino e fora do val); r_pareado: escolhido no proprio VisDrone val",
+  "regra": "PLANO-RODADA6 3.1: R-sel passa a ser o teto R do artigo (selecao fora do teste) e todas as eficacias sao recalculadas com ele; a diferenca R menos R-sel e reportada como vies de selecao, com IC pareado",
+  "eficacias": {
+   "R": {
+    "runs": [
+     "r_pareado"
+    ],
+    "valores": [
+     0.6311
+    ],
+    "media": 0.6311,
+    "media_ic95": [
+     0.6149,
+     0.6471
+    ],
+    "eficacia_R": 1.0,
+    "eficacia_R_sel": 1.0139,
+    "eficacia_R_sel_ic95": [
+     1.0056,
+     1.0218
+    ]
+   },
+   "S-nadir-150": {
+    "runs": [
+     "s_nadir_4k",
+     "s_nadir_4k_sd1",
+     "s_nadir_4k_sd2"
+    ],
+    "valores": [
+     0.0102,
+     0.0198,
+     0.0108
+    ],
+    "media": 0.0136,
+    "media_ic95": [
+     0.012,
+     0.016
+    ],
+    "eficacia_R": 0.0216,
+    "eficacia_R_sel": 0.0219,
+    "eficacia_R_sel_ic95": [
+     0.0192,
+     0.0257
+    ]
+   },
+   "S-oblique": {
+    "runs": [
+     "s_obliquo",
+     "s_obliquo_sd1",
+     "s_obliquo_sd2"
+    ],
+    "valores": [
+     0.0614,
+     0.0552,
+     0.0501
+    ],
+    "media": 0.0555,
+    "media_ic95": [
+     0.0502,
+     0.0614
+    ],
+    "eficacia_R": 0.088,
+    "eficacia_R_sel": 0.0892,
+    "eficacia_R_sel_ic95": [
+     0.0817,
+     0.0974
+    ]
+   },
+   "S-oblique-six": {
+    "runs": [
+     "s_oblvar",
+     "s_oblvar_sd1",
+     "s_oblvar_sd2"
+    ],
+    "valores": [
+     0.1055,
+     0.0958,
+     0.0887
+    ],
+    "media": 0.0966,
+    "media_ic95": [
+     0.0896,
+     0.1048
+    ],
+    "eficacia_R": 0.1531,
+    "eficacia_R_sel": 0.1552,
+    "eficacia_R_sel_ic95": [
+     0.146,
+     0.1669
+    ]
+   },
+   "S-nadir-150-six": {
+    "runs": [
+     "s_variedade"
+    ],
+    "valores": [
+     0.019
+    ],
+    "media": 0.019,
+    "media_ic95": [
+     0.0142,
+     0.0211
+    ],
+    "eficacia_R": 0.0302,
+    "eficacia_R_sel": 0.0306,
+    "eficacia_R_sel_ic95": [
+     0.0229,
+     0.0337
+    ]
+   },
+   "S-oblique-six c030": {
+    "runs": [
+     "s_oblvar_c030",
+     "s_oblvar_c030_sd1",
+     "s_oblvar_c030_sd2"
+    ],
+    "valores": [
+     0.0499,
+     0.0674,
+     0.0679
+    ],
+    "media": 0.0618,
+    "media_ic95": [
+     0.0566,
+     0.0679
+    ],
+    "eficacia_R": 0.0979,
+    "eficacia_R_sel": 0.0992,
+    "eficacia_R_sel_ic95": [
+     0.0913,
+     0.108
+    ]
+   },
+   "S-oblique-six c060": {
+    "runs": [
+     "s_oblvar_c060"
+    ],
+    "valores": [
+     0.0806
+    ],
+    "media": 0.0806,
+    "media_ic95": [
+     0.0739,
+     0.0885
+    ],
+    "eficacia_R": 0.1277,
+    "eficacia_R_sel": 0.1295,
+    "eficacia_R_sel_ic95": [
+     0.1196,
+     0.1411
+    ]
+   },
+   "S-oblique-six c090": {
+    "runs": [
+     "s_oblvar_c090"
+    ],
+    "valores": [
+     0.081
+    ],
+    "media": 0.081,
+    "media_ic95": [
+     0.0745,
+     0.0886
+    ],
+    "eficacia_R": 0.1284,
+    "eficacia_R_sel": 0.1302,
+    "eficacia_R_sel_ic95": [
+     0.1204,
+     0.1406
+    ]
+   },
+   "S-oblique-six c120": {
+    "runs": [
+     "s_oblvar_c120",
+     "s_oblvar_c120_sd1",
+     "s_oblvar_c120_sd2"
+    ],
+    "valores": [
+     0.0915,
+     0.0878,
+     0.0918
+    ],
+    "media": 0.0904,
+    "media_ic95": [
+     0.0838,
+     0.0986
+    ],
+    "eficacia_R": 0.1432,
+    "eficacia_R_sel": 0.1452,
+    "eficacia_R_sel_ic95": [
+     0.1352,
+     0.1566
+    ]
+   },
+   "S-oblique-six scenes": {
+    "runs": [
+     "s_oblvar",
+     "s_oblvar_e22",
+     "s_oblvar_e23"
+    ],
+    "valores": [
+     0.1055,
+     0.0935,
+     0.0821
+    ],
+    "media": 0.0937,
+    "media_ic95": [
+     0.0868,
+     0.1019
+    ],
+    "eficacia_R": 0.1484,
+    "eficacia_R_sel": 0.1505,
+    "eficacia_R_sel_ic95": [
+     0.1411,
+     0.1618
+    ]
+   },
+   "F-synthetic 5% orig": {
+    "runs": [
+     "ft05_sint",
+     "ft05_sint_sd1",
+     "ft05_sint_sd2"
+    ],
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "media": 0.4529,
+    "media_ic95": [
+     0.4373,
+     0.4696
+    ],
+    "eficacia_R": 0.7176,
+    "eficacia_R_sel": 0.7276,
+    "eficacia_R_sel_ic95": [
+     0.7124,
+     0.7401
+    ]
+   },
+   "F-synthetic 5% fz": {
+    "runs": [
+     "ft05_sint_fz"
+    ],
+    "valores": [
+     0.2808
+    ],
+    "media": 0.2808,
+    "media_ic95": [
+     0.2664,
+     0.2952
+    ],
+    "eficacia_R": 0.4449,
+    "eficacia_R_sel": 0.4511,
+    "eficacia_R_sel_ic95": [
+     0.4343,
+     0.4676
+    ]
+   },
+   "F-synthetic 5% lr": {
+    "runs": [
+     "ft05_sint_lr"
+    ],
+    "valores": [
+     0.3103
+    ],
+    "media": 0.3103,
+    "media_ic95": [
+     0.2961,
+     0.3248
+    ],
+    "eficacia_R": 0.4917,
+    "eficacia_R_sel": 0.4985,
+    "eficacia_R_sel_ic95": [
+     0.4818,
+     0.5153
+    ]
+   },
+   "F-synthetic 5% fzlr": {
+    "runs": [
+     "ft05_sint_fzlr"
+    ],
+    "valores": [
+     0.2028
+    ],
+    "media": 0.2028,
+    "media_ic95": [
+     0.1917,
+     0.2144
+    ],
+    "eficacia_R": 0.3214,
+    "eficacia_R_sel": 0.3258,
+    "eficacia_R_sel_ic95": [
+     0.3108,
+     0.341
+    ]
+   },
+   "F-generic 5% orig": {
+    "runs": [
+     "ft05_coco",
+     "ft05_coco_sd1",
+     "ft05_coco_sd2"
+    ],
+    "valores": [
+     0.522,
+     0.5228,
+     0.5285
+    ],
+    "media": 0.5245,
+    "media_ic95": [
+     0.5075,
+     0.5424
+    ],
+    "eficacia_R": 0.831,
+    "eficacia_R_sel": 0.8426,
+    "eficacia_R_sel_ic95": [
+     0.8311,
+     0.8534
+    ]
+   },
+   "F-generic 5% fz": {
+    "runs": [
+     "ft05_coco_fz"
+    ],
+    "valores": [
+     0.5467
+    ],
+    "media": 0.5467,
+    "media_ic95": [
+     0.5298,
+     0.5642
+    ],
+    "eficacia_R": 0.8663,
+    "eficacia_R_sel": 0.8783,
+    "eficacia_R_sel_ic95": [
+     0.8639,
+     0.8916
+    ]
+   },
+   "F-generic 5% lr": {
+    "runs": [
+     "ft05_coco_lr",
+     "ft05_coco_lr_sd1",
+     "ft05_coco_lr_sd2"
+    ],
+    "valores": [
+     0.5746,
+     0.5963,
+     0.5982
+    ],
+    "media": 0.5897,
+    "media_ic95": [
+     0.5748,
+     0.6073
+    ],
+    "eficacia_R": 0.9344,
+    "eficacia_R_sel": 0.9475,
+    "eficacia_R_sel_ic95": [
+     0.936,
+     0.959
+    ]
+   },
+   "F-generic 5% fzlr": {
+    "runs": [
+     "ft05_coco_fzlr"
+    ],
+    "valores": [
+     0.541
+    ],
+    "media": 0.541,
+    "media_ic95": [
+     0.5238,
+     0.5594
+    ],
+    "eficacia_R": 0.8572,
+    "eficacia_R_sel": 0.8691,
+    "eficacia_R_sel_ic95": [
+     0.8537,
+     0.8855
+    ]
+   },
+   "F-synthetic 10% orig": {
+    "runs": [
+     "ft10_sint"
+    ],
+    "valores": [
+     0.5095
+    ],
+    "media": 0.5095,
+    "media_ic95": [
+     0.4935,
+     0.5264
+    ],
+    "eficacia_R": 0.8072,
+    "eficacia_R_sel": 0.8185,
+    "eficacia_R_sel_ic95": [
+     0.8062,
+     0.8301
+    ]
+   },
+   "F-synthetic 10% fz": {
+    "runs": [
+     "ft10_sint_fz"
+    ],
+    "valores": [
+     0.3209
+    ],
+    "media": 0.3209,
+    "media_ic95": [
+     0.3054,
+     0.3358
+    ],
+    "eficacia_R": 0.5085,
+    "eficacia_R_sel": 0.5156,
+    "eficacia_R_sel_ic95": [
+     0.4988,
+     0.532
+    ]
+   },
+   "F-synthetic 10% lr": {
+    "runs": [
+     "ft10_sint_lr"
+    ],
+    "valores": [
+     0.3875
+    ],
+    "media": 0.3875,
+    "media_ic95": [
+     0.3724,
+     0.4041
+    ],
+    "eficacia_R": 0.6141,
+    "eficacia_R_sel": 0.6226,
+    "eficacia_R_sel_ic95": [
+     0.6069,
+     0.64
+    ]
+   },
+   "F-synthetic 10% fzlr": {
+    "runs": [
+     "ft10_sint_fzlr"
+    ],
+    "valores": [
+     0.2241
+    ],
+    "media": 0.2241,
+    "media_ic95": [
+     0.2119,
+     0.2369
+    ],
+    "eficacia_R": 0.3552,
+    "eficacia_R_sel": 0.3601,
+    "eficacia_R_sel_ic95": [
+     0.3448,
+     0.3769
+    ]
+   },
+   "F-generic 10% orig": {
+    "runs": [
+     "ft10_coco"
+    ],
+    "valores": [
+     0.5709
+    ],
+    "media": 0.5709,
+    "media_ic95": [
+     0.5535,
+     0.5883
+    ],
+    "eficacia_R": 0.9045,
+    "eficacia_R_sel": 0.9171,
+    "eficacia_R_sel_ic95": [
+     0.9056,
+     0.9262
+    ]
+   },
+   "F-generic 10% fz": {
+    "runs": [
+     "ft10_coco_fz"
+    ],
+    "valores": [
+     0.5772
+    ],
+    "media": 0.5772,
+    "media_ic95": [
+     0.5607,
+     0.5942
+    ],
+    "eficacia_R": 0.9145,
+    "eficacia_R_sel": 0.9272,
+    "eficacia_R_sel_ic95": [
+     0.9133,
+     0.9408
+    ]
+   },
+   "F-generic 10% lr": {
+    "runs": [
+     "ft10_coco_lr"
+    ],
+    "valores": [
+     0.6224
+    ],
+    "media": 0.6224,
+    "media_ic95": [
+     0.6072,
+     0.6396
+    ],
+    "eficacia_R": 0.9861,
+    "eficacia_R_sel": 0.9999,
+    "eficacia_R_sel_ic95": [
+     0.988,
+     1.013
+    ]
+   },
+   "F-generic 10% fzlr": {
+    "runs": [
+     "ft10_coco_fzlr"
+    ],
+    "valores": [
+     0.5644
+    ],
+    "media": 0.5644,
+    "media_ic95": [
+     0.5487,
+     0.5815
+    ],
+    "eficacia_R": 0.8943,
+    "eficacia_R_sel": 0.9067,
+    "eficacia_R_sel_ic95": [
+     0.8931,
+     0.9196
+    ]
+   },
+   "F-synthetic 5% chosen": {
+    "runs": [
+     "ft05_sint",
+     "ft05_sint_sd1",
+     "ft05_sint_sd2"
+    ],
+    "valores": [
+     0.4424,
+     0.4608,
+     0.4554
+    ],
+    "media": 0.4529,
+    "media_ic95": [
+     0.4373,
+     0.4696
+    ],
+    "eficacia_R": 0.7176,
+    "eficacia_R_sel": 0.7276,
+    "eficacia_R_sel_ic95": [
+     0.7124,
+     0.7401
+    ]
+   },
+   "F-generic 5% chosen": {
+    "runs": [
+     "ft05_coco_lr",
+     "ft05_coco_lr_sd1",
+     "ft05_coco_lr_sd2"
+    ],
+    "valores": [
+     0.5746,
+     0.5963,
+     0.5982
+    ],
+    "media": 0.5897,
+    "media_ic95": [
+     0.5748,
+     0.6073
+    ],
+    "eficacia_R": 0.9344,
+    "eficacia_R_sel": 0.9475,
+    "eficacia_R_sel_ic95": [
+     0.936,
+     0.959
+    ]
+   },
+   "F-synthetic 10% chosen": {
+    "runs": [
+     "ft10_sint"
+    ],
+    "valores": [
+     0.5095
+    ],
+    "media": 0.5095,
+    "media_ic95": [
+     0.4935,
+     0.5264
+    ],
+    "eficacia_R": 0.8072,
+    "eficacia_R_sel": 0.8185,
+    "eficacia_R_sel_ic95": [
+     0.8062,
+     0.8301
+    ]
+   },
+   "F-generic 10% chosen": {
+    "runs": [
+     "ft10_coco_lr"
+    ],
+    "valores": [
+     0.6224
+    ],
+    "media": 0.6224,
+    "media_ic95": [
+     0.6072,
+     0.6396
+    ],
+    "eficacia_R": 0.9861,
+    "eficacia_R_sel": 0.9999,
+    "eficacia_R_sel_ic95": [
+     0.988,
+     1.013
+    ]
+   },
+   "R-sel": {
+    "runs": [
+     "r_pareado_sel"
+    ],
+    "valores": [
+     0.6224
+    ],
+    "media": 0.6224,
+    "media_ic95": [
+     0.6069,
+     0.6397
+    ],
+    "eficacia_R": 0.9863,
+    "eficacia_R_sel": 1.0,
+    "eficacia_R_sel_ic95": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "veredito": "R-sel 0.6224 contra R 0.6311: vies de selecao +0.0087 (IC exclui zero: vies real, pequeno); eficacias recalculadas em rodada6_eficacias.md"
  },
  "Q": {
   "veredito": "pendente"
@@ -17,7 +668,7 @@
  "V": {
   "veredito": "pendente"
  },
- "quando": "2026-11-04T16:35:40",
+ "quando": "2026-11-04T19:28:00",
  "C": {
   "veredito": "pendente"
  }
