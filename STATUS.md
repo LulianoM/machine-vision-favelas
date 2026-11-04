@@ -2,7 +2,19 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-11-04 (versão curta para a AIM), [MAC]
+Última atualização: 2026-11-04 (itens 1, 2 e 4 do servidor), [DESKTOP]
+
+## O que faltava no servidor para a AIM 2027 (04/11, desktop)
+
+Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e comandos em `06-resultados/RESULTADOS.md`, entrada de 04/11.
+
+| Item | Estado |
+|---|---|
+| 1, caixa das 5 malhas de arma | **Feito.** `06-resultados/mede_armas.py` (Blender headless), `armas_malhas.md`. Fuzil AK 1,071 × 0,050 × 0,227 m = 22,0 × 1,0 px a 150 m, 43,9 × 2,0 a 75, 94,0 × 4,4 a 35; pistola 0,195 × 0,030 m = 4,0 × 0,6 px a 150 m. Os dois fuzis medem 1,07 m, não 0,92 e 0,94 (nominal): os "19, 38, 81 px" do `[[NEW]]` da 5.1 são limite inferior. Largura de toda arma abaixo de 1 px a 150 m |
+| 2, fração sub-stride dos oblíquos | **Feito.** `mede_alvo_split.py` com `ds_morro_obl` e `ds_oblvar`: lado menor < 8 px em 0,94% (S-oblique, 1.912 caixas) e 3,88% (S-oblique-six, 1.521). Já nas duas células da Tabela 5 da versão curta (0,9% e 3,9%); o PDF não foi regerado (fluxo do Mac) |
+| 4, teto R com seleção fora do teste | **Rodando desde 11:28**, `07-blender/scripts/r_sel.py` via `lanca_r_sel.cmd`, run `r_pareado_sel`, log `C:rma3-favelalender_sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
+| 3, 5 a 9 | Não iniciados (3, 5, 6, 7 para o periódico; 8 e 9 só se um revisor pedir) |
+
 
 ## Versão curta para a AIM 2027 (04/11)
 
@@ -102,7 +114,7 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
 | Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
-| Fila de execução | Nada rodando. Rodadas 2 (22 a 24/09), 3 (24 a 26/09) e 4 (27 a 30/09) encerradas |
+| Fila de execução | `r_pareado_sel` (item 4) rodando desde 04/11 11:28, relançável por `07-blender/scripts/lanca_r_sel.cmd`. Rodadas 2 a 5 encerradas |
 | Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
 | Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |
 

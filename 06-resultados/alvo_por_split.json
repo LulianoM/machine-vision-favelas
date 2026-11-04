@@ -88,6 +88,94 @@
    }
   }
  },
+ "ds_morro_obl": {
+  "train": {
+   "imagens": 155,
+   "caixas": 1680,
+   "larg_med": 17.99,
+   "alt_med": 26.51,
+   "lado_maior_med": 27.01,
+   "hw_med": 1.464,
+   "area_med": 459.3,
+   "pct_lado_menor_abaixo_8px": 0.95,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 155
+   }
+  },
+  "val": {
+   "imagens": 25,
+   "caixas": 232,
+   "larg_med": 17.85,
+   "alt_med": 25.22,
+   "lado_maior_med": 25.93,
+   "hw_med": 1.457,
+   "area_med": 434.9,
+   "pct_lado_menor_abaixo_8px": 0.86,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 25
+   }
+  },
+  "todos": {
+   "imagens": 180,
+   "caixas": 1912,
+   "larg_med": 17.93,
+   "alt_med": 26.39,
+   "lado_maior_med": 26.9,
+   "hw_med": 1.464,
+   "area_med": 455.8,
+   "pct_lado_menor_abaixo_8px": 0.94,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 180
+   }
+  }
+ },
+ "ds_oblvar": {
+  "train": {
+   "imagens": 152,
+   "caixas": 1325,
+   "larg_med": 13.4,
+   "alt_med": 25.2,
+   "lado_maior_med": 25.36,
+   "hw_med": 1.848,
+   "area_med": 328.6,
+   "pct_lado_menor_abaixo_8px": 4.0,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 152
+   }
+  },
+  "val": {
+   "imagens": 28,
+   "caixas": 196,
+   "larg_med": 12.88,
+   "alt_med": 25.18,
+   "lado_maior_med": 25.18,
+   "hw_med": 1.907,
+   "area_med": 304.1,
+   "pct_lado_menor_abaixo_8px": 3.06,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 28
+   }
+  },
+  "todos": {
+   "imagens": 180,
+   "caixas": 1521,
+   "larg_med": 13.32,
+   "alt_med": 25.2,
+   "lado_maior_med": 25.33,
+   "hw_med": 1.855,
+   "area_med": 324.2,
+   "pct_lado_menor_abaixo_8px": 3.88,
+   "tamanho_de_imagem_mais_comum": {
+    "tamanho": "3840x2160",
+    "imagens": 180
+   }
+  }
+ },
  "visdrone_yolo": {
   "train": {
    "imagens": 6471,

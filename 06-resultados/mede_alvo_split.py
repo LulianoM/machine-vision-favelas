@@ -25,6 +25,10 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 CORPORA = {
     "ds_morro_clima": os.path.join("C:" + os.sep, "arma3-favela", "blender", "ds_morro_clima"),
     "ds_morro_4k": os.path.join("C:" + os.sep, "arma3-favela", "blender", "ds_morro_4k"),
+    # os dois corpora obliquos entraram em 2026-11-04 (item 2 de O-QUE-FALTA-NO-SERVIDOR.md): a Tabela 5
+    # do artigo tinha a fracao sub-stride so das linhas nadir e do VisDrone
+    "ds_morro_obl": os.path.join("C:" + os.sep, "arma3-favela", "blender", "ds_morro_obl"),
+    "ds_oblvar": os.path.join("C:" + os.sep, "arma3-favela", "blender", "ds_oblvar"),
     "visdrone_yolo": os.path.join("C:" + os.sep, "arma3-favela", "visdrone", "visdrone_yolo"),
     "visdrone_sub": os.path.join("C:" + os.sep, "arma3-favela", "visdrone", "visdrone_sub"),
 }
