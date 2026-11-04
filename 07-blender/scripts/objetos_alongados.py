@@ -329,6 +329,26 @@ ARMAS_INEDITAS = [
 # mesma luz), com o tipo de cada caixa gravado no manifest. gen_morro.py liga com --armas.
 MODO_ARMAS = "padrao"
 
+# Rodada 6, item 6 (2026-11-04): com COMPRIMENTO_ARMA = (lo, hi) cada objeto confundivel e, depois de
+# construido, escalado SO no eixo X (o do comprimento, em torno da origem, que e a ponta segurada) ate
+# medir um comprimento sorteado em [lo, hi], a faixa das cinco armas de treino (0,62 a 1,05 m, medida em
+# 06-resultados/armas_malhas.md). Largura, altura e material nao mudam. Assim o detector nao pode usar o
+# comprimento para separar objeto de arma; e como nenhum objeto passa de 1,15 m, tambem nao ha o
+# reangulo dos objetos longos (people_mpfb.make_person), que era outro indicio. gen_morro.py liga com
+# --objetos-comprimento-arma. O manifest grava o comprimento final em `comps`.
+COMPRIMENTO_ARMA = None
+
+
+def _escala_comprimento(o, alvo):
+    xs = [v.co.x for v in o.data.vertices]
+    atual = max(xs) - min(xs)
+    if atual <= 0:
+        return
+    f = alvo / atual
+    for v in o.data.vertices:
+        v.co.x *= f
+    o.data.update()
+
 
 def _sorteia(rng, tabela):
     tot = sum(p for _, _, p in tabela)
@@ -357,6 +377,9 @@ def faz_objeto(nome_obj, rng):
     M = mats()
     tipo, fn = _sorteia(rng, OBJETOS)
     o, L = fn(nome_obj, rng, M)
+    if COMPRIMENTO_ARMA is not None:
+        L = rng.uniform(*COMPRIMENTO_ARMA)
+        _escala_comprimento(o, L)
     return o, tipo, L
 
 
