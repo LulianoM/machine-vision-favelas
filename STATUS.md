@@ -6,7 +6,7 @@ Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md
 
 ## Versão curta para a AIM 2027 (04/11)
 
-Corpo de 8.736 palavras (alvo do autor: 8 a 9 mil; a professora indicou cerca de 10 mil), 45 páginas em Carta, Times New Roman 12, espaço duplo, com 12 tabelas e 5 figuras do v9. Fonte `08-conferencia/versao-curta/versao-curta-aim2027.html`, PDF por `gera_pdf.sh`; extended abstract de 3 mil palavras (19 páginas) na mesma pasta. Cópias em `~/Desktop/AIM 2027 - Versao Curta/`. A página 1 do PDF é a nota de trabalho com as contagens, o que foi cortado do v9, os 5 `[[NEW]]` e as 4 decisões (título, figuras, trilha do CFP, GPU). Pendente para o autor: ler e marcar o PDF, decidir, escrever os `[[NEW]]` (os itens 1 e 2 precisam do desktop, sem GPU), revisão do orientador, submissão até 19/11.
+Corpo de 8.736 palavras (alvo do autor: 8 a 9 mil; a professora indicou cerca de 10 mil), 44 páginas em Carta, Times New Roman 12, espaço duplo, com 12 tabelas e 5 figuras do v9. Fonte `08-conferencia/versao-curta/versao-curta-aim2027.html`, paginação por `pagina.py` e PDF por `gera_pdf.sh`; extended abstract de 3 mil palavras (19 páginas) na mesma pasta. Cópias em `~/Desktop/AIM 2027 - Versao Curta/`. A página 1 do PDF é a nota de trabalho com as contagens, o que foi cortado do v9, os 5 `[[NEW]]` e as 4 decisões (título, figuras, trilha do CFP, GPU). Pendente para o autor: ler e marcar o PDF, decidir, escrever os `[[NEW]]` (os itens 1 e 2 precisam do desktop, sem GPU), revisão do orientador, submissão até 19/11.
 
 ## v9 (02/11): correções da revisão simulada da AIM aplicadas
 
