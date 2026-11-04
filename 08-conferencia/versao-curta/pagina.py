@@ -4,12 +4,12 @@ para depois do parágrafo que vem logo após ela, ou para antes do parágrafo an
 só a posição dos blocos. Rodar depois de qualquer edição de texto e antes de gera_pdf.sh.
 
 Uso (Mac; no desktop o Edge é encontrado sozinho; precisa de pdfinfo, pdftotext e pdftoppm, do poppler, no PATH):
-  python3 pagina.py versao-curta-aim2027.html                                  # Carta, nota nas páginas 1 e 2
-  python3 pagina.py versao-curta-elsevier.html --colunas 2 --primeira 2 --limiar 50   # A4 em duas colunas
+  python3 pagina.py versao-curta-aim2027.html                             # Carta, coluna única
+  python3 pagina.py versao-curta-elsevier.html --colunas 2 --limiar 50    # A4 em duas colunas
   python3 pagina.py entrada.html saida.html
 
---primeira é a primeira página medida (3 na versão AIM, porque as duas primeiras são a nota de trabalho;
-2 na Elsevier, onde a nota ocupa a página 1). A última página nunca conta.
+--primeira é a primeira página medida (1 por padrão; se o fonte tiver uma nota de trabalho nas primeiras
+páginas, passar a primeira página do manuscrito). A última página nunca conta.
 Com --colunas 1 (padrão), o branco de uma página é a distância da última linha de texto até --fundo, a borda
 inferior da mancha em pt (Carta com margem de 1 pol.: 792 - 72 = 720). Buraco é mais de --limiar pt
 (100 pt, cerca de quatro linhas em espaço duplo).
@@ -29,7 +29,7 @@ import argparse, os, re, subprocess, sys, tempfile
 ap = argparse.ArgumentParser()
 ap.add_argument("src"); ap.add_argument("out", nargs="?")
 ap.add_argument("--fundo", type=float, default=720.0)
-ap.add_argument("--primeira", type=int, default=3)
+ap.add_argument("--primeira", type=int, default=1)
 ap.add_argument("--limiar", type=float, default=100.0)
 ap.add_argument("--colunas", type=int, default=1, choices=(1, 2))
 args = ap.parse_args()

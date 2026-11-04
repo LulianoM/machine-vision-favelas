@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """gera_elsevier.py: monta versao-curta-elsevier.html (A4, duas colunas, Times 9,5 pt, o CSS_ELSEVIER
-de 01-artigo/ferramentas/monta_artigo.py) a partir de versao-curta-aim2027.html, com a nota de
-trabalho na página 1, e roda pagina.py nele (--colunas 2 --primeira 2 --limiar 50) para fechar os
-buracos de paginação. É o formato principal da submissão; gera_pdf.sh renderiza os três HTMLs e
+de 01-artigo/ferramentas/monta_artigo.py) a partir de versao-curta-aim2027.html e roda pagina.py nele
+(--colunas 2 --limiar 50) para fechar os buracos de paginação. A nota de trabalho saiu dos HTMLs em
+04/11 (registro em NOTA-DE-TRABALHO.md); se uma div.nota voltar ao fonte, ela entra na página 1. É o formato principal da submissão; gera_pdf.sh renderiza os três HTMLs e
 deixa as cópias no Desktop.
 
 Regras de diagramação: as quatro figuras largas (nadir contra oblíquo, desenho experimental, três
@@ -88,5 +88,5 @@ html = ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
 out = os.path.join(AQUI, "versao-curta-elsevier.html")
 open(out, "w", encoding="utf-8").write(html)
 print("montado", out)
-# a nota ocupa a página 1; a medição de buracos (por coluna, raster) começa na 2
-subprocess.run([sys.executable, os.path.join(AQUI, "pagina.py"), out, "--colunas", "2", "--primeira", "2", "--limiar", "50"], check=True)
+# se o fonte ainda tiver uma div.nota, ela ocupa a página 1 e a medição de buracos (por coluna, raster) começa na 2
+subprocess.run([sys.executable, os.path.join(AQUI, "pagina.py"), out, "--colunas", "2", "--primeira", "2" if nota else "1", "--limiar", "50"], check=True)

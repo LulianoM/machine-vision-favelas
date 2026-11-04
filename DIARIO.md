@@ -9,6 +9,7 @@
 - `gera_pdf.sh`: Elsevier primeiro e nomes novos (`AIM2027_versao-curta_elsevier_DATA.pdf`, `AIM2027_versao-curta_carta-espaco-duplo_DATA.pdf`, extended abstract igual); os PDFs da manhã foram para `antigas-2026-11-04-manha/` no Desktop. `O-QUE-FALTA-NO-SERVIDOR.md` ganhou o estado de 04/11 à tarde (1 e 2 feitos, 4 rodando, o resto na rodada 6) e o PDF do Desktop foi regerado.
 - Sincronização: os cinco commits da rodada 6 do desktop foram puxados antes da edição; a alteração dele nas duas células da Tabela 5 foi reaplicada sem a marca, e a nota `[[NEW]]` da 5.1 que ele expandiu virou o parágrafo em inglês.
 - Decisões do autor, no fim da tarde: título (A) mantido; as cinco figuras ficam ("quanto mais melhor"); trilha do CFP "Applications of Natural Language Processing or Machine Vision". Registradas na nota de trabalho dos dois PDFs (regerados, mesmas 18 e 43 páginas) e no STATUS.
+- À noite, a pedido do autor, a nota de trabalho saiu dos três HTMLs (versão curta nos dois formatos e extended abstract); o texto ficou em `NOTA-DE-TRABALHO.md`. PDFs regerados: Elsevier 17 páginas, Carta 41, extended abstract 17. `pagina.py` passa a medir da página 1 (`--primeira 1` por padrão) e `gera_elsevier.py` só reserva a página 1 se houver `div.nota` no fonte.
 
 ## 2026-11-04 [DESKTOP] Rodada 6 lançada: a lista do servidor inteira, por decisão do autor
 
