@@ -1,5 +1,11 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-04 [MAC] Versão curta: teto R-sel (item 4) aplicado ao texto
+
+- O desktop publicou o item 4 (commit 4d0bbce): R-sel 0,6224 (0,6069 a 0,6397) contra 0,6311, viés +0,0087 (+0,0035 a +0,0136). Aplicado em `versao-curta-aim2027.html` só com números de `06-resultados/rodada6_eficacias.md`: 4.3 (seleção em 265 imagens fora do teste), 4.5 (viés medido no lugar de "direção do viés desconhecida"), 4.6 (R-sel sai do "still running" e entra como acrescentado), 5.2 (0,6224 e viés), 6.5 (5), Tabela 4 (linha de R, eficácias 2,2/3,1/8,9/15,5, melhores 3,2/9,9/17,0; F-synthetic e F-generic a 5% passam a média de 3 sementes, 72,8 e 84,3; 10% primeira semente 81,8 e 91,7; cronograma escolhido 94,8 e 100,0), resumo, intro dos resultados, 6.1 e conclusão (8,9 e 15,5). HERIDAL continua com R, porque R-sel não foi avaliado lá. F-joint na Tabela 4 ficou só com o ponto (74,0 e 87,2, regra ×1,014 do RESULTADOS) porque o desktop não publicou intervalo para `misto05`/`misto10`. Extended abstract com as mesmas trocas.
+- Falta pedir ao desktop: intervalos pareados a R-sel para `misto05`, `misto10`; R-sel na HERIDAL; `figuras_mpl.py` regerando `fig10_ajuste_fino.png` com `r_pareado_sel` (a linha tracejada ainda mostra 0,631).
+- Páginas: Elsevier 18, Carta 43, extended abstract 17; corpo 9.298 palavras; 0 marcas.
+
 ## 2026-11-04 [DESKTOP] Rodada 6: item 4 fechado
 
 - `r_pareado_sel` fez as 60 épocas (best.pt na 55) e o zero-shot deu 0,6224 contra 0,6311 de R. Viés de seleção +0,0087, IC pareado 0,0035 a 0,0136: real e pequeno. Pela regra do plano, R-sel vira o teto do artigo e as eficácias sobem cerca de 1,4% relativos; nenhuma ordem muda. Números e comandos no RESULTADOS; tabela em `06-resultados/rodada6_eficacias.md`. E-mail na thread da rodada.
