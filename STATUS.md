@@ -2,7 +2,11 @@
 
 Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md`.
 
-Última atualização: 2026-11-04 (itens 1, 2 e 4 do servidor), [DESKTOP]
+Última atualização: 2026-11-04 (rodada 6 lançada), [DESKTOP]
+
+## Rodada 6 (lançada 04/11 11:48): a lista do servidor inteira
+
+Decisão do autor em 04/11: "o que manda é o PDF", GPU incluída. Plano e critérios fixados antes em `07-blender/PLANO-RODADA6.md` (commit 7a459ea); cadeia `07-blender/scripts/rodada6.py`, supervisor `supervisiona_rodada6.py` (janela própria, lançado por `retoma_rodada6.cmd`), pausa `pausa_rodada6.py pausa|retoma`, retrato `status_rodada6.py`; estado e logs em `C:rma3-favelalenderila6\`. Ordem: R (item 4, espera o `r_sel.py` das 11:28), P2, Q (item 5), L (item 6), E (item 7), G (item 3), T (sementes), V (item 9), Y (critérios por `06-resultados/rodada6_criterios.py`). Previsão 158 a 198 h, fim entre 11/11 e 13/11; uma semente de cada item até 08/11. Item 8 (arma na mão) fora da cadeia até a modelagem ser validada visualmente (seção 7 do plano). Sem atalho na pasta Inicializar (só com OK do autor). E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48"; um e-mail por etapa concluída.
 
 ## O que faltava no servidor para a AIM 2027 (04/11, desktop)
 
@@ -12,8 +16,9 @@ Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e co
 |---|---|
 | 1, caixa das 5 malhas de arma | **Feito.** `06-resultados/mede_armas.py` (Blender headless), `armas_malhas.md`. Fuzil AK 1,071 × 0,050 × 0,227 m = 22,0 × 1,0 px a 150 m, 43,9 × 2,0 a 75, 94,0 × 4,4 a 35; pistola 0,195 × 0,030 m = 4,0 × 0,6 px a 150 m. Os dois fuzis medem 1,07 m, não 0,92 e 0,94 (nominal): os "19, 38, 81 px" do `[[NEW]]` da 5.1 são limite inferior. Largura de toda arma abaixo de 1 px a 150 m |
 | 2, fração sub-stride dos oblíquos | **Feito.** `mede_alvo_split.py` com `ds_morro_obl` e `ds_oblvar`: lado menor < 8 px em 0,94% (S-oblique, 1.912 caixas) e 3,88% (S-oblique-six, 1.521). Já nas duas células da Tabela 5 da versão curta (0,9% e 3,9%); o PDF não foi regerado (fluxo do Mac) |
-| 4, teto R com seleção fora do teste | **Rodando desde 11:28**, `07-blender/scripts/r_sel.py` via `lanca_r_sel.cmd`, run `r_pareado_sel`, log `C:rma3-favelalender_sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
-| 3, 5 a 9 | Não iniciados (3, 5, 6, 7 para o periódico; 8 e 9 só se um revisor pedir) |
+| 4, teto R com seleção fora do teste | **Rodando desde 11:28**, `07-blender/scripts/r_sel.py` via `lanca_r_sel.cmd`, run `r_pareado_sel`, log `C:rma3-favelalender
+_sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
+| 3, 5, 6, 7, 9 | Na rodada 6 (acima). 8 fora da cadeia, em preparação |
 
 
 ## Versão curta para a AIM 2027 (04/11)
@@ -114,7 +119,7 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
 | Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
-| Fila de execução | `r_pareado_sel` (item 4) rodando desde 04/11 11:28, relançável por `07-blender/scripts/lanca_r_sel.cmd`. Rodadas 2 a 5 encerradas |
+| Fila de execução | Rodada 6 rodando desde 04/11 11:48 (`status_rodada6.py`); dentro dela, `r_pareado_sel` (item 4) desde 11:28. Rodadas 2 a 5 encerradas |
 | Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
 | Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |
 

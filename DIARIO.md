@@ -1,5 +1,14 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-04 [DESKTOP] Rodada 6 lançada: a lista do servidor inteira, por decisão do autor
+
+- Pedido do autor, à tarde: "faça tudo que o PDF está propondo, se tiver que usar a GPU para rodar, rode, o que manda é o PDF agora". A lista deixava 3, 5, 6, 7 para o periódico e 8, 9 para pedido de revisor; agora tudo menos o 8 entra numa cadeia só.
+- `07-blender/PLANO-RODADA6.md` escrito e versionado antes da partida (commit 7a459ea), com hipótese, etapas, custo e critério de cada grupo; `06-resultados/rodada6_criterios.py` executa os critérios (R, Q, L, E, G, V) e grava `rodada6_criterios.json` e `rodada6_eficacias.json/.md` (eficácias com o R de seleção fora do teste).
+- Novidades de código: `objetos_alongados.COMPRIMENTO_ARMA` e `gen_morro.py --objetos-comprimento-arma` (objeto confundível escalado só no eixo do comprimento até 0,62 a 1,05 m; testado em headless, 40 objetos, todos na faixa, sem flag nada muda); `degrada_ladrilhos.py` (ruído, borrão e JPEG com probabilidade 0,75 nos ladrilhos de treino, val intacto, semente 0); `rodada6.py`, `supervisiona_rodada6.py` (não mata a cadeia enquanto o `r_sel.py` estiver vivo), `pausa_rodada6.py`, `status_rodada6.py`, `retoma_rodada6.cmd`.
+- Desenho que vale registrar: o grupo R espera o treino do item 4 lançado fora da cadeia (R1 escreve no log a cada 15 min); o quadro de teste da flag (P2) roda depois de R porque a GPU está ocupada; o teto completo (item 9) treina em 6.147 imagens (train menos a fatia `sel`, que vira a seleção) para a seleção ficar fora do teste como no item 4; os três-classes "e120" (item 5 e 150 m do item 6) usam a receita do `armado_150g_e120`, o de 75 m do item 6 usa a do `armado_75g`.
+- Lançamento às 11:48 por `Start-Process cmd.exe /c retoma_rodada6.cmd`; P1 passou (disco 407 GB, venv 8.4.148 / torch 2.14 / CUDA, HERIDAL convertida). Previsão 158 a 198 h, fim entre 11/11 e 13/11. Atalho na pasta Inicializar não criado (só com OK do autor). E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48".
+- Item 8 (arma na mão): fora da cadeia; seção 7 do plano descreve o que é (IK dos dois braços até os pontos de pega e fechamento dos dedos, conferência visual a 35 m) e a condição para entrar como grupo H.
+
 ## 2026-11-04 [DESKTOP] Itens 1 e 2 do servidor fechados, item 4 lançado
 
 - Entrada: o PDF `O-que-falta-no-servidor_AIM2027_2026-11-04.pdf` (cópia de `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`). Seguida a ordem sugerida: itens 1 e 2 sem GPU, item 4 porque a máquina estava livre.
