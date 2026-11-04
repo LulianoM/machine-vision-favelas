@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-04 [DESKTOP] Rodada 6: pausa, retomada e grupo C (transferência de cor)
+
+- Pausa pedida pelo autor de 14:38 a 16:11 (`pausa_rodada6.py`); o treino do item 4 retomou do `last.pt` na época 31, sem perda.
+- Pedido do autor: grupo C, transferência de cor de Monge-Kantorovich para a estatística do VisDrone train, no molde do G, critério fixado antes, depois do H. Feito: `07-blender/scripts/transfere_cor.py` (fase `estat`, média e covariância RGB de cada imagem do train com grade de passo 4 px, recusa o val; fase `aplica`, mapa T = S_s^-1/2 (S_s^1/2 S_t S_s^1/2)^1/2 S_s^-1/2 em 75% dos ladrilhos de treino, semente 0, JPEG 92 4:4:4, limpos e val intactos, `_transferencia.json`). Conferido numa amostra no scratchpad: T S_s T' = S_t com erro 2e-14, média transferida igual à do alvo, limpos e val idênticos byte a byte, inspeção visual coerente.
+- Cadeia: etapas C1 a C13 em `rodada6.py` (estatística, transferência, `s_nadir_4k_ct` e `s_oblvar_ct`, zero-shot a 1280 e 1024, predições VisDrone e HERIDAL, critério, sementes condicionais a (b), braço combinado com `degrada_ladrilhos.py`, critério final); `rodada6_criterios.py --parte C`; `status_rodada6.py`. Seção 3.10 e cronograma no plano (commit 56e4aad), antes de a cadeia carregar o grupo. Desvio declarado: as sementes condicionais ficam no próprio C, porque o T roda antes e a condição depende do resultado de C6.
+- A cadeia (em R1, esperando o item 4) foi reiniciada para carregar as etapas; o processo do treino do item 4 sobreviveu. Previsão com C: 226 a 294 h, fim perto de 16/11; prazo da AIM em 19/11.
+
 ## 2026-11-04 [MAC] Versão curta: resumo reescrito, regra da QP3 trocada por hipótese testável, pré-registro declarado, gerador sob solicitação direta
 
 - Pedido do autor, no fim da tarde, depois do parecer frio sobre o estado do artigo: reescrever o resumo abrindo com sintético e com menos números; trocar a regra pré-fixada da QP3 ("d′ fora de zero a 150 m = atalho") por uma hipótese que possa falhar; declarar explicitamente o que foi fixado antes e o que foi acrescentado depois de ver resultados; o gerador procedural não é liberado, mas fica "disponível sob solicitação direta aos autores"; verificar se os itens 4, 6 e 8 já estavam no repositório.
