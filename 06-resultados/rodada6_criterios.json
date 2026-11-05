@@ -654,7 +654,384 @@
   "veredito": "R-sel 0.6224 contra R 0.6311: vies de selecao +0.0087 (IC exclui zero: vies real, pequeno); eficacias recalculadas em rodada6_eficacias.md"
  },
  "Q": {
-  "veredito": "pendente"
+  "quadros_novos": {
+   "35 m e120": [
+    {
+     "arquivo": "extra_armado_35_e120.json",
+     "quadros": 80,
+     "pessoas": 953,
+     "recall_qualquer_classe": 0.7387,
+     "objeto_chamado_armada": 0.1918,
+     "objeto_chamado_armada_ic95": [
+      0.1515,
+      0.2357
+     ],
+     "armada_chamada_armada": 0.5029,
+     "dlinha_armada_contra_objeto": 0.875,
+     "dlinha_ic95": [
+      0.6541,
+      1.0872
+     ]
+    }
+   ],
+   "75 m gemeo e120": [
+    {
+     "arquivo": "extra_armado_75g_e120.json",
+     "quadros": 80,
+     "pessoas": 837,
+     "recall_qualquer_classe": 0.7611,
+     "objeto_chamado_armada": 0.2222,
+     "objeto_chamado_armada_ic95": [
+      0.1742,
+      0.2711
+     ],
+     "armada_chamada_armada": 0.537,
+     "dlinha_armada_contra_objeto": 0.854,
+     "dlinha_ic95": [
+      0.6455,
+      1.071
+     ]
+    }
+   ],
+   "150 m gemeo e120": [
+    {
+     "arquivo": "extra_armado_150g_e120.json",
+     "quadros": 80,
+     "pessoas": 916,
+     "recall_qualquer_classe": 0.6627,
+     "objeto_chamado_armada": 0.2452,
+     "objeto_chamado_armada_ic95": [
+      0.2042,
+      0.289
+     ],
+     "armada_chamada_armada": 0.4568,
+     "dlinha_armada_contra_objeto": 0.579,
+     "dlinha_ic95": [
+      0.376,
+      0.7795
+     ]
+    }
+   ],
+   "35 m e60": [
+    {
+     "arquivo": "extra_armado_35.json",
+     "quadros": 80,
+     "pessoas": 953,
+     "recall_qualquer_classe": 0.6842,
+     "objeto_chamado_armada": 0.2534,
+     "objeto_chamado_armada_ic95": [
+      0.2013,
+      0.3039
+     ],
+     "armada_chamada_armada": 0.5434,
+     "dlinha_armada_contra_objeto": 0.77,
+     "dlinha_ic95": [
+      0.5727,
+      0.9922
+     ]
+    },
+    {
+     "arquivo": "extra_armado_35_sd1.json",
+     "quadros": 80,
+     "pessoas": 953,
+     "recall_qualquer_classe": 0.7251,
+     "objeto_chamado_armada": 0.2021,
+     "objeto_chamado_armada_ic95": [
+      0.1541,
+      0.2491
+     ],
+     "armada_chamada_armada": 0.4711,
+     "dlinha_armada_contra_objeto": 0.758,
+     "dlinha_ic95": [
+      0.5224,
+      0.9998
+     ]
+    },
+    {
+     "arquivo": "extra_armado_35_sd2.json",
+     "quadros": 80,
+     "pessoas": 953,
+     "recall_qualquer_classe": 0.6716,
+     "objeto_chamado_armada": 0.2089,
+     "objeto_chamado_armada_ic95": [
+      0.1591,
+      0.2547
+     ],
+     "armada_chamada_armada": 0.4769,
+     "dlinha_armada_contra_objeto": 0.749,
+     "dlinha_ic95": [
+      0.5578,
+      0.9756
+     ]
+    }
+   ],
+   "75 m gemeo e60": [
+    {
+     "arquivo": "extra_armado_75g.json",
+     "quadros": 80,
+     "pessoas": 837,
+     "recall_qualquer_classe": 0.7658,
+     "objeto_chamado_armada": 0.125,
+     "objeto_chamado_armada_ic95": [
+      0.09,
+      0.1618
+     ],
+     "armada_chamada_armada": 0.4319,
+     "dlinha_armada_contra_objeto": 0.973,
+     "dlinha_ic95": [
+      0.7715,
+      1.1919
+     ]
+    },
+    {
+     "arquivo": "extra_armado_75g_sd1.json",
+     "quadros": 80,
+     "pessoas": 837,
+     "recall_qualquer_classe": 0.6941,
+     "objeto_chamado_armada": 0.0972,
+     "objeto_chamado_armada_ic95": [
+      0.0671,
+      0.1285
+     ],
+     "armada_chamada_armada": 0.3541,
+     "dlinha_armada_contra_objeto": 0.917,
+     "dlinha_ic95": [
+      0.7133,
+      1.1441
+     ]
+    },
+    {
+     "arquivo": "extra_armado_75g_sd2.json",
+     "quadros": 80,
+     "pessoas": 837,
+     "recall_qualquer_classe": 0.7599,
+     "objeto_chamado_armada": 0.1806,
+     "objeto_chamado_armada_ic95": [
+      0.1374,
+      0.2235
+     ],
+     "armada_chamada_armada": 0.5564,
+     "dlinha_armada_contra_objeto": 1.05,
+     "dlinha_ic95": [
+      0.8423,
+      1.2907
+     ]
+    }
+   ]
+  },
+  "e120_contra_e60": {
+   "35 m": {
+    "dlinha": {
+     "a_valores": [
+      0.875
+     ],
+     "b_valores": [
+      0.77,
+      0.758,
+      0.749
+     ],
+     "a_media": 0.875,
+     "b_media": 0.759,
+     "dif": 0.116,
+     "dif_ic95": [
+      -0.0452,
+      0.2622
+     ],
+     "dif_relativa_pct_do_menor": 15.3,
+     "razao_a_sobre_b": 1.153,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": true,
+     "resolvivel": false,
+     "passou_em": []
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.1918
+     ],
+     "b_valores": [
+      0.2534,
+      0.2021,
+      0.2089
+     ],
+     "a_media": 0.1918,
+     "b_media": 0.2215,
+     "dif": -0.0297,
+     "dif_ic95": [
+      -0.0634,
+      0.0037
+     ],
+     "dif_relativa_pct_do_menor": -15.5,
+     "razao_a_sobre_b": 0.866,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": true,
+     "resolvivel": false,
+     "passou_em": []
+    },
+    "leitura": "objeto chamado de armada -0.0297 (IC [-0.0634, 0.0037]), nao resolvivel"
+   },
+   "75 m": {
+    "dlinha": {
+     "a_valores": [
+      0.854
+     ],
+     "b_valores": [
+      0.973,
+      0.917,
+      1.05
+     ],
+     "a_media": 0.854,
+     "b_media": 0.98,
+     "dif": -0.126,
+     "dif_ic95": [
+      -0.3485,
+      0.0884
+     ],
+     "dif_relativa_pct_do_menor": -14.8,
+     "razao_a_sobre_b": 0.871,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": true,
+     "resolvivel": false,
+     "passou_em": []
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.2222
+     ],
+     "b_valores": [
+      0.125,
+      0.0972,
+      0.1806
+     ],
+     "a_media": 0.2222,
+     "b_media": 0.1343,
+     "dif": 0.0879,
+     "dif_ic95": [
+      0.0441,
+      0.1311
+     ],
+     "dif_relativa_pct_do_menor": 65.5,
+     "razao_a_sobre_b": 1.655,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": true,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    },
+    "leitura": "objeto chamado de armada +0.0879 (IC [0.0441, 0.1311]), resolvivel"
+   }
+  },
+  "curva_e120": {
+   "75 contra 35": {
+    "dlinha": {
+     "a_valores": [
+      0.854
+     ],
+     "b_valores": [
+      0.875
+     ],
+     "a_media": 0.854,
+     "b_media": 0.875,
+     "dif": -0.021,
+     "dif_ic95": [
+      -0.3187,
+      0.2833
+     ],
+     "dif_relativa_pct_do_menor": -2.5,
+     "razao_a_sobre_b": 0.976,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": false,
+     "resolvivel": false,
+     "passou_em": []
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.2222
+     ],
+     "b_valores": [
+      0.1918
+     ],
+     "a_media": 0.2222,
+     "b_media": 0.1918,
+     "dif": 0.0304,
+     "dif_ic95": [
+      -0.0322,
+      0.0914
+     ],
+     "dif_relativa_pct_do_menor": 15.8,
+     "razao_a_sobre_b": 1.158,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": false,
+     "resolvivel": false,
+     "passou_em": []
+    }
+   },
+   "75 contra 150": {
+    "dlinha": {
+     "a_valores": [
+      0.854
+     ],
+     "b_valores": [
+      0.579
+     ],
+     "a_media": 0.854,
+     "b_media": 0.579,
+     "dif": 0.275,
+     "dif_ic95": [
+      -0.0064,
+      0.5516
+     ],
+     "dif_relativa_pct_do_menor": 47.5,
+     "razao_a_sobre_b": 1.475,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": false,
+     "passou_em": [
+      "c"
+     ]
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.2222
+     ],
+     "b_valores": [
+      0.2452
+     ],
+     "a_media": 0.2222,
+     "b_media": 0.2452,
+     "dif": -0.023,
+     "dif_ic95": [
+      -0.0887,
+      0.0428
+     ],
+     "dif_relativa_pct_do_menor": -10.4,
+     "razao_a_sobre_b": 0.906,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": false,
+     "resolvivel": false,
+     "passou_em": []
+    }
+   }
+  },
+  "regra": "PLANO-RODADA6 3.2: nos 80 quadros novos; e120 contra e60 pareado (mesmos quadros); curva 75 contra 35 e 75 contra 150 independente. U confirmada com orcamento igual = a 120 epocas o gemeo de 75 m ainda tem objeto chamado de armada abaixo de 35 e de 150 m pela leitura (b) nas duas; U era orcamento = pelo menos uma das duas deixa de passar em (b) (intervalo inclui zero) ou inverte",
+  "veredito": "U era (em parte) orcamento: com 120 epocas a vantagem de 75 m sobre 35 m, 150 m nao passa em (b)"
  },
  "L": {
   "veredito": "pendente"
@@ -668,7 +1045,7 @@
  "V": {
   "veredito": "pendente"
  },
- "quando": "2026-11-04T19:28:00",
+ "quando": "2026-11-05T14:10:25",
  "C": {
   "veredito": "pendente"
  }

@@ -304,6 +304,28 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-11-05 [DESKTOP] Rodada 6, grupo Q (item 5): a forma em U da QP3 com orçamento igual
+
+Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.2. Treinos de três classes com a receita do `armado_150g_e120` (120 épocas, paciência 30), cadeia `07-blender/scripts/rodada6.py`, etapas Q1 e Q2: `armado_35_e120` (`ds_armado_35_tiles`, fez as 120, `best.pt` na época 116) e `armado_75g_e120` (`ds_armado_75g_tiles`, parou por paciência na 109, `best.pt` na 74; pausa do autor de 08:47 a 11:42, retomada de `last.pt`). Confusão por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` no val e nos 80 quadros novos (`confusao_armado_35_e120.json`, `extra_armado_35_e120.json`, `confusao_armado_75g_e120.json`, `extra_armado_75g_e120.json`; imgsz 3840, conf 0,25, IoU 0,50). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte Q` (`rodada6_criterios.json`, item Q; 1.000 reamostras de quadros, semente 0). O lado de 60 épocas é a média das três sementes já existentes (`extra_armado_35*.json`, `extra_armado_75g*.json`); o de 120 épocas é uma semente (as sementes 1 e 2 estão no grupo T).
+
+Nos 80 quadros novos (índices 200 a 279, os mesmos nas três altitudes):
+
+| Altitude, orçamento | Objeto chamado de armada (IC 95%) | d′ armada contra objeto (IC 95%) | Recall em qualquer classe |
+|---|---|---|---|
+| 35 m, 60 épocas (média de 3 sementes) | 0,2215 | 0,759 | 0,694 |
+| 75 m gêmeo, 60 épocas (média de 3 sementes) | 0,1343 | 0,980 | 0,740 |
+| 35 m, 120 épocas | 0,1918 (0,1515 a 0,2357) | 0,875 (0,654 a 1,087) | 0,739 |
+| 75 m gêmeo, 120 épocas | 0,2222 (0,1742 a 0,2711) | 0,854 (0,646 a 1,071) | 0,761 |
+| 150 m gêmeo, 120 épocas (rodada 5) | 0,2452 (0,2042 a 0,2890) | 0,579 (0,376 a 0,780) | 0,663 |
+
+Comparações:
+- 75 m, 120 contra 60 épocas (pareado): objeto chamado de armada +0,0879 (IC +0,0441 a +0,1311), passa em (b) e (c); d′ −0,126 (IC −0,349 a +0,088), não resolvível. Com o orçamento maior, o gêmeo de 75 m passa a chamar mais objetos de armada.
+- 35 m, 120 contra 60 épocas: objeto chamado de armada −0,0297 (IC −0,0634 a +0,0037); d′ +0,116 (IC −0,045 a +0,262); nenhum resolvível.
+- Curva com orçamento igual, 75 contra 35 m: objeto chamado de armada +0,0304 (IC −0,0322 a +0,0914), d′ −0,021; nenhum resolvível.
+- 75 contra 150 m: objeto chamado de armada −0,0230 (IC −0,0887 a +0,0428), não resolvível; d′ +0,275 (IC −0,006 a +0,552), passa só em (c).
+
+Veredito pela regra fixada antes: **a forma em U era (em parte) orçamento**. Com 120 épocas nas três altitudes, o falso alarme sobre objetos fica entre 0,19 e 0,25 e nenhuma diferença entre altitudes passa em (b); a vantagem de 75 m sobre 35 e 150 m, medida com 60 épocas a 35 e 75 m, não sobrevive ao orçamento igual. O que sobra, descritivo: a 150 m o d′ é o mais baixo (0,58 contra 0,85 a 0,88), mas a diferença para 75 m não passa em (b). Ressalva: o lado de 120 épocas tem uma semente; as sementes 1 e 2 (grupo T, etapas T1 a T5) refazem o critério com (a).
+
 ## 2026-11-04 [DESKTOP] Rodada 6, grupo R (item 4): teto R com o checkpoint escolhido fora do teste
 
 Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.1. Treino `r_pareado_sel` pela cadeia `07-blender/scripts/r_sel.py` (receita exata de `r_pareado`: yolo11s.pt, as 1.106 imagens de `visdrone_sub/train`, 60 épocas, lote 6, imgsz 1280, paciência 15, semente 0, classe única; `train_yolo_win.py --dry-run --compara runs/detect/r_pareado/args.yaml` acusa só `data` e `name`), com `val` em `C:/arma3-favela/visdrone/ft/sel_r.txt`: 265 imagens do VisDrone train fora da amostra de R e fora do VisDrone val (a fatia `sel` de 324 menos 59 em comum com `visdrone_sub/train`, `ft/sel_r.json`). Fez as 60 épocas (pausa do autor de 14:38 a 16:11, retomada de `last.pt` na época 31); `best.pt` na época 55 (mAP50-95 em `sel_r` 0,2285). Zero-shot por `07-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real C:/arma3-favela/visdrone/visdrone_yolo/data.yaml --imgsz 1280 --out 06-resultados/sim2real_r_pareado_sel.json`; predições por imagem por `revisao-2026-10-17/visdrone_preds.py --modelos r_pareado_sel --batch 4`; critério e eficácias por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte R` (saídas `rodada6_criterios.json`, `rodada6_eficacias.json` e `rodada6_eficacias.md`; 1.000 reamostras pareadas das 548 imagens, semente 0).

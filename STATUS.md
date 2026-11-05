@@ -18,7 +18,8 @@ Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e co
 | 2, fração sub-stride dos oblíquos | **Feito.** `mede_alvo_split.py` com `ds_morro_obl` e `ds_oblvar`: lado menor < 8 px em 0,94% (S-oblique, 1.912 caixas) e 3,88% (S-oblique-six, 1.521). Já nas duas células da Tabela 5 da versão curta (0,9% e 3,9%); o PDF não foi regerado (fluxo do Mac) |
 | 4, teto R com seleção fora do teste | **Feito (19:30).** R-sel 0,6224 contra R 0,6311: viés de seleção +0,0087 (IC 0,0035 a 0,0136), real e pequeno. Eficácias sobem cerca de 1,4% relativos (S-oblique-six 15,3% para 15,5%), nenhuma ordem muda. `06-resultados/rodada6_eficacias.md`; entrada no RESULTADOS |
 _sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
-| 3, 5, 6, 7, 8, 9 | Na rodada 6 (acima); o 8 é o grupo H, último |
+| 5, a forma em U com orçamento igual | **Feito, uma semente (05/11, 14:10).** Com 120 épocas nas três altitudes o objeto chamado de armada fica em 0,19 (35 m), 0,22 (75 m) e 0,25 (150 m), sem diferença resolvível em (b): a U era em parte orçamento. O 75 m com 120 épocas sobe de 0,13 para 0,22, resolvível. Sementes 1 e 2 no grupo T. Entrada no RESULTADOS |
+| 3, 6, 7, 8, 9 | Na rodada 6 (acima); o 8 é o grupo H, depois o C |
 
 
 ## Versão curta para a AIM 2027 (04/11)

@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-05 [DESKTOP] Rodada 6: item 5 fechado (uma semente)
+
+- Pausa do autor de 08:47 a 11:42; o treino do gêmeo de 75 m retomou do `last.pt` na época 77.
+- `armado_35_e120` (120 épocas, best na 116) e `armado_75g_e120` (parou na 109, best na 74). Nos 80 quadros novos, objeto chamado de armada: 35 m 0,192, 75 m 0,222, 150 m 0,245 (todos com 120 épocas); nenhuma diferença entre altitudes passa em (b). Com 60 épocas eram 0,222 e 0,134 (média de três sementes). Veredito pela regra: a U era em parte orçamento. O que mais muda é o 75 m: com o dobro de épocas ele chama mais objetos de armada (+0,088, resolvível). A 150 m o d′ continua o mais baixo (0,58), mas só passa em (c) contra 75 m.
+- Consequência para o texto (não aplicada, decisão do autor): a 5.4 e a 6.1 não podem mais apresentar a U como efeito da GSD; o que se sustenta é um falso alarme de 19 a 25% nas três altitudes com orçamento igual. As sementes do grupo T podem mudar a leitura.
+- A cadeia seguiu às 14:10 para o grupo L (render de `ds_armado_75c`).
+
 ## 2026-11-04 [MAC] Versão curta: teto R-sel (item 4) aplicado ao texto
 
 - O desktop publicou o item 4 (commit 4d0bbce): R-sel 0,6224 (0,6069 a 0,6397) contra 0,6311, viés +0,0087 (+0,0035 a +0,0136). Aplicado em `versao-curta-aim2027.html` só com números de `06-resultados/rodada6_eficacias.md`: 4.3 (seleção em 265 imagens fora do teste), 4.5 (viés medido no lugar de "direção do viés desconhecida"), 4.6 (R-sel sai do "still running" e entra como acrescentado), 5.2 (0,6224 e viés), 6.5 (5), Tabela 4 (linha de R, eficácias 2,2/3,1/8,9/15,5, melhores 3,2/9,9/17,0; F-synthetic e F-generic a 5% passam a média de 3 sementes, 72,8 e 84,3; 10% primeira semente 81,8 e 91,7; cronograma escolhido 94,8 e 100,0), resumo, intro dos resultados, 6.1 e conclusão (8,9 e 15,5). HERIDAL continua com R, porque R-sel não foi avaliado lá. F-joint na Tabela 4 ficou só com o ponto (74,0 e 87,2, regra ×1,014 do RESULTADOS) porque o desktop não publicou intervalo para `misto05`/`misto10`. Extended abstract com as mesmas trocas.
