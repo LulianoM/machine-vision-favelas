@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-05 [DESKTOP] Rodada 6: ordem nova pela criticidade para a AIM
+
+- Pedido do autor, às 21:45: reordenar o que vem depois do L pela criticidade do dado para o artigo da AIM (corte de texto em 15/11), sem interromper o que roda. Ordem nova registrada na seção 8 do plano (commit 6375941): L, R3/R4, G, T1 a T5 e Q5, E, T6 a T14, H, V e C só se couberem antes de 15/11 12:00, Y. Nenhum critério mudou.
+- Feito à mão, sem GPU: o critério R com F-joint e cada treino individual contra R-sel (F-joint 74,0%, IC 72,6 a 75,5, e 87,2%, IC 86,0 a 88,3); a figura do ajuste fino com R-sel (rótulo 0.6224; o "0.571" foi deslocado para não encostar na linha do teto). Divergência para o Mac: a melhor semente de S-oblique-six dá 16,9% sem arredondamento (a Tabela 4 diz 17,0%, provavelmente 0,1055 / 0,6224 com os valores já arredondados).
+- Cadeia: regra do prazo executada por ela (grupos H, V e C ficam `adiada_periodico` se a previsão passar de 15/11 12:00; `--sem-prazo` a desliga); espera de processo órfão antes de relançar render ou treino; previsão do status com 95% das 120 épocas. A cadeia foi reiniciada às 21:57; o treino de L3 (`armado_75c`, iniciado às 21:49) seguiu vivo e a cadeia nova espera por ele.
+- Previsão às 21:56: C terminaria em 15/11 22:30, depois do prazo; H e V cabem.
+
 ## 2026-11-05 [DESKTOP] Rodada 6: item 5 fechado (uma semente)
 
 - Pausa do autor de 08:47 a 11:42; o treino do gêmeo de 75 m retomou do `last.pt` na época 77.

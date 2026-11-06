@@ -19,7 +19,8 @@ Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md`; números e co
 | 4, teto R com seleção fora do teste | **Feito (19:30).** R-sel 0,6224 contra R 0,6311: viés de seleção +0,0087 (IC 0,0035 a 0,0136), real e pequeno. Eficácias sobem cerca de 1,4% relativos (S-oblique-six 15,3% para 15,5%), nenhuma ordem muda. `06-resultados/rodada6_eficacias.md`; entrada no RESULTADOS |
 _sel.log`. Mesma receita de R; seleção em `ft/sel_r.txt` (265 imagens: a fatia `sel` de 324 menos 59 que estavam na amostra de treino de R). ETA do treino 17:25, cadeia (zero-shot e predições) 17:45. Depois: eficácias recalculadas e entrada própria no RESULTADOS |
 | 5, a forma em U com orçamento igual | **Feito, uma semente (05/11, 14:10).** Com 120 épocas nas três altitudes o objeto chamado de armada fica em 0,19 (35 m), 0,22 (75 m) e 0,25 (150 m), sem diferença resolvível em (b): a U era em parte orçamento. O 75 m com 120 épocas sobe de 0,13 para 0,22, resolvível. Sementes 1 e 2 no grupo T. Entrada no RESULTADOS |
-| 3, 6, 7, 8, 9 | Na rodada 6 (acima); o 8 é o grupo H, depois o C |
+| Ordem nova (05/11, 22:00, pedido do autor) | L (item 6, em curso) → R3/R4 (R-sel na HERIDAL; eficácias de todas as linhas da Tabela 4 contra R-sel, já feitas à mão para o VisDrone) → G (item 3) → T1 a T5 e Q5 (sementes do item 5) → E (item 7) → T6 a T14 → H (item 8), V (item 9) e C (cor) só se a previsão de cada um terminar antes de 15/11 12:00 → Y. Previsão às 21:56: L 07/11 00:49, G 07/11 10:02, Q5 08/11 18:23, E 09/11 16:43, H 13/11 02:23, V 14/11 11:29; **C previsto para 15/11 22:30, depois do prazo: pela regra fica para o periódico** se a previsão não melhorar. Seção 8 do plano |
+| Figura do ajuste fino | Regerada com R-sel (rótulo 0.6224), `06-resultados/figuras/fig10_ajuste_fino.png` |
 
 
 ## Versão curta para a AIM 2027 (04/11)
