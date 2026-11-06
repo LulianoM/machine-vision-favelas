@@ -48,11 +48,11 @@ def fig_ajuste():
     sin = {0: [map50("s_oblvar"), map50("s_oblvar_sd1"), map50("s_oblvar_sd2")],
            324: [map50("ft05_sint"), map50("ft05_sint_sd1"), map50("ft05_sint_sd2")], 647: [map50("ft10_sint")]}
     jun = {324: [map50("misto05")], 647: [map50("misto10")]}
-    teto = map50("r_pareado")
+    teto = map50("r_pareado_sel")      # R com o checkpoint escolhido fora do teste (rodada 6, item 4)
 
     fig, ax = plt.subplots(figsize=(3.35, 2.8), dpi=300)
     ax.axhline(teto, color=CINZA, lw=0.8, ls=(0, (3, 2)), zorder=1)
-    ax.text(x[0] - 0.22, teto + 0.018, f"R: 1,106 real images, 60 epochs, {teto:.3f}", ha="left",
+    ax.text(x[0] - 0.22, teto + 0.018, f"R: 1,106 real images, 60 epochs, {teto:.4f}", ha="left",
             va="bottom", color="#444")
     ax.plot([x[1106]], [teto], marker="D", ms=4.5, color=CINZA, zorder=3)
 
@@ -66,9 +66,9 @@ def fig_ajuste():
             dx, dy, ha = pos[k]
             ax.text(x[k] + dx, dados[k][0] + dy, f"{dados[k][0]:.3f}", color=TINTA, ha=ha, va="center")
 
-    serie(gen, AZUL, "o", "Generic start (COCO)", {324: (0, 0.045, "center"), 647: (0, 0.045, "center")})
+    serie(gen, AZUL, "o", "Generic start (COCO)", {324: (0, 0.045, "center"), 647: (0.1, 0.02, "left")})
     serie(jun, AGUA, "^", "Joint: synthetic tiles and real images together",
-          {324: (-0.1, 0.012, "right"), 647: (0.1, 0.014, "left")})
+          {324: (-0.1, 0.012, "right"), 647: (0.1, -0.004, "left")})
     serie(sin, LARANJA, "s", "Synthetic start (S-oblique-six)",
           {0: (0.1, 0.0, "left"), 324: (0.1, -0.032, "left"), 647: (0.1, -0.028, "left")})
     ax.text(x[0] + 0.1, sin[0][0] - 0.05, "zero-shot", ha="left", va="center", color=TINTA)

@@ -31,6 +31,7 @@ Uso:  python rodada6.py              (roda o que falta)
       python rodada6.py --listar     (mostra as etapas e o estado)
       python rodada6.py --dry-run    (imprime o comando de cada etapa pendente, sem executar nada)
       python rodada6.py --so P,R     (roda so os grupos dados, sem gravar `fim`)
+      python rodada6.py --sem-prazo  (ignora a regra do prazo de 15/11 12:00 para H, V e C; uso depois da submissao)
 """
 import glob
 import json
@@ -39,7 +40,7 @@ import shutil
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 SCR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(SCR))
@@ -195,6 +196,7 @@ def grava_json(p, d):
 
 # ------------------------------------------------------------------ primitivas idempotentes
 def render(nome_log, out, n, extra, inicio=0):
+    espera_orfao(nome_log, "gen_morro.py", "--out " + out)
     feitos = linhas(j(out, "manifest.jsonl"))
     if os.path.exists(j(out, "data.yaml")) and feitos >= n:
         return 0
@@ -225,6 +227,10 @@ def treinado(nome):
 def treina(nome, data, modelo, epocas, single, nome_log, semente=0, extra=(), paciencia=None):
     rd = j(RAIZ, "runs", "detect", nome)
     ok = tr(nome)
+    if os.path.exists(ok):
+        return 0
+    espera_orfao(nome_log, "train_yolo_win.py", "--name " + nome)
+    espera_orfao(nome_log, "resume=True", j(rd, "weights", "last.pt"))
     if os.path.exists(ok):
         return 0
     last = j(rd, "weights", "last.pt")
@@ -371,6 +377,40 @@ def varios(*chamadas):
 
 
 DISPENSADA = -200
+ADIADA = -300                 # grupo opcional deixado para o periodico pela regra do prazo (secao 8 do plano)
+PRAZO = datetime(2026, 11, 15, 12, 0)
+OPCIONAIS = ("H", "V", "C")   # nesta ordem; so comecam se a previsao do grupo terminar antes de PRAZO
+SEM_PRAZO = False
+
+
+def orfao(*trechos):
+    """True se ha um processo vivo (nascido de uma instancia anterior da cadeia) cuja linha de comando contem todos os trechos"""
+    try:
+        import psutil
+        eu = {os.getpid()} | {p.pid for p in psutil.Process().parents()}
+        for p in psutil.process_iter(["cmdline"]):
+            if p.pid in eu:
+                continue
+            c = " ".join(p.info.get("cmdline") or [])
+            if all(t in c for t in trechos):
+                return True
+    except Exception:
+        pass
+    return False
+
+
+def espera_orfao(nome_log, *trechos):
+    """espera um render ou treino que sobreviveu ao reinicio da cadeia terminar, sem lancar um segundo por cima"""
+    if DRY:
+        return
+    avisou = False
+    while orfao(*trechos):
+        if not avisou:
+            log(f"  esperando processo anterior terminar ({' '.join(trechos)})")
+            avisou = True
+        with open(j(FILA, nome_log), "a", encoding="utf-8") as f:
+            f.write(f"# {datetime.now():%H:%M} esperando processo anterior: {' '.join(trechos)}\n")
+        time.sleep(10 * 60)
 
 
 # ------------------------------------------------------------------ grupo P
@@ -696,8 +736,62 @@ def etapas():
          lambda L: zs_preds(["s_nadir_4k_ctdeg", "s_oblvar_ctdeg"], L, "C12", heridal=True), ok_arq("C12")),
         ("C13", "C", "criterios do grupo C (com sementes e combinado)", lambda L: criterios("C", L) or marca_ok("C13"), ok_arq("C13")),
         ("Y1", "Y", "todos os criterios do PLANO-RODADA6", lambda L: criterios("tudo", L) or marca_ok("Y1"), ok_arq("Y1")),
+        # acertos do item 4 pedidos em 05/11 (secao 8 do plano): R-sel na HERIDAL e eficacias com intervalo
+        ("R3", "R", "R-sel na HERIDAL: preds 1152 e 1280 e zero-shot nos dois tamanhos", r_sel_heridal, ok_arq("R3")),
+        ("R4", "R", "criterios do item 4 de novo: todas as linhas da Tabela 4 e a HERIDAL contra R-sel",
+         lambda L: criterios("R", L) or marca_ok("R4"), ok_arq("R4")),
+        ("Q5", "Q", "criterio do item 5 com as tres sementes de 120 epocas (leitura a)",
+         lambda L: criterios("Q", L) or marca_ok("Q5"), ok_arq("Q5")),
     ]
-    return E
+    # ordem nova, decidida pelo autor em 05/11 depois dos resultados de R e Q (secao 8 do plano): nenhum criterio muda
+    ordem = (["P1", "R1", "R2", "P2", "P3", "Q1", "Q2", "Q3", "Q4"] + [f"L{i}" for i in range(1, 10)] + ["R3", "R4"]
+             + [f"G{i}" for i in range(1, 6)] + [f"T{i}" for i in range(1, 6)] + ["Q5"] + [f"E{i}" for i in range(1, 9)]
+             + [f"T{i}" for i in range(6, 15)] + [f"H{i}" for i in range(1, 15)] + ["V1", "V2", "V3"]
+             + [f"C{i}" for i in range(1, 14)] + ["Y1"])
+    por_id = {e[0]: e for e in E}
+    assert sorted(ordem) == sorted(por_id), (set(ordem) ^ set(por_id))
+    return [por_id[i] for i in ordem]
+
+
+def r_sel_heridal(L):
+    if not os.path.exists(HERIDAL_YAML) and not DRY:
+        log("  R3: HERIDAL nao convertida")
+        return 1
+    e = le(j(RES, "escala_heridal.json"))
+    casado = e["imgsz_casado"] if e else 1152
+    rc = preds_heridal(["r_pareado_sel"], L)
+    for sz, suf in ((casado, "heridal"), (1280, "heridal_1280")):
+        saida = j(RES, f"sim2real_r_pareado_sel_{suf}.json")
+        if rc == 0 and not os.path.exists(saida):
+            rc = roda([PY, j(SCR, "avalia_sim2real.py"), "--weights", pesos("r_pareado_sel"), "--real", HERIDAL_YAML,
+                       "--imgsz", sz, "--out", saida], L)
+    return marca_ok("R3") if rc == 0 else rc
+
+
+def horas_grupo(g):
+    """previsao da cadeia para um grupo inteiro, pelos mesmos tempos do status_rodada6.py"""
+    import status_rodada6 as S
+    e = carrega()
+    tot = 0.0
+    for eid, gg, _, _, prova in S.R.ETAPAS:
+        if gg == g and not os.path.exists(prova):
+            tot += S.restante(eid, e.get(eid, {}).get("estado", "pendente"))[0]
+    return tot / 3600
+
+
+def prazo_ok(g, eid, prova):
+    """regra do prazo (secao 8): um grupo opcional so comeca se a previsao dele terminar antes de PRAZO; um grupo ja
+    comecado (alguma prova existe) continua. Reavaliada a cada passagem, inclusive depois de uma pausa."""
+    if SEM_PRAZO or g not in OPCIONAIS:
+        return True
+    if any(os.path.exists(p) for eid2, gg, _, _, p in ETAPAS if gg == g):
+        return True
+    h = horas_grupo(g)
+    fim = datetime.now() + timedelta(hours=h)
+    if fim <= PRAZO:
+        return True
+    log(f"[{eid}] grupo {g} ADIADO para o periodico: previsao {h:.1f} h, terminaria {fim:%d/%m %H:%M}, depois de {PRAZO:%d/%m %H:%M}")
+    return False
 
 
 ETAPAS = etapas()
@@ -793,7 +887,9 @@ def main():
             e.pop("fim", None)
             e.pop("grupos_com_falha", None)
             grava(e)
-    grupo_falhou = set()
+    global SEM_PRAZO
+    SEM_PRAZO = "--sem-prazo" in sys.argv
+    grupo_falhou, adiados = set(), set()
     for eid, g, desc, fn, prova in ETAPAS:
         if so is not None and g not in so:
             continue
@@ -808,6 +904,13 @@ def main():
         if g in grupo_falhou:
             marca(eid, estado="pulada", desc=desc)
             continue
+        if g in adiados:
+            marca(eid, estado="adiada_periodico", desc=desc)
+            continue
+        if not DRY and not prazo_ok(g, eid, prova):
+            adiados.add(g)
+            marca(eid, estado="adiada_periodico", desc=desc)
+            continue
         rc = executa(eid, g, desc, fn, prova)
         if rc not in (0, DISPENSADA) and not DRY:
             grupo_falhou.add(g)
@@ -821,6 +924,7 @@ def main():
         e = carrega()
         e["fim"] = datetime.now().isoformat(timespec="seconds")
         e["grupos_com_falha"] = sorted(grupo_falhou)
+        e["grupos_adiados_periodico"] = sorted(adiados)
         grava(e)
     log("rodada6: encerrada" + (f" com falha nos grupos {sorted(grupo_falhou)}" if grupo_falhou else "")
         + (" (execucao parcial, sem fim)" if so is not None else ""))

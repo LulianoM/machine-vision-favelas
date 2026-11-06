@@ -101,6 +101,7 @@ def leitura(va, vb, boot_a, boot_b, pareado):
 # ------------------------------------------------------------------ R (item 4): R com selecao fora do teste
 def grupos_r6():
     g = grupos_r5()
+    g.update({"F-joint 5%": ["misto05"], "F-joint 10%": ["misto10"]})
     g.update({"R": ["r_pareado"], "R-sel": ["r_pareado_sel"], "R-full": ["r_cheio_sel"],
               "S-nadir-150 deg": ["s_nadir_4k_deg", "s_nadir_4k_deg_sd1", "s_nadir_4k_deg_sd2"],
               "S-oblique-six deg": ["s_oblvar_deg", "s_oblvar_deg_sd1", "s_oblvar_deg_sd2"]})
@@ -133,10 +134,43 @@ def item_r():
         if "r_cheio_sel" in cheio:
             ef[k]["eficacia_R_full"] = round(med / cheio["r_cheio_sel"], 4)
     out["eficacias"] = ef
+    # cada treino individual (melhor semente da Tabela 4, sementes do ajuste fino, F-joint), contra R-sel
+    por_run = {r: {"mAP50": round(cheio[r], 4), "mAP50_ic95": ic(boot[r]), "eficacia_R_sel": round(cheio[r] / r1, 4),
+                   "eficacia_R_sel_ic95": ic(boot[r] / boot["r_pareado_sel"]), "eficacia_R": round(cheio[r] / r0, 4)}
+               for r in runs}
+    out["por_run"] = por_run
+    # HERIDAL: R e R-sel no benchmark nadir, eficacias pareadas dos modelos sinteticos (imgsz casado e 1280)
+    her = {}
+    gh = {"R": ["r_pareado"], "R-sel": ["r_pareado_sel"], "S-nadir-150": ["s_nadir_4k", "s_nadir_4k_sd1", "s_nadir_4k_sd2"],
+          "S-nadir-150-six": ["s_variedade"], "S-oblique": ["s_obliquo", "s_obliquo_sd1", "s_obliquo_sd2"],
+          "S-oblique-six": ["s_oblvar", "s_oblvar_sd1", "s_oblvar_sd2"], "Armado-150": ["armado_150g"]}
+    for tag in ("heridal", "heridal_1280"):
+        if not (existe("r_pareado_sel", tag) and existe("r_pareado", tag)):
+            continue
+        rh = sorted({r for v in gh.values() for r in v if existe(r, tag)})
+        ch, bh = boot_mapa(rh, tag)
+        h0, h1 = ch["r_pareado"], ch["r_pareado_sel"]
+        grupos_h = {}
+        for k, v in gh.items():
+            v = [r for r in v if r in ch]
+            if not v:
+                continue
+            mb = np.mean([bh[r] for r in v], 0)
+            med = float(np.mean([ch[r] for r in v]))
+            grupos_h[k] = {"runs": v, "valores": [round(ch[r], 4) for r in v], "media": round(med, 4), "media_ic95": ic(mb),
+                           "eficacia_R": round(med / h0, 4), "eficacia_R_sel": round(med / h1, 4),
+                           "eficacia_R_sel_ic95": ic(mb / bh["r_pareado_sel"])}
+        runs_h = {r: {"mAP50": round(ch[r], 4), "eficacia_R_sel": round(ch[r] / h1, 4),
+                      "eficacia_R_sel_ic95": ic(bh[r] / bh["r_pareado_sel"])} for r in rh}
+        her[tag] = {"R": round(h0, 4), "R_sel": round(h1, 4), "R_sel_ic95": ic(bh["r_pareado_sel"]),
+                    "R_menos_R_sel": round(h0 - h1, 4), "R_menos_R_sel_ic95": ic(bh["r_pareado"] - bh["r_pareado_sel"]),
+                    "grupos": grupos_h, "por_run": runs_h}
+    out["heridal"] = her
     with open(os.path.join(AQUI, "rodada6_eficacias.json"), "w", encoding="utf-8") as f:
         json.dump({"protocolo": "VisDrone-DET val, 548 imagens, classe unica, imgsz 1280; preds de visdrone_preds.py; "
-                                f"{N_BOOT} reamostras pareadas, semente {SEMENTE}; eficacia = media das sementes / R",
-                   "R": r0, "R_sel": r1, "vies": out["vies_de_selecao"], "grupos": ef,
+                                f"{N_BOOT} reamostras pareadas, semente {SEMENTE}; eficacia = media das sementes / R. "
+                                "HERIDAL: 1.647 imagens, preds de preds_nadir.py nas tags heridal (imgsz casado 1152) e heridal_1280",
+                   "R": r0, "R_sel": r1, "vies": out["vies_de_selecao"], "grupos": ef, "por_run": por_run, "heridal": her,
                    "quando": datetime.now().isoformat(timespec="seconds")}, f, indent=1, ensure_ascii=False)
     L = ["# Eficacias com o R de selecao fora do teste (rodada 6, item 4)", "",
          f"R (selecao no val) {r0:.4f}; R-sel (selecao em sel_r) {r1:.4f}; vies R menos R-sel {r0 - r1:+.4f} "
@@ -146,6 +180,23 @@ def item_r():
         L.append(f"| {k} | {', '.join(v['runs'])} | {v['media']:.4f} | {v['media_ic95'][0]:.4f} a {v['media_ic95'][1]:.4f} | "
                  f"{100 * v['eficacia_R']:.1f}% | {100 * v['eficacia_R_sel']:.1f}% ({100 * v['eficacia_R_sel_ic95'][0]:.1f} a "
                  f"{100 * v['eficacia_R_sel_ic95'][1]:.1f}) |")
+    L += ["", "## Cada treino individual contra R-sel (VisDrone val)", "",
+          "| Run | mAP50 (IC 95%) | eficacia / R-sel (IC 95%) | eficacia / R |", "|---|---|---|---|"]
+    for r, v in sorted(por_run.items()):
+        L.append(f"| {r} | {v['mAP50']:.4f} ({v['mAP50_ic95'][0]:.4f} a {v['mAP50_ic95'][1]:.4f}) | "
+                 f"{100 * v['eficacia_R_sel']:.1f}% ({100 * v['eficacia_R_sel_ic95'][0]:.1f} a {100 * v['eficacia_R_sel_ic95'][1]:.1f}) | "
+                 f"{100 * v['eficacia_R']:.1f}% |")
+    for tag, hv in her.items():
+        L += ["", f"## HERIDAL, tag {tag} ({'imgsz casado' if tag == 'heridal' else 'imgsz 1280'})", "",
+              f"R {hv['R']:.4f}; R-sel {hv['R_sel']:.4f} (IC {hv['R_sel_ic95'][0]:.4f} a {hv['R_sel_ic95'][1]:.4f}); "
+              f"R menos R-sel {hv['R_menos_R_sel']:+.4f} (IC pareado {hv['R_menos_R_sel_ic95'][0]:+.4f} a {hv['R_menos_R_sel_ic95'][1]:+.4f}).", "",
+              "| Grupo | runs | media mAP50 | IC 95% | eficacia / R | eficacia / R-sel (IC 95%) |", "|---|---|---|---|---|---|"]
+        for k, v in hv["grupos"].items():
+            L.append(f"| {k} | {', '.join(v['runs'])} | {v['media']:.4f} | {v['media_ic95'][0]:.4f} a {v['media_ic95'][1]:.4f} | "
+                     f"{100 * v['eficacia_R']:.1f}% | {100 * v['eficacia_R_sel']:.1f}% ({100 * v['eficacia_R_sel_ic95'][0]:.1f} a "
+                     f"{100 * v['eficacia_R_sel_ic95'][1]:.1f}) |")
+    if not her:
+        L += ["", "HERIDAL: pendente (faltam as predicoes de r_pareado_sel; etapa R3 da cadeia)."]
     with open(os.path.join(AQUI, "rodada6_eficacias.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     icv = out["vies_de_selecao"]["ic95_pareado"]

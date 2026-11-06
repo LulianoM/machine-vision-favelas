@@ -319,3 +319,22 @@ pronto.
 - 04/11, cerca de 16:40: grupo C (seção 3.10) acrescentado depois do H, a pedido do autor, com critério fixado
   antes de qualquer resultado da rodada (a cadeia estava em R1, no treino do item 4). Cronograma da seção 5
   estendido até 16/11; prazo da AIM em 19/11.
+- 05/11, 22:00: **ordem nova da cadeia a partir do grupo L**, pedida pelo autor depois dos resultados de R (item 4)
+  e Q (item 5), pela criticidade do dado para o artigo da AIM (prazo 19/11, corte de texto em 15/11). **Nenhum
+  critério muda, só a ordem.** Ordem: L (em curso, L3 treinando; L1 a L9 como no plano, cruzados e critério
+  incluídos); R3 e R4, acertos do item 4 (R-sel na HERIDAL a 1152 e 1280 com predições por imagem, e o critério R
+  de novo com todas as linhas da Tabela 4, F-joint incluído, e as eficácias da HERIDAL contra R-sel com intervalo
+  pareado); G (item 3); T1 a T5 (sementes 1 e 2 de `armado_35_e120` e `armado_75g_e120` e confusões) seguidos de Q5,
+  o critério do item 5 com as três sementes (leitura (a)); E (item 7); T6 a T14; H, V e C, nesta ordem, **só se a
+  previsão do grupo terminar antes de 15/11 às 12:00** (regra executada pela cadeia: no início de cada um desses
+  grupos ela soma a previsão das etapas pelos tempos do `status_rodada6.py` e, se passar do prazo, marca o grupo
+  como `adiada_periodico` e não o inicia; um grupo já começado continua; a regra é reavaliada a cada passagem,
+  inclusive depois de uma pausa; `rodada6.py --sem-prazo` a desliga depois da submissão); Y.
+  Feitos à mão na mesma hora, sem GPU: o critério R com todas as linhas da Tabela 4 (`rodada6_eficacias.md` ganhou
+  a tabela por treino individual) e a Figura do ajuste fino regerada com R-sel (`figuras_mpl.py`, rótulo
+  "0.6224"). Para não lançar um segundo processo por cima de um render ou treino que sobreviva ao reinício, a
+  cadeia agora espera o processo anterior terminar (`espera_orfao`). A previsão do status passou a contar 95% das
+  120 épocas nos treinos longos (os dois já feitos foram a 120 e 109). Previsão por grupo às 21:56 de 05/11, sem
+  pausas: L até 07/11 00:49; R3 e R4 até 01:29; G até 07/11 10:02; T1 a T5 e Q5 até 08/11 18:23; E até 09/11
+  16:43; T6 a T14 até 10/11 17:49; H até 13/11 02:23; V até 14/11 11:29; C terminaria em 15/11 22:30, depois do
+  prazo, e pela regra fica para o periódico se a previsão não melhorar até lá.

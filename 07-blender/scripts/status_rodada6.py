@@ -42,7 +42,7 @@ EPOCA = {"Q1": ("armado_35_e120", 120, 250), "Q2": ("armado_75g_e120", 120, 250)
 EST = {"P1": 60, "R2": 600, "Q3": 1200, "Q4": 60, "L2": 300, "L5": 300, "L8": 2400, "L9": 60, "E4": 300, "E6": 3000,
        "E7": 900, "E8": 60, "G1": 600, "G4": 3600, "G5": 300, "T5": 2400, "T10": 7200, "T13": 1200, "T14": 600,
        "V1": 60, "V3": 900, "Y1": 600, "H2": 300, "H6": 300, "H10": 300, "H13": 3600, "H14": 60,
-       "C1": 2400, "C2": 1800, "C5": 5400, "C6": 300, "C7": 4 * 60 * 220, "C8": 4 * 1500, "C9": 600, "C12": 3600, "C13": 600}
+       "C1": 2400, "C2": 1800, "R3": 1800, "R4": 600, "Q5": 60, "C5": 5400, "C6": 300, "C7": 4 * 60 * 220, "C8": 4 * 1500, "C9": 600, "C12": 3600, "C13": 600}
 
 
 def vivo(nome):
@@ -82,7 +82,7 @@ def epocas(nome):
 
 
 def restante(eid, st):
-    if st in ("ok", "dispensada"):
+    if st in ("ok", "dispensada", "adiada_periodico"):
         return 0, ""
     if eid in QUADRO:
         _, tot, seg, pulo = QUADRO[eid]
@@ -93,7 +93,7 @@ def restante(eid, st):
         nome, tot, seg = EPOCA[eid]
         n, ritmo, m50 = epocas(nome)
         r = ritmo or seg
-        return (tot - n) * r * (0.75 if tot == 120 else 1.0), f"epoca {n}/{tot}, {r:.0f} s/epoca, mAP50 val {m50}"
+        return (tot - n) * r * (0.95 if tot == 120 else 1.0), f"epoca {n}/{tot}, {r:.0f} s/epoca, mAP50 val {m50}"
     return EST.get(eid, 60), ""
 
 
@@ -128,8 +128,8 @@ def resultado(eid):
             return f"{d['pessoas']} pessoas, {d['objetos']} objetos {d['comprimentos_objetos']}; {d['pool']}"
         if eid == "R1":
             return f"R-sel mAP50 {map50('r_pareado_sel')} (R 0,6311)"
-        if eid in ("R2", "Q4", "L9", "E8", "G5", "T14", "Y1", "H14", "C6", "C13"):
-            k = {"R2": "R", "Q4": "Q", "L9": "L", "E8": "E", "G5": "G", "H14": "H", "C6": "C", "C13": "C"}.get(eid)
+        if eid in ("R2", "R4", "Q4", "Q5", "L9", "E8", "G5", "T14", "Y1", "H14", "C6", "C13"):
+            k = {"R2": "R", "R4": "R", "Q4": "Q", "Q5": "Q", "L9": "L", "E8": "E", "G5": "G", "H14": "H", "C6": "C", "C13": "C"}.get(eid)
             return c.get(k, {}).get("veredito") if k else json.dumps({x: c[x].get("veredito") for x in c if isinstance(c[x], dict)}, ensure_ascii=False)[:1500]
         if eid == "Q3":
             return " | ".join(f"{n} novos: {taxas(f'extra_{n}.json')}" for n in ("armado_35_e120", "armado_75g_e120"))
@@ -188,9 +188,12 @@ def main():
         total += seg
         if st == "rodando" or st.startswith("falhou") or st == "pulada":
             print(f"  {eid} {desc[:70]:<70} {st:<10} {prog}")
-        elif st not in ("ok", "dispensada"):
+        elif st not in ("ok", "dispensada", "adiada_periodico"):
             pend.append(eid)
+    adi = [eid for eid, *_ in R.ETAPAS if e.get(eid, {}).get("estado") == "adiada_periodico"]
     print("pendentes: " + (" ".join(pend) or "nenhuma"))
+    if adi:
+        print("adiadas para o periodico (regra do prazo de 15/11 12:00): " + " ".join(adi))
     fim = agora + timedelta(seconds=total)
     print(f"falta ~{total / 3600:.1f} h  ->  termino previsto {fim:%a %d/%m %H:%M} (sem pausas)")
     rel_f = os.path.join(R.FILA, "relatadas.txt")
