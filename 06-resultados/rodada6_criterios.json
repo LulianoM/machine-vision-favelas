@@ -1289,7 +1289,540 @@
     "eficacia_R": 0.0302
    }
   },
-  "heridal": {},
+  "heridal": {
+   "heridal": {
+    "R": 0.3185,
+    "R_sel": 0.2927,
+    "R_sel_ic95": [
+     0.2618,
+     0.3247
+    ],
+    "R_menos_R_sel": 0.0258,
+    "R_menos_R_sel_ic95": [
+     0.0113,
+     0.0421
+    ],
+    "grupos": {
+     "R": {
+      "runs": [
+       "r_pareado"
+      ],
+      "valores": [
+       0.3185
+      ],
+      "media": 0.3185,
+      "media_ic95": [
+       0.2843,
+       0.3543
+      ],
+      "eficacia_R": 1.0,
+      "eficacia_R_sel": 1.0881,
+      "eficacia_R_sel_ic95": [
+       1.0376,
+       1.145
+      ]
+     },
+     "R-sel": {
+      "runs": [
+       "r_pareado_sel"
+      ],
+      "valores": [
+       0.2927
+      ],
+      "media": 0.2927,
+      "media_ic95": [
+       0.2618,
+       0.3247
+      ],
+      "eficacia_R": 0.919,
+      "eficacia_R_sel": 1.0,
+      "eficacia_R_sel_ic95": [
+       1.0,
+       1.0
+      ]
+     },
+     "S-nadir-150": {
+      "runs": [
+       "s_nadir_4k",
+       "s_nadir_4k_sd1",
+       "s_nadir_4k_sd2"
+      ],
+      "valores": [
+       0.2394,
+       0.2672,
+       0.0926
+      ],
+      "media": 0.1997,
+      "media_ic95": [
+       0.1713,
+       0.2306
+      ],
+      "eficacia_R": 0.6271,
+      "eficacia_R_sel": 0.6823,
+      "eficacia_R_sel_ic95": [
+       0.5897,
+       0.7893
+      ]
+     },
+     "S-nadir-150-six": {
+      "runs": [
+       "s_variedade"
+      ],
+      "valores": [
+       0.2488
+      ],
+      "media": 0.2488,
+      "media_ic95": [
+       0.2116,
+       0.2865
+      ],
+      "eficacia_R": 0.7813,
+      "eficacia_R_sel": 0.8501,
+      "eficacia_R_sel_ic95": [
+       0.7324,
+       0.9824
+      ]
+     },
+     "S-oblique": {
+      "runs": [
+       "s_obliquo",
+       "s_obliquo_sd1",
+       "s_obliquo_sd2"
+      ],
+      "valores": [
+       0.1092,
+       0.1455,
+       0.1476
+      ],
+      "media": 0.1341,
+      "media_ic95": [
+       0.1149,
+       0.1555
+      ],
+      "eficacia_R": 0.421,
+      "eficacia_R_sel": 0.4581,
+      "eficacia_R_sel_ic95": [
+       0.4057,
+       0.5258
+      ]
+     },
+     "S-oblique-six": {
+      "runs": [
+       "s_oblvar",
+       "s_oblvar_sd1",
+       "s_oblvar_sd2"
+      ],
+      "valores": [
+       0.1079,
+       0.1503,
+       0.1847
+      ],
+      "media": 0.1477,
+      "media_ic95": [
+       0.1265,
+       0.1715
+      ],
+      "eficacia_R": 0.4637,
+      "eficacia_R_sel": 0.5045,
+      "eficacia_R_sel_ic95": [
+       0.4457,
+       0.5727
+      ]
+     },
+     "Armado-150": {
+      "runs": [
+       "armado_150g"
+      ],
+      "valores": [
+       0.1417
+      ],
+      "media": 0.1417,
+      "media_ic95": [
+       0.1145,
+       0.1711
+      ],
+      "eficacia_R": 0.445,
+      "eficacia_R_sel": 0.4842,
+      "eficacia_R_sel_ic95": [
+       0.4026,
+       0.5784
+      ]
+     }
+    },
+    "por_run": {
+     "armado_150g": {
+      "mAP50": 0.1417,
+      "eficacia_R_sel": 0.4842,
+      "eficacia_R_sel_ic95": [
+       0.4026,
+       0.5784
+      ]
+     },
+     "r_pareado": {
+      "mAP50": 0.3185,
+      "eficacia_R_sel": 1.0881,
+      "eficacia_R_sel_ic95": [
+       1.0376,
+       1.145
+      ]
+     },
+     "r_pareado_sel": {
+      "mAP50": 0.2927,
+      "eficacia_R_sel": 1.0,
+      "eficacia_R_sel_ic95": [
+       1.0,
+       1.0
+      ]
+     },
+     "s_nadir_4k": {
+      "mAP50": 0.2394,
+      "eficacia_R_sel": 0.8178,
+      "eficacia_R_sel_ic95": [
+       0.7116,
+       0.9429
+      ]
+     },
+     "s_nadir_4k_sd1": {
+      "mAP50": 0.2672,
+      "eficacia_R_sel": 0.9129,
+      "eficacia_R_sel_ic95": [
+       0.7985,
+       1.0494
+      ]
+     },
+     "s_nadir_4k_sd2": {
+      "mAP50": 0.0926,
+      "eficacia_R_sel": 0.3163,
+      "eficacia_R_sel_ic95": [
+       0.2513,
+       0.3915
+      ]
+     },
+     "s_obliquo": {
+      "mAP50": 0.1092,
+      "eficacia_R_sel": 0.3729,
+      "eficacia_R_sel_ic95": [
+       0.3244,
+       0.4263
+      ]
+     },
+     "s_obliquo_sd1": {
+      "mAP50": 0.1455,
+      "eficacia_R_sel": 0.497,
+      "eficacia_R_sel_ic95": [
+       0.4381,
+       0.5751
+      ]
+     },
+     "s_obliquo_sd2": {
+      "mAP50": 0.1476,
+      "eficacia_R_sel": 0.5043,
+      "eficacia_R_sel_ic95": [
+       0.44,
+       0.5916
+      ]
+     },
+     "s_oblvar": {
+      "mAP50": 0.1079,
+      "eficacia_R_sel": 0.3687,
+      "eficacia_R_sel_ic95": [
+       0.3212,
+       0.4219
+      ]
+     },
+     "s_oblvar_sd1": {
+      "mAP50": 0.1503,
+      "eficacia_R_sel": 0.5136,
+      "eficacia_R_sel_ic95": [
+       0.4499,
+       0.5914
+      ]
+     },
+     "s_oblvar_sd2": {
+      "mAP50": 0.1847,
+      "eficacia_R_sel": 0.6312,
+      "eficacia_R_sel_ic95": [
+       0.5556,
+       0.7295
+      ]
+     },
+     "s_variedade": {
+      "mAP50": 0.2488,
+      "eficacia_R_sel": 0.8501,
+      "eficacia_R_sel_ic95": [
+       0.7324,
+       0.9824
+      ]
+     }
+    }
+   },
+   "heridal_1280": {
+    "R": 0.3353,
+    "R_sel": 0.3026,
+    "R_sel_ic95": [
+     0.2725,
+     0.3334
+    ],
+    "R_menos_R_sel": 0.0327,
+    "R_menos_R_sel_ic95": [
+     0.0181,
+     0.0469
+    ],
+    "grupos": {
+     "R": {
+      "runs": [
+       "r_pareado"
+      ],
+      "valores": [
+       0.3353
+      ],
+      "media": 0.3353,
+      "media_ic95": [
+       0.3027,
+       0.37
+      ],
+      "eficacia_R": 1.0,
+      "eficacia_R_sel": 1.1082,
+      "eficacia_R_sel_ic95": [
+       1.06,
+       1.1573
+      ]
+     },
+     "R-sel": {
+      "runs": [
+       "r_pareado_sel"
+      ],
+      "valores": [
+       0.3026
+      ],
+      "media": 0.3026,
+      "media_ic95": [
+       0.2725,
+       0.3334
+      ],
+      "eficacia_R": 0.9023,
+      "eficacia_R_sel": 1.0,
+      "eficacia_R_sel_ic95": [
+       1.0,
+       1.0
+      ]
+     },
+     "S-nadir-150": {
+      "runs": [
+       "s_nadir_4k",
+       "s_nadir_4k_sd1",
+       "s_nadir_4k_sd2"
+      ],
+      "valores": [
+       0.1956,
+       0.2418,
+       0.0673
+      ],
+      "media": 0.1682,
+      "media_ic95": [
+       0.1431,
+       0.1947
+      ],
+      "eficacia_R": 0.5016,
+      "eficacia_R_sel": 0.5559,
+      "eficacia_R_sel_ic95": [
+       0.4817,
+       0.6396
+      ]
+     },
+     "S-nadir-150-six": {
+      "runs": [
+       "s_variedade"
+      ],
+      "valores": [
+       0.2208
+      ],
+      "media": 0.2208,
+      "media_ic95": [
+       0.1842,
+       0.2584
+      ],
+      "eficacia_R": 0.6584,
+      "eficacia_R_sel": 0.7297,
+      "eficacia_R_sel_ic95": [
+       0.6241,
+       0.8538
+      ]
+     },
+     "S-oblique": {
+      "runs": [
+       "s_obliquo",
+       "s_obliquo_sd1",
+       "s_obliquo_sd2"
+      ],
+      "valores": [
+       0.1053,
+       0.1497,
+       0.1716
+      ],
+      "media": 0.1422,
+      "media_ic95": [
+       0.1214,
+       0.1651
+      ],
+      "eficacia_R": 0.4241,
+      "eficacia_R_sel": 0.47,
+      "eficacia_R_sel_ic95": [
+       0.416,
+       0.5383
+      ]
+     },
+     "S-oblique-six": {
+      "runs": [
+       "s_oblvar",
+       "s_oblvar_sd1",
+       "s_oblvar_sd2"
+      ],
+      "valores": [
+       0.1052,
+       0.1267,
+       0.1936
+      ],
+      "media": 0.1418,
+      "media_ic95": [
+       0.1218,
+       0.1655
+      ],
+      "eficacia_R": 0.423,
+      "eficacia_R_sel": 0.4688,
+      "eficacia_R_sel_ic95": [
+       0.4164,
+       0.5309
+      ]
+     },
+     "Armado-150": {
+      "runs": [
+       "armado_150g"
+      ],
+      "valores": [
+       0.1272
+      ],
+      "media": 0.1272,
+      "media_ic95": [
+       0.1029,
+       0.1566
+      ],
+      "eficacia_R": 0.3793,
+      "eficacia_R_sel": 0.4204,
+      "eficacia_R_sel_ic95": [
+       0.3494,
+       0.5051
+      ]
+     }
+    },
+    "por_run": {
+     "armado_150g": {
+      "mAP50": 0.1272,
+      "eficacia_R_sel": 0.4204,
+      "eficacia_R_sel_ic95": [
+       0.3494,
+       0.5051
+      ]
+     },
+     "r_pareado": {
+      "mAP50": 0.3353,
+      "eficacia_R_sel": 1.1082,
+      "eficacia_R_sel_ic95": [
+       1.06,
+       1.1573
+      ]
+     },
+     "r_pareado_sel": {
+      "mAP50": 0.3026,
+      "eficacia_R_sel": 1.0,
+      "eficacia_R_sel_ic95": [
+       1.0,
+       1.0
+      ]
+     },
+     "s_nadir_4k": {
+      "mAP50": 0.1956,
+      "eficacia_R_sel": 0.6464,
+      "eficacia_R_sel_ic95": [
+       0.5626,
+       0.7449
+      ]
+     },
+     "s_nadir_4k_sd1": {
+      "mAP50": 0.2418,
+      "eficacia_R_sel": 0.799,
+      "eficacia_R_sel_ic95": [
+       0.6957,
+       0.9187
+      ]
+     },
+     "s_nadir_4k_sd2": {
+      "mAP50": 0.0673,
+      "eficacia_R_sel": 0.2224,
+      "eficacia_R_sel_ic95": [
+       0.1744,
+       0.2811
+      ]
+     },
+     "s_obliquo": {
+      "mAP50": 0.1053,
+      "eficacia_R_sel": 0.3482,
+      "eficacia_R_sel_ic95": [
+       0.298,
+       0.4064
+      ]
+     },
+     "s_obliquo_sd1": {
+      "mAP50": 0.1497,
+      "eficacia_R_sel": 0.4948,
+      "eficacia_R_sel_ic95": [
+       0.4367,
+       0.5621
+      ]
+     },
+     "s_obliquo_sd2": {
+      "mAP50": 0.1716,
+      "eficacia_R_sel": 0.5671,
+      "eficacia_R_sel_ic95": [
+       0.49,
+       0.658
+      ]
+     },
+     "s_oblvar": {
+      "mAP50": 0.1052,
+      "eficacia_R_sel": 0.3478,
+      "eficacia_R_sel_ic95": [
+       0.3009,
+       0.4036
+      ]
+     },
+     "s_oblvar_sd1": {
+      "mAP50": 0.1267,
+      "eficacia_R_sel": 0.4188,
+      "eficacia_R_sel_ic95": [
+       0.3643,
+       0.4806
+      ]
+     },
+     "s_oblvar_sd2": {
+      "mAP50": 0.1936,
+      "eficacia_R_sel": 0.6398,
+      "eficacia_R_sel_ic95": [
+       0.5691,
+       0.7261
+      ]
+     },
+     "s_variedade": {
+      "mAP50": 0.2208,
+      "eficacia_R_sel": 0.7297,
+      "eficacia_R_sel_ic95": [
+       0.6241,
+       0.8538
+      ]
+     }
+    }
+   }
+  },
   "veredito": "R-sel 0.6224 contra R 0.6311: vies de selecao +0.0087 (IC exclui zero: vies real, pequeno); eficacias recalculadas em rodada6_eficacias.md"
  },
  "Q": {
@@ -1673,7 +2206,363 @@
   "veredito": "U era (em parte) orcamento: com 120 epocas a vantagem de 75 m sobre 35 m, 150 m nao passa em (b)"
  },
  "L": {
-  "veredito": "pendente"
+  "regra": "PLANO-RODADA6 3.3: modelo treinado com objetos no comprimento das armas, medido nos seus 80 quadros novos (objetos no comprimento das armas). Se o IC de d' inclui 0: a separacao nessa altitude dependia do comprimento; se exclui: a forma sobrevive sem o comprimento, e a queda contra o modelo original e dada por (b) independente e (c). Cruzado: o modelo original nos quadros de comprimento igual mede quanto do seu falso alarme vem do comprimento",
+  "75 m": {
+   "novo_nos_proprios_quadros_novos": {
+    "arquivo": "extra_armado_75c.json",
+    "quadros": 80,
+    "pessoas": 886,
+    "recall_qualquer_classe": 0.8059,
+    "objeto_chamado_armada": 0.2007,
+    "objeto_chamado_armada_ic95": [
+     0.1496,
+     0.2547
+    ],
+    "armada_chamada_armada": 0.3473,
+    "dlinha_armada_contra_objeto": 0.444,
+    "dlinha_ic95": [
+     0.2368,
+     0.6545
+    ]
+   },
+   "original_nos_seus_quadros_novos": {
+    "arquivo": "extra_armado_75g.json",
+    "quadros": 80,
+    "pessoas": 837,
+    "recall_qualquer_classe": 0.7658,
+    "objeto_chamado_armada": 0.125,
+    "objeto_chamado_armada_ic95": [
+     0.09,
+     0.1618
+    ],
+    "armada_chamada_armada": 0.4319,
+    "dlinha_armada_contra_objeto": 0.973,
+    "dlinha_ic95": [
+     0.7715,
+     1.1919
+    ]
+   },
+   "original_nos_quadros_de_comprimento_igual": {
+    "arquivo": "extra75c_armado_75g.json",
+    "quadros": 80,
+    "pessoas": 886,
+    "recall_qualquer_classe": 0.7968,
+    "objeto_chamado_armada": 0.208,
+    "objeto_chamado_armada_ic95": [
+     0.1623,
+     0.2549
+    ],
+    "armada_chamada_armada": 0.508,
+    "dlinha_armada_contra_objeto": 0.83,
+    "dlinha_ic95": [
+     0.6268,
+     1.0515
+    ]
+   },
+   "novo_nos_quadros_originais": {
+    "arquivo": "extra75g_armado_75c.json",
+    "quadros": 80,
+    "pessoas": 837,
+    "recall_qualquer_classe": 0.7407,
+    "objeto_chamado_armada": 0.1354,
+    "objeto_chamado_armada_ic95": [
+     0.0948,
+     0.1846
+    ],
+    "armada_chamada_armada": 0.3541,
+    "dlinha_armada_contra_objeto": 0.723,
+    "dlinha_ic95": [
+     0.4897,
+     0.9682
+    ]
+   },
+   "novo_contra_original": {
+    "dlinha": {
+     "a_valores": [
+      0.444
+     ],
+     "b_valores": [
+      0.973
+     ],
+     "a_media": 0.444,
+     "b_media": 0.973,
+     "dif": -0.529,
+     "dif_ic95": [
+      -0.8212,
+      -0.2457
+     ],
+     "dif_relativa_pct_do_menor": -119.1,
+     "razao_a_sobre_b": 0.456,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.2007
+     ],
+     "b_valores": [
+      0.125
+     ],
+     "a_media": 0.2007,
+     "b_media": 0.125,
+     "dif": 0.0757,
+     "dif_ic95": [
+      0.0162,
+      0.1349
+     ],
+     "dif_relativa_pct_do_menor": 60.6,
+     "razao_a_sobre_b": 1.606,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    }
+   },
+   "original_comprimento_igual_contra_original": {
+    "dlinha": {
+     "a_valores": [
+      0.83
+     ],
+     "b_valores": [
+      0.973
+     ],
+     "a_media": 0.83,
+     "b_media": 0.973,
+     "dif": -0.143,
+     "dif_ic95": [
+      -0.4235,
+      0.1609
+     ],
+     "dif_relativa_pct_do_menor": -17.2,
+     "razao_a_sobre_b": 0.853,
+     "a_ok": null,
+     "b_ok": false,
+     "c_ok": false,
+     "pareado": false,
+     "resolvivel": false,
+     "passou_em": []
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.208
+     ],
+     "b_valores": [
+      0.125
+     ],
+     "a_media": 0.208,
+     "b_media": 0.125,
+     "dif": 0.083,
+     "dif_ic95": [
+      0.026,
+      0.1411
+     ],
+     "dif_relativa_pct_do_menor": 66.4,
+     "razao_a_sobre_b": 1.664,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    }
+   },
+   "veredito": "75 m: a forma sobrevive sem o comprimento (d' 0.444, IC [0.2368, 0.6545]); queda contra o original -0.529 (IC [-0.8212, -0.2457], resolvivel)"
+  },
+  "150 m": {
+   "novo_nos_proprios_quadros_novos": {
+    "arquivo": "extra_armado_150c_e120.json",
+    "quadros": 80,
+    "pessoas": 921,
+    "recall_qualquer_classe": 0.6232,
+    "objeto_chamado_armada": 0.1581,
+    "objeto_chamado_armada_ic95": [
+     0.1208,
+     0.2012
+    ],
+    "armada_chamada_armada": 0.1883,
+    "dlinha_armada_contra_objeto": 0.117,
+    "dlinha_ic95": [
+     -0.0906,
+     0.3182
+    ]
+   },
+   "original_nos_seus_quadros_novos": {
+    "arquivo": "extra_armado_150g_e120.json",
+    "quadros": 80,
+    "pessoas": 916,
+    "recall_qualquer_classe": 0.6627,
+    "objeto_chamado_armada": 0.2452,
+    "objeto_chamado_armada_ic95": [
+     0.2042,
+     0.289
+    ],
+    "armada_chamada_armada": 0.4568,
+    "dlinha_armada_contra_objeto": 0.579,
+    "dlinha_ic95": [
+     0.376,
+     0.7795
+    ]
+   },
+   "original_nos_quadros_de_comprimento_igual": {
+    "arquivo": "extra150c_armado_150g_e120.json",
+    "quadros": 80,
+    "pessoas": 921,
+    "recall_qualquer_classe": 0.7101,
+    "objeto_chamado_armada": 0.3677,
+    "objeto_chamado_armada_ic95": [
+     0.32,
+     0.4177
+    ],
+    "armada_chamada_armada": 0.4643,
+    "dlinha_armada_contra_objeto": 0.247,
+    "dlinha_ic95": [
+     0.0335,
+     0.4423
+    ]
+   },
+   "novo_nos_quadros_originais": {
+    "arquivo": "extra150g_armado_150c_e120.json",
+    "quadros": 80,
+    "pessoas": 916,
+    "recall_qualquer_classe": 0.5524,
+    "objeto_chamado_armada": 0.0924,
+    "objeto_chamado_armada_ic95": [
+     0.061,
+     0.1246
+    ],
+    "armada_chamada_armada": 0.2037,
+    "dlinha_armada_contra_objeto": 0.493,
+    "dlinha_ic95": [
+     0.2604,
+     0.7566
+    ]
+   },
+   "novo_contra_original": {
+    "dlinha": {
+     "a_valores": [
+      0.117
+     ],
+     "b_valores": [
+      0.579
+     ],
+     "a_media": 0.117,
+     "b_media": 0.579,
+     "dif": -0.462,
+     "dif_ic95": [
+      -0.7382,
+      -0.1914
+     ],
+     "dif_relativa_pct_do_menor": -394.9,
+     "razao_a_sobre_b": 0.202,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.1581
+     ],
+     "b_valores": [
+      0.2452
+     ],
+     "a_media": 0.1581,
+     "b_media": 0.2452,
+     "dif": -0.0871,
+     "dif_ic95": [
+      -0.1451,
+      -0.0305
+     ],
+     "dif_relativa_pct_do_menor": -55.1,
+     "razao_a_sobre_b": 0.645,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    }
+   },
+   "original_comprimento_igual_contra_original": {
+    "dlinha": {
+     "a_valores": [
+      0.247
+     ],
+     "b_valores": [
+      0.579
+     ],
+     "a_media": 0.247,
+     "b_media": 0.579,
+     "dif": -0.332,
+     "dif_ic95": [
+      -0.6055,
+      -0.0767
+     ],
+     "dif_relativa_pct_do_menor": -134.4,
+     "razao_a_sobre_b": 0.427,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    },
+    "objeto_chamado_armada": {
+     "a_valores": [
+      0.3677
+     ],
+     "b_valores": [
+      0.2452
+     ],
+     "a_media": 0.3677,
+     "b_media": 0.2452,
+     "dif": 0.1225,
+     "dif_ic95": [
+      0.0525,
+      0.1904
+     ],
+     "dif_relativa_pct_do_menor": 50.0,
+     "razao_a_sobre_b": 1.5,
+     "a_ok": null,
+     "b_ok": true,
+     "c_ok": true,
+     "pareado": false,
+     "resolvivel": true,
+     "passou_em": [
+      "b",
+      "c"
+     ]
+    }
+   },
+   "veredito": "150 m: sem o comprimento o IC de d' inclui 0: a separacao dependia do comprimento (atalho confirmado)"
+  },
+  "veredito": "75 m: a forma sobrevive sem o comprimento (d' 0.444, IC [0.2368, 0.6545]); queda contra o original -0.529 (IC [-0.8212, -0.2457], resolvivel) | 150 m: sem o comprimento o IC de d' inclui 0: a separacao dependia do comprimento (atalho confirmado)"
  },
  "E": {
   "veredito": "pendente"
@@ -1684,7 +2573,7 @@
  "V": {
   "veredito": "pendente"
  },
- "quando": "2026-11-05T21:54:37",
+ "quando": "2026-11-07T05:26:39",
  "C": {
   "veredito": "pendente"
  }

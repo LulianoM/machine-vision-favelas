@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [DESKTOP] Rodada 6: item 6 fechado e R-sel na HERIDAL
+
+- Pausa do autor em 06/11 de 15:38 a 17:54; o treino a 150 m do item 6 retomou do `last.pt` na época 62.
+- Item 6 (uma semente): sem o comprimento como pista, a 150 m a separação entre arma e objeto some (d′ 0,117, IC inclui zero): atalho confirmado. A 75 m cai à metade (d′ 0,973 para 0,444, resolvível) e continua acima do acaso. Cruzado: o modelo original chama de armada 37% dos objetos com comprimento de arma a 150 m (24,5% nos seus quadros) e 21% a 75 m (12,5%). Para o texto: "a forma se perde a 4,88 cm/px" passa de leitura a medida.
+- Acertos do item 4: R-sel na HERIDAL 0,2927 (R 0,3185; viés +0,0258, IC 0,0113 a 0,0421, 8,8% relativos, contra 1,4% no VisDrone). Eficácias na HERIDAL contra R-sel: S-nadir-150 68,2%, S-nadir-150-six 85,0%, S-oblique 45,8%, S-oblique-six 50,5%; ordem igual.
+- A cadeia seguiu às 05:31 para o grupo G (item 3), primeiro treino `s_nadir_4k_deg`.
+
 ## 2026-11-05 [DESKTOP] Rodada 6: ordem nova pela criticidade para a AIM
 
 - Pedido do autor, às 21:45: reordenar o que vem depois do L pela criticidade do dado para o artigo da AIM (corte de texto em 15/11), sem interromper o que roda. Ordem nova registrada na seção 8 do plano (commit 6375941): L, R3/R4, G, T1 a T5 e Q5, E, T6 a T14, H, V e C só se couberem antes de 15/11 12:00, Y. Nenhum critério mudou.

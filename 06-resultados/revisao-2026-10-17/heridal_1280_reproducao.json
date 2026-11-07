@@ -228,6 +228,25 @@
    "P_validador": 0.297,
    "R_validador": 0.1874,
    "quando": "2026-10-19T23:17:48"
+  },
+  "r_pareado_sel": {
+   "run": "r_pareado_sel",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\r_pareado_sel\\weights\\best.pt",
+   "data": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "imagens": 1647,
+   "caixas_verdadeiras": 3229,
+   "predicoes": 218756,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.30256,
+   "mAP50_recalculado": 0.30256,
+   "mAP50_95_validador": 0.13813,
+   "mAP50_95_recalculado": 0.13813,
+   "dif_recalculado_validador": 0.0,
+   "P_validador": 0.499,
+   "R_validador": 0.3072,
+   "quando": "2026-11-07T05:20:34"
   }
  }
 }

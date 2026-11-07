@@ -304,6 +304,50 @@ fica em torno de 76 a 78%, ou seja, no limite da meta de 75%. Na multidao o reca
 por caixas coladas; a confusao entre classes cresce quando o fuzil fica encoberto por outra pessoa.
 Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resultado.json`, `aval_denso/resultado.json`.
 
+## 2026-11-07 [DESKTOP] Rodada 6, grupo L (item 6): o comprimento como atalho, testado
+
+Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.3. Gerador com `--objetos-comprimento-arma` (objeto confundível escalado só no eixo do comprimento até 0,62 a 1,05 m, a faixa das cinco armas; `07-blender/scripts/objetos_alongados.py`, `COMPRIMENTO_ARMA`). Cadeia `07-blender/scripts/rodada6.py`, etapas L1 a L9: `ds_armado_75c` (200 quadros, comando do gêmeo de 75 m mais a flag) e treino `armado_75c` (receita do `armado_75g`, 60 épocas, fez as 60); `ds_armado_150c` (200 quadros, comando do gêmeo de 150 m mais a flag) e treino `armado_150c_e120` (receita do `armado_150g_e120`, parou por paciência na 106, `best.pt` na 37; pausa do autor de 15:38 a 17:54 de 06/11); 80 quadros novos de cada (índices 200 a 279, `ds_armado_75c_extra`, `ds_armado_150c_extra`). Confusões por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` (imgsz 3840, conf 0,25, IoU 0,50): `extra_armado_75c.json`, `extra_armado_150c_e120.json` e os cruzados `extra75c_armado_75g.json`, `extra150c_armado_150g_e120.json`, `extra75g_armado_75c.json`, `extra150g_armado_150c_e120.json`. Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte L` (`rodada6_criterios.json`, item L; 1.000 reamostras de quadros, semente 0, independentes entre corpora). Uma semente por modelo.
+
+Nos 80 quadros novos:
+
+| Modelo e quadros | d′ armada contra objeto (IC 95%) | Objeto chamado de armada (IC 95%) | Armada chamada de armada | Recall em qualquer classe |
+|---|---|---|---|---|
+| 75 m original (`armado_75g`), quadros originais | 0,973 (0,772 a 1,192) | 0,125 (0,090 a 0,162) | 0,432 | 0,766 |
+| 75 m sem o comprimento (`armado_75c`), quadros de comprimento igual | 0,444 (0,237 a 0,655) | 0,201 (0,150 a 0,255) | 0,347 | 0,806 |
+| 75 m original nos quadros de comprimento igual | 0,830 (0,627 a 1,052) | 0,208 (0,162 a 0,255) | 0,508 | 0,797 |
+| 150 m original (`armado_150g_e120`), quadros originais | 0,579 (0,376 a 0,780) | 0,245 (0,204 a 0,289) | 0,457 | 0,663 |
+| 150 m sem o comprimento (`armado_150c_e120`), quadros de comprimento igual | 0,117 (−0,091 a 0,318) | 0,158 (0,121 a 0,201) | 0,188 | 0,623 |
+| 150 m original nos quadros de comprimento igual | 0,247 (0,034 a 0,442) | 0,368 (0,320 a 0,418) | 0,464 | 0,710 |
+
+Comparações (sem o comprimento menos original, cada um nos seus quadros novos; reamostragem independente):
+- 75 m: d′ −0,529 (IC −0,821 a −0,246), passa em (b) e (c); objeto chamado de armada +0,076 (IC +0,016 a +0,135), passa em (b) e (c).
+- 150 m: d′ −0,462 (IC −0,738 a −0,191), passa em (b) e (c); objeto chamado de armada −0,087 (IC −0,145 a −0,031), passa em (b) e (c), mas porque o modelo quase deixa de chamar qualquer coisa de armada (armada chamada de armada 0,188).
+- Cruzado, original nos quadros de comprimento igual menos nos seus: a 75 m, objeto chamado de armada +0,083 (IC +0,026 a +0,141), d′ −0,143 não resolvível; a 150 m, objeto chamado de armada +0,123 (IC +0,053 a +0,190), d′ −0,332 (IC −0,606 a −0,077), ambos em (b) e (c).
+
+Veredito pela regra fixada antes: **a 150 m, sem o comprimento o IC de d′ inclui zero: a separação dependia do comprimento (atalho confirmado). A 75 m a forma sobrevive sem o comprimento (d′ 0,444, IC exclui zero), mas a separação cai à metade (−0,529, resolvível)**. Leitura descritiva do cruzado: o modelo original, sem retreino, passa a chamar de armada 21% (75 m) e 37% (150 m) dos objetos quando eles têm o comprimento de uma arma, contra 12,5% e 24,5% nos seus quadros.
+
+Consequência para o texto (não aplicada; aplicação no Mac): a regra "a forma se perde a 4,88 cm/px", hoje uma leitura, passa a medida a 150 m: sem o comprimento não há separação acima do acaso. O comprimento, hoje "alternativa não testada" (6.2, 6.4), passa a causa demonstrada de toda a separação a 150 m e de cerca de metade a 75 m. O cruzado dá um número de risco direto: um objeto cotidiano do comprimento de uma arma é chamado de arma em cerca de um terço dos casos a 150 m pelo modelo treinado no corpus original. Ressalva: uma semente por modelo.
+
+## 2026-11-07 [DESKTOP] Rodada 6, grupo R (item 4, acertos): R-sel na HERIDAL e todas as linhas da Tabela 4
+
+Seção 8 do plano (ordem nova de 05/11). R3: `revisao-2026-10-17/preds_nadir.py --data C:/arma3-favela/real_nadir/heridal/yolo/data.yaml --tag heridal --imgsz 1152 --modelos r_pareado_sel --batch 4` e o mesmo com `--tag heridal_1280 --imgsz 1280`; zero-shot por `07-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real <HERIDAL> --imgsz 1152 --out 06-resultados/sim2real_r_pareado_sel_heridal.json` (e 1280, `_heridal_1280.json`). R4: `rodada6_criterios.py --parte R` (1.000 reamostras pareadas das 1.647 imagens, semente 0). Saídas em `rodada6_eficacias.json/.md` (seções "Cada treino individual" e "HERIDAL"). As linhas do VisDrone com F-joint e cada treino individual foram feitas à mão em 05/11 às 21:50 (mesmo comando).
+
+HERIDAL, imgsz casado (1152):
+
+| Modelo | mAP50 (IC 95%) | Eficácia / R (antes) | Eficácia / R-sel (IC 95%) |
+|---|---|---|---|
+| R (seleção no VisDrone val) | 0,3185 (0,2843 a 0,3543) | 100% | 108,8% (103,8 a 114,5) |
+| R-sel (seleção fora do teste) | 0,2927 (0,2618 a 0,3247) | 91,9% | 100% |
+| S-nadir-150, 3 sementes | 0,1997 (0,1713 a 0,2306) | 62,7% | 68,2% (59,0 a 78,9) |
+| S-nadir-150-six | 0,2488 (0,2116 a 0,2865) | 78,1% | 85,0% (73,2 a 98,2) |
+| S-oblique, 3 sementes | 0,1341 (0,1149 a 0,1555) | 42,1% | 45,8% (40,6 a 52,6) |
+| S-oblique-six, 3 sementes | 0,1477 (0,1265 a 0,1715) | 46,4% | 50,5% (44,6 a 57,3) |
+| Armado-150 (exploratório) | 0,1417 (0,1145 a 0,1711) | 44,5% | 48,4% (40,3 a 57,8) |
+
+A imgsz 1280: R 0,3353, R-sel 0,3026; eficácias / R-sel 55,6% (S-nadir-150), 73,0% (S-nadir-150-six), 47,0% (S-oblique), 46,9% (S-oblique-six), 42,0% (Armado-150).
+
+Leitura: na HERIDAL a seleção no VisDrone val pesa mais que no próprio VisDrone. R menos R-sel é +0,0258 (IC pareado +0,0113 a +0,0421), 8,8% relativos, contra 1,4% no VisDrone; o checkpoint escolhido no teste urbano generaliza melhor para o nadir por acaso de época. Com R-sel no denominador, todas as eficácias na HERIDAL sobem cerca de 9% relativos, e nenhuma ordem muda (nadir acima do oblíquo, as faixas como antes). Consequência para o texto (não aplicada): as linhas da HERIDAL da Tabela 4 e do resumo passam a 68,2% (nadir) contra 45,8% e 50,5% (oblíquos), com R-sel 0,2927 como teto.
+
 ## 2026-11-05 [DESKTOP] Rodada 6, grupo Q (item 5): a forma em U da QP3 com orçamento igual
 
 Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.2. Treinos de três classes com a receita do `armado_150g_e120` (120 épocas, paciência 30), cadeia `07-blender/scripts/rodada6.py`, etapas Q1 e Q2: `armado_35_e120` (`ds_armado_35_tiles`, fez as 120, `best.pt` na época 116) e `armado_75g_e120` (`ds_armado_75g_tiles`, parou por paciência na 109, `best.pt` na 74; pausa do autor de 08:47 a 11:42, retomada de `last.pt`). Confusão por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` no val e nos 80 quadros novos (`confusao_armado_35_e120.json`, `extra_armado_35_e120.json`, `confusao_armado_75g_e120.json`, `extra_armado_75g_e120.json`; imgsz 3840, conf 0,25, IoU 0,50). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte Q` (`rodada6_criterios.json`, item Q; 1.000 reamostras de quadros, semente 0). O lado de 60 épocas é a média das três sementes já existentes (`extra_armado_35*.json`, `extra_armado_75g*.json`); o de 120 épocas é uma semente (as sementes 1 e 2 estão no grupo T).

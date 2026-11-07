@@ -1,0 +1,17 @@
+{
+ "weights": "C:\\arma3-favela\\blender\\runs\\detect\\r_pareado_sel\\weights\\best.pt",
+ "imgsz": 1152,
+ "conf": 0.001,
+ "resultados": [
+  {
+   "metrics/precision(B)": 0.4862,
+   "metrics/recall(B)": 0.3063,
+   "metrics/mAP50(B)": 0.2927,
+   "metrics/mAP50-95(B)": 0.1319,
+   "fitness": 0.1319,
+   "conjunto": "real",
+   "data": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "single_cls": true
+  }
+ ]
+}

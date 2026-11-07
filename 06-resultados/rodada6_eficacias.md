@@ -89,4 +89,30 @@ R (selecao no val) 0.6311; R-sel (selecao em sel_r) 0.6224; vies R menos R-sel +
 | s_oblvar_sd2 | 0.0887 (0.0813 a 0.0968) | 14.2% (13.2 a 15.4) | 14.1% |
 | s_variedade | 0.0190 (0.0142 a 0.0211) | 3.1% (2.3 a 3.4) | 3.0% |
 
-HERIDAL: pendente (faltam as predicoes de r_pareado_sel; etapa R3 da cadeia).
+## HERIDAL, tag heridal (imgsz casado)
+
+R 0.3185; R-sel 0.2927 (IC 0.2618 a 0.3247); R menos R-sel +0.0258 (IC pareado +0.0113 a +0.0421).
+
+| Grupo | runs | media mAP50 | IC 95% | eficacia / R | eficacia / R-sel (IC 95%) |
+|---|---|---|---|---|---|
+| R | r_pareado | 0.3185 | 0.2843 a 0.3543 | 100.0% | 108.8% (103.8 a 114.5) |
+| R-sel | r_pareado_sel | 0.2927 | 0.2618 a 0.3247 | 91.9% | 100.0% (100.0 a 100.0) |
+| S-nadir-150 | s_nadir_4k, s_nadir_4k_sd1, s_nadir_4k_sd2 | 0.1997 | 0.1713 a 0.2306 | 62.7% | 68.2% (59.0 a 78.9) |
+| S-nadir-150-six | s_variedade | 0.2488 | 0.2116 a 0.2865 | 78.1% | 85.0% (73.2 a 98.2) |
+| S-oblique | s_obliquo, s_obliquo_sd1, s_obliquo_sd2 | 0.1341 | 0.1149 a 0.1555 | 42.1% | 45.8% (40.6 a 52.6) |
+| S-oblique-six | s_oblvar, s_oblvar_sd1, s_oblvar_sd2 | 0.1477 | 0.1265 a 0.1715 | 46.4% | 50.4% (44.6 a 57.3) |
+| Armado-150 | armado_150g | 0.1417 | 0.1145 a 0.1711 | 44.5% | 48.4% (40.3 a 57.8) |
+
+## HERIDAL, tag heridal_1280 (imgsz 1280)
+
+R 0.3353; R-sel 0.3026 (IC 0.2725 a 0.3334); R menos R-sel +0.0327 (IC pareado +0.0181 a +0.0469).
+
+| Grupo | runs | media mAP50 | IC 95% | eficacia / R | eficacia / R-sel (IC 95%) |
+|---|---|---|---|---|---|
+| R | r_pareado | 0.3353 | 0.3027 a 0.3700 | 100.0% | 110.8% (106.0 a 115.7) |
+| R-sel | r_pareado_sel | 0.3026 | 0.2725 a 0.3334 | 90.2% | 100.0% (100.0 a 100.0) |
+| S-nadir-150 | s_nadir_4k, s_nadir_4k_sd1, s_nadir_4k_sd2 | 0.1682 | 0.1431 a 0.1947 | 50.2% | 55.6% (48.2 a 64.0) |
+| S-nadir-150-six | s_variedade | 0.2208 | 0.1842 a 0.2584 | 65.8% | 73.0% (62.4 a 85.4) |
+| S-oblique | s_obliquo, s_obliquo_sd1, s_obliquo_sd2 | 0.1422 | 0.1214 a 0.1651 | 42.4% | 47.0% (41.6 a 53.8) |
+| S-oblique-six | s_oblvar, s_oblvar_sd1, s_oblvar_sd2 | 0.1418 | 0.1218 a 0.1655 | 42.3% | 46.9% (41.6 a 53.1) |
+| Armado-150 | armado_150g | 0.1272 | 0.1029 a 0.1566 | 37.9% | 42.0% (34.9 a 50.5) |
