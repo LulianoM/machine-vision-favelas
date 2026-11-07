@@ -1,5 +1,11 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [MAC] Seis inconsistências dos pareceres corrigidas; extended abstract deixa de ser mantido
+
+- Corrigido no inglês e na cópia pt-BR (script `corrige_0711h.py` no scratchpad, sem número novo): 6.2 passa a 9,76 cm por pixel (9,71 era o valor pelo FOV do manual da DJI, `gsd_zoom.md`); 4.2.2 explica que 1,15 m vale pelo comprimento registrado e a malha da espingarda chega a 1,17; "about one in five" vira "one in five to one in four" (0,192 a 0,245); 5.4 ganha a frase sobre a pistola a 0,50 como pista que não é a arma (pose fixa por arma); 4.7 enumera os dez modelos com três sementes (S-nadir-150, S-oblique, S-oblique-six e subconjuntos de 30 e 120 quadros, F-synthetic e F-generic a 5 por cento, F-generic com taxa menor, S-nadir-35 e gêmeo a 75 m); `<title>` sem "skeleton".
+- Autor: o extended abstract não é mais atualizado (as duas trocas que já tinham entrado nele hoje ficam).
+- Elsevier 18 páginas (Figura 2 no topo da 8), Carta 44, pt-BR 20. Artifact v14. Quatro agentes verificadores lançados (números das seções 1 a 4, 5.1 a 5.3, 5.4 a 5.5, consistência interna da 6 e 7).
+
 ## 2026-11-07 [MAC] Coautor Toledo, Figura 2 abrindo página, cópia em português e três pareceres frios
 
 - Felipe I. M. Toledo (COPPE/UFRJ) entrou como coautor nos dois fontes, com afiliação própria (¹ FGV EBAPE, ² COPPE/UFRJ); `gera_elsevier.py` passou a aceitar mais de uma linha de afiliação. O `[[DECIDE]]` que restava no extended abstract saiu.
