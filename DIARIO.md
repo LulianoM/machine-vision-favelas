@@ -21,6 +21,15 @@
 - Consequência para o texto (não aplicada, decisão do autor): a 5.4 e a 6.1 não podem mais apresentar a U como efeito da GSD; o que se sustenta é um falso alarme de 19 a 25% nas três altitudes com orçamento igual. As sementes do grupo T podem mudar a leitura.
 - A cadeia seguiu às 14:10 para o grupo L (render de `ds_armado_75c`).
 
+## 2026-11-07 [MAC] Versão curta: itens 5 e 6 e R-sel na HERIDAL aplicados (veredito da QP3)
+
+- `git pull`: desktop fechou o item 6 e os acertos do item 4 (8acc7ba, 07/11 05:31); cadeia no grupo G.
+- Aplicado em `versao-curta-aim2027.html` e `esqueleto-aim2027.html` por `edita_0711.py` (scratchpad), só com números de `06-resultados/RESULTADOS.md` (entradas de 05 e 07/11), `rodada6_eficacias.md` e `rodada6_criterios.json`; células de recall, armada e desarmada das linhas novas lidas dos `extra_*.json` e `confusao_*.json` citados no RESULTADOS.
+- Item 6: a hipótese declarada na 4.6 em 04/11 foi testada; a 150 m o d′ sem o comprimento é 0,12 (IC −0,09 a 0,32, inclui zero): atalho de comprimento confirmado; a 75 m 0,44 (0,24 a 0,65), queda −0,53 resolvível; cruzado 0,368 e 0,208. Entrou em resumo, abertura dos Resultados, 4.6 (Experimento C e pré-registro), 5.4 (parágrafo novo), Tabela 9 (seis linhas novas), Tabela 4 (três linhas), 6.1 QP3, 6.4, 6.5 (6) e conclusão.
+- Item 5: aplicado junto, porque a 5.4 e a 6.1 do item 6 não se escrevem com a U como efeito da GSD; texto diz "in part an artefact of training budget", 19,2/22,2/24,5, uma semente por controle (sementes T1 a T5 previstas para 08/11 refazem a leitura).
+- HERIDAL: teto R-sel 0,2927, viés +0,0258 (8,8% contra 1,4% no VisDrone); 68,2 (59,0 a 78,9), 85,0, 45,8 (40,6 a 52,6), 50,5 (44,6 a 57,3). Resumo, 5.2, Tabelas 4 e 6, 6.1 QP1. Usei 50,5% (RESULTADOS); `rodada6_eficacias.md` imprime 50,4% para 0,5045: arredondamento, apontado ao desktop.
+- Corpo 9.298 → 10.044 palavras. Extended abstract ainda tem uma marca `[[DECIDE]]` (Illumination), decisão do autor.
+
 ## 2026-11-05 [MAC] Versão curta: restos do item 4 aplicados; item 5 conferido e pendente de decisão
 
 - `git pull`: desktop fechou o item 5 (af6936e) e, a pedido do autor por e-mail, reordenou a cadeia pela criticidade para a AIM (6375941, d8b7945): L, R3/R4, G, T1 a T5 e Q5, E, T6 a T14, H, V e C só se couberem antes de 15/11 12:00. Previsão do desktop: L 07/11 00:49, G 07/11 10:02, Q5 08/11 18:23, E 09/11 16:43, H 13/11, V 14/11; C fica para o periódico.
