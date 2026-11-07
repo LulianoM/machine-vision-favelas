@@ -121,7 +121,7 @@ def primeira_legenda(p):
     t = subprocess.run(["pdftotext", "-f", str(p), "-l", str(p), "-layout", PDF, "-"], capture_output=True, text=True).stdout
     for ln in t.splitlines():
         if ln.strip():
-            m = re.match(r"\s*(Table|Figure) (\d+)\.", ln)
+            m = re.match(r"\s*(Table|Figure|Tabela|Figura) (\d+)\.", ln)
             return (m.group(1), int(m.group(2))) if m else ln.strip()[:60]
 
 def acha_bloco(tokens, rotulo, n):
@@ -187,7 +187,7 @@ def move_antes_do_paragrafo_anterior(tokens, i):
     h = k - 1
     while h >= 0 and tipo(tokens[h]) == "ws": h -= 1
     if h >= 0 and tipo(tokens[h]) == "h": k = h
-    m = re.search(r"<b>(Table|Figure) (\d+)\.</b>", tokens[i])
+    m = re.search(r"<b>(Table|Figure|Tabela|Figura) (\d+)\.</b>", tokens[i])
     antes = re.sub(r"<[^>]+>", " ", "".join(tokens[:k]))
     if not re.search(r"\b%ss? [^.;]*\b%s\b" % (m.group(1), m.group(2)), antes): return None
     movidos = [tokens[b] for b in bloco]
@@ -207,7 +207,7 @@ def blocos_largos_na_pagina(tokens, p):
     mais deixa buraco"""
     t = subprocess.run(["pdftotext", "-f", str(p), "-l", str(p), "-layout", PDF, "-"], capture_output=True, text=True).stdout
     idx = []
-    for rot, num in re.findall(r"^\s*(Table|Figure) (\d+)\.", t, re.M):
+    for rot, num in re.findall(r"^\s*(Table|Figure|Tabela|Figura) (\d+)\.", t, re.M):
         i = acha_bloco(tokens, rot, int(num))
         if i is not None and tokens[i].startswith('<div class="full">') and i not in idx: idx.append(i)
     return idx
@@ -321,11 +321,50 @@ def cadeia(tokens, nome, fn, passos=6):
         estados.append(prox); atual = prox
     return estados
 
+
+def pagina_da_legenda(nome):
+    """página em que a legenda do bloco `nome` ("Figure 2") aparece no PDF já renderizado, ou None"""
+    for p in range(1, paginas() + 1):
+        t = subprocess.run(["pdftotext", "-f", str(p), "-l", str(p), "-layout", PDF, "-"], capture_output=True, text=True).stdout
+        if re.search(r"^\s*%s\." % re.escape(nome), t, re.M): return p
+    return None
+
+def encaixa_topo(tokens):
+    """passo prévio: um bloco largo marcado .topo (break-before: page) sempre abre página. Entre as
+    posições do bloco até cinco parágrafos à frente da citação, sem sair da seção, cada uma com e sem o
+    corte do parágrafo seguinte que enche a página anterior, fica a que deixa menos branco na página
+    anterior e na própria página do bloco (um bloco flutuante que não cabe depois dele esvazia a página)."""
+    medir = branco_colunas if COLUNAS == 2 else branco
+    for t0 in [t for t in tokens if t.startswith('<div class="full topo">')]:
+        rot, num = re.search(r"<b>(Table|Figure|Tabela|Figura) (\d+)\.</b>", t0).groups(); num = int(num)
+        nome = f"{rot} {num}"; h0 = grupos_h(tokens, acha_bloco(tokens, rot, num))
+        melhor, estado = None, tokens
+        for k in range(6):
+            if k:
+                prox = move_depois_do_proximo_p(estado, acha_bloco(estado, rot, num))
+                if prox is None or abs(grupos_h(prox, acha_bloco(prox, rot, num)) - h0) > 1: break
+                estado = prox
+            renderiza(estado); q = pagina_da_legenda(nome)
+            if q is None: break
+            cands = [(estado, f"{k} parágrafo(s) à frente da citação, sem corte")]
+            div = divide_para_encher(estado, acha_bloco(estado, rot, num), q - 1) if q > PRIMEIRA else None
+            if div: cands.append((div[0], f"{k} parágrafo(s) à frente da citação, {div[2]}"))
+            for est, desc in cands:
+                renderiza(est); qq = pagina_da_legenda(nome); n = paginas()
+                custo = (medir(qq - 1) if qq > PRIMEIRA else 0.0) + (medir(qq) if qq < n else 0.0)
+                print(f"  {nome} (topo): {desc}: página {qq}, branco em volta {custo:.0f} pt", flush=True)
+                if melhor is None or custo < melhor[0]: melhor = (custo, est, desc, qq)
+        if melhor:
+            tokens = melhor[1]
+            print(f"bloco de topo {nome}: {melhor[2]}; abre a página {melhor[3]}", flush=True)
+    return tokens
+
 # busca gulosa de cima para baixo: para o primeiro buraco, três famílias de candidatos (bloco avançado
 # até seis parágrafos, recuado até seis, ou parágrafo seguinte partido no ponto que enche a página);
 # fica o melhor pela chave (páginas, primeiro buraco mais ao fim, branco total). Como a chave só
 # melhora, não há vaivém, e a folga empurrada para a frente acaba na última página.
 rejeitados = set()
+toks = encaixa_topo(toks)
 n, buracos, brancos = mede(toks)
 for rodada in range(40):
     print(f"rodada {rodada}: {n} páginas, buracos:", [(p, round(b)) for p, b, _ in buracos], flush=True)
@@ -337,7 +376,7 @@ for rodada in range(40):
         atual = chave(n, buracos)
         candidatos = []  # (chave, tokens, n, buracos, brancos, descrição)
         for i in cands:
-            nome = re.search(r"<b>((?:Table|Figure) \d+)\.</b>", toks[i]).group(1)
+            nome = re.search(r"<b>((?:Table|Figure|Tabela|Figura) \d+)\.</b>", toks[i]).group(1)
             if (nome, i, p) in rejeitados: continue
             # primeiro o corte do parágrafo seguinte, que leva o bloco para o topo da página seguinte
             div = divide_para_encher(toks, i, p)

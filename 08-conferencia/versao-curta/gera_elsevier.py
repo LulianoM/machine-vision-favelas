@@ -14,7 +14,10 @@ import os, re, subprocess, sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(AQUI, "../.."))
-src = open(os.path.join(AQUI, "versao-curta-aim2027.html"), encoding="utf-8").read()
+# uso: gera_elsevier.py [fonte.html [saida.html]]; o padrão é a versão em inglês
+FONTE = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "versao-curta-aim2027.html")
+SAIDA = sys.argv[2] if len(sys.argv) > 2 else os.path.join(AQUI, "versao-curta-elsevier.html")
+src = open(FONTE, encoding="utf-8").read()
 montador = open(os.path.join(REPO, "01-artigo/ferramentas/monta_artigo.py"), encoding="utf-8").read()
 css = re.search(r'CSS_ELSEVIER\s*=\s*"""(.*?)"""', montador, re.S).group(1)
 css += """
@@ -32,6 +35,9 @@ table.t thead { display: table-header-group; }
 .flt { float: left; width: 100%; break-inside: avoid; margin: 0; }
 .flt + p, .full + p { text-indent: 1.2em; margin-top: -3pt; }
 .flt table { margin-top: 2pt; }
+/* bloco largo que abre página (Figura 2): no meio da página ele partiria a leitura das duas colunas em
+   duas filas; pagina.py enche a página anterior partindo o parágrafo seguinte */
+.topo { break-before: page; }
 .flt figure img { max-width: 100%; }
 /* segunda parte de um parágrafo partido por pagina.py em volta de um bloco largo: continua sem recuo */
 p.cont, .full + p.cont, .flt + p.cont, p + p.cont { text-indent: 0; margin-top: 0; }
@@ -55,7 +61,7 @@ corpo = corpo.replace('<div class="front">', '<div class="capa full">', 1)
 i = corpo.index('<div class="capa full">'); j = corpo.index("</div>", i)
 capa = corpo[i:j]
 capa = re.sub(r"<p>(Luciano[^<]*)</p>", r'<p class="autores">\1</p>', capa, count=1)
-capa = re.sub(r"<p>(Fundação[^<]*)</p>", r'<p class="afil">\1</p>', capa, count=1)
+capa = re.sub(r"<p>([¹²] [^<]*)</p>", r'<p class="afil">\1</p>', capa)
 corpo = corpo[:i] + capa + corpo[j:]
 corpo = corpo.replace('<div class="abstract">', '<div class="resumo full">', 1)
 corpo = corpo.replace('<p class="kw">', '<p class="kw" style="text-indent:0">')
@@ -69,7 +75,7 @@ def figura(m):
     for chave, larg in LARGAS.items():
         if chave in blk:
             if larg != "100%": blk = blk.replace("<img ", f'<img style="max-width: {larg};" ', 1)
-            return f'<div class="full">{blk}</div>'
+            return f'<div class="full{" topo" if chave == "fig9_" else ""}">{blk}</div>'
     return f'<div class="flt">{blk}</div>'
 corpo = re.sub(r"<figure>.*?</figure>", figura, corpo, flags=re.S)
 
@@ -82,10 +88,10 @@ def tabela(m):
     return f'<div class="{"full" if ncol >= 7 or nlin >= 15 else "flt"}">{blk}</div>'
 corpo = re.sub(r'<table class="t[^"]*"[^>]*>.*?</table>(\s*<p class="tn">.*?</p>)?', tabela, corpo, flags=re.S)
 
-html = ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
-        "<title>Machine Vision from the Global South, short version, Elsevier preview</title>"
+html = (f"<!doctype html><html lang='{'pt-BR' if 'ptbr' in FONTE else 'en'}'><head><meta charset='utf-8'>"
+        f"<title>Machine Vision from the Global South, short version, {'cópia de leitura em português' if 'ptbr' in FONTE else 'Elsevier preview'}</title>"
         f"<style>{css}</style></head><body>\n{nota}\n{marca}\n{corpo}{cauda}")
-out = os.path.join(AQUI, "versao-curta-elsevier.html")
+out = SAIDA
 open(out, "w", encoding="utf-8").write(html)
 print("montado", out)
 # se o fonte ainda tiver uma div.nota, ela ocupa a página 1 e a medição de buracos (por coluna, raster) começa na 2

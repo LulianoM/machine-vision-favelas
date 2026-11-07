@@ -1,5 +1,13 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [MAC] Coautor Toledo, Figura 2 abrindo página, cópia em português e três pareceres frios
+
+- Felipe I. M. Toledo (COPPE/UFRJ) entrou como coautor nos dois fontes, com afiliação própria (¹ FGV EBAPE, ² COPPE/UFRJ); `gera_elsevier.py` passou a aceitar mais de uma linha de afiliação. O `[[DECIDE]]` que restava no extended abstract saiu.
+- A Figura 2 confundia o leitor no meio da página 8 (duas filas de colunas). Agora é bloco `full topo` com `break-before: page`; `pagina.py` ganhou `encaixa_topo`, que testa posições até cinco parágrafos à frente da citação, com e sem corte do parágrafo seguinte, e fica com a de menos branco em volta (a primeira tentativa, só avançar e cortar, deixou a página 7 só com a figura porque a Tabela 3 flutuante não coube depois dela). Elsevier 18 páginas, cheias.
+- Cópia de leitura em português: cinco agentes traduziram blocos do fonte com tags e números conferidos automaticamente contra o inglês; `versao-curta-elsevier.ptbr.html` tem 20 páginas. Referências em inglês. Vale o inglês em caso de dúvida.
+- Três agentes avaliaram o artigo (revisor da trilha, metodologista, gestão pública): aceite estimado 45 a 65 por cento; falhas comuns: contribuição para gestão num parágrafo (6.4), RQ3 apoiada em modelos treinados uma vez, teto R fraco, resumo de 398 palavras; inconsistências conferidas (9,71 contra 9,76; 1,15 m contra 1,17; "one in five" para 0,245). Lista completa no STATUS.
+- Artifact privado v13 com os quatro PDFs. Scripts de apoio no scratchpad do Mac (`prep_0711e.py`, `monta_ptbr.py`, `reune_cont.py`).
+
 ## 2026-11-07 [DESKTOP] Rodada 6 caiu com o reinício do app e foi pausada
 
 - A cadeia, o supervisor e o treino T1 (`armado_35_e120_sd1`, época 7 de 120) pararam às 12:16 sem erro no log: o app do Claude fechou e reabriu (processos do app com início às 13:48; o PC não reiniciou, boot em 21/10). Processo lançado pela sessão morre com o app (memória `cadeia-morre-com-o-app`), e o atalho na pasta Inicializar só cobre reinício do PC. A vigia horária, que era desta sessão, morreu junto; por isso ninguém relançou entre 12:16 e 13:49.
