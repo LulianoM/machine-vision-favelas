@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-rodada4_criterios.py: aplica os criterios que 07-blender/PLANO-RODADA4.md fixou antes da rodada 4.
+rodada4_criterios.py: aplica os criterios que 03-blender/PLANO-RODADA4.md fixou antes da rodada 4.
 
 Le so arquivos de 06-resultados e grava rodada4_criterios.json. Cada item tem as medidas, a regra e o
 veredito; item cujo arquivo ainda nao existe sai como "pendente". Nenhuma regra e escolhida aqui: elas
@@ -312,7 +312,7 @@ def item_sementes():
 
 
 def main():
-    out = {"plano": "07-blender/PLANO-RODADA4.md",
+    out = {"plano": "03-blender/PLANO-RODADA4.md",
            "10.6_iou_e_visdrone_oficial": item_iou(),
            "10.2_escala_casada": item_escala(),
            "9.5_objeto_no_porte_de_arma": {"armado_75": item_porte("armado_75"), "armado_75g": item_porte("armado_75g")},

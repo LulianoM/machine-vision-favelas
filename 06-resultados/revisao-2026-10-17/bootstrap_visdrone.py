@@ -339,7 +339,7 @@ def main_r5(sufixo):
                      "razao_a_sobre_b": round(a0 / b0, 3) if b0 > 0 else None,
                      "razao_ic95": [round(float(np.percentile(razao, 2.5)), 3), round(float(np.percentile(razao, 97.5)), 3)],
                      "ic_exclui_zero": bool(ic(d)[0] > 0 or ic(d)[1] < 0)})
-    out = {"plano": "07-blender/PLANO-RODADA5.md, secao 2.3 (b)",
+    out = {"plano": "03-blender/PLANO-RODADA5.md, secao 2.3 (b)",
            "protocolo": "VisDrone-DET val, 548 imagens, classe unica, imgsz 1280, conf 0,001, NMS IoU 0,7, max_det 300; "
                         "predicoes de visdrone_preds.py (FP32, lote 4)",
            "bootstrap": {"reamostras": N_BOOT, "semente": SEMENTE, "unidade": "imagem, com reposicao",

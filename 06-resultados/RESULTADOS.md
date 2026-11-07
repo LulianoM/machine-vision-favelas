@@ -2,7 +2,7 @@
 
 Trazido do desktop em 2026-09-18 [DESKTOP]. A primeira parte (ficha) foi montada na reconciliação, conferindo cada número no arquivo de origem. A segunda parte é o `RESULTADOS-BLENDER.md` escrito no desktop em 12 e 13/09, sem alteração de conteúdo.
 
-Aviso de leitura: o experimento NÃO rodou no ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado no mesmo dia sem gerar nenhuma imagem (ver `docs/DIVERGENCIAS.md`, item 1). Tudo abaixo é Blender 5.2 em modo headless. O código está em `07-blender/scripts/`.
+Aviso de leitura: o experimento NÃO rodou no ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado no mesmo dia sem gerar nenhuma imagem (ver `docs/DIVERGENCIAS.md`, item 1). Tudo abaixo é Blender 5.2 em modo headless. O código está em `03-blender/scripts/`.
 
 ## Ficha do experimento para o artigo
 
@@ -23,7 +23,7 @@ Classes em todos: `0 pessoa_armada`, `1 pessoa_desarmada` (origem: `data.yaml` d
 | `teste_angulos` | Mesma cidade, semente nova, ângulo e lente mais abertos | Sim | 0 / 60 | 0 / 596 | 310 / 286 | 3840x2160 |
 | `teste_denso` | Mesma cidade, multidão | Sim | 0 / 40 | 0 / 1.749 | 890 / 859 | 3840x2160 |
 
-Convenção de anotação: AMODAL, recortada na borda do quadro. A caixa é o envelope 2D de todos os vértices deformados do corpo e da arma projetados na câmera, inclusive os encobertos por prédio (`07-blender/scripts/people_mpfb.py`, função `bbox_2d`). A pessoa só é anotada se pelo menos 35% de 14 pontos amostrados do corpo têm linha de visão livre até a câmera (função `visibility`, parâmetro `--min-vis 0.35`). Lado mínimo da caixa: 0,2% do quadro (`--min-lado 0.002`). É a mesma lógica do VisDrone (objeto inteiro), com corte de visibilidade mínima.
+Convenção de anotação: AMODAL, recortada na borda do quadro. A caixa é o envelope 2D de todos os vértices deformados do corpo e da arma projetados na câmera, inclusive os encobertos por prédio (`03-blender/scripts/people_mpfb.py`, função `bbox_2d`). A pessoa só é anotada se pelo menos 35% de 14 pontos amostrados do corpo têm linha de visão livre até a câmera (função `visibility`, parâmetro `--min-vis 0.35`). Lado mínimo da caixa: 0,2% do quadro (`--min-lado 0.002`). É a mesma lógica do VisDrone (objeto inteiro), com corte de visibilidade mínima.
 
 Comandos que geraram os datasets:
 
@@ -61,11 +61,11 @@ Faixas efetivamente sorteadas, lidas de `manifests/<dataset>.jsonl` (uma linha p
 
 Leitura importante: no `dataset_odm` o sol quase não varia (elevação 45 a 54, azimute dentro de 12 graus do norte). Não é descuido: a textura da fotogrametria já tem a sombra das 11h55 de 02/08/2022 gravada no pixel, então o gerador prende o sol perto da direção real. É exatamente o eixo que Liao et al. 2026 mostram custar cerca de 10 pontos de mAP50 quando não é variado. Ver `docs/DIVERGENCIAS.md`, item 5.
 
-Outros eixos randomizados (origem: `07-blender/README.md`, seção "O que a cena v3 contém", e o código): yaw livre de 0 a 360, fração de armados 0,5 (`--prob-armado`), pool de 6 humanos MPFB por lote com idade, sexo, biotipo, roupa e pose sorteados, poses nomeadas no `cid150` (parado, andando, sentado, lado, costas, empunhando, braços cruzados), pavimentos de 1 a 5, adição em laje, cobertura, caixa d'água, props. Pós-processamento de câmera (`post_process.py`): ruído de sensor, desfoque, aberração cromática, vinheta, neblina, compressão JPEG.
+Outros eixos randomizados (origem: `03-blender/README.md`, seção "O que a cena v3 contém", e o código): yaw livre de 0 a 360, fração de armados 0,5 (`--prob-armado`), pool de 6 humanos MPFB por lote com idade, sexo, biotipo, roupa e pose sorteados, poses nomeadas no `cid150` (parado, andando, sentado, lado, costas, empunhando, braços cruzados), pavimentos de 1 a 5, adição em laje, cobertura, caixa d'água, props. Pós-processamento de câmera (`post_process.py`): ruído de sensor, desfoque, aberração cromática, vinheta, neblina, compressão JPEG.
 
 ### 3. Modelo e hiperparâmetros
 
-Script: `07-blender/scripts/train_yolo_win.py`. Aumentos fixos no script: `hsv_h=0.015, hsv_s=0.6, hsv_v=0.4, degrees=10, scale=0.4, fliplr=0.5, mosaic=1.0, patience=15`. Demais valores: padrão do Ultralytics 8.4.148 (`optimizer=auto, lr0=0.01, amp=true, seed=0`). Origem de cada linha: `<run>/args.yaml`.
+Script: `03-blender/scripts/train_yolo_win.py`. Aumentos fixos no script: `hsv_h=0.015, hsv_s=0.6, hsv_v=0.4, degrees=10, scale=0.4, fliplr=0.5, mosaic=1.0, patience=15`. Demais valores: padrão do Ultralytics 8.4.148 (`optimizer=auto, lr0=0.01, amp=true, seed=0`). Origem de cada linha: `<run>/args.yaml`.
 
 | Run | Pesos iniciais | Dataset | Épocas pedidas / feitas | imgsz | batch | workers |
 |---|---|---|---|---|---|---|
@@ -141,7 +141,7 @@ Estes dois testes são sintético contra sintético, na mesma cidade, com a mesm
 | mAP com 5 a 10% de dado real | NÃO EXISTE | Idem |
 | mAP sintético mais real | NÃO EXISTE | Idem |
 
-O script já tem o caminho pronto (`train_yolo_win.py --eval-only --weights <best.pt> --real visdrone_yolo/data.yaml --single-cls`), e `03-arma3/scripts/visdrone_to_yolo.py` converte o VisDrone. Falta baixar o VisDrone-DET, converter mantendo só `pedestrian` e `people` numa classe única, e rodar. Observação de desenho: o VisDrone voa mais baixo do que 100 a 150 m e não tem a classe "armada", então o zero-shot mede detecção de pessoa (classe única), não a distinção armado e desarmado.
+O script já tem o caminho pronto (`train_yolo_win.py --eval-only --weights <best.pt> --real visdrone_yolo/data.yaml --single-cls`), e `02-projeto-ufrj-2022/arma3-2022/scripts/visdrone_to_yolo.py` converte o VisDrone. Falta baixar o VisDrone-DET, converter mantendo só `pedestrian` e `people` numa classe única, e rodar. Observação de desenho: o VisDrone voa mais baixo do que 100 a 150 m e não tem a classe "armada", então o zero-shot mede detecção de pessoa (classe única), não a distinção armado e desarmado.
 
 ### 7. Números sem arquivo de origem
 
@@ -306,7 +306,7 @@ Pesos: `runs/detect/cid150_s/weights/best.pt`. Resultados: `aval_angulos/resulta
 
 ## 2026-11-07 [DESKTOP] Rodada 6, grupo G (item 3): ruído, borrão e JPEG como aumento
 
-Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.5. Ladrilhos degradados por `07-blender/scripts/degrada_ladrilhos.py --src C:/arma3-favela/blender/ds_morro_4k_tiles --out C:/arma3-favela/blender/ds_morro_4k_deg_tiles` (e o mesmo para `ds_oblvar_tiles`): 75% dos ladrilhos de treino com ruído gaussiano dependente do sinal (sigma 0,004 a 0,018), borrão de 0,3 a 1,2 px e JPEG 50 a 90 com 4:2:0, semente 0, validação intacta, parâmetros em `_degradacao.json`. Treinos `s_nadir_4k_deg` (parou na 42) e `s_oblvar_deg` (fez as 60), receita da 7.6, semente 0. Zero-shot por `avalia_sim2real.py` (VisDrone val, imgsz 1280; `sim2real_s_nadir_4k_deg.json`, `sim2real_s_oblvar_deg.json`), predições por `visdrone_preds.py` e `preds_nadir.py` (HERIDAL, tags `heridal` a 1152 e `heridal_1280`). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte G` (1.000 reamostras pareadas por imagem, semente 0). Lado degradado: uma semente; lado limpo: média das três sementes existentes.
+Plano e critério fixados antes em `03-blender/PLANO-RODADA6.md`, seção 3.5. Ladrilhos degradados por `03-blender/scripts/degrada_ladrilhos.py --src C:/arma3-favela/blender/ds_morro_4k_tiles --out C:/arma3-favela/blender/ds_morro_4k_deg_tiles` (e o mesmo para `ds_oblvar_tiles`): 75% dos ladrilhos de treino com ruído gaussiano dependente do sinal (sigma 0,004 a 0,018), borrão de 0,3 a 1,2 px e JPEG 50 a 90 com 4:2:0, semente 0, validação intacta, parâmetros em `_degradacao.json`. Treinos `s_nadir_4k_deg` (parou na 42) e `s_oblvar_deg` (fez as 60), receita da 7.6, semente 0. Zero-shot por `avalia_sim2real.py` (VisDrone val, imgsz 1280; `sim2real_s_nadir_4k_deg.json`, `sim2real_s_oblvar_deg.json`), predições por `visdrone_preds.py` e `preds_nadir.py` (HERIDAL, tags `heridal` a 1152 e `heridal_1280`). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte G` (1.000 reamostras pareadas por imagem, semente 0). Lado degradado: uma semente; lado limpo: média das três sementes existentes.
 
 | Corpus e benchmark | Limpo, 3 sementes (faixa) | Degradado, 1 semente | Diferença (IC 95% pareado) | Relativa | Leituras |
 |---|---|---|---|---|---|
@@ -321,7 +321,7 @@ Consequência para o texto (não aplicada; aplicação no Mac): por ora, os arte
 
 ## 2026-11-07 [DESKTOP] Rodada 6, grupo L (item 6): o comprimento como atalho, testado
 
-Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.3. Gerador com `--objetos-comprimento-arma` (objeto confundível escalado só no eixo do comprimento até 0,62 a 1,05 m, a faixa das cinco armas; `07-blender/scripts/objetos_alongados.py`, `COMPRIMENTO_ARMA`). Cadeia `07-blender/scripts/rodada6.py`, etapas L1 a L9: `ds_armado_75c` (200 quadros, comando do gêmeo de 75 m mais a flag) e treino `armado_75c` (receita do `armado_75g`, 60 épocas, fez as 60); `ds_armado_150c` (200 quadros, comando do gêmeo de 150 m mais a flag) e treino `armado_150c_e120` (receita do `armado_150g_e120`, parou por paciência na 106, `best.pt` na 37; pausa do autor de 15:38 a 17:54 de 06/11); 80 quadros novos de cada (índices 200 a 279, `ds_armado_75c_extra`, `ds_armado_150c_extra`). Confusões por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` (imgsz 3840, conf 0,25, IoU 0,50): `extra_armado_75c.json`, `extra_armado_150c_e120.json` e os cruzados `extra75c_armado_75g.json`, `extra150c_armado_150g_e120.json`, `extra75g_armado_75c.json`, `extra150g_armado_150c_e120.json`. Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte L` (`rodada6_criterios.json`, item L; 1.000 reamostras de quadros, semente 0, independentes entre corpora). Uma semente por modelo.
+Plano e critério fixados antes em `03-blender/PLANO-RODADA6.md`, seção 3.3. Gerador com `--objetos-comprimento-arma` (objeto confundível escalado só no eixo do comprimento até 0,62 a 1,05 m, a faixa das cinco armas; `03-blender/scripts/objetos_alongados.py`, `COMPRIMENTO_ARMA`). Cadeia `03-blender/scripts/rodada6.py`, etapas L1 a L9: `ds_armado_75c` (200 quadros, comando do gêmeo de 75 m mais a flag) e treino `armado_75c` (receita do `armado_75g`, 60 épocas, fez as 60); `ds_armado_150c` (200 quadros, comando do gêmeo de 150 m mais a flag) e treino `armado_150c_e120` (receita do `armado_150g_e120`, parou por paciência na 106, `best.pt` na 37; pausa do autor de 15:38 a 17:54 de 06/11); 80 quadros novos de cada (índices 200 a 279, `ds_armado_75c_extra`, `ds_armado_150c_extra`). Confusões por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` (imgsz 3840, conf 0,25, IoU 0,50): `extra_armado_75c.json`, `extra_armado_150c_e120.json` e os cruzados `extra75c_armado_75g.json`, `extra150c_armado_150g_e120.json`, `extra75g_armado_75c.json`, `extra150g_armado_150c_e120.json`. Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte L` (`rodada6_criterios.json`, item L; 1.000 reamostras de quadros, semente 0, independentes entre corpora). Uma semente por modelo.
 
 Nos 80 quadros novos:
 
@@ -345,7 +345,7 @@ Consequência para o texto (não aplicada; aplicação no Mac): a regra "a forma
 
 ## 2026-11-07 [DESKTOP] Rodada 6, grupo R (item 4, acertos): R-sel na HERIDAL e todas as linhas da Tabela 4
 
-Seção 8 do plano (ordem nova de 05/11). R3: `revisao-2026-10-17/preds_nadir.py --data C:/arma3-favela/real_nadir/heridal/yolo/data.yaml --tag heridal --imgsz 1152 --modelos r_pareado_sel --batch 4` e o mesmo com `--tag heridal_1280 --imgsz 1280`; zero-shot por `07-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real <HERIDAL> --imgsz 1152 --out 06-resultados/sim2real_r_pareado_sel_heridal.json` (e 1280, `_heridal_1280.json`). R4: `rodada6_criterios.py --parte R` (1.000 reamostras pareadas das 1.647 imagens, semente 0). Saídas em `rodada6_eficacias.json/.md` (seções "Cada treino individual" e "HERIDAL"). As linhas do VisDrone com F-joint e cada treino individual foram feitas à mão em 05/11 às 21:50 (mesmo comando).
+Seção 8 do plano (ordem nova de 05/11). R3: `revisao-2026-10-17/preds_nadir.py --data C:/arma3-favela/real_nadir/heridal/yolo/data.yaml --tag heridal --imgsz 1152 --modelos r_pareado_sel --batch 4` e o mesmo com `--tag heridal_1280 --imgsz 1280`; zero-shot por `03-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real <HERIDAL> --imgsz 1152 --out 06-resultados/sim2real_r_pareado_sel_heridal.json` (e 1280, `_heridal_1280.json`). R4: `rodada6_criterios.py --parte R` (1.000 reamostras pareadas das 1.647 imagens, semente 0). Saídas em `rodada6_eficacias.json/.md` (seções "Cada treino individual" e "HERIDAL"). As linhas do VisDrone com F-joint e cada treino individual foram feitas à mão em 05/11 às 21:50 (mesmo comando).
 
 HERIDAL, imgsz casado (1152):
 
@@ -365,7 +365,7 @@ Leitura: na HERIDAL a seleção no VisDrone val pesa mais que no próprio VisDro
 
 ## 2026-11-05 [DESKTOP] Rodada 6, grupo Q (item 5): a forma em U da QP3 com orçamento igual
 
-Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.2. Treinos de três classes com a receita do `armado_150g_e120` (120 épocas, paciência 30), cadeia `07-blender/scripts/rodada6.py`, etapas Q1 e Q2: `armado_35_e120` (`ds_armado_35_tiles`, fez as 120, `best.pt` na época 116) e `armado_75g_e120` (`ds_armado_75g_tiles`, parou por paciência na 109, `best.pt` na 74; pausa do autor de 08:47 a 11:42, retomada de `last.pt`). Confusão por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` no val e nos 80 quadros novos (`confusao_armado_35_e120.json`, `extra_armado_35_e120.json`, `confusao_armado_75g_e120.json`, `extra_armado_75g_e120.json`; imgsz 3840, conf 0,25, IoU 0,50). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte Q` (`rodada6_criterios.json`, item Q; 1.000 reamostras de quadros, semente 0). O lado de 60 épocas é a média das três sementes já existentes (`extra_armado_35*.json`, `extra_armado_75g*.json`); o de 120 épocas é uma semente (as sementes 1 e 2 estão no grupo T).
+Plano e critério fixados antes em `03-blender/PLANO-RODADA6.md`, seção 3.2. Treinos de três classes com a receita do `armado_150g_e120` (120 épocas, paciência 30), cadeia `03-blender/scripts/rodada6.py`, etapas Q1 e Q2: `armado_35_e120` (`ds_armado_35_tiles`, fez as 120, `best.pt` na época 116) e `armado_75g_e120` (`ds_armado_75g_tiles`, parou por paciência na 109, `best.pt` na 74; pausa do autor de 08:47 a 11:42, retomada de `last.pt`). Confusão por `06-resultados/confusao_armado.py --pesos <run>/weights/best.pt --ds <ds> --split val --instancias` no val e nos 80 quadros novos (`confusao_armado_35_e120.json`, `extra_armado_35_e120.json`, `confusao_armado_75g_e120.json`, `extra_armado_75g_e120.json`; imgsz 3840, conf 0,25, IoU 0,50). Critério por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte Q` (`rodada6_criterios.json`, item Q; 1.000 reamostras de quadros, semente 0). O lado de 60 épocas é a média das três sementes já existentes (`extra_armado_35*.json`, `extra_armado_75g*.json`); o de 120 épocas é uma semente (as sementes 1 e 2 estão no grupo T).
 
 Nos 80 quadros novos (índices 200 a 279, os mesmos nas três altitudes):
 
@@ -387,7 +387,7 @@ Veredito pela regra fixada antes: **a forma em U era (em parte) orçamento**. Co
 
 ## 2026-11-04 [DESKTOP] Rodada 6, grupo R (item 4): teto R com o checkpoint escolhido fora do teste
 
-Plano e critério fixados antes em `07-blender/PLANO-RODADA6.md`, seção 3.1. Treino `r_pareado_sel` pela cadeia `07-blender/scripts/r_sel.py` (receita exata de `r_pareado`: yolo11s.pt, as 1.106 imagens de `visdrone_sub/train`, 60 épocas, lote 6, imgsz 1280, paciência 15, semente 0, classe única; `train_yolo_win.py --dry-run --compara runs/detect/r_pareado/args.yaml` acusa só `data` e `name`), com `val` em `C:/arma3-favela/visdrone/ft/sel_r.txt`: 265 imagens do VisDrone train fora da amostra de R e fora do VisDrone val (a fatia `sel` de 324 menos 59 em comum com `visdrone_sub/train`, `ft/sel_r.json`). Fez as 60 épocas (pausa do autor de 14:38 a 16:11, retomada de `last.pt` na época 31); `best.pt` na época 55 (mAP50-95 em `sel_r` 0,2285). Zero-shot por `07-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real C:/arma3-favela/visdrone/visdrone_yolo/data.yaml --imgsz 1280 --out 06-resultados/sim2real_r_pareado_sel.json`; predições por imagem por `revisao-2026-10-17/visdrone_preds.py --modelos r_pareado_sel --batch 4`; critério e eficácias por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte R` (saídas `rodada6_criterios.json`, `rodada6_eficacias.json` e `rodada6_eficacias.md`; 1.000 reamostras pareadas das 548 imagens, semente 0).
+Plano e critério fixados antes em `03-blender/PLANO-RODADA6.md`, seção 3.1. Treino `r_pareado_sel` pela cadeia `03-blender/scripts/r_sel.py` (receita exata de `r_pareado`: yolo11s.pt, as 1.106 imagens de `visdrone_sub/train`, 60 épocas, lote 6, imgsz 1280, paciência 15, semente 0, classe única; `train_yolo_win.py --dry-run --compara runs/detect/r_pareado/args.yaml` acusa só `data` e `name`), com `val` em `C:/arma3-favela/visdrone/ft/sel_r.txt`: 265 imagens do VisDrone train fora da amostra de R e fora do VisDrone val (a fatia `sel` de 324 menos 59 em comum com `visdrone_sub/train`, `ft/sel_r.json`). Fez as 60 épocas (pausa do autor de 14:38 a 16:11, retomada de `last.pt` na época 31); `best.pt` na época 55 (mAP50-95 em `sel_r` 0,2285). Zero-shot por `03-blender/scripts/avalia_sim2real.py --weights runs/detect/r_pareado_sel/weights/best.pt --real C:/arma3-favela/visdrone/visdrone_yolo/data.yaml --imgsz 1280 --out 06-resultados/sim2real_r_pareado_sel.json`; predições por imagem por `revisao-2026-10-17/visdrone_preds.py --modelos r_pareado_sel --batch 4`; critério e eficácias por `C:/arma3-favela/venv/Scripts/python.exe 06-resultados/rodada6_criterios.py --parte R` (saídas `rodada6_criterios.json`, `rodada6_eficacias.json` e `rodada6_eficacias.md`; 1.000 reamostras pareadas das 548 imagens, semente 0).
 
 | | mAP50 no VisDrone val | IC 95% |
 |---|---|---|
@@ -403,7 +403,7 @@ Checagens de partida da mesma cadeia: P2, um quadro a 75 m com `--objetos-compri
 
 Lista em `08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md` (feita no Mac em 04/11 a partir dos `[[NEW]]` da versão curta para a AIM 2027). Os itens 1 e 2 são só leitura; o 4 é um treino de R.
 
-**Item 1, caixa envolvente das cinco malhas de arma** (`06-resultados/mede_armas.py`, roda dentro do Blender headless: `"C:\Program Files (x86)\Steam\steamapps\common\Blenderlender.exe" -b --python 06-resultados/mede_armas.py`; saídas `06-resultados/armas_malhas.json` e `armas_malhas.md`). Vértices da malha construída por `07-blender/scripts/objetos_alongados.py`, no referencial local da arma (+X cano, Y largura, Z altura); 12 sementes por malha deram a mesma caixa (o sorteio só escolhe material). Pixels = metros / GSD (4,88, 2,44 e 1,14 cm/px a 150, 75 e 35 m em 4K, `revisao-2026-10-17/gsd_zoom.md`). "Nominal" é o comprimento que a função devolve e que o manuscrito cita (4.2.2).
+**Item 1, caixa envolvente das cinco malhas de arma** (`06-resultados/mede_armas.py`, roda dentro do Blender headless: `"C:\Program Files (x86)\Steam\steamapps\common\Blenderlender.exe" -b --python 06-resultados/mede_armas.py`; saídas `06-resultados/armas_malhas.json` e `armas_malhas.md`). Vértices da malha construída por `03-blender/scripts/objetos_alongados.py`, no referencial local da arma (+X cano, Y largura, Z altura); 12 sementes por malha deram a mesma caixa (o sorteio só escolhe material). Pixels = metros / GSD (4,88, 2,44 e 1,14 cm/px a 150, 75 e 35 m em 4K, `revisao-2026-10-17/gsd_zoom.md`). "Nominal" é o comprimento que a função devolve e que o manuscrito cita (4.2.2).
 
 | Malha | Peso no sorteio | Nominal (m) | Comprimento (m) | Largura (m) | Altura (m) | 150 m, C × L (px) | 75 m (px) | 35 m (px) | Altura a 150 / 75 / 35 (px) |
 |---|---|---|---|---|---|---|---|---|---|
@@ -424,7 +424,7 @@ Média ponderada pelo peso de sorteio das cinco: comprimento 18,3 / 36,5 / 78,2 
 
 As medianas e contagens batem com `forma_corpora.json` (as linhas oblíquas da Tabela 5 do artigo). Para a Tabela 5: 0,9% e 3,9%, contra 0,8% no corpus de registro e 30,5% no VisDrone val. S-oblique-six tem quatro vezes mais caixas sub-stride que S-oblique porque o pitch mais alto (45 a 56 graus) e os seis sítios estreitam a pessoa em planta (largura mediana 13,3 contra 17,9 px).
 
-**Item 4, teto R com o checkpoint escolhido fora do teste** (em curso). `07-blender/scripts/r_sel.py`, lançado por `lanca_r_sel.cmd` em 04/11 às 11:28 (log `C:rma3-favelalender
+**Item 4, teto R com o checkpoint escolhido fora do teste** (em curso). `03-blender/scripts/r_sel.py`, lançado por `lanca_r_sel.cmd` em 04/11 às 11:28 (log `C:rma3-favelalender
 _sel.log`). Mesma receita de `r_pareado` (`train_yolo_win.py --data C:/arma3-favela/visdrone/visdrone_sub/data_sel.yaml --model yolo11s.pt --imgsz 1280 --epochs 60 --batch 6 --workers 4 --name r_pareado_sel --single-cls`; `--dry-run --compara runs/detect/r_pareado/args.yaml` acusa só `data` e `name`), com `val` apontando para `C:/arma3-favela/visdrone/ft/sel_r.txt`. Achado ao montar a fatia: `ft/sel` (324 imagens do VisDrone train) tem 59 imagens em comum com `visdrone_sub/train` (as 1.106 de R, semente 21), porque os dois são sorteios independentes do mesmo train; `sel_r` são as 265 restantes (`ft/sel_r.json` lista as 59 removidas), fora do treino de R e fora do VisDrone val. Isso vale também como ressalva para os ajustes finos da rodada 3 e 5: a seleção deles em `sel` é disjunta do val (teste) e das fatias `ft05`/`ft10`, como sempre se disse, mas não da amostra de R (que esses runs não usam no treino, então não há vazamento, só a observação). Depois do treino a cadeia roda `avalia_sim2real.py` (VisDrone val, imgsz 1280, `sim2real_r_pareado_sel.json`) e `visdrone_preds.py --modelos r_pareado_sel` para o bootstrap. Resultado e eficácias recalculadas entram numa entrada própria quando terminar.
 
 ## 2026-10-22 [DESKTOP] Rodada 5 encerrada: fechamento (Y2 a Y4) e vereditos
@@ -444,7 +444,7 @@ A cadeia terminou em 22/10 às 11:05, sem grupo com falha além do P2 da primeir
 
 ## 2026-10-22 [DESKTOP] Rodada 5, grupo C (R5-2): semente de cena para S-oblique-six
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas C1 a C8 (plano 3.8). Duas réplicas do corpus oblíquo de seis sítios com sementes de cena 22 e 23 (a 21 é a do corpus original), 180 quadros cada, mesma receita e semente de treino 0; zero-shot em `06-resultados/sim2real_s_oblvar_e22.json` e `sim2real_s_oblvar_e23.json`. A réplica 23 foi pausada pelo autor em 21/10 às 23:38 e retomada em 22/10 às 01:41, do quadro 13 de 30 do sítio interrompido.
+Cadeia `03-blender/scripts/rodada5.py`, etapas C1 a C8 (plano 3.8). Duas réplicas do corpus oblíquo de seis sítios com sementes de cena 22 e 23 (a 21 é a do corpus original), 180 quadros cada, mesma receita e semente de treino 0; zero-shot em `06-resultados/sim2real_s_oblvar_e22.json` e `sim2real_s_oblvar_e23.json`. A réplica 23 foi pausada pelo autor em 21/10 às 23:38 e retomada em 22/10 às 01:41, do quadro 13 de 30 do sítio interrompido.
 
 | Semente de cena (treino 0) | mAP50 no VisDrone |
 |---|---|
@@ -458,7 +458,7 @@ Cadeia `07-blender/scripts/rodada5.py`, etapas C1 a C8 (plano 3.8). Duas réplic
 
 ## 2026-10-21 [DESKTOP] Rodada 5, grupo M (R5-7): três classes a 150 m, agora válido
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas M1 a M4 (plano 3.7); M5 a M8 (corpus de 600 quadros) dispensadas pela regra, porque o modelo passou a validade. Gêmeo a 150 m do corpus de 35 m, 80 quadros novos (índices 200 a 279) renderizados com o mesmo gerador; treino `armado_150g_e120` (120 épocas, paciência 30; parou na 80). Confusão por `06-resultados/confusao_armado.py` no val (`confusao_armado_150g_e120.json`) e nos 80 quadros novos (`extra_armado_150g_e120.json`); critério por `rodada5_criterios.py` (item M, salvo em `06-resultados/rodada5_criterios_M.json`): conf 0,25, d′ com correção log-linear, 1.000 reamostras de quadros, semente 0.
+Cadeia `03-blender/scripts/rodada5.py`, etapas M1 a M4 (plano 3.7); M5 a M8 (corpus de 600 quadros) dispensadas pela regra, porque o modelo passou a validade. Gêmeo a 150 m do corpus de 35 m, 80 quadros novos (índices 200 a 279) renderizados com o mesmo gerador; treino `armado_150g_e120` (120 épocas, paciência 30; parou na 80). Confusão por `06-resultados/confusao_armado.py` no val (`confusao_armado_150g_e120.json`) e nos 80 quadros novos (`extra_armado_150g_e120.json`); critério por `rodada5_criterios.py` (item M, salvo em `06-resultados/rodada5_criterios_M.json`): conf 0,25, d′ com correção log-linear, 1.000 reamostras de quadros, semente 0.
 
 - Validade (pelo menos metade das pessoas encontradas em qualquer classe, no val e nos novos): 0,606 (297 pessoas) e 0,663 (916). Válido; a rodada 4 tinha 0,498.
 - 150 m, val (27 quadros): armada chamada de armada 0,435; objeto chamado de armada 0,178 (IC 0,107 a 0,247); d′ 0,75 (IC 0,33 a 1,26).
@@ -469,7 +469,7 @@ Cadeia `07-blender/scripts/rodada5.py`, etapas M1 a M4 (plano 3.7); M5 a M8 (cor
 
 ## 2026-10-20 [DESKTOP] Rodada 5, grupo D (R5-4): ablação só com sol duro
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 180 quadros nadir a 150 m só com sol duro (mesma semente de cena e sítio do corpus de registro), treino `s_soldur_4k` com a receita da 7.6. Avaliação por regime nos 120 quadros de teste (20 por regime) por `06-resultados/por_regime.py --por-quadro`, para o especialista (`06-resultados/por_regime_s_soldur_4k.json`) e para o generalista S-nadir-150 reavaliado (`06-resultados/por_regime_s_nadir_4k_r5.json`). Comparações do critério por `06-resultados/rodada5_grupo_d.py` (recall a conf 0,25 em imagem inteira, 2.000 reamostras de quadros, semente 0).
+Cadeia `03-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 180 quadros nadir a 150 m só com sol duro (mesma semente de cena e sítio do corpus de registro), treino `s_soldur_4k` com a receita da 7.6. Avaliação por regime nos 120 quadros de teste (20 por regime) por `06-resultados/por_regime.py --por-quadro`, para o especialista (`06-resultados/por_regime_s_soldur_4k.json`) e para o generalista S-nadir-150 reavaliado (`06-resultados/por_regime_s_nadir_4k_r5.json`). Comparações do critério por `06-resultados/rodada5_grupo_d.py` (recall a conf 0,25 em imagem inteira, 2.000 reamostras de quadros, semente 0).
 
 | Regime | mAP50 especialista (só sol duro) | mAP50 generalista (seis regimes) | recall especialista | recall generalista |
 |---|---|---|---|---|
@@ -487,7 +487,7 @@ Cadeia `07-blender/scripts/rodada5.py`, etapas D1 a D5 (plano 3.6). Corpus de 18
 
 ## 2026-10-20 [DESKTOP] Rodada 5, grupo A (R5-3): curva de aprendizado sobre o número de quadros
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas A1 a A10 (plano 3.5). Subconjuntos encaixados dos 152 quadros de treino de S-oblique-six, estratificados por sítio (`06-resultados/curva_subconjuntos.json`: 182, 341, 503 e 696 ladrilhos); mesma validação; 60 épocas; zero-shot em `06-resultados/sim2real_s_oblvar_c*.json`.
+Cadeia `03-blender/scripts/rodada5.py`, etapas A1 a A10 (plano 3.5). Subconjuntos encaixados dos 152 quadros de treino de S-oblique-six, estratificados por sítio (`06-resultados/curva_subconjuntos.json`: 182, 341, 503 e 696 ladrilhos); mesma validação; 60 épocas; zero-shot em `06-resultados/sim2real_s_oblvar_c*.json`.
 
 | Quadros de treino | mAP50 no VisDrone (sementes) | Média | Faixa |
 |---|---|---|---|
@@ -505,7 +505,7 @@ Leituras disponíveis agora (a de intervalo pareado sai no fechamento, Y3):
 
 ## 2026-10-19 [DESKTOP] Rodada 5, grupos F (R5-5), N (R5-6) e Y1: ajuste fino por cronograma, HERIDAL e critérios
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas F0 a F16, N1 a N3 e Y1 (plano `07-blender/PLANO-RODADA5.md`, 3.2 a 3.4). Vereditos em `06-resultados/rodada5_criterios.json` (`06-resultados/rodada5_criterios.py --parte prioridade`); escolha de cronograma em `06-resultados/rodada5_ft_selecao.json`; zero-shot em `06-resultados/sim2real_<run>.json`; reamostragem em `06-resultados/revisao-2026-10-17/bootstrap_visdrone_r5.md`, `resolvivel_r5.md`, `bootstrap_heridal.md` e `bootstrap_heridal_1280.md`.
+Cadeia `03-blender/scripts/rodada5.py`, etapas F0 a F16, N1 a N3 e Y1 (plano `03-blender/PLANO-RODADA5.md`, 3.2 a 3.4). Vereditos em `06-resultados/rodada5_criterios.json` (`06-resultados/rodada5_criterios.py --parte prioridade`); escolha de cronograma em `06-resultados/rodada5_ft_selecao.json`; zero-shot em `06-resultados/sim2real_<run>.json`; reamostragem em `06-resultados/revisao-2026-10-17/bootstrap_visdrone_r5.md`, `resolvivel_r5.md`, `bootstrap_heridal.md` e `bootstrap_heridal_1280.md`.
 
 **Grupo S, leituras de intervalo (Y1).** S-oblique menos S-nadir-150 na média de três sementes: +0,0419 (IC 0,0368 a 0,0470), razão 4,08 (3,44 a 4,64); passa em (a), (b) e (c). S-oblique-six contra S-oblique, três contra três: razão 1,74 (1,64 a 1,85), passa nas três. S-nadir-150-six contra S-nadir-150: razão 1,40 (1,07 a 1,50), passa em (b) e (c), não em (a). Eficácia na média: S-nadir-150 2,2% (1,9 a 2,5), S-oblique 8,8% (8,1 a 9,6).
 
@@ -520,7 +520,7 @@ Cadeia `07-blender/scripts/rodada5.py`, etapas F0 a F16, N1 a N3 e Y1 (plano `07
 
 Seleção no `sel` (mAP50-95), nunca no teste: o início sintético prefere o cronograma original nas duas fatias; o COCO prefere a taxa 0,0002 nas duas. Sementes 1 e 2 do ft05_coco_lr: 0,5963 e 0,5982. Comparação de interesse, cada início no cronograma que preferiu: a 5%, COCO 0,5897 (três sementes) contra sintético 0,4529 (três), +0,1369 (IC 0,1290 a 0,1465), 30,2% relativos, passa em (a), (b) e (c); a 10%, 0,6224 contra 0,5095, +0,1129 (IC 0,1044 a 0,1230), 22,2%, passa em (b). Veredito do critério: custo robusto ao cronograma. Congelar o extrator ou baixar a taxa piorou o início sintético em todas as células; no COCO, a taxa menor melhorou.
 
-**Grupo N (HERIDAL, base real nadir, 40 a 65 m).** Zenodo 5662351 (CC BY 3.0), 1.647 imagens e 3.229 pessoas, todas as anotadas (`07-blender/scripts/prepara_heridal.py --divisao todas`, contagens em `06-resultados/heridal_contagens.json`); imgsz casado 1152 pela regra dos rótulos (`06-resultados/escala_nadir.py`, `06-resultados/escala_heridal.json`), 1280 como medida secundária. R (treinado no VisDrone) faz 0,3185: protocolo interpretável (limiar 0,05).
+**Grupo N (HERIDAL, base real nadir, 40 a 65 m).** Zenodo 5662351 (CC BY 3.0), 1.647 imagens e 3.229 pessoas, todas as anotadas (`03-blender/scripts/prepara_heridal.py --divisao todas`, contagens em `06-resultados/heridal_contagens.json`); imgsz casado 1152 pela regra dos rótulos (`06-resultados/escala_nadir.py`, `06-resultados/escala_heridal.json`), 1280 como medida secundária. R (treinado no VisDrone) faz 0,3185: protocolo interpretável (limiar 0,05).
 
 | Grupo | mAP50, imgsz 1152 (IC 95%) | parcela de R | mAP50, imgsz 1280 |
 |---|---|---|---|
@@ -535,7 +535,7 @@ Principal (oblíquo menos nadir, três contra três): -0,0656 (IC -0,0840 a -0,0
 
 ## 2026-10-19 [DESKTOP] Rodada 5, grupo S (R5-1): sementes 1 e 2 de S-nadir-150 e S-oblique
 
-Cadeia `07-blender/scripts/rodada5.py`, etapas S1 a S7 (plano `07-blender/PLANO-RODADA5.md`, 3.1, critério fixado antes). Treinos com a receita da 7.6, corpus fixo, só a semente de treino muda: `train_yolo_win.py` com `--seed 1` e `--seed 2`. Zero-shot no VisDrone val por `07-blender/scripts/avalia_sim2real.py --weights <run>/weights/best.pt --real <visdrone val> --imgsz 1280 --out 06-resultados/sim2real_<run>.json`; regra oficial em `06-resultados/visdrone_oficial_iou.json`; predições por imagem em `06-resultados/revisao-2026-10-17/preds_visdrone_<run>.npz` (não versionadas).
+Cadeia `03-blender/scripts/rodada5.py`, etapas S1 a S7 (plano `03-blender/PLANO-RODADA5.md`, 3.1, critério fixado antes). Treinos com a receita da 7.6, corpus fixo, só a semente de treino muda: `train_yolo_win.py` com `--seed 1` e `--seed 2`. Zero-shot no VisDrone val por `03-blender/scripts/avalia_sim2real.py --weights <run>/weights/best.pt --real <visdrone val> --imgsz 1280 --out 06-resultados/sim2real_<run>.json`; regra oficial em `06-resultados/visdrone_oficial_iou.json`; predições por imagem em `06-resultados/revisao-2026-10-17/preds_visdrone_<run>.npz` (não versionadas).
 
 | Modelo | Semente 0 (já reportada) | Semente 1 | Semente 2 | Média | Faixa | Eficácia da média (R = 0,6311) |
 |---|---|---|---|---|---|---|
@@ -707,7 +707,7 @@ Leitura: o reconhecimento acompanha comprimento e silhueta, nao o modelo. O FAL 
 
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo C: corpus gemeo a 75 m pronto (C1, C2)
 
-Corpus `ds_armado_75g`: 200 quadros 4K com o comando que gerou `ds_armado_35` (64 samples, 12 a 24 pessoas, `--mistura 0.34 0.33 0.33`, `--porte-realista --fio-gsd --laje 0.75 --amostra-no-quadro`, `--climas todos`), mudando so a altura: `--alt 75 --alt-jitter 6` (argumentos `GEMEO75` de `07-blender/scripts/rodada3.py`). Render medio 124 s por quadro. 2.257 caixas (735 armada, 730 desarmada, 792 objeto), contra 2.223 do `ds_armado_35` (777, 706, 740).
+Corpus `ds_armado_75g`: 200 quadros 4K com o comando que gerou `ds_armado_35` (64 samples, 12 a 24 pessoas, `--mistura 0.34 0.33 0.33`, `--porte-realista --fio-gsd --laje 0.75 --amostra-no-quadro`, `--climas todos`), mudando so a altura: `--alt 75 --alt-jitter 6` (argumentos `GEMEO75` de `03-blender/scripts/rodada3.py`). Render medio 124 s por quadro. 2.257 caixas (735 armada, 730 desarmada, 792 objeto), contra 2.223 do `ds_armado_35` (777, 706, 740).
 
 Forma (`python mede_forma.py`, `forma_corpora.json`): pessoa armada com mediana 48,1 x 42,7 px, igual a `ds_armado_75` (48,1 x 42,5) e cerca de 2,5 vezes menor em cada lado que `ds_armado_35` (122,3 x 107,7); h/w de todas as caixas 0,87 (75 m original 0,88; 35 m 0,84). Ladrilhos (`tile_dataset.py --tile 1280 --overlap 0.2`): 1.287 de treino e 176 de validacao (24 quadros), contra 1.166 e 242 do 35 m.
 
@@ -734,11 +734,11 @@ D1 (`prepara_ft.py`, `C:\arma3-favela\visdrone\ft\fatias.json`): do treino do Vi
 
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 5% a partir do sintetico (D2)
 
-`ft05_sint` (etapa D2 de `07-blender/scripts/rodada3.py`): pesos `s_oblvar` (S-oblique-six) ajustados na fatia de 5% do VisDrone (324 imagens de treino), 30 epocas, yolo11s, 1280, batch 6, single_cls, selecao na fatia `sel` (324 imagens disjuntas). mAP50 na selecao (`runs/detect/ft05_sint/results.csv`): 0,159 na epoca 1, 0,251 na 5, 0,320 na 10, 0,378 na 20 e **0,396 na 30** (melhor, ainda subindo); mAP50-95 0,148. E numero de selecao, nao de teste: o teste no val inteiro do VisDrone e a etapa D6 (`ft_visdrone.json`). A comparacao com o braco COCO (D3) entra junto com ele.
+`ft05_sint` (etapa D2 de `03-blender/scripts/rodada3.py`): pesos `s_oblvar` (S-oblique-six) ajustados na fatia de 5% do VisDrone (324 imagens de treino), 30 epocas, yolo11s, 1280, batch 6, single_cls, selecao na fatia `sel` (324 imagens disjuntas). mAP50 na selecao (`runs/detect/ft05_sint/results.csv`): 0,159 na epoca 1, 0,251 na 5, 0,320 na 10, 0,378 na 20 e **0,396 na 30** (melhor, ainda subindo); mAP50-95 0,148. E numero de selecao, nao de teste: o teste no val inteiro do VisDrone e a etapa D6 (`ft_visdrone.json`). A comparacao com o braco COCO (D3) entra junto com ele.
 
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 5% a partir do COCO (D3)
 
-`ft05_coco` (etapa D3 de `07-blender/scripts/rodada3.py`): `yolo11s.pt` (COCO) ajustado na mesma fatia de 5% do VisDrone (324 imagens), com a receita do D2 (30 epocas, 1280, batch 6, single_cls, selecao em `sel`). mAP50 na selecao (`runs/detect/ft05_sint/results.csv` e `runs/detect/ft05_coco/results.csv`):
+`ft05_coco` (etapa D3 de `03-blender/scripts/rodada3.py`): `yolo11s.pt` (COCO) ajustado na mesma fatia de 5% do VisDrone (324 imagens), com a receita do D2 (30 epocas, 1280, batch 6, single_cls, selecao em `sel`). mAP50 na selecao (`runs/detect/ft05_sint/results.csv` e `runs/detect/ft05_coco/results.csv`):
 
 | inicio | epoca 1 | 3 | 4 | 10 | 20 | melhor (epoca) | mAP50-95 no melhor |
 |---|---|---|---|---|---|---|---|
@@ -749,11 +749,11 @@ Leitura provisoria (selecao, nao teste): com 5% do VisDrone o inicio sintetico s
 
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino 10% a partir do sintetico (D4)
 
-`ft10_sint` (etapa D4 de `07-blender/scripts/rodada3.py`): pesos `s_oblvar` ajustados na fatia de 10% do VisDrone (647 imagens, contem a de 5%), receita do D2. mAP50 na selecao (`runs/detect/ft10_sint/results.csv`): 0,180 na epoca 1, 0,383 na 10, 0,426 na 20 e **0,449 na 27** (melhor); mAP50-95 0,171. Leitura provisoria (selecao, nao teste): dobrar o dado real sobe o inicio sintetico de 0,396 para 0,449, ainda abaixo do inicio COCO com metade do dado (0,465 com 5%).
+`ft10_sint` (etapa D4 de `03-blender/scripts/rodada3.py`): pesos `s_oblvar` ajustados na fatia de 10% do VisDrone (647 imagens, contem a de 5%), receita do D2. mAP50 na selecao (`runs/detect/ft10_sint/results.csv`): 0,180 na epoca 1, 0,383 na 10, 0,426 na 20 e **0,449 na 27** (melhor); mAP50-95 0,171. Leitura provisoria (selecao, nao teste): dobrar o dado real sobe o inicio sintetico de 0,396 para 0,449, ainda abaixo do inicio COCO com metade do dado (0,465 com 5%).
 
 ## 2026-09-26 [DESKTOP] Rodada 3, grupo D: ajuste fino no VisDrone, teste (D5, D6); rodada encerrada
 
-`ft10_coco` (D5): `yolo11s.pt` ajustado na fatia de 10% (647 imagens) com a receita do D2; melhor mAP50 na selecao 0,507 (epoca 30). D6 (`ft_resumo` de `07-blender/scripts/rodada3.py`): os quatro melhores pesos avaliados no val inteiro do VisDrone com o protocolo do R pareado (`avalia_sim2real.py`, conf 0,001, imgsz 1280). Resumo em `ft_visdrone.json`, metricas completas em `sim2real_ft05_sint.json`, `sim2real_ft05_coco.json`, `sim2real_ft10_sint.json`, `sim2real_ft10_coco.json`; curvas de selecao em `ft_curvas_selecao.json` (`python ft_curvas.py`).
+`ft10_coco` (D5): `yolo11s.pt` ajustado na fatia de 10% (647 imagens) com a receita do D2; melhor mAP50 na selecao 0,507 (epoca 30). D6 (`ft_resumo` de `03-blender/scripts/rodada3.py`): os quatro melhores pesos avaliados no val inteiro do VisDrone com o protocolo do R pareado (`avalia_sim2real.py`, conf 0,001, imgsz 1280). Resumo em `ft_visdrone.json`, metricas completas em `sim2real_ft05_sint.json`, `sim2real_ft05_coco.json`, `sim2real_ft10_sint.json`, `sim2real_ft10_coco.json`; curvas de selecao em `ft_curvas_selecao.json` (`python ft_curvas.py`).
 
 | dado real | inicio | P | R | mAP50 | mAP50-95 | eficacia vs R pareado (0,6311) |
 |---|---|---|---|---|---|---|
@@ -768,7 +768,7 @@ Rodada 3 encerrada em 26/09 17:54, sem grupo com falha. Todos os `[X]` da rodada
 
 ## 2026-09-30 [DESKTOP] Rodada 4 (27 a 30/09): resultados e criterios
 
-Cadeia `07-blender/scripts/rodada4.py`, plano e criterios fixados antes do primeiro resultado em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9). Disparada em 27/09 11:31, encerrada em 30/09 10:25 sem grupo com falha, com quatro pausas do autor. Os criterios foram aplicados por `python rodada4_criterios.py` (saida `rodada4_criterios.json`), que so le arquivos desta pasta.
+Cadeia `03-blender/scripts/rodada4.py`, plano e criterios fixados antes do primeiro resultado em `03-blender/PLANO-RODADA4.md` (commit 6ebbaa9). Disparada em 27/09 11:31, encerrada em 30/09 10:25 sem grupo com falha, com quatro pausas do autor. Os criterios foram aplicados por `python rodada4_criterios.py` (saida `rodada4_criterios.json`), que so le arquivos desta pasta.
 
 ### K. VisDrone pela regra oficial e a IoU 0,50/0,60/0,75 (10.6), armados a IoU 0,60 e 0,75, escala casada (10.2)
 
@@ -870,17 +870,17 @@ A revisao geral de 30/09 (tres revisores: numeros, logica, forma) conferiu contr
 
 | No texto | Valor | Origem |
 |---|---|---|
-| 7.2, vao entre lotes | 0 com p 0,82; 0,5 a 1,2 m com p 0,12; 1,3 a 2,0 m com p 0,052; 2,3 a 3,1 m com p 0,008 | `07-blender/scripts/gen_morro.py`, funcao `folga()` (limiares 0,82, 0,94 e 0,992 sobre `rng.random()`) |
+| 7.2, vao entre lotes | 0 com p 0,82; 0,5 a 1,2 m com p 0,12; 1,3 a 2,0 m com p 0,052; 2,3 a 3,1 m com p 0,008 | `03-blender/scripts/gen_morro.py`, funcao `folga()` (limiares 0,82, 0,94 e 0,992 sobre `rng.random()`) |
 | 10.4, camera obliqua | 120 m com variacao de ate 36 m para cada lado | `gen_morro.py`, bloco `if args.obliqua`: `alt = 60 x res/1920` e `alt_jitter = 18 x res/1920`; em 4K (3840) da 120 e 36 |
 | 8.2 e figura do nadir contra obliquo | h/w mediana 1,58 dos sem arma no corpus obliquo (1,46 em todas), tabela por pitch, 0,98 no nadir | `forma_corpora.json` (`ds_morro_obl/por_classe`, `ds_morro_obl/por_pitch`), `python mede_forma.py` |
 | 9.1, pessoas nas imagens | 2.659 caixas nos 149 quadros de treino do corpus de referencia (3.225 nos 180); 18.858 pessoas nas 1.106 imagens de R | `alvo_por_split.json` (`ds_morro_4k/train`, `ds_morro_4k/todos`, `visdrone_sub/train`), `python mede_alvo_split.py` |
-| 9.1 e tabela de protocolo, modelo R | 1.106 imagens sorteadas com semente 21; 60 epocas, batch 6, imgsz 1280, patience 15, semente de treino 0, as 60 epocas completas | sorteio: `monta_subamostra()` em `07-blender/scripts/fila_noite.py` (`random.Random(21).sample`, N = ladrilhos de treino do corpus de referencia); treino: `runs/detect/r_pareado/args.yaml` e `results.csv` (60 linhas) |
+| 9.1 e tabela de protocolo, modelo R | 1.106 imagens sorteadas com semente 21; 60 epocas, batch 6, imgsz 1280, patience 15, semente de treino 0, as 60 epocas completas | sorteio: `monta_subamostra()` em `03-blender/scripts/fila_noite.py` (`random.Random(21).sample`, N = ladrilhos de treino do corpus de referencia); treino: `runs/detect/r_pareado/args.yaml` e `results.csv` (60 linhas) |
 | 9.0, receita do piloto | ladrilho e entrada de 640 px, orcamento de 120 epocas, patience 15, batch 8, duas classes; parada antecipada na epoca 24 | `runs/detect/morro_clima_s/args.yaml` (`imgsz: 640`, `epochs: 120`, `patience: 15`, `batch: 8`, `data: ds_morro_clima_tiles`) e `results.csv` (24 linhas) |
 | 7.5 e 11.3, elevacao do sol | 46 a 74 graus no hard sun, 9 a 25 no low sun | `gen_morro.py`, dicionario de regimes (`elev=(46, 74)` e `elev=(9, 25)`, desde o commit 6c604f6 de 20/09); realizado no corpus de referencia 47,2 a 74,0 e 9,1 a 24,9, e nos quadros do teste por regime 47,1 a 71,5 e 10,8 a 25,0 (campo `elev` dos manifests de `ds_morro_4k` e `ds_regime_4k`) |
 | 7.6, validacao | 24 a 35 quadros por corpus | entrada de 26/09 acima (vals de 24 a 35 imagens) e `alvo_por_split.json` (31 no corpus de referencia) |
 | 9.5, pessoas por quadro | 14 a 30 | entrada do teste de arma inedita acima (comando do `ds_armado_75`) |
 
-Figura 5 refeita com rotulos em Arial (a fonte bitmap padrao do PIL comia os espacos): `python ../07-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2 --larg 900 --zoom 5 --seed 1 --en --out figuras/fig5_anotacao.jpg`.
+Figura 5 refeita com rotulos em Arial (a fonte bitmap padrao do PIL comia os espacos): `python ../03-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2 --larg 900 --zoom 5 --seed 1 --en --out figuras/fig5_anotacao.jpg`.
 
 ## 2026-09-30 [DESKTOP] Refino do artigo: origem das tabelas e figuras novas
 

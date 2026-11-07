@@ -1,5 +1,5 @@
 {
- "plano": "07-blender/PLANO-RODADA5.md",
+ "plano": "03-blender/PLANO-RODADA5.md",
  "parte": "tudo",
  "R5-1_sementes_S": {
   "principal_S-oblique_menos_S-nadir-150": {
@@ -736,7 +736,7 @@
   },
   "imgsz_casado": {
    "tag": "heridal",
-   "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+   "plano": "03-blender/PLANO-RODADA5.md, secao 3.3",
    "bootstrap": {
     "reamostras": 1000,
     "semente": 0,
@@ -1077,7 +1077,7 @@
   },
   "imgsz_1280": {
    "tag": "heridal_1280",
-   "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+   "plano": "03-blender/PLANO-RODADA5.md, secao 3.3",
    "bootstrap": {
     "reamostras": 1000,
     "semente": 0,

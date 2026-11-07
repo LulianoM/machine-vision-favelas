@@ -2,7 +2,7 @@
 """
 rodada5.py: a rodada 5 (partida em 19/10/2026), em uma cadeia so, idempotente e retomavel.
 
-Desenho, criterios fixados antes de rodar e custo em 07-blender/PLANO-RODADA5.md (secoes 2 a 6). Molde
+Desenho, criterios fixados antes de rodar e custo em 03-blender/PLANO-RODADA5.md (secoes 2 a 6). Molde
 das rodadas 3 e 4: cada etapa tem um arquivo de prova e, se ele existe, a etapa e pulada; render retoma
 pelo numero de linhas do manifest (--start); treino retoma do last.pt e so conta como feito com
 TREINO_OK (o best.pt existe desde a primeira epoca e nao serve de prova). Uma trava (fila5/rodada5.trava,

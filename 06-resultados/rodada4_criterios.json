@@ -1,5 +1,5 @@
 {
- "plano": "07-blender/PLANO-RODADA4.md",
+ "plano": "03-blender/PLANO-RODADA4.md",
  "10.6_iou_e_visdrone_oficial": {
   "pares": {
    "padrao_ultralytics: r_pareado - s_oblvar": {

@@ -555,7 +555,7 @@ Notas:
 
 5) Detecção em imagem real. Não encontrei estudo que isole sol duro contra encoberto para pessoas vistas do ar; os indícios (UAVDT, DroneCrowd) estão confundidos com cena, densidade, tarefa ou classe. Um teste real possível: usar os rótulos Sunny e Cloudy do DroneCrowd, com a ressalva de cena, ou rotular a iluminação de parte do VisDrone test-dev.
 
-6) Faixa de elevação solar. A faixa de cada regime não está no artigo. Pelo 07-blender/scripts/gen_morro.py: sol_duro de 46 a 74° com disco de 0,6°; sol_baixo de 9 a 25° com disco de 0,9°.
+6) Faixa de elevação solar. A faixa de cada regime não está no artigo. Pelo 03-blender/scripts/gen_morro.py: sol_duro de 46 a 74° com disco de 0,6°; sol_baixo de 9 a 25° com disco de 0,9°.
 - Se a seção 7.5 declarar essas faixas, o texto pode dizer que o hard sun cai na faixa exigida e perto da 'ideal' da NGS (40 a 60°).
 - Pode dizer também que o low sun, que empatou com o encoberto (0,790 contra 0,791), fica abaixo do mínimo da NGS (30°) e em parte abaixo do da RICS (15°). É a frase opcional marcada na 11.3.
 - O empate do low sun também pesa sobre o mecanismo: um sol direto baixo, com sombra longa, não prejudicou. Há duas hipóteses a testar: com o sol alto, a sombra do fundo fica fragmentada; com o sol baixo, a sombra longa da própria pessoa ajuda, como em Reilly et al. (2010).

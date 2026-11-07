@@ -14,7 +14,7 @@ PYV=/c/arma3-favela/venv/Scripts/python.exe
 RAIZ=/c/arma3-favela/blender
 LOGV=$RAIZ/vigia3.log
 relanca() {
-  powershell -NoProfile -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\07-blender\scripts\rodada3.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\rodada3.out' -RedirectStandardError 'C:\arma3-favela\blender\rodada3.err' -WindowStyle Hidden" >/dev/null 2>&1
+  powershell -NoProfile -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\03-blender\scripts\rodada3.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\rodada3.out' -RedirectStandardError 'C:\arma3-favela\blender\rodada3.err' -WindowStyle Hidden" >/dev/null 2>&1
 }
 echo "$(date '+%F %T') vigia iniciado" >> $LOGV
 while true; do

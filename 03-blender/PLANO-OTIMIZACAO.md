@@ -73,6 +73,6 @@ uma execução interrompida continue de onde parou em vez de recomeçar. É o it
 
 ## Como validar que a otimização não estragou nada
 
-Rodar `07-blender/scripts/teste_fidelidade.py` antes e depois sobre a mesma semente, e exigir que
+Rodar `03-blender/scripts/teste_fidelidade.py` antes e depois sobre a mesma semente, e exigir que
 nenhuma das dez métricas saia da faixa. A névoa e a contagem de amostras mexem diretamente em
 contraste, meio-tom e B/R da sombra, que são três dessas métricas.

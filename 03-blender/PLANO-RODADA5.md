@@ -10,7 +10,7 @@ quê. Nada foi lançado, treinado ou renderizado ao escrever este plano.
 Fontes dos números: tempos unitários de `06-resultados/revisao-2026-10-17/custo-rodada5.md` e
 `checkpoints.md`; leituras de resolubilidade de `resolvivel.md` e `bootstrap_visdrone.md`; bases
 reais de `04-bibliografia/benchmarks-nadir-2026-10-17.md`; comandos de `06-resultados/RESULTADOS.md`
-e de `07-blender/scripts/rodada3.py` e `rodada4.py`; protocolo do artigo nas seções 4.6 e 4.7 de
+e de `03-blender/scripts/rodada3.py` e `rodada4.py`; protocolo do artigo nas seções 4.6 e 4.7 de
 `01-artigo/manuscrito/s4-materials-methods.md`. Toda estimativa minha está marcada como estimativa.
 
 ## 1. Resumo: ordem, horas e o que cada grupo fecha
@@ -47,7 +47,7 @@ ficam mais lentos, `custo-rodada5.md`). As pausas do autor somam-se à parede: a
 PY   = C:\arma3-favela\venv\Scripts\python.exe        (Ultralytics 8.4.148, PyTorch 2.14)
 BL   = C:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe
 RAIZ = C:\arma3-favela\blender                       (diretório de trabalho de todo comando)
-SCR  = C:\projetos\machine-vision-favelas\07-blender\scripts
+SCR  = C:\projetos\machine-vision-favelas\03-blender\scripts
 RES  = C:\projetos\machine-vision-favelas\06-resultados
 REV  = RES\revisao-2026-10-17
 VIS  = C:\arma3-favela\visdrone\visdrone_yolo\data.yaml
@@ -562,17 +562,17 @@ semente, `varios`, provas `.ok`):
 
 | Novo | Copiar de | O que muda |
 |---|---|---|
-| `07-blender/scripts/rodada5.py` | `rodada3.py` (estrutura, trava, laço, estado) com as primitivas de `rodada4.py` | `FILA = fila5`, `rodada5.log`, `rodada5.trava`; `ETAPAS` dos grupos P, S, F, N, Y1, A, D, M, C, Y2; `treina()` ganha `extra` (flags) e `paciencia`; funções `preflight`, `monta_curva`, `junta_oblvar(semente, dst)`, `junta_150_600`, `selecao_ft`, `validade_150`; estados `aguardando_dado` e `dispensada` |
-| `07-blender/scripts/supervisiona_rodada5.py` | `supervisiona_rodada3.py` | 3 para 5 em nomes, fila, log (`vigia5.log`), atalho e título; `PARADO_S = 60 min`; `mata_cadeia` também mata `confusao_armado.py`, `por_regime.py`, `visdrone_preds.py`, `preds_nadir.py`, `avalia_sim2real.py` |
-| `07-blender/scripts/pausa_rodada5.py` | `pausa_rodada3.py` | nomes; lista de processos com `por_regime.py`, `visdrone_preds.py`, `preds_nadir.py`, `avalia_visdrone_oficial.py`, `rodada5_criterios.py` |
-| `07-blender/scripts/status_rodada5.py` | `status_rodada3.py` | `import rodada5 as R`; segundos por quadro: D1 183, M1 e M5 128, C1 e C5 200; segundos por época: S1 e S3 240, S2 e S4 206, F a 5% 98, F a 10% 184, A proporcional a 198, D3 240, M2 261, M7 780, C3 e C7 198; diretórios de render de D1, M1, M5, C1, C5 |
-| `07-blender/scripts/retoma_rodada5.cmd` | `retoma_rodada3.cmd` | nomes e título da janela |
+| `03-blender/scripts/rodada5.py` | `rodada3.py` (estrutura, trava, laço, estado) com as primitivas de `rodada4.py` | `FILA = fila5`, `rodada5.log`, `rodada5.trava`; `ETAPAS` dos grupos P, S, F, N, Y1, A, D, M, C, Y2; `treina()` ganha `extra` (flags) e `paciencia`; funções `preflight`, `monta_curva`, `junta_oblvar(semente, dst)`, `junta_150_600`, `selecao_ft`, `validade_150`; estados `aguardando_dado` e `dispensada` |
+| `03-blender/scripts/supervisiona_rodada5.py` | `supervisiona_rodada3.py` | 3 para 5 em nomes, fila, log (`vigia5.log`), atalho e título; `PARADO_S = 60 min`; `mata_cadeia` também mata `confusao_armado.py`, `por_regime.py`, `visdrone_preds.py`, `preds_nadir.py`, `avalia_sim2real.py` |
+| `03-blender/scripts/pausa_rodada5.py` | `pausa_rodada3.py` | nomes; lista de processos com `por_regime.py`, `visdrone_preds.py`, `preds_nadir.py`, `avalia_visdrone_oficial.py`, `rodada5_criterios.py` |
+| `03-blender/scripts/status_rodada5.py` | `status_rodada3.py` | `import rodada5 as R`; segundos por quadro: D1 183, M1 e M5 128, C1 e C5 200; segundos por época: S1 e S3 240, S2 e S4 206, F a 5% 98, F a 10% 184, A proporcional a 198, D3 240, M2 261, M7 780, C3 e C7 198; diretórios de render de D1, M1, M5, C1, C5 |
+| `03-blender/scripts/retoma_rodada5.cmd` | `retoma_rodada3.cmd` | nomes e título da janela |
 | atalho `retoma_rodada5.lnk` na pasta Inicializar | o da rodada 3 | é configuração persistente: só com o OK do autor; o supervisor o apaga no fim |
 | `06-resultados/rodada5_criterios.py` | `rodada4_criterios.py` | as regras deste plano; `--parte prioridade` ou `tudo`; só lê arquivos de `06-resultados` |
 | `06-resultados/revisao-2026-10-17/preds_nadir.py` | `visdrone_preds.py` | `--data`, `--tag`, `--imgsz`; saída `preds_<tag>_<run>.npz` e `<tag>_reproducao.json` |
 | `06-resultados/revisao-2026-10-17/bootstrap_nadir.py` | `bootstrap_visdrone.py` | `--tag`; pares da seção 3.3; 1.000 reamostras, semente 0 |
 | `06-resultados/escala_nadir.py` | `escala_casada.py` | `--data`, `--alvo 20.55`; só rótulos e tamanhos de imagem |
-| `07-blender/scripts/prepara_heridal.py` | novo | VOC para YOLO, classe única; contagens de imagens e caixas; roda com `-I`, fora da pasta baixada |
+| `03-blender/scripts/prepara_heridal.py` | novo | VOC para YOLO, classe única; contagens de imagens e caixas; roda com `-I`, fora da pasta baixada |
 
 ### 4.2 Scripts a modificar (compatíveis para trás: o padrão é o comportamento de hoje)
 

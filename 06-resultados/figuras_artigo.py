@@ -13,7 +13,7 @@ da PCERJ), a pedido do autor em 30/09.
                           camera obliqua (S-oblique), com recortes de pessoas sem arma de cada um
 
 Figuras 2 e 4 refeitas com rotulos em ingles a partir das mesmas imagens de 20/09. A figura 5 sai de
-07-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2
+03-blender/scripts/previa_dataset.py --ds C:/arma3-favela/blender/ds_morro_clima --n 4 --cols 2
 --larg 900 --zoom 5 --seed 1 --en --out figuras/fig5_anotacao.jpg (a semente 1 reproduz os quatro
 quadros da versao de 20/09).
 

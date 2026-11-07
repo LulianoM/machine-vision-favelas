@@ -4,7 +4,7 @@ rodada6.py: a rodada 6 (partida em 04/11/2026), em uma cadeia so, idempotente e 
 08-conferencia/versao-curta/O-QUE-FALTA-NO-SERVIDOR.md pede para o desktop, menos o item 8 (arma na mao),
 que entrou como grupo H depois da conferencia visual (ver abaixo).
 
-Desenho, criterios fixados antes e custo em 07-blender/PLANO-RODADA6.md. Molde da rodada 5: cada etapa
+Desenho, criterios fixados antes e custo em 03-blender/PLANO-RODADA6.md. Molde da rodada 5: cada etapa
 tem um arquivo de prova e, se ele existe, a etapa e pulada; render retoma pelo manifest (--start); treino
 retoma do last.pt e so conta como feito com TREINO_OK. Trava fila6/rodada6.trava; PAUSA em fila6/PAUSA.
 Duas tentativas por etapa; se uma etapa falha, o resto do grupo e pulado e os outros grupos seguem.

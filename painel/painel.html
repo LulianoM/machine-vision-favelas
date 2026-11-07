@@ -291,7 +291,7 @@ Trabalhe em fases e pare nos pontos marcados PARE para eu aprovar.
 Não copie nem altere nada ainda. Se houver treino, captura ou avaliação rodando agora, não interrompa. Levante e me mostre:
 
 1. Árvore da pasta de trabalho atual com tamanho por subpasta, e se ela já é um repositório git próprio (se for: quantos commits, branch, se há remoto).
-2. Código: para cada arquivo de `03-arma3/scripts/`, se é igual, alterado ou novo em relação ao que está no clone (lá estão os originais de 11/09). Liste também scripts e notebooks fora dessa pasta.
+2. Código: para cada arquivo de `02-projeto-ufrj-2022/arma3-2022/scripts/`, se é igual, alterado ou novo em relação ao que está no clone (lá estão os originais de 11/09). Liste também scripts e notebooks fora dessa pasta.
 3. Dados: cada dataset (caminho, tamanho, número de imagens e de rótulos, classes, splits, convenção de anotação modal ou amodal, data), screenshots brutas do ARMA, arquivos `.rpt`, missão do ARMA 3 (caminho da pasta da missão e dos `.sqf` em uso).
 4. Treino: cada run (caminho, data, modelo base, épocas, imgsz, batch, tempo de treino, GPU), onde estão os pesos `best.pt` e `last.pt`, e as métricas finais que constam em arquivo (`results.csv`, saída de `val`).
 5. Avaliação sim-to-real: o que já foi medido no VisDrone ou em qualquer imagem real (zero-shot, fine-tuning com fração de dado real, sintético mais real), com o arquivo que comprova cada número.
@@ -305,7 +305,7 @@ PARE. Me mostre o inventário resumido em tabelas e espere meu OK.
 
 Monte e me mostre uma tabela de divergências entre o que existe aqui e o que o repositório afirma. Regras de precedência:
 
-- Experimento, código, pipeline, datasets, treino, métricas e ambiente: o DESKTOP prevalece. O que está em `03-arma3/` no clone são os originais de 11/09; suas versões sobrescrevem e o git guarda a diferença.
+- Experimento, código, pipeline, datasets, treino, métricas e ambiente: o DESKTOP prevalece. O que está em `02-projeto-ufrj-2022/arma3-2022/` no clone são os originais de 11/09; suas versões sobrescrevem e o git guarda a diferença.
 - Estrutura de pastas, protocolo de sessão, regras do `CLAUDE.md`, manuscrito por seção e `PENDENCIAS.md`: o REPOSITÓRIO prevalece. O conteúdo daqui se encaixa na estrutura de lá. Se algo não couber (cenas 3D, recortes da ortofoto do IPP, dados GIS), proponha pasta numerada nova, por exemplo `07-cenas-3d/` ou `08-dados-ipp/`, com README de manifesto e os arquivos pesados fora do git.
 - Conhecimento e pesquisa: vale a união. Onde a pesquisa daqui confirmar, ampliar ou contradisser `docs/CONTEXTO.md` ou `05-levantamento-3d/`, não sobrescreva em silêncio. Registre em `docs/DIVERGENCIAS.md`: o que o Mac afirma, o que o desktop encontrou, a evidência de cada lado, e a sua recomendação. Eu decido.
 - Afirmações do repositório que ficaram falsas porque você avançou devem ser corrigidas: `STATUS.md` (seção Experimento e Bloqueios), a frase "As classes atuais são pessoas vistas de cima" em `docs/CONTEXTO.md` se não for mais verdade, os itens C5 e D4 de `01-artigo/PENDENCIAS.md`, e o painel.
@@ -316,7 +316,7 @@ PARE. Me mostre a tabela de divergências e o plano de cópia (origem, destino, 
 
 ## Fase 3. Executar
 
-1. Código para `03-arma3/scripts/` (e subpastas que fizerem sentido). Se os scripts têm caminho absoluto da pasta antiga embutido, não conserte agora: liste em `docs/DIVERGENCIAS.md` e proponha a correção (variável de ambiente ou arquivo de configuração) para depois.
+1. Código para `02-projeto-ufrj-2022/arma3-2022/scripts/` (e subpastas que fizerem sentido). Se os scripts têm caminho absoluto da pasta antiga embutido, não conserte agora: liste em `docs/DIVERGENCIAS.md` e proponha a correção (variável de ambiente ou arquivo de configuração) para depois.
 2. `06-resultados/RESULTADOS.md`: traga o que existir e acrescente no topo uma "Ficha do experimento para o artigo" com: datasets (imagens, rótulos, classes, splits, convenção de anotação), parâmetros de randomização da cena, modelo e hiperparâmetros, hardware e tempo de treino, métricas no sintético, métricas em imagem real (zero-shot, com fração de real, sintético mais real). Cada número com o arquivo de origem e o comando que o gerou. Número que só existir em conversa ou na sua memória e não em arquivo: regenere com `yolo val` se for barato, senão marque `[SEM ARQUIVO DE ORIGEM]` e não o use.
 3. `06-resultados/&lt;nome-do-run&gt;/` para cada run relevante: `args.yaml`, `results.csv`, gráficos PNG e até 10 previews com caixas. Nada de pesos.
 4. `06-resultados/ONDE-ESTAO-OS-DADOS.md`: caminho absoluto, tamanho, data e SHA256 de cada arquivo de pesos; caminho, tamanho e contagem de cada dataset. É o que permite ao outro lado saber o que existe sem receber o arquivo.
@@ -369,7 +369,7 @@ Me diga o que é preciso para passar a trabalhar só em `C:\projetos\machine-vis
     </div>
     <div class="log">
       <span class="when">2026-09-18 · [DESKTOP]</span>
-      <p>Reconciliação com o repositório. Inventário da pasta real do desktop (44 GB). Descoberto: o experimento rodou em Blender e não no ARMA 3; três dos quatro braços usam fotogrametria de dado sensível, que não saiu do desktop; as classes são pessoa armada e desarmada; nenhum teste em imagem real existe; a pesquisa a partir do e-mail de 12/09 não foi feita lá. Publicados: <code>07-blender/</code>, <code>06-resultados/</code> com ficha do experimento e 5 runs, <code>docs/DIVERGENCIAS.md</code> com 14 itens (4 abertos para o autor), ambiente e contexto. Três citações conferidas no Crossref e no arXiv.</p>
+      <p>Reconciliação com o repositório. Inventário da pasta real do desktop (44 GB). Descoberto: o experimento rodou em Blender e não no ARMA 3; três dos quatro braços usam fotogrametria de dado sensível, que não saiu do desktop; as classes são pessoa armada e desarmada; nenhum teste em imagem real existe; a pesquisa a partir do e-mail de 12/09 não foi feita lá. Publicados: <code>03-blender/</code>, <code>06-resultados/</code> com ficha do experimento e 5 runs, <code>docs/DIVERGENCIAS.md</code> com 14 itens (4 abertos para o autor), ambiente e contexto. Três citações conferidas no Crossref e no arXiv.</p>
     </div>
     <div class="log">
       <span class="when">2026-09-17 · [MAC]</span>

@@ -23,7 +23,7 @@ import statistics as st
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.normpath(os.path.join(AQUI, "..", "07-blender", "scripts")))
+sys.path.insert(0, os.path.normpath(os.path.join(AQUI, "..", "03-blender", "scripts")))
 
 import bpy  # noqa: E402
 import objetos_alongados as OA  # noqa: E402

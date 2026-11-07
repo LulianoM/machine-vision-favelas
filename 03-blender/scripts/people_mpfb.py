@@ -451,7 +451,7 @@ def make_person(rng, idx, x, y, z, armed, on_roof=False, pose=None, arma=None, c
     ocupa 18 px de comprimento por 1 px de largura, entao o que chega ao sensor e uma estrutura
     linear que quebra a silhueta, nao a forma da arma. Sem alguem carregando uma vassoura no
     corpus, a rede aprende que linha escura igual a armada, e a taxa de falso positivo real fica
-    sem medida. Ver 07-blender/PLANO-ARMADO.md."""
+    sem medida. Ver 03-blender/PLANO-ARMADO.md."""
     if classe is None:
         classe = 0 if armed else 1
     armed = (classe == 0)

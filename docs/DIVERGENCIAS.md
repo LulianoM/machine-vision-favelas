@@ -11,9 +11,9 @@ Estados: ABERTA (depende do autor), CORRIGIDA (era fato desatualizado, já acert
 **Decisão do autor (2026-09-20):** adotar o Blender como método do trabalho e do artigo. Razão dada: facilita a escrita e a criação dos scripts em Python, e é o caminho mais eficaz pelo que o levantamento mostrou. O ARMA 3 passa a constar como origem da ideia em 2022 (Fábio Guimarães, PCERJ) e como prior art via G-MAD, não como método executado. Falta aplicar no texto: `01-artigo/manuscrito/` (método e resultados) e `docs/CONTEXTO.md`.
 
 
-- Mac afirma: o experimento é o "pipeline ARMA 3 -> bounding box -> YOLO" (`CLAUDE.md`, `03-arma3/`, `docs/CONTEXTO.md`), e o levantamento de 12/09 recomenda "ARMA 3 + código do G-MAD" para quem prioriza publicar rápido.
+- Mac afirma: o experimento é o "pipeline ARMA 3 -> bounding box -> YOLO" (`CLAUDE.md`, `02-projeto-ufrj-2022/arma3-2022/`, `docs/CONTEXTO.md`), e o levantamento de 12/09 recomenda "ARMA 3 + código do G-MAD" para quem prioriza publicar rápido.
 - Desktop encontrou: o ARMA 3 foi tentado em 2026-09-11 e abandonado no mesmo dia. A missão `dsFavela.Tanoa` chegou a existir, mas nenhuma imagem foi capturada. Motivo registrado na nota do desktop: o jogo não expõe controles, a automação dependia de OCR e de cliques em primeiro plano. Todo o resto (5 treinos, 8 datasets) foi feito no Blender 5.2.1 headless, com anotação por projeção de vértices e oclusão por ray cast.
-- Evidência: 6 arquivos `.rpt` de 11/09 com zero linhas `DSIMG`/`DSLBL`; pasta `Documents\Arma 3\Screenshots` inexistente; `07-blender/README.md`; `docs/2026-09-12_nota-obsidian-desktop.md`.
+- Evidência: 6 arquivos `.rpt` de 11/09 com zero linhas `DSIMG`/`DSLBL`; pasta `Documents\Arma 3\Screenshots` inexistente; `03-blender/README.md`; `docs/2026-09-12_nota-obsidian-desktop.md`.
 - O que isso toca no artigo: a frase "dados sintéticos de motor de jogo", a Seção de resultados, o crédito ao Fábio e ao prof. Miceli (continua devido pela ideia de 2022, mas o método executado mudou), e a relação com o G-MAD (deixa de ser "mesmo método, publicado antes" e passa a ser "linhagem comum, método diferente").
 - Recomendação: descrever o Blender como o método executado; o ARMA 3 entra como origem da ideia em 2022 e como prior art (G-MAD). Não reescrever nada no manuscrito antes de o autor e o orientador decidirem.
 
@@ -26,14 +26,14 @@ como segunda amostra de estatística de rótulo, que é como a Seção 8 já o t
 
 - Mac afirma: a base de geometria recomendada é a ortofoto pública do IPP de 2024 (mais o LiDAR, se vier), justamente por não ser dado sensível (`docs/CONTEXTO.md`, `PENDENCIAS.md` D3). Os ortomosaicos da PCERJ não trafegam.
 - Desktop encontrou: as 567 fotos de drone da PCERJ (ago/2022) foram reprocessadas no OpenDroneMap e viraram a base de `dataset_odm`, `dataset_cid150`, `teste_angulos` e `teste_denso`, do mapa navegável e da quadra. Só o `dataset_v3` (OSM + Poly Haven) é livre de dado PCERJ. Nada disso saiu do desktop: a regra foi respeitada, mas o experimento depende do dado sensível.
-- Evidência: `07-blender/scripts/gen_odm.py` (malha ODM), `segmenta_predios.py` (lê `dsm.tif` e `odm_orthophoto.tif`), `build_cidade.py` (laje com foto do ortomosaico); `06-resultados/ONDE-ESTAO-OS-DADOS.md`.
+- Evidência: `03-blender/scripts/gen_odm.py` (malha ODM), `segmenta_predios.py` (lê `dsm.tif` e `odm_orthophoto.tif`), `build_cidade.py` (laje com foto do ortomosaico); `06-resultados/ONDE-ESTAO-OS-DADOS.md`.
 - Consequências: (a) as métricas podem ser citadas, as imagens não, então o artigo não pode ilustrar esses braços; (b) reprodutibilidade por terceiros é nula nesses braços; (c) é preciso confirmar com a PCERJ se publicar métrica derivada do dado é aceitável.
 - Recomendação: tratar `blender_v3_tiles2` (OSM) como o braço publicável e ilustrável; tratar os braços PCERJ como resultado interno que mostra o ganho de usar geometria real; e, quando a ortofoto do IPP for baixada, refazer a "cidade de sólidos" sobre ela para ter um braço de geometria real que seja aberto.
 
 ### [ ] 3. As classes são armada e desarmada (ABERTA, e virou frente de trabalho em 2026-09-20)
 
 **Direção do autor em 2026-09-20:** em vez de retirar a distinção do artigo, melhorá-la com
-modelagem e teste novos. Ver `07-blender/PLANO-ARMADO.md`.
+modelagem e teste novos. Ver `03-blender/PLANO-ARMADO.md`.
 
 - Mac afirmava: "As classes atuais são pessoas vistas de cima (reproduz 2022)".
 - Desktop encontrou: duas classes em todos os datasets, `pessoa_armada` e `pessoa_desarmada`, metade de cada.
@@ -77,7 +77,7 @@ modelagem e teste novos. Ver `07-blender/PLANO-ARMADO.md`.
 
 ### [x] 9. `train_yolo.py` original trava no Windows
 
-- Corrigido: `03-arma3/scripts/train_yolo.py` foi sobrescrito com a versão do desktop (`train_yolo_win.py`, tudo dentro de `if __name__ == "__main__"`). A mesma versão está em `07-blender/scripts/` com o nome que os `.sh` chamam.
+- Corrigido: `02-projeto-ufrj-2022/arma3-2022/scripts/train_yolo.py` foi sobrescrito com a versão do desktop (`train_yolo_win.py`, tudo dentro de `if __name__ == "__main__"`). A mesma versão está em `03-blender/scripts/` com o nome que os `.sh` chamam.
 
 ## C. Informação nova, sem conflito
 
@@ -97,17 +97,17 @@ As 567 fotos são todas em nadir a 150 m. Não há textura de fachada: o mapa se
 
 Os scripts foram copiados como estão. Ocorrências de `C:\arma3-favela` ou `/c/arma3-favela`:
 
-| Arquivo em `07-blender/scripts/` | Ocorrências | O que aponta |
+| Arquivo em `03-blender/scripts/` | Ocorrências | O que aponta |
 |---|---|---|
 | `build_cidade.py` | 4 | assets Poly Haven, `odm\quadra`, saída `.blend` |
 | `build_map.py`, `gen_odm.py`, `final_map.sh`, `run_batch_cidade.sh` | 3 cada | raiz do ODM, malha, `.blend`, venv |
 | `gen_cidade.py`, `gen_jacarezinho.py`, `rebuild_map.sh`, `test_pessoas.py` | 2 cada | `quadra.blend`, assets, OSM |
 | `build_dsm_mesh.py`, `build_quadra.py`, `export_dsm.py`, `render_quadra.py`, `segmenta_predios.py`, `dataset_real.sh`, `pos_mapa.sh`, `run_after_batch.sh`, `run_batch_odm.sh`, `run_batch_v3.sh` | 1 cada | raiz do ODM ou venv |
 
-Também: os 8 `data.yaml` dos datasets (campo `path`), `03-arma3/scripts/windows/setup_mods.bat` e `start_favela.bat`, e `run_batch_v3.sh` e `run_batch_odm.sh` chamam `../projeto_contexto/.../train_yolo.py`.
+Também: os 8 `data.yaml` dos datasets (campo `path`), `02-projeto-ufrj-2022/arma3-2022/scripts/windows/setup_mods.bat` e `start_favela.bat`, e `run_batch_v3.sh` e `run_batch_odm.sh` chamam `../projeto_contexto/.../train_yolo.py`.
 
-Proposta de correção, para depois: um arquivo `07-blender/config.local.toml` (fora do git, com modelo `config.exemplo.toml` versionado) com três chaves, `DADOS` (hoje `C:\arma3-favela`), `BLENDER_EXE` e `PYTHON_EXE`; um módulo `caminhos.py` que lê esse arquivo, com a variável de ambiente `MVF_DADOS` como alternativa; e os `.sh` lendo as mesmas variáveis. Os `data.yaml` podem usar `path` relativo. Enquanto os dados morarem em `C:\arma3-favela`, os scripts funcionam como estão, de qualquer pasta.
+Proposta de correção, para depois: um arquivo `03-blender/config.local.toml` (fora do git, com modelo `config.exemplo.toml` versionado) com três chaves, `DADOS` (hoje `C:\arma3-favela`), `BLENDER_EXE` e `PYTHON_EXE`; um módulo `caminhos.py` que lê esse arquivo, com a variável de ambiente `MVF_DADOS` como alternativa; e os `.sh` lendo as mesmas variáveis. Os `data.yaml` podem usar `path` relativo. Enquanto os dados morarem em `C:\arma3-favela`, os scripts funcionam como estão, de qualquer pasta.
 
 ### 14. Três versões do `capturaDataset.sqf`
 
-(a) original de 11/09 (estava no repositório); (b) `missao\` do desktop: sem marcadores, usa a posição do jogador em vez de abortar, 500 imagens, 25 a 110 m (guardada em `03-arma3/missao/capturaDataset-500img-25a110m.sqf`); (c) a da pasta da missão do ARMA, que é (b) com 30 imagens, 95 a 105 m, pitch 60 a 90 (agora em `03-arma3/scripts/capturaDataset.sqf`, por ser a que estava em uso). Nenhuma chegou a gerar dado.
+(a) original de 11/09 (estava no repositório); (b) `missao\` do desktop: sem marcadores, usa a posição do jogador em vez de abortar, 500 imagens, 25 a 110 m (guardada em `02-projeto-ufrj-2022/arma3-2022/missao/capturaDataset-500img-25a110m.sqf`); (c) a da pasta da missão do ARMA, que é (b) com 30 imagens, 95 a 105 m, pitch 60 a 90 (agora em `02-projeto-ufrj-2022/arma3-2022/scripts/capturaDataset.sqf`, por ser a que estava em uso). Nenhuma chegou a gerar dado.

@@ -132,7 +132,7 @@ AUTORIA = {
         "Cada modelo foi especificado antes de rodar, mas o protocolo cresceu em etapas, e o texto "
         "diz quais modelos entraram depois de resultados anteriores. A rodada 4 (27 a 30/09) "
         "acrescentou sementes, treino misto, objeto no porte de arma, quadros novos a 35 e 75 m e "
-        "o gêmeo de 150 m, com critérios fixados antes em 07-blender/PLANO-RODADA4.md."),
+        "o gêmeo de 150 m, com critérios fixados antes em 03-blender/PLANO-RODADA4.md."),
     "08b-robustness.md": (
         "Luciano Martins Figueira (mestrando)",
         "ameaças e testes definidos antes dos resultados",

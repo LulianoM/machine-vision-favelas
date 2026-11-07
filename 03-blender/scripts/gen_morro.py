@@ -120,7 +120,7 @@ ap.add_argument("--obliqua", action="store_true",
                      "para a caixa sair alta e estreita (h/w perto de 2,2) em vez de quadrada")
 # Otimizacoes atras de flag, e nao editadas no lugar, para o A/B ficar reprodutivel: a mesma
 # semente roda com e sem, e o teste_fidelidade.py compara as dez metricas nos dois. As tres
-# suspeitas estao em 07-blender/PLANO-OTIMIZACAO.md e nenhuma foi medida em separado ainda.
+# suspeitas estao em 03-blender/PLANO-OTIMIZACAO.md e nenhuma foi medida em separado ainda.
 ap.add_argument("--otimizado", action="store_true",
                 help="liga as tres otimizacoes de uma vez: dado persistente, caixa de ar "
                      "encolhida e poda de arvore fora do quadro")

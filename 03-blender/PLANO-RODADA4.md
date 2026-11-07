@@ -5,7 +5,7 @@ versionado antes do primeiro resultado da rodada. As regras abaixo são as que
 `06-resultados/rodada4_criterios.py` executa. Qualquer mudança de regra depois disso tem de dizer
 que veio depois.
 
-Cadeia: `07-blender/scripts/rodada4.py`, com trava, retomada e supervisor, no molde da rodada 3.
+Cadeia: `03-blender/scripts/rodada4.py`, com trava, retomada e supervisor, no molde da rodada 3.
 
 - **Supervisor:** `supervisiona_rodada4.py`, aberto por `retoma_rodada4.cmd` e por um atalho na
   pasta Inicializar.

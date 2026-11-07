@@ -56,7 +56,7 @@ MODELOS_1710 = {
     "F-joint 10%": "misto10",
 }
 
-# rodada 5 (07-blender/PLANO-RODADA5.md): R5-1 sementes, R5-5 cronogramas, R5-3 curva, R5-4 sol duro, R5-2 cena
+# rodada 5 (03-blender/PLANO-RODADA5.md): R5-1 sementes, R5-5 cronogramas, R5-3 curva, R5-4 sol duro, R5-2 cena
 MODELOS_R5 = {
     "S-nadir-150 s1": "s_nadir_4k_sd1",
     "S-nadir-150 s2": "s_nadir_4k_sd2",

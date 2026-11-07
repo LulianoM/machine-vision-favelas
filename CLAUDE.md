@@ -22,6 +22,8 @@ A memória automática do Claude Code é local por máquina e NÃO é compartilh
 ## Mapa do repositório
 
 ```
+README.md                 página de entrada do GitHub
+REPRODUZIR.md             guia para validar de fora: baixar modelos, benchmark, refazer a cadeia
 CLAUDE.md                 este arquivo (instruções comuns)
 STATUS.md                 retrato atual: o que está feito, em curso, bloqueado, próximos passos
 DIARIO.md                 diário de bordo das duas máquinas
@@ -32,11 +34,11 @@ DIARIO.md                 diário de bordo das duas máquinas
   resumo-artigo-v2.md     resumo por seção
   ferramentas/            docx_para_secoes.py (rodar de novo quando chegar v3)
 02-projeto-ufrj-2022/     histórico do projeto drone PCERJ/UFRJ (Miceli, Fábio Guimarães)
-03-arma3/                 pipeline ARMA 3 -> bounding box -> YOLO (README-PIPELINE.md + scripts). Tentado em 11/09, sem dado gerado
+  arma3-2022/             plano original ARMA 3 -> bounding box -> YOLO. Tentado em 11/09, sem dado gerado, só registro
 04-bibliografia/          índices e notas versionados; PDFs ficam fora do git
 05-levantamento-3d/       levantamento técnico de 12/09: de onde vem a geometria da favela
 06-resultados/            o que o desktop produz: RESULTADOS.md, métricas, figuras leves
-07-blender/               pipeline que de fato rodou: Blender headless -> bounding box -> YOLO (README.md + scripts)
+03-blender/               pipeline usado (era 07-blender até 2026-11-07): Blender headless -> bounding box -> YOLO (README.md + scripts)
 08-conferencia/           dossiê da AIM 2027: estratégia, roteiro de 48 missões, eixos e os
                           papers premiados de 2026 que servem de modelo de formato
 painel/                   fonte HTML do painel web (artifact) do projeto
@@ -46,9 +48,9 @@ docs/                     guias de setup, briefing do pacote de 11/09, contexto 
 ## Regras duras
 
 - Nunca inventar número, métrica, citação ou DOI. Métrica só entra no artigo se estiver em `06-resultados/` com o comando que a gerou. DOI só depois de conferido no Crossref.
-- O artigo sai só como texto: corpora, pesos e código não são publicados (decisão do autor em 2026-09-30). Por isso o manuscrito não cita caminho, arquivo, script, flag de linha de comando nem nome interno de corpus do repositório, e não tem nota de proveniência. A rastreabilidade de cada número continua obrigatória, mas fica em `06-resultados/RESULTADOS.md`, fora do texto.
-- Dados sensíveis: os ortomosaicos do Jacarezinho e de Manguinhos são dados operacionais da PCERJ. Não entram no git, em artifact, em pacote, nem em serviço externo. Nenhuma coordenada em nível de endereço, nenhuma imagem que identifique morador. Vale também para tudo que DERIVA deles: malhas e DSM do OpenDroneMap, cenas `.blend`, renders dos datasets `odm` e `cid150`, mosaicos `train_batch` e `val_batch` desses treinos, e logs com coordenada. Só o braço `v3` (OSM + Poly Haven) pode ser ilustrado.
-- Fora do git (ver `.gitignore`): datasets, screenshots do ARMA, pesos, `runs/`, PDFs de papers, zips. Única exceção: os cinco PDFs de `08-conferencia/modelos_2026/` (CFP e modelos de formato da AIM 2027, 11 MB). Binário grande trafega por cópia direta entre as máquinas (scp/rsync via Tailscale), não pelo GitHub.
+- Código, pesos e corpora sintéticos SÃO publicados (decisão do autor em 2026-11-07, que revoga a de 2026-09-30): código no repositório público, binários nas releases `modelos-v1`, `corpora-v1` e `extras-v1` (ver `06-resultados/RELEASES.md`, envio por `03-blender/scripts/publica_releases.py`). O manuscrito continua só texto: não cita caminho, arquivo, script, flag de linha de comando nem nome interno de corpus, e não tem nota de proveniência. A rastreabilidade de cada número continua obrigatória, mas fica em `06-resultados/RESULTADOS.md`, fora do texto.
+- Dados sensíveis: os ortomosaicos do Jacarezinho e de Manguinhos são dados operacionais da PCERJ. Não entram no git, em artifact, em pacote, nem em serviço externo. Nenhuma coordenada em nível de endereço, nenhuma imagem que identifique morador. Vale também para tudo que DERIVA deles: malhas e DSM do OpenDroneMap, cenas `.blend`, renders dos datasets `odm` e `cid150`, mosaicos `train_batch` e `val_batch` desses treinos, e logs com coordenada. Só os braços procedurais (`v3`, OSM + Poly Haven, e `gen_morro.py`) podem ser ilustrados. Exceção decidida pelo autor em 2026-11-07: os PESOS treinados nesses dados (`blender_odm_tiles`, `cid150_s`) são publicados; as imagens, malhas e logs continuam fora.
+- Fora do git (ver `.gitignore`; vão para as releases, não para commits): datasets, screenshots do ARMA, pesos, `runs/`, PDFs de papers, zips. Única exceção: os cinco PDFs de `08-conferencia/modelos_2026/` (CFP e modelos de formato da AIM 2027, 11 MB). Binário grande trafega por cópia direta entre as máquinas (scp/rsync via Tailscale), não pelo GitHub.
 - Texto entregue ao autor ou ao orientador: sem travessão. Usar vírgula, dois-pontos ou parênteses. O manuscrito herdado do orientador ainda tem travessões; removê-los é item de `PENDENCIAS.md`.
 - Documento acadêmico para leitura sai em PDF ou .docx, não como página estilizada. O painel web é só para estado do projeto.
 - Ao citar o pipeline ARMA 3, creditar Fábio H. P. Guimarães (proposta, 2022) e prof. Claudio Miceli de Farias (orientação).

@@ -99,7 +99,7 @@ Chegou a funcionar até a geração da missão. O `capturaDataset.sqf` projetava
 A automação de GUI dependia de OCR do Windows (`C:\arma3-favela\ocr.ps1`) porque o jogo não expõe
 controles, e só cliques em foreground (SendInput) chegavam ao jogo. Base escolhida: Tanoa, com os
 objetos `Land_Slum_01/02/03_F` perto de Georgetown `[5396, 10335]`. Scripts originais preservados em
-`C:\arma3-favela\projeto_contexto\PROJETO-MACHINE-VISION-FAVELAS\03-arma3\`.
+`C:\arma3-favela\projeto_contexto\PROJETO-MACHINE-VISION-FAVELAS\02-projeto-ufrj-2022/arma3-2022\`.
 
 ## Referências
 

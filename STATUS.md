@@ -4,9 +4,13 @@ Retrato atual do projeto. Reescrever a cada marco. Histórico fica em `DIARIO.md
 
 Última atualização: 2026-11-04 (versão curta: resumo reescrito, QP3 como hipótese testável, pré-registro declarado), [MAC]; rodada 6 lançada no mesmo dia, [DESKTOP]
 
+## Publicação para validação externa (07/11, desktop)
+
+Código, pesos e corpora sintéticos publicados para o Felipe Toledo validar (guia em `REPRODUZIR.md`, links em `06-resultados/RELEASES.md`). Envio em curso por `03-blender/scripts/publica_releases.py` (log `C:rma3-favela\publica_releases.log`; retomável: rodar de novo pula o que já subiu). Material PCERJ fora. Pastas renomeadas: `03-blender` (era `07-blender`), `02-projeto-ufrj-2022/arma3-2022` (era `03-arma3`).
+
 ## Rodada 6 (lançada 04/11 11:48): a lista do servidor inteira
 
-Decisão do autor em 04/11: "o que manda é o PDF", GPU incluída. Plano e critérios fixados antes em `07-blender/PLANO-RODADA6.md` (commit 7a459ea); cadeia `07-blender/scripts/rodada6.py`, supervisor `supervisiona_rodada6.py` (janela própria, lançado por `retoma_rodada6.cmd`), pausa `pausa_rodada6.py pausa|retoma`, retrato `status_rodada6.py`; estado e logs em `C:rma3-favelalenderila6\`. Ordem: R (item 4, espera o `r_sel.py` das 11:28), P2, Q (item 5), L (item 6), E (item 7), G (item 3), T (sementes), V (item 9), Y (critérios por `06-resultados/rodada6_criterios.py`). Previsão 226 a 294 h com o grupo H (item 8, arma na mão, acrescentado às 12:10) e o grupo C (transferência de cor de Monge-Kantorovich, acrescentado à tarde a pedido do autor, seção 3.10 do plano), fim perto de 16/11; uma semente de cada item até 08/11. Pausada pelo autor de 14:38 a 16:11. Atalho `retoma_rodada6.lnk` na pasta Inicializar criado às 12:12 com o OK do autor (o supervisor o apaga quando a rodada termina): a rodada volta sozinha depois de reiniciar o PC. E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48"; um e-mail por etapa concluída.
+Decisão do autor em 04/11: "o que manda é o PDF", GPU incluída. Plano e critérios fixados antes em `03-blender/PLANO-RODADA6.md` (commit 7a459ea); cadeia `03-blender/scripts/rodada6.py`, supervisor `supervisiona_rodada6.py` (janela própria, lançado por `retoma_rodada6.cmd`), pausa `pausa_rodada6.py pausa|retoma`, retrato `status_rodada6.py`; estado e logs em `C:rma3-favelalenderila6\`. Ordem: R (item 4, espera o `r_sel.py` das 11:28), P2, Q (item 5), L (item 6), E (item 7), G (item 3), T (sementes), V (item 9), Y (critérios por `06-resultados/rodada6_criterios.py`). Previsão 226 a 294 h com o grupo H (item 8, arma na mão, acrescentado às 12:10) e o grupo C (transferência de cor de Monge-Kantorovich, acrescentado à tarde a pedido do autor, seção 3.10 do plano), fim perto de 16/11; uma semente de cada item até 08/11. Pausada pelo autor de 14:38 a 16:11. Atalho `retoma_rodada6.lnk` na pasta Inicializar criado às 12:12 com o OK do autor (o supervisor o apaga quando a rodada termina): a rodada volta sozinha depois de reiniciar o PC. E-mail de abertura na thread "Rodada 6: iniciada em 04/11 às 11:48"; um e-mail por etapa concluída.
 
 ## O que faltava no servidor para a AIM 2027 (04/11, desktop)
 
@@ -42,7 +46,7 @@ Parecer em `01-artigo/revisao-2026-11-02/PARECER-AIM.md` (56 pontos, 16 altos). 
 
 ## Rodada 4 (encerrada 30/09 10:25, sem grupo com falha)
 
-Disparada em 27/09 11:31, com quatro pausas do autor. Plano e critérios fixados antes do primeiro resultado em `07-blender/PLANO-RODADA4.md` (commit 6ebbaa9); vereditos em `06-resultados/rodada4_criterios.json`; números e comandos em `06-resultados/RESULTADOS.md`, entrada de 30/09. O supervisor saiu sozinho e apagou o atalho de inicialização.
+Disparada em 27/09 11:31, com quatro pausas do autor. Plano e critérios fixados antes do primeiro resultado em `03-blender/PLANO-RODADA4.md` (commit 6ebbaa9); vereditos em `06-resultados/rodada4_criterios.json`; números e comandos em `06-resultados/RESULTADOS.md`, entrada de 30/09. O supervisor saiu sozinho e apagou o atalho de inicialização.
 
 | Critério | Resultado | Veredito |
 |---|---|---|
@@ -61,7 +65,7 @@ Aplicado ao manuscrito em 30/09 (commit 35b09ca): abstract, 7.6, 7.7, 8.3, 9.3 a
 
 ## Rodada 3 (encerrada 26/09 17:54, sem grupo com falha)
 
-Disparada em 24/09 19:06. Ficou parada 9,5 h pela queda do PC (24/09 23:25) e mais 6 h em três pausas pedidas pelo autor. Cadeia `07-blender/scripts/rodada3.py`; o supervisor `supervisiona_rodada3.py` saiu sozinho e apagou o atalho de inicialização. Números e comandos em `06-resultados/RESULTADOS.md`, entradas de 25 e 26/09.
+Disparada em 24/09 19:06. Ficou parada 9,5 h pela queda do PC (24/09 23:25) e mais 6 h em três pausas pedidas pelo autor. Cadeia `03-blender/scripts/rodada3.py`; o supervisor `supervisiona_rodada3.py` saiu sozinho e apagou o atalho de inicialização. Números e comandos em `06-resultados/RESULTADOS.md`, entradas de 25 e 26/09.
 
 | Grupo | O que | Resultado |
 |---|---|---|
@@ -77,7 +81,7 @@ Para a próxima rodada longa neste PC: cadeia idempotente com trava e retomada; 
 
 ## Rodada 5 (encerrada 22/10 11:05, sem grupo com falha)
 
-Plano e critérios em `07-blender/PLANO-RODADA5.md`; cadeia `07-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favela
+Plano e critérios em `03-blender/PLANO-RODADA5.md`; cadeia `03-blender/scripts/rodada5.py`, supervisor `supervisiona_rodada5.py` (atalho `retoma_rodada5.lnk` na pasta Inicializar, apagado pelo supervisor no fim), pausa `pausa_rodada5.py`, retrato `status_rodada5.py`. Ordem S, F, N, Y1, A, D, M, C, Y2; previsão da cadeia 24/10 19:07. HERIDAL (Zenodo 5662351, CC BY 3.0, 8,31 GB) baixando em `C:rma3-favela
 eal_nadir\heridal\_bruto\`; o grupo N espera o dado sem travar a cadeia. Lançar sempre pela sessão com `cmd /c retoma_rodada5.cmd` ou por duplo clique; pelo Explorer a partir da sessão, o Blender sobe sem MPFB (visto em 18/10).
 
 ## Versões do artigo
@@ -94,7 +98,7 @@ Feedback de Felipe I. Toledo (texto, quatro áudios transcritos, esqueleto de se
 | Análises novas, só inferência | Em `06-resultados/revisao-2026-10-17/` com entradas em `RESULTADOS.md`: fatos dos corpora, GSD e zoom da Z30, seleção de checkpoint (D1); intervalos de 95% por reamostragem, curvas PR, varredura de limiar, leituras de resolubilidade (D2); similaridade de recortes por altitude (D3). Bases reais nadir em `04-bibliografia/benchmarks-nadir-2026-10-17.md` (D4) |
 | Achados que mudaram o texto | R selecionou o checkpoint no próprio VisDrone val (teto otimista por seleção, declarado); fator nadir/oblíquo 6,0 com intervalo 4,6 a 7,0 (ainda uma corrida por lado); diferenças do ajuste fino estáveis mas de 5 a 16% relativos; 35 m contra gêmeo resolvível só nos quadros novos; nenhum limiar leva o objeto chamado de arma abaixo de 0,09 com recall acima de 0,42; similaridade não separa arma de objeto em nenhuma altitude (AUC 0,53 a 0,65); renders sem ruído, borrão nem compressão |
 | PDF | `C:/Users/marti/Desktop/machine-vision-favelas-elsevier-2026-10-17.pdf`: 34 páginas, cerca de 18,9 mil palavras de corpo, 13 figuras, 23 tabelas, 0 `[X]` |
-| Decisões | 18/10: gerador não será liberado (A3); declaração de uso de IA incluída (A4); A1, A2 e A7 aplicados; sem financiamento (declarado); coautor delegado retirado por ora, com 4.1, 3.2, 6.5 e conflito de interesse reescritos sem ele (A5). Rodada 5 a partir da madrugada de 19/10, plano em `07-blender/PLANO-RODADA5.md` |
+| Decisões | 18/10: gerador não será liberado (A3); declaração de uso de IA incluída (A4); A1, A2 e A7 aplicados; sem financiamento (declarado); coautor delegado retirado por ora, com 4.1, 3.2, 6.5 e conflito de interesse reescritos sem ele (A5). Rodada 5 a partir da madrugada de 19/10, plano em `03-blender/PLANO-RODADA5.md` |
 | Correções de 18/10 | G-MAD e Berwaldt et al. citados (2.2); origem no projeto UFRJ de 2022 e Acknowledgements a Fábio H. P. Guimarães e ao prof. Claudio Miceli; censo com fonte (29.766 na favela, 35.458 no subdistrito, IBGE); resumo para leigo novo (`01-artigo/resumo-leigo-2026-10-18.md`); inventário com 16 corpora e 26 runs; PENDENCIAS sem item aberto. PDF: 34 páginas |
 
 ## Artigo
@@ -105,7 +109,7 @@ Feedback de Felipe I. Toledo (texto, quatro áudios transcritos, esqueleto de se
 | Manuscrito por seção | `01-artigo/manuscrito/s1` a `s8` desde 18/10 (estrutura de sete seções); a versão de 30/09 congelada em `01-artigo/manuscrito-2026-09-30/`; PDF por `01-artigo/ferramentas/monta_artigo.py` |
 | Pendências do rascunho | `01-artigo/PENDENCIAS.md`: 12 resolvidas (A1, A2, A3, A5, B2, C1 a C5, E1, E2), 20 abertas |
 | Resultados empíricos | Sintético e VisDrone (imagem real) com origem em arquivo (`06-resultados/`), todos no manuscrito. **Validado em 10 rodadas em 26 e 27/09** (`01-artigo/VALIDACAO-2026-09-26.md`): 287 achados conferidos e aplicados; todo número bate com a fonte, toda remissão resolve, o PDF sai limpo. Atualizado com a rodada 4 em 30/09 e revisado de novo no mesmo dia (três lentes: números, lógica, forma; 128 trocas, cada uma conferida na fonte; origem dos números conferidos em `06-resultados/RESULTADOS.md`, entrada de 30/09). Nenhum `[X]`: as duas checagens não rodadas estão descritas como especificadas e não executadas. Decidido em 30/09: sai só o texto, sem corpus nem código, e o manuscrito não cita arquivos do repositório. Decisões ainda do autor: lista na entrada do DIARIO de 30/09 (revisão geral) |
-| Figuras | 8, todas do braço procedural, rótulos em inglês desde 30/09: nadir, beco, anotação, seis regimes de luz, seis assentamentos, nadir contra oblíquo, armados por altitude, quadros do piloto. Geradas por `06-resultados/figuras_artigo.py` e `07-blender/scripts/previa_dataset.py` |
+| Figuras | 8, todas do braço procedural, rótulos em inglês desde 30/09: nadir, beco, anotação, seis regimes de luz, seis assentamentos, nadir contra oblíquo, armados por altitude, quadros do piloto. Geradas por `06-resultados/figuras_artigo.py` e `03-blender/scripts/previa_dataset.py` |
 | Refino de 30/09 | Análise geral e versão refinada: `01-artigo/ANALISE-2026-09-30.md` (diagnóstico, o que foi aplicado, dez críticas que ficam para os autores). Corpo de 28,0 mil para 26,5 mil palavras; abstract de 510 para 330; 11.1 e 10.7 removidas (11 renumerada); histórico de rascunho fora do texto; 17 tabelas numeradas com legenda; 10 figuras citadas no texto (duas novas: desenho experimental e curva do ajuste fino); quadros de autoria fora do PDF, só o aviso de versão prévia |
 | Resumo para leigo | `01-artigo/resumo-leigo-2026-09-30.md`, 2 páginas em português para o orientador; PDF por `01-artigo/ferramentas/monta_resumo_leigo.py` |
 | PDF | `monta_artigo.py`, formato Elsevier: 17 páginas, 28.621 palavras (com referências), 10 figuras, 17 tabelas, 0 `[X]`. Na Área de Trabalho do desktop. Enviado ao autor em 30/09 por link (página privada https://claude.ai/artifact/WPd1bZtKCVSo6XN56qMeuf, com o resumo para leigo), porque o anexo de 5 MB não cabe na ferramenta de e-mail |
@@ -119,7 +123,7 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Item | Estado |
 |---|---|
 | Motor | **Blender 5.2.1 headless**, não ARMA 3. O ARMA 3 foi tentado em 11/09 e abandonado sem gerar imagem. **Decidido pelo autor em 20/09: o Blender é o método do trabalho e do artigo** (`docs/DIVERGENCIAS.md`, item 1) |
-| Código | `07-blender/scripts/` (gerador `gen_morro.py`, sítios, pessoas MPFB, objetos, cadeias) e `06-resultados/` (avaliação e análise). Caminhos absolutos ainda embutidos (`docs/DIVERGENCIAS.md`, item 13) |
+| Código | `03-blender/scripts/` (gerador `gen_morro.py`, sítios, pessoas MPFB, objetos, cadeias) e `06-resultados/` (avaliação e análise). Caminhos absolutos ainda embutidos (`docs/DIVERGENCIAS.md`, item 13) |
 | Classes | Pessoa única nos braços de transferência; `pessoa_armada`, `pessoa_desarmada` e `pessoa_objeto` nos braços armados. Anotação amodal recortada no quadro, visibilidade mínima 0,35 |
 | Receita de treino | YOLO11s, imgsz 1280, 60 épocas, batch 6, início COCO, ladrilhos de 1280 px com sobreposição 0,2; ajuste fino com 30 épocas. RTX 2060 6 GB |
 | Sim-to-real | **Os três números medidos.** Teto real pareado (1.106 imagens): 0,6311. Zero-shot: nadir 0,0102 (1,6%), oblíquo 0,0614 (9,7%), S-oblique-six 0,1055 (16,7%). Ajuste fino, teste no val inteiro: 0,4424 e 0,5095 partindo do sintético, 0,5220 e 0,5709 partindo do COCO. Sintético e real no mesmo treino (rodada 4): 0,4607 (5%) e 0,5428 (10%), abaixo do só real. Três sementes: S-oblique-six 15,3% em média (14,1 a 16,7%); a vantagem do COCO a 5% é resolvível |
@@ -127,9 +131,9 @@ Detalhe em `06-resultados/RESULTADOS.md`.
 | Tamanho do alvo | Nadir 4K: 17,6 × 17,5 px, h/w 0,98. VisDrone treino: 13,0 × 24,0, h/w 1,95. `ds_oblvar`: 13,3 × 25,2, h/w 1,85. Ferramentas: `06-resultados/mede_forma.py` (corpora sintéticos) e `06-resultados/mede_alvo_split.py` (VisDrone e piloto, por split) |
 | Comparação com a literatura | Kiefer et al. (YOLO): 10,2 sintético contra 43,9 real, razão 23,2%. O S-oblique-six faz 10,5 absoluto (logo acima da faixa deles) e razão 16,7%. Não é comparação direta: o real deles é o treino inteiro do VisDrone com 10 classes, o nosso são 1.106 imagens com uma classe, e o sintético deles tem 40.000 imagens |
 | Achado de método | Ladrilhar em escala nativa levou o mAP50 de 0,116 para 0,561 nas mesmas 120 imagens (12/09); a escala de treino pesa mais que o volume |
-| Plano experimental | `07-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
+| Plano experimental | `03-blender/PLANO-EXPERIMENTAL.md`, quatro frentes com custo de GPU declarado |
 | Pesquisa a partir do e-mail de 12/09 | Liao et al. e Kiefer et al. lidos e conferidos na fonte em 21/09, com ficha própria em `04-bibliografia/`. G-MAD e IPP seguem por usar |
-| Coleção de sítios | `07-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
+| Coleção de sítios | `03-blender/scripts/sitios.py`, sítios variando relevo, mata, corredor (avenida, rua, rio) e paleta. O sítio -1 reproduz o `ds_morro_4k` |
 | Fila de execução | Rodada 6 rodando desde 04/11 11:48 (`status_rodada6.py`); dentro dela, `r_pareado_sel` (item 4) desde 11:28. Rodadas 2 a 5 encerradas |
 | Dado sensível | Os braços com fotogrametria PCERJ (`odm`, `cid150`) não saíram do desktop. Todo o trabalho das rodadas 2 e 3 é procedural (`gen_morro.py`) e pode ser ilustrado |
 | Onde estão os binários | `C:\arma3-favela\`. Inventário com SHA256 em `06-resultados/ONDE-ESTAO-OS-DADOS.md`, ainda sem os corpora e pesos das rodadas 2 e 3 |

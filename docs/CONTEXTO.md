@@ -16,11 +16,11 @@ Conhecimento que estava só na memória do Claude do Mac e que o desktop também
 | 2026-09-12, 12h45 [MAC] | Levantamento técnico sobre como recriar a favela em 3D, e e-mail de resumo. Ver `05-levantamento-3d/`. O desktop não recebeu nem usou esse material. |
 | 2026-09-12 11h30 a 2026-09-13 05h24 [DESKTOP] | Batelada a 150 m: 560 imagens de treino, 60 de teste de ângulo e luz, 40 de multidão, ladrilhamento, treino `cid150_s` (8 h 54 min, mAP50 0,676) e avaliação em imagem inteira (F1 0,849 e 0,787). Última atividade do desktop antes da reconciliação. |
 | 2026-09-17 | O orientador não enviou versão nova: o arquivo baixado nesse dia é idêntico byte a byte à v2 de 10/09. Pasta reorganizada no Mac, artigo dividido por seção, estrutura de repositório único preparada. |
-| 2026-09-17 e 18 [DESKTOP] | Reconciliação: clone em `C:\projetos\machine-vision-favelas`, inventário, `docs/DIVERGENCIAS.md`, código em `07-blender/`, resultados em `06-resultados/`. |
+| 2026-09-17 e 18 [DESKTOP] | Reconciliação: clone em `C:\projetos\machine-vision-favelas`, inventário, `docs/DIVERGENCIAS.md`, código em `03-blender/`, resultados em `06-resultados/`. |
 
 ## O experimento e o que ele prova
 
-O pipeline valida o método da seção de resultados do artigo: cena sintética, anotação automática de bounding box, domain randomization, treino de detector, teste em imagem aérea real (VisDrone). Corrigido em 2026-09-18 [DESKTOP]: o pipeline executado é o de `07-blender/` (Blender headless), não o de `03-arma3/`, que foi tentado e abandonado sem gerar imagem (ver `docs/DIVERGENCIAS.md`, item 1). Números que vão para o artigo: mAP zero-shot, mAP com 5 a 10% de dado real, e sintético mais real. Nenhum dos três existe ainda. As classes atuais são duas, `pessoa_armada` e `pessoa_desarmada`, vistas de drone a 100 e a 150 m (a frase anterior dizia só "pessoas vistas de cima"). Classes do artigo (altura de edificação, adição em laje, transição de material) exigem um segundo experimento com cenas de edificações empilhadas; o pipeline é o mesmo.
+O pipeline valida o método da seção de resultados do artigo: cena sintética, anotação automática de bounding box, domain randomization, treino de detector, teste em imagem aérea real (VisDrone). Corrigido em 2026-09-18 [DESKTOP]: o pipeline executado é o de `03-blender/` (Blender headless), não o de `02-projeto-ufrj-2022/arma3-2022/`, que foi tentado e abandonado sem gerar imagem (ver `docs/DIVERGENCIAS.md`, item 1). Números que vão para o artigo: mAP zero-shot, mAP com 5 a 10% de dado real, e sintético mais real. Nenhum dos três existe ainda. As classes atuais são duas, `pessoa_armada` e `pessoa_desarmada`, vistas de drone a 100 e a 150 m (a frase anterior dizia só "pessoas vistas de cima"). Classes do artigo (altura de edificação, adição em laje, transição de material) exigem um segundo experimento com cenas de edificações empilhadas; o pipeline é o mesmo.
 
 ## Achados do levantamento 3D que decidem o desenho
 
@@ -65,5 +65,5 @@ Acrescentado em 2026-09-18 [DESKTOP]. É o que estava só na memória local do C
 ## Onde estão os binários que não entram no git
 
 - Pacote completo de 11/09 com os 18 PDFs: no Mac em `~/Documents/Mestrado/Projetos/PROJETO-MACHINE-VISION-FAVELAS-2026-09-11.rar`; no desktop, na pasta descompactada original.
-- Dataset de 2022, ortomosaicos e decks: Google Drive, pasta "PROJETO DRONE". IDs em `03-arma3/manifest-drive.md`.
+- Dataset de 2022, ortomosaicos e decks: Google Drive, pasta "PROJETO DRONE". IDs em `02-projeto-ufrj-2022/arma3-2022/manifest-drive.md`.
 - Tudo que o desktop produziu (datasets, pesos, ODM, cenas `.blend`): `C:\arma3-favela\`, inventariado em `06-resultados/ONDE-ESTAO-OS-DADOS.md`. O pacote de 11/09 está descompactado em `C:\arma3-favela\projeto_contexto\`.

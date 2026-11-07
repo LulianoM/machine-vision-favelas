@@ -9,7 +9,7 @@ verificação visual e entra como grupo próprio quando estiver pronto (seção 
 regra depois disso tem de dizer que veio depois e por quê.
 
 Fontes: tempos de `06-resultados/revisao-2026-10-17/custo-rodada5.md` e dos runs da rodada 5
-(`checkpoints.md`); comandos de `07-blender/scripts/rodada4.py` e `rodada5.py`; leituras de
+(`checkpoints.md`); comandos de `03-blender/scripts/rodada4.py` e `rodada5.py`; leituras de
 resolubilidade da seção 2.3 do `PLANO-RODADA5.md`, sem mudança; caixas das armas de
 `06-resultados/armas_malhas.md` (item 1, feito hoje).
 
@@ -42,7 +42,7 @@ Caminhos, receita de treino, moldes de comando e as três leituras de resolubili
 de `train_yolo_win.py`, 60 épocas com paciência 15 nos de classe única, ladrilhos de 1280 px com
 sobreposição 0,2, seleção do `best.pt` pelo mAP50-95 na divisão `val` do `data.yaml`. Os três-classes
 "e120" usam 120 épocas e paciência 30, a receita do `armado_150g_e120` (rodada 5, M2). Estado, logs,
-trava e PAUSA em `RAIZ\fila6`; cadeia `07-blender/scripts/rodada6.py`; supervisor, pausa, retrato e
+trava e PAUSA em `RAIZ\fila6`; cadeia `03-blender/scripts/rodada6.py`; supervisor, pausa, retrato e
 `retoma_rodada6.cmd` são cópias dos da rodada 5.
 
 Leituras (2.3 da rodada 5): **(a)** faixas de sementes que não se cruzam; **(b)** intervalo de 95% por
@@ -231,7 +231,7 @@ correlação entre canais), e não geometria. Se levar a estatística de cor de 
 imagens reais sobe o zero-shot, a aparência explica parte da lacuna; se não sobe, a lacuna é geometria, que é a
 tese do artigo.
 
-**Etapas.** `07-blender/scripts/transfere_cor.py`, fora de linha como `degrada_ladrilhos.py`. C1: média (3) e
+**Etapas.** `03-blender/scripts/transfere_cor.py`, fora de linha como `degrada_ladrilhos.py`. C1: média (3) e
 covariância (3x3) RGB em 0..1 de cada imagem de `visdrone_yolo/train/images` (6.471; nunca o val, que o script
 recusa), numa grade de passo 4 px, sem rótulo, em `C:\arma3-favela\visdrone\cor_visdrone_train.json`. C2: para
 cada ladrilho de treino de `ds_morro_4k_tiles` e `ds_oblvar_tiles`, com probabilidade 0,75 e semente 0, sorteia

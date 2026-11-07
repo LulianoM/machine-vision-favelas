@@ -2,7 +2,7 @@
 """
 rodada4.py: a rodada iniciada em 27/09, em uma cadeia so, idempotente e retomavel (molde da rodada 3).
 
-Desenho, criterios fixados antes de rodar e custo em 07-blender/PLANO-RODADA4.md. Cada etapa tem um
+Desenho, criterios fixados antes de rodar e custo em 03-blender/PLANO-RODADA4.md. Cada etapa tem um
 arquivo de prova; se ele existe, a etapa e pulada. Render retoma pelo manifest; treino retoma do
 last.pt e so conta como feito com TREINO_OK. Uma trava impede duas instancias.
 

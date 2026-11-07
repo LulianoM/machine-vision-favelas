@@ -268,6 +268,6 @@ Total: 16 corpora (14 sintéticos e 2 mistos) em 32 pastas (16 de quadros ou mis
 | Item | Caminho |
 |---|---|
 | Jogo | `C:\Program Files (x86)\Steam\steamapps\common\Arma 3\` |
-| Missão em uso | `C:\Users\marti\Documents\Arma 3\missions\dsFavela.Tanoa\` (copiada para `03-arma3/missao/`) |
+| Missão em uso | `C:\Users\marti\Documents\Arma 3\missions\dsFavela.Tanoa\` (copiada para `02-projeto-ufrj-2022/arma3-2022/missao/`) |
 | Logs `.rpt` | `C:\Users\marti\AppData\Local\Arma 3\`, 6 arquivos de 2026-09-11, nenhum com linha `DSIMG` ou `DSLBL` |
 | Screenshots | A pasta `Documents\Arma 3\Screenshots\` não existe: nenhuma captura foi feita |

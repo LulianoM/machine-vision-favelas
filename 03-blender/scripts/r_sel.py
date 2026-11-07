@@ -25,7 +25,7 @@ from datetime import datetime
 RAIZ = os.path.join("C:" + os.sep, "arma3-favela", "blender")
 PY = os.path.join("C:" + os.sep, "arma3-favela", "venv", "Scripts", "python.exe")
 REPO = os.path.join("C:" + os.sep, "projetos", "machine-vision-favelas")
-SCR = os.path.join(REPO, "07-blender", "scripts")
+SCR = os.path.join(REPO, "03-blender", "scripts")
 RES = os.path.join(REPO, "06-resultados")
 REV = os.path.join(RES, "revisao-2026-10-17")
 DATA = "C:/arma3-favela/visdrone/visdrone_sub/data_sel.yaml"

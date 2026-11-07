@@ -1,5 +1,13 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [DESKTOP] Publicação para validação externa (Felipe Toledo): releases, REPRODUZIR.md e pastas renomeadas
+
+- Pedido do Felipe Toledo (áudio de WhatsApp, transcrito com Whisper): olhar o treino sintético, pegar o modelo e rodar o próprio benchmark. Decisão do autor no chat: "PODE ADICIONAR TUDO, menos os ortomosaicos da PCERJ"; o que não couber no GitHub vai para o Drive, com link aqui.
+- `03-blender/scripts/publica_releases.py` envia para três releases (`modelos-v1`: 149 pesos; `corpora-v1`: 87 pastas de corpus em tar, partes de 1,9 GiB; `extras-v1`: runs sem pesos, resultados, cenas procedurais, assets CC0). Retomável, grava SHA256 em `06-resultados/releases-manifesto.jsonl`. Fora: pasta `odm/`, ortomosaicos, datasets `odm` e `cid150`, `teste_angulos`, `teste_denso`, imagens dos runs nesses dados, logs com coordenada, VisDrone e HERIDAL (licença de terceiros; dos corpora mistos só rótulos). Os pesos `blender_odm_tiles` e `cid150_s` vão.
+- `REPRODUZIR.md` e `README.md` novos na raiz; `06-resultados/RELEASES.md`.
+- Pastas: `07-blender` virou `03-blender` (pipeline usado) e `03-arma3` virou `02-projeto-ufrj-2022/arma3-2022` (só registro). Referências atualizadas em 64 arquivos (este diário não foi reescrito: entradas antigas citam os nomes antigos). `C:rma3-favela` não foi renomeada: venv, servidor MCP do Blender (rodando) e scripts de fila dependem do caminho.
+- `CLAUDE.md`: regra de 30/09 (nada publicado) revogada; manuscrito continua só texto.
+
 ## 2026-11-07 [MAC] Segunda rodada de verificação: revisão de prova no inglês e cópia pt-BR alinhada
 
 - Dois agentes sobre o Elsevier já validado: um revisor de prova (inglês) e um comparador pt-BR contra o inglês. Nenhum número errado; só redação e termos.

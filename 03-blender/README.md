@@ -99,7 +99,7 @@ Custo: cena constroi em 1 s; render 4K Cycles/OptiX na RTX 2060 em 26 a 29 s; 10
 ## Validar antes de treinar
 
 ```bat
-C:\arma3-favela\venv\Scripts\python.exe ..\projeto_contexto\PROJETO-MACHINE-VISION-FAVELAS\03-arma3\scripts\preview_boxes.py --data dataset_v3 --split val --n 12 --out dataset_v3\preview
+C:\arma3-favela\venv\Scripts\python.exe ..\projeto_contexto\PROJETO-MACHINE-VISION-FAVELAS\02-projeto-ufrj-2022/arma3-2022\scripts\preview_boxes.py --data dataset_v3 --split val --n 12 --out dataset_v3\preview
 ```
 
 ## Fotogrametria das fotos reais (ODM)

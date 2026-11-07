@@ -2,7 +2,7 @@
  "gerado_em": "2026-10-17",
  "agente": "D1",
  "camera_do_gerador": {
-  "origem": "07-blender/scripts/gen_morro.py, linhas 1503 a 1508 (Z30_LENS = 4.3 * 36 / 5.37; c.sensor_width = 36; c.sensor_fit = HORIZONTAL; c.lens = lente) e linha 1603 (CAMS['nadir'] = camera(..., Z30_LENS, ...)); todo corpus usa cam_ds = CAMS['nadir'] (linha 1690)",
+  "origem": "03-blender/scripts/gen_morro.py, linhas 1503 a 1508 (Z30_LENS = 4.3 * 36 / 5.37; c.sensor_width = 36; c.sensor_fit = HORIZONTAL; c.lens = lente) e linha 1603 (CAMS['nadir'] = camera(..., Z30_LENS, ...)); todo corpus usa cam_ds = CAMS['nadir'] (linha 1690)",
   "sensor_mm": 36.0,
   "lente_equivalente_mm": 28.8268,
   "premissa": "Z30 com lente de 4,3 mm sobre sensor de 5,37 mm de largura; 4,3 x 36 / 5,37 = 28,83 mm equivalente",

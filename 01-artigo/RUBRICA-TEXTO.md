@@ -1,7 +1,7 @@
 # Rubrica de avaliação do texto técnico
 
 Criada em 2026-09-20 [DESKTOP] para dirigir o loop de refinamento das seções técnicas
-(`03b`, `06b`, `07b`, `08b`). Mesma lógica de `07-blender/RUBRICA-FIDELIDADE.md`: critério
+(`03b`, `06b`, `07b`, `08b`). Mesma lógica de `03-blender/RUBRICA-FIDELIDADE.md`: critério
 declarado e testável, para separar "melhorou" de "parece ter melhorado".
 
 Escopo: SÓ as seções técnicas. As seções do orientador (01, 02, 03, 04, 05, 06, 07, 08) e as de

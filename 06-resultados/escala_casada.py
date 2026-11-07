@@ -32,7 +32,7 @@ RAIZ = os.path.join("C:" + os.sep, "arma3-favela")
 VAL = os.path.join(RAIZ, "visdrone", "visdrone_yolo", "val")
 VIS_YAML = os.path.join(RAIZ, "visdrone", "visdrone_yolo", "data.yaml")
 DETECT = os.path.join(RAIZ, "blender", "runs", "detect")
-AVALIA = os.path.join(os.path.dirname(AQUI), "07-blender", "scripts", "avalia_sim2real.py")
+AVALIA = os.path.join(os.path.dirname(AQUI), "03-blender", "scripts", "avalia_sim2real.py")
 ALVO = json.load(open(os.path.join(AQUI, "alvo_por_split.json"), encoding="utf-8"))["ds_morro_4k"]["todos"]["lado_maior_med"]
 
 

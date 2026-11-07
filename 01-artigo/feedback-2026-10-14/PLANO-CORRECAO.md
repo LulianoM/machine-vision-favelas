@@ -76,7 +76,7 @@ Arquivos novos em `01-artigo/manuscrito/`; os antigos ficam congelados em `01-ar
 
 ## 5. Experimentos propostos para a rodada 5 (decisão do autor; nada roda nesta rodada)
 
-Custo estimado por D1 a partir de `07-blender/PLANO-EXPERIMENTAL.md` e dos tempos medidos em `RESULTADOS.md`.
+Custo estimado por D1 a partir de `03-blender/PLANO-EXPERIMENTAL.md` e dos tempos medidos em `RESULTADOS.md`.
 
 | # | Experimento | Ponto do revisor | O que decide |
 |---|---|---|---|

@@ -2,7 +2,7 @@
 
 Gerado em 2026-09-11 a partir do computador principal do Felipe (Luciano Martins Figueira). Este pacote existe para que um segundo computador, sem nenhum contexto prévio, consiga entender o projeto inteiro e executar o experimento de treinamento com bounding boxes gerados no ARMA 3.
 
-Se você é o Claude Code rodando na outra máquina: leia este arquivo inteiro, depois `03-arma3/README-PIPELINE.md`, e só então comece a executar. O prompt de partida sugerido está em `PROMPT-PARA-CLAUDE-CODE.md`.
+Se você é o Claude Code rodando na outra máquina: leia este arquivo inteiro, depois `02-projeto-ufrj-2022/arma3-2022/README-PIPELINE.md`, e só então comece a executar. O prompt de partida sugerido está em `PROMPT-PARA-CLAUDE-CODE.md`.
 
 ## 1. O que é o projeto, em uma frase
 
@@ -54,7 +54,7 @@ PROMPT-PARA-CLAUDE-CODE.md       prompt de partida para a outra máquina
   Projeto Drone PCERJ - UFRJ 2022.md        histórico, pessoas, cronograma, onde está o material
   Bibliografia - Projeto Drone PCERJ.md     19 papers do Fábio em 3 eixos
   decks-reunioes-2022.md                    transcrição dos decks e do cronograma do Drive
-03-arma3/
+02-projeto-ufrj-2022/arma3-2022/
   README-PIPELINE.md                        passo a passo: ARMA 3 -> bounding box -> YOLO -> teste real
   manifest-drive.md                         IDs e links do Drive (dataset 2022, ortomosaicos)
   amostra/412.PNG                           captura do editor Eden feita em 2022

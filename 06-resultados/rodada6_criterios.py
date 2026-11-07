@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-rodada6_criterios.py: aplica os criterios que 07-blender/PLANO-RODADA6.md fixou antes da rodada 6
+rodada6_criterios.py: aplica os criterios que 03-blender/PLANO-RODADA6.md fixou antes da rodada 6
 (molde do rodada5_criterios.py). Le so arquivos de 06-resultados (inclusive revisao-2026-10-17/) e
 grava rodada6_criterios.json (vereditos) e rodada6_eficacias.json/.md (eficacias com o R de selecao fora
 do teste). Item cujo arquivo ainda nao existe sai como "pendente". Nenhuma regra e escolhida aqui.

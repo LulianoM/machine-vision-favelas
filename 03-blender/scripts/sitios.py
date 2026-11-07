@@ -10,7 +10,7 @@ medem retorno decrescente para o tamanho do conjunto: mais imagem do mesmo lugar
 menos. Ver `04-bibliografia/kiefer-2022-numeros-conferidos.md`.
 
 O que este módulo NÃO afirma. Que variedade de sítio melhore a transferência é hipótese, não
-resultado. O teste de dose em `07-blender/PLANO-EXPERIMENTAL.md`, frente B, existe para medir isso
+resultado. O teste de dose em `03-blender/PLANO-EXPERIMENTAL.md`, frente B, existe para medir isso
 com orçamento igual (4 sítios de 45 imagens contra 1 sítio de 180) antes de gastar o orçamento
 grande. Se não mover nada no recorte pequeno, não move em escala.
 

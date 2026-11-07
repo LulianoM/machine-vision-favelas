@@ -7,7 +7,7 @@ while ! grep -q "^\[gen\] fim" dataset_v1.log; do
 done
 echo "=== lote terminou: $(date) ==="; tail -2 dataset_v1.log
 PY=/c/arma3-favela/venv/Scripts/python.exe
-SCRIPTS=../projeto/PROJETO-MACHINE-VISION-FAVELAS/03-arma3/scripts
+SCRIPTS=../projeto/PROJETO-MACHINE-VISION-FAVELAS/02-projeto-ufrj-2022/arma3-2022/scripts
 $PY $SCRIPTS/preview_boxes.py --data dataset_v1 --split val --n 12 --out dataset_v1/preview
 $PY crops.py dataset_v1 60
 echo "=== treino: $(date) ==="

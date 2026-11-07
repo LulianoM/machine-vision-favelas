@@ -73,15 +73,15 @@ Comandos:
 
 ## myScriptArmas3.txt (29/05/2022)
 
-Script original de 3 linhas, salvo em `03-arma3/scripts/myScriptArmas3-original-2022.sqf`. Espera 3 s, pega o `boundingBoxReal` da unidade `man1`, mostra no hint e salva um screenshot com o nome igual ao box.
+Script original de 3 linhas, salvo em `02-projeto-ufrj-2022/arma3-2022/scripts/myScriptArmas3-original-2022.sqf`. Espera 3 s, pega o `boundingBoxReal` da unidade `man1`, mostra no hint e salva um screenshot com o nome igual ao box.
 
 ## DATASET (maio/2022)
 
-- `ImagensExemplos/`: 28 capturas PNG (111 a 524, ~2 a 3,5 MB cada) feitas em 07/05/2022, vista de cima do editor Eden com unidades posicionadas. `411.PNG` e `412.PNG` são menores (~250 KB); a 412 está em `03-arma3/amostra/`.
+- `ImagensExemplos/`: 28 capturas PNG (111 a 524, ~2 a 3,5 MB cada) feitas em 07/05/2022, vista de cima do editor Eden com unidades posicionadas. `411.PNG` e `412.PNG` são menores (~250 KB); a 412 está em `02-projeto-ufrj-2022/arma3-2022/amostra/`.
 - `ComBoundingBox/`: 7 PNGs (~7 MB cada) de 29/05/2022, nomeadas com a saída do script. Seis têm nome no formato `[x,y]` (saída de `worldToScreen`, posição 2D na tela) e uma tem `[[-0.8,-1.15,-0.1],[0.8,1.05,1.9],3.58852]` (saída de `boundingBoxReal`, caixa 3D no espaço do modelo).
 - `imgboxScreen/`: 42 PNGs (~6 MB cada) de 30/05/2022, todas nomeadas `[x,y]`, com a unidade quase sempre perto do centro da tela (x≈0.476, y≈0.599).
 
-Conclusão do estado de 2022: o pipeline chegou a extrair a posição 2D do centro da unidade na tela, mas não a caixa 2D completa. O script novo em `03-arma3/scripts/capturaDataset.sqf` fecha essa etapa.
+Conclusão do estado de 2022: o pipeline chegou a extrair a posição 2D do centro da unidade na tela, mas não a caixa 2D completa. O script novo em `02-projeto-ufrj-2022/arma3-2022/scripts/capturaDataset.sqf` fecha essa etapa.
 
 ## Ortomosaico (ago/2022)
 

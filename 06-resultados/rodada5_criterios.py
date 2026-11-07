@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-rodada5_criterios.py: aplica os criterios que 07-blender/PLANO-RODADA5.md fixou antes da rodada 5
+rodada5_criterios.py: aplica os criterios que 03-blender/PLANO-RODADA5.md fixou antes da rodada 5
 (molde do rodada4_criterios.py).
 
 Le so arquivos de 06-resultados (inclusive revisao-2026-10-17/) e grava rodada5_criterios.json. Cada item
@@ -479,7 +479,7 @@ def main():
     ap.add_argument("--parte", choices=["prioridade", "tudo"], default="tudo")
     a = ap.parse_args()
     anterior = le("rodada5_criterios.json") or {}
-    out = {"plano": "07-blender/PLANO-RODADA5.md", "parte": a.parte,
+    out = {"plano": "03-blender/PLANO-RODADA5.md", "parte": a.parte,
            "R5-1_sementes_S": item_s(), "R5-5_ajuste_fino_F": item_f(), "R5-6_base_nadir_N": item_n()}
     if a.parte == "tudo":
         out.update({"R5-3_curva_A": item_a(), "R5-4_sol_duro_D": item_d(), "R5-7_150m_M": item_m(),

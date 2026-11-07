@@ -1,5 +1,5 @@
 {
- "plano": "07-blender/PLANO-RODADA5.md, secao 2.3 (b)",
+ "plano": "03-blender/PLANO-RODADA5.md, secao 2.3 (b)",
  "protocolo": "VisDrone-DET val, 548 imagens, classe unica, imgsz 1280, conf 0,001, NMS IoU 0,7, max_det 300; predicoes de visdrone_preds.py (FP32, lote 4)",
  "bootstrap": {
   "reamostras": 1000,

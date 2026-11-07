@@ -128,7 +128,7 @@ def main():
                      "a_faixas_de_sementes": ra_txt, "a_ok": oka, "b_ok": okb, "c_ok": okc,
                      "resolvivel": bool(oka is True or okb is True),
                      "sinal": "a acima" if a0 > b0 else "b acima"})
-    out = {"tag": a.tag, "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+    out = {"tag": a.tag, "plano": "03-blender/PLANO-RODADA5.md, secao 3.3",
            "bootstrap": {"reamostras": N_BOOT, "semente": SEMENTE, "imagens": n_img, "unidade": "imagem, com reposicao",
                          "pareado": "as mesmas reamostras para todos os modelos"},
            "validade": {"R_mAP50": round(r0, 4), "limiar": LIMIAR_VALIDADE, "interpretavel": r0 >= LIMIAR_VALIDADE,

@@ -21,7 +21,7 @@ import math
 import os
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-OBJ = os.path.join(AQUI, "..", "07-blender", "scripts", "objetos_alongados.py")
+OBJ = os.path.join(AQUI, "..", "03-blender", "scripts", "objetos_alongados.py")
 LIMIAR = 0.8
 Z = 1.959964
 

@@ -4,7 +4,7 @@ Responde ao ponto M3 do revisor (GSD além de altitude; justificar a câmera e s
 
 ## 1. O modelo de câmera do gerador
 
-Origem: `07-blender/scripts/gen_morro.py`, linhas 1503 a 1508 e 1603.
+Origem: `03-blender/scripts/gen_morro.py`, linhas 1503 a 1508 e 1603.
 
 ```
 Z30_LENS = 4.3 * 36 / 5.37      # 4.3 mm num sensor de 5.37 mm, ou seja ~28,8 mm equivalente

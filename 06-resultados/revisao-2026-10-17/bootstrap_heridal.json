@@ -1,6 +1,6 @@
 {
  "tag": "heridal",
- "plano": "07-blender/PLANO-RODADA5.md, secao 3.3",
+ "plano": "03-blender/PLANO-RODADA5.md, secao 3.3",
  "bootstrap": {
   "reamostras": 1000,
   "semente": 0,

@@ -3,7 +3,7 @@
 cd "$(dirname "$0")"
 BL="/c/Program Files (x86)/Steam/steamapps/common/Blender/blender.exe"
 PY=/c/arma3-favela/venv/Scripts/python.exe
-SCRIPTS=../projeto_contexto/PROJETO-MACHINE-VISION-FAVELAS/03-arma3/scripts
+SCRIPTS=../projeto_contexto/PROJETO-MACHINE-VISION-FAVELAS/02-projeto-ufrj-2022/arma3-2022/scripts
 OUT=dataset_v3
 rm -rf $OUT
 echo "=== render inicio: $(date) ==="

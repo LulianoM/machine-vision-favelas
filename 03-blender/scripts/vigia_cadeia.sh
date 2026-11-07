@@ -32,7 +32,7 @@ if [ "$vivo" = "0" ]; then
   # traceback novo desde a ultima passada?
   tb=$(grep -h "Traceback\|Error:\|CUDA error\|out of memory" fila/25_render_zoom35.log fila/27_treino_armado_35.log fila/12_render_obliquo.log fila/14_treino_S_obliquo.log 2>/dev/null | tail -1)
   echo "MORTO: relancando. ultimo erro: ${tb:-nenhum} | $(tail -1 encadeia.log)"
-  powershell -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\07-blender\scripts\retoma_cadeia.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\retoma.out' -RedirectStandardError 'C:\arma3-favela\blender\retoma.err' -WindowStyle Hidden" >/dev/null
+  powershell -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\03-blender\scripts\retoma_cadeia.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\retoma.out' -RedirectStandardError 'C:\arma3-favela\blender\retoma.err' -WindowStyle Hidden" >/dev/null
   exit 0
 fi
 
@@ -43,7 +43,7 @@ if [ "$idade" -gt 2400 ]; then
   echo "TRAVADO: $mais_novo sem escrita ha $((idade/60)) min; matando e relancando"
   wmic process where "name='blender.exe' or (name='python.exe' and commandline like '%retoma_cadeia%') or (name='python.exe' and commandline like '%fila_noite%') or (name='python.exe' and commandline like '%train_yolo%')" call terminate >/dev/null 2>&1
   sleep 5
-  powershell -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\07-blender\scripts\retoma_cadeia.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\retoma.out' -RedirectStandardError 'C:\arma3-favela\blender\retoma.err' -WindowStyle Hidden" >/dev/null
+  powershell -c "Start-Process -FilePath 'C:\arma3-favela\venv\Scripts\python.exe' -ArgumentList '-u','C:\projetos\machine-vision-favelas\03-blender\scripts\retoma_cadeia.py' -WorkingDirectory 'C:\arma3-favela\blender' -RedirectStandardOutput 'C:\arma3-favela\blender\retoma.out' -RedirectStandardError 'C:\arma3-favela\blender\retoma.err' -WindowStyle Hidden" >/dev/null
   exit 0
 fi
 

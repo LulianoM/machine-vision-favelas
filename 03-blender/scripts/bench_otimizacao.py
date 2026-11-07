@@ -2,7 +2,7 @@
 """
 bench_otimizacao.py: mede QUAL das otimizacoes de render paga, e se alguma delas estraga a imagem.
 
-`07-blender/PLANO-OTIMIZACAO.md` lista tres suspeitas para os 176 s por imagem, ordenadas por
+`03-blender/PLANO-OTIMIZACAO.md` lista tres suspeitas para os 176 s por imagem, ordenadas por
 palpite e nenhuma medida em separado. Este script faz o A contra B que falta.
 
 Duas coisas sao medidas em cada variante, e as duas importam:
