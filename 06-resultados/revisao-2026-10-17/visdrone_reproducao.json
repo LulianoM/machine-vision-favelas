@@ -940,6 +940,46 @@
    "P_validador": 0.7173,
    "R_validador": 0.5703,
    "quando": "2026-11-04T19:14:52"
+  },
+  "s_nadir_4k_deg": {
+   "run": "s_nadir_4k_deg",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k_deg\\weights\\best.pt",
+   "imagens": 548,
+   "caixas_verdadeiras": 13969,
+   "predicoes": 148551,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.01318,
+   "mAP50_recalculado": 0.01318,
+   "mAP50_95_validador": 0.00317,
+   "mAP50_95_recalculado": 0.00317,
+   "mAP50_reportado": 0.0132,
+   "dif_recalculado_validador": 0.0,
+   "dif_validador_reportado": -2e-05,
+   "P_validador": 0.0733,
+   "R_validador": 0.0677,
+   "quando": "2026-11-07T11:04:15"
+  },
+  "s_oblvar_deg": {
+   "run": "s_oblvar_deg",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_deg\\weights\\best.pt",
+   "imagens": 548,
+   "caixas_verdadeiras": 13969,
+   "predicoes": 131493,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1280,
+   "mAP50_validador": 0.10366,
+   "mAP50_recalculado": 0.10366,
+   "mAP50_95_validador": 0.03263,
+   "mAP50_95_recalculado": 0.03263,
+   "mAP50_reportado": 0.1037,
+   "dif_recalculado_validador": 0.0,
+   "dif_validador_reportado": -4e-05,
+   "P_validador": 0.2533,
+   "R_validador": 0.1661,
+   "quando": "2026-11-07T11:04:46"
   }
  }
 }

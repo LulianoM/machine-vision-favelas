@@ -1,0 +1,17 @@
+{
+ "weights": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_deg\\weights\\best.pt",
+ "imgsz": 1280,
+ "conf": 0.001,
+ "resultados": [
+  {
+   "metrics/precision(B)": 0.2533,
+   "metrics/recall(B)": 0.1661,
+   "metrics/mAP50(B)": 0.1037,
+   "metrics/mAP50-95(B)": 0.0326,
+   "fitness": 0.0326,
+   "conjunto": "real",
+   "data": "C:\\arma3-favela\\visdrone\\visdrone_yolo\\data.yaml",
+   "single_cls": true
+  }
+ ]
+}

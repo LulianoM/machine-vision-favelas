@@ -2568,12 +2568,149 @@
   "veredito": "pendente"
  },
  "G": {
-  "veredito": "pendente"
+  "regra": "PLANO-RODADA6 3.5: degradado menos limpo, media das sementes, no VisDrone val (pareado, 1.000 reamostras) e na HERIDAL a imgsz casado (idem); (a) com sementes dos dois lados; (c). Resolvivel para cima = a falta de artefatos de sensor explica parte da lacuna; nao resolvivel = nao explica; para baixo = degradar prejudica",
+  "S-nadir-150 visdrone": {
+   "a_valores": [
+    0.0132
+   ],
+   "b_valores": [
+    0.0102,
+    0.0198,
+    0.0108
+   ],
+   "a_media": 0.0132,
+   "b_media": 0.0136,
+   "dif": -0.0004,
+   "dif_ic95": [
+    -0.0019,
+    0.001
+   ],
+   "dif_relativa_pct_do_menor": -3.3,
+   "razao_a_sobre_b": 0.968,
+   "a_ok": null,
+   "b_ok": false,
+   "c_ok": false,
+   "pareado": true,
+   "resolvivel": false,
+   "passou_em": [],
+   "a_runs": [
+    "s_nadir_4k_deg"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ]
+  },
+  "S-oblique-six visdrone": {
+   "a_valores": [
+    0.1037
+   ],
+   "b_valores": [
+    0.1055,
+    0.0958,
+    0.0887
+   ],
+   "a_media": 0.1037,
+   "b_media": 0.0966,
+   "dif": 0.007,
+   "dif_ic95": [
+    0.0022,
+    0.0119
+   ],
+   "dif_relativa_pct_do_menor": 7.3,
+   "razao_a_sobre_b": 1.073,
+   "a_ok": null,
+   "b_ok": true,
+   "c_ok": false,
+   "pareado": true,
+   "resolvivel": true,
+   "passou_em": [
+    "b"
+   ],
+   "a_runs": [
+    "s_oblvar_deg"
+   ],
+   "b_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ]
+  },
+  "S-nadir-150 heridal": {
+   "a_valores": [
+    0.219
+   ],
+   "b_valores": [
+    0.2394,
+    0.2672,
+    0.0926
+   ],
+   "a_media": 0.219,
+   "b_media": 0.1997,
+   "dif": 0.0192,
+   "dif_ic95": [
+    0.0077,
+    0.0309
+   ],
+   "dif_relativa_pct_do_menor": 9.6,
+   "razao_a_sobre_b": 1.096,
+   "a_ok": null,
+   "b_ok": true,
+   "c_ok": false,
+   "pareado": true,
+   "resolvivel": true,
+   "passou_em": [
+    "b"
+   ],
+   "a_runs": [
+    "s_nadir_4k_deg"
+   ],
+   "b_runs": [
+    "s_nadir_4k",
+    "s_nadir_4k_sd1",
+    "s_nadir_4k_sd2"
+   ]
+  },
+  "S-oblique-six heridal": {
+   "a_valores": [
+    0.1476
+   ],
+   "b_valores": [
+    0.1079,
+    0.1503,
+    0.1847
+   ],
+   "a_media": 0.1476,
+   "b_media": 0.1477,
+   "dif": -0.0,
+   "dif_ic95": [
+    -0.0105,
+    0.0096
+   ],
+   "dif_relativa_pct_do_menor": -0.0,
+   "razao_a_sobre_b": 1.0,
+   "a_ok": null,
+   "b_ok": false,
+   "c_ok": false,
+   "pareado": true,
+   "resolvivel": false,
+   "passou_em": [],
+   "a_runs": [
+    "s_oblvar_deg"
+   ],
+   "b_runs": [
+    "s_oblvar",
+    "s_oblvar_sd1",
+    "s_oblvar_sd2"
+   ]
+  },
+  "veredito": "S-nadir-150 no visdrone: degradado cai -0.0004 (nao resolvivel, []) | S-oblique-six no visdrone: degradado sobe +0.0070 (resolvivel, ['b']) | S-nadir-150 no heridal: degradado sobe +0.0192 (resolvivel, ['b']) | S-oblique-six no heridal: degradado cai -0.0000 (nao resolvivel, [])"
  },
  "V": {
   "veredito": "pendente"
  },
- "quando": "2026-11-07T05:26:39",
+ "quando": "2026-11-07T11:10:05",
  "C": {
   "veredito": "pendente"
  }

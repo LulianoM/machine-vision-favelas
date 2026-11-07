@@ -247,6 +247,44 @@
    "P_validador": 0.4854,
    "R_validador": 0.3066,
    "quando": "2026-11-07T05:19:27"
+  },
+  "s_nadir_4k_deg": {
+   "run": "s_nadir_4k_deg",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_nadir_4k_deg\\weights\\best.pt",
+   "data": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "imagens": 1647,
+   "caixas_verdadeiras": 3229,
+   "predicoes": 440613,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1152,
+   "mAP50_validador": 0.21895,
+   "mAP50_recalculado": 0.21895,
+   "mAP50_95_validador": 0.09381,
+   "mAP50_95_recalculado": 0.09381,
+   "dif_recalculado_validador": 0.0,
+   "P_validador": 0.407,
+   "R_validador": 0.2555,
+   "quando": "2026-11-07T11:05:47"
+  },
+  "s_oblvar_deg": {
+   "run": "s_oblvar_deg",
+   "pesos": "C:\\arma3-favela\\blender\\runs\\detect\\s_oblvar_deg\\weights\\best.pt",
+   "data": "C:\\arma3-favela\\real_nadir\\heridal\\yolo\\data.yaml",
+   "imagens": 1647,
+   "caixas_verdadeiras": 3229,
+   "predicoes": 104286,
+   "batch": 4,
+   "fp16": false,
+   "imgsz": 1152,
+   "mAP50_validador": 0.14763,
+   "mAP50_recalculado": 0.14763,
+   "mAP50_95_validador": 0.05723,
+   "mAP50_95_recalculado": 0.05723,
+   "dif_recalculado_validador": 0.0,
+   "P_validador": 0.3444,
+   "R_validador": 0.1843,
+   "quando": "2026-11-07T11:06:43"
   }
  }
 }

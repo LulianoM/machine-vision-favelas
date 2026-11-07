@@ -1,5 +1,10 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [DESKTOP] Rodada 6: item 3 fechado (uma semente) e pausa
+
+- Item 3: `s_nadir_4k_deg` e `s_oblvar_deg` (ladrilhos com ruído, borrão e JPEG). Degradado menos limpo: S-oblique-six no VisDrone +0,0070 (+7,3%, b), S-nadir-150 na HERIDAL +0,0192 (+9,6%, b), as outras duas nulas. Os dois ganhos caem dentro da faixa das sementes limpas; a leitura (a) espera T6 a T10.
+- Pausa do autor às 11:25, logo depois de o grupo G fechar; a cadeia já tinha começado T1 (`armado_35_e120_sd1`, época 3), que retoma do `last.pt`.
+
 ## 2026-11-07 [DESKTOP] Rodada 6: item 6 fechado e R-sel na HERIDAL
 
 - Pausa do autor em 06/11 de 15:38 a 17:54; o treino a 150 m do item 6 retomou do `last.pt` na época 62.
