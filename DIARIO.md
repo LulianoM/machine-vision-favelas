@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [MAC] Validação: 760 números conferidos, nenhum errado; ajustes de texto, Tabelas 9 a 11 renumeradas
+
+- Quatro agentes verificadores (1 a 4; 5.1 a 5.3; 5.4 e 5.5; consistência interna) contra `06-resultados/`: nenhum valor divergente; achados só de apresentação e qualificadores, aplicados no inglês e espelhados no pt-BR (lista no STATUS). Único número novo: 8,6 (9,76/1,14) no lugar de 8,5 na 6.2.
+- Tabelas renumeradas pela ordem de citação (antigas 10, 11, 9 viram 9, 10, 11) e blocos postos em ordem física crescente; `pagina.py` com `ordem_ok` (rejeita movimento que inverte tabelas ou figuras) e cortes de parágrafo com pelo menos seis palavras de cada lado (a Carta tinha um parágrafo "withdrawn." de uma palavra).
+- Lição: `gera_elsevier.py` deve ler o fonte depois de `reune_cont.py`; um build saiu com 19 páginas por usar o fonte com os cortes da Carta. Com as referências em entrelinha 1,15 o Elsevier fecha em 18 páginas (última a 100 pt do pé).
+- Artifact v15 com Elsevier, Carta e pt-BR.
+
 ## 2026-11-07 [MAC] Seis inconsistências dos pareceres corrigidas; extended abstract deixa de ser mantido
 
 - Corrigido no inglês e na cópia pt-BR (script `corrige_0711h.py` no scratchpad, sem número novo): 6.2 passa a 9,76 cm por pixel (9,71 era o valor pelo FOV do manual da DJI, `gsd_zoom.md`); 4.2.2 explica que 1,15 m vale pelo comprimento registrado e a malha da espingarda chega a 1,17; "about one in five" vira "one in five to one in four" (0,192 a 0,245); 5.4 ganha a frase sobre a pistola a 0,50 como pista que não é a arma (pose fixa por arma); 4.7 enumera os dez modelos com três sementes (S-nadir-150, S-oblique, S-oblique-six e subconjuntos de 30 e 120 quadros, F-synthetic e F-generic a 5 por cento, F-generic com taxa menor, S-nadir-35 e gêmeo a 75 m); `<title>` sem "skeleton".

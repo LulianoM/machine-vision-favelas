@@ -22,7 +22,7 @@ montador = open(os.path.join(REPO, "01-artigo/ferramentas/monta_artigo.py"), enc
 css = re.search(r'CSS_ELSEVIER\s*=\s*"""(.*?)"""', montador, re.S).group(1)
 css += """
 .new { background: #fff1a8; } .dec { background: #cfe4ff; }
-.refs p, .refs p + p { text-indent: -1.2em; padding-left: 1.2em; margin: 0 0 2pt 0; font-size: 8pt; line-height: 1.2; overflow-wrap: anywhere; }
+.refs p, .refs p + p { text-indent: -1.2em; padding-left: 1.2em; margin: 0 0 2pt 0; font-size: 8pt; line-height: 1.15; overflow-wrap: anywhere; }
 .decl p, .decl p + p { text-indent: 0; margin: 0 0 4pt 0; font-size: 8.6pt; }
 table caption { caption-side: top; text-align: left; font-size: 8pt; line-height: 1.25; padding: 0 0 2pt 0; break-after: avoid; }
 p.tn, p + p.tn { font-size: 7.6pt; line-height: 1.2; text-indent: 0; margin: -6pt 0 9pt 0; text-align: left; }

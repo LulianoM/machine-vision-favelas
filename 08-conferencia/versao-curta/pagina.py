@@ -254,6 +254,8 @@ def pontos_de_corte(tok):
                 cortes.append(k)
         else:
             palavras += 1
+    # nunca deixar menos de seis palavras de um lado do corte (evita parágrafo de uma palavra)
+    cortes = [c for c in cortes if 6 <= sum(1 for q in pecas[:c] if q.strip() and not q.startswith("<")) <= palavras - 6]
     return m.group(1), pecas, cortes
 
 def estado_dividido(tokens, i, idx_p, corte):
@@ -359,6 +361,15 @@ def encaixa_topo(tokens):
             print(f"bloco de topo {nome}: {melhor[2]}; abre a página {melhor[3]}", flush=True)
     return tokens
 
+
+def ordem_ok(tokens):
+    """as legendas de tabelas, e as de figuras, aparecem em ordem crescente no fluxo (um movimento que
+    inverte duas tabelas é rejeitado)"""
+    for rot in ("Table", "Figure", "Tabela", "Figura"):
+        ns = [int(m.group(1)) for t in tokens for m in [re.search(r"<b>%s (\d+)\.</b>" % rot, t)] if m and tipo(t) in ("fig", "tab")]
+        if ns != sorted(ns): return False
+    return True
+
 # busca gulosa de cima para baixo: para o primeiro buraco, três famílias de candidatos (bloco avançado
 # até seis parágrafos, recuado até seis, ou parágrafo seguinte partido no ponto que enche a página);
 # fica o melhor pela chave (páginas, primeiro buraco mais ao fim, branco total). Como a chave só
@@ -380,12 +391,14 @@ for rodada in range(40):
             if (nome, i, p) in rejeitados: continue
             # primeiro o corte do parágrafo seguinte, que leva o bloco para o topo da página seguinte
             div = divide_para_encher(toks, i, p)
+            if div and not ordem_ok(div[0]): div = None
             if div:
                 novo, (n2, bur2, br2), desc = div
                 candidatos.append((chave(n2, bur2), novo, n2, bur2, br2, f"{nome}: {desc}"))
                 if candidatos[-1][0] < atual: break
             for sentido, fn in (("para a frente", move_depois_do_proximo_p), ("para trás", move_antes_do_paragrafo_anterior)):
                 for passo, novo in enumerate(cadeia(toks, nome, fn), 1):
+                    if not ordem_ok(novo): break
                     n2, bur2, br2 = mede(novo)
                     candidatos.append((chave(n2, bur2), novo, n2, bur2, br2, f"{nome} movida {passo} parágrafo(s) {sentido}"))
             rejeitados.add((nome, i, p))
