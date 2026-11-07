@@ -81,8 +81,8 @@ Teste por imagem com intervalo de confiança: `06-resultados/revisao-2026-10-17/
 
 | Base | Fonte | Preparo |
 |---|---|---|
-| VisDrone2019-DET (treino e val) | site oficial do VisDrone | `visdrone_to_yolo.py` (em `02-projeto-ufrj-2022/arma3-2022/scripts/`), depois `03-blender/scripts/prepara_ft.py` para as fatias `sel`, `ft05` e `ft10` (semente 2609) |
-| HERIDAL (busca e resgate, nadir) | Zenodo 5662351, `heridal_keras_retinanet_voc.zip`, CC BY 3.0 | `python -I 03-blender/scripts/prepara_heridal.py --bruto <pasta do zip>` |
+| VisDrone2019-DET (treino e val) | <https://github.com/VisDrone/VisDrone-Dataset> (task 1, object detection in images) | `visdrone_to_yolo.py` (em `02-projeto-ufrj-2022/arma3-2022/scripts/`), depois `03-blender/scripts/prepara_ft.py` para as fatias `sel`, `ft05` e `ft10` (semente 2609) |
+| HERIDAL (busca e resgate, nadir) | <https://zenodo.org/records/5662351>, `heridal_keras_retinanet_voc.zip`, CC BY 3.0 | `python -I 03-blender/scripts/prepara_heridal.py --bruto <pasta do zip>` |
 
 ## 5. Caminho longo: refazer tudo
 
