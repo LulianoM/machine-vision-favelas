@@ -26,6 +26,12 @@
 - Consequência para o texto (não aplicada, decisão do autor): a 5.4 e a 6.1 não podem mais apresentar a U como efeito da GSD; o que se sustenta é um falso alarme de 19 a 25% nas três altitudes com orçamento igual. As sementes do grupo T podem mudar a leitura.
 - A cadeia seguiu às 14:10 para o grupo L (render de `ds_armado_75c`).
 
+## 2026-11-07 [MAC] Versão curta: item 3 (ruído, borrão e JPEG) aplicado
+
+- `git pull`: desktop fechou o item 3 (dc357c2, 11:20) e pausou às 11:25 com T1 em curso.
+- Aplicado em `versao-curta-aim2027.html`: 4.6, Experimento A ganha o quarto check (degradação em 3/4 dos ladrilhos de treino, regra de leitura); 4.6, pré-registro: G sai do "still running" e entra no que rodou; 5.2, parágrafo novo com as quatro células (+0,0070, IC +0,0022 a +0,0119, 7,3%; +0,0192, IC +0,0077 a +0,0309, 9,6%; −0,0004 e −0,0000 nulos) e a ressalva de que os ganhos caem dentro da faixa das três sementes limpas; 6.5 (2) passa a "medido: 7 a 10% relativos em duas de quatro células, dentro da dispersão de treino". Extended abstract: frase das limitações. Números de `06-resultados/RESULTADOS.md`, entrada de 07/11 do grupo G.
+- Corpo 10.044 → 10.329 palavras.
+
 ## 2026-11-07 [MAC] Versão curta: itens 5 e 6 e R-sel na HERIDAL aplicados (veredito da QP3)
 
 - `git pull`: desktop fechou o item 6 e os acertos do item 4 (8acc7ba, 07/11 05:31); cadeia no grupo G.
