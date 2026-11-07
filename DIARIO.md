@@ -1,5 +1,11 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [DESKTOP] Rodada 6 caiu com o reinício do app e foi pausada
+
+- A cadeia, o supervisor e o treino T1 (`armado_35_e120_sd1`, época 7 de 120) pararam às 12:16 sem erro no log: o app do Claude fechou e reabriu (processos do app com início às 13:48; o PC não reiniciou, boot em 21/10). Processo lançado pela sessão morre com o app (memória `cadeia-morre-com-o-app`), e o atalho na pasta Inicializar só cobre reinício do PC. A vigia horária, que era desta sessão, morreu junto; por isso ninguém relançou entre 12:16 e 13:49.
+- O autor notou GPU e RAM ociosas às 13:49 e pediu pausa: `fila6/PAUSA` criada (nada a encerrar). O `last.pt` do T1 é da época 6 (12:14); perde-se só a época 7 em curso.
+- Para a retomada sobreviver a reinícios do app, o supervisor deve ser aberto pelo autor (duplo clique em `07-blender/scripts/retoma_rodada6.cmd`, que roda no shell do usuário e carrega o MPFB), não pela sessão do Claude.
+
 ## 2026-11-07 [DESKTOP] Rodada 6: item 3 fechado (uma semente) e pausa
 
 - Item 3: `s_nadir_4k_deg` e `s_oblvar_deg` (ladrilhos com ruído, borrão e JPEG). Degradado menos limpo: S-oblique-six no VisDrone +0,0070 (+7,3%, b), S-nadir-150 na HERIDAL +0,0192 (+9,6%, b), as outras duas nulas. Os dois ganhos caem dentro da faixa das sementes limpas; a leitura (a) espera T6 a T10.
