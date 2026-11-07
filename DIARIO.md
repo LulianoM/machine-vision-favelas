@@ -1,5 +1,12 @@
 # DIÁRIO DE BORDO
 
+## 2026-11-07 [MAC] Segunda rodada de verificação: revisão de prova no inglês e cópia pt-BR alinhada
+
+- Dois agentes sobre o Elsevier já validado: um revisor de prova (inglês) e um comparador pt-BR contra o inglês. Nenhum número errado; só redação e termos.
+- Inglês (10 trocas, nenhum número novo): 4.7 explica as três taxas que são cota inferior e a quarta grandeza (precisão da classe armada); "armed recall and the rate for each other class give d′"; "a steeper pitch band"; 5.4 cita 0.67 a 0.90 "for the detectors of the same four corpora on their selection splits"; subconjuntos aninhados "as means of three seeds"; precisão 0.37 a 0.46 "at the default threshold (Section 5.4)"; d′ 0.58 "compared with 0.97 for the twin at 75 m"; resumo "with overlapping run ranges" na inversão da HERIDAL; espaço na legenda da Tabela 2; "matched box for box" removido onde já estava dito.
+- Português: as mesmas 10 trocas espelhadas, mais 5 frases reescritas (5.1 com ponto e vírgula; 5.4 pose de porte; 6.4 "ficou aquém"; 7 "em coerência com a forma aparente"; célula da Tabela 3 "distinção entre armado e desarmado por GSD") e termos unificados em todo o texto: a GSD sempre feminina, "classificado como armado" (era "chamado de armado", 12 ocorrências), "a confiança 0.25", "aninhados", "avaliados" (era "pontuados"), "benchmark nadir" e "em nadir", "revocação de armados" na Figura 5.
+- Rebuild completo (reune_cont antes de gera_elsevier): Elsevier 18 páginas, Carta 44, pt-BR 20; artifact v16.
+
 ## 2026-11-07 [MAC] Validação: 760 números conferidos, nenhum errado; ajustes de texto, Tabelas 9 a 11 renumeradas
 
 - Quatro agentes verificadores (1 a 4; 5.1 a 5.3; 5.4 e 5.5; consistência interna) contra `06-resultados/`: nenhum valor divergente; achados só de apresentação e qualificadores, aplicados no inglês e espelhados no pt-BR (lista no STATUS). Único número novo: 8,6 (9,76/1,14) no lugar de 8,5 na 6.2.
